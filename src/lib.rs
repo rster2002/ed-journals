@@ -9,7 +9,17 @@ mod tests {
     #[test]
     fn sandbox() {
         let dir_path = PathBuf::from("/home/bjorn/.local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous");
-        let ed_log_dir = EDLogDir::try_from(dir_path)
+        let mut reader = EDLogDir::try_from(dir_path)
+            .unwrap()
+            .journal_logs()
+            .unwrap()
+            .get(0)
+            .unwrap()
+            .create_reader()
             .unwrap();
+
+        while let Some(entry) = reader.next() {
+            dbg!(entry);
+        }
     }
 }

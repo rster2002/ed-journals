@@ -1,4 +1,5 @@
-use std::fs::DirEntry;
+use std::fs::{DirEntry, File};
+use std::io;
 use std::num::ParseIntError;
 use std::path::{Path, PathBuf};
 use chrono::NaiveDateTime;
@@ -6,6 +7,7 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use regex_macro::regex;
 use thiserror::Error;
+use crate::models::journal_reader::JournalReader;
 
 const FILE_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap());
 
@@ -22,6 +24,9 @@ pub enum JournalFileError {
 
     #[error("Failed to parse journal part: {0}")]
     FailedToParsePart(#[from] ParseIntError),
+
+    #[error(transparent)]
+    IO(#[from] io::Error),
 }
 
 #[derive(Debug)]
@@ -34,6 +39,10 @@ pub struct JournalFile {
 impl JournalFile {
     pub fn is_match(name: &str) -> bool {
         FILE_NAME_REGEX.is_match(name)
+    }
+
+    pub fn create_reader(&self) -> Result<JournalReader, JournalFileError> {
+        Ok(JournalReader::from(File::open(self.path.as_path())?))
     }
 }
 

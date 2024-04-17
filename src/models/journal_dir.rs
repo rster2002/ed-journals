@@ -1,5 +1,4 @@
-use std::path::{Path, PathBuf};
-use regex_macro::{Lazy, regex};
+use std::path::PathBuf;
 use thiserror::Error;
 use crate::models::journal_file::{JournalFile, JournalFileError};
 
