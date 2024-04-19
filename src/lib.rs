@@ -7,6 +7,7 @@ mod tests {
     use crate::models::journal_dir::EDLogDir;
 
     #[test]
+    #[ignore]
     fn sandbox() {
         let dir_path = PathBuf::from("/home/bjorn/.local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous");
         let mut reader = EDLogDir::try_from(dir_path)
