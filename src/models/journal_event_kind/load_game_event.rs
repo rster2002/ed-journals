@@ -13,11 +13,13 @@ pub struct LoadGameEvent {
     #[serde(default)]
     pub odyssey: bool,
     pub ship: String,
+
+    #[serde(rename = "ShipID")]
     pub ship_id: u32,
     pub ship_name: String,
     pub ship_ident: String,
     pub fuel_level: f32,
-    pub fuel_capacity: u16,
+    pub fuel_capacity: f32,
     pub game_mode: String,
     pub credits: u64,
     pub loan: u64,
@@ -57,7 +59,7 @@ mod tests {
             ship_name: "jewel of parhoon".to_string(),
             ship_ident: "hr-17f".to_string(),
             fuel_level: 3.964024,
-            fuel_capacity: 8,
+            fuel_capacity: 8.0,
             game_mode: "Open".to_string(),
             credits: 2890718739,
             loan: 0,

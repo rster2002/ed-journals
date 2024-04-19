@@ -20,7 +20,10 @@ pub struct LoadoutModule {
     pub on: bool,
     pub priority: u8,
     pub health: f32,
-    pub value: u32,
+
+    // TODO check when this value is used
+    pub value: Option<u32>,
+    pub ammo_in_clip: Option<u32>,
 }
 
 mod tests {
