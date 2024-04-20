@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::station::station_service::StationService;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -54,12 +54,13 @@ pub struct DockedEventStationEconomy {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
+
     use crate::models::journal_event_kind::docked_event::DockedEvent;
 
     #[test]
     fn docked_event_is_parsed_correctly() {
-        let value = serde_json::from_str::<DockedEvent>(&r#"
+        let value = serde_json::from_str::<DockedEvent>(
+            r#"
             {
                 "StationName": "Jenner Orbital",
                 "StationType": "Outpost",
@@ -108,7 +109,8 @@ mod tests {
                 ],
                 "DistFromStarLS": 10.061876
             }
-        "#.to_string());
+        "#,
+        );
 
         assert!(value.is_ok());
     }

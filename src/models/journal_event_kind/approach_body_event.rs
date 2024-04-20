@@ -10,8 +10,8 @@ pub struct ApproachBodyEvent {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
     use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
+    use serde_json::json;
 
     #[test]
     fn approach_body_is_parsed_correctly() {
@@ -19,7 +19,7 @@ mod tests {
             "StarSystem": "Eranin",
             "Body": "Eranin 2"
         }))
-            .unwrap();
+        .unwrap();
 
         let expected = ApproachBodyEvent {
             star_system: "Eranin".to_string(),

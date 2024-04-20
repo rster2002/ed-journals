@@ -1,14 +1,15 @@
 #[macro_export]
 macro_rules! from_str_deserialize_impl {
     ($ty:ty) => {
-        impl<'de> serde::Deserialize<'de> for $ty
-        {
+        impl<'de> serde::Deserialize<'de> for $ty {
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-                where D: serde::Deserializer<'de>
+            where
+                D: serde::Deserializer<'de>,
             {
                 let s = String::deserialize(deserializer)?;
-                FromStr::from_str(&s)
-                    .map_err(|value| serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value)))
+                FromStr::from_str(&s).map_err(|value| {
+                    serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value))
+                })
             }
         }
     };

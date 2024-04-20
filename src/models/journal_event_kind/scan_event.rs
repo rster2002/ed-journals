@@ -166,7 +166,8 @@ mod tests {
 
     #[test]
     fn scan_event_is_parsed_correctly() {
-        let value = serde_json::from_str::<ScanEvent>(r#"
+        let value = serde_json::from_str::<ScanEvent>(
+            r#"
             {
                 "timestamp": "2022-10-11T19:59:10Z",
                 "event": "Scan",
@@ -187,7 +188,8 @@ mod tests {
                 "WasDiscovered": true,
                 "WasMapped": false
             }
-        "#);
+        "#,
+        );
 
         assert!(value.is_ok());
     }

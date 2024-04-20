@@ -13,8 +13,8 @@ pub struct NewCommanderEvent {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
     use crate::models::journal_event_kind::new_commander_event::NewCommanderEvent;
+    use serde_json::json;
 
     #[test]
     fn new_commander_event_is_parsed_correctly() {
@@ -23,7 +23,7 @@ mod tests {
             "FID": "F44396",
             "Package": "ImperialBountyHunter"
         }))
-            .unwrap();
+        .unwrap();
 
         let expected = NewCommanderEvent {
             name: "HRC1".to_string(),

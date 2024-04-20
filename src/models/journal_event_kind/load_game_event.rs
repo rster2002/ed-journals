@@ -27,11 +27,12 @@ pub struct LoadGameEvent {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
+
     use crate::models::journal_event_kind::load_game_event::LoadGameEvent;
 
     fn load_game_event_is_parsed_correctly() {
-        let parsed: LoadGameEvent = serde_json::from_str(r#"
+        let parsed: LoadGameEvent = serde_json::from_str(
+            r#"
             {
                 "Commander": "HRC-2",
                 "FID": "F44396",
@@ -46,8 +47,9 @@ mod tests {
                 "Credits": 2890718739,
                 "Loan": 0
             }
-        "#)
-            .unwrap();
+        "#,
+        )
+        .unwrap();
 
         let expected = LoadGameEvent {
             commander: "HRC-2".to_string(),

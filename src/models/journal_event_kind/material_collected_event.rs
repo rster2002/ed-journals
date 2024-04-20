@@ -11,5 +11,3 @@ pub struct MaterialCollectedEvent {
     pub name: String,
     pub count: u8,
 }
-
-

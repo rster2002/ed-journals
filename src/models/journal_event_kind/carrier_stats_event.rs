@@ -73,6 +73,7 @@ pub struct CarrierStatsEventCrewEntry {
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
+#[derive(Default)]
 pub enum CarrierStatsEventCrewRole {
     BlackMarket,
     Captain,
@@ -88,13 +89,8 @@ pub enum CarrierStatsEventCrewRole {
     VistaGenomics,
     PioneerSupplies,
     Bartender,
+    #[default]
     Unknown,
-}
-
-impl Default for CarrierStatsEventCrewRole {
-    fn default() -> Self {
-        CarrierStatsEventCrewRole::Unknown
-    }
 }
 
 #[derive(Debug, Deserialize)]

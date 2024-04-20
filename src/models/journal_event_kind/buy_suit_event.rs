@@ -21,7 +21,4 @@ pub struct BuySuitEvent {
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
-pub struct BuySuitEventSuitMod {
-
-}
-
+pub struct BuySuitEventSuitMod {}

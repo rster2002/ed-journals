@@ -3,7 +3,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct PassengersEvent {
-    pub manifest: Vec<PassengersManifestEntry>
+    pub manifest: Vec<PassengersManifestEntry>,
 }
 
 #[derive(Debug, Deserialize)]

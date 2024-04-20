@@ -55,8 +55,10 @@ pub struct EngineerProgressUpdate {
 
 #[cfg(test)]
 mod tests {
+    use crate::models::journal_event_kind::engineer_progress_event::{
+        EngineerProgressStartupEntry, EngineerProgressStartupProgress, EngineerProgressUpdate,
+    };
     use serde_json::json;
-    use crate::models::journal_event_kind::engineer_progress_event::{EngineerProgressStartupEntry, EngineerProgressStartupProgress, EngineerProgressUpdate};
 
     #[test]
     fn engineer_startup_entries_are_parsed_correctly() {
@@ -71,7 +73,7 @@ mod tests {
                     "Engineer": "Felicity Farseer",
                     "EngineerID": 300100,
                     "Progress": "Invited"
-                })
+                }),
             ),
             (
                 EngineerProgressStartupEntry {
@@ -83,7 +85,7 @@ mod tests {
                     "Engineer": "Eleanor Bresa",
                     "EngineerID": 400011,
                     "Progress": "Known"
-                })
+                }),
             ),
             (
                 EngineerProgressStartupEntry {
@@ -100,13 +102,12 @@ mod tests {
                     "Progress": "Unlocked",
                     "RankProgress": 0,
                     "Rank": 5
-                })
-            )
+                }),
+            ),
         ];
 
         for (expected, value) in test_cases {
-            let parsed: EngineerProgressStartupEntry = serde_json::from_value(value)
-                .unwrap();
+            let parsed: EngineerProgressStartupEntry = serde_json::from_value(value).unwrap();
 
             assert_eq!(parsed, expected);
         }
@@ -128,8 +129,7 @@ mod tests {
             rank_progress: 0.0,
         };
 
-        let parsed: EngineerProgressUpdate = serde_json::from_value(test)
-            .unwrap();
+        let parsed: EngineerProgressUpdate = serde_json::from_value(test).unwrap();
 
         assert_eq!(parsed, expected);
     }

@@ -1,6 +1,6 @@
-use chrono::{DateTime, Utc};
-use serde::{Deserialize};
 use crate::models::journal_event_kind::JournalEventKind;
+use chrono::{DateTime, Utc};
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct JournalEntry {

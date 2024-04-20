@@ -13,8 +13,8 @@ pub struct PowerplayEvent {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
     use crate::models::journal_event_kind::powerplay_event::PowerplayEvent;
+    use serde_json::json;
 
     #[test]
     fn powerplay_event_is_parsed_correctly() {
@@ -25,7 +25,7 @@ mod tests {
             "Votes": 0,
             "TimePledged": 433024
         }))
-            .unwrap();
+        .unwrap();
 
         let expected = PowerplayEvent {
             power: "Edmund Mahon".to_string(),

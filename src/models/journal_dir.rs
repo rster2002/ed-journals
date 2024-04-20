@@ -1,6 +1,6 @@
+use crate::models::journal_file::{JournalFile, JournalFileError};
 use std::path::PathBuf;
 use thiserror::Error;
-use crate::models::journal_file::{JournalFile, JournalFileError};
 
 #[derive(Debug, Error)]
 pub enum EDLogDirError {
@@ -29,29 +29,21 @@ impl TryFrom<PathBuf> for EDLogDir {
             return Err(EDLogDirError::PathIsNotADirectory);
         }
 
-        Ok(EDLogDir {
-            dir_path,
-        })
+        Ok(EDLogDir { dir_path })
     }
 }
 
 impl EDLogDir {
     pub fn journal_logs(&self) -> Result<Vec<JournalFile>, EDLogDirError> {
-
-
-        self.dir_path.read_dir()?
-            .into_iter()
-            .filter_map(|entry| {
-                match entry {
-                    Ok(entry) => {
-                        match JournalFile::try_from(entry) {
-                            Ok(journal_file) => Some(Ok(journal_file)),
-                            Err(JournalFileError::IncorrectFileName) => None,
-                            Err(err) => Some(Err(err.into())),
-                        }
-                    }
+        self.dir_path
+            .read_dir()?
+            .filter_map(|entry| match entry {
+                Ok(entry) => match JournalFile::try_from(entry) {
+                    Ok(journal_file) => Some(Ok(journal_file)),
+                    Err(JournalFileError::IncorrectFileName) => None,
                     Err(err) => Some(Err(err.into())),
-                }
+                },
+                Err(err) => Some(Err(err.into())),
             })
             .collect::<Result<Vec<JournalFile>, EDLogDirError>>()
 
@@ -64,7 +56,6 @@ impl EDLogDir {
         //     entry.file_name()
         //         .to_str();
         // }
-
 
         // todo!()
 

@@ -150,7 +150,6 @@ pub struct StatisticsExploration {
 
     // #[serde(rename = "Fuel_Purchased")]
     // pub fuel_purchased: u32,
-
     #[serde(rename = "Exploration_Profits")]
     pub exploration_profits: u64,
 
@@ -209,7 +208,6 @@ pub struct StatisticsSearchAndRescue {
 pub struct StatisticsCrafting {
     // #[serde(rename = "Spent_On_Crafting")]
     // pub spent_on_crafting: u64,
-
     #[serde(rename = "Count_Of_Used_Engineers")]
     pub count_of_used_engineers: u32,
 
@@ -230,7 +228,6 @@ pub struct StatisticsCrafting {
 
     #[serde(rename = "Recipes_Generated_Rank_5")]
     pub recipes_generated_rank_5: u32,
-
     // #[serde(rename = "Recipes_Applied")]
     // pub recipes_applied: u32,
     //

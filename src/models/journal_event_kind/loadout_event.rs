@@ -9,7 +9,7 @@ pub struct LoadoutEvent {
     pub ship_id: u32,
     pub ship_name: String,
     pub ship_ident: String,
-    pub modules: Vec<LoadoutModule>
+    pub modules: Vec<LoadoutModule>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -27,8 +27,8 @@ pub struct LoadoutModule {
 }
 
 mod tests {
-    use serde_json::json;
     use crate::models::journal_event_kind::loadout_event::LoadoutEvent;
+    use serde_json::json;
 
     fn loadout_event_is_parsed_correctly() {
         let value = serde_json::from_value::<LoadoutEvent>(json!({

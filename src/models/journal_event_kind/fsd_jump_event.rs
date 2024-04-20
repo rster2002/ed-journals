@@ -148,7 +148,8 @@ mod tests {
 
     #[test]
     fn fsd_jump_event_is_parsed_correctly() {
-        let value = serde_json::from_str::<FSDJumpEvent>(&r#"
+        let value = serde_json::from_str::<FSDJumpEvent>(
+            r#"
             {
                 "StarSystem": "Eranin",
                 "SystemAddress": 2832631632594,
@@ -284,7 +285,8 @@ mod tests {
                     "FactionState": "CivilLiberty"
                 }
             }
-        "#);
+        "#,
+        );
 
         assert!(value.is_ok());
     }

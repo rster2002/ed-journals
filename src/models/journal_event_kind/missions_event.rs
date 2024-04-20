@@ -22,8 +22,8 @@ pub struct MissionEventEntry {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
     use crate::models::journal_event_kind::missions_event::{MissionEventEntry, MissionsEvent};
+    use serde_json::json;
 
     #[test]
     fn mission_event_is_parsed_correctly() {
@@ -39,17 +39,15 @@ mod tests {
             "Failed": [],
             "Complete": []
         }))
-            .unwrap();
+        .unwrap();
 
         let expected = MissionsEvent {
-            active: vec![
-                MissionEventEntry {
-                    mission_id: 65380900,
-                    name: "Mission_Courier_name".to_string(),
-                    passenger_mission: false,
-                    expires: 82751,
-                }
-            ],
+            active: vec![MissionEventEntry {
+                mission_id: 65380900,
+                name: "Mission_Courier_name".to_string(),
+                passenger_mission: false,
+                expires: 82751,
+            }],
             failed: vec![],
             complete: vec![],
         };

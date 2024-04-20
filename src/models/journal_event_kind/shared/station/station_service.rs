@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use crate::from_str_deserialize_impl;
+use std::str::FromStr;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -75,5 +75,3 @@ impl FromStr for StationService {
 }
 
 from_str_deserialize_impl!(StationService);
-
-

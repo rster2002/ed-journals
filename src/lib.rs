@@ -5,20 +5,18 @@ mod macros;
 
 #[cfg(test)]
 mod tests {
-    use std::path::PathBuf;
     use crate::models::journal_dir::EDLogDir;
+    use std::path::PathBuf;
 
     #[test]
     fn sandbox() {
         let dir_path = PathBuf::from("/home/bjorn/GitHub/ed-logs/journals");
-        let log_dir = EDLogDir::try_from(dir_path)
-            .unwrap();
+        let log_dir = EDLogDir::try_from(dir_path).unwrap();
 
         for journal in log_dir.journal_logs().unwrap() {
-            let mut reader = journal.create_reader()
-                .unwrap();
+            let mut reader = journal.create_reader().unwrap();
 
-            while let Some(entry) = reader.next() {
+            for entry in reader {
                 dbg!(&entry);
                 entry.unwrap();
 

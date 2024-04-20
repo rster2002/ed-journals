@@ -54,8 +54,8 @@ mod tests {
                 "#,
                 LiftoffEvent {
                     position: Some(LiftoffEventPosition {
-                        latitude: 14.493940,
-                        longitude: 177.978470,
+                        latitude: 14.493_94,
+                        longitude: 177.978_47,
                     }),
                     star_system: "HIP 36731".to_string(),
                     system_address: 251029096803,
@@ -107,8 +107,7 @@ mod tests {
         ];
 
         for (test, expected) in test_cases {
-            let value: LiftoffEvent = serde_json::from_str(test)
-                .unwrap();
+            let value: LiftoffEvent = serde_json::from_str(test).unwrap();
 
             assert_eq!(value, expected);
         }

@@ -24,9 +24,7 @@ pub struct SuitLoadoutEvent {
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
-pub struct SuitLoadoutMod {
-
-}
+pub struct SuitLoadoutMod {}
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -51,6 +49,4 @@ pub struct SuitLoadoutModule {
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
-pub struct SuitLoadoutModuleWeaponMod {
-
-}
+pub struct SuitLoadoutModuleWeaponMod {}

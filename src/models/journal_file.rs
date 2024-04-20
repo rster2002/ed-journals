@@ -1,15 +1,16 @@
-use std::fs::{DirEntry, File};
-use std::io;
-use std::num::ParseIntError;
-use std::path::{Path, PathBuf};
 use chrono::NaiveDateTime;
 use once_cell::sync::Lazy;
 use regex::Regex;
-use regex_macro::regex;
-use thiserror::Error;
-use crate::models::journal_reader::JournalReader;
+use std::fs::{DirEntry, File};
+use std::io;
+use std::num::ParseIntError;
+use std::path::PathBuf;
 
-const FILE_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap());
+use crate::models::journal_reader::JournalReader;
+use thiserror::Error;
+
+const FILE_NAME_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap());
 
 #[derive(Debug, Error)]
 pub enum JournalFileError {
@@ -56,15 +57,18 @@ impl TryFrom<DirEntry> for JournalFile {
             .to_str()
             .ok_or(JournalFileError::FailedToRepresentOsString)?;
 
-        let mut captures = FILE_NAME_REGEX.captures(file_name)
+        let captures = FILE_NAME_REGEX
+            .captures(file_name)
             .ok_or(JournalFileError::IncorrectFileName)?;
 
-        let timestamp_str = captures.get(1)
+        let timestamp_str = captures
+            .get(1)
             .expect("Regex should have already matched")
             .as_str();
 
         let native_date_time = NaiveDateTime::parse_from_str(timestamp_str, "%Y-%m-%dT%H%M%S")?;
-        let part = captures.get(2)
+        let part = captures
+            .get(2)
             .expect("Regex should have already matched")
             .as_str()
             .parse()?;
@@ -76,5 +80,3 @@ impl TryFrom<DirEntry> for JournalFile {
         })
     }
 }
-
-

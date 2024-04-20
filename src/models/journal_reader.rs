@@ -1,10 +1,10 @@
-use std::fs::File;
-use std::{io, mem};
+use crate::models::journal_event::JournalEntry;
 use std::collections::VecDeque;
+use std::fs::File;
 use std::io::{LineWriter, Read, Seek, SeekFrom, Write};
 use std::string::FromUtf8Error;
+use std::{io, mem};
 use thiserror::Error;
-use crate::models::journal_event::JournalEntry;
 
 #[derive(Debug, Error)]
 pub enum JournalReaderError {
@@ -49,9 +49,9 @@ impl JournalReader {
     }
 }
 
-impl From<File> for JournalReader  {
+impl From<File> for JournalReader {
     fn from(value: File) -> Self {
-        JournalReader  {
+        JournalReader {
             file: value,
             position: 0,
             file_read_buffer: Vec::new(),
@@ -68,6 +68,6 @@ impl Iterator for JournalReader {
             return Some(Err(err));
         }
 
-        self.entry_buffer.pop_front().map(|a| Ok(a))
+        self.entry_buffer.pop_front().map(Ok)
     }
 }

@@ -16,7 +16,7 @@ pub struct FSSSignalDiscoveredEvent {
 
 mod tests {
     fn fss_signal_discovered_event_is_parsed_correctly() {
-        let test_cases = [
+        let _test_cases = [
             r#"
                 {
                     "timestamp": "2022-11-30T20:13:44Z",
@@ -42,7 +42,7 @@ mod tests {
                     "SignalName": "DECIPULA XFY-23L",
                     "IsStation": true
                 }
-            "#
+            "#,
         ];
     }
 }
