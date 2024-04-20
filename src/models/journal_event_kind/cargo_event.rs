@@ -5,6 +5,9 @@ use serde::Deserialize;
 #[serde(rename_all = "PascalCase")]
 pub struct CargoEvent {
     pub vessel: CargoEventVessel,
+
+    // TODO this seems to be missing for SRV?
+    #[serde(default)]
     pub inventory: Vec<CargoEventInventoryItem>,
 }
 

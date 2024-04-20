@@ -14,7 +14,7 @@ pub struct ModuleStoreEvent {
     pub stored_item: String,
 
     #[serde(rename = "StoredItem_Localised")]
-    pub stored_item_localized: String,
+    pub stored_item_localised: String,
 
     // TODO maybe replace this with an enum
     pub ship: String,

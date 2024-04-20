@@ -1,5 +1,7 @@
 // /home/bjorn/.local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous
+#[macro_use]
 mod models;
+mod macros;
 
 #[cfg(test)]
 mod tests {

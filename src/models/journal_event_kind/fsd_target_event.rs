@@ -8,6 +8,8 @@ pub struct FSDTargetEvent {
     #[serde(rename = "Starsystem")]
     star_system: Option<String>,
     name: String,
+
+    #[serde(default)]
     remaining_jumps_in_route: u8,
     star_class: String,
 }

@@ -14,13 +14,17 @@ pub struct DisembarkEvent {
     pub body_id: u32,
     pub on_station: bool,
     pub on_planet: bool,
-    pub station_name: String,
+
+    // TODO probably only set when [on_station] is true.
+    pub station_name: Option<String>,
 
     // TODO look into changing this into an enum
-    pub station_type: String,
+    // TODO probably only set when [on_station] is true.
+    pub station_type: Option<String>,
 
+    // TODO probably only set when [on_station] is true.
     #[serde(rename = "MarketID")]
-    pub market_id: u64,
+    pub market_id: Option<u64>,
 
     #[serde(rename = "SRV")]
     pub srv: bool,

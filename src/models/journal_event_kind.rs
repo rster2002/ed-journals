@@ -51,16 +51,36 @@ mod scan_bary_centre_event;
 mod scan_event;
 mod codex_entry_event;
 mod fss_discovery_scan_event;
+mod touchdown_event;
+mod launch_srv_event;
+mod create_suit_loadout_event;
+mod switch_suit_loadout_event;
+mod scan_organic_event;
+mod ship_targeted_event;
+mod dock_srv_event;
+mod carrier_stats_event;
+mod carrier_jump_cancelled_event;
+mod carrier_jump_request_event;
+mod fuel_scoop_event;
+mod fss_body_signals_event;
+mod fss_all_bodies_found_event;
+mod reservoir_replenished_event;
+mod shared;
 
 use serde::{Deserialize, Serialize};
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
 use crate::models::journal_event_kind::buy_suit_event::BuySuitEvent;
 use crate::models::journal_event_kind::cargo_event::CargoEvent;
+use crate::models::journal_event_kind::carrier_jump_cancelled_event::CarrierJumpCancelled;
+use crate::models::journal_event_kind::carrier_jump_request_event::CarrierJumpRequestEvent;
+use crate::models::journal_event_kind::carrier_stats_event::CarrierStatsEvent;
 use crate::models::journal_event_kind::clear_saved_game_event::ClearSavedGameEvent;
 use crate::models::journal_event_kind::codex_entry_event::CodexEntryEvent;
 use crate::models::journal_event_kind::commander_event::CommanderEvent;
+use crate::models::journal_event_kind::create_suit_loadout_event::CreateSuitLoadoutEvent;
 use crate::models::journal_event_kind::disembark_event::DisembarkEvent;
+use crate::models::journal_event_kind::dock_srv_event::DockSRVEvent;
 use crate::models::journal_event_kind::docked_event::DockedEvent;
 use crate::models::journal_event_kind::docking_cancelled_event::DockingCancelled;
 use crate::models::journal_event_kind::docking_denied_event::DockingDeniedEvent;
@@ -73,8 +93,12 @@ use crate::models::journal_event_kind::file_header_event::FileHeaderEvent;
 use crate::models::journal_event_kind::friends_event::FriendsEvent;
 use crate::models::journal_event_kind::fsd_jump_event::FSDJumpEvent;
 use crate::models::journal_event_kind::fsd_target_event::FSDTargetEvent;
+use crate::models::journal_event_kind::fss_all_bodies_found_event::FSSAllBodiesFoundEvent;
+use crate::models::journal_event_kind::fss_body_signals_event::FSSBodySignalsEvent;
 use crate::models::journal_event_kind::fss_discovery_scan_event::FSSDiscoveryScan;
 use crate::models::journal_event_kind::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+use crate::models::journal_event_kind::fuel_scoop_event::FuelScoopEvent;
+use crate::models::journal_event_kind::launch_srv_event::LaunchSRVEvent;
 use crate::models::journal_event_kind::leave_body_event::LeaveBodyEvent;
 use crate::models::journal_event_kind::liftoff_event::LiftoffEvent;
 use crate::models::journal_event_kind::load_game_event::LoadGameEvent;
@@ -93,9 +117,12 @@ use crate::models::journal_event_kind::progress_event::ProgressEvent;
 use crate::models::journal_event_kind::rank_event::RankEvent;
 use crate::models::journal_event_kind::receive_text_event::ReceiveTextEvent;
 use crate::models::journal_event_kind::reputation_event::ReputationEvent;
+use crate::models::journal_event_kind::reservoir_replenished_event::ReservoirReplenishedEvent;
 use crate::models::journal_event_kind::scan_bary_centre_event::ScanBaryCentreEvent;
 use crate::models::journal_event_kind::scan_event::ScanEvent;
+use crate::models::journal_event_kind::scan_organic_event::ScanOrganicEvent;
 use crate::models::journal_event_kind::ship_locker_event::ShipLockerEvent;
+use crate::models::journal_event_kind::ship_targeted_event::ShipTargetedEvent;
 use crate::models::journal_event_kind::squadron_startup_event::SquadronStartupEvent;
 use crate::models::journal_event_kind::start_jump_event::StartJumpEvent;
 use crate::models::journal_event_kind::statistics_event::StatisticsEvent;
@@ -104,6 +131,8 @@ use crate::models::journal_event_kind::suit_loadout_event::SuitLoadoutEvent;
 use crate::models::journal_event_kind::supercruise_destination_drop_event::SupercruiseDestinationDropEvent;
 use crate::models::journal_event_kind::supercruise_entry_event::SupercruiseEntryEvent;
 use crate::models::journal_event_kind::supercruise_exit_event::SupercruiseExitEvent;
+use crate::models::journal_event_kind::switch_suit_loadout_event::SwitchSuitLoadoutEvent;
+use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 
@@ -146,6 +175,7 @@ pub enum JournalEventKind {
     StartJump(StartJumpEvent),
     SupercruiseEntry(SupercruiseEntryEvent),
     SupercruiseExit(SupercruiseExitEvent),
+    Touchdown(TouchdownEvent),
     Undocked(UndockedEvent),
 
     /// This event is fired when something changes in the `NavRoute.json` file and does not contain
@@ -153,9 +183,14 @@ pub enum JournalEventKind {
     NavRoute,
     NavRouteClear,
 
+    // Combat
+    ShipTargeted(ShipTargetedEvent),
+
     // Exploration
     CodexEntry(CodexEntryEvent),
     Scan(ScanEvent),
+    FSSAllBodiesFound(FSSAllBodiesFoundEvent),
+    FSSBodySignals(FSSBodySignalsEvent),
     FSSDiscoveryScan(FSSDiscoveryScan),
     FSSSignalDiscovered(FSSSignalDiscoveredEvent),
     MaterialCollected(MaterialCollectedEvent),
@@ -169,22 +204,34 @@ pub enum JournalEventKind {
     // Squadrons
     SquadronStartup(SquadronStartupEvent),
 
+    // Fleet carriers
+    CarrierStats(CarrierStatsEvent),
+    CarrierJumpRequest(CarrierJumpRequestEvent),
+    CarrierJumpCancelled(CarrierJumpCancelled),
+
     // Odyssey
     Backpack(BackpackEvent),
     BuySuit(BuySuitEvent),
+    CreateSuitLoadout(CreateSuitLoadoutEvent),
     Disembark(DisembarkEvent),
     Embark(EmbarkEvent),
+    ScanOrganic(ScanOrganicEvent),
     ShipLocker(ShipLockerEvent),
+    SwitchSuitLoadout(SwitchSuitLoadoutEvent),
     SuitLoadout(SuitLoadoutEvent),
 
     // Other
+    DockSRV(DockSRVEvent),
+    FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
+    LaunchSRV(LaunchSRVEvent),
     Music(MusicEvent),
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not
     /// contain any data itself.
     ModuleInfo,
     ReceiveText(ReceiveTextEvent),
+    ReservoirReplenished(ReservoirReplenishedEvent),
     Shutdown,
     USSDrop(USSDropEvent),
     SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),

@@ -31,7 +31,7 @@ pub struct FSDJumpEvent {
 
     #[serde(default)]
     pub factions: Vec<FSDJumpEventFaction>,
-    pub system_faction: FSDJumpEventSystemFaction,
+    pub system_faction: Option<FSDJumpEventSystemFaction>,
 
     #[serde(default)]
     pub conflicts: Vec<FSDJumpEventConflict>,

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::station::station_service::StationService;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -17,8 +18,8 @@ pub struct DockedEvent {
 
     #[serde(rename = "StationGovernment_Localised")]
     pub station_government_localised: String,
-    pub station_allegiance: String,
-    pub station_services: Vec<String>,
+    pub station_allegiance: Option<String>,
+    pub station_services: Vec<StationService>,
     pub station_economy: String,
 
     #[serde(rename = "StationEconomy_Localised")]
@@ -34,7 +35,10 @@ pub struct DockedEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct DockedEventStationFaction {
     pub name: String,
-    pub faction_state: String,
+
+    // TODO replace with enum
+    /// This is [None] when a fleet carrier
+    pub faction_state: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

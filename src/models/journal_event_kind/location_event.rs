@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::station::station_service::StationService;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -33,7 +34,7 @@ pub struct LocationEvent {
     pub station_allegiance: Option<String>,
 
     // TODO check when this is filled
-    pub station_services: Option<Vec<String>>,
+    pub station_services: Option<Vec<StationService>>,
 
     // TODO check when this is filled
     pub station_economy: Option<String>,

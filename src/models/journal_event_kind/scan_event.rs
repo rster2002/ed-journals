@@ -4,12 +4,13 @@ use serde::Deserialize;
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEvent {
-    // TODO turn this into an enum
-    pub scan_type: String,
+    pub scan_type: ScanEventScanType,
     pub body_name: String,
 
     #[serde(rename = "BodyID")]
     pub body_id: u8,
+
+    #[serde(default)]
     pub parents: Vec<ScanEventParent>,
     pub star_system: String,
     pub system_address: u64,
@@ -19,15 +20,23 @@ pub struct ScanEvent {
     pub was_discovered: bool,
     pub was_mapped: bool,
 
+    /// [None] value should be considered a belt cluster
     #[serde(flatten)]
-    pub kind: ScanEventKind,
+    pub kind: Option<ScanEventKind>,
+}
+
+#[derive(Debug, Deserialize)]
+#[cfg_attr(test, derive(PartialEq))]
+#[serde(rename_all = "PascalCase")]
+pub enum ScanEventScanType {
+    AutoScan,
+    Detailed,
 }
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum ScanEventKind {
-    BeltCluster,
     Star(ScanEventStar),
     Planet(ScanEventPlanet),
 }
@@ -126,28 +135,6 @@ pub struct ScanEventPlanetComposition {
     pub metal: f32,
 }
 
-
-// #[derive(Debug, Deserialize)]
-// #[cfg_attr(test, derive(PartialEq))]
-// #[serde(rename_all = "PascalCase")]
-// pub struct ScanEvent {
-//     // TODO turn this into an enum
-//     pub scan_type: String,
-//     pub body_name: String,
-//
-//     #[serde(rename = "BodyID")]
-//     pub parents: Vec<ScanEventParent>,
-
-//
-//     #[serde(rename = "DistanceFromArrivalLS")]
-//     pub distance_from_arrival_ls: f32,
-//
-
-//
-//     pub was_discovered: bool,
-//     pub was_mapped: bool,
-// }
-
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
@@ -171,4 +158,37 @@ pub struct ScanEventRing {
     pub mass_mt: f32,
     pub inner_rad: f32,
     pub outer_rad: f32,
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::models::journal_event_kind::scan_event::ScanEvent;
+
+    #[test]
+    fn scan_event_is_parsed_correctly() {
+        let value = serde_json::from_str::<ScanEvent>(r#"
+            {
+                "timestamp": "2022-10-11T19:59:10Z",
+                "event": "Scan",
+                "ScanType": "AutoScan",
+                "BodyName": "Etain A Belt Cluster 1",
+                "BodyID": 2,
+                "Parents": [
+                    {
+                        "Ring": 1
+                    },
+                    {
+                        "Star": 0
+                    }
+                ],
+                "StarSystem": "Etain",
+                "SystemAddress": 2869977884057,
+                "DistanceFromArrivalLS": 4.884683,
+                "WasDiscovered": true,
+                "WasMapped": false
+            }
+        "#);
+
+        assert!(value.is_ok());
+    }
 }

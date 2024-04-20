@@ -11,25 +11,25 @@ pub struct CodexEntryEvent {
     pub name: String,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localized: String,
+    pub name_localised: String,
 
     // TODO turn this into an enum
     pub sub_category: String,
 
     #[serde(rename = "SubCategory_Localised")]
-    pub sub_category_localized: String,
+    pub sub_category_localised: String,
 
     // TODO turn this into an enum
     pub category: String,
 
     #[serde(rename = "Category_Localised")]
-    pub category_localized: String,
+    pub category_localised: String,
 
     // TODO turn this into an enum
     pub region: String,
 
     #[serde(rename = "Region_Localised")]
-    pub region_localized: String,
+    pub region_localised: String,
 
     pub system: String,
     pub system_address: u64,
