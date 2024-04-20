@@ -13,6 +13,7 @@ pub struct StartJumpEvent {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase", tag = "JumpType")]
 pub enum StartJumpType {
+    #[serde(rename_all = "PascalCase")]
     Hyperspace {
         star_system: String,
         system_address: u64,

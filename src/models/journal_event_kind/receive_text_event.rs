@@ -9,6 +9,6 @@ pub struct ReceiveTextEvent {
     pub message: String,
 
     #[serde(rename = "Message_Localised")]
-    pub message_localized: String,
+    pub message_localised: String,
     pub channel: String,
 }

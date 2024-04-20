@@ -8,7 +8,7 @@ pub struct USSDropEvent {
     pub uss_type: String,
 
     #[serde(rename = "USSType_Localised")]
-    pub uss_type_localized: String,
+    pub uss_type_localised: String,
 
     #[serde(rename = "USSThreat")]
     pub uss_threat: u8,

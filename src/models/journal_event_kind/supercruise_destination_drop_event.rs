@@ -8,6 +8,6 @@ pub struct SupercruiseDestinationDropEvent {
     pub kind: String,
 
     #[serde(rename = "Type_Localised")]
-    pub type_localized: String,
+    pub type_localised: String,
     pub threat: u8,
 }

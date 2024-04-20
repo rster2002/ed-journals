@@ -74,7 +74,8 @@ pub struct LocationEvent {
     pub body_type: String,
 
     // TODO check when this is filled
-    pub factions: Option<String>,
+    #[serde(default)]
+    pub factions: Vec<LocationEventFaction>,
 }
 
 #[derive(Debug, Deserialize)]
