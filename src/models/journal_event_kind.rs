@@ -75,6 +75,7 @@ mod shipyard_event;
 mod stored_ships_event;
 mod shipyard_swap_event;
 mod module_retrieve_event;
+mod module_swap_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -144,6 +145,8 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
+use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
 use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
@@ -216,7 +219,8 @@ pub enum JournalEventKind {
     ScanBaryCentre(ScanBaryCentreEvent),
 
     // Station services
-    ModuleRetrieve(),
+    ModuleRetrieve(ModuleRetrieveEvent),
+    ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
     ModuleStore(ModuleStoreEvent),
     RefuelAll(RefuelAllEvent),
