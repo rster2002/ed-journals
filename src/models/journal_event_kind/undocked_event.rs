@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::station::station_type::StationType;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -7,7 +8,7 @@ pub struct UndockedEvent {
     pub station_name: String,
 
     // TODO replace this with an enum
-    pub station_type: String,
+    pub station_type: StationType,
 
     #[serde(rename = "MarketID")]
     pub market_id: u64,

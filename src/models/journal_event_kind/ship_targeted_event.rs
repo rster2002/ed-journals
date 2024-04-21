@@ -6,8 +6,9 @@ use serde::Deserialize;
 pub struct ShipTargetedEvent {
     pub target_locked: bool,
 
-    #[serde(flatten)]
-    pub scan_stage: ShipTargetedEventScanStage,
+    /// [None] is used when [target_locked] is false.
+    #[serde(flatten, default)]
+    pub scan_stage: Option<ShipTargetedEventScanStage>,
 }
 
 #[derive(Debug, Deserialize)]

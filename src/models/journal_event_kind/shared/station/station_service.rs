@@ -33,6 +33,9 @@ pub enum StationService {
     ApexInterstellar,
     VistaGenomics,
     PioneerSupplies,
+
+    #[cfg(not(feature = "strict"))]
+    Unknown(String),
 }
 
 impl FromStr for StationService {
@@ -69,6 +72,11 @@ impl FromStr for StationService {
             "apexinterstellar" => Ok(StationService::ApexInterstellar),
             "vistagenomics" => Ok(StationService::VistaGenomics),
             "pioneersupplies" => Ok(StationService::PioneerSupplies),
+
+            #[cfg(not(feature = "strict"))]
+            _ => Ok(StationService::Unknown(s.to_string())),
+
+            #[cfg(feature = "strict")]
             _ => Err(s.to_string()),
         }
     }

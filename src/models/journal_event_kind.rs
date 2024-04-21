@@ -66,6 +66,15 @@ mod switch_suit_loadout_event;
 mod touchdown_event;
 mod undocked_event;
 mod uss_drop_event;
+mod npc_crew_wage_paid_event;
+mod refuel_all_event;
+mod set_user_ship_name_event;
+mod saa_signals_found_event;
+mod saa_scan_complete_event;
+mod shipyard_event;
+mod stored_ships_event;
+mod shipyard_swap_event;
+mod module_retrieve_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -135,6 +144,14 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
+use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
+use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
+use crate::models::journal_event_kind::saa_signals_found_event::SAASignalsFoundEvent;
+use crate::models::journal_event_kind::set_user_ship_name_event::SetUserShipNameEvent;
+use crate::models::journal_event_kind::shipyard_event::ShipyardEvent;
+use crate::models::journal_event_kind::shipyard_swap_event::ShipyardSwapEvent;
+use crate::models::journal_event_kind::stored_ships_event::StoredShipsEvent;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "event")]
@@ -194,12 +211,20 @@ pub enum JournalEventKind {
     FSSDiscoveryScan(FSSDiscoveryScan),
     FSSSignalDiscovered(FSSSignalDiscoveredEvent),
     MaterialCollected(MaterialCollectedEvent),
+    SAAScanComplete(SAAScanCompleteEvent),
+    SAASignalsFound(SAASignalsFoundEvent),
     ScanBaryCentre(ScanBaryCentreEvent),
 
     // Station services
+    ModuleRetrieve(),
     Outfitting(OutfittingEvent),
     ModuleStore(ModuleStoreEvent),
+    RefuelAll(RefuelAllEvent),
+    SetUserShipName(SetUserShipNameEvent),
+    Shipyard(ShipyardEvent),
+    ShipyardSwap(ShipyardSwapEvent),
     StoredModules(StoredModulesEvent),
+    StoredShips(StoredShipsEvent),
 
     // Squadrons
     SquadronStartup(SquadronStartupEvent),
@@ -225,11 +250,14 @@ pub enum JournalEventKind {
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
     LaunchSRV(LaunchSRVEvent),
-    Music(MusicEvent),
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not
     /// contain any data itself.
     ModuleInfo,
+    Music(MusicEvent),
+
+    #[serde(rename = "NpcCrewPaidWage")]
+    NPCCrewPaidWage(NPCCrewWagePaidEvent),
     ReceiveText(ReceiveTextEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
     Shutdown,

@@ -17,7 +17,7 @@ mod tests {
             let mut reader = journal.create_reader().unwrap();
 
             for entry in reader {
-                dbg!(&entry);
+                // dbg!(&entry);
                 entry.unwrap();
 
                 // if !entry.is_err() {

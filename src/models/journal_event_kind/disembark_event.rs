@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::station::station_type::StationType;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -20,7 +21,7 @@ pub struct DisembarkEvent {
 
     // TODO look into changing this into an enum
     // TODO probably only set when [on_station] is true.
-    pub station_type: Option<String>,
+    pub station_type: Option<StationType>,
 
     // TODO probably only set when [on_station] is true.
     #[serde(rename = "MarketID")]

@@ -20,6 +20,8 @@ pub struct BackpackEventObject {
 
     #[serde(rename = "Name_Localised")]
     pub name_localised: String,
+
+    #[serde(rename = "OwnerID")]
     pub owner_id: u64,
 
     #[serde(rename = "MissionID")]

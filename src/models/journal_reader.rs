@@ -41,8 +41,13 @@ impl JournalReader {
         let local_string = String::from_utf8(mem::take(&mut self.file_read_buffer))?;
 
         for line in local_string.lines() {
-            dbg!(&line);
-            self.entry_buffer.push_back(serde_json::from_str(line)?);
+            let i = serde_json::from_str(line);
+
+            if i.is_err() {
+                dbg!(&line);
+            }
+
+            self.entry_buffer.push_back(i?);
         }
 
         Ok(())
