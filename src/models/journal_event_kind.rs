@@ -87,6 +87,7 @@ mod scanned_event;
 mod market_event;
 mod market_buy_event;
 mod material_trade_event;
+mod module_swap_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -156,6 +157,8 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
+use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
@@ -247,9 +250,10 @@ pub enum JournalEventKind {
     // Station services
     BuyAmmo(BuyAmmoEvent),
     BuyDrones(BuyDronesEvent),
-    // ModuleRetrieve(),
     Market(MarketEvent),
     MaterialTrade(MaterialTradeEvent),
+    ModuleRetrieve(ModuleRetrieveEvent),
+    ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
     ModuleStore(ModuleStoreEvent),
     RefuelAll(RefuelAllEvent),
