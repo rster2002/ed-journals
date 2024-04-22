@@ -1,8 +1,9 @@
 use std::str::FromStr;
+use serde::Deserialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Material {
     // Raw
@@ -57,416 +58,419 @@ pub enum Material {
     #[serde(rename = "selenium")]
     Selenium,
 
+
+    #[serde(rename= "nickel")]
     Nickel,
+
+    #[serde(rename= "germanium")]
     Germanium,
+
+    #[serde(rename= "tungsten")]
     Tungsten,
+
+    #[serde(rename= "tellurium")]
     Tellurium,
 
+
+    #[serde(rename = "rhenium")]
     Rhenium,
+
+    #[serde(rename = "arsenic")]
     Arsenic,
+
+    #[serde(rename = "mercury")]
     Mercury,
+
+    #[serde(rename = "polonium")]
     Polonium,
 
+
+    #[serde(rename = "lead")]
     Lead,
+
+    #[serde(rename = "zirconium")]
     Zirconium,
+
+    #[serde(rename = "boron")]
     Boron,
+
+    #[serde(rename = "antimony")]
     Antimony,
 
     // Manufactured
+    #[serde(rename = "chemicalstorageunits")]
     ChemicalStorageUnits,
+
+    #[serde(rename = "chemicalprocessors")]
     ChemicalProcessors,
+
+    #[serde(rename = "chemicaldistillery")]
     ChemicalDistillery,
+
+    #[serde(rename = "chemicalmanipulators")]
     ChemicalManipulators,
+
+    #[serde(rename = "pharmaceuticalisolators")]
     PharmaceuticalIsolators,
 
+
+    #[serde(rename = "temperedalloys")]
     TemperedAlloys,
+
+    #[serde(rename = "heatresistantceramics")]
     HeatResistantCeramics,
+
+    #[serde(rename = "precipitatedalloys")]
     PrecipitatedAlloys,
+
+    #[serde(rename = "thermicalloys")]
     ThermicAlloys,
+
+    #[serde(rename = "militarygradealloys")]
     MilitaryGradeAlloys,
 
+
+    #[serde(rename = "heatconductionwiring")]
     HeatConductionWiring,
+
+    #[serde(rename = "heatdispersionplate")]
     HeatDispersionPlate,
+
+    #[serde(rename = "heatexchangers")]
     HeatExchangers,
+
+    #[serde(rename = "heatvanes")]
     HeatVanes,
+
+    #[serde(rename = "protoheatradiators")]
     ProtoHeatRadiators,
 
+
+    #[serde(rename = "basicconductors")]
     BasicConductors,
+
+    #[serde(rename = "conductivecomponents")]
     ConductiveComponents,
+
+    #[serde(rename = "conductiveceramics")]
     ConductiveCeramics,
+
+    #[serde(rename = "conductivepolymers")]
     ConductivePolymers,
+
+    #[serde(rename = "biotechconductors")]
     BiotechConductors,
 
+
+    #[serde(rename = "mechanicalscrap")]
     MechanicalScrap,
+
+    #[serde(rename = "mechanicalequipment")]
     MechanicalEquipment,
+
+    #[serde(rename = "mechanicalcomponents")]
     MechanicalComponents,
+
+    #[serde(rename = "configurablecomponents")]
     ConfigurableComponents,
+
+    #[serde(rename = "improvisedcomponents")]
     ImprovisedComponents,
 
+
+    #[serde(rename = "gridresistors")]
     GridResistors,
+
+    #[serde(rename = "hybridcapacitors")]
     HybridCapacitors,
+
+    #[serde(rename = "electrochemicalarrays")]
     ElectrochemicalArrays,
+
+    #[serde(rename = "polymercapacitors")]
     PolymerCapacitors,
+
+    #[serde(rename = "militarysupercapacitors")]
     MilitarySupercapacitors,
 
+
+    #[serde(rename = "wornshieldemitters")]
     WornShieldEmitters,
+
+    #[serde(rename = "shieldemitters")]
     ShieldEmitters,
+
+    #[serde(rename = "shieldingsensors")]
     ShieldingSensors,
+
+    #[serde(rename = "compoundshielding")]
     CompoundShielding,
+
+    #[serde(rename = "imperialshielding")]
     ImperialShielding,
 
+
+    #[serde(rename = "compactcomposites")]
     CompactComposites,
+
+    #[serde(rename = "filamentcomposites")]
     FilamentComposites,
+
+    #[serde(rename = "highdensitycomposites")]
     HighDensityComposites,
+
+    #[serde(rename = "fedproprietarycomposites")]
     ProprietaryComposites,
+
+    #[serde(rename = "fedcorecomposites")]
     CoreDynamicsComposites,
 
+
+    #[serde(rename = "crystalshards")]
     CrystalShards,
+
+    #[serde(rename = "uncutfocuscrystals")]
     FlawedFocusCrystals,
+
+    #[serde(rename = "focuscrystals")]
     FocusCrystals,
+
+    #[serde(rename = "refinedfocuscrystals")]
     RefinedFocusCrystals,
+
+    #[serde(rename = "exquisitefocuscrystals")]
     ExquisiteFocusCrystals,
 
+
+    #[serde(rename = "salvagedalloys")]
     SalvagedAlloys,
+
+    #[serde(rename = "galvanisingalloys")]
     GalvanisingAlloys,
+
+    #[serde(rename = "phasealloys")]
     PhaseAlloys,
+
+    #[serde(rename = "protolightalloys")]
     ProtoLightAlloys,
+
+    #[serde(rename = "protoradiolicalloys")]
     ProtoRadiolicAlloys,
 
+
+    #[serde(rename = "hardenedsurfacefragments")]
     HardenedSurfaceFragments,
+
+    #[serde(rename = "tg_causticshard")]
     CausticShard,
+
+    #[serde(rename = "tacticalcorechip")]
     TacticalCoreChip,
+
+    #[serde(rename = "thargoidcarapace")]
     ThargoidCarapace,
+
+    #[serde(rename = "biomechanicalconduits")]
     BioMechanicalConduits,
+
+    #[serde(rename = "tg_causticgeneratorparts")]
     CorrosiveMechanisms,
+
+    #[serde(rename = "phasingmembraneresidue")]
     PhasingMembraneResidue,
+
+    #[serde(rename = "thargoidenergycell")]
     ThargoidEnergyCell,
+
+    #[serde(rename = "tg_wreckagecomponents")]
     WreckageComponents,
+
+    #[serde(rename = "tg_causticcrystal")]
     CausticCrystal,
+
+    #[serde(rename = "thargoidtechnologicalcomponents")]
     ThargoidTechnologicalComponents,
+
+    #[serde(rename = "weaponparts")]
     WeaponParts,
+
+    #[serde(rename = "heatexposurespecimen")]
     HeatExposureSpecimen,
+
+    #[serde(rename = "tg_propulsionelement")]
     PropulsionElements,
+
+    #[serde(rename = "unknownenergysource")]
     SensorFragment,
+
+    #[serde(rename = "thargoidorganiccircuitry")]
     ThargoidOrganicCircuitry,
 
+
+    #[serde(rename = "guardian_powercell")]
     GuardianPowerCell,
+
+    #[serde(rename = "guardian_sentinel_wreckagecomponents")]
     GuardianWreckageComponents,
+
+    #[serde(rename = "guardian_powerconduit")]
     GuardianPowerConduit,
+
+    #[serde(rename = "guardian_sentinel_weaponparts")]
     GuardianSentinelWeaponParts,
+
+    #[serde(rename = "guardian_techcomponent")]
     GuardianTechnologyComponent,
 
     // Encoded
+    #[serde(rename = "scrambledemissiondata")]
     ExceptionScrambledEmissionData,
+
+    #[serde(rename = "archivedemissiondata")]
     IrregularEmissionData,
+
+    #[serde(rename = "emissiondata")]
     UnexpectedEmissionData,
+
+    #[serde(rename = "decodedemissiondata")]
     DecodedEmissionData,
+
+    #[serde(rename = "compactemissionsdata")]
     AbnormalCompactEmissionData,
 
+
+    #[serde(rename = "disruptedwakeechoes")]
     AtypicalDisruptedWakeEchoes,
+
+    #[serde(rename = "fsdtelemetry")]
     AnomalousFSDTelemetry,
+
+    #[serde(rename = "wakesolutions")]
     StrangeWakeSolutions,
+
+    #[serde(rename = "hyperspacetrajectories")]
     EccentricHyperspaceTrajectories,
+
+    #[serde(rename = "dataminedwake")]
     DataminedWakeExceptions,
 
+
+    #[serde(rename = "shieldcyclerecordings")]
     DistortedShieldCycleRecordings,
+
+    #[serde(rename = "shieldsoakanalysis")]
     InconsistentShieldSoakAnalysis,
+
+    #[serde(rename = "shielddensityreports")]
     UntypicalShieldScans,
+
+    #[serde(rename = "shieldpatternanalysis")]
     AberrantShieldPatternAnalysis,
+
+    #[serde(rename = "shieldfrequencydata")]
     PeculiarShieldFrequencyData,
 
+
+    #[serde(rename = "encryptedfiles")]
     UnusualEncryptedFiles,
+
+    #[serde(rename = "encryptioncodes")]
     TaggedEncryptionCodes,
+
+    #[serde(rename = "symmetrickeys")]
     OpenSymmetricKeys,
+
+    #[serde(rename = "encryptionarchives")]
     AtypicalEncryptionArchives,
+
+    #[serde(rename = "adaptiveencryptors")]
     AdaptiveEncryptorsCapture,
 
+
+    #[serde(rename = "bulkscandata")]
     AnomalousBulkScanData,
+
+    #[serde(rename = "scanarchives")]
     UnidentifiedScanArchives,
+
+    #[serde(rename = "scandatabanks")]
     ClassifiedScanDatabanks,
+
+    #[serde(rename = "divergentscandata")]
     DivergentScanData,
+
+    #[serde(rename = "classifiedscanfragment")]
     ClassifiedScanFragment,
 
+
+    #[serde(rename = "legacyfirmware")]
     SpecializedLegacyFirmware,
+
+    #[serde(rename = "consumerfirmware")]
     ModifiedConsumerFirmware,
+
+    #[serde(rename = "industrialfirmware")]
     CrackedIndustrialFirmware,
+
+    #[serde(rename = "securityfirmware")]
     SecurityFirmwarePatch,
+
+    #[serde(rename = "embeddedfirmware")]
     ModifiedEmbeddedFirmware,
 
+
+    #[serde(rename = "tg_structuraldata")]
     ThargoidStructuralData,
+
+    #[serde(rename = "tg_shutdowndata")]
     MassiveEnergySurgeAnalytics,
+
+    #[serde(rename = "tg_shipflightdata")]
     ShipFlightData,
+
+    #[serde(rename = "tg_shipsystemsdata")]
     ShipSystemsData,
+
+    #[serde(rename = "tg_interdictiondata")]
     ThargoidInterdictionTelemetry,
+
+    #[serde(rename = "tg_compositiondata")]
     ThargoidMaterialCompositionData,
+
+    #[serde(rename = "unknownshipsignature")]
     ThargoidShipSignature,
+
+    #[serde(rename = "thargoidresiduedata")]
     ThargoidResidueData,
+
+    #[serde(rename = "thargoidwakedata")]
     ThargoidWakeData,
 
+    #[serde(rename = "ancienthistoricaldata")]
     PatternGammaObeliskData,
+
+    #[serde(rename = "ancientculturaldata")]
     PatternBetaObeliskData,
+
+    #[serde(rename = "ancientbiologicaldata")]
     PatternAlphaObeliskData,
+
+    #[serde(rename = "ancientlanguagedata")]
     PatternDeltaObeliskData,
+
+    #[serde(rename = "ancienttechnologicaldata")]
     PatternEpsilonObeliskData,
+
+    #[serde(rename = "guardian_moduleblueprint")]
     GuardianModuleBlueprintFragment,
+
+    #[serde(rename = "guardian_vesselblueprint")]
     GuardianVesselBlueprintFragment,
+
+    #[serde(rename = "guardian_weaponblueprint")]
     GuardianWeaponBlueprintFragment,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
 }
-
-#[derive(Debug, Error)]
-pub enum MaterialParseError {
-    #[error("Unknown material: '{0}'")]
-    UnknownMaterial(String),
-}
-
-impl FromStr for Material {
-    type Err = MaterialParseError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            // Raw
-            "carbon" => Ok(Material::Carbon),
-            "vanadium" => Ok(Material::Vanadium),
-            "niobium" => Ok(Material::Niobium),
-            "yttrium" => Ok(Material::Yttrium),
-
-            "phosphorus" => Ok(Material::Phosphorus),
-            "chromium" => Ok(Material::Chromium),
-            "molybdenum" => Ok(Material::Molybdenum),
-            "technetium" => Ok(Material::Technetium),
-
-            "sulphur" => Ok(Material::Sulphur),
-            "manganese" => Ok(Material::Manganese),
-            "cadmium" => Ok(Material::Cadmium),
-            "ruthenium" => Ok(Material::Ruthenium),
-
-            "iron" => Ok(Material::Iron),
-            "zinc" => Ok(Material::Zinc),
-            "tin" => Ok(Material::Tin),
-            "selenium" => Ok(Material::Selenium),
-
-            "nickel" => Ok(Material::Nickel),
-            "germanium" => Ok(Material::Germanium),
-            "tungsten" => Ok(Material::Tungsten),
-            "tellurium" => Ok(Material::Tellurium),
-
-            "rhenium" => Ok(Material::Rhenium),
-            "arsenic" => Ok(Material::Arsenic),
-            "mercury" => Ok(Material::Mercury),
-            "polonium" => Ok(Material::Polonium),
-
-            "lead" => Ok(Material::Lead),
-            "zirconium" => Ok(Material::Zirconium),
-            "boron" => Ok(Material::Boron),
-            "antimony" => Ok(Material::Antimony),
-
-            // Manufactured
-            "chemicalstorageunits" => Ok(Material::ChemicalStorageUnits),
-            "chemicalprocessors" => Ok(Material::ChemicalProcessors),
-            "chemicaldistillery" => Ok(Material::ChemicalDistillery),
-            "chemicalmanipulators" => Ok(Material::ChemicalManipulators),
-            "pharmaceuticalisolators" => Ok(Material::PharmaceuticalIsolators),
-
-            "temperedalloys" => Ok(Material::TemperedAlloys),
-            "heatresistantceramics" => Ok(Material::HeatResistantCeramics),
-            "precipitatedalloys" => Ok(Material::PrecipitatedAlloys),
-            "thermicalloys" => Ok(Material::ThermicAlloys),
-            "militarygradealloys" => Ok(Material::MilitaryGradeAlloys),
-
-            "heatconductionwiring" => Ok(Material::HeatConductionWiring),
-            "heatdispersionplate" => Ok(Material::HeatDispersionPlate),
-            "heatexchangers" => Ok(Material::HeatExchangers),
-            "heatvanes" => Ok(Material::HeatVanes),
-            "protoheatradiators" => Ok(Material::ProtoHeatRadiators),
-
-            "basicconductors" => Ok(Material::BasicConductors),
-            "conductivecomponents" => Ok(Material::ConductiveComponents),
-            "conductiveceramics" => Ok(Material::ConductiveCeramics),
-            "conductivepolymers" => Ok(Material::ConductivePolymers),
-            "biotechconductors" => Ok(Material::BiotechConductors),
-
-            "mechanicalscrap" => Ok(Material::MechanicalScrap),
-            "mechanicalequipment" => Ok(Material::MechanicalEquipment),
-            "mechanicalcomponents" => Ok(Material::MechanicalComponents),
-            "configurablecomponents" => Ok(Material::ConfigurableComponents),
-            "improvisedcomponents" => Ok(Material::ImprovisedComponents),
-
-            "gridresistors" => Ok(Material::GridResistors),
-            "hybridcapacitors" => Ok(Material::HybridCapacitors),
-            "electrochemicalarrays" => Ok(Material::ElectrochemicalArrays),
-            "polymercapacitors" => Ok(Material::PolymerCapacitors),
-            "militarysupercapacitors" => Ok(Material::MilitarySupercapacitors),
-
-            "wornshieldemitters" => Ok(Material::WornShieldEmitters),
-            "shieldemitters" => Ok(Material::ShieldEmitters),
-            "shieldingsensors" => Ok(Material::ShieldingSensors),
-            "compoundshielding" => Ok(Material::CompoundShielding),
-            "imperialshielding" => Ok(Material::ImperialShielding),
-
-            "compactcomposites" => Ok(Material::CompactComposites),
-            "filamentcomposites" => Ok(Material::FilamentComposites),
-            "highdensitycomposites" => Ok(Material::HighDensityComposites),
-            "proprietarycomposites" => Ok(Material::ProprietaryComposites),
-            "fedproprietarycomposites" => Ok(Material::ProprietaryComposites),
-            "coredynamicscomposites" => Ok(Material::CoreDynamicsComposites),
-            "fedcorecomposites" => Ok(Material::CoreDynamicsComposites),
-
-            "crystalshards" => Ok(Material::CrystalShards),
-            "flawedfocuscrystals" => Ok(Material::FlawedFocusCrystals),
-            "uncutfocuscrystals" => Ok(Material::FlawedFocusCrystals),
-            "focuscrystals" => Ok(Material::FocusCrystals),
-            "refinedfocuscrystals" => Ok(Material::RefinedFocusCrystals),
-            "exquisitefocuscrystals" => Ok(Material::ExquisiteFocusCrystals),
-
-            "salvagedalloys" => Ok(Material::SalvagedAlloys),
-            "galvanisingalloys" => Ok(Material::GalvanisingAlloys),
-            "phasealloys" => Ok(Material::PhaseAlloys),
-            "protolightalloys" => Ok(Material::ProtoLightAlloys),
-            "protoradiolicalloys" => Ok(Material::ProtoRadiolicAlloys),
-
-            "hardenedsurfacefragments" => Ok(Material::HardenedSurfaceFragments),
-            "causticshard" => Ok(Material::CausticShard),
-            "tg_causticshard" => Ok(Material::CausticShard),
-            "tacticalcorechip" => Ok(Material::TacticalCoreChip),
-            "thargoidcarapace" => Ok(Material::ThargoidCarapace),
-            "biomechanicalconduits" => Ok(Material::BioMechanicalConduits),
-            "corrosivemechanisms" => Ok(Material::CorrosiveMechanisms),
-            "tg_causticgeneratorparts" => Ok(Material::CorrosiveMechanisms),
-            "phasingmembraneresidue" => Ok(Material::PhasingMembraneResidue),
-            "thargoidenergycell" => Ok(Material::ThargoidEnergyCell),
-            "wreckagecomponents" => Ok(Material::WreckageComponents),
-            "tg_wreckagecomponents" => Ok(Material::WreckageComponents),
-            "causticcrystal" => Ok(Material::CausticCrystal),
-            "tg_causticcrystal" => Ok(Material::CausticCrystal),
-            "thargoidtechnologicalcomponents" => Ok(Material::ThargoidTechnologicalComponents),
-            "weaponparts" => Ok(Material::WeaponParts),
-            "heatexposurespecimen" => Ok(Material::HeatExposureSpecimen),
-            "propulsionelements" => Ok(Material::PropulsionElements),
-            "tg_propulsionelement" => Ok(Material::PropulsionElements),
-            "sensorfragment" => Ok(Material::SensorFragment),
-            "unknownenergysource" => Ok(Material::SensorFragment),
-            "thargoidorganiccircuitry" => Ok(Material::ThargoidOrganicCircuitry),
-
-            "guardianpowercell" => Ok(Material::GuardianPowerCell),
-            "guardian_powercell" => Ok(Material::GuardianPowerCell),
-            "guardianwreckagecomponents" => Ok(Material::GuardianWreckageComponents),
-            "guardian_sentinel_wreckagecomponents" => Ok(Material::GuardianWreckageComponents),
-            "guardianpowerconduit" => Ok(Material::GuardianPowerConduit),
-            "guardian_powerconduit" => Ok(Material::GuardianPowerConduit),
-            "guardiansentinelweaponparts" => Ok(Material::GuardianSentinelWeaponParts),
-            "guardian_sentinel_weaponparts" => Ok(Material::GuardianSentinelWeaponParts),
-            "guardiantechnologycomponent" => Ok(Material::GuardianTechnologyComponent),
-            "guardian_techcomponent" => Ok(Material::GuardianTechnologyComponent),
-
-            // Encoded
-            "exceptionscrambledemissiondata" => Ok(Material::ExceptionScrambledEmissionData),
-            "scrambledemissiondata" => Ok(Material::ExceptionScrambledEmissionData),
-            "irregularemissiondata" => Ok(Material::IrregularEmissionData),
-            "archivedemissiondata" => Ok(Material::IrregularEmissionData),
-            "unexpectedemissiondata" => Ok(Material::UnexpectedEmissionData),
-            "emissiondata" => Ok(Material::UnexpectedEmissionData),
-            "decodedemissiondata" => Ok(Material::DecodedEmissionData),
-            "abnormalcompactemissiondata" => Ok(Material::AbnormalCompactEmissionData),
-            "compactemissionsdata" => Ok(Material::AbnormalCompactEmissionData),
-
-            "atypicaldisruptedwakeechoes" => Ok(Material::AtypicalDisruptedWakeEchoes),
-            "disruptedwakeechoes" => Ok(Material::AtypicalDisruptedWakeEchoes),
-            "anomalousfsdtelemetry" => Ok(Material::AnomalousFSDTelemetry),
-            "fsdtelemetry" => Ok(Material::AnomalousFSDTelemetry),
-            "strangewakesolutions" => Ok(Material::StrangeWakeSolutions),
-            "wakesolutions" => Ok(Material::StrangeWakeSolutions),
-            "eccentrichyperspacetrajectories" => Ok(Material::EccentricHyperspaceTrajectories),
-            "hyperspacetrajectories" => Ok(Material::EccentricHyperspaceTrajectories),
-            "dataminedwakeexceptions" => Ok(Material::DataminedWakeExceptions),
-            "dataminedwake" => Ok(Material::DataminedWakeExceptions),
-
-            "distortedshieldcyclerecordings" => Ok(Material::DistortedShieldCycleRecordings),
-            "shieldcyclerecordings" => Ok(Material::DistortedShieldCycleRecordings),
-            "inconsistentshieldsoakanalysis" => Ok(Material::InconsistentShieldSoakAnalysis),
-            "shieldsoakanalysis" => Ok(Material::InconsistentShieldSoakAnalysis),
-            "untypicalshieldscans" => Ok(Material::UntypicalShieldScans),
-            "shielddensityreports" => Ok(Material::UntypicalShieldScans),
-            "aberrantshieldpatternanalysis" => Ok(Material::AberrantShieldPatternAnalysis),
-            "shieldpatternanalysis" => Ok(Material::AberrantShieldPatternAnalysis),
-            "peculiarshieldfrequencydata" => Ok(Material::PeculiarShieldFrequencyData),
-            "shieldfrequencydata" => Ok(Material::PeculiarShieldFrequencyData),
-
-            "unusualencryptedfiles" => Ok(Material::UnusualEncryptedFiles),
-            "encryptedfiles" => Ok(Material::UnusualEncryptedFiles),
-            "taggedencryptioncodes" => Ok(Material::TaggedEncryptionCodes),
-            "encryptioncodes" => Ok(Material::TaggedEncryptionCodes),
-            "opensymmetrickeys" => Ok(Material::OpenSymmetricKeys),
-            "symmetrickeys" => Ok(Material::OpenSymmetricKeys),
-            "atypicalencryptionarchives" => Ok(Material::AtypicalEncryptionArchives),
-            "encryptionarchives" => Ok(Material::AtypicalEncryptionArchives),
-            "adaptiveencryptorscapture" => Ok(Material::AdaptiveEncryptorsCapture),
-            "adaptiveencryptors" => Ok(Material::AdaptiveEncryptorsCapture),
-
-            "anomalousbulkscandata" => Ok(Material::AnomalousBulkScanData),
-            "bulkscandata" => Ok(Material::AnomalousBulkScanData),
-            "unidentifiedscanarchives" => Ok(Material::UnidentifiedScanArchives),
-            "scanarchives" => Ok(Material::UnidentifiedScanArchives),
-            "classifiedscandatabanks" => Ok(Material::ClassifiedScanDatabanks),
-            "scandatabanks" => Ok(Material::ClassifiedScanDatabanks),
-            "divergentscandata" => Ok(Material::DivergentScanData),
-            "classifiedscanfragment" => Ok(Material::ClassifiedScanFragment),
-
-            "specializedlegacyfirmware" => Ok(Material::SpecializedLegacyFirmware),
-            "legacyfirmware" => Ok(Material::SpecializedLegacyFirmware),
-            "modifiedconsumerfirmware" => Ok(Material::ModifiedConsumerFirmware),
-            "consumerfirmware" => Ok(Material::ModifiedConsumerFirmware),
-            "crackedindustrialfirmware" => Ok(Material::CrackedIndustrialFirmware),
-            "industrialfirmware" => Ok(Material::CrackedIndustrialFirmware),
-            "securityfirmwarepatch" => Ok(Material::SecurityFirmwarePatch),
-            "securityfirmware" => Ok(Material::SecurityFirmwarePatch),
-            "modifiedembeddedfirmware" => Ok(Material::ModifiedEmbeddedFirmware),
-            "embeddedfirmware" => Ok(Material::ModifiedEmbeddedFirmware),
-
-            "thargoidstructuraldata" => Ok(Material::ThargoidStructuralData),
-            "tg_structuraldata" => Ok(Material::ThargoidStructuralData),
-            "massiveenergysurgeanalytics" => Ok(Material::MassiveEnergySurgeAnalytics),
-            "tg_shutdowndata" => Ok(Material::MassiveEnergySurgeAnalytics),
-            "shipflightdata" => Ok(Material::ShipFlightData),
-            "tg_shipflightdata" => Ok(Material::ShipFlightData),
-            "shipsystemsdata" => Ok(Material::ShipSystemsData),
-            "tg_shipsystemsdata" => Ok(Material::ShipSystemsData),
-            "thargoidinterdictiontelemetry" => Ok(Material::ThargoidInterdictionTelemetry),
-            "tg_interdictiondata" => Ok(Material::ThargoidInterdictionTelemetry),
-            "thargoidmaterialcompositiondata" => Ok(Material::ThargoidMaterialCompositionData),
-            "tg_compositiondata" => Ok(Material::ThargoidMaterialCompositionData),
-            "thargoidshipsignature" => Ok(Material::ThargoidShipSignature),
-            "unknownshipsignature" => Ok(Material::ThargoidShipSignature),
-            "thargoidresiduedata" => Ok(Material::ThargoidResidueData),
-            "thargoidwakedata" => Ok(Material::ThargoidWakeData),
-
-            "patterngammaobeliskdata" => Ok(Material::PatternGammaObeliskData),
-            "ancienthistoricaldata" => Ok(Material::PatternGammaObeliskData),
-            "patternbetaobeliskdata" => Ok(Material::PatternBetaObeliskData),
-            "ancientculturaldata" => Ok(Material::PatternBetaObeliskData),
-            "patternalphaobeliskdata" => Ok(Material::PatternAlphaObeliskData),
-            "ancientbiologicaldata" => Ok(Material::PatternAlphaObeliskData),
-            "patterndeltaobeliskdata" => Ok(Material::PatternDeltaObeliskData),
-            "ancientlanguagedata" => Ok(Material::PatternDeltaObeliskData),
-            "patternepsilonobeliskdata" => Ok(Material::PatternEpsilonObeliskData),
-            "ancienttechnologicaldata" => Ok(Material::PatternEpsilonObeliskData),
-            "guardianmoduleblueprintfragment" => Ok(Material::GuardianModuleBlueprintFragment),
-            "guardian_moduleblueprint" => Ok(Material::GuardianModuleBlueprintFragment),
-            "guardianvesselblueprintfragment" => Ok(Material::GuardianVesselBlueprintFragment),
-            "guardian_vesselblueprint" => Ok(Material::GuardianVesselBlueprintFragment),
-            "guardianweaponblueprintfragment" => Ok(Material::GuardianWeaponBlueprintFragment),
-            "guardian_weaponblueprint" => Ok(Material::GuardianWeaponBlueprintFragment),
-
-            #[cfg(not(feature = "strict"))]
-            _ => Ok(Material::Unknown(s.to_string())),
-
-            #[cfg(feature = "strict")]
-            _ => Err(MaterialParseError::UnknownMaterial(s.to_string())),
-        }
-    }
-}
-
-from_str_deserialize_impl!(Material);

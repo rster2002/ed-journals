@@ -1,21 +1,37 @@
 use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
 
+/// The type of material, either Raw, Manufactured, or Encoded.
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialType {
-    #[serde(alias = "raw")]
     Raw,
-
-    #[serde(alias = "manufactured")]
     Manufactured,
-
-    #[serde(alias = "encoded")]
     Encoded,
 
     #[cfg(not(feature = "strict"))]
-    Unknown,
+    #[serde(untagged)]
+    Unknown(String),
+}
+
+/// Sometimes a lowercase version of [MaterialType] is used, so this type is used in the data to
+/// preserve the casing. Prefer using [MaterialType] in your application by using the [From] trait.
+#[derive(Debug, Deserialize)]
+#[cfg_attr(test, derive(PartialEq))]
+pub enum MaterialTypeLowercase {
+    #[serde(rename = "raw")]
+    Raw,
+
+    #[serde(rename = "manufactured")]
+    Manufactured,
+
+    #[serde(rename = "encoded")]
+    Encoded,
+
+    #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl From<Material> for MaterialType {
@@ -171,7 +187,39 @@ impl From<Material> for MaterialType {
             | Material::GuardianWeaponBlueprintFragment => MaterialType::Encoded,
 
             #[cfg(not(feature = "strict"))]
-            Material::Unknown(_) => MaterialType::Unknown,
+            Material::Unknown(value) => MaterialType::Unknown(format!("Unknown material: '{}'", value)),
+        }
+    }
+}
+
+impl From<MaterialTypeLowercase> for MaterialType {
+    fn from(value: MaterialTypeLowercase) -> Self {
+        match value {
+            MaterialTypeLowercase::Raw => MaterialType::Raw,
+            MaterialTypeLowercase::Manufactured => MaterialType::Manufactured,
+            MaterialTypeLowercase::Encoded => MaterialType::Encoded,
+
+            #[cfg(not(feature = "strict"))]
+            MaterialTypeLowercase::Unknown(value) => MaterialType::Unknown(value),
+        }
+    }
+}
+
+impl From<Material> for MaterialTypeLowercase {
+    fn from(value: Material) -> Self {
+        MaterialType::from(value).into()
+    }
+}
+
+impl From<MaterialType> for MaterialTypeLowercase {
+    fn from(value: MaterialType) -> Self {
+        match value {
+            MaterialType::Raw => MaterialTypeLowercase::Raw,
+            MaterialType::Manufactured => MaterialTypeLowercase::Manufactured,
+            MaterialType::Encoded => MaterialTypeLowercase::Encoded,
+
+            #[cfg(not(feature = "strict"))]
+            MaterialType::Unknown(value) => MaterialTypeLowercase::Unknown(value),
         }
     }
 }

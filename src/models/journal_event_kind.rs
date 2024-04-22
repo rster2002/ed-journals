@@ -90,6 +90,7 @@ mod material_trade_event;
 mod module_swap_event;
 mod carrier_jump_event;
 mod sell_drones_event;
+mod material_discovered_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -167,6 +168,7 @@ use crate::models::journal_event_kind::carrier_jump_event::CarrierJumpEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
 use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
 use crate::models::journal_event_kind::market_event::MarketEvent;
+use crate::models::journal_event_kind::material_discovered_event::MaterialDiscoveredEvent;
 use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
@@ -244,6 +246,7 @@ pub enum JournalEventKind {
     FSSDiscoveryScan(FSSDiscoveryScan),
     FSSSignalDiscovered(FSSSignalDiscoveredEvent),
     MaterialCollected(MaterialCollectedEvent),
+    MaterialDiscovered(MaterialDiscoveredEvent),
     SAAScanComplete(SAAScanCompleteEvent),
     SAASignalsFound(SAASignalsFoundEvent),
     ScanBaryCentre(ScanBaryCentreEvent),

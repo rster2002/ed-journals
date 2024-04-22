@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
-use crate::models::journal_event_kind::shared::materials::material_type::MaterialType;
+use crate::models::journal_event_kind::shared::materials::material_type::{MaterialType, MaterialTypeLowercase};
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -8,7 +8,7 @@ use crate::models::journal_event_kind::shared::materials::material_type::Materia
 pub struct MaterialTradeEvent {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    pub trader_type: MaterialType,
+    pub trader_type: MaterialTypeLowercase,
 }
 
 #[derive(Debug, Deserialize)]
@@ -20,6 +20,6 @@ pub struct MaterialTradeEventExchange {
     #[serde(rename = "Material_Localised")]
     pub material_localized: String,
 
-    pub category: MaterialType,
+    pub category: MaterialTypeLowercase,
     pub quantity: u16,
 }
