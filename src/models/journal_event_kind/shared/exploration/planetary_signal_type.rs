@@ -1,33 +1,22 @@
 use std::str::FromStr;
-use crate::from_str_deserialize_impl;
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum PlanetarySignalType {
+    #[serde(rename = "$SAA_SignalType_Human;")]
     Human,
+
+    #[serde(rename = "$SAA_SignalType_Biological;")]
     Biological,
+
+    #[serde(rename = "$SAA_SignalType_Geological;")]
     Geological,
 
+    #[serde(rename = "$SAA_SignalType_Thargoid;")]
+    Thargoid,
+
     #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
     Unknown(String),
 }
-
-impl FromStr for PlanetarySignalType {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "$SAA_SignalType_Human;" => Ok(PlanetarySignalType::Human),
-            "$SAA_SignalType_Biological;" => Ok(PlanetarySignalType::Biological),
-            "$SAA_SignalType_Geological;" => Ok(PlanetarySignalType::Geological),
-
-            #[cfg(not(feature = "strict"))]
-            _ => Ok(PlanetarySignalType::Unknown(s.to_string())),
-
-            #[cfg(feature = "strict")]
-            _ => Err(s.to_string()),
-        }
-    }
-}
-
-from_str_deserialize_impl!(PlanetarySignalType);

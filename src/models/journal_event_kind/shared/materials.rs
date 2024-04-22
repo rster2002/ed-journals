@@ -1,4 +1,4 @@
 pub mod material_type;
 pub mod material;
-mod material_grade;
-mod material_category;
+pub mod material_grade;
+pub mod material_category;

@@ -6,24 +6,55 @@ use crate::from_str_deserialize_impl;
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Material {
     // Raw
+    #[serde(rename = "carbon")]
     Carbon,
+
+    #[serde(rename = "vanadium")]
     Vanadium,
+
+    #[serde(rename = "niobium")]
     Niobium,
+
+    #[serde(rename = "yttrium")]
     Yttrium,
 
+
+    #[serde(rename = "phosphorus")]
     Phosphorus,
+
+    #[serde(rename = "chromium")]
     Chromium,
+
+    #[serde(rename = "molybdenum")]
     Molybdenum,
+
+    #[serde(rename = "technetium")]
     Technetium,
 
+
+    #[serde(rename = "sulphur")]
     Sulphur,
+
+    #[serde(rename = "manganese")]
     Manganese,
+
+    #[serde(rename = "cadmium")]
     Cadmium,
+
+    #[serde(rename = "ruthenium")]
     Ruthenium,
 
+
+    #[serde(rename = "iron")]
     Iron,
+
+    #[serde(rename = "zinc")]
     Zinc,
+
+    #[serde(rename = "tin")]
     Tin,
+
+    #[serde(rename = "selenium")]
     Selenium,
 
     Nickel,
@@ -182,6 +213,7 @@ pub enum Material {
     GuardianWeaponBlueprintFragment,
 
     #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
     Unknown(String),
 }
 

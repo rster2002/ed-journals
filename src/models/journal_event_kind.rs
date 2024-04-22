@@ -88,6 +88,8 @@ mod market_event;
 mod market_buy_event;
 mod material_trade_event;
 mod module_swap_event;
+mod carrier_jump_event;
+mod sell_drones_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -161,6 +163,7 @@ use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEven
 use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
+use crate::models::journal_event_kind::carrier_jump_event::CarrierJumpEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
 use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
 use crate::models::journal_event_kind::market_event::MarketEvent;
@@ -172,6 +175,7 @@ use crate::models::journal_event_kind::repair_event::RepairEvent;
 use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::models::journal_event_kind::saa_signals_found_event::SAASignalsFoundEvent;
 use crate::models::journal_event_kind::scanned_event::ScannedEvent;
+use crate::models::journal_event_kind::sell_drones_event::SellDronesEvent;
 use crate::models::journal_event_kind::send_text_event::SendTextEvent;
 use crate::models::journal_event_kind::set_user_ship_name_event::SetUserShipNameEvent;
 use crate::models::journal_event_kind::shield_state_event::ShieldStateEvent;
@@ -259,6 +263,7 @@ pub enum JournalEventKind {
     RefuelAll(RefuelAllEvent),
     Repair(RepairEvent),
     RepairAll(RepairAllEvent),
+    SellDrones(SellDronesEvent),
     SetUserShipName(SetUserShipNameEvent),
     Shipyard(ShipyardEvent),
     ShipyardSwap(ShipyardSwapEvent),
@@ -269,6 +274,7 @@ pub enum JournalEventKind {
     SquadronStartup(SquadronStartupEvent),
 
     // Fleet carriers
+    CarrierJump(CarrierJumpEvent),
     CarrierStats(CarrierStatsEvent),
     CarrierJumpRequest(CarrierJumpRequestEvent),
     CarrierJumpCancelled(CarrierJumpCancelled),
