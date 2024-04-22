@@ -1,4 +1,6 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::ship::ship_module::ShipModule;
+use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -11,13 +13,13 @@ pub struct ModuleStoreEvent {
     pub slot: String,
 
     // TODO maybe replace this with an enum or a struct
-    pub stored_item: String,
+    pub stored_item: ShipModule,
 
     #[serde(rename = "StoredItem_Localised")]
     pub stored_item_localised: String,
 
     // TODO maybe replace this with an enum
-    pub ship: String,
+    pub ship: ShipType,
 
     #[serde(rename = "ShipID")]
     pub ship_id: u8,

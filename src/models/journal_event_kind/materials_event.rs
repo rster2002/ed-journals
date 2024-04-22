@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::materials::material::Material;
 
 #[derive(Debug, Deserialize)]
 pub struct MaterialsEvent {
@@ -15,7 +16,7 @@ pub struct MaterialsEvent {
 #[derive(Debug, Deserialize)]
 pub struct MaterialEventEntry {
     #[serde(rename = "Name")]
-    pub name: String,
+    pub name: Material,
 
     #[serde(rename = "Count")]
     pub count: u16,

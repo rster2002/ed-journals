@@ -5,12 +5,17 @@ mod macros;
 
 #[cfg(test)]
 mod tests {
+    use std::env::current_dir;
     use crate::models::journal_dir::EDLogDir;
     use std::path::PathBuf;
 
     #[test]
     fn sandbox() {
-        let dir_path = PathBuf::from("/home/bjorn/GitHub/ed-logs/journals");
+        // let dir_path = PathBuf::from("/home/bjorn/GitHub/ed-logs/journals");
+        let dir_path = current_dir()
+            .unwrap()
+            .join("journals");
+
         let log_dir = EDLogDir::try_from(dir_path).unwrap();
 
         for journal in log_dir.journal_logs().unwrap() {

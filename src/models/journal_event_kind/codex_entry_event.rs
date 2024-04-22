@@ -45,5 +45,7 @@ pub struct CodexEntryEvent {
 
     // TODO check when this is filled
     pub longitude: Option<f32>,
+
+    #[serde(default)]
     pub is_new_entry: bool,
 }

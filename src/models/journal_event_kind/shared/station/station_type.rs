@@ -4,6 +4,9 @@ use crate::from_str_deserialize_impl;
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum StationType {
+    Orbis,
+    Coriolis,
+    Ocellus,
     Outpost,
     FleetCarrier,
 
@@ -16,6 +19,9 @@ impl FromStr for StationType {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
+            "Orbis" => Ok(StationType::Orbis),
+            "Coriolis" => Ok(StationType::Coriolis),
+            "Ocellus" => Ok(StationType::Ocellus),
             "Outpost" => Ok(StationType::Outpost),
             "FleetCarrier" => Ok(StationType::FleetCarrier),
 

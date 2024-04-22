@@ -85,7 +85,9 @@ pub struct FSDJumpEventActiveState {
 #[serde(rename_all = "PascalCase")]
 pub struct FSDJumpEventSystemFaction {
     pub name: String,
-    pub faction_state: String,
+
+    // TODO check what it means when this is [None]
+    pub faction_state: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

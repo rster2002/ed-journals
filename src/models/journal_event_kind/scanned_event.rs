@@ -3,16 +3,13 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
-pub struct FriendsEvent {
-    status: FriendsEventStatus,
-    name: String,
+pub struct ScannedEvent {
+    pub scan_type: ScannedEventScanType,
 }
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
-pub enum FriendsEventStatus {
-    Online,
-    Added,
-    Requested,
+pub enum ScannedEventScanType {
+    Cargo,
 }

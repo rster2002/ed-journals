@@ -11,6 +11,10 @@ pub enum StationService {
     Powerplay,
     Outfitting,
     Livery,
+
+    /// Tuning is an old service that does not hold any meaning anymore. Check this
+    /// [Frontiers community forum post](https://forums.frontier.co.uk/threads/tuning-in-station-facilities-what-is-it.362951/)
+    Tuning,
     SearchAndRescue,
     Dock,
     AutoDock,
@@ -33,6 +37,13 @@ pub enum StationService {
     ApexInterstellar,
     VistaGenomics,
     PioneerSupplies,
+    Shipyard,
+    RedemptionOffice,
+    FrontlineSolutions,
+    MaterialTrader,
+
+    // TODO not sure what this is
+    Shop,
 
     #[cfg(not(feature = "strict"))]
     Unknown(String),
@@ -50,6 +61,7 @@ impl FromStr for StationService {
             "powerplay" => Ok(StationService::Powerplay),
             "outfitting" => Ok(StationService::Outfitting),
             "livery" => Ok(StationService::Livery),
+            "tuning" => Ok(StationService::Tuning),
             "searchrescue" => Ok(StationService::SearchAndRescue),
             "dock" => Ok(StationService::Dock),
             "autodock" => Ok(StationService::AutoDock),
@@ -72,6 +84,11 @@ impl FromStr for StationService {
             "apexinterstellar" => Ok(StationService::ApexInterstellar),
             "vistagenomics" => Ok(StationService::VistaGenomics),
             "pioneersupplies" => Ok(StationService::PioneerSupplies),
+            "shipyard" => Ok(StationService::Shipyard),
+            "voucherredemption" => Ok(StationService::RedemptionOffice),
+            "frontlinesolutions" => Ok(StationService::FrontlineSolutions),
+            "materialtrader" => Ok(StationService::MaterialTrader),
+            "shop" => Ok(StationService::Shop),
 
             #[cfg(not(feature = "strict"))]
             _ => Ok(StationService::Unknown(s.to_string())),

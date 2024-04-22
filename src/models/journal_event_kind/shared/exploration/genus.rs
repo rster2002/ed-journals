@@ -14,6 +14,7 @@ pub enum Genus {
     Frutexa,
     Tussock,
     Cactoida,
+    Clypeus,
 
     #[cfg(not(feature = "strict"))]
     Unknown(String),
@@ -34,6 +35,7 @@ impl FromStr for Genus {
             "$Codex_Ent_Shrubs_Genus_Name;" => Ok(Genus::Frutexa),
             "$Codex_Ent_Tussocks_Genus_Name;" => Ok(Genus::Tussock),
             "$Codex_Ent_Cactoid_Genus_Name;" => Ok(Genus::Cactoida),
+            "$Codex_Ent_Clypeus_Genus_Name;" => Ok(Genus::Clypeus),
 
             #[cfg(not(feature = "strict"))]
             _ => Ok(Genus::Unknown(s.to_string())),

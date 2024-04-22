@@ -75,6 +75,18 @@ mod shipyard_event;
 mod stored_ships_event;
 mod shipyard_swap_event;
 mod module_retrieve_event;
+mod launch_drone_event;
+mod send_text_event;
+mod repair_all_event;
+mod buy_ammo_event;
+mod repair_event;
+mod buy_drones_event;
+mod under_attack_event;
+mod shield_state_event;
+mod scanned_event;
+mod market_event;
+mod market_buy_event;
+mod material_trade_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -144,14 +156,26 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
+use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
+use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
+use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
+use crate::models::journal_event_kind::market_event::MarketEvent;
+use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
+use crate::models::journal_event_kind::repair_all_event::RepairAllEvent;
+use crate::models::journal_event_kind::repair_event::RepairEvent;
 use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::models::journal_event_kind::saa_signals_found_event::SAASignalsFoundEvent;
+use crate::models::journal_event_kind::scanned_event::ScannedEvent;
+use crate::models::journal_event_kind::send_text_event::SendTextEvent;
 use crate::models::journal_event_kind::set_user_ship_name_event::SetUserShipNameEvent;
+use crate::models::journal_event_kind::shield_state_event::ShieldStateEvent;
 use crate::models::journal_event_kind::shipyard_event::ShipyardEvent;
 use crate::models::journal_event_kind::shipyard_swap_event::ShipyardSwapEvent;
 use crate::models::journal_event_kind::stored_ships_event::StoredShipsEvent;
+use crate::models::journal_event_kind::under_attack_event::UnderAttackEvent;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "event")]
@@ -202,6 +226,8 @@ pub enum JournalEventKind {
 
     // Combat
     ShipTargeted(ShipTargetedEvent),
+    ShieldState(ShieldStateEvent),
+    UnderAttack(UnderAttackEvent),
 
     // Exploration
     CodexEntry(CodexEntryEvent),
@@ -215,11 +241,20 @@ pub enum JournalEventKind {
     SAASignalsFound(SAASignalsFoundEvent),
     ScanBaryCentre(ScanBaryCentreEvent),
 
+    // Trade
+    MarketBuy(MarketBuyEvent),
+
     // Station services
-    ModuleRetrieve(),
+    BuyAmmo(BuyAmmoEvent),
+    BuyDrones(BuyDronesEvent),
+    // ModuleRetrieve(),
+    Market(MarketEvent),
+    MaterialTrade(MaterialTradeEvent),
     Outfitting(OutfittingEvent),
     ModuleStore(ModuleStoreEvent),
     RefuelAll(RefuelAllEvent),
+    Repair(RepairEvent),
+    RepairAll(RepairAllEvent),
     SetUserShipName(SetUserShipNameEvent),
     Shipyard(ShipyardEvent),
     ShipyardSwap(ShipyardSwapEvent),
@@ -249,6 +284,7 @@ pub enum JournalEventKind {
     DockSRV(DockSRVEvent),
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
+    LaunchDrone(LaunchDroneEvent),
     LaunchSRV(LaunchSRVEvent),
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not
@@ -260,6 +296,8 @@ pub enum JournalEventKind {
     NPCCrewPaidWage(NPCCrewWagePaidEvent),
     ReceiveText(ReceiveTextEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
+    Scanned(ScannedEvent),
+    SendText(SendTextEvent),
     Shutdown,
     USSDrop(USSDropEvent),
     SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
