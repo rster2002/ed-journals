@@ -1,1 +1,2 @@
-pub mod commodity_type;
+pub mod commodity;
+pub mod commodity_category;

@@ -7,6 +7,12 @@ pub enum FactionState {
     Election,
     Expansion,
     PublicHoliday,
+    InfrastructureFailure,
+    Boom,
+    Terrorism,
+    CivilWar,
+    PirateAttack,
+    Drought,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

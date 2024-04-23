@@ -91,6 +91,10 @@ mod module_swap_event;
 mod carrier_jump_event;
 mod sell_drones_event;
 mod material_discovered_event;
+mod collect_cargo_event;
+mod eject_cargo_event;
+mod approach_settlement_event;
+mod promotion_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -160,11 +164,14 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::approach_settlement_event::ApproachSettlementEvent;
 use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
 use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
 use crate::models::journal_event_kind::carrier_jump_event::CarrierJumpEvent;
+use crate::models::journal_event_kind::collect_cargo_event::CollectCargoEvent;
+use crate::models::journal_event_kind::eject_cargo_event::EjectCargoEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
 use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
 use crate::models::journal_event_kind::market_event::MarketEvent;
@@ -252,6 +259,8 @@ pub enum JournalEventKind {
     ScanBaryCentre(ScanBaryCentreEvent),
 
     // Trade
+    CollectCargo(CollectCargoEvent),
+    EjectCargo(EjectCargoEvent),
     MarketBuy(MarketBuyEvent),
 
     // Station services
@@ -294,6 +303,7 @@ pub enum JournalEventKind {
     SuitLoadout(SuitLoadoutEvent),
 
     // Other
+    ApproachSettlement(ApproachSettlementEvent),
     DockSRV(DockSRVEvent),
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
@@ -307,6 +317,7 @@ pub enum JournalEventKind {
 
     #[serde(rename = "NpcCrewPaidWage")]
     NPCCrewPaidWage(NPCCrewWagePaidEvent),
+    Promotion(),
     ReceiveText(ReceiveTextEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
     Scanned(ScannedEvent),

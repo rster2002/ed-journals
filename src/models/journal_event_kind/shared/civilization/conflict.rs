@@ -20,6 +20,9 @@ pub enum ConflictWarType {
     #[serde(rename = "war")]
     War,
 
+    #[serde(rename = "civilwar")]
+    CivilWar,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

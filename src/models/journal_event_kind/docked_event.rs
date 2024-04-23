@@ -1,5 +1,6 @@
 use crate::models::journal_event_kind::shared::station::station_service::StationService;
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::station::station_info::StationInfo;
 use crate::models::journal_event_kind::shared::station::station_type::StationType;
 
 #[derive(Debug, Deserialize)]
@@ -11,47 +12,50 @@ pub struct DockedEvent {
     pub star_system: String,
     pub system_address: u64,
 
-    #[serde(rename = "MarketID")]
-    pub market_id: u64,
-    pub station_faction: DockedEventStationFaction,
+    #[serde(flatten)]
+    pub station_info: StationInfo,
 
-    pub station_government: String,
-
-    #[serde(rename = "StationGovernment_Localised")]
-    pub station_government_localised: String,
-    pub station_allegiance: Option<String>,
-    pub station_services: Vec<StationService>,
-    pub station_economy: String,
-
-    #[serde(rename = "StationEconomy_Localised")]
-    pub station_economy_localised: String,
-    pub station_economies: Vec<DockedEventStationEconomy>,
+    // #[serde(rename = "MarketID")]
+    // pub market_id: u64,
+    // pub station_faction: DockedEventStationFaction,
+    //
+    // pub station_government: String,
+    //
+    // #[serde(rename = "StationGovernment_Localised")]
+    // pub station_government_localised: String,
+    // pub station_allegiance: Option<String>,
+    // pub station_services: Vec<StationService>,
+    // pub station_economy: String,
+    //
+    // #[serde(rename = "StationEconomy_Localised")]
+    // pub station_economy_localised: String,
+    // pub station_economies: Vec<DockedEventStationEconomy>,
 
     #[serde(rename = "DistFromStarLS")]
     pub dist_from_star_ls: f32,
 }
 
-#[derive(Debug, Deserialize)]
-#[cfg_attr(test, derive(PartialEq))]
-#[serde(rename_all = "PascalCase")]
-pub struct DockedEventStationFaction {
-    pub name: String,
-
-    // TODO replace with enum
-    /// This is [None] when a fleet carrier
-    pub faction_state: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-#[cfg_attr(test, derive(PartialEq))]
-#[serde(rename_all = "PascalCase")]
-pub struct DockedEventStationEconomy {
-    pub name: String,
-
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: String,
-    pub proportion: f32,
-}
+// #[derive(Debug, Deserialize)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[serde(rename_all = "PascalCase")]
+// pub struct DockedEventStationFaction {
+//     pub name: String,
+//
+//     // TODO replace with enum
+//     /// This is [None] when a fleet carrier
+//     pub faction_state: Option<String>,
+// }
+//
+// #[derive(Debug, Deserialize)]
+// #[cfg_attr(test, derive(PartialEq))]
+// #[serde(rename_all = "PascalCase")]
+// pub struct DockedEventStationEconomy {
+//     pub name: String,
+//
+//     #[serde(rename = "Name_Localised")]
+//     pub name_localised: String,
+//     pub proportion: f32,
+// }
 
 #[cfg(test)]
 mod tests {

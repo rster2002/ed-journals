@@ -5,6 +5,9 @@ use thiserror::Error;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Economy {
+    #[serde(rename = "$economy_Agri;")]
+    Agriculture,
+
     #[serde(rename = "$economy_Colony;")]
     Colony,
 
@@ -17,8 +20,14 @@ pub enum Economy {
     #[serde(rename = "$economy_Extraction;")]
     Extraction,
 
+    #[serde(rename = "$economy_HighTech;")]
+    HighTech,
+
     #[serde(rename = "$economy_Military;")]
     Military,
+
+    #[serde(rename = "$economy_Carrier;")]
+    PrivateEnterprise,
 
     #[serde(rename = "$economy_None;")]
     None,

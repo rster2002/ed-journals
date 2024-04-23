@@ -1,5 +1,6 @@
 use crate::models::journal_event_kind::shared::station::station_service::StationService;
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::civilization::system_info::SystemInfo;
 use crate::models::journal_event_kind::shared::station::station_type::StationType;
 
 #[derive(Debug, Deserialize)]
@@ -11,73 +12,81 @@ pub struct LocationEvent {
     pub dist_from_star_ls: Option<f32>,
     pub docked: bool,
 
-    // TODO check when this is filled
-    pub station_name: Option<String>,
-
-    // TODO check when this is filled
-    pub station_type: Option<StationType>,
-
-    // TODO check when this is filled
-    #[serde(rename = "MarketID")]
-    pub market_id: Option<u64>,
-
-    // TODO check when this is filled
-    pub station_faction: Option<LocationEventStationFaction>,
-
-    // TODO check when this is filled
-    pub station_government: Option<String>,
-
-    // TODO check when this is filled
-    #[serde(rename = "StationGovernment_Localised")]
-    pub station_government_localised: Option<String>,
-
-    // TODO check when this is filled
-    pub station_allegiance: Option<String>,
-
-    // TODO check when this is filled
-    pub station_services: Option<Vec<StationService>>,
-
-    // TODO check when this is filled
-    pub station_economy: Option<String>,
-
-    // TODO check when this is filled
-    #[serde(rename = "StationEconomy_Localised")]
-    pub station_economy_localised: Option<String>,
-    pub station_economies: Option<Vec<LocationEventStationEconomy>>,
-
-    pub taxi: bool,
-    pub multicrew: bool,
-    pub star_system: String,
-    pub system_address: u64,
-    pub star_pos: [f32; 3],
-
-    pub system_allegiance: String,
-    pub system_economy: String,
-
-    #[serde(rename = "SystemEconomy_Localised")]
-    pub system_economy_localised: String,
-    pub system_second_economy: String,
-
-    #[serde(rename = "SystemSecondEconomy_Localised")]
-    pub system_second_economy_localised: String,
-    pub system_government: String,
-
-    #[serde(rename = "SystemGovernment_Localised")]
-    pub system_government_localised: String,
-    pub system_security: String,
-
-    #[serde(rename = "SystemSecurity_Localised")]
-    pub system_security_localised: String,
-    pub population: u64,
-    pub body: String,
-
-    // TODO check when this is filled
-    pub body_id: Option<u32>,
-    pub body_type: String,
-
-    // TODO check when this is filled
     #[serde(default)]
-    pub factions: Vec<LocationEventFaction>,
+    pub taxi: bool,
+
+    #[serde(default)]
+    pub multicrew: bool,
+
+    #[serde(flatten)]
+    pub system_info: SystemInfo,
+
+    // // TODO check when this is filled
+    // pub station_name: Option<String>,
+    //
+    // // TODO check when this is filled
+    // pub station_type: Option<StationType>,
+    //
+    // // TODO check when this is filled
+    // #[serde(rename = "MarketID")]
+    // pub market_id: Option<u64>,
+    //
+    // // TODO check when this is filled
+    // pub station_faction: Option<LocationEventStationFaction>,
+    //
+    // // TODO check when this is filled
+    // pub station_government: Option<String>,
+    //
+    // // TODO check when this is filled
+    // #[serde(rename = "StationGovernment_Localised")]
+    // pub station_government_localised: Option<String>,
+    //
+    // // TODO check when this is filled
+    // pub station_allegiance: Option<String>,
+    //
+    // // TODO check when this is filled
+    // pub station_services: Option<Vec<StationService>>,
+    //
+    // // TODO check when this is filled
+    // pub station_economy: Option<String>,
+    //
+    // // TODO check when this is filled
+    // #[serde(rename = "StationEconomy_Localised")]
+    // pub station_economy_localised: Option<String>,
+    // pub station_economies: Option<Vec<LocationEventStationEconomy>>,
+    //
+
+    // pub star_system: String,
+    // pub system_address: u64,
+    // pub star_pos: [f32; 3],
+    //
+    // pub system_allegiance: String,
+    // pub system_economy: String,
+    //
+    // #[serde(rename = "SystemEconomy_Localised")]
+    // pub system_economy_localised: String,
+    // pub system_second_economy: String,
+    //
+    // #[serde(rename = "SystemSecondEconomy_Localised")]
+    // pub system_second_economy_localised: String,
+    // pub system_government: String,
+    //
+    // #[serde(rename = "SystemGovernment_Localised")]
+    // pub system_government_localised: String,
+    // pub system_security: String,
+    //
+    // #[serde(rename = "SystemSecurity_Localised")]
+    // pub system_security_localised: String,
+    // pub population: u64,
+    // pub body: String,
+    //
+    // // TODO check when this is filled
+    // pub body_id: Option<u32>,
+    // pub body_type: String,
+    //
+    // // TODO check when this is filled
+    // #[serde(default)]
+    // pub factions: Vec<LocationEventFaction>,
 }
 
 #[derive(Debug, Deserialize)]

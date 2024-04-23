@@ -3,7 +3,7 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-use crate::models::journal_event_kind::shared::ship::ship_type::{ShipType, ShipTypeError};
+use crate::models::journal_event_kind::shared::ship::ship_type::{ShipType};
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -17,8 +17,8 @@ pub enum ShipModule {
 
 #[derive(Debug, Error)]
 pub enum ShipModuleParseError {
-    #[error("Failed to parse cockpit module ship type: {0}")]
-    ShipTypeError(#[from] ShipTypeError),
+    #[error(transparent)]
+    SerdeJsonError(#[from] serde_json::Error),
 
     #[error("Unknown ship module: {0}")]
     UnknownShipModule(String),

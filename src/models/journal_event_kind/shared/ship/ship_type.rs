@@ -1,64 +1,53 @@
 use std::str::FromStr;
 use serde::Deserialize;
+use serde_json::Value;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_kind::shared::exploration::planetary_signal_type::PlanetarySignalType;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum ShipType {
+    #[serde(alias = "sidewinder")]
     SideWinder,
+
+    #[serde(alias = "cobramkiii")]
     CobraMkIII,
+
+    #[serde(rename = "Krait_Light", alias = "krait_light")]
     KraitPhantom,
+
+    #[serde(rename = "Krait_MkII", alias = "krait_mkii")]
     KraitMkII,
     Python,
+
+    #[serde(rename = "TypeX", alias = "typex")]
     AllianceChieftain,
+
+    #[serde(rename = "Type7", alias = "type7")]
     Type7,
+
+    #[serde(rename = "Type9", alias = "type9")]
     Type9,
+
+    #[serde(rename = "Type9_Military")]
     Type10,
+
+    #[serde(rename = "Asp", alias = "asp")]
     AspExplorer,
+
+    #[serde(rename = "ferdelance")]
     FerDeLance,
 
     #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
     Unknown(String),
 }
 
-#[derive(Debug, Error)]
-pub enum ShipTypeError {
-    #[error("Unknown ship type '{0}'")]
-    UnknownShip(String),
-}
-
 impl FromStr for ShipType {
-    type Err = ShipTypeError;
+    type Err = serde_json::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "SideWinder" => Ok(ShipType::SideWinder),
-            "CobraMkIII" => Ok(ShipType::CobraMkIII),
-            "Krait_Light" => Ok(ShipType::KraitPhantom),
-            "krait_light" => Ok(ShipType::KraitPhantom),
-            "Krait_MkII" => Ok(ShipType::KraitMkII),
-            "krait_mkii" => Ok(ShipType::KraitMkII),
-            "Type7" => Ok(ShipType::Type7),
-            "type7" => Ok(ShipType::Type7),
-            "Python" => Ok(ShipType::Python),
-            "TypeX" => Ok(ShipType::AllianceChieftain),
-            "typex" => Ok(ShipType::AllianceChieftain),
-            "Type9" => Ok(ShipType::Type9),
-            "type9" => Ok(ShipType::Type9),
-            "Asp" => Ok(ShipType::AspExplorer),
-            "asp" => Ok(ShipType::AspExplorer),
-            "ferdelance" => Ok(ShipType::FerDeLance),
-            "Type9_Military" => Ok(ShipType::Type10),
-
-            #[cfg(not(feature = "strict"))]
-            _ => Ok(ShipType::Unknown(s.to_string())),
-
-            #[cfg(feature = "strict")]
-            _ => Err(ShipTypeError::UnknownShip(s.to_string())),
-        }
+        serde_json::from_str(s)
     }
 }
-
-from_str_deserialize_impl!(ShipType);
