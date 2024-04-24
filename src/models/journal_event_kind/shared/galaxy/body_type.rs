@@ -7,6 +7,9 @@ pub enum BodyType {
     Star,
     Planet,
 
+    // TODO add description on when this is used
+    Null,
+
     #[cfg(not(feature = "strict"))]
     Unknown(String),
 }

@@ -29,6 +29,12 @@ pub enum Economy {
     #[serde(rename = "$economy_Carrier;")]
     PrivateEnterprise,
 
+    #[serde(rename = "$economy_Tourism;")]
+    Tourism,
+
+    #[serde(rename = "$economy_Engineer;")]
+    Engineer,
+
     #[serde(rename = "$economy_None;")]
     None,
 

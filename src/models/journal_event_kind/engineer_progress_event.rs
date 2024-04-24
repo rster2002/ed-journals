@@ -50,7 +50,9 @@ pub struct EngineerProgressUpdate {
     #[serde(rename = "EngineerID")]
     pub engineer_id: u32,
     pub rank: u8,
-    pub rank_progress: f32,
+
+    // TODO check when this is None
+    pub rank_progress: Option<f32>,
 }
 
 #[cfg(test)]
@@ -126,7 +128,7 @@ mod tests {
             engineer: "Zacariah Nemo".to_string(),
             engineer_id: 300050,
             rank: 4,
-            rank_progress: 0.0,
+            rank_progress: Some(0.0),
         };
 
         let parsed: EngineerProgressUpdate = serde_json::from_value(test).unwrap();

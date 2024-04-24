@@ -12,7 +12,7 @@ pub struct ApproachSettlementEvent {
     pub name: String,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localized: String,
+    pub name_localized: Option<String>,
 
     #[serde(flatten)]
     pub station_info: Option<StationInfo>,

@@ -396,7 +396,7 @@ pub enum Material {
     #[serde(rename = "scandatabanks")]
     ClassifiedScanDatabanks,
 
-    #[serde(rename = "divergentscandata")]
+    #[serde(rename = "encodedscandata")]
     DivergentScanData,
 
     #[serde(rename = "classifiedscanfragment")]

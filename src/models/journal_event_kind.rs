@@ -95,6 +95,13 @@ mod collect_cargo_event;
 mod eject_cargo_event;
 mod approach_settlement_event;
 mod promotion_event;
+mod jet_cone_boost_event;
+mod multi_sell_exploration_data_event;
+mod datalink_scan_event;
+mod interdicted_event;
+mod repair_drone_event;
+mod module_buy_event;
+mod engineer_craft_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -171,15 +178,23 @@ use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
 use crate::models::journal_event_kind::carrier_jump_event::CarrierJumpEvent;
 use crate::models::journal_event_kind::collect_cargo_event::CollectCargoEvent;
+use crate::models::journal_event_kind::datalink_scan_event::DatalinkScanEvent;
 use crate::models::journal_event_kind::eject_cargo_event::EjectCargoEvent;
+use crate::models::journal_event_kind::engineer_craft_event::EngineerCraftEvent;
+use crate::models::journal_event_kind::interdicted_event::InterdictedEvent;
+use crate::models::journal_event_kind::jet_cone_boost_event::JetConeBoostEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
 use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
 use crate::models::journal_event_kind::market_event::MarketEvent;
 use crate::models::journal_event_kind::material_discovered_event::MaterialDiscoveredEvent;
 use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
+use crate::models::journal_event_kind::module_buy_event::ModuleBuyEvent;
+use crate::models::journal_event_kind::multi_sell_exploration_data_event::MultiSellExplorationDataEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
+use crate::models::journal_event_kind::promotion_event::PromotionEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
 use crate::models::journal_event_kind::repair_all_event::RepairAllEvent;
+use crate::models::journal_event_kind::repair_drone_event::RepairDroneEvent;
 use crate::models::journal_event_kind::repair_event::RepairEvent;
 use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::models::journal_event_kind::saa_signals_found_event::SAASignalsFoundEvent;
@@ -241,6 +256,8 @@ pub enum JournalEventKind {
     NavRouteClear,
 
     // Combat
+    HeatWarning,
+    Interdicted(InterdictedEvent),
     ShipTargeted(ShipTargetedEvent),
     ShieldState(ShieldStateEvent),
     UnderAttack(UnderAttackEvent),
@@ -254,6 +271,7 @@ pub enum JournalEventKind {
     FSSSignalDiscovered(FSSSignalDiscoveredEvent),
     MaterialCollected(MaterialCollectedEvent),
     MaterialDiscovered(MaterialDiscoveredEvent),
+    MultiSellExplorationData(MultiSellExplorationDataEvent),
     SAAScanComplete(SAAScanCompleteEvent),
     SAASignalsFound(SAASignalsFoundEvent),
     ScanBaryCentre(ScanBaryCentreEvent),
@@ -271,6 +289,7 @@ pub enum JournalEventKind {
     ModuleRetrieve(ModuleRetrieveEvent),
     ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
+    ModuleBuy(ModuleBuyEvent),
     ModuleStore(ModuleStoreEvent),
     RefuelAll(RefuelAllEvent),
     Repair(RepairEvent),
@@ -304,9 +323,12 @@ pub enum JournalEventKind {
 
     // Other
     ApproachSettlement(ApproachSettlementEvent),
+    DatalinkScan(DatalinkScanEvent),
     DockSRV(DockSRVEvent),
+    EngineerCraft(EngineerCraftEvent),
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
+    JetConeBoost(JetConeBoostEvent),
     LaunchDrone(LaunchDroneEvent),
     LaunchSRV(LaunchSRVEvent),
 
@@ -317,8 +339,9 @@ pub enum JournalEventKind {
 
     #[serde(rename = "NpcCrewPaidWage")]
     NPCCrewPaidWage(NPCCrewWagePaidEvent),
-    Promotion(),
+    Promotion(PromotionEvent),
     ReceiveText(ReceiveTextEvent),
+    RepairDrone(RepairDroneEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
     Scanned(ScannedEvent),
     SendText(SendTextEvent),

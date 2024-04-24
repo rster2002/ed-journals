@@ -36,7 +36,7 @@ pub enum ShipType {
     #[serde(rename = "Asp", alias = "asp")]
     AspExplorer,
 
-    #[serde(rename = "ferdelance")]
+    #[serde(rename = "FerDeLance", alias = "ferdelance")]
     FerDeLance,
 
     #[cfg(not(feature = "strict"))]

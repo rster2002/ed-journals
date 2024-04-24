@@ -1,102 +1,122 @@
 use crate::from_str_deserialize_impl;
 use std::str::FromStr;
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum StationService {
+    #[serde(rename = "blackmarket")]
     BlackMarket,
+
+    #[serde(rename = "missions")]
     Missions,
+
+    #[serde(rename = "missionsgenerated")]
     MissionsGenerated,
+
+    #[serde(rename = "facilitator")]
     Facilitator,
+
+    #[serde(rename = "powerplay")]
     Powerplay,
+
+    #[serde(rename = "outfitting")]
     Outfitting,
+
+    #[serde(rename = "livery")]
     Livery,
 
     /// Tuning is an old service that does not hold any meaning anymore. Check this
     /// [Frontiers community forum post](https://forums.frontier.co.uk/threads/tuning-in-station-facilities-what-is-it.362951/)
+    #[serde(rename = "tuning")]
     Tuning,
+
+    #[serde(rename = "searchrescue")]
     SearchAndRescue,
+
+    #[serde(rename = "dock")]
     Dock,
+
+    #[serde(rename = "autodock")]
     AutoDock,
+
+    #[serde(rename = "commodities")]
     Commodities,
+
+    #[serde(rename = "contacts")]
     Contacts,
+
+    #[serde(rename = "exploration")]
     Exploration,
+
+    #[serde(rename = "crewlounge")]
     CrewLounge,
+
+    #[serde(rename = "rearm")]
     Rearm,
+
+    #[serde(rename = "refuel")]
     Refuel,
+
+    #[serde(rename = "repair")]
     Repair,
+
+    #[serde(rename = "engineer")]
     Engineer,
+
+    #[serde(rename = "flightcontroller")]
     FlightController,
+
+    #[serde(rename = "stationoperations")]
     StationOperations,
+
+    #[serde(rename = "stationMenu")]
     StationMenu,
+
+    #[serde(rename = "carriervendor")]
     CarrierVendor,
+
+    #[serde(rename = "carrierfuel")]
     CarrierFuel,
+
+    #[serde(rename = "carriermanagement")]
     CarrierManagement,
+
+    #[serde(rename = "socialspace")]
     SocialSpace,
+
+    #[serde(rename = "bartender")]
     Bartender,
+
+    #[serde(rename = "apexinterstellar")]
     ApexInterstellar,
+
+    #[serde(rename = "vistagenomics")]
     VistaGenomics,
+
+    #[serde(rename = "pioneersupplies")]
     PioneerSupplies,
+
+    #[serde(rename = "shipyard")]
     Shipyard,
+
+    #[serde(rename = "voucherredemption")]
     RedemptionOffice,
+
+    #[serde(rename = "frontlinesolutions")]
     FrontlineSolutions,
+
+    #[serde(rename = "materialtrader")]
     MaterialTrader,
 
+    #[serde(rename = "techBroker")]
+    TechnologyBroker,
+
     // TODO not sure what this is
+    #[serde(rename = "shop")]
     Shop,
 
     #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
     Unknown(String),
 }
-
-impl FromStr for StationService {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "blackmarket" => Ok(StationService::BlackMarket),
-            "missions" => Ok(StationService::Missions),
-            "missionsgenerated" => Ok(StationService::MissionsGenerated),
-            "facilitator" => Ok(StationService::Facilitator),
-            "powerplay" => Ok(StationService::Powerplay),
-            "outfitting" => Ok(StationService::Outfitting),
-            "livery" => Ok(StationService::Livery),
-            "tuning" => Ok(StationService::Tuning),
-            "searchrescue" => Ok(StationService::SearchAndRescue),
-            "dock" => Ok(StationService::Dock),
-            "autodock" => Ok(StationService::AutoDock),
-            "commodities" => Ok(StationService::Commodities),
-            "contacts" => Ok(StationService::Contacts),
-            "exploration" => Ok(StationService::Exploration),
-            "crewlounge" => Ok(StationService::CrewLounge),
-            "rearm" => Ok(StationService::Rearm),
-            "refuel" => Ok(StationService::Refuel),
-            "repair" => Ok(StationService::Repair),
-            "engineer" => Ok(StationService::Engineer),
-            "flightcontroller" => Ok(StationService::FlightController),
-            "stationoperations" => Ok(StationService::StationOperations),
-            "stationMenu" => Ok(StationService::StationMenu),
-            "carriervendor" => Ok(StationService::CarrierVendor),
-            "carrierfuel" => Ok(StationService::CarrierFuel),
-            "carriermanagement" => Ok(StationService::CarrierManagement),
-            "socialspace" => Ok(StationService::SocialSpace),
-            "bartender" => Ok(StationService::Bartender),
-            "apexinterstellar" => Ok(StationService::ApexInterstellar),
-            "vistagenomics" => Ok(StationService::VistaGenomics),
-            "pioneersupplies" => Ok(StationService::PioneerSupplies),
-            "shipyard" => Ok(StationService::Shipyard),
-            "voucherredemption" => Ok(StationService::RedemptionOffice),
-            "frontlinesolutions" => Ok(StationService::FrontlineSolutions),
-            "materialtrader" => Ok(StationService::MaterialTrader),
-            "shop" => Ok(StationService::Shop),
-
-            #[cfg(not(feature = "strict"))]
-            _ => Ok(StationService::Unknown(s.to_string())),
-
-            #[cfg(feature = "strict")]
-            _ => Err(s.to_string()),
-        }
-    }
-}
-
-from_str_deserialize_impl!(StationService);

@@ -9,6 +9,8 @@ pub enum StationType {
     Outpost,
     FleetCarrier,
     MegaShip,
+    CraterOutpost,
+    CraterPort,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

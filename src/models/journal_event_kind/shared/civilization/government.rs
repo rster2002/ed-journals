@@ -24,6 +24,18 @@ pub enum Government {
     #[serde(rename = "$government_Carrier;")]
     PrivateOwnership,
 
+    #[serde(rename = "$government_Theocracy;")]
+    Theocracy,
+
+    #[serde(rename = "$government_Anarchy;")]
+    Anarchy,
+
+    #[serde(rename = "$government_Engineer;")]
+    Engineer,
+
+    #[serde(rename = "$government_Feudal;")]
+    Feudal,
+
     #[serde(rename = "$government_None;")]
     None,
 

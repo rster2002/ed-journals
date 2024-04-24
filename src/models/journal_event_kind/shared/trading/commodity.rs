@@ -460,7 +460,7 @@ pub enum Commodity {
     #[serde(rename = "guardianorb")]
     GuardianOrb,
 
-    #[serde(rename = "guardianrelic")]
+    #[serde(rename = "AncientRelic", alias = "ancientrelic")]
     GuardianRelic,
 
     #[serde(rename = "guardiantablet")]

@@ -5,4 +5,4 @@ pub mod trading;
 pub mod materials;
 pub mod civilization;
 pub mod galaxy;
-mod commander;
+pub mod commander;

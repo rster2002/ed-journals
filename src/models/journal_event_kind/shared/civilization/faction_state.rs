@@ -3,16 +3,26 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum FactionState {
-    War,
+    Blight,
+    Boom,
+    Bust,
+    CivilUnrest,
+    CivilWar,
+    Drought,
     Election,
     Expansion,
-    PublicHoliday,
+    Famine,
     InfrastructureFailure,
-    Boom,
-    Terrorism,
-    CivilWar,
+    NaturalDisaster,
     PirateAttack,
-    Drought,
+    PublicHoliday,
+    Terrorism,
+    War,
+    CivilLiberty,
+    Outbreak,
+    Retreat,
+    Lockdown,
+    Investment,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

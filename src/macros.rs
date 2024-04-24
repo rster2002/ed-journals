@@ -15,28 +15,19 @@ macro_rules! from_str_deserialize_impl {
     };
 }
 
-// #[macro_export]
-// macro_rules! map_aliases {
-//     ($t:ty => {$($l:literal => $i:tt)+,}) => {
-//         impl FromStr for $t {
-//             type Err = ();
-//
-//             fn from_str(s: &str) -> Result<Self, Self::Err> {
-//                 match s {
-//                     $($l => Ok($t::$i))+,
-//                     _ => Err(()),
-//                 }
-//             }
-//         }
-//     };
-// }
-//
-// struct A;
-//
-// impl FromStr for A {
-//     type Err = ();
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         todo!()
-//     }
-// }
+#[macro_export]
+macro_rules! try_from_deserialize_impl {
+    ($f:ident => $ty:ident) => {
+        impl<'de> serde::Deserialize<'de> for $ty {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+            where
+                D: serde::Deserializer<'de>
+            {
+                let value = $f::deserialize(deserializer)?;
+
+                $ty::try_from(value)
+                    .map_err(|e| serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value)))
+            }
+        }
+    };
+}
