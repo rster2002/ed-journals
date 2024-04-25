@@ -12,7 +12,8 @@ pub struct ThargoidWar {
     pub remaining_ports: u8,
 
     // TODO parse this to a special struct
-    pub estimated_remaining_time: String,
+    // TODO check when this is [None]
+    pub estimated_remaining_time: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -20,7 +21,16 @@ pub struct ThargoidWar {
 #[serde(rename_all = "PascalCase")]
 pub enum ThargoidWarState {
     #[serde(rename = "Thargoid_Stronghold")]
-    ThargoidStronghold,
+    Stronghold,
+
+    #[serde(rename = "Thargoid_Probing")]
+    Probing,
+
+    #[serde(rename = "Thargoid_Controlled")]
+    Controlled,
+
+    #[serde(rename = "Thargoid_Recovery")]
+    Recovery,
 
     #[serde(rename = "")]
     Unspecified,

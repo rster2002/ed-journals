@@ -4,6 +4,7 @@ use thiserror::Error;
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum HardpointSize {
+    Tiny,
     Small,
     Medium,
     Large,
@@ -21,6 +22,8 @@ impl FromStr for HardpointSize {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
+            "Tiny" => Ok(HardpointSize::Tiny),
+            "tiny" => Ok(HardpointSize::Tiny),
             "Small" => Ok(HardpointSize::Small),
             "small" => Ok(HardpointSize::Small),
             "Medium" => Ok(HardpointSize::Medium),

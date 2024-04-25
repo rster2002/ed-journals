@@ -35,6 +35,12 @@ pub enum Economy {
     #[serde(rename = "$economy_Engineer;")]
     Engineer,
 
+    #[serde(rename = "$economy_Terraforming;")]
+    Terraforming,
+
+    #[serde(rename = "$economy_Rescue;")]
+    Rescue,
+
     #[serde(rename = "$economy_None;")]
     None,
 
@@ -42,25 +48,3 @@ pub enum Economy {
     #[serde(untagged)]
     Unknown(String),
 }
-
-// #[derive(Debug, Error)]
-// pub enum SystemEconomyParseError {
-//     #[error("Unknown system economy: '{0}'")]
-//     UnknownSystemEconomy(String),
-// }
-//
-// impl FromStr for Economy {
-//     type Err = SystemEconomyParseError;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "$economy_Industrial;" => Ok(Economy::Industrial),
-//
-//             #[cfg(not(feature = "strict"))]
-//             _ => Ok(Economy::Unknown(s.to_string())),
-//
-//             #[cfg(feature = "strict")]
-//             _ => Err(SystemEconomyParseError::UnknownSystemEconomy(s.to_string())),
-//         }
-//     }
-// }

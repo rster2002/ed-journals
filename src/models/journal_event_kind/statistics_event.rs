@@ -53,19 +53,19 @@ pub struct StatisticsCombat {
     pub bounties_claimed: u32,
 
     #[serde(rename = "Bounty_Hunting_Profit")]
-    pub bounty_hunting_profit: u64,
+    pub bounty_hunting_profit: i64,
 
     #[serde(rename = "Combat_Bonds")]
     pub combat_bonds: u32,
 
     #[serde(rename = "Combat_Bond_Profits")]
-    pub combat_bond_profits: u64,
+    pub combat_bond_profits: i64,
 
     #[serde(rename = "Assassinations")]
     pub assassinations: u32,
 
     #[serde(rename = "Assassination_Profits")]
-    pub assassination_profits: u64,
+    pub assassination_profits: i64,
 
     #[serde(rename = "Highest_Single_Reward")]
     pub highest_single_reward: u64,
@@ -98,7 +98,7 @@ pub struct StatisticsSmuggling {
     pub black_markets_traded_with: u32,
 
     #[serde(rename = "Black_Markets_Profits")]
-    pub black_markets_profits: u64,
+    pub black_markets_profits: i64,
 
     #[serde(rename = "Resources_Smuggled")]
     pub resources_smuggled: u32,
@@ -107,7 +107,7 @@ pub struct StatisticsSmuggling {
     pub average_profit: f32,
 
     #[serde(rename = "Highest_Single_Transaction")]
-    pub highest_single_transaction: u64,
+    pub highest_single_transaction: i64,
 }
 
 #[derive(Debug, Deserialize)]
@@ -116,7 +116,7 @@ pub struct StatisticsTrading {
     pub markets_traded_with: u32,
 
     #[serde(rename = "Market_Profits")]
-    pub market_profits: u64,
+    pub market_profits: i64,
 
     #[serde(rename = "Resources_Traded")]
     pub resources_traded: u32,
@@ -125,13 +125,13 @@ pub struct StatisticsTrading {
     pub average_profit: f32,
 
     #[serde(rename = "Highest_Single_Transaction")]
-    pub highest_single_transaction: u64,
+    pub highest_single_transaction: i64,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct StatisticsMining {
     #[serde(rename = "Mining_Profits")]
-    mining_profits: u64,
+    mining_profits: i64,
 
     #[serde(rename = "Quantity_Mined")]
     quantity_mined: u32,
@@ -151,7 +151,7 @@ pub struct StatisticsExploration {
     // #[serde(rename = "Fuel_Purchased")]
     // pub fuel_purchased: u32,
     #[serde(rename = "Exploration_Profits")]
-    pub exploration_profits: u64,
+    pub exploration_profits: i64,
 
     #[serde(rename = "Planets_Scanned_To_Level_2")]
     pub planets_scanned_to_level_2: u32,
@@ -197,7 +197,7 @@ pub struct StatisticsSearchAndRescue {
     pub search_rescue_traded: u32,
 
     #[serde(rename = "SearchRescue_Profit")]
-    pub search_rescue_profit: u64,
+    pub search_rescue_profit: i64,
 
     #[serde(rename = "SearchRescue_Count")]
     pub search_rescue_count: u32,

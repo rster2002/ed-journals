@@ -36,6 +36,9 @@ pub enum Government {
     #[serde(rename = "$government_Feudal;")]
     Feudal,
 
+    #[serde(rename = "$government_PrisonColony;")]
+    PrisonColony,
+
     #[serde(rename = "$government_None;")]
     None,
 

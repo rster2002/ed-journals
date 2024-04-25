@@ -11,6 +11,7 @@ pub enum StationType {
     MegaShip,
     CraterOutpost,
     CraterPort,
+    OnFootSettlement,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

@@ -1,6 +1,7 @@
 pub mod hardpoint_size;
 mod core_slot;
 
+use std::num::ParseIntError;
 use std::str::FromStr;
 use once_cell::sync::Lazy;
 use regex::Regex;
@@ -16,12 +17,13 @@ pub struct ShipSlot {
     pub kind: SkipSlotKind,
 }
 
+// TODO kinda want to refactor this to use untagged variants
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum SkipSlotKind {
     UtilityMount,
     Hardpoint(HardpointSize),
-    OptionalInternal,
+    OptionalInternal(u8),
     CoreInternal(CoreSlot),
 }
 
@@ -33,12 +35,16 @@ pub enum ParseShipSlotError {
     #[error(transparent)]
     HardpointSizeParseError(#[from] HardpointSizeParseError),
 
+    #[error("Failed to parse optional internal size: {0}")]
+    OptionalInternalSizeParseError(#[source] ParseIntError),
+
     #[error("Failed to parse ship slot: '{0}'")]
     FailedToParse(String),
 }
 
 const UTILITY_HARDPOINT_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap());
 const HARDPOINT_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap());
+const OPTIONAL_INTERNAL_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap());
 
 impl FromStr for ShipSlot {
     type Err = ParseShipSlotError;
@@ -73,6 +79,25 @@ impl FromStr for ShipSlot {
                 slot_nr,
                 kind: SkipSlotKind::Hardpoint(size),
             });
+        }
+
+        if let Some(captures) = OPTIONAL_INTERNAL_REGEX.captures(s) {
+            let slot_nr = captures.get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            let size = captures.get(2)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|e| ParseShipSlotError::OptionalInternalSizeParseError(e))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: SkipSlotKind::OptionalInternal(size),
+            })
         }
 
         if let Ok(core_slot) = s.parse() {

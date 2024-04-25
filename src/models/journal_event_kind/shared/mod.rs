@@ -6,3 +6,4 @@ pub mod materials;
 pub mod civilization;
 pub mod galaxy;
 pub mod commander;
+pub mod thargoid;

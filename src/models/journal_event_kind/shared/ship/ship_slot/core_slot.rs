@@ -7,6 +7,9 @@ use crate::from_str_deserialize_impl;
 pub enum CoreSlot {
     PowerPlant,
     MainEngines,
+    PowerDistributor,
+    Sensors,
+    LifeSupport,
 }
 
 #[derive(Debug, Error)]
@@ -22,6 +25,9 @@ impl FromStr for CoreSlot {
         match s {
             "PowerPlant" => Ok(CoreSlot::PowerPlant),
             "MainEngines" => Ok(CoreSlot::MainEngines),
+            "PowerDistributor" => Ok(CoreSlot::PowerDistributor),
+            "Radar" => Ok(CoreSlot::Sensors),
+            "LifeSupport" => Ok(CoreSlot::LifeSupport),
             _ => Err(CoreSlotParseError::UnknownCoreSlot(s.to_string())),
         }
     }

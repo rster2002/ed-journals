@@ -8,6 +8,7 @@ pub enum ModuleClass {
     C,
     D,
     E,
+    I,
 }
 
 #[derive(Debug, Error)]
@@ -21,11 +22,11 @@ impl TryFrom<u8> for ModuleClass {
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
         match value {
-            1 => Ok(ModuleClass::A),
-            2 => Ok(ModuleClass::B),
+            5 => Ok(ModuleClass::A),
+            4 => Ok(ModuleClass::B),
             3 => Ok(ModuleClass::C),
-            4 => Ok(ModuleClass::D),
-            5 => Ok(ModuleClass::E),
+            2 => Ok(ModuleClass::D),
+            1 => Ok(ModuleClass::E),
             _ => Err(ModuleClassError::UnknownModuleClass(value)),
         }
     }

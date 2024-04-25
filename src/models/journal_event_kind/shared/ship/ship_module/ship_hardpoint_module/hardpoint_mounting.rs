@@ -5,13 +5,13 @@ use serde_json::Value;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum HardpointMounting {
-    #[serde(rename = "fixed")]
+    #[serde(rename = "Fixed", alias = "fixed")]
     Fixed,
 
-    #[serde(rename = "gimbal")]
+    #[serde(rename = "Gimbal", alias = "gimbal")]
     Gimballed,
 
-    #[serde(rename = "turret")]
+    #[serde(rename = "Turret", alias = "turret")]
     Turreted,
 }
 

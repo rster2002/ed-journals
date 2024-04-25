@@ -237,6 +237,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::ThargoidLink
             | Commodity::ThargoidMedusaTissueSample
             | Commodity::ThargoidOrthrusTissueSample
+            | Commodity::ThargoidGeneratorTissueSample
             | Commodity::ThargoidProbe
             | Commodity::ThargoidResin
             | Commodity::ThargoidScoutTissueSample

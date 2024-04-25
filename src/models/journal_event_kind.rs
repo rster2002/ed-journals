@@ -102,6 +102,22 @@ mod interdicted_event;
 mod repair_drone_event;
 mod module_buy_event;
 mod engineer_craft_event;
+mod shipyard_transfer_event;
+mod escape_interdiction_event;
+mod hull_damage_event;
+mod died_event;
+mod resurrect_event;
+mod synthasis_event;
+mod cargo_transfer_event;
+mod technology_broker_event;
+mod market_sell_event;
+mod data_scanned_event;
+mod afmu_repairs_event;
+mod shipyard_buy_event;
+mod shipyard_new_event;
+mod module_sell_event;
+mod restock_vehicle_event;
+mod launch_fighter_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -171,24 +187,33 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use crate::models::journal_event_kind::afmu_repairs_event::AFMURepairsEvent;
 use crate::models::journal_event_kind::approach_settlement_event::ApproachSettlementEvent;
 use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
 use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
+use crate::models::journal_event_kind::cargo_transfer_event::CargoTransferEvent;
 use crate::models::journal_event_kind::carrier_jump_event::CarrierJumpEvent;
 use crate::models::journal_event_kind::collect_cargo_event::CollectCargoEvent;
+use crate::models::journal_event_kind::data_scanned_event::DataScannedEvent;
 use crate::models::journal_event_kind::datalink_scan_event::DatalinkScanEvent;
+use crate::models::journal_event_kind::died_event::DiedEvent;
 use crate::models::journal_event_kind::eject_cargo_event::EjectCargoEvent;
 use crate::models::journal_event_kind::engineer_craft_event::EngineerCraftEvent;
+use crate::models::journal_event_kind::escape_interdiction_event::EscapeInterdictionEvent;
+use crate::models::journal_event_kind::hull_damage_event::HullDamageEvent;
 use crate::models::journal_event_kind::interdicted_event::InterdictedEvent;
 use crate::models::journal_event_kind::jet_cone_boost_event::JetConeBoostEvent;
 use crate::models::journal_event_kind::launch_drone_event::LaunchDroneEvent;
+use crate::models::journal_event_kind::launch_fighter_event::LaunchFighterEvent;
 use crate::models::journal_event_kind::market_buy_event::MarketBuyEvent;
 use crate::models::journal_event_kind::market_event::MarketEvent;
+use crate::models::journal_event_kind::market_sell_event::MarketSellEvent;
 use crate::models::journal_event_kind::material_discovered_event::MaterialDiscoveredEvent;
 use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
 use crate::models::journal_event_kind::module_buy_event::ModuleBuyEvent;
+use crate::models::journal_event_kind::module_sell_event::ModuleSellEvent;
 use crate::models::journal_event_kind::multi_sell_exploration_data_event::MultiSellExplorationDataEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
 use crate::models::journal_event_kind::promotion_event::PromotionEvent;
@@ -196,6 +221,8 @@ use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
 use crate::models::journal_event_kind::repair_all_event::RepairAllEvent;
 use crate::models::journal_event_kind::repair_drone_event::RepairDroneEvent;
 use crate::models::journal_event_kind::repair_event::RepairEvent;
+use crate::models::journal_event_kind::restock_vehicle_event::RestockVehicleEvent;
+use crate::models::journal_event_kind::resurrect_event::ResurrectEvent;
 use crate::models::journal_event_kind::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::models::journal_event_kind::saa_signals_found_event::SAASignalsFoundEvent;
 use crate::models::journal_event_kind::scanned_event::ScannedEvent;
@@ -203,9 +230,14 @@ use crate::models::journal_event_kind::sell_drones_event::SellDronesEvent;
 use crate::models::journal_event_kind::send_text_event::SendTextEvent;
 use crate::models::journal_event_kind::set_user_ship_name_event::SetUserShipNameEvent;
 use crate::models::journal_event_kind::shield_state_event::ShieldStateEvent;
+use crate::models::journal_event_kind::shipyard_buy_event::ShipyardBuyEvent;
 use crate::models::journal_event_kind::shipyard_event::ShipyardEvent;
+use crate::models::journal_event_kind::shipyard_new_event::ShipyardNewEvent;
 use crate::models::journal_event_kind::shipyard_swap_event::ShipyardSwapEvent;
+use crate::models::journal_event_kind::shipyard_transfer_event::ShipyardTransferEvent;
 use crate::models::journal_event_kind::stored_ships_event::StoredShipsEvent;
+use crate::models::journal_event_kind::synthasis_event::SynthesisEvent;
+use crate::models::journal_event_kind::technology_broker_event::TechnologyBrokerEvent;
 use crate::models::journal_event_kind::under_attack_event::UnderAttackEvent;
 
 #[derive(Debug, Deserialize)]
@@ -256,7 +288,11 @@ pub enum JournalEventKind {
     NavRouteClear,
 
     // Combat
+    Died(DiedEvent),
+    EscapeInterdiction(EscapeInterdictionEvent),
+    HeatDamage,
     HeatWarning,
+    HullDamage(HullDamageEvent),
     Interdicted(InterdictedEvent),
     ShipTargeted(ShipTargetedEvent),
     ShieldState(ShieldStateEvent),
@@ -280,6 +316,7 @@ pub enum JournalEventKind {
     CollectCargo(CollectCargoEvent),
     EjectCargo(EjectCargoEvent),
     MarketBuy(MarketBuyEvent),
+    MarketSell(MarketSellEvent),
 
     // Station services
     BuyAmmo(BuyAmmoEvent),
@@ -287,6 +324,7 @@ pub enum JournalEventKind {
     Market(MarketEvent),
     MaterialTrade(MaterialTradeEvent),
     ModuleRetrieve(ModuleRetrieveEvent),
+    ModuleSell(ModuleSellEvent),
     ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
     ModuleBuy(ModuleBuyEvent),
@@ -294,12 +332,17 @@ pub enum JournalEventKind {
     RefuelAll(RefuelAllEvent),
     Repair(RepairEvent),
     RepairAll(RepairAllEvent),
+    RestockVehicle(RestockVehicleEvent),
     SellDrones(SellDronesEvent),
     SetUserShipName(SetUserShipNameEvent),
     Shipyard(ShipyardEvent),
+    ShipyardBuy(ShipyardBuyEvent),
+    ShipyardNew(ShipyardNewEvent),
+    ShipyardTransfer(ShipyardTransferEvent),
     ShipyardSwap(ShipyardSwapEvent),
     StoredModules(StoredModulesEvent),
     StoredShips(StoredShipsEvent),
+    TechnologyBroker(TechnologyBrokerEvent),
 
     // Squadrons
     SquadronStartup(SquadronStartupEvent),
@@ -322,14 +365,19 @@ pub enum JournalEventKind {
     SuitLoadout(SuitLoadoutEvent),
 
     // Other
+    #[serde(rename = "AfmuRepairs")]
+    AFMURepairs(AFMURepairsEvent),
     ApproachSettlement(ApproachSettlementEvent),
+    CargoTransfer(CargoTransferEvent),
     DatalinkScan(DatalinkScanEvent),
+    DataScanned(DataScannedEvent),
     DockSRV(DockSRVEvent),
     EngineerCraft(EngineerCraftEvent),
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
     JetConeBoost(JetConeBoostEvent),
     LaunchDrone(LaunchDroneEvent),
+    LaunchFighter(LaunchFighterEvent),
     LaunchSRV(LaunchSRVEvent),
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not
@@ -343,9 +391,12 @@ pub enum JournalEventKind {
     ReceiveText(ReceiveTextEvent),
     RepairDrone(RepairDroneEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
+    Resurrect(ResurrectEvent),
     Scanned(ScannedEvent),
+    SelfDestruct,
     SendText(SendTextEvent),
     Shutdown,
+    Synthesis(SynthesisEvent),
     USSDrop(USSDropEvent),
     SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
 }

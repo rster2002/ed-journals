@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
-use crate::models::journal_event_kind::shared::materials::material_type::{MaterialType, MaterialTypeLowercase};
+use crate::models::journal_event_kind::shared::materials::material_category::{MaterialCategory, MaterialTypeLowercase};
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

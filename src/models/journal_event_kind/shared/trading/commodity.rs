@@ -625,6 +625,9 @@ pub enum Commodity {
     #[serde(rename = "thargoidscythetissuesample")]
     ThargoidScytheTissueSample,
 
+    #[serde(rename = "ThargoidGeneratorTissueSample", alias = "thargoidgeneratortissuesample")]
+    ThargoidGeneratorTissueSample,
+
     #[serde(rename = "thargoidsensor")]
     ThargoidSensor,
 
