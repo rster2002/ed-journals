@@ -11,6 +11,42 @@ pub enum ShipType {
     #[serde(alias = "sidewinder")]
     SideWinder,
 
+    #[serde(rename = "eagle")]
+    Eagle,
+
+    #[serde(rename = "empire_eagle")]
+    ImperialEagle,
+
+    #[serde(rename = "vulture")]
+    Vulture,
+
+    #[serde(rename = "empire_trader")]
+    Clipper,
+
+    #[serde(rename = "empire_courier")]
+    ImperialCourier,
+
+    #[serde(rename = "adder")]
+    Adder,
+
+    #[serde(rename = "federation_gunship")]
+    FederalGunship,
+
+    #[serde(rename = "federation_dropship_mkii")]
+    FederalAssaultShip,
+
+    #[serde(rename = "federation_dropship")]
+    FederalDropship,
+
+    #[serde(rename = "diamondback")]
+    DiamondBackScout,
+
+    #[serde(rename = "diamondbackxl")]
+    DiamondBackExplorer,
+
+    #[serde(rename = "viper_mkiv")]
+    ViperMkIV,
+
     #[serde(alias = "cobramkiii")]
     CobraMkIII,
 

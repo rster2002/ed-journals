@@ -118,6 +118,13 @@ mod shipyard_new_event;
 mod module_sell_event;
 mod restock_vehicle_event;
 mod launch_fighter_event;
+mod bounty_event;
+mod mission_redirected_event;
+mod dock_fighter_event;
+mod mission_abandoned_event;
+mod mission_completed_event;
+mod mission_accepted_event;
+mod pay_fines_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -189,6 +196,7 @@ use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
 use crate::models::journal_event_kind::afmu_repairs_event::AFMURepairsEvent;
 use crate::models::journal_event_kind::approach_settlement_event::ApproachSettlementEvent;
+use crate::models::journal_event_kind::bounty_event::BountyEvent;
 use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
 use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
@@ -199,6 +207,7 @@ use crate::models::journal_event_kind::collect_cargo_event::CollectCargoEvent;
 use crate::models::journal_event_kind::data_scanned_event::DataScannedEvent;
 use crate::models::journal_event_kind::datalink_scan_event::DatalinkScanEvent;
 use crate::models::journal_event_kind::died_event::DiedEvent;
+use crate::models::journal_event_kind::dock_fighter_event::DockFighterEvent;
 use crate::models::journal_event_kind::eject_cargo_event::EjectCargoEvent;
 use crate::models::journal_event_kind::engineer_craft_event::EngineerCraftEvent;
 use crate::models::journal_event_kind::escape_interdiction_event::EscapeInterdictionEvent;
@@ -212,10 +221,15 @@ use crate::models::journal_event_kind::market_event::MarketEvent;
 use crate::models::journal_event_kind::market_sell_event::MarketSellEvent;
 use crate::models::journal_event_kind::material_discovered_event::MaterialDiscoveredEvent;
 use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
+use crate::models::journal_event_kind::mission_abandoned_event::MissionAbandonedEvent;
+use crate::models::journal_event_kind::mission_accepted_event::MissionAcceptedEvent;
+use crate::models::journal_event_kind::mission_completed_event::MissionCompletedEvent;
+use crate::models::journal_event_kind::mission_redirected_event::MissionRedirectedEvent;
 use crate::models::journal_event_kind::module_buy_event::ModuleBuyEvent;
 use crate::models::journal_event_kind::module_sell_event::ModuleSellEvent;
 use crate::models::journal_event_kind::multi_sell_exploration_data_event::MultiSellExplorationDataEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
+use crate::models::journal_event_kind::pay_fines_event::PayFinesEvent;
 use crate::models::journal_event_kind::promotion_event::PromotionEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
 use crate::models::journal_event_kind::repair_all_event::RepairAllEvent;
@@ -288,6 +302,7 @@ pub enum JournalEventKind {
     NavRouteClear,
 
     // Combat
+    Bounty(BountyEvent),
     Died(DiedEvent),
     EscapeInterdiction(EscapeInterdictionEvent),
     HeatDamage,
@@ -323,10 +338,15 @@ pub enum JournalEventKind {
     BuyDrones(BuyDronesEvent),
     Market(MarketEvent),
     MaterialTrade(MaterialTradeEvent),
+    MissionAbandoned(MissionAbandonedEvent),
+    MissionAccepted(MissionAcceptedEvent),
+    MissionCompleted(MissionCompletedEvent),
+    MissionRedirected(MissionRedirectedEvent),
     ModuleRetrieve(ModuleRetrieveEvent),
     ModuleSell(ModuleSellEvent),
     ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
+    PayFines(PayFinesEvent),
     ModuleBuy(ModuleBuyEvent),
     ModuleStore(ModuleStoreEvent),
     RefuelAll(RefuelAllEvent),
@@ -371,6 +391,7 @@ pub enum JournalEventKind {
     CargoTransfer(CargoTransferEvent),
     DatalinkScan(DatalinkScanEvent),
     DataScanned(DataScannedEvent),
+    DockFighter(DockFighterEvent),
     DockSRV(DockSRVEvent),
     EngineerCraft(EngineerCraftEvent),
     FuelScoop(FuelScoopEvent),

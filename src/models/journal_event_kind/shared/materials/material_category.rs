@@ -7,7 +7,10 @@ use crate::models::journal_event_kind::shared::materials::material::Material;
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialCategory {
     Raw,
+
     Manufactured,
+
+    #[serde(alias = "$MICRORESOURCE_CATEGORY_Encoded;")]
     Encoded,
 
     #[cfg(not(feature = "strict"))]

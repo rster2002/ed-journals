@@ -5,7 +5,10 @@ use thiserror::Error;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Superpower {
+    Independent,
     Federation,
+    Empire,
+    Alliance,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

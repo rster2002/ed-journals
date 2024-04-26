@@ -23,6 +23,7 @@ pub enum FactionState {
     Retreat,
     Lockdown,
     Investment,
+    None,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

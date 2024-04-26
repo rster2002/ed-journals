@@ -1,19 +1,26 @@
+mod faction_happiness;
+
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::civilization::faction::faction_happiness::FactionHappiness;
 use crate::models::journal_event_kind::shared::civilization::faction_state::FactionState;
+use crate::models::journal_event_kind::shared::civilization::government::Government;
+use crate::models::journal_event_kind::shared::civilization::superpower::Superpower;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub struct Faction {
     pub name: String,
-    pub faction_state: String,
-    pub government: String,
+    pub faction_state: FactionState,
+    pub government: Government,
     pub influence: f32,
-    pub allegiance: String,
-    pub happiness: String,
+    pub allegiance: Superpower,
+
+    // TODO check possible values
+    pub happiness: FactionHappiness,
 
     #[serde(rename = "Happiness_Localised")]
-    pub happiness_localised: String,
+    pub happiness_localised: Option<String>,
     pub my_reputation: f32,
 
     #[serde(default)]

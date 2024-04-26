@@ -3,43 +3,45 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Government {
-    #[serde(rename = "$government_Cooperative;")]
+    Communism,
+
+    #[serde(alias = "$government_Cooperative;")]
     Cooperative,
 
-    #[serde(rename = "$government_Corporate;")]
+    #[serde(alias = "$government_Corporate;")]
     Corporate,
 
-    #[serde(rename = "$government_Confederacy;")]
+    #[serde(alias = "$government_Confederacy;")]
     Confederacy,
 
-    #[serde(rename = "$government_Democracy;")]
+    #[serde(alias = "$government_Democracy;")]
     Democracy,
 
-    #[serde(rename = "$government_Dictatorship;")]
+    #[serde(alias = "$government_Dictatorship;")]
     Dictatorship,
 
-    #[serde(rename = "$government_Patronage;")]
+    #[serde(alias = "$government_Patronage;")]
     Patronage,
 
-    #[serde(rename = "$government_Carrier;")]
+    #[serde(alias = "$government_Carrier;")]
     PrivateOwnership,
 
-    #[serde(rename = "$government_Theocracy;")]
+    #[serde(alias = "$government_Theocracy;")]
     Theocracy,
 
-    #[serde(rename = "$government_Anarchy;")]
+    #[serde(alias = "$government_Anarchy;")]
     Anarchy,
 
-    #[serde(rename = "$government_Engineer;")]
+    #[serde(alias = "$government_Engineer;")]
     Engineer,
 
-    #[serde(rename = "$government_Feudal;")]
+    #[serde(alias = "$government_Feudal;")]
     Feudal,
 
-    #[serde(rename = "$government_PrisonColony;")]
+    #[serde(alias = "$government_PrisonColony;")]
     PrisonColony,
 
-    #[serde(rename = "$government_None;")]
+    #[serde(alias = "$government_None;")]
     None,
 
     #[cfg(not(feature = "strict"))]
