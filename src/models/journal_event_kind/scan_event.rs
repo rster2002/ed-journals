@@ -29,6 +29,7 @@ pub struct ScanEvent {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventScanType {
+    NavBeaconDetail,
     AutoScan,
     Detailed,
 }

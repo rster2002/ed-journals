@@ -1,6 +1,8 @@
 use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
 use crate::models::journal_event_kind::shared::materials::material_category::MaterialCategory;
+use crate::models::journal_event_kind::shared::shared_material::SharedMaterial;
+use crate::models::journal_event_kind::shared::shared_material_category::SharedMaterialCategory;
 use crate::models::journal_event_kind::shared::station::mission_type::MissionType;
 use crate::models::journal_event_kind::shared::trading::commodity::Commodity;
 
@@ -116,7 +118,7 @@ pub struct MissionCompletedEventCommodityReward {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventMaterialsReward {
-    pub name: Material,
-    pub category: MaterialCategory,
+    pub name: SharedMaterial,
+    pub category: SharedMaterialCategory,
     pub count: u8,
 }

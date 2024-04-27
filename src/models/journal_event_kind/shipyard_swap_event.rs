@@ -8,7 +8,7 @@ pub struct ShipyardSwapEvent {
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipType_Localised")]
-    pub ship_type_localized: String,
+    pub ship_type_localized: Option<String>,
 
     #[serde(rename = "ShipID")]
     pub ship_id: u8,

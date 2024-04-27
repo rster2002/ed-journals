@@ -26,6 +26,9 @@ pub enum Government {
     #[serde(alias = "$government_Carrier;")]
     PrivateOwnership,
 
+    #[serde(alias = "$government_Prison;")]
+    Prison,
+
     #[serde(alias = "$government_Theocracy;")]
     Theocracy,
 

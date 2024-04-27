@@ -42,6 +42,9 @@ pub enum InternalModule {
     #[serde(rename = "shieldgenerator")]
     ShieldGenerator,
 
+    #[serde(rename = "shieldgenerator_fast")]
+    BiWeaveShieldGenerator,
+
     #[serde(rename = "guardianfsdbooster")]
     GuardianFSDBooster,
 
@@ -62,6 +65,9 @@ pub enum InternalModule {
 
     #[serde(rename = "repairer")]
     AFMU,
+
+    #[serde(rename = "fighterbay")]
+    FighterHangar,
 }
 
 impl FromStr for InternalModule {

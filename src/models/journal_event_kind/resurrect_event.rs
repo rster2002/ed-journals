@@ -17,4 +17,7 @@ pub enum ResurrectEventOption {
 
     #[serde(rename = "rebuy")]
     Rebuy,
+
+    #[serde(rename = "rejoin")]
+    Rejoin,
 }

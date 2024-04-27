@@ -8,6 +8,7 @@ pub enum ModuleClass {
     C,
     D,
     E,
+    F,
     I,
 }
 

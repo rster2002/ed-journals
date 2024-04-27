@@ -1,10 +1,13 @@
 pub mod ship_hardpoint_module;
 pub mod ship_internal_module;
 pub mod module_class;
+pub mod ship_cockpit_module;
+pub mod ship_armor_module;
 
 use std::str::FromStr;
 use serde::Deserialize;
-use crate::models::journal_event_kind::shared::ship::cockpit_module::CockpitModule;
+use crate::models::journal_event_kind::shared::ship::ship_module::ship_armor_module::ShipArmorModule;
+use crate::models::journal_event_kind::shared::ship::ship_module::ship_cockpit_module::ShipCockpitModule;
 use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
 use crate::models::journal_event_kind::shared::ship::ship_module::ship_internal_module::ShipInternalModule;
 
@@ -24,7 +27,10 @@ pub enum ShipModule {
     Hardpoint(ShipHardpointModule),
 
     #[serde(untagged)]
-    Cockpit(CockpitModule),
+    Armor(ShipArmorModule),
+
+    #[serde(untagged)]
+    Cockpit(ShipCockpitModule),
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

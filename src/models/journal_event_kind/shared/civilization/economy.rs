@@ -11,6 +11,9 @@ pub enum Economy {
     #[serde(rename = "$economy_Colony;")]
     Colony,
 
+    #[serde(rename = "$economy_Service;")]
+    Service,
+
     #[serde(rename = "$economy_Industrial;")]
     Industrial,
 

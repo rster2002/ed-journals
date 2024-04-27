@@ -1,5 +1,7 @@
 use serde::Deserialize;
 use crate::models::journal_event_kind::shared::exploration::genus::Genus;
+use crate::models::journal_event_kind::shared::exploration::species::Species;
+use crate::models::journal_event_kind::shared::exploration::variant::Variant;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -16,14 +18,12 @@ pub struct ScanOrganicEvent {
     #[serde(rename = "Genus_Localised")]
     pub genus_localised: String,
 
-    // TODO replace this with an enum
-    pub species: String,
+    pub species: Species,
 
     #[serde(rename = "Species_Localised")]
     pub species_localised: String,
 
-    // TODO replace this with an enum
-    pub variant: String,
+    pub variant: Variant,
 
     #[serde(rename = "Variant_Localised")]
     pub variant_localised: String,

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::odyssey::citizen::Citizen;
 use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 
 #[derive(Debug, Deserialize)]
@@ -18,9 +19,17 @@ pub struct BountyEventNormal {
 
     #[serde(rename = "PilotName_Localised")]
     pub pilot_name_localized: String,
-    pub target: ShipType,
+    pub target: BountyEventTarget,
     pub total_reward: u64,
     pub victim_faction: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[cfg_attr(test, derive(PartialEq))]
+#[serde(untagged)]
+pub enum BountyEventTarget {
+    Ship(ShipType),
+    Citizen(Citizen),
 }
 
 #[derive(Debug, Deserialize)]

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::ship::fighter_loadout::FighterLoadout;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -8,11 +9,12 @@ pub struct RestockVehicleEvent {
     pub kind: RestockVehicleEventType,
 
     #[serde(rename = "Type_Localised")]
-    pub type_localized: String,
-    pub loadout: RestockVehicleEventLoadout,
+    pub type_localized: Option<String>,
+    pub loadout: FighterLoadout,
 
+    // TODO figure out when this is [None]
     #[serde(rename = "ID")]
-    pub id: u8,
+    pub id: Option<u8>,
     pub cost: u64,
     pub count: u8,
 }
@@ -25,14 +27,4 @@ pub enum RestockVehicleEventType {
 
     #[serde(rename = "independent_fighter")]
     TaipanFighter,
-}
-
-#[derive(Debug, Deserialize)]
-#[cfg_attr(test, derive(PartialEq))]
-pub enum RestockVehicleEventLoadout {
-    #[serde(rename = "zero")]
-    Zero,
-
-    #[serde(rename = "starter")]
-    Starter,
 }

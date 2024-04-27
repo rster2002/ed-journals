@@ -3,20 +3,44 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum MissionType {
-    #[serde(rename = "Mission_Salvage")]
+    #[serde(alias = "Mission_Salvage")]
     BlackBoxSalvageOperation,
 
-    #[serde(rename = "Mission_Courier_War_name")]
+    #[serde(alias = "Mission_Courier_War_name")]
     DataCourier,
 
-    #[serde(rename = "Mission_Massacre", alias = "Mission_Massacre_name")]
+    #[serde(alias = "Mission_Massacre", alias = "Mission_Massacre_name")]
     MassacreMission,
 
-    #[serde(rename = "Mission_MassacreWing", alias = "Mission_MassacreWing_name")]
+    #[serde(alias = "Mission_MassacreWing", alias = "Mission_MassacreWing_name")]
     WingMassacreMission,
 
-    #[serde(rename = "Mission_AltruismCredits", alias = "Mission_AltruismCredits_name")]
+    #[serde(alias = "Mission_AltruismCredits", alias = "Mission_AltruismCredits_name")]
     DonationMission,
+
+    #[serde(alias = "Mission_OnFoot_Smuggle_Contact_006", alias = "Mission_OnFoot_Smuggle_Contact_006_name")]
+    OnFootSmuggleContract,
+
+    #[serde(
+        alias = "Mission_OnFoot_Massacre_MB",
+        alias = "Mission_OnFoot_Massacre_MB_name",
+    )]
+    OnFootMassacreMission,
+
+    #[serde(
+        alias = "Mission_OnFoot_Assassination_MB",
+        alias = "Mission_OnFoot_Assassination_MB_name",
+    )]
+    OnFootAssassinationMission,
+
+    #[serde(alias = "Mission_OnFoot_Assassination_Hard_005")]
+    OnFootAssassinationHard,
+
+    #[serde(alias = "Mission_OnFoot_Sabotage_Production_002")]
+    OnFootDisruptionMission,
+
+    #[serde(alias = "Mission_Mining")]
+    MiningMission,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

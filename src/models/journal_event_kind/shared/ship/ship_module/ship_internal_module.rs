@@ -37,7 +37,7 @@ pub enum ShipInternalModuleError {
     FailedToParse(String),
 }
 
-const SHIP_INTERNAL_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?[iI]nt_([a-zA-Z_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_name;)?$"#).unwrap());
+const SHIP_INTERNAL_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?[iI]nt_([a-zA-Z_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_[a-zA-Z_]+?)?(_name;)?$"#).unwrap());
 
 impl FromStr for ShipInternalModule {
     type Err = ShipInternalModuleError;
@@ -47,9 +47,15 @@ impl FromStr for ShipInternalModule {
             return Err(ShipInternalModuleError::FailedToParse(s.to_string()));
         };
 
-        let module = captures.get(1)
+        let module_string = captures.get(1)
             .expect("Should have been captured already")
-            .as_str()
+            .as_str();
+
+        let module_suffix = captures.get(7)
+            .map(|capture| capture.as_str())
+            .unwrap_or_default();
+
+        let module = format!("{}{}", module_string, module_suffix)
             .parse()
             .map_err(|e| ShipInternalModuleError::FailedToParseModule(e))?;
 
@@ -147,6 +153,16 @@ mod tests {
                 size: 5,
                 class: ModuleClass::A,
             }),
+            ("$int_cargorack_size7_class1_name;", ShipInternalModule {
+                module: InternalModule::CargoRack,
+                size: 7,
+                class: ModuleClass::E,
+            }),
+            ("$int_shieldgenerator_size8_class3_fast_name;", ShipInternalModule {
+                module: InternalModule::BiWeaveShieldGenerator,
+                size: 8,
+                class: ModuleClass::C,
+            })
         ];
 
         for (input, expected) in test_cases {

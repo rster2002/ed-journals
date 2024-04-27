@@ -5,11 +5,13 @@ use crate::from_str_deserialize_impl;
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum CoreSlot {
+    Armour,
     PowerPlant,
     MainEngines,
     PowerDistributor,
     Sensors,
     LifeSupport,
+    FrameShiftDrive,
 }
 
 #[derive(Debug, Error)]
@@ -28,6 +30,9 @@ impl FromStr for CoreSlot {
             "PowerDistributor" => Ok(CoreSlot::PowerDistributor),
             "Radar" => Ok(CoreSlot::Sensors),
             "LifeSupport" => Ok(CoreSlot::LifeSupport),
+            "Armour" => Ok(CoreSlot::Armour),
+            "FrameShiftDrive" => Ok(CoreSlot::FrameShiftDrive),
+
             _ => Err(CoreSlotParseError::UnknownCoreSlot(s.to_string())),
         }
     }

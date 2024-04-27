@@ -12,9 +12,10 @@ use crate::models::journal_event_kind::shared::galaxy::body_type::BodyType;
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierJumpEvent {
     pub docked: bool,
+
+    #[serde(default)]
     pub on_foot: bool,
 
-    // TODO a lot of this seems to be shared with FSDJumpEvent
     #[serde(flatten)]
     pub system_info: SystemInfo,
 }

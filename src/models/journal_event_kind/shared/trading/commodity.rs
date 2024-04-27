@@ -1,1258 +1,1231 @@
 use serde::Deserialize;
 
+/// Includes both entries for both ship commodities and Odyssey commodities.
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Commodity {
     // Chemicals
-    #[serde(rename = "argonomictreatment")]
+    #[serde(alias = "argonomictreatment")]
     ArgonomicTreatment,
 
-    #[serde(rename = "explosives")]
+    #[serde(alias = "explosives")]
     Explosives,
 
-    #[serde(rename = "hydrogenfuel")]
+    #[serde(alias = "hydrogenfuel")]
     HydrogenFuel,
 
-    #[serde(rename = "hydrogenperoxide")]
+    #[serde(alias = "hydrogenperoxide")]
     HydrogenPeroxide,
 
-    #[serde(rename = "liquidoxygen")]
+    #[serde(alias = "liquidoxygen")]
     LiquidOxygen,
 
-    #[serde(rename = "mineraloil")]
+    #[serde(alias = "mineraloil")]
     MineralOil,
 
-    #[serde(rename = "nerveagents")]
+    #[serde(alias = "nerveagents")]
     NerveAgents,
 
-    #[serde(rename = "pesticides")]
+    #[serde(alias = "pesticides")]
     Pesticides,
 
-    #[serde(rename = "rockforthfertiliser")]
+    #[serde(alias = "rockforthfertiliser")]
     RockforthFertiliser,
 
-    #[serde(rename = "surfacestabilisers")]
+    #[serde(alias = "surfacestabilisers")]
     SurfaceStabilisers,
 
-    #[serde(rename = "syntheticreagents")]
+    #[serde(alias = "syntheticreagents")]
     SyntheticReagents,
 
-    #[serde(rename = "tritium")]
+    #[serde(alias = "tritium")]
     Tritium,
 
-    #[serde(rename = "water")]
+    #[serde(alias = "water")]
     Water,
 
     // Consumer items
-    #[serde(rename = "clothing")]
+    #[serde(alias = "clothing")]
     Clothing,
 
-    #[serde(rename = "consumertechnology")]
+    #[serde(alias = "consumertechnology")]
     ConsumerTechnology,
 
-    #[serde(rename = "domesticappliances")]
+    #[serde(alias = "domesticappliances")]
     DomesticAppliances,
 
-    #[serde(rename = "evacuationshelter")]
+    #[serde(alias = "evacuationshelter")]
     EvacuationShelter,
 
-    #[serde(rename = "survivalequipment")]
+    #[serde(alias = "survivalequipment")]
     SurvivalEquipment,
 
     // Legal drugs
-    #[serde(rename = "beer")]
+    #[serde(alias = "beer")]
     Beer,
 
-    #[serde(rename = "bootlegliquor")]
+    #[serde(alias = "bootlegliquor")]
     BootlegLiquor,
 
-    #[serde(rename = "liquor")]
+    #[serde(alias = "liquor")]
     Liquor,
 
-    #[serde(rename = "basicnarcotics")]
+    #[serde(alias = "basicnarcotics")]
     Narcotics,
 
-    #[serde(rename = "onionheadgammastrain")]
+    #[serde(alias = "onionheadgammastrain")]
     OnionheadGammaStrain,
 
-    #[serde(rename = "tobacco")]
+    #[serde(alias = "tobacco")]
     Tobacco,
 
-    #[serde(rename = "wine")]
+    #[serde(alias = "wine")]
     Wine,
 
     // Foods
-    #[serde(rename = "algae")]
+    #[serde(alias = "algae")]
     Algae,
 
-    #[serde(rename = "animalmeat")]
+    #[serde(alias = "animalmeat")]
     AnimalMeat,
 
-    #[serde(rename = "coffee")]
+    #[serde(alias = "coffee")]
     Coffee,
 
-    #[serde(rename = "fish")]
+    #[serde(alias = "fish")]
     Fish,
 
-    #[serde(rename = "foodcartridges")]
+    #[serde(alias = "foodcartridges")]
     FoodCartridges,
 
-    #[serde(rename = "fruitandvegetables")]
+    #[serde(alias = "fruitandvegetables")]
     FruitAndVegetables,
 
-    #[serde(rename = "grain")]
+    #[serde(alias = "grain")]
     Grain,
 
-    #[serde(rename = "syntheticmeat")]
+    #[serde(alias = "syntheticmeat")]
     SyntheticMeat,
 
-    #[serde(rename = "tea")]
+    #[serde(alias = "tea")]
     Tea,
 
     // Industrial materials
-    #[serde(rename = "ceramiccomposites")]
+    #[serde(alias = "ceramiccomposites")]
     CeramicComposites,
 
-    #[serde(rename = "cmmcomposite")]
+    #[serde(alias = "cmmcomposite")]
     CMMComposite,
 
-    #[serde(rename = "insulatingmembrane")]
+    #[serde(alias = "insulatingmembrane")]
     InsulatingMembrane,
 
-    #[serde(rename = "metaalloys")]
+    #[serde(alias = "metaalloys")]
     MetaAlloys,
 
-    #[serde(rename = "microweavecollinghoses")]
+    #[serde(alias = "microweavecollinghoses")]
     MicroWeaveCollingHoses,
 
-    #[serde(rename = "neofabricinsulation")]
+    #[serde(alias = "neofabricinsulation")]
     NeofabricInsulation,
 
-    #[serde(rename = "polymers")]
+    #[serde(alias = "polymers")]
     Polymers,
 
-    #[serde(rename = "semiconductors")]
+    #[serde(alias = "semiconductors")]
     Semiconductors,
 
-    #[serde(rename = "superconductors")]
+    #[serde(alias = "superconductors")]
     Superconductors,
 
     // Machinery
-    #[serde(rename = "articulationmotors")]
+    #[serde(alias = "articulationmotors")]
     ArticulationMotors,
 
-    #[serde(rename = "atmosphericprocessors")]
+    #[serde(alias = "atmosphericprocessors")]
     AtmosphericProcessors,
 
-    #[serde(rename = "buildingfabricators")]
+    #[serde(alias = "buildingfabricators")]
     BuildingFabricators,
 
-    #[serde(rename = "cropharvesters")]
+    #[serde(alias = "cropharvesters")]
     CropHarvesters,
 
-    #[serde(rename = "emergencypowercells")]
+    #[serde(alias = "emergencypowercells")]
     EmergencyPowerCells,
 
-    #[serde(rename = "energygridassembly")]
+    #[serde(alias = "energygridassembly")]
     EnergyGridAssembly,
 
-    #[serde(rename = "exhaustmanifold")]
+    #[serde(alias = "exhaustmanifold")]
     ExhaustManifold,
 
-    #[serde(rename = "geologicalequipment")]
+    #[serde(alias = "geologicalequipment")]
     GeologicalEquipment,
 
-    #[serde(rename = "heatsinkinterlink")]
+    #[serde(alias = "heatsinkinterlink")]
     HeatsinkInterlink,
 
-    #[serde(rename = "hnshockmount")]
+    #[serde(alias = "hnshockmount")]
     HNShockMount,
 
-    #[serde(rename = "iondistributor")]
+    #[serde(alias = "iondistributor")]
     IonDistributor,
 
-    #[serde(rename = "magneticemittercoil")]
+    #[serde(alias = "magneticemittercoil")]
     MagneticEmitterCoil,
 
-    #[serde(rename = "marineequipment")]
+    #[serde(alias = "marineequipment")]
     MarineEquipment,
 
-    #[serde(rename = "microbialfurnaces")]
+    #[serde(alias = "microbialfurnaces")]
     MicrobialFurnaces,
 
-    #[serde(rename = "mineralextractors")]
+    #[serde(alias = "mineralextractors")]
     MineralExtractors,
 
-    #[serde(rename = "modularterminals")]
+    #[serde(alias = "modularterminals")]
     ModularTerminals,
 
-    #[serde(rename = "powerconverter")]
+    #[serde(alias = "powerconverter")]
     PowerConverter,
 
-    #[serde(rename = "powergenerators")]
+    #[serde(alias = "powergenerators")]
     PowerGenerators,
 
-    #[serde(rename = "powertransferbus")]
+    #[serde(alias = "powertransferbus")]
     PowerTransferBus,
 
-    #[serde(rename = "radiationbaffle")]
+    #[serde(alias = "radiationbaffle")]
     RadiationBaffle,
 
-    #[serde(rename = "reinforcedmountingplate")]
+    #[serde(alias = "reinforcedmountingplate")]
     ReinforcedMountingPlate,
 
-    #[serde(rename = "skimmercomponents")]
+    #[serde(alias = "skimmercomponents")]
     SkimmerComponents,
 
-    #[serde(rename = "thermalcoolingunits")]
+    #[serde(alias = "thermalcoolingunits")]
     ThermalCoolingUnits,
 
-    #[serde(rename = "waterpurifiers")]
+    #[serde(alias = "waterpurifiers")]
     WaterPurifiers,
 
     // Medicines
-    #[serde(rename = "advancedmedicines")]
+    #[serde(alias = "advancedmedicines")]
     AdvancedMedicines,
 
-    #[serde(rename = "agrimedicines")]
+    #[serde(alias = "agrimedicines")]
     AgriMedicines,
 
-    #[serde(rename = "basicmedicines")]
+    #[serde(alias = "basicmedicines")]
     BasicMedicines,
 
-    #[serde(rename = "combatstabilisers")]
+    #[serde(alias = "combatstabilisers")]
     CombatStabilisers,
 
-    #[serde(rename = "performanceenhancers")]
+    #[serde(alias = "performanceenhancers")]
     PerformanceEnhancers,
 
-    #[serde(rename = "progenitorcells")]
+    #[serde(alias = "progenitorcells")]
     ProgenitorCells,
 
     // Metals
-    #[serde(rename = "aluminium")]
+    #[serde(alias = "aluminium")]
     Aluminium,
 
-    #[serde(rename = "beryllium")]
+    #[serde(alias = "beryllium")]
     Beryllium,
 
-    #[serde(rename = "bismuth")]
+    #[serde(alias = "bismuth")]
     Bismuth,
 
-    #[serde(rename = "cobalt")]
+    #[serde(alias = "cobalt")]
     Cobalt,
 
-    #[serde(rename = "copper")]
+    #[serde(alias = "copper")]
     Copper,
 
-    #[serde(rename = "gallium")]
+    #[serde(alias = "gallium")]
     Gallium,
 
-    #[serde(rename = "gold")]
+    #[serde(alias = "gold")]
     Gold,
 
-    #[serde(rename = "hafnium178")]
+    #[serde(alias = "hafnium178")]
     Hafnium178,
 
-    #[serde(rename = "indium")]
+    #[serde(alias = "indium")]
     Indium,
 
-    #[serde(rename = "lanthanum")]
+    #[serde(alias = "lanthanum")]
     Lanthanum,
 
-    #[serde(rename = "lithium")]
+    #[serde(alias = "lithium")]
     Lithium,
 
-    #[serde(rename = "osmium")]
+    #[serde(alias = "osmium")]
     Osmium,
 
-    #[serde(rename = "palladium")]
+    #[serde(alias = "palladium")]
     Palladium,
 
-    #[serde(rename = "platinum")]
+    #[serde(alias = "platinum")]
     Platinum,
 
-    #[serde(rename = "praseodymium")]
+    #[serde(alias = "praseodymium")]
     Praseodymium,
 
-    #[serde(rename = "samarium")]
+    #[serde(alias = "samarium")]
     Samarium,
 
-    #[serde(rename = "silver")]
+    #[serde(alias = "silver", alias = "$Silver_Name;")]
     Silver,
 
-    #[serde(rename = "tantalum")]
+    #[serde(alias = "tantalum")]
     Tantalum,
 
-    #[serde(rename = "thallium")]
+    #[serde(alias = "thallium")]
     Thallium,
 
-    #[serde(rename = "thorium")]
+    #[serde(alias = "thorium")]
     Thorium,
 
-    #[serde(rename = "titanium")]
+    #[serde(alias = "titanium")]
     Titanium,
 
-    #[serde(rename = "uranium")]
+    #[serde(alias = "uranium")]
     Uranium,
 
     // Minerals
-    #[serde(rename = "alexandrite")]
+    #[serde(alias = "alexandrite")]
     Alexandrite,
 
-    #[serde(rename = "bauxite")]
+    #[serde(alias = "bauxite")]
     Bauxite,
 
-    #[serde(rename = "benitoite")]
+    #[serde(alias = "benitoite")]
     Benitoite,
 
-    #[serde(rename = "bertrandite")]
+    #[serde(alias = "bertrandite")]
     Bertrandite,
 
-    #[serde(rename = "bromellite")]
+    #[serde(alias = "bromellite")]
     Bromellite,
 
-    #[serde(rename = "coltan")]
+    #[serde(alias = "coltan")]
     Coltan,
 
-    #[serde(rename = "cryolite")]
+    #[serde(alias = "cryolite")]
     Cryolite,
 
-    #[serde(rename = "gallite")]
+    #[serde(alias = "gallite")]
     Gallite,
 
-    #[serde(rename = "goslarite")]
+    #[serde(alias = "goslarite")]
     Goslarite,
 
-    #[serde(rename = "grandidierite")]
+    #[serde(alias = "grandidierite")]
     Grandidierite,
 
-    #[serde(rename = "indite")]
+    #[serde(alias = "indite", alias = "$Indite_Name;")]
     Indite,
 
-    #[serde(rename = "jadeite")]
+    #[serde(alias = "jadeite")]
     Jadeite,
 
-    #[serde(rename = "lepidolite")]
+    #[serde(alias = "lepidolite")]
     Lepidolite,
 
-    #[serde(rename = "lithiumhydroxide")]
+    #[serde(alias = "lithiumhydroxide")]
     LithiumHydroxide,
 
-    #[serde(rename = "lowtemperaturediamonds")]
+    #[serde(alias = "lowtemperaturediamonds")]
     LowTemperatureDiamonds,
 
-    #[serde(rename = "methaneclathrate")]
+    #[serde(alias = "methaneclathrate")]
     MethaneClathrate,
 
-    #[serde(rename = "methanolmonohydratecrystals")]
+    #[serde(alias = "methanolmonohydratecrystals")]
     MethanolMonohydrateCrystals,
 
-    #[serde(rename = "moissanite")]
+    #[serde(alias = "moissanite")]
     Moissanite,
 
-    #[serde(rename = "monazite")]
+    #[serde(alias = "monazite")]
     Monazite,
 
-    #[serde(rename = "musgravite")]
+    #[serde(alias = "musgravite")]
     Musgravite,
 
-    #[serde(rename = "painite")]
+    #[serde(alias = "painite")]
     Painite,
 
-    #[serde(rename = "pyrophyllite")]
+    #[serde(alias = "pyrophyllite")]
     Pyrophyllite,
 
-    #[serde(rename = "rhodplumsite")]
+    #[serde(alias = "rhodplumsite")]
     Rhodplumsite,
 
-    #[serde(rename = "rutile")]
+    #[serde(alias = "rutile")]
     Rutile,
 
-    #[serde(rename = "serendibite")]
+    #[serde(alias = "serendibite")]
     Serendibite,
 
-    #[serde(rename = "taaffeite")]
+    #[serde(alias = "taaffeite")]
     Taaffeite,
 
-    #[serde(rename = "uraninite")]
+    #[serde(alias = "uraninite")]
     Uraninite,
 
-    #[serde(rename = "voidopal")]
+    #[serde(alias = "voidopal")]
     VoidOpal,
 
     // Salvage
-    #[serde(rename = "airelics")]
+    #[serde(alias = "airelics")]
     AIRelics,
 
-    #[serde(rename = "ancientartefact")]
+    #[serde(alias = "ancientartefact")]
     AncientArtefact,
 
-    #[serde(rename = "ancientkey")]
+    #[serde(alias = "ancientkey")]
     AncientKey,
 
-    #[serde(rename = "anomalyparticles")]
+    #[serde(alias = "anomalyparticles")]
     AnomalyParticles,
 
-    #[serde(rename = "antimattercontainmentunit")]
+    #[serde(alias = "antimattercontainmentunit")]
     AntimatterContainmentUnit,
 
-    #[serde(rename = "aniquejewellery")]
+    #[serde(alias = "aniquejewellery")]
     AniqueJewellery,
 
-    #[serde(rename = "antiquities")]
+    #[serde(alias = "antiquities")]
     Antiquities,
 
-    #[serde(rename = "assaultplans")]
+    #[serde(alias = "assaultplans")]
     AssaultPlans,
 
-    #[serde(rename = "blackbox")]
+    #[serde(alias = "blackbox")]
     BlackBox,
 
-    #[serde(rename = "bonefragments")]
+    #[serde(alias = "bonefragments")]
     BoneFragments,
 
-    #[serde(rename = "caustictissuesample")]
+    #[serde(alias = "caustictissuesample")]
     CausticTissueSample,
 
-    #[serde(rename = "commercialsamples")]
+    #[serde(alias = "commercialsamples")]
     CommercialSamples,
 
-    #[serde(rename = "coralsap")]
+    #[serde(alias = "coralsap")]
     CoralSap,
 
-    #[serde(rename = "cystspecimen")]
+    #[serde(alias = "cystspecimen")]
     CystSpecimen,
 
-    #[serde(rename = "damagedescapepod")]
+    #[serde(alias = "damagedescapepod")]
     DamagedEscapePod,
 
-    #[serde(rename = "datacore")]
+    #[serde(alias = "datacore")]
     DataCore,
 
-    #[serde(rename = "diplomaticbag")]
+    #[serde(alias = "diplomaticbag")]
     DiplomaticBag,
 
-    #[serde(rename = "earthrelics")]
+    #[serde(alias = "earthrelics")]
     EarthRelics,
 
-    #[serde(rename = "encryptedcorrespondence")]
+    #[serde(alias = "encryptedcorrespondence")]
     EncryptedCorrespondence,
 
-    #[serde(rename = "encrypteddatastorage")]
+    #[serde(alias = "encrypteddatastorage")]
     EncryptedDataStorage,
 
-    #[serde(rename = "experimentalchemicals")]
+    #[serde(alias = "experimentalchemicals")]
     ExperimentalChemicals,
 
-    #[serde(rename = "fossilremnants")]
+    #[serde(alias = "fossilremnants")]
     FossilRemnants,
 
-    #[serde(rename = "genebank")]
+    #[serde(alias = "genebank")]
     GeneBank,
 
-    #[serde(rename = "geologicalsamples")]
+    #[serde(alias = "geologicalsamples")]
     GeologicalSamples,
 
-    #[serde(rename = "guardiancasket")]
+    #[serde(alias = "guardiancasket")]
     GuardianCasket,
 
-    #[serde(rename = "guardianorb")]
+    #[serde(alias = "guardianorb")]
     GuardianOrb,
 
-    #[serde(rename = "AncientRelic", alias = "ancientrelic")]
+    #[serde(alias = "AncientRelic", alias = "ancientrelic")]
     GuardianRelic,
 
-    #[serde(rename = "guardiantablet")]
+    #[serde(alias = "guardiantablet")]
     GuardianTablet,
 
-    #[serde(rename = "guardiantotem")]
+    #[serde(alias = "guardiantotem")]
     GuardianTotem,
 
-    #[serde(rename = "guardianurn")]
+    #[serde(alias = "guardianurn")]
     GuardianUrn,
 
-    #[serde(rename = "hostages")]
+    #[serde(alias = "hostages")]
     Hostages,
 
-    #[serde(rename = "impurespiremineral")]
+    #[serde(alias = "impurespiremineral")]
     ImpureSpireMineral,
 
-    #[serde(rename = "largesurveydatacache")]
+    #[serde(alias = "largesurveydatacache")]
     LargeSurveyDataCache,
 
-    #[serde(rename = "militaryintelligence")]
+    #[serde(alias = "militaryintelligence")]
     MilitaryIntelligence,
 
-    #[serde(rename = "militaryplans")]
+    #[serde(alias = "militaryplans")]
     MilitaryPlans,
 
-    #[serde(rename = "molluscbraintissue")]
+    #[serde(alias = "molluscbraintissue")]
     MolluscBrainTissue,
 
-    #[serde(rename = "molluscfluid")]
+    #[serde(alias = "molluscfluid")]
     MolluscFluid,
 
-    #[serde(rename = "molluscmembrane")]
+    #[serde(alias = "molluscmembrane")]
     MolluscMembrane,
 
-    #[serde(rename = "molluscmycelium")]
+    #[serde(alias = "molluscmycelium")]
     MolluscMycelium,
 
-    #[serde(rename = "molluscsofttissue")]
+    #[serde(alias = "molluscsofttissue")]
     MolluscSoftTissue,
 
-    #[serde(rename = "molluscspores")]
+    #[serde(alias = "molluscspores")]
     MolluscSpores,
 
-    #[serde(rename = "mysteriousidol")]
+    #[serde(alias = "mysteriousidol")]
     MysteriousIdol,
 
-    #[serde(rename = "occupiedescapepod")]
+    #[serde(alias = "occupiedescapepod")]
     OccupiedEscapePod,
 
-    #[serde(rename = "organsample")]
+    #[serde(alias = "organsample")]
     OrganSample,
 
-    #[serde(rename = "personaleffects")]
+    #[serde(alias = "personaleffects")]
     PersonalEffects,
 
-    #[serde(rename = "podcoretissue")]
+    #[serde(alias = "podcoretissue")]
     PodCoreTissue,
 
-    #[serde(rename = "poddeadtissue")]
+    #[serde(alias = "poddeadtissue")]
     PodDeadTissue,
 
-    #[serde(rename = "podmesoglea")]
+    #[serde(alias = "podmesoglea")]
     PodMesoglea,
 
-    #[serde(rename = "podoutertissue")]
+    #[serde(alias = "podoutertissue")]
     PodOuterTissue,
 
-    #[serde(rename = "podshelltissue")]
+    #[serde(alias = "podshelltissue")]
     PodShellTissue,
 
-    #[serde(rename = "podsurfacetissue")]
+    #[serde(alias = "podsurfacetissue")]
     PodSurfaceTissue,
 
-    #[serde(rename = "podtissue")]
+    #[serde(alias = "podtissue")]
     PodTissue,
 
-    #[serde(rename = "politicalprisoners")]
+    #[serde(alias = "politicalprisoners")]
     PoliticalPrisoners,
 
-    #[serde(rename = "preciousgems")]
+    #[serde(alias = "preciousgems")]
     PreciousGems,
 
-    #[serde(rename = "prohibitedresearchmaterials")]
+    #[serde(alias = "prohibitedresearchmaterials")]
     ProhibitedResearchMaterials,
 
-    #[serde(rename = "protectivemembranescrap")]
+    #[serde(alias = "protectivemembranescrap")]
     ProtectiveMembraneScrap,
 
-    #[serde(rename = "prototypetech")]
+    #[serde(alias = "prototypetech")]
     PrototypeTech,
 
-    #[serde(rename = "rareartwork")]
+    #[serde(alias = "rareartwork")]
     RareArtwork,
 
-    #[serde(rename = "rebeltransmission")]
+    #[serde(alias = "rebeltransmission")]
     RebelTransmission,
 
-    #[serde(rename = "sap8corecontainer")]
+    #[serde(alias = "sap8corecontainer")]
     SAP8CoreContainer,
 
-    #[serde(rename = "scientificresearch")]
+    #[serde(alias = "scientificresearch")]
     ScientificResearch,
 
-    #[serde(rename = "scientificsamples")]
+    #[serde(alias = "scientificsamples")]
     ScientificSamples,
 
-    #[serde(rename = "semirefinesspiremineral")]
+    #[serde(alias = "semirefinesspiremineral")]
     SemiRefinesSpireMineral,
 
-    #[serde(rename = "smallsurveydatacache")]
+    #[serde(alias = "smallsurveydatacache")]
     SmallSurveyDataCache,
 
-    #[serde(rename = "spacepioneerrelics")]
+    #[serde(alias = "spacepioneerrelics")]
     SpacePioneerRelics,
 
-    #[serde(rename = "tacticaldata")]
+    #[serde(alias = "tacticaldata")]
     TacticalData,
 
-    #[serde(rename = "technicalblueprints")]
+    #[serde(alias = "technicalblueprints")]
     TechnicalBlueprints,
 
-    #[serde(rename = "thargoidbasilisktissuesample")]
+    #[serde(alias = "thargoidbasilisktissuesample")]
     ThargoidBasiliskTissueSample,
 
-    #[serde(rename = "thargoidbiostoragecapsule")]
+    #[serde(alias = "thargoidbiostoragecapsule")]
     ThargoidBioStorageCapsule,
 
-    #[serde(rename = "thargoidbiologicalmatter")]
+    #[serde(alias = "thargoidbiologicalmatter")]
     ThargoidBiologicalMatter,
 
-    #[serde(rename = "thargoidcyclopstissuesample")]
+    #[serde(alias = "thargoidcyclopstissuesample")]
     ThargoidCyclopsTissueSample,
 
-    #[serde(rename = "thargoidglaivetissuesample")]
+    #[serde(alias = "thargoidglaivetissuesample")]
     ThargoidGlaiveTissueSample,
 
-    #[serde(rename = "thargoidheart")]
+    #[serde(alias = "thargoidheart")]
     ThargoidHeart,
 
-    #[serde(rename = "thargoidhydratissuesample")]
+    #[serde(alias = "thargoidhydratissuesample")]
     ThargoidHydraTissueSample,
 
-    #[serde(rename = "thargoidlink")]
+    #[serde(alias = "thargoidlink")]
     ThargoidLink,
 
-    #[serde(rename = "thargoidmedusatissuesample")]
+    #[serde(alias = "thargoidmedusatissuesample")]
     ThargoidMedusaTissueSample,
 
-    #[serde(rename = "thargoidorthrustissuesample")]
+    #[serde(alias = "thargoidorthrustissuesample")]
     ThargoidOrthrusTissueSample,
 
-    #[serde(rename = "thargoidprobe")]
+    #[serde(alias = "thargoidprobe")]
     ThargoidProbe,
 
-    #[serde(rename = "thargoidresin")]
+    #[serde(alias = "thargoidresin")]
     ThargoidResin,
 
-    #[serde(rename = "thargoidscouttissuesample")]
+    #[serde(alias = "thargoidscouttissuesample")]
     ThargoidScoutTissueSample,
 
-    #[serde(rename = "thargoidscythetissuesample")]
+    #[serde(alias = "thargoidscythetissuesample")]
     ThargoidScytheTissueSample,
 
-    #[serde(rename = "ThargoidGeneratorTissueSample", alias = "thargoidgeneratortissuesample")]
+    #[serde(alias = "ThargoidGeneratorTissueSample", alias = "thargoidgeneratortissuesample")]
     ThargoidGeneratorTissueSample,
 
-    #[serde(rename = "thargoidsensor")]
+    #[serde(alias = "thargoidsensor")]
     ThargoidSensor,
 
-    #[serde(rename = "thargoidtechnologysamples")]
+    #[serde(alias = "thargoidtechnologysamples")]
     ThargoidTechnologySamples,
 
-    #[serde(rename = "timecapsule")]
+    #[serde(alias = "timecapsule")]
     TimeCapsule,
 
-    #[serde(rename = "titandeeptissuesample")]
+    #[serde(alias = "titandeeptissuesample")]
     TitanDeepTissueSample,
 
-    #[serde(rename = "titandrivecomponent")]
+    #[serde(alias = "titandrivecomponent")]
     TitanDriveComponent,
 
-    #[serde(rename = "titanmawdeeptissuesample")]
+    #[serde(alias = "titanmawdeeptissuesample")]
     TitanMawDeepTissueSample,
 
-    #[serde(rename = "titanmawpartialtissuesample")]
+    #[serde(alias = "titanmawpartialtissuesample")]
     TitanMawPartialTissueSample,
 
-    #[serde(rename = "titanmawtissuesample")]
+    #[serde(alias = "titanmawtissuesample")]
     TitanMawTissueSample,
 
-    #[serde(rename = "titanpartialtissuesample")]
+    #[serde(alias = "titanpartialtissuesample")]
     TitanPartialTissueSample,
 
-    #[serde(rename = "titantissuesample")]
+    #[serde(alias = "titantissuesample")]
     TitanTissueSample,
 
-    #[serde(rename = "tradedata")]
+    #[serde(alias = "tradedata")]
     TradeData,
 
-    #[serde(rename = "trinketsofhiddenfortune")]
+    #[serde(alias = "trinketsofhiddenfortune")]
     TrinketsOfHiddenFortune,
 
-    #[serde(rename = "unclassifiedrelic")]
+    #[serde(alias = "unclassifiedrelic")]
     UnclassifiedRelic,
 
-    #[serde(rename = "unoccupiedescapepod")]
+    #[serde(alias = "unoccupiedescapepod")]
     UnoccupiedEscapePod,
 
-    #[serde(rename = "unstabledatacore")]
+    #[serde(alias = "unstabledatacore")]
     UnstableDataCore,
 
-    #[serde(rename = "wreckagecomponents")]
+    #[serde(alias = "wreckagecomponents")]
     WreckageComponents,
 
     // Slaves
-    #[serde(rename = "imperialslaves")]
+    #[serde(alias = "imperialslaves")]
     ImperialSlaves,
 
-    #[serde(rename = "slaves")]
+    #[serde(alias = "slaves")]
     Slaves,
 
     // Technology
-    #[serde(rename = "advancedcatalysers")]
+    #[serde(alias = "advancedcatalysers")]
     AdvancedCatalysers,
 
-    #[serde(rename = "animalmonitors")]
+    #[serde(alias = "animalmonitors")]
     AnimalMonitors,
 
-    #[serde(rename = "aquaponicsystems")]
+    #[serde(alias = "aquaponicsystems")]
     AquaponicSystems,
 
-    #[serde(rename = "autofabricators")]
+    #[serde(alias = "autofabricators")]
     AutoFabricators,
 
-    #[serde(rename = "bioreducinglichen")]
+    #[serde(alias = "bioreducinglichen")]
     BioreducingLichen,
 
-    #[serde(rename = "computercomponents")]
+    #[serde(alias = "computercomponents")]
     ComputerComponents,
 
-    #[serde(rename = "hesuits")]
+    #[serde(alias = "hesuits")]
     HESuits,
 
-    #[serde(rename = "hardwarediagnosticsensor")]
+    #[serde(alias = "hardwarediagnosticsensor")]
     HardwareDiagnosticSensor,
 
-    #[serde(rename = "landenrichmentsystems")]
+    #[serde(alias = "landenrichmentsystems")]
     LandEnrichmentSystems,
 
-    #[serde(rename = "medialdiagnosticequipment")]
+    #[serde(alias = "medialdiagnosticequipment")]
     MedialDiagnosticEquipment,
 
-    #[serde(rename = "microcontrollers")]
+    #[serde(alias = "microcontrollers")]
     MicroControllers,
 
-    #[serde(rename = "muonimager")]
+    #[serde(alias = "muonimager")]
     MuonImager,
 
-    #[serde(rename = "nanobreakers")]
+    #[serde(alias = "nanobreakers")]
     Nanobreakers,
 
-    #[serde(rename = "resonatingseparators")]
+    #[serde(alias = "resonatingseparators")]
     ResonatingSeparators,
 
-    #[serde(rename = "robotics")]
+    #[serde(alias = "robotics")]
     Robotics,
 
-    #[serde(rename = "structuralregulators")]
+    #[serde(alias = "structuralregulators")]
     StructuralRegulators,
 
-    #[serde(rename = "telemetrysuite")]
+    #[serde(alias = "telemetrysuite")]
     TelemetrySuite,
 
     // Textiles
-    #[serde(rename = "conductivefabrics")]
+    #[serde(alias = "conductivefabrics")]
     ConductiveFabrics,
 
-    #[serde(rename = "leather")]
+    #[serde(alias = "leather")]
     Leather,
 
-    #[serde(rename = "militarygradefabrics")]
+    #[serde(alias = "militarygradefabrics")]
     MilitaryGradeFabrics,
 
-    #[serde(rename = "naturalfabrics")]
+    #[serde(alias = "naturalfabrics")]
     NaturalFabrics,
 
-    #[serde(rename = "syntheticfabrics")]
+    #[serde(alias = "syntheticfabrics")]
     SyntheticFabrics,
 
     // Waste
-    #[serde(rename = "biowaste")]
+    #[serde(alias = "biowaste")]
     Biowaste,
 
-    #[serde(rename = "chemicalwaste")]
+    #[serde(alias = "chemicalwaste")]
     ChemicalWaste,
 
-    #[serde(rename = "scrap")]
+    #[serde(alias = "scrap")]
     Scrap,
 
-    #[serde(rename = "toxicwaste")]
+    #[serde(alias = "toxicwaste")]
     ToxicWaste,
 
     // Weapons
-    #[serde(rename = "battleweapons")]
+    #[serde(alias = "battleweapons")]
     BattleWeapons,
 
-    #[serde(rename = "landmines")]
+    #[serde(alias = "landmines")]
     Landmines,
 
-    #[serde(rename = "nonlethalweapons")]
+    #[serde(alias = "nonlethalweapons")]
     NonLethalWeapons,
 
-    #[serde(rename = "personalweapons")]
+    #[serde(alias = "personalweapons")]
     PersonalWeapons,
 
-    #[serde(rename = "reactivearmour")]
+    #[serde(alias = "reactivearmour")]
     ReactiveArmour,
 
     // Rare
-    #[serde(rename = "jaquesquinentianstill")]
+    #[serde(alias = "jaquesquinentianstill")]
     JaquesQuinentianStill,
 
-    #[serde(rename = "kinagoviolins")]
+    #[serde(alias = "kinagoviolins")]
     KinagoViolins,
 
-    #[serde(rename = "apavietii")]
+    #[serde(alias = "apavietii")]
     ApaVietii,
 
-    #[serde(rename = "geawendancedust")]
+    #[serde(alias = "geawendancedust")]
     GeawenDanceDust,
 
-    #[serde(rename = "vanayequiceratomorphafur")]
+    #[serde(alias = "vanayequiceratomorphafur")]
     VanayequiCeratomorphaFur,
 
-    #[serde(rename = "karetiicouture")]
+    #[serde(alias = "karetiicouture")]
     KaretiiCouture,
 
-    #[serde(rename = "mukusubiichitinos")]
+    #[serde(alias = "mukusubiichitinos")]
     MukusubiiChitinos,
 
-    #[serde(rename = "ultracompactprocessorprototypes")]
+    #[serde(alias = "ultracompactprocessorprototypes")]
     UltraCompactProcessorPrototypes,
 
-    #[serde(rename = "eleuthermals")]
+    #[serde(alias = "eleuthermals")]
     EleuThermals,
 
-    #[serde(rename = "kamorinhistoricweapons")]
+    #[serde(alias = "kamorinhistoricweapons")]
     KamorinHistoricWeapons,
 
-    #[serde(rename = "ceremonialheiketea")]
+    #[serde(alias = "ceremonialheiketea")]
     CeremonialHeikeTea,
 
-    #[serde(rename = "vidavantianlace")]
+    #[serde(alias = "vidavantianlace")]
     VidavantianLace,
 
-    #[serde(rename = "kachiriginfilterleeches")]
+    #[serde(alias = "kachiriginfilterleeches")]
     KachiriginFilterLeeches,
 
-    #[serde(rename = "lyraeweed")]
+    #[serde(alias = "lyraeweed")]
     LyraeWeed,
 
-    #[serde(rename = "galactictravelguide")]
+    #[serde(alias = "galactictravelguide")]
     GalacticTravelGuide,
 
-    #[serde(rename = "harmasilversearum")]
+    #[serde(alias = "harmasilversearum")]
     HarmaSilverSeaRum,
 
-    #[serde(rename = "ngadandarifireopals")]
+    #[serde(alias = "ngadandarifireopals")]
     NgadandariFireOpals,
 
-    #[serde(rename = "alyabodysoap")]
+    #[serde(alias = "alyabodysoap")]
     AlyaBodySoap,
 
-    #[serde(rename = "helvetitjpearls")]
+    #[serde(alias = "helvetitjpearls")]
     HelvetitjPearls,
 
-    #[serde(rename = "ochoengchillies")]
+    #[serde(alias = "ochoengchillies")]
     OchoengChillies,
 
-    #[serde(rename = "onionheadbetastrain")]
+    #[serde(alias = "onionheadbetastrain")]
     OnionheadBetaStrain,
 
-    #[serde(rename = "kamitracigars")]
+    #[serde(alias = "kamitracigars")]
     KamitraCigars,
 
-    #[serde(rename = "njangarisaddles")]
+    #[serde(alias = "njangarisaddles")]
     NjangariSaddles,
 
-    #[serde(rename = "hiporganophosphates")]
+    #[serde(alias = "hiporganophosphates")]
     HipOrganophosphates,
 
-    #[serde(rename = "gilyasignatureweapons")]
+    #[serde(alias = "gilyasignatureweapons")]
     GilyaSignatureWeapons,
 
-    #[serde(rename = "hr7221wheat")]
+    #[serde(alias = "hr7221wheat")]
     HR7221Wheat,
 
-    #[serde(rename = "wheemetewheatcakes")]
+    #[serde(alias = "wheemetewheatcakes")]
     WheemeteWheatCakes,
 
-    #[serde(rename = "rajukrumultistoves")]
+    #[serde(alias = "rajukrumultistoves")]
     RajukruMultiStoves,
 
-    #[serde(rename = "nanomedicines")]
+    #[serde(alias = "nanomedicines")]
     Nanomedicines,
 
-    #[serde(rename = "noneuclidianexotanks")]
+    #[serde(alias = "noneuclidianexotanks")]
     NonEuclidianExotanks,
 
-    #[serde(rename = "ngunamodernantiques")]
+    #[serde(alias = "ngunamodernantiques")]
     NgunaModernAntiques,
 
-    #[serde(rename = "xihebiomorphiccompanions")]
+    #[serde(alias = "xihebiomorphiccompanions")]
     XiheBiomorphicCompanions,
 
-    #[serde(rename = "esusekucaviar")]
+    #[serde(alias = "esusekucaviar")]
     EsusekuCaviar,
 
-    #[serde(rename = "orrerianviciousbrew")]
+    #[serde(alias = "orrerianviciousbrew")]
     OrrerianViciousBrew,
 
-    #[serde(rename = "vherculisbodyrub")]
+    #[serde(alias = "vherculisbodyrub")]
     VHerculisBodyRub,
 
-    #[serde(rename = "voidextractcoffee")]
+    #[serde(alias = "voidextractcoffee")]
     VoidExtractCoffee,
 
-    #[serde(rename = "uszaiantreegrub")]
+    #[serde(alias = "uszaiantreegrub")]
     UszaianTreeGrub,
 
-    #[serde(rename = "haidenblackbrew")]
+    #[serde(alias = "haidenblackbrew")]
     HaidenBlackBrew,
 
-    #[serde(rename = "motronaexperiencejelly")]
+    #[serde(alias = "motronaexperiencejelly")]
     MotronaExperienceJelly,
 
-    #[serde(rename = "jaradharrepuzzlebox")]
+    #[serde(alias = "jaradharrepuzzlebox")]
     JaradharrePuzzleBox,
 
-    #[serde(rename = "personalgifts")]
+    #[serde(alias = "personalgifts")]
     PersonalGifts,
 
-    #[serde(rename = "mulachigiantfungus")]
+    #[serde(alias = "mulachigiantfungus")]
     MulachiGiantFungus,
 
-    #[serde(rename = "ltthypersweet")]
+    #[serde(alias = "ltthypersweet")]
     LTTHyperSweet,
 
-    #[serde(rename = "medbstarlube")]
+    #[serde(alias = "medbstarlube")]
     MedbStarlube,
 
-    #[serde(rename = "giantverrix")]
+    #[serde(alias = "giantverrix")]
     GiantVerrix,
 
-    #[serde(rename = "hip118311swarm")]
+    #[serde(alias = "hip118311swarm")]
     HIP118311Swarm,
 
-    #[serde(rename = "disomacorn")]
+    #[serde(alias = "disomacorn")]
     DisoMaCorn,
 
-    #[serde(rename = "lavianbrandy")]
+    #[serde(alias = "lavianbrandy")]
     LavianBrandy,
 
-    #[serde(rename = "azuremilk")]
+    #[serde(alias = "azuremilk")]
     AzureMilk,
 
-    #[serde(rename = "leestianeviljuice")]
+    #[serde(alias = "leestianeviljuice")]
     LeestianEvilJuice,
 
-    #[serde(rename = "coquimspongiformvictuals")]
+    #[serde(alias = "coquimspongiformvictuals")]
     CoquimSpongiformVictuals,
 
-    #[serde(rename = "leatheryeggs")]
+    #[serde(alias = "leatheryeggs")]
     LeatheryEggs,
 
-    #[serde(rename = "shanscharisorchid")]
+    #[serde(alias = "shanscharisorchid")]
     ShansCharisOrchid,
 
-    #[serde(rename = "konggaale")]
+    #[serde(alias = "konggaale")]
     KonggaAle,
 
-    #[serde(rename = "vegaslimweed")]
+    #[serde(alias = "vegaslimweed")]
     VegaSlimweed,
 
-    #[serde(rename = "tiolcewaste2pasteunits")]
+    #[serde(alias = "tiolcewaste2pasteunits")]
     TiolceWaste2PasteUnits,
 
-    #[serde(rename = "ophiuchexinoartefacts")]
+    #[serde(alias = "ophiuchexinoartefacts")]
     OphiuchExinoArtefacts,
 
-    #[serde(rename = "altairianskin")]
+    #[serde(alias = "altairianskin")]
     AltairianSkin,
 
-    #[serde(rename = "aganipperush")]
+    #[serde(alias = "aganipperush")]
     AganippeRush,
 
-    #[serde(rename = "cd75kittenbrandcoffee")]
+    #[serde(alias = "cd75kittenbrandcoffee")]
     CD75KittenBrandCoffee,
 
-    #[serde(rename = "havasupaidreamcatcher")]
+    #[serde(alias = "havasupaidreamcatcher")]
     HavasupaiDreamCatcher,
 
-    #[serde(rename = "eraninpearlwhisky")]
+    #[serde(alias = "eraninpearlwhisky")]
     EraninPearlWhisky,
 
-    #[serde(rename = "pavoniseargrubs")]
+    #[serde(alias = "pavoniseargrubs")]
     PavonisEarGrubs,
 
-    #[serde(rename = "onionheadalphastrain")]
+    #[serde(alias = "onionheadalphastrain")]
     OnionheadAlphaStrain,
 
-    #[serde(rename = "indibourbon")]
+    #[serde(alias = "indibourbon")]
     IndiBourbon,
 
-    #[serde(rename = "bakedgreebles")]
+    #[serde(alias = "bakedgreebles")]
     BakedGreebles,
 
-    #[serde(rename = "karsukilocusts")]
+    #[serde(alias = "karsukilocusts")]
     KarsukiLocusts,
 
-    #[serde(rename = "masterchefs")]
+    #[serde(alias = "masterchefs")]
     MasterChefs,
 
-    #[serde(rename = "yasokondileaf")]
+    #[serde(alias = "yasokondileaf")]
     YasoKondiLeaf,
 
-    #[serde(rename = "burnhambiledistillate")]
+    #[serde(alias = "burnhambiledistillate")]
     BurnhamBileDistillate,
 
-    #[serde(rename = "thehuttonmug")]
+    #[serde(alias = "thehuttonmug")]
     TheHuttonMug,
 
-    #[serde(rename = "centaurimegagin")]
+    #[serde(alias = "centaurimegagin")]
     CentauriMegaGin,
 
-    #[serde(rename = "utgaroarmillennialeggs")]
+    #[serde(alias = "utgaroarmillennialeggs")]
     UtgaroarMillennialEggs,
 
-    #[serde(rename = "soontillrelics")]
+    #[serde(alias = "soontillrelics")]
     SoontillRelics,
 
-    #[serde(rename = "zeesszeantgrubglue")]
+    #[serde(alias = "zeesszeantgrubglue")]
     ZeesszeAntGrubGlue,
 
-    #[serde(rename = "thewatersofshintara")]
+    #[serde(alias = "thewatersofshintara")]
     TheWatersOfShintara,
 
-    #[serde(rename = "baltahsinevacuumkrill")]
+    #[serde(alias = "baltahsinevacuumkrill")]
     BaltahsineVacuumKrill,
 
-    #[serde(rename = "sanumadecorativemeat")]
+    #[serde(alias = "sanumadecorativemeat")]
     SanumaDecorativeMeat,
 
-    #[serde(rename = "giantirukamasnails")]
+    #[serde(alias = "giantirukamasnails")]
     GiantIrukamaSnails,
 
-    #[serde(rename = "anduligafireworks")]
+    #[serde(alias = "anduligafireworks")]
     AnduligaFireWorks,
 
-    #[serde(rename = "crystallinespheres")]
+    #[serde(alias = "crystallinespheres")]
     CrystallineSpheres,
 
-    #[serde(rename = "pantaaprayersticks")]
+    #[serde(alias = "pantaaprayersticks")]
     PantaaPrayerSticks,
 
-    #[serde(rename = "chieridanimarinepaste")]
+    #[serde(alias = "chieridanimarinepaste")]
     ChiEridaniMarinePaste,
 
-    #[serde(rename = "ethgrezeteabuds")]
+    #[serde(alias = "ethgrezeteabuds")]
     EthgrezeTeaBuds,
 
-    #[serde(rename = "deltaphoenicispalms")]
+    #[serde(alias = "deltaphoenicispalms")]
     DeltaPhoenicisPalms,
 
-    #[serde(rename = "tarachspice")]
+    #[serde(alias = "tarachspice")]
     TarachSpice,
 
-    #[serde(rename = "wulpahyperboresystems")]
+    #[serde(alias = "wulpahyperboresystems")]
     WulpaHyperboreSystems,
 
-    #[serde(rename = "livehecateseaworms")]
+    #[serde(alias = "livehecateseaworms")]
     LiveHecateSeaWorms,
 
-    #[serde(rename = "korokungpellets")]
+    #[serde(alias = "korokungpellets")]
     KoroKungPellets,
 
-    #[serde(rename = "bastsnakegin")]
+    #[serde(alias = "bastsnakegin")]
     BastSnakeGin,
 
-    #[serde(rename = "terramaterbloodbores")]
+    #[serde(alias = "terramaterbloodbores")]
     TerraMaterBloodBores,
 
-    #[serde(rename = "wuthielokufroth")]
+    #[serde(alias = "wuthielokufroth")]
     WuthieloKuFroth,
 
-    #[serde(rename = "honestypills")]
+    #[serde(alias = "honestypills")]
     HonestyPills,
 
-    #[serde(rename = "cromsilverfesh")]
+    #[serde(alias = "cromsilverfesh")]
     CromSilverFesh,
 
-    #[serde(rename = "borasetanipathogenetics")]
+    #[serde(alias = "borasetanipathogenetics")]
     BorasetaniPathogenetics,
 
-    #[serde(rename = "cetirabbits")]
+    #[serde(alias = "cetirabbits")]
     CetiRabbits,
 
-    #[serde(rename = "aepyornisegg")]
+    #[serde(alias = "aepyornisegg")]
     AepyornisEgg,
 
-    #[serde(rename = "uzumokulowgwings")]
+    #[serde(alias = "uzumokulowgwings")]
     UzumokuLowGWings,
 
-    #[serde(rename = "cherbonesbloodcrystals")]
+    #[serde(alias = "cherbonesbloodcrystals")]
     CherbonesBloodCrystals,
 
-    #[serde(rename = "toxandjivirocide")]
+    #[serde(alias = "toxandjivirocide")]
     ToxandjiVirocide,
 
-    #[serde(rename = "onionhead")]
+    #[serde(alias = "onionhead")]
     Onionhead,
 
-    #[serde(rename = "lucanonionhead")]
+    #[serde(alias = "lucanonionhead")]
     LucanOnionhead,
 
-    #[serde(rename = "tanmarktranquiltea")]
+    #[serde(alias = "tanmarktranquiltea")]
     TanmarkTranquilTea,
 
-    #[serde(rename = "thrutiscream")]
+    #[serde(alias = "thrutiscream")]
     ThrutisCream,
 
-    #[serde(rename = "alacarakmoskinart")]
+    #[serde(alias = "alacarakmoskinart")]
     AlacarakmoSkinArt,
 
-    #[serde(rename = "platinumalloy")]
+    #[serde(alias = "platinumalloy")]
     PlatinumAlloy,
 
-    #[serde(rename = "mokojingbeastfeast")]
+    #[serde(alias = "mokojingbeastfeast")]
     MokojingBeastFeast,
 
-    #[serde(rename = "edenapplesofaerial")]
+    #[serde(alias = "edenapplesofaerial")]
     EdenApplesOfAerial,
 
-    #[serde(rename = "chameleoncloth")]
+    #[serde(alias = "chameleoncloth")]
     ChameleonCloth,
 
-    #[serde(rename = "taurichimes")]
+    #[serde(alias = "taurichimes")]
     TauriChimes,
 
-    #[serde(rename = "rusanioldsmokey")]
+    #[serde(alias = "rusanioldsmokey")]
     RusaniOldSmokey,
 
-    #[serde(rename = "azcancriformula42")]
+    #[serde(alias = "azcancriformula42")]
     AZCancriFormula42,
 
-    #[serde(rename = "gomanyauponcoffee")]
+    #[serde(alias = "gomanyauponcoffee")]
     GomanYauponCoffee,
 
-    #[serde(rename = "gerasiangueuzebeer")]
+    #[serde(alias = "gerasiangueuzebeer")]
     GerasianGueuzeBeer,
 
-    #[serde(rename = "jarouarice")]
+    #[serde(alias = "jarouarice")]
     JarouaRice,
 
-    #[serde(rename = "anynacoffee")]
+    #[serde(alias = "anynacoffee")]
     AnyNaCoffee,
 
-    #[serde(rename = "fujintea")]
+    #[serde(alias = "fujintea")]
     FujinTea,
 
-    #[serde(rename = "hip10175bushmeat")]
+    #[serde(alias = "hip10175bushmeat")]
     HIP10175BushMeat,
 
-    #[serde(rename = "momusbogspaniel")]
+    #[serde(alias = "momusbogspaniel")]
     MomusBogSpaniel,
 
-    #[serde(rename = "witchhaulkobebeef")]
+    #[serde(alias = "witchhaulkobebeef")]
     WitchhaulKobeBeef,
 
-    #[serde(rename = "saxonwine")]
+    #[serde(alias = "saxonwine")]
     SaxonWine,
 
-    #[serde(rename = "aroucaconventualsweets")]
+    #[serde(alias = "aroucaconventualsweets")]
     AroucaConventualSweets,
 
-    #[serde(rename = "albinoquechuamammothmeat")]
+    #[serde(alias = "albinoquechuamammothmeat")]
     AlbinoQuechuaMammothMeat,
 
-    #[serde(rename = "duradrives")]
+    #[serde(alias = "duradrives")]
     Duradrives,
 
-    #[serde(rename = "holvaduellingblades")]
+    #[serde(alias = "holvaduellingblades")]
     HolvaDuellingBlades,
 
-    #[serde(rename = "rapabaosnakeskins")]
+    #[serde(alias = "rapabaosnakeskins")]
     RapaBaoSnakeSkins,
 
-    #[serde(rename = "wolffesh")]
+    #[serde(alias = "wolffesh")]
     WolfFesh,
 
-    #[serde(rename = "eshuumbrellas")]
+    #[serde(alias = "eshuumbrellas")]
     EshuUmbrellas,
 
-    #[serde(rename = "neritusberries")]
+    #[serde(alias = "neritusberries")]
     NeritusBerries,
 
-    #[serde(rename = "jotunmookah")]
+    #[serde(alias = "jotunmookah")]
     JotunMookah,
 
-    #[serde(rename = "chateaudeaegaeon")]
+    #[serde(alias = "chateaudeaegaeon")]
     ChateauDeAegaeon,
 
-    #[serde(rename = "belalansrayleather")]
+    #[serde(alias = "belalansrayleather")]
     BelalansRayLeather,
 
-    #[serde(rename = "damnacarapaces")]
+    #[serde(alias = "damnacarapaces")]
     DamnaCarapaces,
 
-    #[serde(rename = "hipprotosquid")]
+    #[serde(alias = "hipprotosquid")]
     HIPProtoSquid,
 
-    #[serde(rename = "mechucoshightea")]
+    #[serde(alias = "mechucoshightea")]
     MechucosHighTea,
 
-    #[serde(rename = "deuringastruffles")]
+    #[serde(alias = "deuringastruffles")]
     DeuringasTruffles,
 
-    #[serde(rename = "bankiamphibiousleather")]
+    #[serde(alias = "bankiamphibiousleather")]
     BankiAmphibiousLeather,
 
-    #[serde(rename = "sothiscrystallinegold")]
+    #[serde(alias = "sothiscrystallinegold")]
     SothisCrystallineGold,
 
-    #[serde(rename = "tiegfriessynthsilk")]
+    #[serde(alias = "tiegfriessynthsilk")]
     TiegfriesSynthSilk,
 
-    #[serde(rename = "volkhabbeedrones")]
+    #[serde(alias = "volkhabbeedrones")]
     VolkhabBeeDrones,
 
-    #[serde(rename = "buckyballbeermats")]
+    #[serde(alias = "buckyballbeermats")]
     BuckyballBeerMats,
 
-    #[serde(rename = "classifiedexperimentalequipment")]
+    #[serde(alias = "classifiedexperimentalequipment")]
     ClassifiedExperimentalEquipment,
+
+
+    // Data
+    #[serde(alias = "$EnhancedInterrogationRecordings_Name;")]
+    EnhancedInterrogationRecordings,
+
+
+    // Goods
+    #[serde(alias = "$IonisedGas_Name;")]
+    IonisedGas,
+
+
+    // None
+    #[serde(alias = "drones")]
+    Limpet,
 
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
 }
-
-
-
-
-// use std::str::FromStr;
-// use thiserror::Error;
-// use crate::from_str_deserialize_impl;
-//
-// #[derive(Debug)]
-// #[cfg_attr(test, derive(PartialEq))]
-// pub enum CommodityType {
-//     Wine,
-//
-//     KamitraCigars,
-//
-//     #[cfg(not(feature = "strict"))]
-//     Unknown(String),
-// }
-//
-// #[derive(Debug, Error)]
-// pub enum CommodityTypeParseError {
-//     #[error("Unknown commodity: '{0}'")]
-//     UnknownCommodity(String),
-// }
-//
-// impl FromStr for CommodityType {
-//     type Err = CommodityTypeParseError;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "wine" => Ok(CommodityType::Wine),
-//             "kamitracigars" => Ok(CommodityType::KamitraCigars),
-//
-//             #[cfg(not(feature = "strict"))]
-//             _ => Ok(CommodityType::Unknown(s.to_string())),
-//
-//             #[cfg(feature = "strict")]
-//             _ => Err(CommodityTypeParseError::UnknownCommodity(s.to_string())),
-//         }
-//     }
-// }
-//
-// from_str_deserialize_impl!(CommodityType);
 

@@ -12,6 +12,7 @@ pub struct FriendsEvent {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub enum FriendsEventStatus {
+    Offline,
     Online,
     Added,
     Requested,

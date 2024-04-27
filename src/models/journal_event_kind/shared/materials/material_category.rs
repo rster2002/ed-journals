@@ -6,36 +6,43 @@ use crate::models::journal_event_kind::shared::materials::material::Material;
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialCategory {
+    #[serde(alias = "raw", alias = "$MICRORESOURCE_CATEGORY_Raw;")]
     Raw,
 
+    #[serde(alias = "manufactured", alias = "$MICRORESOURCE_CATEGORY_Manufactured;")]
     Manufactured,
 
-    #[serde(alias = "$MICRORESOURCE_CATEGORY_Encoded;")]
+    #[serde(alias = "encoded", alias = "$MICRORESOURCE_CATEGORY_Encoded;")]
     Encoded,
+    //
+    // #[serde(alias = "$MICRORESOURCE_CATEGORY_Data;")]
+    // Data,
+    //
+    // Item,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
 }
 
-/// Sometimes a lowercase version of [MaterialCategory] is used, so this type is used in the data to
-/// preserve the casing. Prefer using [MaterialCategory] in your application by using the [From] trait.
-#[derive(Debug, Deserialize)]
-#[cfg_attr(test, derive(PartialEq))]
-pub enum MaterialTypeLowercase {
-    #[serde(rename = "raw")]
-    Raw,
-
-    #[serde(rename = "manufactured")]
-    Manufactured,
-
-    #[serde(rename = "encoded")]
-    Encoded,
-
-    #[cfg(not(feature = "strict"))]
-    #[serde(untagged)]
-    Unknown(String),
-}
+// /// Sometimes a lowercase version of [MaterialCategory] is used, so this type is used in the data to
+// /// preserve the casing. Prefer using [MaterialCategory] in your application by using the [From] trait.
+// #[derive(Debug, Deserialize)]
+// #[cfg_attr(test, derive(PartialEq))]
+// pub enum MaterialTypeLowercase {
+//     #[serde(rename = "raw")]
+//     Raw,
+//
+//     #[serde(rename = "manufactured")]
+//     Manufactured,
+//
+//     #[serde(rename = "encoded")]
+//     Encoded,
+//
+//     #[cfg(not(feature = "strict"))]
+//     #[serde(untagged)]
+//     Unknown(String),
+// }
 
 impl From<Material> for MaterialCategory {
     fn from(value: Material) -> Self {
@@ -188,6 +195,11 @@ impl From<Material> for MaterialCategory {
             | Material::GuardianModuleBlueprintFragment
             | Material::GuardianVesselBlueprintFragment
             | Material::GuardianWeaponBlueprintFragment => MaterialCategory::Encoded,
+            //
+            // Material::ExtractionYieldData
+            // | Material::StellarActivityLogs => MaterialCategory::Data,
+            //
+            // Material::GMeds => MaterialCategory::Item,
 
             #[cfg(not(feature = "strict"))]
             Material::Unknown(value) => MaterialCategory::Unknown(format!("Unknown material: '{}'", value)),
@@ -195,34 +207,34 @@ impl From<Material> for MaterialCategory {
     }
 }
 
-impl From<MaterialTypeLowercase> for MaterialCategory {
-    fn from(value: MaterialTypeLowercase) -> Self {
-        match value {
-            MaterialTypeLowercase::Raw => MaterialCategory::Raw,
-            MaterialTypeLowercase::Manufactured => MaterialCategory::Manufactured,
-            MaterialTypeLowercase::Encoded => MaterialCategory::Encoded,
-
-            #[cfg(not(feature = "strict"))]
-            MaterialTypeLowercase::Unknown(value) => MaterialCategory::Unknown(value),
-        }
-    }
-}
-
-impl From<Material> for MaterialTypeLowercase {
-    fn from(value: Material) -> Self {
-        MaterialCategory::from(value).into()
-    }
-}
-
-impl From<MaterialCategory> for MaterialTypeLowercase {
-    fn from(value: MaterialCategory) -> Self {
-        match value {
-            MaterialCategory::Raw => MaterialTypeLowercase::Raw,
-            MaterialCategory::Manufactured => MaterialTypeLowercase::Manufactured,
-            MaterialCategory::Encoded => MaterialTypeLowercase::Encoded,
-
-            #[cfg(not(feature = "strict"))]
-            MaterialCategory::Unknown(value) => MaterialTypeLowercase::Unknown(value),
-        }
-    }
-}
+// impl From<MaterialTypeLowercase> for MaterialCategory {
+//     fn from(value: MaterialTypeLowercase) -> Self {
+//         match value {
+//             MaterialTypeLowercase::Raw => MaterialCategory::Raw,
+//             MaterialTypeLowercase::Manufactured => MaterialCategory::Manufactured,
+//             MaterialTypeLowercase::Encoded => MaterialCategory::Encoded,
+//
+//             #[cfg(not(feature = "strict"))]
+//             MaterialTypeLowercase::Unknown(value) => MaterialCategory::Unknown(value),
+//         }
+//     }
+// }
+//
+// impl From<Material> for MaterialTypeLowercase {
+//     fn from(value: Material) -> Self {
+//         MaterialCategory::from(value).into()
+//     }
+// }
+//
+// impl From<MaterialCategory> for MaterialTypeLowercase {
+//     fn from(value: MaterialCategory) -> Self {
+//         match value {
+//             MaterialCategory::Raw => MaterialTypeLowercase::Raw,
+//             MaterialCategory::Manufactured => MaterialTypeLowercase::Manufactured,
+//             MaterialCategory::Encoded => MaterialTypeLowercase::Encoded,
+//
+//             #[cfg(not(feature = "strict"))]
+//             MaterialCategory::Unknown(value) => MaterialTypeLowercase::Unknown(value),
+//         }
+//     }
+// }

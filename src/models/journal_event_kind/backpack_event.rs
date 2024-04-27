@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::odyssey::item::Item;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -15,8 +16,7 @@ pub struct BackpackEvent {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackEventObject {
-    // TODO check if this can be an enum
-    pub name: String,
+    pub name: Item,
 
     #[serde(rename = "Name_Localised")]
     pub name_localised: String,

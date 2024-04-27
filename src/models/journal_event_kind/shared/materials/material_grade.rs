@@ -8,6 +8,9 @@ pub enum MaterialGrade {
     Grade4,
     Grade5,
 
+    /// Used for odyssey materials
+    None,
+
     #[cfg(not(feature = "strict"))]
     Unknown,
 }
@@ -190,6 +193,9 @@ impl From<Material> for MaterialGrade {
             Material::GuardianModuleBlueprintFragment => MaterialGrade::Grade5,
             Material::GuardianVesselBlueprintFragment => MaterialGrade::Grade5,
             Material::GuardianWeaponBlueprintFragment => MaterialGrade::Grade5,
+
+            // Material::ExtractionYieldData
+            // | Material::StellarActivityLogs => MaterialGrade::None,
 
             #[cfg(not(feature = "strict"))]
             Material::Unknown(_) => MaterialGrade::Unknown,

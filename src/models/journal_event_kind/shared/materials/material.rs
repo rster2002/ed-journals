@@ -7,55 +7,55 @@ use crate::from_str_deserialize_impl;
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Material {
     // Raw
-    #[serde(rename = "carbon")]
+    #[serde(alias = "carbon")]
     Carbon,
 
-    #[serde(rename = "vanadium")]
+    #[serde(alias = "vanadium")]
     Vanadium,
 
-    #[serde(rename = "niobium")]
+    #[serde(alias = "niobium")]
     Niobium,
 
-    #[serde(rename = "yttrium")]
+    #[serde(alias = "yttrium")]
     Yttrium,
 
 
-    #[serde(rename = "phosphorus")]
+    #[serde(alias = "phosphorus")]
     Phosphorus,
 
-    #[serde(rename = "chromium")]
+    #[serde(alias = "chromium")]
     Chromium,
 
-    #[serde(rename = "molybdenum")]
+    #[serde(alias = "molybdenum")]
     Molybdenum,
 
-    #[serde(rename = "technetium")]
+    #[serde(alias = "technetium")]
     Technetium,
 
 
-    #[serde(rename = "sulphur")]
+    #[serde(alias = "sulphur")]
     Sulphur,
 
-    #[serde(rename = "manganese")]
+    #[serde(alias = "manganese")]
     Manganese,
 
-    #[serde(rename = "cadmium")]
+    #[serde(alias = "cadmium")]
     Cadmium,
 
-    #[serde(rename = "ruthenium")]
+    #[serde(alias = "ruthenium")]
     Ruthenium,
 
 
-    #[serde(rename = "iron")]
+    #[serde(alias = "iron")]
     Iron,
 
-    #[serde(rename = "zinc")]
+    #[serde(alias = "zinc")]
     Zinc,
 
-    #[serde(rename = "tin")]
+    #[serde(alias = "tin")]
     Tin,
 
-    #[serde(rename = "selenium")]
+    #[serde(alias = "selenium")]
     Selenium,
 
 
@@ -72,403 +72,410 @@ pub enum Material {
     Tellurium,
 
 
-    #[serde(rename = "rhenium")]
+    #[serde(alias = "rhenium")]
     Rhenium,
 
-    #[serde(rename = "arsenic")]
+    #[serde(alias = "arsenic")]
     Arsenic,
 
-    #[serde(rename = "mercury")]
+    #[serde(alias = "mercury")]
     Mercury,
 
-    #[serde(rename = "polonium")]
+    #[serde(alias = "polonium")]
     Polonium,
 
 
-    #[serde(rename = "lead")]
+    #[serde(alias = "lead")]
     Lead,
 
-    #[serde(rename = "zirconium")]
+    #[serde(alias = "zirconium")]
     Zirconium,
 
-    #[serde(rename = "boron")]
+    #[serde(alias = "boron")]
     Boron,
 
-    #[serde(rename = "antimony")]
+    #[serde(alias = "antimony")]
     Antimony,
 
     // Manufactured
-    #[serde(rename = "chemicalstorageunits")]
+    #[serde(alias = "chemicalstorageunits")]
     ChemicalStorageUnits,
 
-    #[serde(rename = "chemicalprocessors")]
+    #[serde(alias = "chemicalprocessors")]
     ChemicalProcessors,
 
-    #[serde(rename = "chemicaldistillery")]
+    #[serde(alias = "chemicaldistillery")]
     ChemicalDistillery,
 
-    #[serde(rename = "chemicalmanipulators")]
+    #[serde(alias = "chemicalmanipulators")]
     ChemicalManipulators,
 
-    #[serde(rename = "pharmaceuticalisolators")]
+    #[serde(alias = "pharmaceuticalisolators")]
     PharmaceuticalIsolators,
 
 
-    #[serde(rename = "temperedalloys")]
+    #[serde(alias = "temperedalloys")]
     TemperedAlloys,
 
-    #[serde(rename = "heatresistantceramics")]
+    #[serde(alias = "heatresistantceramics")]
     HeatResistantCeramics,
 
-    #[serde(rename = "precipitatedalloys")]
+    #[serde(alias = "precipitatedalloys")]
     PrecipitatedAlloys,
 
-    #[serde(rename = "thermicalloys")]
+    #[serde(alias = "thermicalloys")]
     ThermicAlloys,
 
-    #[serde(rename = "militarygradealloys")]
+    #[serde(alias = "militarygradealloys")]
     MilitaryGradeAlloys,
 
 
-    #[serde(rename = "heatconductionwiring")]
+    #[serde(alias = "heatconductionwiring")]
     HeatConductionWiring,
 
-    #[serde(rename = "heatdispersionplate")]
+    #[serde(alias = "heatdispersionplate")]
     HeatDispersionPlate,
 
-    #[serde(rename = "heatexchangers")]
+    #[serde(alias = "heatexchangers")]
     HeatExchangers,
 
-    #[serde(rename = "heatvanes")]
+    #[serde(alias = "heatvanes")]
     HeatVanes,
 
-    #[serde(rename = "protoheatradiators")]
+    #[serde(alias = "protoheatradiators")]
     ProtoHeatRadiators,
 
 
-    #[serde(rename = "basicconductors")]
+    #[serde(alias = "basicconductors")]
     BasicConductors,
 
-    #[serde(rename = "conductivecomponents")]
+    #[serde(alias = "conductivecomponents")]
     ConductiveComponents,
 
-    #[serde(rename = "conductiveceramics")]
+    #[serde(alias = "conductiveceramics")]
     ConductiveCeramics,
 
-    #[serde(rename = "conductivepolymers")]
+    #[serde(alias = "conductivepolymers")]
     ConductivePolymers,
 
-    #[serde(rename = "biotechconductors")]
+    #[serde(alias = "biotechconductors")]
     BiotechConductors,
 
 
-    #[serde(rename = "mechanicalscrap")]
+    #[serde(alias = "mechanicalscrap")]
     MechanicalScrap,
 
-    #[serde(rename = "mechanicalequipment")]
+    #[serde(alias = "mechanicalequipment")]
     MechanicalEquipment,
 
-    #[serde(rename = "mechanicalcomponents")]
+    #[serde(alias = "mechanicalcomponents")]
     MechanicalComponents,
 
-    #[serde(rename = "configurablecomponents")]
+    #[serde(alias = "configurablecomponents")]
     ConfigurableComponents,
 
-    #[serde(rename = "improvisedcomponents")]
+    #[serde(alias = "improvisedcomponents")]
     ImprovisedComponents,
 
 
-    #[serde(rename = "gridresistors")]
+    #[serde(alias = "gridresistors")]
     GridResistors,
 
-    #[serde(rename = "hybridcapacitors")]
+    #[serde(alias = "hybridcapacitors")]
     HybridCapacitors,
 
-    #[serde(rename = "electrochemicalarrays")]
+    #[serde(alias = "electrochemicalarrays")]
     ElectrochemicalArrays,
 
-    #[serde(rename = "polymercapacitors")]
+    #[serde(alias = "polymercapacitors")]
     PolymerCapacitors,
 
-    #[serde(rename = "militarysupercapacitors")]
+    #[serde(alias = "militarysupercapacitors")]
     MilitarySupercapacitors,
 
 
-    #[serde(rename = "wornshieldemitters")]
+    #[serde(alias = "wornshieldemitters")]
     WornShieldEmitters,
 
-    #[serde(rename = "shieldemitters")]
+    #[serde(alias = "shieldemitters")]
     ShieldEmitters,
 
-    #[serde(rename = "shieldingsensors")]
+    #[serde(alias = "shieldingsensors")]
     ShieldingSensors,
 
-    #[serde(rename = "compoundshielding")]
+    #[serde(alias = "compoundshielding")]
     CompoundShielding,
 
-    #[serde(rename = "imperialshielding")]
+    #[serde(alias = "imperialshielding")]
     ImperialShielding,
 
 
-    #[serde(rename = "compactcomposites")]
+    #[serde(alias = "compactcomposites")]
     CompactComposites,
 
-    #[serde(rename = "filamentcomposites")]
+    #[serde(alias = "filamentcomposites")]
     FilamentComposites,
 
-    #[serde(rename = "highdensitycomposites")]
+    #[serde(alias = "highdensitycomposites")]
     HighDensityComposites,
 
-    #[serde(rename = "fedproprietarycomposites")]
+    #[serde(alias = "fedproprietarycomposites")]
     ProprietaryComposites,
 
-    #[serde(rename = "fedcorecomposites")]
+    #[serde(alias = "fedcorecomposites")]
     CoreDynamicsComposites,
 
 
-    #[serde(rename = "crystalshards")]
+    #[serde(alias = "crystalshards")]
     CrystalShards,
 
-    #[serde(rename = "uncutfocuscrystals")]
+    #[serde(alias = "uncutfocuscrystals")]
     FlawedFocusCrystals,
 
-    #[serde(rename = "focuscrystals")]
+    #[serde(alias = "focuscrystals")]
     FocusCrystals,
 
-    #[serde(rename = "refinedfocuscrystals")]
+    #[serde(alias = "refinedfocuscrystals")]
     RefinedFocusCrystals,
 
-    #[serde(rename = "exquisitefocuscrystals")]
+    #[serde(alias = "exquisitefocuscrystals")]
     ExquisiteFocusCrystals,
 
 
-    #[serde(rename = "salvagedalloys")]
+    #[serde(alias = "salvagedalloys")]
     SalvagedAlloys,
 
-    #[serde(rename = "galvanisingalloys")]
+    #[serde(alias = "galvanisingalloys")]
     GalvanisingAlloys,
 
-    #[serde(rename = "phasealloys")]
+    #[serde(alias = "phasealloys")]
     PhaseAlloys,
 
-    #[serde(rename = "protolightalloys")]
+    #[serde(alias = "protolightalloys")]
     ProtoLightAlloys,
 
-    #[serde(rename = "protoradiolicalloys")]
+    #[serde(alias = "protoradiolicalloys")]
     ProtoRadiolicAlloys,
 
 
-    #[serde(rename = "hardenedsurfacefragments")]
+    #[serde(alias = "hardenedsurfacefragments")]
     HardenedSurfaceFragments,
 
-    #[serde(rename = "tg_causticshard")]
+    #[serde(alias = "tg_causticshard")]
     CausticShard,
 
-    #[serde(rename = "tacticalcorechip")]
+    #[serde(alias = "tacticalcorechip")]
     TacticalCoreChip,
 
-    #[serde(rename = "thargoidcarapace")]
+    #[serde(alias = "thargoidcarapace")]
     ThargoidCarapace,
 
-    #[serde(rename = "biomechanicalconduits")]
+    #[serde(alias = "biomechanicalconduits")]
     BioMechanicalConduits,
 
-    #[serde(rename = "tg_causticgeneratorparts")]
+    #[serde(alias = "tg_causticgeneratorparts")]
     CorrosiveMechanisms,
 
-    #[serde(rename = "phasingmembraneresidue")]
+    #[serde(alias = "phasingmembraneresidue")]
     PhasingMembraneResidue,
 
-    #[serde(rename = "thargoidenergycell")]
+    #[serde(alias = "thargoidenergycell")]
     ThargoidEnergyCell,
 
-    #[serde(rename = "tg_wreckagecomponents")]
+    #[serde(alias = "tg_wreckagecomponents")]
     WreckageComponents,
 
-    #[serde(rename = "tg_causticcrystal")]
+    #[serde(alias = "tg_causticcrystal")]
     CausticCrystal,
 
-    #[serde(rename = "thargoidtechnologicalcomponents")]
+    #[serde(alias = "thargoidtechnologicalcomponents")]
     ThargoidTechnologicalComponents,
 
-    #[serde(rename = "weaponparts")]
+    #[serde(alias = "weaponparts")]
     WeaponParts,
 
-    #[serde(rename = "heatexposurespecimen")]
+    #[serde(alias = "heatexposurespecimen")]
     HeatExposureSpecimen,
 
-    #[serde(rename = "tg_propulsionelement")]
+    #[serde(alias = "tg_propulsionelement")]
     PropulsionElements,
 
-    #[serde(rename = "unknownenergysource")]
+    #[serde(alias = "unknownenergysource")]
     SensorFragment,
 
-    #[serde(rename = "thargoidorganiccircuitry")]
+    #[serde(alias = "thargoidorganiccircuitry")]
     ThargoidOrganicCircuitry,
 
 
-    #[serde(rename = "guardian_powercell")]
+    #[serde(alias = "guardian_powercell")]
     GuardianPowerCell,
 
-    #[serde(rename = "guardian_sentinel_wreckagecomponents")]
+    #[serde(alias = "guardian_sentinel_wreckagecomponents")]
     GuardianWreckageComponents,
 
-    #[serde(rename = "guardian_powerconduit")]
+    #[serde(alias = "guardian_powerconduit")]
     GuardianPowerConduit,
 
-    #[serde(rename = "guardian_sentinel_weaponparts")]
+    #[serde(alias = "guardian_sentinel_weaponparts")]
     GuardianSentinelWeaponParts,
 
-    #[serde(rename = "guardian_techcomponent")]
+    #[serde(alias = "guardian_techcomponent")]
     GuardianTechnologyComponent,
 
     // Encoded
-    #[serde(rename = "scrambledemissiondata")]
+    #[serde(alias = "scrambledemissiondata")]
     ExceptionScrambledEmissionData,
 
-    #[serde(rename = "archivedemissiondata")]
+    #[serde(alias = "archivedemissiondata")]
     IrregularEmissionData,
 
-    #[serde(rename = "emissiondata")]
+    #[serde(alias = "emissiondata")]
     UnexpectedEmissionData,
 
-    #[serde(rename = "decodedemissiondata")]
+    #[serde(alias = "decodedemissiondata")]
     DecodedEmissionData,
 
-    #[serde(rename = "compactemissionsdata")]
+    #[serde(alias = "compactemissionsdata")]
     AbnormalCompactEmissionData,
 
 
-    #[serde(rename = "disruptedwakeechoes")]
+    #[serde(alias = "disruptedwakeechoes")]
     AtypicalDisruptedWakeEchoes,
 
-    #[serde(rename = "fsdtelemetry")]
+    #[serde(alias = "fsdtelemetry")]
     AnomalousFSDTelemetry,
 
-    #[serde(rename = "wakesolutions")]
+    #[serde(alias = "wakesolutions")]
     StrangeWakeSolutions,
 
-    #[serde(rename = "hyperspacetrajectories")]
+    #[serde(alias = "hyperspacetrajectories")]
     EccentricHyperspaceTrajectories,
 
-    #[serde(rename = "dataminedwake")]
+    #[serde(alias = "dataminedwake")]
     DataminedWakeExceptions,
 
 
-    #[serde(rename = "shieldcyclerecordings")]
+    #[serde(alias = "shieldcyclerecordings")]
     DistortedShieldCycleRecordings,
 
-    #[serde(rename = "shieldsoakanalysis")]
+    #[serde(alias = "shieldsoakanalysis")]
     InconsistentShieldSoakAnalysis,
 
-    #[serde(rename = "shielddensityreports")]
+    #[serde(alias = "shielddensityreports")]
     UntypicalShieldScans,
 
-    #[serde(rename = "shieldpatternanalysis")]
+    #[serde(alias = "shieldpatternanalysis")]
     AberrantShieldPatternAnalysis,
 
-    #[serde(rename = "shieldfrequencydata")]
+    #[serde(alias = "shieldfrequencydata")]
     PeculiarShieldFrequencyData,
 
 
-    #[serde(rename = "encryptedfiles")]
+    #[serde(alias = "encryptedfiles")]
     UnusualEncryptedFiles,
 
-    #[serde(rename = "encryptioncodes")]
+    #[serde(alias = "encryptioncodes")]
     TaggedEncryptionCodes,
 
-    #[serde(rename = "symmetrickeys")]
+    #[serde(alias = "symmetrickeys")]
     OpenSymmetricKeys,
 
-    #[serde(rename = "encryptionarchives")]
+    #[serde(alias = "encryptionarchives")]
     AtypicalEncryptionArchives,
 
-    #[serde(rename = "adaptiveencryptors")]
+    #[serde(alias = "adaptiveencryptors")]
     AdaptiveEncryptorsCapture,
 
 
-    #[serde(rename = "bulkscandata")]
+    #[serde(alias = "bulkscandata")]
     AnomalousBulkScanData,
 
-    #[serde(rename = "scanarchives")]
+    #[serde(alias = "scanarchives")]
     UnidentifiedScanArchives,
 
-    #[serde(rename = "scandatabanks")]
+    #[serde(alias = "scandatabanks")]
     ClassifiedScanDatabanks,
 
-    #[serde(rename = "EncodedScanData", alias = "encodedscandata")]
+    #[serde(alias = "EncodedScanData", alias = "encodedscandata")]
     DivergentScanData,
 
-    #[serde(rename = "classifiedscanfragment")]
+    #[serde(alias = "classifiedscanfragment")]
     ClassifiedScanFragment,
 
 
-    #[serde(rename = "legacyfirmware")]
+    #[serde(alias = "legacyfirmware")]
     SpecializedLegacyFirmware,
 
-    #[serde(rename = "consumerfirmware")]
+    #[serde(alias = "consumerfirmware")]
     ModifiedConsumerFirmware,
 
-    #[serde(rename = "industrialfirmware")]
+    #[serde(alias = "industrialfirmware")]
     CrackedIndustrialFirmware,
 
-    #[serde(rename = "securityfirmware")]
+    #[serde(alias = "securityfirmware")]
     SecurityFirmwarePatch,
 
-    #[serde(rename = "embeddedfirmware")]
+    #[serde(alias = "EmbeddedFirmware", alias = "embeddedfirmware")]
     ModifiedEmbeddedFirmware,
 
 
-    #[serde(rename = "tg_structuraldata")]
+    #[serde(alias = "tg_structuraldata")]
     ThargoidStructuralData,
 
-    #[serde(rename = "tg_shutdowndata")]
+    #[serde(alias = "tg_shutdowndata")]
     MassiveEnergySurgeAnalytics,
 
-    #[serde(rename = "tg_shipflightdata")]
+    #[serde(alias = "tg_shipflightdata")]
     ShipFlightData,
 
-    #[serde(rename = "tg_shipsystemsdata")]
+    #[serde(alias = "tg_shipsystemsdata")]
     ShipSystemsData,
 
-    #[serde(rename = "tg_interdictiondata")]
+    #[serde(alias = "tg_interdictiondata")]
     ThargoidInterdictionTelemetry,
 
-    #[serde(rename = "tg_compositiondata")]
+    #[serde(alias = "tg_compositiondata")]
     ThargoidMaterialCompositionData,
 
-    #[serde(rename = "unknownshipsignature")]
+    #[serde(alias = "unknownshipsignature")]
     ThargoidShipSignature,
 
-    #[serde(rename = "thargoidresiduedata")]
+    #[serde(alias = "thargoidresiduedata")]
     ThargoidResidueData,
 
-    #[serde(rename = "thargoidwakedata")]
+    #[serde(alias = "thargoidwakedata")]
     ThargoidWakeData,
 
-    #[serde(rename = "ancienthistoricaldata")]
+    #[serde(alias = "ancienthistoricaldata")]
     PatternGammaObeliskData,
 
-    #[serde(rename = "ancientculturaldata")]
+    #[serde(alias = "ancientculturaldata")]
     PatternBetaObeliskData,
 
-    #[serde(rename = "ancientbiologicaldata")]
+    #[serde(alias = "ancientbiologicaldata")]
     PatternAlphaObeliskData,
 
-    #[serde(rename = "ancientlanguagedata")]
+    #[serde(alias = "ancientlanguagedata")]
     PatternDeltaObeliskData,
 
-    #[serde(rename = "ancienttechnologicaldata")]
+    #[serde(alias = "ancienttechnologicaldata")]
     PatternEpsilonObeliskData,
 
-    #[serde(rename = "guardian_moduleblueprint")]
+    #[serde(alias = "guardian_moduleblueprint")]
     GuardianModuleBlueprintFragment,
 
-    #[serde(rename = "guardian_vesselblueprint")]
+    #[serde(alias = "guardian_vesselblueprint")]
     GuardianVesselBlueprintFragment,
 
-    #[serde(rename = "guardian_weaponblueprint")]
+    #[serde(alias = "guardian_weaponblueprint")]
     GuardianWeaponBlueprintFragment,
+    //
+    // // Odyssey item
+    // GMeds,
+    //
+    // // Odyssey data
+    // ExtractionYieldData,
+    // StellarActivityLogs,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

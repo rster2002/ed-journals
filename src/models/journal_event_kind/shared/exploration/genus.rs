@@ -41,6 +41,15 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
     Recepta,
 
+    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
+    Tubus,
+
+    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
+    Fonticulua,
+
+    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
+    Electricae,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

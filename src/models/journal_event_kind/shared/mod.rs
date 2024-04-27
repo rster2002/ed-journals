@@ -7,3 +7,6 @@ pub mod civilization;
 pub mod galaxy;
 pub mod commander;
 pub mod thargoid;
+pub mod odyssey;
+pub mod shared_material;
+pub mod shared_material_category;

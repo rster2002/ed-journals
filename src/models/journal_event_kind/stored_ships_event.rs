@@ -40,12 +40,25 @@ pub struct StoredShipEventRemoteShip {
     #[serde(rename = "ShipType_Localised")]
     pub ship_type_localised: Option<String>,
     pub name: String,
+
+    #[serde(default)]
+    pub in_transit: bool,
+
+    #[serde(flatten)]
+    pub storage_location: Option<StoredShipEventStorageLocation>,
+
+    pub value: u64,
+    pub hot: bool,
+}
+
+#[derive(Debug, Deserialize)]
+#[cfg_attr(test, derive(PartialEq))]
+#[serde(rename_all = "PascalCase")]
+pub struct StoredShipEventStorageLocation {
     pub star_system: String,
 
     #[serde(rename = "ShipMarketID")]
     pub ship_market_id: u64,
     pub transfer_price: u64,
     pub transfer_time: u32,
-    pub value: u64,
-    pub hot: bool,
 }

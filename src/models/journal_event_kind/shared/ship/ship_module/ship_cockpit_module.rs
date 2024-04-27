@@ -8,7 +8,7 @@ use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
-pub struct CockpitModule(pub ShipType);
+pub struct ShipCockpitModule(pub ShipType);
 
 #[derive(Debug, Error)]
 pub enum CockpitModuleParseError {
@@ -21,7 +21,7 @@ pub enum CockpitModuleParseError {
 
 const COCKPIT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap());
 
-impl FromStr for CockpitModule {
+impl FromStr for ShipCockpitModule {
     type Err = CockpitModuleParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -35,8 +35,8 @@ impl FromStr for CockpitModule {
             .parse()
             .map_err(|_| CockpitModuleParseError::UnknownShipType)?;
 
-        return Ok(CockpitModule(ship_type));
+        return Ok(ShipCockpitModule(ship_type));
     }
 }
 
-from_str_deserialize_impl!(CockpitModule);
+from_str_deserialize_impl!(ShipCockpitModule);

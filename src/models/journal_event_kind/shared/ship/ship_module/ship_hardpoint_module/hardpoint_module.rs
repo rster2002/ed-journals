@@ -1,7 +1,10 @@
 use std::str::FromStr;
 use serde::Deserialize;
 use serde_json::Value;
+use crate::models::journal_event_kind::shared::ship::ship_module::module_class::ModuleClass;
+use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
 use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_type::HardpointType;
+use crate::models::journal_event_kind::shared::ship::ship_slot::hardpoint_size::HardpointSize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -32,6 +35,12 @@ pub enum HardpointModule {
 
     #[serde(rename = "chafflauncher")]
     ChaffLauncher,
+
+    #[serde(rename = "dumbfiremissilerack")]
+    MissileRack,
+
+    #[serde(rename = "shieldbooster")]
+    ShieldBooster,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
@@ -65,4 +74,11 @@ impl HardpointModule {
     pub fn is_utility(&self) -> bool {
         matches!(self.hardpoint_type(), HardpointType::Utility)
     }
+
+    // pub fn fixed_class(&self, mounting: &HardpointMounting, size: &HardpointSize) -> Option<ModuleClass> {
+    //     match (self, mounting, size) {
+    //         (HardpointModule::BeamLaser, )
+    //         _ => None,
+    //     }
+    // }
 }
