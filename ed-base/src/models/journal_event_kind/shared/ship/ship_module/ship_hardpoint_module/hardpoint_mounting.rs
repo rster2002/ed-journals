@@ -1,6 +1,6 @@
-use std::str::FromStr;
 use serde::Deserialize;
 use serde_json::Value;
+use std::str::FromStr;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

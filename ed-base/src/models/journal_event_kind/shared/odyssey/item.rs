@@ -1,9 +1,9 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -239,7 +239,8 @@ impl Item {
     }
 }
 
-const ITEM_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+const ITEM_NAME_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
 
 impl FromStr for Item {
     type Err = ItemError;
@@ -249,9 +250,12 @@ impl FromStr for Item {
             return Err(ItemError::UnknownItem(s.to_string()));
         };
 
-        Item::name_to_item(captures.get(1)
-            .expect("Should have been captured already")
-            .as_str())
+        Item::name_to_item(
+            captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str(),
+        )
     }
 }
 
@@ -259,14 +263,15 @@ from_str_deserialize_impl!(Item);
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use crate::models::journal_event_kind::shared::odyssey::item::Item;
+    use std::str::FromStr;
 
     #[test]
     fn item_test_cases_are_parsed_correctly() {
-        let test_cases = [
-            ("$EnhancedInterrogationRecordings_Name;", Item::EnhancedInterrogationRecordings),
-        ];
+        let test_cases = [(
+            "$EnhancedInterrogationRecordings_Name;",
+            Item::EnhancedInterrogationRecordings,
+        )];
 
         for (case, expected) in test_cases {
             let result = Item::from_str(case);

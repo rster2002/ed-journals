@@ -7,7 +7,7 @@ use regex::Regex;
 use serde::Deserialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-use crate::models::journal_event_kind::shared::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
+use crate::models::journal_event_kind::shared::ship::ship_module::module_class::{ModuleClassError};
 use crate::models::journal_event_kind::shared::ship::ship_module::ship_armor_module::armor_grade::{ArmorGrade, ArmorGradeError};
 use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 
@@ -39,7 +39,8 @@ pub enum ShipArmorModuleError {
     FailedToParse(String),
 }
 
-const ARMOR_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$(\w+?)_armour_grade(\d+)_name;$"#).unwrap());
+const ARMOR_MODULE_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^\$(\w+?)_armour_grade(\d+)_name;$"#).unwrap());
 
 impl FromStr for ShipArmorModule {
     type Err = ShipArmorModuleError;
@@ -49,22 +50,21 @@ impl FromStr for ShipArmorModule {
             return Err(ShipArmorModuleError::FailedToParse(s.to_string()));
         };
 
-        let ship = captures.get(1)
+        let ship = captures
+            .get(1)
             .expect("Should have already been matched")
             .as_str()
             .parse()
-            .map_err(|e| ShipArmorModuleError::FailedToParseShipType(e))?;
+            .map_err(ShipArmorModuleError::FailedToParseShipType)?;
 
-        let grade = captures.get(2)
+        let grade = captures
+            .get(2)
             .expect("Should have already been matched")
             .as_str()
             .parse::<u8>()?
             .try_into()?;
 
-        Ok(ShipArmorModule {
-            ship,
-            grade,
-        })
+        Ok(ShipArmorModule { ship, grade })
     }
 }
 
@@ -73,7 +73,7 @@ from_str_deserialize_impl!(ShipArmorModule);
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-    use crate::models::journal_event_kind::shared::ship::ship_module::module_class::ModuleClass;
+
     use crate::models::journal_event_kind::shared::ship::ship_module::ship_armor_module::armor_grade::ArmorGrade;
     use crate::models::journal_event_kind::shared::ship::ship_module::ship_armor_module::ShipArmorModule;
     use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
@@ -81,14 +81,20 @@ mod tests {
     #[test]
     fn ship_armor_module_test_cases_are_parsed_correctly() {
         let test_cases = [
-            ("$type9_military_armour_grade1_name;", ShipArmorModule {
-                ship: ShipType::Type10,
-                grade: ArmorGrade::LightweightAlloys,
-            }),
-            ("$type9_military_armour_grade3_name;", ShipArmorModule {
-                ship: ShipType::Type10,
-                grade: ArmorGrade::MilitaryGradeComposite,
-            }),
+            (
+                "$type9_military_armour_grade1_name;",
+                ShipArmorModule {
+                    ship: ShipType::Type10,
+                    grade: ArmorGrade::LightweightAlloys,
+                },
+            ),
+            (
+                "$type9_military_armour_grade3_name;",
+                ShipArmorModule {
+                    ship: ShipType::Type10,
+                    grade: ArmorGrade::MilitaryGradeComposite,
+                },
+            ),
         ];
 
         for (case, expected) in test_cases {

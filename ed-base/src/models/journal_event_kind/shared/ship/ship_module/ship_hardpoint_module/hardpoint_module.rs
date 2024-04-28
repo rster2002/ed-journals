@@ -1,10 +1,8 @@
-use std::str::FromStr;
 use serde::Deserialize;
 use serde_json::Value;
-use crate::models::journal_event_kind::shared::ship::ship_module::module_class::ModuleClass;
-use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
+use std::str::FromStr;
+
 use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_type::HardpointType;
-use crate::models::journal_event_kind::shared::ship::ship_slot::hardpoint_size::HardpointSize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

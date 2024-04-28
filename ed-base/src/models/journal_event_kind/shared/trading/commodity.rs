@@ -1,9 +1,9 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -435,7 +435,6 @@ pub enum Commodity {
     // None
     Limpet,
 
-
     #[cfg(not(feature = "strict"))]
     Unknown(String),
 }
@@ -858,7 +857,8 @@ impl Commodity {
     }
 }
 
-const COMMODITY_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+const COMMODITY_NAME_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
 
 impl FromStr for Commodity {
     type Err = CommodityError;
@@ -868,9 +868,12 @@ impl FromStr for Commodity {
             return Err(CommodityError::UnknownCommodity(s.to_string()));
         };
 
-        Commodity::name_to_commodity(captures.get(1)
-            .expect("Should have been captured already")
-            .as_str())
+        Commodity::name_to_commodity(
+            captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str(),
+        )
     }
 }
 

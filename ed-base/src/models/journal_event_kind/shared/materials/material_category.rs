@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
+use serde::Deserialize;
 
 /// The type of material, either Raw, Manufactured, or Encoded.
 #[derive(Debug, Deserialize)]
@@ -9,7 +9,10 @@ pub enum MaterialCategory {
     #[serde(alias = "raw", alias = "$MICRORESOURCE_CATEGORY_Raw;")]
     Raw,
 
-    #[serde(alias = "manufactured", alias = "$MICRORESOURCE_CATEGORY_Manufactured;")]
+    #[serde(
+        alias = "manufactured",
+        alias = "$MICRORESOURCE_CATEGORY_Manufactured;"
+    )]
     Manufactured,
 
     #[serde(alias = "encoded", alias = "$MICRORESOURCE_CATEGORY_Encoded;")]
@@ -19,7 +22,6 @@ pub enum MaterialCategory {
     // Data,
     //
     // Item,
-
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -200,9 +202,10 @@ impl From<Material> for MaterialCategory {
             // | Material::StellarActivityLogs => MaterialCategory::Data,
             //
             // Material::GMeds => MaterialCategory::Item,
-
             #[cfg(not(feature = "strict"))]
-            Material::Unknown(value) => MaterialCategory::Unknown(format!("Unknown material: '{}'", value)),
+            Material::Unknown(value) => {
+                MaterialCategory::Unknown(format!("Unknown material: '{}'", value))
+            }
         }
     }
 }

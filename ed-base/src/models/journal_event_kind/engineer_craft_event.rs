@@ -1,9 +1,9 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
 use crate::models::journal_event_kind::shared::ship::blueprint::Blueprint;
 use crate::models::journal_event_kind::shared::ship::blueprint_modifier::BlueprintModifier;
 use crate::models::journal_event_kind::shared::ship::ship_module::ShipModule;
 use crate::models::journal_event_kind::shared::ship::ship_slot::ShipSlot;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

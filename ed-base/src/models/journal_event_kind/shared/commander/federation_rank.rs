@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use thiserror::Error;
-use crate::models::journal_event_kind::shared::commander::exploration_rank::ExplorationRank;
+
 use crate::try_from_deserialize_impl;
 
 #[derive(Debug)]

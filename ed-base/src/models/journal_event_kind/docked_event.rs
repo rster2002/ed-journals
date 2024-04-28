@@ -1,7 +1,6 @@
-use crate::models::journal_event_kind::shared::station::station_service::StationService;
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::station::station_info::StationInfo;
 use crate::models::journal_event_kind::shared::station::station_type::StationType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -30,7 +29,6 @@ pub struct DockedEvent {
     // #[serde(rename = "StationEconomy_Localised")]
     // pub station_economy_localised: String,
     // pub station_economies: Vec<DockedEventStationEconomy>,
-
     #[serde(rename = "DistFromStarLS")]
     pub dist_from_star_ls: f32,
 }

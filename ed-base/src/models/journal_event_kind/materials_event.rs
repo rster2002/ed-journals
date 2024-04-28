@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::materials::material::Material;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct MaterialsEvent {

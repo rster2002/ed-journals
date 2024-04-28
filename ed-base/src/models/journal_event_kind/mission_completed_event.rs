@@ -1,6 +1,5 @@
 use serde::Deserialize;
-use crate::models::journal_event_kind::shared::materials::material::Material;
-use crate::models::journal_event_kind::shared::materials::material_category::MaterialCategory;
+
 use crate::models::journal_event_kind::shared::shared_material::SharedMaterial;
 use crate::models::journal_event_kind::shared::shared_material_category::SharedMaterialCategory;
 use crate::models::journal_event_kind::shared::station::mission_type::MissionType;

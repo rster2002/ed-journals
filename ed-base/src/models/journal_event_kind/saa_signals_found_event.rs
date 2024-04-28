@@ -1,6 +1,6 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::exploration::genus::Genus;
 use crate::models::journal_event_kind::shared::exploration::planetary_signal_type::PlanetarySignalType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

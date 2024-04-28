@@ -1,8 +1,8 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::commander::combat_rank::CombatRank;
 use crate::models::journal_event_kind::shared::odyssey::citizen::Citizen;
 use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 use crate::models::journal_event_kind::shared::thargoid::thargoid_ship::ThargoidShip;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -35,7 +35,7 @@ pub struct DiedEventIndividualKill {
 #[cfg_attr(test, derive(PartialEq))]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventWingKill {
-    pub killers: Vec<DiedEventWingKiller>
+    pub killers: Vec<DiedEventWingKiller>,
 }
 
 #[derive(Debug, Deserialize)]

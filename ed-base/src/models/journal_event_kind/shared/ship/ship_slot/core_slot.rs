@@ -1,6 +1,6 @@
+use crate::from_str_deserialize_impl;
 use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -39,4 +39,3 @@ impl FromStr for CoreSlot {
 }
 
 from_str_deserialize_impl!(CoreSlot);
-

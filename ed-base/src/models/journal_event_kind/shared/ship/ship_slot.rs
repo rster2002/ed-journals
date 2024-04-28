@@ -1,14 +1,16 @@
-pub mod hardpoint_size;
 mod core_slot;
+pub mod hardpoint_size;
 
-use std::num::ParseIntError;
-use std::str::FromStr;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_kind::shared::ship::ship_slot::core_slot::CoreSlot;
-use crate::models::journal_event_kind::shared::ship::ship_slot::hardpoint_size::{HardpointSize, HardpointSizeParseError};
+use crate::models::journal_event_kind::shared::ship::ship_slot::hardpoint_size::{
+    HardpointSize, HardpointSizeParseError,
+};
+use once_cell::sync::Lazy;
+use regex::Regex;
+use std::num::ParseIntError;
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -42,16 +44,20 @@ pub enum ParseShipSlotError {
     FailedToParse(String),
 }
 
-const UTILITY_HARDPOINT_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap());
-const HARDPOINT_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap());
-const OPTIONAL_INTERNAL_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap());
+const UTILITY_HARDPOINT_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap());
+const HARDPOINT_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap());
+const OPTIONAL_INTERNAL_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap());
 
 impl FromStr for ShipSlot {
     type Err = ParseShipSlotError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Some(captures) = UTILITY_HARDPOINT_REGEX.captures(s) {
-            let slot_nr = captures.get(1)
+            let slot_nr = captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()
@@ -64,12 +70,14 @@ impl FromStr for ShipSlot {
         }
 
         if let Some(captures) = HARDPOINT_REGEX.captures(s) {
-            let size = captures.get(1)
+            let size = captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()?;
 
-            let slot_nr = captures.get(2)
+            let slot_nr = captures
+                .get(2)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()
@@ -82,22 +90,24 @@ impl FromStr for ShipSlot {
         }
 
         if let Some(captures) = OPTIONAL_INTERNAL_REGEX.captures(s) {
-            let slot_nr = captures.get(1)
+            let slot_nr = captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()
                 .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
 
-            let size = captures.get(2)
+            let size = captures
+                .get(2)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()
-                .map_err(|e| ParseShipSlotError::OptionalInternalSizeParseError(e))?;
+                .map_err(ParseShipSlotError::OptionalInternalSizeParseError)?;
 
             return Ok(ShipSlot {
                 slot_nr,
                 kind: SkipSlotKind::OptionalInternal(size),
-            })
+            });
         }
 
         if let Ok(core_slot) = s.parse() {
@@ -112,7 +122,6 @@ impl FromStr for ShipSlot {
 }
 
 from_str_deserialize_impl!(ShipSlot);
-
 
 // pub struct ShipSlot {
 //     pub slot_nr: u8,

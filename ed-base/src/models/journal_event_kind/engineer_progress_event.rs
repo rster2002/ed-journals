@@ -135,7 +135,7 @@ mod tests {
             progress: EngineerProgressStartupProgress::Unlocked {
                 rank: 4,
                 rank_progress: Some(0.0),
-            }
+            },
         };
 
         let parsed: EngineerProgressUpdate = serde_json::from_value(test).unwrap();

@@ -48,8 +48,11 @@ pub enum ShipHardpointModuleError {
     FailedToParse(String),
 }
 
-const GRADED_HARDPOINT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?[hH]pt_(\w+?)_size(\d+)_class(\d+)(_name;)?$"#).unwrap());
-const HARDPOINT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fG]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mS]edium|[lL]arge|[hH]uge)(_name;)?$"#).unwrap());
+const GRADED_HARDPOINT_MODULE_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^\$?[hH]pt_(\w+?)_size(\d+)_class(\d+)(_name;)?$"#).unwrap());
+const HARDPOINT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fG]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mS]edium|[lL]arge|[hH]uge)(_name;)?$"#).unwrap()
+});
 
 impl FromStr for ShipHardpointModule {
     type Err = ShipHardpointModuleError;
@@ -63,23 +66,27 @@ impl FromStr for ShipHardpointModule {
             return Self::from_hardpoint_captures(captures);
         };
 
-        return Err(ShipHardpointModuleError::FailedToParse(s.to_string()));
+        Err(ShipHardpointModuleError::FailedToParse(s.to_string()))
     }
 }
 
 impl ShipHardpointModule {
-    fn from_graded_hardpoint_captures(captures: Captures) -> Result<ShipHardpointModule, ShipHardpointModuleError> {
-        let module = captures.get(1)
+    fn from_graded_hardpoint_captures(
+        captures: Captures,
+    ) -> Result<ShipHardpointModule, ShipHardpointModuleError> {
+        let module = captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .parse()
-            .map_err(|e| ShipHardpointModuleError::FailedToParseHardpointModule(e))?;
+            .map_err(ShipHardpointModuleError::FailedToParseHardpointModule)?;
 
-        let class = captures.get(3)
+        let class = captures
+            .get(3)
             .expect("Should have been captured already")
             .as_str()
             .parse::<u8>()
-            .map_err(|e| ShipHardpointModuleError::FailedToParseClassNumber(e))?
+            .map_err(ShipHardpointModuleError::FailedToParseClassNumber)?
             .try_into()?;
 
         Ok(ShipHardpointModule {
@@ -90,14 +97,18 @@ impl ShipHardpointModule {
         })
     }
 
-    fn from_hardpoint_captures(captures: Captures) -> Result<ShipHardpointModule, ShipHardpointModuleError> {
-        let module = captures.get(1)
+    fn from_hardpoint_captures(
+        captures: Captures,
+    ) -> Result<ShipHardpointModule, ShipHardpointModuleError> {
+        let module = captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .parse()
-            .map_err(|e| ShipHardpointModuleError::FailedToParseHardpointModule(e))?;
+            .map_err(ShipHardpointModuleError::FailedToParseHardpointModule)?;
 
-        let size = captures.get(4)
+        let size = captures
+            .get(4)
             .expect("Should have been captured already")
             .as_str()
             .parse()?;
@@ -107,7 +118,7 @@ impl ShipHardpointModule {
             Some(capture) => capture
                 .as_str()
                 .parse()
-                .map_err(|e| ShipHardpointModuleError::FailedToParseHardpointMounting(e)),
+                .map_err(ShipHardpointModuleError::FailedToParseHardpointMounting),
             None => {
                 if matches!(size, HardpointSize::Tiny) {
                     Ok(HardpointMounting::Turreted)
@@ -151,42 +162,57 @@ mod tests {
     use crate::models::journal_event_kind::shared::ship::ship_module::module_class::ModuleClass;
     use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_module::HardpointModule;
     use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
-    use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::{ShipHardpointModule, ShipHardpointModuleError};
+    use crate::models::journal_event_kind::shared::ship::ship_module::ship_hardpoint_module::{ShipHardpointModule};
     use crate::models::journal_event_kind::shared::ship::ship_slot::hardpoint_size::HardpointSize;
 
     #[test]
     fn ship_hardpoint_module_test_cases_all_pass() {
         let test_cases = [
-            ("$hpt_beamlaser_gimbal_medium_name;", ShipHardpointModule {
-                module: HardpointModule::BeamLaser,
-                mounting: HardpointMounting::Gimballed,
-                size: HardpointSize::Medium,
-                class: Some(ModuleClass::E),
-            }),
-            ("$hpt_heatsinklauncher_turret_tiny_name;", ShipHardpointModule {
-                module: HardpointModule::HeatsinkLauncher,
-                mounting: HardpointMounting::Turreted,
-                size: HardpointSize::Tiny,
-                class: Some(ModuleClass::I),
-            }),
-            ("Hpt_CausticSinkLauncher_Turret_Tiny", ShipHardpointModule {
-                module: HardpointModule::CausticSinkLauncher,
-                mounting: HardpointMounting::Turreted,
-                size: HardpointSize::Tiny,
-                class: Some(ModuleClass::I),
-            }),
-            ("$hpt_chafflauncher_tiny_name;", ShipHardpointModule {
-                module: HardpointModule::ChaffLauncher,
-                mounting: HardpointMounting::Turreted,
-                size: HardpointSize::Tiny,
-                class: Some(ModuleClass::I),
-            }),
-            ("$hpt_shieldbooster_size0_class5_name;", ShipHardpointModule {
-                module: HardpointModule::ShieldBooster,
-                mounting: HardpointMounting::Turreted,
-                size: HardpointSize::Tiny,
-                class: Some(ModuleClass::A),
-            })
+            (
+                "$hpt_beamlaser_gimbal_medium_name;",
+                ShipHardpointModule {
+                    module: HardpointModule::BeamLaser,
+                    mounting: HardpointMounting::Gimballed,
+                    size: HardpointSize::Medium,
+                    class: Some(ModuleClass::E),
+                },
+            ),
+            (
+                "$hpt_heatsinklauncher_turret_tiny_name;",
+                ShipHardpointModule {
+                    module: HardpointModule::HeatsinkLauncher,
+                    mounting: HardpointMounting::Turreted,
+                    size: HardpointSize::Tiny,
+                    class: Some(ModuleClass::I),
+                },
+            ),
+            (
+                "Hpt_CausticSinkLauncher_Turret_Tiny",
+                ShipHardpointModule {
+                    module: HardpointModule::CausticSinkLauncher,
+                    mounting: HardpointMounting::Turreted,
+                    size: HardpointSize::Tiny,
+                    class: Some(ModuleClass::I),
+                },
+            ),
+            (
+                "$hpt_chafflauncher_tiny_name;",
+                ShipHardpointModule {
+                    module: HardpointModule::ChaffLauncher,
+                    mounting: HardpointMounting::Turreted,
+                    size: HardpointSize::Tiny,
+                    class: Some(ModuleClass::I),
+                },
+            ),
+            (
+                "$hpt_shieldbooster_size0_class5_name;",
+                ShipHardpointModule {
+                    module: HardpointModule::ShieldBooster,
+                    mounting: HardpointMounting::Turreted,
+                    size: HardpointSize::Tiny,
+                    class: Some(ModuleClass::A),
+                },
+            ),
         ];
 
         for (case, expected) in test_cases {

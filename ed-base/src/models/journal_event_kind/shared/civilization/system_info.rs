@@ -1,4 +1,3 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::civilization::conflict::Conflict;
 use crate::models::journal_event_kind::shared::civilization::economy::Economy;
 use crate::models::journal_event_kind::shared::civilization::faction::Faction;
@@ -7,6 +6,7 @@ use crate::models::journal_event_kind::shared::civilization::superpower::Superpo
 use crate::models::journal_event_kind::shared::civilization::system_security::SystemSecurity;
 use crate::models::journal_event_kind::shared::civilization::thargoid_war::ThargoidWar;
 use crate::models::journal_event_kind::shared::galaxy::body_type::BodyType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

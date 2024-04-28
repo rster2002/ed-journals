@@ -83,7 +83,6 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::Semiconductors
             | Commodity::Superconductors => CommodityCategory::IndustrialMaterials,
 
-
             Commodity::ArticulationMotors
             | Commodity::AtmosphericProcessors
             | Commodity::BuildingFabricators
@@ -138,7 +137,6 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::Thorium
             | Commodity::Titanium
             | Commodity::Uranium => CommodityCategory::Metals,
-
 
             Commodity::Alexandrite
             | Commodity::Bauxite
@@ -268,8 +266,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::UnstableDataCore
             | Commodity::WreckageComponents => CommodityCategory::Salvage,
 
-            Commodity::ImperialSlaves
-            | Commodity::Slaves => CommodityCategory::Slaves,
+            Commodity::ImperialSlaves | Commodity::Slaves => CommodityCategory::Slaves,
 
             Commodity::AdvancedCatalysers
             | Commodity::AnimalMonitors
@@ -452,20 +449,9 @@ impl From<Commodity> for CommodityCategory {
             Commodity::Limpet => CommodityCategory::None,
 
             #[cfg(not(feature = "strict"))]
-            Commodity::Unknown(value) => CommodityCategory::Unknown(format!("Unknown commodity: '{}'", value)),
+            Commodity::Unknown(value) => {
+                CommodityCategory::Unknown(format!("Unknown commodity: '{}'", value))
+            }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

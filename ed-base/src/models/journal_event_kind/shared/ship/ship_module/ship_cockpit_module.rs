@@ -1,9 +1,9 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
 use once_cell::sync::Lazy;
 use regex::Regex;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
-use crate::models::journal_event_kind::shared::ship::ship_module::ShipModule;
+
 use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 
 #[derive(Debug)]
@@ -19,7 +19,8 @@ pub enum CockpitModuleParseError {
     UnknownShipType,
 }
 
-const COCKPIT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap());
+const COCKPIT_MODULE_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap());
 
 impl FromStr for ShipCockpitModule {
     type Err = CockpitModuleParseError;
@@ -29,13 +30,14 @@ impl FromStr for ShipCockpitModule {
             return Err(CockpitModuleParseError::FailedRegex);
         };
 
-        let ship_type = captures.get(1)
+        let ship_type = captures
+            .get(1)
             .expect("Should have already been matched")
             .as_str()
             .parse()
             .map_err(|_| CockpitModuleParseError::UnknownShipType)?;
 
-        return Ok(ShipCockpitModule(ship_type));
+        Ok(ShipCockpitModule(ship_type))
     }
 }
 

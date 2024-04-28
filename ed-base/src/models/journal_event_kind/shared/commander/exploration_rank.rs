@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use thiserror::Error;
-use crate::models::journal_event_kind::shared::commander::exobiology_rank::{ExobiologyRank, ExobiologyRankError};
+
 use crate::try_from_deserialize_impl;
 
 #[derive(Debug)]
@@ -61,4 +61,3 @@ impl TryFrom<u8> for ExplorationRank {
 }
 
 try_from_deserialize_impl!(u8 => ExplorationRank);
-

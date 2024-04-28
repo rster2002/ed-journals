@@ -1,6 +1,6 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::odyssey::suit::Suit;
 use crate::models::journal_event_kind::shared::odyssey::suit_mod::SuitMod;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -16,4 +16,3 @@ pub struct BuySuitEvent {
     pub suit_id: u64,
     pub suit_mods: Vec<SuitMod>,
 }
-

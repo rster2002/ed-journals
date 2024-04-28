@@ -1,6 +1,4 @@
-use std::str::FromStr;
 use serde::Deserialize;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

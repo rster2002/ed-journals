@@ -1,7 +1,4 @@
-use std::str::FromStr;
 use serde::Deserialize;
-use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -19,7 +16,6 @@ pub enum Material {
     #[serde(alias = "yttrium")]
     Yttrium,
 
-
     #[serde(alias = "phosphorus")]
     Phosphorus,
 
@@ -31,7 +27,6 @@ pub enum Material {
 
     #[serde(alias = "technetium")]
     Technetium,
-
 
     #[serde(alias = "sulphur")]
     Sulphur,
@@ -45,7 +40,6 @@ pub enum Material {
     #[serde(alias = "ruthenium")]
     Ruthenium,
 
-
     #[serde(alias = "iron")]
     Iron,
 
@@ -58,19 +52,17 @@ pub enum Material {
     #[serde(alias = "selenium")]
     Selenium,
 
-
-    #[serde(rename= "nickel")]
+    #[serde(rename = "nickel")]
     Nickel,
 
-    #[serde(rename= "germanium")]
+    #[serde(rename = "germanium")]
     Germanium,
 
-    #[serde(rename= "tungsten")]
+    #[serde(rename = "tungsten")]
     Tungsten,
 
-    #[serde(rename= "tellurium")]
+    #[serde(rename = "tellurium")]
     Tellurium,
-
 
     #[serde(alias = "rhenium")]
     Rhenium,
@@ -83,7 +75,6 @@ pub enum Material {
 
     #[serde(alias = "polonium")]
     Polonium,
-
 
     #[serde(alias = "lead")]
     Lead,
@@ -113,7 +104,6 @@ pub enum Material {
     #[serde(alias = "pharmaceuticalisolators")]
     PharmaceuticalIsolators,
 
-
     #[serde(alias = "temperedalloys")]
     TemperedAlloys,
 
@@ -128,7 +118,6 @@ pub enum Material {
 
     #[serde(alias = "militarygradealloys")]
     MilitaryGradeAlloys,
-
 
     #[serde(alias = "heatconductionwiring")]
     HeatConductionWiring,
@@ -145,7 +134,6 @@ pub enum Material {
     #[serde(alias = "protoheatradiators")]
     ProtoHeatRadiators,
 
-
     #[serde(alias = "basicconductors")]
     BasicConductors,
 
@@ -160,7 +148,6 @@ pub enum Material {
 
     #[serde(alias = "biotechconductors")]
     BiotechConductors,
-
 
     #[serde(alias = "mechanicalscrap")]
     MechanicalScrap,
@@ -177,7 +164,6 @@ pub enum Material {
     #[serde(alias = "improvisedcomponents")]
     ImprovisedComponents,
 
-
     #[serde(alias = "gridresistors")]
     GridResistors,
 
@@ -192,7 +178,6 @@ pub enum Material {
 
     #[serde(alias = "militarysupercapacitors")]
     MilitarySupercapacitors,
-
 
     #[serde(alias = "wornshieldemitters")]
     WornShieldEmitters,
@@ -209,7 +194,6 @@ pub enum Material {
     #[serde(alias = "imperialshielding")]
     ImperialShielding,
 
-
     #[serde(alias = "compactcomposites")]
     CompactComposites,
 
@@ -224,7 +208,6 @@ pub enum Material {
 
     #[serde(alias = "fedcorecomposites")]
     CoreDynamicsComposites,
-
 
     #[serde(alias = "crystalshards")]
     CrystalShards,
@@ -241,7 +224,6 @@ pub enum Material {
     #[serde(alias = "exquisitefocuscrystals")]
     ExquisiteFocusCrystals,
 
-
     #[serde(alias = "salvagedalloys")]
     SalvagedAlloys,
 
@@ -256,7 +238,6 @@ pub enum Material {
 
     #[serde(alias = "protoradiolicalloys")]
     ProtoRadiolicAlloys,
-
 
     #[serde(alias = "hardenedsurfacefragments")]
     HardenedSurfaceFragments,
@@ -306,7 +287,6 @@ pub enum Material {
     #[serde(alias = "thargoidorganiccircuitry")]
     ThargoidOrganicCircuitry,
 
-
     #[serde(alias = "guardian_powercell")]
     GuardianPowerCell,
 
@@ -338,7 +318,6 @@ pub enum Material {
     #[serde(alias = "compactemissionsdata")]
     AbnormalCompactEmissionData,
 
-
     #[serde(alias = "disruptedwakeechoes")]
     AtypicalDisruptedWakeEchoes,
 
@@ -353,7 +332,6 @@ pub enum Material {
 
     #[serde(alias = "dataminedwake")]
     DataminedWakeExceptions,
-
 
     #[serde(alias = "shieldcyclerecordings")]
     DistortedShieldCycleRecordings,
@@ -370,7 +348,6 @@ pub enum Material {
     #[serde(alias = "shieldfrequencydata")]
     PeculiarShieldFrequencyData,
 
-
     #[serde(alias = "encryptedfiles")]
     UnusualEncryptedFiles,
 
@@ -385,7 +362,6 @@ pub enum Material {
 
     #[serde(alias = "adaptiveencryptors")]
     AdaptiveEncryptorsCapture,
-
 
     #[serde(alias = "bulkscandata")]
     AnomalousBulkScanData,
@@ -402,7 +378,6 @@ pub enum Material {
     #[serde(alias = "classifiedscanfragment")]
     ClassifiedScanFragment,
 
-
     #[serde(alias = "legacyfirmware")]
     SpecializedLegacyFirmware,
 
@@ -417,7 +392,6 @@ pub enum Material {
 
     #[serde(alias = "EmbeddedFirmware", alias = "embeddedfirmware")]
     ModifiedEmbeddedFirmware,
-
 
     #[serde(alias = "tg_structuraldata")]
     ThargoidStructuralData,
@@ -476,7 +450,6 @@ pub enum Material {
     // // Odyssey data
     // ExtractionYieldData,
     // StellarActivityLogs,
-
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

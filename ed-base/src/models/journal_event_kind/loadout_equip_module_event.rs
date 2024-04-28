@@ -1,8 +1,8 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::odyssey::suit::Suit;
-use crate::models::journal_event_kind::shared::odyssey::weapon::Weapon;
 use crate::models::journal_event_kind::shared::odyssey::suit_slot::SuitSlot;
+use crate::models::journal_event_kind::shared::odyssey::weapon::Weapon;
 use crate::models::journal_event_kind::shared::odyssey::weapon_mod::WeaponMod;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

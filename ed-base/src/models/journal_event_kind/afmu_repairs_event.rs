@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::ship::ship_module::ShipModule;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

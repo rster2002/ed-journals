@@ -1,8 +1,8 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::civilization::economy::Economy;
 use crate::models::journal_event_kind::shared::civilization::faction_state::FactionState;
 use crate::models::journal_event_kind::shared::civilization::government::Government;
 use crate::models::journal_event_kind::shared::station::station_service::StationService;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

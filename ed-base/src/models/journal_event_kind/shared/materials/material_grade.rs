@@ -196,7 +196,6 @@ impl From<Material> for MaterialGrade {
 
             // Material::ExtractionYieldData
             // | Material::StellarActivityLogs => MaterialGrade::None,
-
             #[cfg(not(feature = "strict"))]
             Material::Unknown(_) => MaterialGrade::Unknown,
         }

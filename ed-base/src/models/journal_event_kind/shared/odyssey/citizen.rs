@@ -9,7 +9,10 @@ pub enum Citizen {
     #[serde(rename = "assaultsuitai_class1", alias = "assaultsuitai_class2")]
     Commando,
 
-    #[serde(rename = "lightassaultsuitai_class1", alias = "lightassaultsuitai_class2")]
+    #[serde(
+        rename = "lightassaultsuitai_class1",
+        alias = "lightassaultsuitai_class2"
+    )]
     Scout,
 
     #[serde(rename = "closesuitai_class1")]

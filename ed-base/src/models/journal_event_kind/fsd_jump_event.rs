@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::civilization::system_info::SystemInfo;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -11,7 +11,6 @@ pub struct FSDJumpEvent {
 
     #[serde(flatten)]
     pub system_info: SystemInfo,
-
     // pub star_system: String,
     // pub system_address: u64,
     // pub star_pos: [f32; 3],

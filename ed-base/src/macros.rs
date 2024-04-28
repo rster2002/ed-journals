@@ -21,12 +21,13 @@ macro_rules! try_from_deserialize_impl {
         impl<'de> serde::Deserialize<'de> for $ty {
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
             where
-                D: serde::Deserializer<'de>
+                D: serde::Deserializer<'de>,
             {
                 let value = $f::deserialize(deserializer)?;
 
-                $ty::try_from(value)
-                    .map_err(|e| serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value)))
+                $ty::try_from(value).map_err(|_e| {
+                    serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value))
+                })
             }
         }
     };

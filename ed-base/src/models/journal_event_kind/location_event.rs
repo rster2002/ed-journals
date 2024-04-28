@@ -1,7 +1,5 @@
-use crate::models::journal_event_kind::shared::station::station_service::StationService;
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::civilization::system_info::SystemInfo;
-use crate::models::journal_event_kind::shared::station::station_type::StationType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -20,7 +18,6 @@ pub struct LocationEvent {
 
     #[serde(flatten)]
     pub system_info: SystemInfo,
-
     // // TODO check when this is filled
     // pub station_name: Option<String>,
     //

@@ -1,7 +1,7 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::exploration::genus::Genus;
 use crate::models::journal_event_kind::shared::exploration::species::Species;
 use crate::models::journal_event_kind::shared::exploration::variant::Variant;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use thiserror::Error;
-use crate::models::journal_event_kind::shared::commander::combat_rank::{CombatRank, CombatRankError};
+
 use crate::try_from_deserialize_impl;
 
 #[derive(Debug)]
@@ -32,7 +32,7 @@ pub enum EmpireRankError {
     UnknownEmpireRank(u8),
 }
 
-impl TryFrom<u8> for EmpireRank  {
+impl TryFrom<u8> for EmpireRank {
     type Error = EmpireRankError;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {

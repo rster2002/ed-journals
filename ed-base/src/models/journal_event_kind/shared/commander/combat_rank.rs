@@ -1,7 +1,6 @@
-use std::str::FromStr;
 use serde::{Deserialize, Deserializer};
+use std::str::FromStr;
 use thiserror::Error;
-use crate::try_from_deserialize_impl;
 
 #[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
@@ -107,20 +106,18 @@ enum CombatInput {
 
 impl<'de> serde::Deserialize<'de> for CombatRank {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where
-            D: Deserializer<'de>
+    where
+        D: Deserializer<'de>,
     {
         let input = CombatInput::deserialize(deserializer)?;
 
         match input {
-            CombatInput::U8(value) => Ok(
-                CombatRank::try_from(value)
-                    .map_err(|_| serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value)))?
-            ),
-            CombatInput::String(value) => Ok(
-                CombatRank::from_str(&value)
-                    .map_err(|_| serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value)))?
-            )
+            CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
+                serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
+            })?),
+            CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
+                serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
+            })?),
         }
     }
 }

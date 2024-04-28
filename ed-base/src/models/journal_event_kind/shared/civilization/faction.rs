@@ -1,10 +1,10 @@
 mod faction_happiness;
 
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::civilization::faction::faction_happiness::FactionHappiness;
 use crate::models::journal_event_kind::shared::civilization::faction_state::FactionState;
 use crate::models::journal_event_kind::shared::civilization::government::Government;
 use crate::models::journal_event_kind::shared::civilization::superpower::Superpower;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

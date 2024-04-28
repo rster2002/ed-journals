@@ -1,10 +1,9 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
-use crate::models::journal_event_kind::shared::civilization::faction_state::FactionState;
 
 /// Mission_Sightseeing_Criminal_BOOM
 #[derive(Debug)]
@@ -23,7 +22,8 @@ pub enum SightSeeingMissionError {
     FailedToParse(String),
 }
 
-const SIGHTSEEING_MISSION_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^Mission_Sightseeing_([a-zA-Z]+?)_([A-Z]+?)(_name)?$"#).unwrap());
+const SIGHTSEEING_MISSION_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^Mission_Sightseeing_([a-zA-Z]+?)_([A-Z]+?)(_name)?$"#).unwrap());
 
 impl FromStr for SightseeingMission {
     type Err = SightSeeingMissionError;
@@ -33,23 +33,20 @@ impl FromStr for SightseeingMission {
             return Err(SightSeeingMissionError::FailedToParse(s.to_string()));
         };
 
-        let citizen = captures.get(1)
+        let citizen = captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_string();
 
-        let state = captures.get(2)
+        let state = captures
+            .get(2)
             .expect("Should have been captured already")
             .as_str()
             .to_string();
 
-        Ok(SightseeingMission  {
-            citizen,
-            state,
-        })
+        Ok(SightseeingMission { citizen, state })
     }
 }
 
 from_str_deserialize_impl!(SightseeingMission);
-
-

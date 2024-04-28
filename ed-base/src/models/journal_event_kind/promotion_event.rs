@@ -1,4 +1,3 @@
-use serde::Deserialize;
 use crate::models::journal_event_kind::shared::commander::combat_rank::CombatRank;
 use crate::models::journal_event_kind::shared::commander::empire_rank::EmpireRank;
 use crate::models::journal_event_kind::shared::commander::exobiology_rank::ExobiologyRank;
@@ -6,6 +5,7 @@ use crate::models::journal_event_kind::shared::commander::exploration_rank::Expl
 use crate::models::journal_event_kind::shared::commander::federation_rank::FederationRank;
 use crate::models::journal_event_kind::shared::commander::mercenary_rank::MercenaryRank;
 use crate::models::journal_event_kind::shared::commander::trade_rank::TradeRank;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, derive(PartialEq))]

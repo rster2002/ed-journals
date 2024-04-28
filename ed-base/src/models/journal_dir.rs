@@ -52,7 +52,5 @@ impl EDLogDir {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn journal_files_are_returned_in_the_correct_order() {
-
-    }
+    fn journal_files_are_returned_in_the_correct_order() {}
 }
