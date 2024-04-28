@@ -1,1231 +1,877 @@
+use std::str::FromStr;
+use once_cell::sync::Lazy;
+use regex::Regex;
 use serde::Deserialize;
+use thiserror::Error;
+use crate::from_str_deserialize_impl;
 
-/// Includes both entries for both ship commodities and Odyssey commodities.
-#[derive(Debug, Deserialize)]
+#[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Commodity {
     // Chemicals
-    #[serde(alias = "argonomictreatment")]
     ArgonomicTreatment,
-
-    #[serde(alias = "explosives")]
     Explosives,
-
-    #[serde(alias = "hydrogenfuel")]
     HydrogenFuel,
-
-    #[serde(alias = "hydrogenperoxide")]
     HydrogenPeroxide,
-
-    #[serde(alias = "liquidoxygen")]
     LiquidOxygen,
-
-    #[serde(alias = "mineraloil")]
     MineralOil,
-
-    #[serde(alias = "nerveagents")]
     NerveAgents,
-
-    #[serde(alias = "pesticides")]
     Pesticides,
-
-    #[serde(alias = "rockforthfertiliser")]
     RockforthFertiliser,
-
-    #[serde(alias = "surfacestabilisers")]
     SurfaceStabilisers,
-
-    #[serde(alias = "syntheticreagents")]
     SyntheticReagents,
-
-    #[serde(alias = "tritium")]
     Tritium,
-
-    #[serde(alias = "water")]
     Water,
 
     // Consumer items
-    #[serde(alias = "clothing")]
     Clothing,
-
-    #[serde(alias = "consumertechnology")]
     ConsumerTechnology,
-
-    #[serde(alias = "domesticappliances")]
     DomesticAppliances,
-
-    #[serde(alias = "evacuationshelter")]
     EvacuationShelter,
-
-    #[serde(alias = "survivalequipment")]
     SurvivalEquipment,
 
     // Legal drugs
-    #[serde(alias = "beer")]
     Beer,
-
-    #[serde(alias = "bootlegliquor")]
     BootlegLiquor,
-
-    #[serde(alias = "liquor")]
     Liquor,
-
-    #[serde(alias = "basicnarcotics")]
     Narcotics,
-
-    #[serde(alias = "onionheadgammastrain")]
     OnionheadGammaStrain,
-
-    #[serde(alias = "tobacco")]
     Tobacco,
-
-    #[serde(alias = "wine")]
     Wine,
 
     // Foods
-    #[serde(alias = "algae")]
     Algae,
-
-    #[serde(alias = "animalmeat")]
     AnimalMeat,
-
-    #[serde(alias = "coffee")]
     Coffee,
-
-    #[serde(alias = "fish")]
     Fish,
-
-    #[serde(alias = "foodcartridges")]
     FoodCartridges,
-
-    #[serde(alias = "fruitandvegetables")]
     FruitAndVegetables,
-
-    #[serde(alias = "grain")]
     Grain,
-
-    #[serde(alias = "syntheticmeat")]
     SyntheticMeat,
-
-    #[serde(alias = "tea")]
     Tea,
 
     // Industrial materials
-    #[serde(alias = "ceramiccomposites")]
     CeramicComposites,
-
-    #[serde(alias = "cmmcomposite")]
     CMMComposite,
-
-    #[serde(alias = "insulatingmembrane")]
     InsulatingMembrane,
-
-    #[serde(alias = "metaalloys")]
     MetaAlloys,
-
-    #[serde(alias = "microweavecollinghoses")]
     MicroWeaveCollingHoses,
-
-    #[serde(alias = "neofabricinsulation")]
     NeofabricInsulation,
-
-    #[serde(alias = "polymers")]
     Polymers,
-
-    #[serde(alias = "semiconductors")]
     Semiconductors,
-
-    #[serde(alias = "superconductors")]
     Superconductors,
 
     // Machinery
-    #[serde(alias = "articulationmotors")]
     ArticulationMotors,
-
-    #[serde(alias = "atmosphericprocessors")]
     AtmosphericProcessors,
-
-    #[serde(alias = "buildingfabricators")]
     BuildingFabricators,
-
-    #[serde(alias = "cropharvesters")]
     CropHarvesters,
-
-    #[serde(alias = "emergencypowercells")]
     EmergencyPowerCells,
-
-    #[serde(alias = "energygridassembly")]
     EnergyGridAssembly,
-
-    #[serde(alias = "exhaustmanifold")]
     ExhaustManifold,
-
-    #[serde(alias = "geologicalequipment")]
     GeologicalEquipment,
-
-    #[serde(alias = "heatsinkinterlink")]
     HeatsinkInterlink,
-
-    #[serde(alias = "hnshockmount")]
     HNShockMount,
-
-    #[serde(alias = "iondistributor")]
     IonDistributor,
-
-    #[serde(alias = "magneticemittercoil")]
     MagneticEmitterCoil,
-
-    #[serde(alias = "marineequipment")]
     MarineEquipment,
-
-    #[serde(alias = "microbialfurnaces")]
     MicrobialFurnaces,
-
-    #[serde(alias = "mineralextractors")]
     MineralExtractors,
-
-    #[serde(alias = "modularterminals")]
     ModularTerminals,
-
-    #[serde(alias = "powerconverter")]
     PowerConverter,
-
-    #[serde(alias = "powergenerators")]
     PowerGenerators,
-
-    #[serde(alias = "powertransferbus")]
     PowerTransferBus,
-
-    #[serde(alias = "radiationbaffle")]
     RadiationBaffle,
-
-    #[serde(alias = "reinforcedmountingplate")]
     ReinforcedMountingPlate,
-
-    #[serde(alias = "skimmercomponents")]
     SkimmerComponents,
-
-    #[serde(alias = "thermalcoolingunits")]
     ThermalCoolingUnits,
-
-    #[serde(alias = "waterpurifiers")]
     WaterPurifiers,
 
     // Medicines
-    #[serde(alias = "advancedmedicines")]
     AdvancedMedicines,
-
-    #[serde(alias = "agrimedicines")]
     AgriMedicines,
-
-    #[serde(alias = "basicmedicines")]
     BasicMedicines,
-
-    #[serde(alias = "combatstabilisers")]
     CombatStabilisers,
-
-    #[serde(alias = "performanceenhancers")]
     PerformanceEnhancers,
-
-    #[serde(alias = "progenitorcells")]
     ProgenitorCells,
 
     // Metals
-    #[serde(alias = "aluminium")]
     Aluminium,
-
-    #[serde(alias = "beryllium")]
     Beryllium,
-
-    #[serde(alias = "bismuth")]
     Bismuth,
-
-    #[serde(alias = "cobalt")]
     Cobalt,
-
-    #[serde(alias = "copper")]
     Copper,
-
-    #[serde(alias = "gallium")]
     Gallium,
-
-    #[serde(alias = "gold")]
     Gold,
-
-    #[serde(alias = "hafnium178")]
     Hafnium178,
-
-    #[serde(alias = "indium")]
     Indium,
-
-    #[serde(alias = "lanthanum")]
     Lanthanum,
-
-    #[serde(alias = "lithium")]
     Lithium,
-
-    #[serde(alias = "osmium")]
     Osmium,
-
-    #[serde(alias = "palladium")]
     Palladium,
-
-    #[serde(alias = "platinum")]
     Platinum,
-
-    #[serde(alias = "praseodymium")]
     Praseodymium,
-
-    #[serde(alias = "samarium")]
     Samarium,
-
-    #[serde(alias = "silver", alias = "$Silver_Name;")]
     Silver,
-
-    #[serde(alias = "tantalum")]
     Tantalum,
-
-    #[serde(alias = "thallium")]
     Thallium,
-
-    #[serde(alias = "thorium")]
     Thorium,
-
-    #[serde(alias = "titanium")]
     Titanium,
-
-    #[serde(alias = "uranium")]
     Uranium,
 
     // Minerals
-    #[serde(alias = "alexandrite")]
     Alexandrite,
-
-    #[serde(alias = "bauxite")]
     Bauxite,
-
-    #[serde(alias = "benitoite")]
     Benitoite,
-
-    #[serde(alias = "bertrandite")]
     Bertrandite,
-
-    #[serde(alias = "bromellite")]
     Bromellite,
-
-    #[serde(alias = "coltan")]
     Coltan,
-
-    #[serde(alias = "cryolite")]
     Cryolite,
-
-    #[serde(alias = "gallite")]
     Gallite,
-
-    #[serde(alias = "goslarite")]
     Goslarite,
-
-    #[serde(alias = "grandidierite")]
     Grandidierite,
-
-    #[serde(alias = "indite", alias = "$Indite_Name;")]
     Indite,
-
-    #[serde(alias = "jadeite")]
     Jadeite,
-
-    #[serde(alias = "lepidolite")]
     Lepidolite,
-
-    #[serde(alias = "lithiumhydroxide")]
     LithiumHydroxide,
-
-    #[serde(alias = "lowtemperaturediamonds")]
     LowTemperatureDiamonds,
-
-    #[serde(alias = "methaneclathrate")]
     MethaneClathrate,
-
-    #[serde(alias = "methanolmonohydratecrystals")]
     MethanolMonohydrateCrystals,
-
-    #[serde(alias = "moissanite")]
     Moissanite,
-
-    #[serde(alias = "monazite")]
     Monazite,
-
-    #[serde(alias = "musgravite")]
     Musgravite,
-
-    #[serde(alias = "painite")]
     Painite,
-
-    #[serde(alias = "pyrophyllite")]
     Pyrophyllite,
-
-    #[serde(alias = "rhodplumsite")]
     Rhodplumsite,
-
-    #[serde(alias = "rutile")]
     Rutile,
-
-    #[serde(alias = "serendibite")]
     Serendibite,
-
-    #[serde(alias = "taaffeite")]
     Taaffeite,
-
-    #[serde(alias = "uraninite")]
     Uraninite,
-
-    #[serde(alias = "voidopal")]
     VoidOpal,
 
     // Salvage
-    #[serde(alias = "airelics")]
     AIRelics,
-
-    #[serde(alias = "ancientartefact")]
     AncientArtefact,
-
-    #[serde(alias = "ancientkey")]
     AncientKey,
-
-    #[serde(alias = "anomalyparticles")]
     AnomalyParticles,
-
-    #[serde(alias = "antimattercontainmentunit")]
     AntimatterContainmentUnit,
-
-    #[serde(alias = "aniquejewellery")]
     AniqueJewellery,
-
-    #[serde(alias = "antiquities")]
     Antiquities,
-
-    #[serde(alias = "assaultplans")]
     AssaultPlans,
-
-    #[serde(alias = "blackbox")]
     BlackBox,
-
-    #[serde(alias = "bonefragments")]
     BoneFragments,
-
-    #[serde(alias = "caustictissuesample")]
     CausticTissueSample,
-
-    #[serde(alias = "commercialsamples")]
     CommercialSamples,
-
-    #[serde(alias = "coralsap")]
     CoralSap,
-
-    #[serde(alias = "cystspecimen")]
     CystSpecimen,
-
-    #[serde(alias = "damagedescapepod")]
     DamagedEscapePod,
-
-    #[serde(alias = "datacore")]
     DataCore,
-
-    #[serde(alias = "diplomaticbag")]
     DiplomaticBag,
-
-    #[serde(alias = "earthrelics")]
     EarthRelics,
-
-    #[serde(alias = "encryptedcorrespondence")]
     EncryptedCorrespondence,
-
-    #[serde(alias = "encrypteddatastorage")]
     EncryptedDataStorage,
-
-    #[serde(alias = "experimentalchemicals")]
     ExperimentalChemicals,
-
-    #[serde(alias = "fossilremnants")]
     FossilRemnants,
-
-    #[serde(alias = "genebank")]
     GeneBank,
-
-    #[serde(alias = "geologicalsamples")]
     GeologicalSamples,
-
-    #[serde(alias = "guardiancasket")]
     GuardianCasket,
-
-    #[serde(alias = "guardianorb")]
     GuardianOrb,
-
-    #[serde(alias = "AncientRelic", alias = "ancientrelic")]
     GuardianRelic,
-
-    #[serde(alias = "guardiantablet")]
     GuardianTablet,
-
-    #[serde(alias = "guardiantotem")]
     GuardianTotem,
-
-    #[serde(alias = "guardianurn")]
     GuardianUrn,
-
-    #[serde(alias = "hostages")]
     Hostages,
-
-    #[serde(alias = "impurespiremineral")]
     ImpureSpireMineral,
-
-    #[serde(alias = "largesurveydatacache")]
     LargeSurveyDataCache,
-
-    #[serde(alias = "militaryintelligence")]
     MilitaryIntelligence,
-
-    #[serde(alias = "militaryplans")]
     MilitaryPlans,
-
-    #[serde(alias = "molluscbraintissue")]
     MolluscBrainTissue,
-
-    #[serde(alias = "molluscfluid")]
     MolluscFluid,
-
-    #[serde(alias = "molluscmembrane")]
     MolluscMembrane,
-
-    #[serde(alias = "molluscmycelium")]
     MolluscMycelium,
-
-    #[serde(alias = "molluscsofttissue")]
     MolluscSoftTissue,
-
-    #[serde(alias = "molluscspores")]
     MolluscSpores,
-
-    #[serde(alias = "mysteriousidol")]
     MysteriousIdol,
-
-    #[serde(alias = "occupiedescapepod")]
     OccupiedEscapePod,
-
-    #[serde(alias = "organsample")]
     OrganSample,
-
-    #[serde(alias = "personaleffects")]
     PersonalEffects,
-
-    #[serde(alias = "podcoretissue")]
     PodCoreTissue,
-
-    #[serde(alias = "poddeadtissue")]
     PodDeadTissue,
-
-    #[serde(alias = "podmesoglea")]
     PodMesoglea,
-
-    #[serde(alias = "podoutertissue")]
     PodOuterTissue,
-
-    #[serde(alias = "podshelltissue")]
     PodShellTissue,
-
-    #[serde(alias = "podsurfacetissue")]
     PodSurfaceTissue,
-
-    #[serde(alias = "podtissue")]
     PodTissue,
-
-    #[serde(alias = "politicalprisoners")]
     PoliticalPrisoners,
-
-    #[serde(alias = "preciousgems")]
     PreciousGems,
-
-    #[serde(alias = "prohibitedresearchmaterials")]
     ProhibitedResearchMaterials,
-
-    #[serde(alias = "protectivemembranescrap")]
     ProtectiveMembraneScrap,
-
-    #[serde(alias = "prototypetech")]
     PrototypeTech,
-
-    #[serde(alias = "rareartwork")]
     RareArtwork,
-
-    #[serde(alias = "rebeltransmission")]
     RebelTransmission,
-
-    #[serde(alias = "sap8corecontainer")]
     SAP8CoreContainer,
-
-    #[serde(alias = "scientificresearch")]
     ScientificResearch,
-
-    #[serde(alias = "scientificsamples")]
     ScientificSamples,
-
-    #[serde(alias = "semirefinesspiremineral")]
     SemiRefinesSpireMineral,
-
-    #[serde(alias = "smallsurveydatacache")]
     SmallSurveyDataCache,
-
-    #[serde(alias = "spacepioneerrelics")]
     SpacePioneerRelics,
-
-    #[serde(alias = "tacticaldata")]
     TacticalData,
-
-    #[serde(alias = "technicalblueprints")]
     TechnicalBlueprints,
-
-    #[serde(alias = "thargoidbasilisktissuesample")]
     ThargoidBasiliskTissueSample,
-
-    #[serde(alias = "thargoidbiostoragecapsule")]
     ThargoidBioStorageCapsule,
-
-    #[serde(alias = "thargoidbiologicalmatter")]
     ThargoidBiologicalMatter,
-
-    #[serde(alias = "thargoidcyclopstissuesample")]
     ThargoidCyclopsTissueSample,
-
-    #[serde(alias = "thargoidglaivetissuesample")]
     ThargoidGlaiveTissueSample,
-
-    #[serde(alias = "thargoidheart")]
     ThargoidHeart,
-
-    #[serde(alias = "thargoidhydratissuesample")]
     ThargoidHydraTissueSample,
-
-    #[serde(alias = "thargoidlink")]
     ThargoidLink,
-
-    #[serde(alias = "thargoidmedusatissuesample")]
     ThargoidMedusaTissueSample,
-
-    #[serde(alias = "thargoidorthrustissuesample")]
     ThargoidOrthrusTissueSample,
-
-    #[serde(alias = "thargoidprobe")]
     ThargoidProbe,
-
-    #[serde(alias = "thargoidresin")]
     ThargoidResin,
-
-    #[serde(alias = "thargoidscouttissuesample")]
     ThargoidScoutTissueSample,
-
-    #[serde(alias = "thargoidscythetissuesample")]
     ThargoidScytheTissueSample,
-
-    #[serde(alias = "ThargoidGeneratorTissueSample", alias = "thargoidgeneratortissuesample")]
     ThargoidGeneratorTissueSample,
-
-    #[serde(alias = "thargoidsensor")]
     ThargoidSensor,
-
-    #[serde(alias = "thargoidtechnologysamples")]
     ThargoidTechnologySamples,
-
-    #[serde(alias = "timecapsule")]
     TimeCapsule,
-
-    #[serde(alias = "titandeeptissuesample")]
     TitanDeepTissueSample,
-
-    #[serde(alias = "titandrivecomponent")]
     TitanDriveComponent,
-
-    #[serde(alias = "titanmawdeeptissuesample")]
     TitanMawDeepTissueSample,
-
-    #[serde(alias = "titanmawpartialtissuesample")]
     TitanMawPartialTissueSample,
-
-    #[serde(alias = "titanmawtissuesample")]
     TitanMawTissueSample,
-
-    #[serde(alias = "titanpartialtissuesample")]
     TitanPartialTissueSample,
-
-    #[serde(alias = "titantissuesample")]
     TitanTissueSample,
-
-    #[serde(alias = "tradedata")]
     TradeData,
-
-    #[serde(alias = "trinketsofhiddenfortune")]
     TrinketsOfHiddenFortune,
-
-    #[serde(alias = "unclassifiedrelic")]
     UnclassifiedRelic,
-
-    #[serde(alias = "unoccupiedescapepod")]
     UnoccupiedEscapePod,
-
-    #[serde(alias = "unstabledatacore")]
     UnstableDataCore,
-
-    #[serde(alias = "wreckagecomponents")]
     WreckageComponents,
 
     // Slaves
-    #[serde(alias = "imperialslaves")]
     ImperialSlaves,
-
-    #[serde(alias = "slaves")]
     Slaves,
 
     // Technology
-    #[serde(alias = "advancedcatalysers")]
     AdvancedCatalysers,
-
-    #[serde(alias = "animalmonitors")]
     AnimalMonitors,
-
-    #[serde(alias = "aquaponicsystems")]
     AquaponicSystems,
-
-    #[serde(alias = "autofabricators")]
     AutoFabricators,
-
-    #[serde(alias = "bioreducinglichen")]
     BioreducingLichen,
-
-    #[serde(alias = "computercomponents")]
     ComputerComponents,
-
-    #[serde(alias = "hesuits")]
     HESuits,
-
-    #[serde(alias = "hardwarediagnosticsensor")]
     HardwareDiagnosticSensor,
-
-    #[serde(alias = "landenrichmentsystems")]
     LandEnrichmentSystems,
-
-    #[serde(alias = "medialdiagnosticequipment")]
     MedialDiagnosticEquipment,
-
-    #[serde(alias = "microcontrollers")]
     MicroControllers,
-
-    #[serde(alias = "muonimager")]
     MuonImager,
-
-    #[serde(alias = "nanobreakers")]
     Nanobreakers,
-
-    #[serde(alias = "resonatingseparators")]
     ResonatingSeparators,
-
-    #[serde(alias = "robotics")]
     Robotics,
-
-    #[serde(alias = "structuralregulators")]
     StructuralRegulators,
-
-    #[serde(alias = "telemetrysuite")]
     TelemetrySuite,
-
     // Textiles
-    #[serde(alias = "conductivefabrics")]
     ConductiveFabrics,
-
-    #[serde(alias = "leather")]
     Leather,
-
-    #[serde(alias = "militarygradefabrics")]
     MilitaryGradeFabrics,
-
-    #[serde(alias = "naturalfabrics")]
     NaturalFabrics,
-
-    #[serde(alias = "syntheticfabrics")]
     SyntheticFabrics,
-
     // Waste
-    #[serde(alias = "biowaste")]
     Biowaste,
-
-    #[serde(alias = "chemicalwaste")]
     ChemicalWaste,
-
-    #[serde(alias = "scrap")]
     Scrap,
-
-    #[serde(alias = "toxicwaste")]
     ToxicWaste,
-
     // Weapons
-    #[serde(alias = "battleweapons")]
     BattleWeapons,
-
-    #[serde(alias = "landmines")]
     Landmines,
-
-    #[serde(alias = "nonlethalweapons")]
     NonLethalWeapons,
-
-    #[serde(alias = "personalweapons")]
     PersonalWeapons,
-
-    #[serde(alias = "reactivearmour")]
     ReactiveArmour,
-
     // Rare
-    #[serde(alias = "jaquesquinentianstill")]
     JaquesQuinentianStill,
-
-    #[serde(alias = "kinagoviolins")]
     KinagoViolins,
-
-    #[serde(alias = "apavietii")]
     ApaVietii,
-
-    #[serde(alias = "geawendancedust")]
     GeawenDanceDust,
-
-    #[serde(alias = "vanayequiceratomorphafur")]
     VanayequiCeratomorphaFur,
-
-    #[serde(alias = "karetiicouture")]
     KaretiiCouture,
-
-    #[serde(alias = "mukusubiichitinos")]
     MukusubiiChitinos,
-
-    #[serde(alias = "ultracompactprocessorprototypes")]
     UltraCompactProcessorPrototypes,
-
-    #[serde(alias = "eleuthermals")]
     EleuThermals,
-
-    #[serde(alias = "kamorinhistoricweapons")]
     KamorinHistoricWeapons,
-
-    #[serde(alias = "ceremonialheiketea")]
     CeremonialHeikeTea,
-
-    #[serde(alias = "vidavantianlace")]
     VidavantianLace,
-
-    #[serde(alias = "kachiriginfilterleeches")]
     KachiriginFilterLeeches,
-
-    #[serde(alias = "lyraeweed")]
     LyraeWeed,
-
-    #[serde(alias = "galactictravelguide")]
     GalacticTravelGuide,
-
-    #[serde(alias = "harmasilversearum")]
     HarmaSilverSeaRum,
-
-    #[serde(alias = "ngadandarifireopals")]
     NgadandariFireOpals,
-
-    #[serde(alias = "alyabodysoap")]
     AlyaBodySoap,
-
-    #[serde(alias = "helvetitjpearls")]
     HelvetitjPearls,
-
-    #[serde(alias = "ochoengchillies")]
     OchoengChillies,
-
-    #[serde(alias = "onionheadbetastrain")]
     OnionheadBetaStrain,
-
-    #[serde(alias = "kamitracigars")]
     KamitraCigars,
-
-    #[serde(alias = "njangarisaddles")]
     NjangariSaddles,
-
-    #[serde(alias = "hiporganophosphates")]
     HipOrganophosphates,
-
-    #[serde(alias = "gilyasignatureweapons")]
     GilyaSignatureWeapons,
-
-    #[serde(alias = "hr7221wheat")]
     HR7221Wheat,
-
-    #[serde(alias = "wheemetewheatcakes")]
     WheemeteWheatCakes,
-
-    #[serde(alias = "rajukrumultistoves")]
     RajukruMultiStoves,
-
-    #[serde(alias = "nanomedicines")]
     Nanomedicines,
-
-    #[serde(alias = "noneuclidianexotanks")]
     NonEuclidianExotanks,
-
-    #[serde(alias = "ngunamodernantiques")]
     NgunaModernAntiques,
-
-    #[serde(alias = "xihebiomorphiccompanions")]
     XiheBiomorphicCompanions,
-
-    #[serde(alias = "esusekucaviar")]
     EsusekuCaviar,
-
-    #[serde(alias = "orrerianviciousbrew")]
     OrrerianViciousBrew,
-
-    #[serde(alias = "vherculisbodyrub")]
     VHerculisBodyRub,
-
-    #[serde(alias = "voidextractcoffee")]
     VoidExtractCoffee,
-
-    #[serde(alias = "uszaiantreegrub")]
     UszaianTreeGrub,
-
-    #[serde(alias = "haidenblackbrew")]
     HaidenBlackBrew,
-
-    #[serde(alias = "motronaexperiencejelly")]
     MotronaExperienceJelly,
-
-    #[serde(alias = "jaradharrepuzzlebox")]
     JaradharrePuzzleBox,
-
-    #[serde(alias = "personalgifts")]
     PersonalGifts,
-
-    #[serde(alias = "mulachigiantfungus")]
     MulachiGiantFungus,
-
-    #[serde(alias = "ltthypersweet")]
     LTTHyperSweet,
-
-    #[serde(alias = "medbstarlube")]
     MedbStarlube,
-
-    #[serde(alias = "giantverrix")]
     GiantVerrix,
-
-    #[serde(alias = "hip118311swarm")]
     HIP118311Swarm,
-
-    #[serde(alias = "disomacorn")]
     DisoMaCorn,
-
-    #[serde(alias = "lavianbrandy")]
     LavianBrandy,
-
-    #[serde(alias = "azuremilk")]
     AzureMilk,
-
-    #[serde(alias = "leestianeviljuice")]
     LeestianEvilJuice,
-
-    #[serde(alias = "coquimspongiformvictuals")]
     CoquimSpongiformVictuals,
-
-    #[serde(alias = "leatheryeggs")]
     LeatheryEggs,
-
-    #[serde(alias = "shanscharisorchid")]
     ShansCharisOrchid,
-
-    #[serde(alias = "konggaale")]
     KonggaAle,
-
-    #[serde(alias = "vegaslimweed")]
     VegaSlimweed,
-
-    #[serde(alias = "tiolcewaste2pasteunits")]
     TiolceWaste2PasteUnits,
-
-    #[serde(alias = "ophiuchexinoartefacts")]
     OphiuchExinoArtefacts,
-
-    #[serde(alias = "altairianskin")]
     AltairianSkin,
-
-    #[serde(alias = "aganipperush")]
     AganippeRush,
-
-    #[serde(alias = "cd75kittenbrandcoffee")]
     CD75KittenBrandCoffee,
-
-    #[serde(alias = "havasupaidreamcatcher")]
     HavasupaiDreamCatcher,
-
-    #[serde(alias = "eraninpearlwhisky")]
     EraninPearlWhisky,
-
-    #[serde(alias = "pavoniseargrubs")]
     PavonisEarGrubs,
-
-    #[serde(alias = "onionheadalphastrain")]
     OnionheadAlphaStrain,
-
-    #[serde(alias = "indibourbon")]
     IndiBourbon,
-
-    #[serde(alias = "bakedgreebles")]
     BakedGreebles,
-
-    #[serde(alias = "karsukilocusts")]
     KarsukiLocusts,
-
-    #[serde(alias = "masterchefs")]
     MasterChefs,
-
-    #[serde(alias = "yasokondileaf")]
     YasoKondiLeaf,
-
-    #[serde(alias = "burnhambiledistillate")]
     BurnhamBileDistillate,
-
-    #[serde(alias = "thehuttonmug")]
     TheHuttonMug,
-
-    #[serde(alias = "centaurimegagin")]
     CentauriMegaGin,
-
-    #[serde(alias = "utgaroarmillennialeggs")]
     UtgaroarMillennialEggs,
-
-    #[serde(alias = "soontillrelics")]
     SoontillRelics,
-
-    #[serde(alias = "zeesszeantgrubglue")]
     ZeesszeAntGrubGlue,
-
-    #[serde(alias = "thewatersofshintara")]
     TheWatersOfShintara,
-
-    #[serde(alias = "baltahsinevacuumkrill")]
     BaltahsineVacuumKrill,
-
-    #[serde(alias = "sanumadecorativemeat")]
     SanumaDecorativeMeat,
-
-    #[serde(alias = "giantirukamasnails")]
     GiantIrukamaSnails,
-
-    #[serde(alias = "anduligafireworks")]
     AnduligaFireWorks,
-
-    #[serde(alias = "crystallinespheres")]
     CrystallineSpheres,
-
-    #[serde(alias = "pantaaprayersticks")]
     PantaaPrayerSticks,
-
-    #[serde(alias = "chieridanimarinepaste")]
     ChiEridaniMarinePaste,
-
-    #[serde(alias = "ethgrezeteabuds")]
     EthgrezeTeaBuds,
-
-    #[serde(alias = "deltaphoenicispalms")]
     DeltaPhoenicisPalms,
-
-    #[serde(alias = "tarachspice")]
     TarachSpice,
-
-    #[serde(alias = "wulpahyperboresystems")]
     WulpaHyperboreSystems,
-
-    #[serde(alias = "livehecateseaworms")]
     LiveHecateSeaWorms,
-
-    #[serde(alias = "korokungpellets")]
     KoroKungPellets,
-
-    #[serde(alias = "bastsnakegin")]
     BastSnakeGin,
-
-    #[serde(alias = "terramaterbloodbores")]
     TerraMaterBloodBores,
-
-    #[serde(alias = "wuthielokufroth")]
     WuthieloKuFroth,
-
-    #[serde(alias = "honestypills")]
     HonestyPills,
-
-    #[serde(alias = "cromsilverfesh")]
     CromSilverFesh,
-
-    #[serde(alias = "borasetanipathogenetics")]
     BorasetaniPathogenetics,
-
-    #[serde(alias = "cetirabbits")]
     CetiRabbits,
-
-    #[serde(alias = "aepyornisegg")]
     AepyornisEgg,
-
-    #[serde(alias = "uzumokulowgwings")]
     UzumokuLowGWings,
-
-    #[serde(alias = "cherbonesbloodcrystals")]
     CherbonesBloodCrystals,
-
-    #[serde(alias = "toxandjivirocide")]
     ToxandjiVirocide,
-
-    #[serde(alias = "onionhead")]
     Onionhead,
-
-    #[serde(alias = "lucanonionhead")]
     LucanOnionhead,
-
-    #[serde(alias = "tanmarktranquiltea")]
     TanmarkTranquilTea,
-
-    #[serde(alias = "thrutiscream")]
     ThrutisCream,
-
-    #[serde(alias = "alacarakmoskinart")]
     AlacarakmoSkinArt,
-
-    #[serde(alias = "platinumalloy")]
     PlatinumAlloy,
-
-    #[serde(alias = "mokojingbeastfeast")]
     MokojingBeastFeast,
-
-    #[serde(alias = "edenapplesofaerial")]
     EdenApplesOfAerial,
-
-    #[serde(alias = "chameleoncloth")]
     ChameleonCloth,
-
-    #[serde(alias = "taurichimes")]
     TauriChimes,
-
-    #[serde(alias = "rusanioldsmokey")]
     RusaniOldSmokey,
-
-    #[serde(alias = "azcancriformula42")]
     AZCancriFormula42,
-
-    #[serde(alias = "gomanyauponcoffee")]
     GomanYauponCoffee,
-
-    #[serde(alias = "gerasiangueuzebeer")]
     GerasianGueuzeBeer,
-
-    #[serde(alias = "jarouarice")]
     JarouaRice,
-
-    #[serde(alias = "anynacoffee")]
     AnyNaCoffee,
-
-    #[serde(alias = "fujintea")]
     FujinTea,
-
-    #[serde(alias = "hip10175bushmeat")]
     HIP10175BushMeat,
-
-    #[serde(alias = "momusbogspaniel")]
     MomusBogSpaniel,
-
-    #[serde(alias = "witchhaulkobebeef")]
     WitchhaulKobeBeef,
-
-    #[serde(alias = "saxonwine")]
     SaxonWine,
-
-    #[serde(alias = "aroucaconventualsweets")]
     AroucaConventualSweets,
-
-    #[serde(alias = "albinoquechuamammothmeat")]
     AlbinoQuechuaMammothMeat,
-
-    #[serde(alias = "duradrives")]
     Duradrives,
-
-    #[serde(alias = "holvaduellingblades")]
     HolvaDuellingBlades,
-
-    #[serde(alias = "rapabaosnakeskins")]
     RapaBaoSnakeSkins,
-
-    #[serde(alias = "wolffesh")]
     WolfFesh,
-
-    #[serde(alias = "eshuumbrellas")]
     EshuUmbrellas,
-
-    #[serde(alias = "neritusberries")]
     NeritusBerries,
-
-    #[serde(alias = "jotunmookah")]
     JotunMookah,
-
-    #[serde(alias = "chateaudeaegaeon")]
     ChateauDeAegaeon,
-
-    #[serde(alias = "belalansrayleather")]
     BelalansRayLeather,
-
-    #[serde(alias = "damnacarapaces")]
     DamnaCarapaces,
-
-    #[serde(alias = "hipprotosquid")]
     HIPProtoSquid,
-
-    #[serde(alias = "mechucoshightea")]
     MechucosHighTea,
-
-    #[serde(alias = "deuringastruffles")]
     DeuringasTruffles,
-
-    #[serde(alias = "bankiamphibiousleather")]
     BankiAmphibiousLeather,
-
-    #[serde(alias = "sothiscrystallinegold")]
     SothisCrystallineGold,
-
-    #[serde(alias = "tiegfriessynthsilk")]
     TiegfriesSynthSilk,
-
-    #[serde(alias = "volkhabbeedrones")]
     VolkhabBeeDrones,
-
-    #[serde(alias = "buckyballbeermats")]
     BuckyballBeerMats,
-
-    #[serde(alias = "classifiedexperimentalequipment")]
     ClassifiedExperimentalEquipment,
 
-
-    // Data
-    #[serde(alias = "$EnhancedInterrogationRecordings_Name;")]
-    EnhancedInterrogationRecordings,
-
-
-    // Goods
-    #[serde(alias = "$IonisedGas_Name;")]
-    IonisedGas,
-
-
     // None
-    #[serde(alias = "drones")]
     Limpet,
 
 
     #[cfg(not(feature = "strict"))]
-    #[serde(untagged)]
     Unknown(String),
 }
 
+#[derive(Debug, Error)]
+pub enum CommodityError {
+    #[error("Unknown commodity: '{0}'")]
+    UnknownCommodity(String),
+}
+
+impl Commodity {
+    fn name_to_commodity(name: &str) -> Result<Commodity, CommodityError> {
+        let lower_case: &str = &name.to_ascii_lowercase();
+
+        match lower_case {
+            "argonomictreatment" => Ok(Commodity::ArgonomicTreatment),
+            "explosives" => Ok(Commodity::Explosives),
+            "hydrogenfuel" => Ok(Commodity::HydrogenFuel),
+            "hydrogenperoxide" => Ok(Commodity::HydrogenPeroxide),
+            "liquidoxygen" => Ok(Commodity::LiquidOxygen),
+            "mineraloil" => Ok(Commodity::MineralOil),
+            "nerveagents" => Ok(Commodity::NerveAgents),
+            "pesticides" => Ok(Commodity::Pesticides),
+            "rockforthfertiliser" => Ok(Commodity::RockforthFertiliser),
+            "surfacestabilisers" => Ok(Commodity::SurfaceStabilisers),
+            "syntheticreagents" => Ok(Commodity::SyntheticReagents),
+            "tritium" => Ok(Commodity::Tritium),
+            "water" => Ok(Commodity::Water),
+            "clothing" => Ok(Commodity::Clothing),
+            "consumertechnology" => Ok(Commodity::ConsumerTechnology),
+            "domesticappliances" => Ok(Commodity::DomesticAppliances),
+            "evacuationshelter" => Ok(Commodity::EvacuationShelter),
+            "survivalequipment" => Ok(Commodity::SurvivalEquipment),
+            "beer" => Ok(Commodity::Beer),
+            "bootlegliquor" => Ok(Commodity::BootlegLiquor),
+            "liquor" => Ok(Commodity::Liquor),
+            "basicnarcotics" => Ok(Commodity::Narcotics),
+            "onionheadc" => Ok(Commodity::OnionheadGammaStrain),
+            "tobacco" => Ok(Commodity::Tobacco),
+            "wine" => Ok(Commodity::Wine),
+            "algae" => Ok(Commodity::Algae),
+            "animalmeat" => Ok(Commodity::AnimalMeat),
+            "coffee" => Ok(Commodity::Coffee),
+            "fish" => Ok(Commodity::Fish),
+            "foodcartridges" => Ok(Commodity::FoodCartridges),
+            "fruitandvegetables" => Ok(Commodity::FruitAndVegetables),
+            "grain" => Ok(Commodity::Grain),
+            "syntheticmeat" => Ok(Commodity::SyntheticMeat),
+            "tea" => Ok(Commodity::Tea),
+            "ceramiccomposites" => Ok(Commodity::CeramicComposites),
+            "cmmcomposite" => Ok(Commodity::CMMComposite),
+            "insulatingmembrane" => Ok(Commodity::InsulatingMembrane),
+            "metaalloys" => Ok(Commodity::MetaAlloys),
+            "microweavecollinghoses" => Ok(Commodity::MicroWeaveCollingHoses),
+            "neofabricinsulation" => Ok(Commodity::NeofabricInsulation),
+            "polymers" => Ok(Commodity::Polymers),
+            "semiconductors" => Ok(Commodity::Semiconductors),
+            "superconductors" => Ok(Commodity::Superconductors),
+            "articulationmotors" => Ok(Commodity::ArticulationMotors),
+            "atmosphericprocessors" => Ok(Commodity::AtmosphericProcessors),
+            "buildingfabricators" => Ok(Commodity::BuildingFabricators),
+            "cropharvesters" => Ok(Commodity::CropHarvesters),
+            "emergencypowercells" => Ok(Commodity::EmergencyPowerCells),
+            "energygridassembly" => Ok(Commodity::EnergyGridAssembly),
+            "exhaustmanifold" => Ok(Commodity::ExhaustManifold),
+            "geologicalequipment" => Ok(Commodity::GeologicalEquipment),
+            "heatsinkinterlink" => Ok(Commodity::HeatsinkInterlink),
+            "hnshockmount" => Ok(Commodity::HNShockMount),
+            "iondistributor" => Ok(Commodity::IonDistributor),
+            "magneticemittercoil" => Ok(Commodity::MagneticEmitterCoil),
+            "marineequipment" => Ok(Commodity::MarineEquipment),
+            "microbialfurnaces" => Ok(Commodity::MicrobialFurnaces),
+            "mineralextractors" => Ok(Commodity::MineralExtractors),
+            "modularterminals" => Ok(Commodity::ModularTerminals),
+            "powerconverter" => Ok(Commodity::PowerConverter),
+            "powergenerators" => Ok(Commodity::PowerGenerators),
+            "powertransferbus" => Ok(Commodity::PowerTransferBus),
+            "radiationbaffle" => Ok(Commodity::RadiationBaffle),
+            "reinforcedmountingplate" => Ok(Commodity::ReinforcedMountingPlate),
+            "skimmercomponents" => Ok(Commodity::SkimmerComponents),
+            "thermalcoolingunits" => Ok(Commodity::ThermalCoolingUnits),
+            "waterpurifiers" => Ok(Commodity::WaterPurifiers),
+            "advancedmedicines" => Ok(Commodity::AdvancedMedicines),
+            "agrimedicines" => Ok(Commodity::AgriMedicines),
+            "basicmedicines" => Ok(Commodity::BasicMedicines),
+            "combatstabilisers" => Ok(Commodity::CombatStabilisers),
+            "performanceenhancers" => Ok(Commodity::PerformanceEnhancers),
+            "progenitorcells" => Ok(Commodity::ProgenitorCells),
+            "aluminium" => Ok(Commodity::Aluminium),
+            "beryllium" => Ok(Commodity::Beryllium),
+            "bismuth" => Ok(Commodity::Bismuth),
+            "cobalt" => Ok(Commodity::Cobalt),
+            "copper" => Ok(Commodity::Copper),
+            "gallium" => Ok(Commodity::Gallium),
+            "gold" => Ok(Commodity::Gold),
+            "hafnium178" => Ok(Commodity::Hafnium178),
+            "indium" => Ok(Commodity::Indium),
+            "lanthanum" => Ok(Commodity::Lanthanum),
+            "lithium" => Ok(Commodity::Lithium),
+            "osmium" => Ok(Commodity::Osmium),
+            "palladium" => Ok(Commodity::Palladium),
+            "platinum" => Ok(Commodity::Platinum),
+            "praseodymium" => Ok(Commodity::Praseodymium),
+            "samarium" => Ok(Commodity::Samarium),
+            "silver" => Ok(Commodity::Silver),
+            "tantalum" => Ok(Commodity::Tantalum),
+            "thallium" => Ok(Commodity::Thallium),
+            "thorium" => Ok(Commodity::Thorium),
+            "titanium" => Ok(Commodity::Titanium),
+            "uranium" => Ok(Commodity::Uranium),
+            "alexandrite" => Ok(Commodity::Alexandrite),
+            "bauxite" => Ok(Commodity::Bauxite),
+            "benitoite" => Ok(Commodity::Benitoite),
+            "bertrandite" => Ok(Commodity::Bertrandite),
+            "bromellite" => Ok(Commodity::Bromellite),
+            "coltan" => Ok(Commodity::Coltan),
+            "cryolite" => Ok(Commodity::Cryolite),
+            "gallite" => Ok(Commodity::Gallite),
+            "goslarite" => Ok(Commodity::Goslarite),
+            "grandidierite" => Ok(Commodity::Grandidierite),
+            "indite" => Ok(Commodity::Indite),
+            "jadeite" => Ok(Commodity::Jadeite),
+            "lepidolite" => Ok(Commodity::Lepidolite),
+            "lithiumhydroxide" => Ok(Commodity::LithiumHydroxide),
+            "lowtemperaturediamonds" => Ok(Commodity::LowTemperatureDiamonds),
+            "methaneclathrate" => Ok(Commodity::MethaneClathrate),
+            "methanolmonohydratecrystals" => Ok(Commodity::MethanolMonohydrateCrystals),
+            "moissanite" => Ok(Commodity::Moissanite),
+            "monazite" => Ok(Commodity::Monazite),
+            "musgravite" => Ok(Commodity::Musgravite),
+            "painite" => Ok(Commodity::Painite),
+            "pyrophyllite" => Ok(Commodity::Pyrophyllite),
+            "rhodplumsite" => Ok(Commodity::Rhodplumsite),
+            "rutile" => Ok(Commodity::Rutile),
+            "serendibite" => Ok(Commodity::Serendibite),
+            "taaffeite" => Ok(Commodity::Taaffeite),
+            "uraninite" => Ok(Commodity::Uraninite),
+            "opal" => Ok(Commodity::VoidOpal),
+            "airelics" => Ok(Commodity::AIRelics),
+            "ancientartefact" => Ok(Commodity::AncientArtefact),
+            "ancientkey" => Ok(Commodity::AncientKey),
+            "anomalyparticles" => Ok(Commodity::AnomalyParticles),
+            "antimattercontainmentunit" => Ok(Commodity::AntimatterContainmentUnit),
+            "aniquejewellery" => Ok(Commodity::AniqueJewellery),
+            "antiquities" => Ok(Commodity::Antiquities),
+            "assaultplans" => Ok(Commodity::AssaultPlans),
+            "blackbox" => Ok(Commodity::BlackBox),
+            "bonefragments" => Ok(Commodity::BoneFragments),
+            "caustictissuesample" => Ok(Commodity::CausticTissueSample),
+            "commercialsamples" => Ok(Commodity::CommercialSamples),
+            "coralsap" => Ok(Commodity::CoralSap),
+            "cystspecimen" => Ok(Commodity::CystSpecimen),
+            "damagedescapepod" => Ok(Commodity::DamagedEscapePod),
+            "datacore" => Ok(Commodity::DataCore),
+            "diplomaticbag" => Ok(Commodity::DiplomaticBag),
+            "earthrelics" => Ok(Commodity::EarthRelics),
+            "encryptedcorrespondence" => Ok(Commodity::EncryptedCorrespondence),
+            "encrypteddatastorage" => Ok(Commodity::EncryptedDataStorage),
+            "experimentalchemicals" => Ok(Commodity::ExperimentalChemicals),
+            "fossilremnants" => Ok(Commodity::FossilRemnants),
+            "genebank" => Ok(Commodity::GeneBank),
+            "geologicalsamples" => Ok(Commodity::GeologicalSamples),
+            "guardiancasket" => Ok(Commodity::GuardianCasket),
+            "guardianorb" => Ok(Commodity::GuardianOrb),
+            "ancientrelic" => Ok(Commodity::GuardianRelic),
+            "guardiantablet" => Ok(Commodity::GuardianTablet),
+            "guardiantotem" => Ok(Commodity::GuardianTotem),
+            "guardianurn" => Ok(Commodity::GuardianUrn),
+            "hostages" => Ok(Commodity::Hostages),
+            "impurespiremineral" => Ok(Commodity::ImpureSpireMineral),
+            "largesurveydatacache" => Ok(Commodity::LargeSurveyDataCache),
+            "militaryintelligence" => Ok(Commodity::MilitaryIntelligence),
+            "militaryplans" => Ok(Commodity::MilitaryPlans),
+            "molluscbraintissue" => Ok(Commodity::MolluscBrainTissue),
+            "molluscfluid" => Ok(Commodity::MolluscFluid),
+            "molluscmembrane" => Ok(Commodity::MolluscMembrane),
+            "molluscmycelium" => Ok(Commodity::MolluscMycelium),
+            "molluscsofttissue" => Ok(Commodity::MolluscSoftTissue),
+            "molluscspores" => Ok(Commodity::MolluscSpores),
+            "mysteriousidol" => Ok(Commodity::MysteriousIdol),
+            "occupiedescapepod" => Ok(Commodity::OccupiedEscapePod),
+            "organsample" => Ok(Commodity::OrganSample),
+            "personaleffects" => Ok(Commodity::PersonalEffects),
+            "podcoretissue" => Ok(Commodity::PodCoreTissue),
+            "poddeadtissue" => Ok(Commodity::PodDeadTissue),
+            "podmesoglea" => Ok(Commodity::PodMesoglea),
+            "podoutertissue" => Ok(Commodity::PodOuterTissue),
+            "podshelltissue" => Ok(Commodity::PodShellTissue),
+            "podsurfacetissue" => Ok(Commodity::PodSurfaceTissue),
+            "podtissue" => Ok(Commodity::PodTissue),
+            "politicalprisoners" => Ok(Commodity::PoliticalPrisoners),
+            "preciousgems" => Ok(Commodity::PreciousGems),
+            "prohibitedresearchmaterials" => Ok(Commodity::ProhibitedResearchMaterials),
+            "protectivemembranescrap" => Ok(Commodity::ProtectiveMembraneScrap),
+            "prototypetech" => Ok(Commodity::PrototypeTech),
+            "rareartwork" => Ok(Commodity::RareArtwork),
+            "rebeltransmission" => Ok(Commodity::RebelTransmission),
+            "sap8corecontainer" => Ok(Commodity::SAP8CoreContainer),
+            "scientificresearch" => Ok(Commodity::ScientificResearch),
+            "scientificsamples" => Ok(Commodity::ScientificSamples),
+            "semirefinesspiremineral" => Ok(Commodity::SemiRefinesSpireMineral),
+            "smallsurveydatacache" => Ok(Commodity::SmallSurveyDataCache),
+            "spacepioneerrelics" => Ok(Commodity::SpacePioneerRelics),
+            "tacticaldata" => Ok(Commodity::TacticalData),
+            "technicalblueprints" => Ok(Commodity::TechnicalBlueprints),
+            "thargoidbasilisktissuesample" => Ok(Commodity::ThargoidBasiliskTissueSample),
+            "thargoidbiostoragecapsule" => Ok(Commodity::ThargoidBioStorageCapsule),
+            "thargoidbiologicalmatter" => Ok(Commodity::ThargoidBiologicalMatter),
+            "thargoidcyclopstissuesample" => Ok(Commodity::ThargoidCyclopsTissueSample),
+            "thargoidglaivetissuesample" => Ok(Commodity::ThargoidGlaiveTissueSample),
+            "thargoidheart" => Ok(Commodity::ThargoidHeart),
+            "thargoidhydratissuesample" => Ok(Commodity::ThargoidHydraTissueSample),
+            "thargoidlink" => Ok(Commodity::ThargoidLink),
+            "thargoidmedusatissuesample" => Ok(Commodity::ThargoidMedusaTissueSample),
+            "thargoidorthrustissuesample" => Ok(Commodity::ThargoidOrthrusTissueSample),
+            "thargoidprobe" => Ok(Commodity::ThargoidProbe),
+            "thargoidresin" => Ok(Commodity::ThargoidResin),
+            "thargoidscouttissuesample" => Ok(Commodity::ThargoidScoutTissueSample),
+            "thargoidscythetissuesample" => Ok(Commodity::ThargoidScytheTissueSample),
+            "thargoidgeneratortissuesample" => Ok(Commodity::ThargoidGeneratorTissueSample),
+            "thargoidsensor" => Ok(Commodity::ThargoidSensor),
+            "thargoidtechnologysamples" => Ok(Commodity::ThargoidTechnologySamples),
+            "timecapsule" => Ok(Commodity::TimeCapsule),
+            "titandeeptissuesample" => Ok(Commodity::TitanDeepTissueSample),
+            "titandrivecomponent" => Ok(Commodity::TitanDriveComponent),
+            "titanmawdeeptissuesample" => Ok(Commodity::TitanMawDeepTissueSample),
+            "titanmawpartialtissuesample" => Ok(Commodity::TitanMawPartialTissueSample),
+            "titanmawtissuesample" => Ok(Commodity::TitanMawTissueSample),
+            "titanpartialtissuesample" => Ok(Commodity::TitanPartialTissueSample),
+            "titantissuesample" => Ok(Commodity::TitanTissueSample),
+            "tradedata" => Ok(Commodity::TradeData),
+            "trinketsofhiddenfortune" => Ok(Commodity::TrinketsOfHiddenFortune),
+            "unclassifiedrelic" => Ok(Commodity::UnclassifiedRelic),
+            "unoccupiedescapepod" => Ok(Commodity::UnoccupiedEscapePod),
+            "unstabledatacore" => Ok(Commodity::UnstableDataCore),
+            "wreckagecomponents" => Ok(Commodity::WreckageComponents),
+            "imperialslaves" => Ok(Commodity::ImperialSlaves),
+            "slaves" => Ok(Commodity::Slaves),
+            "advancedcatalysers" => Ok(Commodity::AdvancedCatalysers),
+            "animalmonitors" => Ok(Commodity::AnimalMonitors),
+            "aquaponicsystems" => Ok(Commodity::AquaponicSystems),
+            "autofabricators" => Ok(Commodity::AutoFabricators),
+            "bioreducinglichen" => Ok(Commodity::BioreducingLichen),
+            "computercomponents" => Ok(Commodity::ComputerComponents),
+            "hesuits" => Ok(Commodity::HESuits),
+            "hardwarediagnosticsensor" => Ok(Commodity::HardwareDiagnosticSensor),
+            "landenrichmentsystems" => Ok(Commodity::LandEnrichmentSystems),
+            "medialdiagnosticequipment" => Ok(Commodity::MedialDiagnosticEquipment),
+            "microcontrollers" => Ok(Commodity::MicroControllers),
+            "muonimager" => Ok(Commodity::MuonImager),
+            "nanobreakers" => Ok(Commodity::Nanobreakers),
+            "resonatingseparators" => Ok(Commodity::ResonatingSeparators),
+            "robotics" => Ok(Commodity::Robotics),
+            "structuralregulators" => Ok(Commodity::StructuralRegulators),
+            "telemetrysuite" => Ok(Commodity::TelemetrySuite),
+            "conductivefabrics" => Ok(Commodity::ConductiveFabrics),
+            "leather" => Ok(Commodity::Leather),
+            "militarygradefabrics" => Ok(Commodity::MilitaryGradeFabrics),
+            "naturalfabrics" => Ok(Commodity::NaturalFabrics),
+            "syntheticfabrics" => Ok(Commodity::SyntheticFabrics),
+            "biowaste" => Ok(Commodity::Biowaste),
+            "chemicalwaste" => Ok(Commodity::ChemicalWaste),
+            "scrap" => Ok(Commodity::Scrap),
+            "toxicwaste" => Ok(Commodity::ToxicWaste),
+            "battleweapons" => Ok(Commodity::BattleWeapons),
+            "landmines" => Ok(Commodity::Landmines),
+            "nonlethalweapons" => Ok(Commodity::NonLethalWeapons),
+            "personalweapons" => Ok(Commodity::PersonalWeapons),
+            "reactivearmour" => Ok(Commodity::ReactiveArmour),
+            "jaquesquinentianstill" => Ok(Commodity::JaquesQuinentianStill),
+            "kinagoviolins" => Ok(Commodity::KinagoViolins),
+            "apavietii" => Ok(Commodity::ApaVietii),
+            "geawendancedust" => Ok(Commodity::GeawenDanceDust),
+            "vanayequiceratomorphafur" => Ok(Commodity::VanayequiCeratomorphaFur),
+            "karetiicouture" => Ok(Commodity::KaretiiCouture),
+            "mukusubiichitinos" => Ok(Commodity::MukusubiiChitinos),
+            "ultracompactprocessorprototypes" => Ok(Commodity::UltraCompactProcessorPrototypes),
+            "eleuthermals" => Ok(Commodity::EleuThermals),
+            "kamorinhistoricweapons" => Ok(Commodity::KamorinHistoricWeapons),
+            "ceremonialheiketea" => Ok(Commodity::CeremonialHeikeTea),
+            "vidavantianlace" => Ok(Commodity::VidavantianLace),
+            "kachiriginfilterleeches" => Ok(Commodity::KachiriginFilterLeeches),
+            "lyraeweed" => Ok(Commodity::LyraeWeed),
+            "galactictravelguide" => Ok(Commodity::GalacticTravelGuide),
+            "harmasilversearum" => Ok(Commodity::HarmaSilverSeaRum),
+            "ngadandarifireopals" => Ok(Commodity::NgadandariFireOpals),
+            "alyabodysoap" => Ok(Commodity::AlyaBodySoap),
+            "helvetitjpearls" => Ok(Commodity::HelvetitjPearls),
+            "ochoengchillies" => Ok(Commodity::OchoengChillies),
+            "onionheadbetastrain" => Ok(Commodity::OnionheadBetaStrain),
+            "kamitracigars" => Ok(Commodity::KamitraCigars),
+            "njangarisaddles" => Ok(Commodity::NjangariSaddles),
+            "hiporganophosphates" => Ok(Commodity::HipOrganophosphates),
+            "gilyasignatureweapons" => Ok(Commodity::GilyaSignatureWeapons),
+            "hr7221wheat" => Ok(Commodity::HR7221Wheat),
+            "wheemetewheatcakes" => Ok(Commodity::WheemeteWheatCakes),
+            "rajukrumultistoves" => Ok(Commodity::RajukruMultiStoves),
+            "nanomedicines" => Ok(Commodity::Nanomedicines),
+            "noneuclidianexotanks" => Ok(Commodity::NonEuclidianExotanks),
+            "ngunamodernantiques" => Ok(Commodity::NgunaModernAntiques),
+            "xihebiomorphiccompanions" => Ok(Commodity::XiheBiomorphicCompanions),
+            "esusekucaviar" => Ok(Commodity::EsusekuCaviar),
+            "orrerianviciousbrew" => Ok(Commodity::OrrerianViciousBrew),
+            "vherculisbodyrub" => Ok(Commodity::VHerculisBodyRub),
+            "voidextractcoffee" => Ok(Commodity::VoidExtractCoffee),
+            "uszaiantreegrub" => Ok(Commodity::UszaianTreeGrub),
+            "haidenblackbrew" => Ok(Commodity::HaidenBlackBrew),
+            "motronaexperiencejelly" => Ok(Commodity::MotronaExperienceJelly),
+            "jaradharrepuzzlebox" => Ok(Commodity::JaradharrePuzzleBox),
+            "personalgifts" => Ok(Commodity::PersonalGifts),
+            "mulachigiantfungus" => Ok(Commodity::MulachiGiantFungus),
+            "ltthypersweet" => Ok(Commodity::LTTHyperSweet),
+            "medbstarlube" => Ok(Commodity::MedbStarlube),
+            "giantverrix" => Ok(Commodity::GiantVerrix),
+            "hip118311swarm" => Ok(Commodity::HIP118311Swarm),
+            "disomacorn" => Ok(Commodity::DisoMaCorn),
+            "lavianbrandy" => Ok(Commodity::LavianBrandy),
+            "azuremilk" => Ok(Commodity::AzureMilk),
+            "leestianeviljuice" => Ok(Commodity::LeestianEvilJuice),
+            "coquimspongiformvictuals" => Ok(Commodity::CoquimSpongiformVictuals),
+            "leatheryeggs" => Ok(Commodity::LeatheryEggs),
+            "shanscharisorchid" => Ok(Commodity::ShansCharisOrchid),
+            "konggaale" => Ok(Commodity::KonggaAle),
+            "vegaslimweed" => Ok(Commodity::VegaSlimweed),
+            "tiolcewaste2pasteunits" => Ok(Commodity::TiolceWaste2PasteUnits),
+            "ophiuchexinoartefacts" => Ok(Commodity::OphiuchExinoArtefacts),
+            "altairianskin" => Ok(Commodity::AltairianSkin),
+            "aganipperush" => Ok(Commodity::AganippeRush),
+            "cd75kittenbrandcoffee" => Ok(Commodity::CD75KittenBrandCoffee),
+            "havasupaidreamcatcher" => Ok(Commodity::HavasupaiDreamCatcher),
+            "eraninpearlwhisky" => Ok(Commodity::EraninPearlWhisky),
+            "pavoniseargrubs" => Ok(Commodity::PavonisEarGrubs),
+            "onionheadalphastrain" => Ok(Commodity::OnionheadAlphaStrain),
+            "indibourbon" => Ok(Commodity::IndiBourbon),
+            "bakedgreebles" => Ok(Commodity::BakedGreebles),
+            "karsukilocusts" => Ok(Commodity::KarsukiLocusts),
+            "masterchefs" => Ok(Commodity::MasterChefs),
+            "yasokondileaf" => Ok(Commodity::YasoKondiLeaf),
+            "burnhambiledistillate" => Ok(Commodity::BurnhamBileDistillate),
+            "thehuttonmug" => Ok(Commodity::TheHuttonMug),
+            "centaurimegagin" => Ok(Commodity::CentauriMegaGin),
+            "utgaroarmillennialeggs" => Ok(Commodity::UtgaroarMillennialEggs),
+            "soontillrelics" => Ok(Commodity::SoontillRelics),
+            "zeesszeantgrubglue" => Ok(Commodity::ZeesszeAntGrubGlue),
+            "thewatersofshintara" => Ok(Commodity::TheWatersOfShintara),
+            "baltahsinevacuumkrill" => Ok(Commodity::BaltahsineVacuumKrill),
+            "sanumadecorativemeat" => Ok(Commodity::SanumaDecorativeMeat),
+            "giantirukamasnails" => Ok(Commodity::GiantIrukamaSnails),
+            "anduligafireworks" => Ok(Commodity::AnduligaFireWorks),
+            "crystallinespheres" => Ok(Commodity::CrystallineSpheres),
+            "pantaaprayersticks" => Ok(Commodity::PantaaPrayerSticks),
+            "chieridanimarinepaste" => Ok(Commodity::ChiEridaniMarinePaste),
+            "ethgrezeteabuds" => Ok(Commodity::EthgrezeTeaBuds),
+            "deltaphoenicispalms" => Ok(Commodity::DeltaPhoenicisPalms),
+            "tarachspice" => Ok(Commodity::TarachSpice),
+            "wulpahyperboresystems" => Ok(Commodity::WulpaHyperboreSystems),
+            "livehecateseaworms" => Ok(Commodity::LiveHecateSeaWorms),
+            "korokungpellets" => Ok(Commodity::KoroKungPellets),
+            "bastsnakegin" => Ok(Commodity::BastSnakeGin),
+            "terramaterbloodbores" => Ok(Commodity::TerraMaterBloodBores),
+            "wuthielokufroth" => Ok(Commodity::WuthieloKuFroth),
+            "honestypills" => Ok(Commodity::HonestyPills),
+            "cromsilverfesh" => Ok(Commodity::CromSilverFesh),
+            "borasetanipathogenetics" => Ok(Commodity::BorasetaniPathogenetics),
+            "cetirabbits" => Ok(Commodity::CetiRabbits),
+            "aepyornisegg" => Ok(Commodity::AepyornisEgg),
+            "uzumokulowgwings" => Ok(Commodity::UzumokuLowGWings),
+            "cherbonesbloodcrystals" => Ok(Commodity::CherbonesBloodCrystals),
+            "toxandjivirocide" => Ok(Commodity::ToxandjiVirocide),
+            "onionhead" => Ok(Commodity::Onionhead),
+            "lucanonionhead" => Ok(Commodity::LucanOnionhead),
+            "tanmarktranquiltea" => Ok(Commodity::TanmarkTranquilTea),
+            "thrutiscream" => Ok(Commodity::ThrutisCream),
+            "alacarakmoskinart" => Ok(Commodity::AlacarakmoSkinArt),
+            "platinumalloy" => Ok(Commodity::PlatinumAlloy),
+            "mokojingbeastfeast" => Ok(Commodity::MokojingBeastFeast),
+            "edenapplesofaerial" => Ok(Commodity::EdenApplesOfAerial),
+            "chameleoncloth" => Ok(Commodity::ChameleonCloth),
+            "taurichimes" => Ok(Commodity::TauriChimes),
+            "rusanioldsmokey" => Ok(Commodity::RusaniOldSmokey),
+            "azcancriformula42" => Ok(Commodity::AZCancriFormula42),
+            "gomanyauponcoffee" => Ok(Commodity::GomanYauponCoffee),
+            "gerasiangueuzebeer" => Ok(Commodity::GerasianGueuzeBeer),
+            "jarouarice" => Ok(Commodity::JarouaRice),
+            "anynacoffee" => Ok(Commodity::AnyNaCoffee),
+            "fujintea" => Ok(Commodity::FujinTea),
+            "hip10175bushmeat" => Ok(Commodity::HIP10175BushMeat),
+            "momusbogspaniel" => Ok(Commodity::MomusBogSpaniel),
+            "witchhaulkobebeef" => Ok(Commodity::WitchhaulKobeBeef),
+            "saxonwine" => Ok(Commodity::SaxonWine),
+            "aroucaconventualsweets" => Ok(Commodity::AroucaConventualSweets),
+            "albinoquechuamammothmeat" => Ok(Commodity::AlbinoQuechuaMammothMeat),
+            "duradrives" => Ok(Commodity::Duradrives),
+            "holvaduellingblades" => Ok(Commodity::HolvaDuellingBlades),
+            "rapabaosnakeskins" => Ok(Commodity::RapaBaoSnakeSkins),
+            "wolffesh" => Ok(Commodity::WolfFesh),
+            "eshuumbrellas" => Ok(Commodity::EshuUmbrellas),
+            "neritusberries" => Ok(Commodity::NeritusBerries),
+            "jotunmookah" => Ok(Commodity::JotunMookah),
+            "chateaudeaegaeon" => Ok(Commodity::ChateauDeAegaeon),
+            "belalansrayleather" => Ok(Commodity::BelalansRayLeather),
+            "damnacarapaces" => Ok(Commodity::DamnaCarapaces),
+            "hipprotosquid" => Ok(Commodity::HIPProtoSquid),
+            "mechucoshightea" => Ok(Commodity::MechucosHighTea),
+            "deuringastruffles" => Ok(Commodity::DeuringasTruffles),
+            "bankiamphibiousleather" => Ok(Commodity::BankiAmphibiousLeather),
+            "sothiscrystallinegold" => Ok(Commodity::SothisCrystallineGold),
+            "tiegfriessynthsilk" => Ok(Commodity::TiegfriesSynthSilk),
+            "volkhabbeedrones" => Ok(Commodity::VolkhabBeeDrones),
+            "buckyballbeermats" => Ok(Commodity::BuckyballBeerMats),
+            "classifiedexperimentalequipment" => Ok(Commodity::ClassifiedExperimentalEquipment),
+            "drones" => Ok(Commodity::Limpet),
+
+            #[cfg(not(feature = "strict"))]
+            _ => Ok(Commodity::Unknown(name.to_string())),
+
+            #[cfg(feature = "strict")]
+            _ => Err(CommodityError::UnknownCommodity(name.to_string())),
+        }
+    }
+}
+
+const COMMODITY_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+
+impl FromStr for Commodity {
+    type Err = CommodityError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let Some(captures) = COMMODITY_NAME_REGEX.captures(s) else {
+            return Err(CommodityError::UnknownCommodity(s.to_string()));
+        };
+
+        Commodity::name_to_commodity(captures.get(1)
+            .expect("Should have been captured already")
+            .as_str())
+    }
+}
+
+from_str_deserialize_impl!(Commodity);

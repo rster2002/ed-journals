@@ -54,7 +54,7 @@ impl TryFrom<u8> for FederationRank {
             14 => Ok(FederationRank::Admiral),
 
             #[cfg(not(feature = "strict"))]
-            _ => Ok(FederationRankError::Unknown(value)),
+            _ => Ok(FederationRank::Unknown(value)),
 
             #[cfg(feature = "strict")]
             _ => Err(FederationRankError::UnknownFederationRank(value)),

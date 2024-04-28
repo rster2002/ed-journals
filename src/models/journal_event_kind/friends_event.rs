@@ -16,4 +16,5 @@ pub enum FriendsEventStatus {
     Online,
     Added,
     Requested,
+    Lost,
 }

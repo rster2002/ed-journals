@@ -449,10 +449,6 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::BuckyballBeerMats
             | Commodity::ClassifiedExperimentalEquipment => CommodityCategory::Rare,
 
-            Commodity::EnhancedInterrogationRecordings => CommodityCategory::Data,
-
-            Commodity::IonisedGas => CommodityCategory::Goods,
-
             Commodity::Limpet => CommodityCategory::None,
 
             #[cfg(not(feature = "strict"))]

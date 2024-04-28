@@ -10,3 +10,4 @@ pub mod thargoid;
 pub mod odyssey;
 pub mod shared_material;
 pub mod shared_material_category;
+pub mod shared_commodity;

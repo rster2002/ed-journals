@@ -52,7 +52,7 @@ impl TryFrom<u8> for TradeRank {
             13 => Ok(TradeRank::EliteV),
 
             #[cfg(not(feature = "strict"))]
-            _ => Ok(MercenaryRank::Unknown(value)),
+            _ => Ok(TradeRank::Unknown(value)),
 
             #[cfg(feature = "strict")]
             _ => Err(TradeRankError::UnknownTradeRank(value)),

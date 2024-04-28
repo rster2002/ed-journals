@@ -5,6 +5,6 @@ use serde::Deserialize;
 pub struct ReputationEvent {
     pub empire: f32,
     pub federation: f32,
-    pub independent: f32,
+    pub independent: Option<f32>,
     pub alliance: f32,
 }

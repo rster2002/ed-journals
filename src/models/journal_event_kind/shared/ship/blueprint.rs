@@ -16,6 +16,12 @@ pub enum Blueprint {
     #[serde(rename = "Weapon_LongRange")]
     WeaponLongRange,
 
+    #[serde(rename = "Sensor_LongRange")]
+    LongRangeSensors,
+
+    #[serde(rename = "PowerDistributor_HighFrequency")]
+    PowerDistributorChargeEnhanced,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

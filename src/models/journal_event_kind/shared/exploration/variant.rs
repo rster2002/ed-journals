@@ -22,6 +22,15 @@ pub enum Variant {
     #[serde(rename = "$Codex_Ent_Tussocks_11_F_Name;")]
     TussockCaputusYellow,
 
+    #[serde(rename = "$Codex_Ent_Tussocks_08_G_Name;")]
+    TussockAlbataLime,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_04_K_Name;")]
+    TussockCultroGreen,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_07_F_Name;")]
+    TussockSerratiYellow,
+
     // Clypeus
     #[serde(rename = "$Codex_Ent_Clypeus_03_F_Name;")]
     ClypeusSpeculumiMauve,
@@ -62,6 +71,12 @@ pub enum Variant {
     #[serde(rename = "$Codex_Ent_Osseus_03_F_Name;")]
     OsseusSpiralisTurquoise,
 
+    #[serde(rename = "$Codex_Ent_Osseus_03_K_Name;")]
+    OsseusSpiralisIndigo,
+
+    #[serde(rename = "$Codex_Ent_Osseus_05_F_Name;")]
+    OsseusCornibusTurquoise,
+
     // Recepta
     #[serde(rename = "$Codex_Ent_Recepta_03_Yttrium_Name;")]
     ReceptraConditivusGreen,
@@ -85,6 +100,9 @@ pub enum Variant {
 
     #[serde(rename = "$Codex_Ent_Bacterial_06_T_Name;")]
     BacteriumAlcyoneumRed,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_06_K_Name;")]
+    BacteriumAlcyoneumGreen,
 
     #[serde(rename = "$Codex_Ent_Bacterial_05_Yttrium_Name;")]
     BacteriumVesiculaLime,
@@ -116,6 +134,9 @@ pub enum Variant {
     #[serde(rename = "$Codex_Ent_Bacterial_01_M_Name;")]
     BacteriumAurasusTeal,
 
+    #[serde(rename = "$Codex_Ent_Bacterial_01_G_Name;")]
+    BacteriumAurasusEmerald,
+
     #[serde(rename = "$Codex_Ent_Bacterial_08_Antimony_Name;")]
     BacteriumInformemRed,
 
@@ -126,11 +147,17 @@ pub enum Variant {
     #[serde(rename = "$Codex_Ent_Fungoids_01_Tellurium_Name;")]
     FungoidaSetisisYellow,
 
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Antimony_Name;")]
+    FungoidaSetisisPeach,
+
     #[serde(rename = "$Codex_Ent_Fungoids_04_Cadmium_Name;")]
     FungoidaGelataCyan,
 
     #[serde(rename = "$Codex_Ent_Fungoids_04_Tungsten_Name;")]
     FungoidaGelataOrange,
+
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Molybdenum_Name;")]
+    FungoidaGelataMulberry,
 
     // Tubus
     #[serde(rename = "$Codex_Ent_Tubus_01_M_Name;")]
@@ -138,6 +165,9 @@ pub enum Variant {
 
     #[serde(rename = "$Codex_Ent_Tubus_01_A_Name;")]
     TubusConiferIndigo,
+
+    #[serde(rename = "$Codex_Ent_Tubus_01_F_Name;")]
+    TubusConiferGrey,
 
     // Fonticulus
     #[serde(rename = "$Codex_Ent_Fonticulus_02_M_Name;")]
@@ -150,4 +180,7 @@ pub enum Variant {
     // Conchas
     #[serde(rename = "$Codex_Ent_Conchas_01_Cadmium_Name;")]
     ConchasRenibusRed,
+
+    #[serde(rename = "$Codex_Ent_Conchas_01_Molybdenum_Name;")]
+    ConchasRenibusPeach,
 }

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::models::journal_event_kind::shared::shared_commodity::SharedCommodity;
 use crate::models::journal_event_kind::shared::ship::ship_type::ShipType;
 use crate::models::journal_event_kind::shared::station::mission_type::MissionType;
 use crate::models::journal_event_kind::shared::trading::commodity::Commodity;
@@ -25,7 +26,7 @@ pub struct MissionAcceptedEvent {
     pub wing: bool,
 
     // TODO test when that properties are present
-    pub commodity: Option<Commodity>,
+    pub commodity: Option<SharedCommodity>,
     pub count: Option<u16>,
     pub donation: Option<String>,
     pub donated: Option<u64>,

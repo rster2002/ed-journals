@@ -8,7 +8,9 @@ pub struct CarrierJumpRequestEvent {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
     pub system_name: String,
-    pub body: String,
+
+    // TODO check why this is sometimes [None]
+    pub body: Option<String>,
     pub system_address: u64,
 
     #[serde(rename = "BodyID")]

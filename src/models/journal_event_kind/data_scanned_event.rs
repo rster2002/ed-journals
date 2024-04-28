@@ -28,4 +28,7 @@ pub enum DataScannedEventType {
 
     #[serde(rename = "$Datascan_WreckedShip;")]
     WreckedShip,
+
+    #[serde(rename = "$Datascan_TouristBeacon;")]
+    TouristBeacon,
 }

@@ -16,6 +16,15 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Tussocks_11_Name;")]
     TussockCaputus,
 
+    #[serde(rename = "$Codex_Ent_Tussocks_08_Name;")]
+    TussockAlbata,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_04_Name;")]
+    TussockCultro,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_07_Name;")]
+    TussockSerrati,
+
     // Clypeus
     #[serde(rename = "$Codex_Ent_Clypeus_03_Name;")]
     ClypeusSpeculumi,
@@ -43,6 +52,9 @@ pub enum Species {
 
     #[serde(rename = "$Codex_Ent_Osseus_03_Name;")]
     OsseusSpiralis,
+
+    #[serde(rename = "$Codex_Ent_Osseus_05_Name;")]
+    OsseusCornibus,
 
     // Recepta
     #[serde(rename = "$Codex_Ent_Recepta_03_Name;")]

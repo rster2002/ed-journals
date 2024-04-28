@@ -12,6 +12,9 @@ pub enum InternalModule {
     #[serde(rename = "powerplant")]
     PowerPlant,
 
+    #[serde(rename = "modulereinforcement")]
+    ModuleReinforcement,
+
     #[serde(rename = "guardianmodulereinforcement")]
     GuardianModuleReinforcement,
 
@@ -26,6 +29,9 @@ pub enum InternalModule {
 
     #[serde(rename = "cargorack")]
     CargoRack,
+
+    #[serde(rename = "corrosionproofcargorack")]
+    AntiCorrosionCargoRack,
 
     #[serde(rename = "supercruiseassist")]
     SupercruiseAssist,
@@ -68,6 +74,9 @@ pub enum InternalModule {
 
     #[serde(rename = "fighterbay")]
     FighterHangar,
+
+    #[serde(rename = "passengercabin")]
+    PassengerCabin,
 }
 
 impl FromStr for InternalModule {

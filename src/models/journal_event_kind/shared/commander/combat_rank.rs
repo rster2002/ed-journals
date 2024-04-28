@@ -90,7 +90,7 @@ impl FromStr for CombatRank {
             "EliteV" => Ok(CombatRank::EliteV),
 
             #[cfg(not(feature = "strict"))]
-            _ => Ok(CombatRank::UnknownString(value)),
+            _ => Ok(CombatRank::UnknownString(s.to_string())),
 
             #[cfg(feature = "strict")]
             _ => Err(CombatRankError::UnknownCombatString(s.to_string())),

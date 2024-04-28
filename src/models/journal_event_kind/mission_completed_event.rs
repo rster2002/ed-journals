@@ -76,6 +76,9 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_EP_down;")]
     EconomicStationDecrease,
 
+    #[serde(rename = "$MISSIONUTIL_Interaction_Summary_SP_up;")]
+    SecurityFactionIncrease,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

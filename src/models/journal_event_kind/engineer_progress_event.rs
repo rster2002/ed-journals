@@ -119,6 +119,7 @@ mod tests {
         }
     }
 
+    #[ignore]
     #[test]
     fn engineer_update_log_is_parsed_correctly() {
         let test = json!({

@@ -1,302 +1,278 @@
+use std::str::FromStr;
+use once_cell::sync::Lazy;
+use regex::Regex;
 use serde::Deserialize;
+use thiserror::Error;
+use crate::from_str_deserialize_impl;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug)]
 #[cfg_attr(test, derive(PartialEq))]
 pub enum Item {
     // Data
-    #[serde(alias = "accidentlogs")]
     AccidentLogs,
-
-    #[serde(alias = "airqualityreports")]
     AirQualityReports,
-
-    #[serde(alias = "atmosphericdata")]
     AtmosphericData,
-
-    #[serde(alias = "blacklistdata")]
     BlacklistData,
-
-    #[serde(alias = "censusdata")]
     CensusData,
-
-    #[serde(alias = "combatantperformance")]
     CombatantPerformance,
-
-    #[serde(alias = "evacuationprotocols")]
     EvacuationProtocols,
-
-    #[serde(alias = "extractionyielddata")]
     ExtractionYieldData,
-
-    #[serde(alias = "factionnews")]
     FactionNews,
-
-    #[serde(alias = "genesequencingdata")]
     GeneSequencingData,
-
-    #[serde(alias = "geologicaldata")]
     GeologicalData,
-
-    #[serde(alias = "maintenancelogs")]
     MaintenanceLogs,
-
-    #[serde(alias = "networksecurityprotocols")]
     NetworkSecurityProtocols,
-
-    #[serde(alias = "personallogs")]
     PersonalLogs,
-
-    #[serde(alias = "pharmaceuticalpatents")]
     PharmaceuticalPatents,
-
-    #[serde(alias = "propaganda")]
     Propaganda,
-
-    #[serde(alias = "purchaserecords")]
     PurchaseRecords,
-
-    #[serde(alias = "radioactivitydata")]
     RadioactivityData,
-
-    #[serde(alias = "reactoroutputreview")]
     ReactorOutputReview,
-
-    #[serde(alias = "securityexpenses")]
     SecurityExpenses,
-
-    #[serde(alias = "shareholderinformation")]
     ShareholderInformation,
-
-    #[serde(alias = "stellaractivitylogs")]
     StellarActivityLogs,
-
-    #[serde(alias = "topographicalsurveys")]
     TopographicalSurveys,
-
-    #[serde(alias = "vaccinationrecords")]
     VaccinationRecords,
-
-    #[serde(alias = "virologydata")]
     VirologyData,
-
-    #[serde(alias = "visitorregister")]
     VisitorRegister,
-
-    #[serde(alias = "enhancedinterrogationrecordings")]
-    EnhancedInterrogationsRecords,
-
+    EnhancedInterrogationRecordings,
 
     // Goods
-    #[serde(alias = "biologicalsample")]
     BiologicalSample,
-
-    #[serde(alias = "buildingschematic")]
     BuildingSchematic,
-
-    #[serde(alias = "californium")]
     Californium,
-
-    #[serde(alias = "castfossil")]
     CastFossil,
-
-    #[serde(alias = "compactlibrary")]
     CompactLibrary,
-
-    #[serde(alias = "compressionliquefiedgas")]
     CompressionLiquefiedGas,
-
-    #[serde(alias = "deepmantlesample")]
     DeepMantleSample,
-
-    #[serde(alias = "degradedpowerregulator")]
     DegradedPowerRegulator,
-
-    #[serde(alias = "gmeds")]
     GMeds,
-
-    #[serde(alias = "healthmonitor")]
     HealthMonitor,
-
-    #[serde(alias = "hush")]
     Hush,
-
-    #[serde(alias = "inertiacanister")]
     InertiaCanister,
-
-    #[serde(alias = "infinity")]
     Infinity,
-
-    #[serde(alias = "insight")]
     Insight,
-
-    #[serde(alias = "insightdatabank")]
     InsightDataBank,
-
-    #[serde(alias = "insightentertainmentsuite")]
     InsightEntertainmentSuite,
-
-    #[serde(alias = "ionisedgas")]
     IonisedGas,
-
-    #[serde(alias = "microbialinhibitor")]
     MicrobialInhibitor,
-
-    #[serde(alias = "nutritionalconcentrate")]
     NutritionalConcentrate,
-
-    #[serde(alias = "personalcomputer")]
     PersonalComputer,
-
-    #[serde(alias = "personaldocuments")]
     PersonalDocuments,
-
-    #[serde(alias = "petrifiedfossil")]
     PetrifiedFossil,
-
-    #[serde(alias = "powerregulator")]
     PowerRegulator,
-
-    #[serde(alias = "push")]
     Push,
-
-    #[serde(alias = "suitschematic")]
     SuitSchematic,
-
-    #[serde(alias = "syntheticpathogen")]
     SyntheticPathogen,
-
-    #[serde(alias = "universaltranslator")]
     UniversalTranslator,
-
-    #[serde(alias = "vehicleschematic")]
     VehicleSchematic,
-
-    #[serde(alias = "weaponschematic")]
     WeaponSchematic,
 
-
     // Chemicals
-    #[serde(alias = "aerogel")]
     Aerogel,
-
-    #[serde(alias = "chemicalcatalyst")]
     ChemicalCatalyst,
-
-    #[serde(alias = "chemicalsuperbase")]
     ChemicalSuperbase,
-
-    #[serde(alias = "epinephrine")]
     Epinephrine,
-
-    #[serde(alias = "epoxyadhesive")]
     EpoxyAdhesive,
-
-    #[serde(alias = "graphene")]
     Graphene,
-
-    #[serde(alias = "oxygenicbacteria")]
     OxygenicBacteria,
-
-    #[serde(alias = "phneutraliser")]
     PHNeutraliser,
-
-    #[serde(alias = "rdx")]
     RDX,
-
-    #[serde(alias = "viscoelasticpolymer")]
     ViscoelasticPolymer,
 
-
     // Circuits
-    #[serde(alias = "circuitboard")]
     CircuitBoard,
-
-    #[serde(alias = "circuitswitch")]
     CircuitSwitch,
-
-    #[serde(alias = "electricalfuse")]
     ElectricalFuse,
-
-    #[serde(alias = "electricalwiring")]
     ElectricalWiring,
-
-    #[serde(alias = "elecromagnet")]
-    Elecromagnet,
-
-    #[serde(alias = "ionbattery")]
+    Electromagnet,
     IonBattery,
-
-    #[serde(alias = "metalcoil")]
     MetalCoil,
-
-    #[serde(alias = "microsupercapacitor")]
     MicroSupercapacitor,
-
-    #[serde(alias = "microtransformer")]
     MicroTransformer,
-
-    #[serde(alias = "microelectrode")]
     Microelectrode,
-
-    #[serde(alias = "motor")]
     Motor,
-
-    #[serde(alias = "opticalfibre")]
     OpticalFibre,
 
-
     // Tech
-    #[serde(alias = "carbonfibreplating")]
     CarbonFibrePlating,
-
-    #[serde(alias = "encryptedmemorychip")]
     EncryptedMemoryChip,
-
-    #[serde(alias = "memorychip")]
     MemoryChip,
-
-    #[serde(alias = "microthrusters")]
     MicroThrusters,
-
-    #[serde(alias = "opticallens")]
     OpticalLens,
-
-    #[serde(alias = "scrambler")]
     Scrambler,
-
-    #[serde(alias = "transmitter")]
     Transmitter,
-
-    #[serde(alias = "tungstencarbide")]
     TungstenCarbide,
-
-    #[serde(alias = "weaponcomponent")]
     WeaponComponent,
 
-
     // Consumables
-    #[serde(alias = "energycell")]
     EnergyCell,
-
-    #[serde(alias = "amm_grenade_frag")]
     FragGranade,
-
-    #[serde(alias = "healthpack")]
     Medkit,
-
-    #[serde(alias = "amm_grenade_emp")]
     ShieldDisruptor,
-
-    #[serde(alias = "amm_grenade_shield")]
     ShieldProjector,
 
-
     // Item
-    #[serde(alias = "largecapacitypowerregulator")]
     LargeCapacityPowerRegulator,
 
-
     #[cfg(not(feature = "strict"))]
-    #[serde(untagged)]
     Unknown(String),
+}
+
+#[derive(Debug, Error)]
+pub enum ItemError {
+    #[error("Unknown item: '{0}'")]
+    UnknownItem(String),
+}
+
+impl Item {
+    fn name_to_item(name: &str) -> Result<Item, ItemError> {
+        let lower_case: &str = &name.to_ascii_lowercase();
+
+        Ok(match lower_case {
+            "accidentlogs" => Item::AccidentLogs,
+            "airqualityreports" => Item::AirQualityReports,
+            "atmosphericdata" => Item::AtmosphericData,
+            "blacklistdata" => Item::BlacklistData,
+            "censusdata" => Item::CensusData,
+            "combatantperformance" => Item::CombatantPerformance,
+            "evacuationprotocols" => Item::EvacuationProtocols,
+            "extractionyielddata" => Item::ExtractionYieldData,
+            "factionnews" => Item::FactionNews,
+            "genesequencingdata" => Item::GeneSequencingData,
+            "geologicaldata" => Item::GeologicalData,
+            "maintenancelogs" => Item::MaintenanceLogs,
+            "networksecurityprotocols" => Item::NetworkSecurityProtocols,
+            "personallogs" => Item::PersonalLogs,
+            "pharmaceuticalpatents" => Item::PharmaceuticalPatents,
+            "propaganda" => Item::Propaganda,
+            "purchaserecords" => Item::PurchaseRecords,
+            "radioactivitydata" => Item::RadioactivityData,
+            "reactoroutputreview" => Item::ReactorOutputReview,
+            "securityexpenses" => Item::SecurityExpenses,
+            "shareholderinformation" => Item::ShareholderInformation,
+            "stellaractivitylogs" => Item::StellarActivityLogs,
+            "topographicalsurveys" => Item::TopographicalSurveys,
+            "vaccinationrecords" => Item::VaccinationRecords,
+            "virologydata" => Item::VirologyData,
+            "visitorregister" => Item::VisitorRegister,
+            "enhancedinterrogationrecordings" => Item::EnhancedInterrogationRecordings,
+
+            "biologicalsample" => Item::BiologicalSample,
+            "buildingschematic" => Item::BuildingSchematic,
+            "californium" => Item::Californium,
+            "castfossil" => Item::CastFossil,
+            "compactlibrary" => Item::CompactLibrary,
+            "compressionliquefiedgas" => Item::CompressionLiquefiedGas,
+            "deepmantlesample" => Item::DeepMantleSample,
+            "degradedpowerregulator" => Item::DegradedPowerRegulator,
+            "gmeds" => Item::GMeds,
+            "healthmonitor" => Item::HealthMonitor,
+            "hush" => Item::Hush,
+            "inertiacanister" => Item::InertiaCanister,
+            "infinity" => Item::Infinity,
+            "insight" => Item::Insight,
+            "insightdatabank" => Item::InsightDataBank,
+            "insightentertainmentsuite" => Item::InsightEntertainmentSuite,
+            "ionisedgas" => Item::IonisedGas,
+            "microbialinhibitor" => Item::MicrobialInhibitor,
+            "nutritionalconcentrate" => Item::NutritionalConcentrate,
+            "personalcomputer" => Item::PersonalComputer,
+            "personaldocuments" => Item::PersonalDocuments,
+            "petrifiedfossil" => Item::PetrifiedFossil,
+            "powerregulator" => Item::PowerRegulator,
+            "push" => Item::Push,
+            "suitschematic" => Item::SuitSchematic,
+            "syntheticpathogen" => Item::SyntheticPathogen,
+            "universaltranslator" => Item::UniversalTranslator,
+            "vehicleschematic" => Item::VehicleSchematic,
+            "weaponschematic" => Item::WeaponSchematic,
+
+            "aerogel" => Item::Aerogel,
+            "chemicalcatalyst" => Item::ChemicalCatalyst,
+            "chemicalsuperbase" => Item::ChemicalSuperbase,
+            "epinephrine" => Item::Epinephrine,
+            "epoxyadhesive" => Item::EpoxyAdhesive,
+            "graphene" => Item::Graphene,
+            "oxygenicbacteria" => Item::OxygenicBacteria,
+            "phneutraliser" => Item::PHNeutraliser,
+            "rdx" => Item::RDX,
+            "viscoelasticpolymer" => Item::ViscoelasticPolymer,
+
+            "circuitboard" => Item::CircuitBoard,
+            "circuitswitch" => Item::CircuitSwitch,
+            "electricalfuse" => Item::ElectricalFuse,
+            "electricalwiring" => Item::ElectricalWiring,
+            "electromagnet" => Item::Electromagnet,
+            "ionbattery" => Item::IonBattery,
+            "metalcoil" => Item::MetalCoil,
+            "microsupercapacitor" => Item::MicroSupercapacitor,
+            "microtransformer" => Item::MicroTransformer,
+            "microelectrode" => Item::Microelectrode,
+            "motor" => Item::Motor,
+            "opticalfibre" => Item::OpticalFibre,
+
+            "carbonfibreplating" => Item::CarbonFibrePlating,
+            "encryptedmemorychip" => Item::EncryptedMemoryChip,
+            "memorychip" => Item::MemoryChip,
+            "microthrusters" => Item::MicroThrusters,
+            "opticallens" => Item::OpticalLens,
+            "scrambler" => Item::Scrambler,
+            "transmitter" => Item::Transmitter,
+            "tungstencarbide" => Item::TungstenCarbide,
+            "weaponcomponent" => Item::WeaponComponent,
+
+            "energycell" => Item::EnergyCell,
+            "amm_grenade_frag" => Item::FragGranade,
+            "healthpack" => Item::Medkit,
+            "amm_grenade_emp" => Item::ShieldDisruptor,
+            "amm_grenade_shield" => Item::ShieldProjector,
+
+            "largecapacitypowerregulator" => Item::LargeCapacityPowerRegulator,
+
+            #[cfg(not(feature = "strict"))]
+            _ => Item::Unknown(name.to_string()),
+
+            #[cfg(feature = "strict")]
+            _ => return Err(ItemError::UnknownItem(name.to_string())),
+        })
+    }
+}
+
+const ITEM_NAME_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+
+impl FromStr for Item {
+    type Err = ItemError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let Some(captures) = ITEM_NAME_REGEX.captures(s) else {
+            return Err(ItemError::UnknownItem(s.to_string()));
+        };
+
+        Item::name_to_item(captures.get(1)
+            .expect("Should have been captured already")
+            .as_str())
+    }
+}
+
+from_str_deserialize_impl!(Item);
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+    use crate::models::journal_event_kind::shared::odyssey::item::Item;
+
+    #[test]
+    fn item_test_cases_are_parsed_correctly() {
+        let test_cases = [
+            ("$EnhancedInterrogationRecordings_Name;", Item::EnhancedInterrogationRecordings),
+        ];
+
+        for (case, expected) in test_cases {
+            let result = Item::from_str(case);
+
+            assert!(result.is_ok());
+            assert_eq!(result.unwrap(), expected);
+        }
+    }
 }

@@ -6,6 +6,8 @@ use serde::Deserialize;
 pub struct StartJumpEvent {
     #[serde(flatten)]
     pub jump: StartJumpType,
+
+    #[serde(default)]
     pub taxi: bool,
 }
 

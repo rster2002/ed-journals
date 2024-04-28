@@ -42,6 +42,15 @@ pub enum HardpointModule {
     #[serde(rename = "shieldbooster")]
     ShieldBooster,
 
+    #[serde(rename = "atmulticannon")]
+    EnhancedAXMultiCannon,
+
+    #[serde(rename = "atdumbfiremissile")]
+    AXMissileRack,
+
+    #[serde(rename = "flakmortar")]
+    RemoteFlakLauncher,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

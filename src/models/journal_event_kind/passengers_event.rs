@@ -10,9 +10,10 @@ pub struct PassengersEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct PassengersManifestEntry {
     #[serde(rename = "MissionID")]
-    mission_id: String,
+    mission_id: u64,
 
-    #[serde(rename = "type")]
+    // TODO replace with enum
+    #[serde(rename = "Type")]
     kind: String,
 
     #[serde(rename = "VIP")]

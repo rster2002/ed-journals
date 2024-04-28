@@ -147,6 +147,13 @@ mod loadout_equip_module_event;
 mod use_consumable_event;
 mod collect_items_event;
 mod drop_items_event;
+mod buy_exploration_data_event;
+mod vehicle_switch_event;
+mod pay_bounties_event;
+mod prospected_asteroid_event;
+mod asteroid_cracked_event;
+mod mining_refined;
+mod mission_failed_event;
 
 use crate::models::journal_event_kind::approach_body_event::ApproachBodyEvent;
 use crate::models::journal_event_kind::backpack_event::BackpackEvent;
@@ -216,15 +223,18 @@ use crate::models::journal_event_kind::touchdown_event::TouchdownEvent;
 use crate::models::journal_event_kind::undocked_event::UndockedEvent;
 use crate::models::journal_event_kind::uss_drop_event::USSDropEvent;
 use serde::Deserialize;
+use serde_json::Value;
 use crate::models::journal_event_kind::afmu_repairs_event::AFMURepairsEvent;
 use crate::models::journal_event_kind::applied_to_squadron_event::AppliedToSquadronEvent;
 use crate::models::journal_event_kind::approach_settlement_event::ApproachSettlementEvent;
+use crate::models::journal_event_kind::asteroid_cracked_event::AsteroidCrackedEvent;
 use crate::models::journal_event_kind::backpack_change_event::BackpackChangeEvent;
 use crate::models::journal_event_kind::bounty_event::BountyEvent;
 use crate::models::journal_event_kind::module_retrieve_event::ModuleRetrieveEvent;
 use crate::models::journal_event_kind::module_swap_event::ModuleSwapEvent;
 use crate::models::journal_event_kind::buy_ammo_event::BuyAmmoEvent;
 use crate::models::journal_event_kind::buy_drones_event::BuyDronesEvent;
+use crate::models::journal_event_kind::buy_exploration_data_event::BuyExplorationDataEvent;
 use crate::models::journal_event_kind::buy_micro_resource_event::BuyMicroResourceEvent;
 use crate::models::journal_event_kind::buy_weapon_event::BuyWeaponEvent;
 use crate::models::journal_event_kind::cargo_depot_event::CargoDepotEvent;
@@ -260,9 +270,11 @@ use crate::models::journal_event_kind::market_event::MarketEvent;
 use crate::models::journal_event_kind::market_sell_event::MarketSellEvent;
 use crate::models::journal_event_kind::material_discovered_event::MaterialDiscoveredEvent;
 use crate::models::journal_event_kind::material_trade_event::MaterialTradeEvent;
+use crate::models::journal_event_kind::mining_refined::MiningRefinedEvent;
 use crate::models::journal_event_kind::mission_abandoned_event::MissionAbandonedEvent;
 use crate::models::journal_event_kind::mission_accepted_event::MissionAcceptedEvent;
 use crate::models::journal_event_kind::mission_completed_event::MissionCompletedEvent;
+use crate::models::journal_event_kind::mission_failed_event::MissionFailedEvent;
 use crate::models::journal_event_kind::mission_redirected_event::MissionRedirectedEvent;
 use crate::models::journal_event_kind::module_buy_event::ModuleBuyEvent;
 use crate::models::journal_event_kind::module_sell_event::ModuleSellEvent;
@@ -270,8 +282,10 @@ use crate::models::journal_event_kind::multi_sell_exploration_data_event::MultiS
 use crate::models::journal_event_kind::nav_beacon_scan_event::NavBeaconScanEvent;
 use crate::models::journal_event_kind::npc_crew_rank_event::NPCCrewRankEvent;
 use crate::models::journal_event_kind::npc_crew_wage_paid_event::NPCCrewWagePaidEvent;
+use crate::models::journal_event_kind::pay_bounties_event::PayBountiesEvent;
 use crate::models::journal_event_kind::pay_fines_event::PayFinesEvent;
 use crate::models::journal_event_kind::promotion_event::PromotionEvent;
+use crate::models::journal_event_kind::prospected_asteroid_event::{ProspectedAsteroidEvent, ProspectedAsteroidEventContent};
 use crate::models::journal_event_kind::redeem_voucher_event::RedeemVoucherEvent;
 use crate::models::journal_event_kind::refuel_all_event::RefuelAllEvent;
 use crate::models::journal_event_kind::repair_all_event::RepairAllEvent;
@@ -297,6 +311,7 @@ use crate::models::journal_event_kind::synthasis_event::SynthesisEvent;
 use crate::models::journal_event_kind::technology_broker_event::TechnologyBrokerEvent;
 use crate::models::journal_event_kind::under_attack_event::UnderAttackEvent;
 use crate::models::journal_event_kind::use_consumable_event::UseConsumableEvent;
+use crate::models::journal_event_kind::vehicle_switch_event::VehicleSwitchEvent;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "event")]
@@ -370,15 +385,18 @@ pub enum JournalEventKind {
     MaterialDiscovered(MaterialDiscoveredEvent),
     MultiSellExplorationData(MultiSellExplorationDataEvent),
     NavBeaconScan(NavBeaconScanEvent),
+    BuyExplorationData(BuyExplorationDataEvent),
     SAAScanComplete(SAAScanCompleteEvent),
     SAASignalsFound(SAASignalsFoundEvent),
     ScanBaryCentre(ScanBaryCentreEvent),
 
     // Trade
+    AsteroidCracked(AsteroidCrackedEvent),
     CollectCargo(CollectCargoEvent),
     EjectCargo(EjectCargoEvent),
     MarketBuy(MarketBuyEvent),
     MarketSell(MarketSellEvent),
+    MiningRefined(MiningRefinedEvent),
 
     // Station services
     BuyAmmo(BuyAmmoEvent),
@@ -391,11 +409,13 @@ pub enum JournalEventKind {
     MissionAbandoned(MissionAbandonedEvent),
     MissionAccepted(MissionAcceptedEvent),
     MissionCompleted(MissionCompletedEvent),
+    MissionFailed(MissionFailedEvent),
     MissionRedirected(MissionRedirectedEvent),
     ModuleRetrieve(ModuleRetrieveEvent),
     ModuleSell(ModuleSellEvent),
     ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
+    PayBounties(PayBountiesEvent),
     PayFines(PayFinesEvent),
     ModuleBuy(ModuleBuyEvent),
     ModuleStore(ModuleStoreEvent),
@@ -478,6 +498,7 @@ pub enum JournalEventKind {
     #[serde(rename = "NpcCrewRank")]
     NPCCrewRank(NPCCrewRankEvent),
     Promotion(PromotionEvent),
+    ProspectedAsteroid(ProspectedAsteroidEvent),
     ReceiveText(ReceiveTextEvent),
     RepairDrone(RepairDroneEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
@@ -489,5 +510,10 @@ pub enum JournalEventKind {
     Synthesis(SynthesisEvent),
     SystemsShutdown,
     USSDrop(USSDropEvent),
+    VehicleSwitch(VehicleSwitchEvent),
     SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
+
+    #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
+    Unknown(Value),
 }

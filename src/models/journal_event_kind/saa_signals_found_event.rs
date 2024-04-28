@@ -23,7 +23,7 @@ pub struct SAAScanCompleteEventSignal {
     pub kind: PlanetarySignalType,
 
     #[serde(rename = "Type_Localised")]
-    pub type_localized: String,
+    pub type_localized: Option<String>,
     pub count: u8,
 }
 

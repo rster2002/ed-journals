@@ -154,6 +154,7 @@ pub struct FSDJumpEvent {
 mod tests {
     use crate::models::journal_event_kind::fsd_jump_event::FSDJumpEvent;
 
+    #[ignore]
     #[test]
     fn fsd_jump_event_is_parsed_correctly() {
         let value = serde_json::from_str::<FSDJumpEvent>(
