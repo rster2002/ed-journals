@@ -676,6 +676,9 @@ impl Display for Item {
             Item::Medkit => "Medkit",
             Item::ShieldDisruptor => "Shield Disruptor",
             Item::ShieldProjector => "Shield Projector",
+
+            #[cfg(not(feature = "strict"))]
+            Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),
         })
     }
 }
