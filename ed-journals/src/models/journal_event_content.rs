@@ -1,6 +1,42 @@
 use kinded::Kinded;
 use serde::Deserialize;
+
+// This is just for me because RustRover doesn't recognise that this is used in a feature.
+#[allow(unused)]
 use serde_json::Value;
+use crate::journal_event_content::buy_trade_data_event::BuyTradeDateEvent;
+use crate::journal_event_content::cap_ship_bond_event::CapShipBondEvent;
+use crate::journal_event_content::clear_impound_event::ClearImpoundEvent;
+use crate::journal_event_content::community_goal_discard_event::CommunityGoalDiscardEvent;
+use crate::journal_event_content::community_goal_event::CommunityGoalEventGoal;
+use crate::journal_event_content::community_goal_join_event::CommunityGoalJoinEvent;
+use crate::journal_event_content::community_goal_reward_event::CommunityGoalRewardEvent;
+use crate::journal_event_content::crew_fire_event::CrewFireEvent;
+use crate::journal_event_content::disbanded_squadron_event::DisbandedSquadronEvent;
+use crate::journal_event_content::invited_to_squadron_event::InvitedToSquadronEvent;
+use crate::journal_event_content::joined_squadron_event::JoinedSquadronEvent;
+use crate::journal_event_content::kicked_from_squadron_event::KickedFromSquadronEvent;
+use crate::journal_event_content::left_squadron_event::LeftSquadronEvent;
+use crate::journal_event_content::mass_module_store_event::MassModuleStoreEvent;
+use crate::journal_event_content::material_discarded_event::MaterialDiscarded;
+use crate::journal_event_content::powerplay_collect_event::PowerplayCollectEvent;
+use crate::journal_event_content::powerplay_defect_event::PowerplayDefectEvent;
+use crate::journal_event_content::powerplay_deliver_event::PowerplayDeliverEvent;
+use crate::journal_event_content::powerplay_fast_track_event::PowerplayFastTrackEvent;
+use crate::journal_event_content::powerplay_join_event::PowerplayJoinEvent;
+use crate::journal_event_content::powerplay_vote_event::PowerplayVoteEvent;
+use crate::journal_event_content::pvp_kill_event::PVPKillEvent;
+use crate::journal_event_content::refuel_partial_event::RefuelPartialEvent;
+use crate::journal_event_content::scientific_research_event::ScientificResearchEvent;
+use crate::journal_event_content::screenshot_event::ScreenshotEvent;
+use crate::journal_event_content::sell_exploration_date_event::SellExplorationDataEvent;
+use crate::journal_event_content::sell_ship_on_rebuy_event::SellShipOnRebuyEvent;
+use crate::journal_event_content::shared_bookmark_to_squadron_event::ShardedBookmarkToSquadronEvent;
+use crate::journal_event_content::shipyard_sell_event::ShipyardSellEvent;
+use crate::journal_event_content::squadron_created_event::SquadronCreatedEvent;
+use crate::journal_event_content::squadron_demotion_event::SquadronDemotionEvent;
+use crate::journal_event_content::squadron_promotion_event::SquadronPromotionEvent;
+use crate::journal_event_content::won_a_trophy_for_squadron_event::WonATrophyForSquadronEvent;
 
 use crate::models::journal_event_content::afmu_repairs_event::AFMURepairsEvent;
 use crate::models::journal_event_content::applied_to_squadron_event::AppliedToSquadronEvent;
@@ -305,7 +341,6 @@ pub mod sell_drones_event;
 pub mod sell_organic_data;
 pub mod send_text_event;
 pub mod set_user_ship_name_event;
-
 pub mod book_taxi_event;
 pub mod carrier_buy_event;
 pub mod carrier_crew_services_event;
@@ -353,6 +388,40 @@ pub mod vehicle_switch_event;
 pub mod wing_add_event;
 pub mod wing_invite_event;
 pub mod wing_join_event;
+mod cap_ship_bond_event;
+mod pvp_kill_event;
+mod material_discarded_event;
+mod sell_exploration_date_event;
+mod screenshot_event;
+mod buy_trade_data_event;
+mod community_goal_event;
+mod community_goal_discard_event;
+mod community_goal_join_event;
+mod community_goal_reward_event;
+mod crew_fire_event;
+mod engineer_apply_event;
+mod mass_module_store_event;
+mod refuel_partial_event;
+mod scientific_research_event;
+mod sell_ship_on_rebuy_event;
+mod shipyard_sell_event;
+mod clear_impound_event;
+mod powerplay_collect_event;
+mod powerplay_defect_event;
+mod powerplay_deliver_event;
+mod powerplay_fast_track_event;
+mod powerplay_join_event;
+mod powerplay_vote_event;
+mod disbanded_squadron_event;
+mod invited_to_squadron_event;
+mod joined_squadron_event;
+mod kicked_from_squadron_event;
+mod left_squadron_event;
+mod shared_bookmark_to_squadron_event;
+mod squadron_created_event;
+mod squadron_demotion_event;
+mod squadron_promotion_event;
+mod won_a_trophy_for_squadron_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///
@@ -364,23 +433,22 @@ pub mod wing_join_event;
 pub enum JournalEventContent {
     // Startup
     Cargo(CargoEvent),
+    ClearSavedGame(ClearSavedGameEvent),
+    Commander(CommanderEvent),
 
     #[serde(rename = "Fileheader")]
     FileHeader(FileHeaderEvent),
-    Commander(CommanderEvent),
-    Materials(MaterialsEvent),
-    Rank(RankEvent),
-    Progress(ProgressEvent),
-    Reputation(ReputationEvent),
-    EngineerProgress(EngineerProgressEvent),
     LoadGame(LoadGameEvent),
-    Powerplay(PowerplayEvent),
-    Passengers(PassengersEvent),
-    Statistics(StatisticsEvent),
-    NewCommander(NewCommanderEvent),
     Loadout(LoadoutEvent),
-    ClearSavedGame(ClearSavedGameEvent),
+    Materials(MaterialsEvent),
     Missions(MissionsEvent),
+    NewCommander(NewCommanderEvent),
+    Passengers(PassengersEvent),
+    Powerplay(PowerplayEvent),
+    Progress(ProgressEvent),
+    Rank(RankEvent),
+    Reputation(ReputationEvent),
+    Statistics(StatisticsEvent),
 
     // Travel
     ApproachBody(ApproachBodyEvent),
@@ -408,6 +476,7 @@ pub enum JournalEventContent {
 
     // Combat
     Bounty(BountyEvent),
+    CapShipBond(CapShipBondEvent),
     Died(DiedEvent),
     EscapeInterdiction(EscapeInterdictionEvent),
     FactionKillBond(FactionKillBondEvent),
@@ -417,30 +486,35 @@ pub enum JournalEventContent {
     HullDamage(HullDamageEvent),
     Interdicted(InterdictedEvent),
     Interdiction(InterdictionEvent),
-    ShipTargeted(ShipTargetedEvent),
-    ShieldState(ShieldStateEvent),
+    PVPKill(PVPKillEvent),
     SRVDestroyed(SRVDestroyedEvent),
+    ShieldState(ShieldStateEvent),
+    ShipTargeted(ShipTargetedEvent),
     UnderAttack(UnderAttackEvent),
 
     // Exploration
+    BuyExplorationData(BuyExplorationDataEvent),
     CodexEntry(CodexEntryEvent),
     DiscoveryScan(DiscoveryScanEvent),
-    Scan(ScanEvent),
     FSSAllBodiesFound(FSSAllBodiesFoundEvent),
     FSSBodySignals(FSSBodySignalsEvent),
     FSSDiscoveryScan(FSSDiscoveryScan),
     FSSSignalDiscovered(FSSSignalDiscoveredEvent),
     MaterialCollected(MaterialCollectedEvent),
+    MaterialDiscarded(MaterialDiscarded),
     MaterialDiscovered(MaterialDiscoveredEvent),
     MultiSellExplorationData(MultiSellExplorationDataEvent),
     NavBeaconScan(NavBeaconScanEvent),
-    BuyExplorationData(BuyExplorationDataEvent),
     SAAScanComplete(SAAScanCompleteEvent),
     SAASignalsFound(SAASignalsFoundEvent),
+    Scan(ScanEvent),
     ScanBaryCentre(ScanBaryCentreEvent),
+    SellExplorationData(SellExplorationDataEvent),
+    Screenshot(ScreenshotEvent),
 
     // Trade
     AsteroidCracked(AsteroidCrackedEvent),
+    BuyTradeData(BuyTradeDateEvent),
     CollectCargo(CollectCargoEvent),
     EjectCargo(EjectCargoEvent),
     MarketBuy(MarketBuyEvent),
@@ -451,51 +525,80 @@ pub enum JournalEventContent {
     BuyAmmo(BuyAmmoEvent),
     BuyDrones(BuyDronesEvent),
     CargoDepot(CargoDepotEvent),
+    CommunityGoal(CommunityGoalEventGoal),
+    CommunityGoalDiscard(CommunityGoalDiscardEvent),
+    CommunityGoalJoin(CommunityGoalJoinEvent),
+    CommunityGoalReward(CommunityGoalRewardEvent),
     CrewAssign(CrewAssignEvent),
+    CrewFire(CrewFireEvent),
     CrewHire(CrewHireEvent),
     EngineerContribution(EngineerContributionEvent),
+    EngineerCraft(EngineerCraftEvent),
+    EngineerProgress(EngineerProgressEvent),
     FetchRemoteModule(FetchRemoteModuleEvent),
     Market(MarketEvent),
+    MassModuleStore(MassModuleStoreEvent),
     MaterialTrade(MaterialTradeEvent),
     MissionAbandoned(MissionAbandonedEvent),
     MissionAccepted(MissionAcceptedEvent),
     MissionCompleted(MissionCompletedEvent),
     MissionFailed(MissionFailedEvent),
     MissionRedirected(MissionRedirectedEvent),
+    ModuleBuy(ModuleBuyEvent),
+    ModuleBuyAndStore(ModuleBuyAndStoreEvent),
     ModuleRetrieve(ModuleRetrieveEvent),
     ModuleSell(ModuleSellEvent),
     ModuleSellRemote(ModuleSellRemoteEvent),
+    ModuleStore(ModuleStoreEvent),
     ModuleSwap(ModuleSwapEvent),
     Outfitting(OutfittingEvent),
     PayBounties(PayBountiesEvent),
     PayFines(PayFinesEvent),
-    ModuleBuy(ModuleBuyEvent),
-    ModuleStore(ModuleStoreEvent),
-    ModuleBuyAndStore(ModuleBuyAndStoreEvent),
     RedeemVoucher(RedeemVoucherEvent),
     RefuelAll(RefuelAllEvent),
+    RefuelPartial(RefuelPartialEvent),
     Repair(RepairEvent),
     RepairAll(RepairAllEvent),
     RestockVehicle(RestockVehicleEvent),
+    ScientificResearch(ScientificResearchEvent),
     SearchAndRescue(SearchAndRescueEvent),
     SellDrones(SellDronesEvent),
+    SellShipOnRebuy(SellShipOnRebuyEvent),
     SetUserShipName(SetUserShipNameEvent),
     Shipyard(ShipyardEvent),
     ShipyardBuy(ShipyardBuyEvent),
     ShipyardNew(ShipyardNewEvent),
-    ShipyardTransfer(ShipyardTransferEvent),
+    ShipyardSell(ShipyardSellEvent),
     ShipyardSwap(ShipyardSwapEvent),
+    ShipyardTransfer(ShipyardTransferEvent),
     StoredModules(StoredModulesEvent),
     StoredShips(StoredShipsEvent),
     TechnologyBroker(TechnologyBrokerEvent),
+    ClearImpound(ClearImpoundEvent),
 
     // Powerplay
+    PowerplayCollect(PowerplayCollectEvent),
+    PowerplayDefect(PowerplayDefectEvent),
+    PowerplayDeliver(PowerplayDeliverEvent),
+    PowerplayFastTrack(PowerplayFastTrackEvent),
+    PowerplayJoin(PowerplayJoinEvent),
     PowerplayLeave(PowerplayLeaveEvent),
     PowerplaySalary(PowerplaySalaryEvent),
+    PowerplayVote(PowerplayVoteEvent),
 
     // Squadrons
     AppliedToSquadron(AppliedToSquadronEvent),
+    DisbandedSquadron(DisbandedSquadronEvent),
+    InvitedToSquadron(InvitedToSquadronEvent),
+    JoinedSquadron(JoinedSquadronEvent),
+    KickedFromSquadron(KickedFromSquadronEvent),
+    LeftSquadron(LeftSquadronEvent),
+    SharedBookmarkToSquadron(ShardedBookmarkToSquadronEvent),
+    SquadronCreated(SquadronCreatedEvent),
+    SquadronDemotion(SquadronDemotionEvent),
+    SquadronPromotion(SquadronPromotionEvent),
     SquadronStartup(SquadronStartupEvent),
+    WonATrophyForSquadron(WonATrophyForSquadronEvent),
 
     // Fleet carriers
     CarrierJump(CarrierJumpEvent),
@@ -542,7 +645,6 @@ pub enum JournalEventContent {
     DataScanned(DataScannedEvent),
     DockFighter(DockFighterEvent),
     DockSRV(DockSRVEvent),
-    EngineerCraft(EngineerCraftEvent),
     FighterRebuilt(FighterRebuiltEvent),
     FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
