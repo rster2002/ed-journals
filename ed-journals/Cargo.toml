@@ -1,0 +1,24 @@
+[package]
+name = "ed-journals"
+description = "Provides models for representing and parsing elite dangerous journal files"
+repository = "https://github.com/rster2002/ed-logs"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+keywords = ["elite-dangrous", "elite-journal"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+regex-macro = "0.2.0"
+once_cell = "1.19.0"
+thiserror = "1.0.58"
+regex = "1.10.4"
+chrono = { version = "0.4.38", features = ["serde"] }
+serde = { version = "1.0.198", features = ["derive"] }
+serde_json = "1.0.116"
+kinded = "0.3.0"
+
+[features]
+default = []
+strict = []
