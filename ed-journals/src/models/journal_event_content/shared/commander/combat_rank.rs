@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::{Deserialize, Deserializer};
@@ -122,11 +123,29 @@ impl<'de> serde::Deserialize<'de> for CombatRank {
     }
 }
 
-// impl<'de> Deserialize<'de> for CombatRank {
-//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: Deserializer<'de> {
-//         let value = u8::deserialize(deserializer)?;
-//
-//         CombatRank::try_from(value)
-//             .map_err(|e| serde::de::Error::custom(format!("Failed to deserialize: got '{}'", value)))
-//     }
-// }
+impl Display for CombatRank {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            CombatRank::Harmless => "Harmless",
+            CombatRank::MostlyHarmless => "Mostly Harmless",
+            CombatRank::Novice => "Novice",
+            CombatRank::Competent => "Competent",
+            CombatRank::Expert => "Expert",
+            CombatRank::Master => "Master",
+            CombatRank::Dangerous => "Dangerous",
+            CombatRank::Deadly => "Deadly",
+            CombatRank::Elite => "Elite",
+            CombatRank::EliteI => "Elite I",
+            CombatRank::EliteII => "Elite II",
+            CombatRank::EliteIII => "Elite III",
+            CombatRank::EliteIV => "Elite IV",
+            CombatRank::EliteV => "Elite V",
+
+            #[cfg(not(feature = "strict"))]
+            CombatRank::UnknownU8(unknown) => return write!(f, "Unknown combat rank nr: {}", unknown),
+
+            #[cfg(not(feature = "strict"))]
+            CombatRank::UnknownString(unknown) => return write!(f, "Unknown combat rank: {}", unknown)
+        })
+    }
+}

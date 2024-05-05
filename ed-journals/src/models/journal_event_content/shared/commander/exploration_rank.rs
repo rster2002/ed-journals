@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
 use crate::try_from_deserialize_impl;
@@ -59,3 +60,27 @@ impl TryFrom<u8> for ExplorationRank {
 }
 
 try_from_deserialize_impl!(u8 => ExplorationRank);
+
+impl Display for ExplorationRank {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            ExplorationRank::Aimless => "Aimless",
+            ExplorationRank::MostlyAimless => "Mostly Aimless",
+            ExplorationRank::Scout => "Scout",
+            ExplorationRank::Surveyor => "Surveyor",
+            ExplorationRank::Trailblazer => "Trailblazer",
+            ExplorationRank::Pathfinder => "Pathfinder",
+            ExplorationRank::Ranger => "Ranger",
+            ExplorationRank::Pioneer => "Pioneer",
+            ExplorationRank::Elite => "Elite",
+            ExplorationRank::EliteI => "Elite I",
+            ExplorationRank::EliteII => "Elite II",
+            ExplorationRank::EliteIII => "Elite III",
+            ExplorationRank::EliteIV => "Elite IV",
+            ExplorationRank::EliteV => "Elite V",
+
+            #[cfg(not(feature = "strict"))]
+            ExplorationRank::Unknown(unknown) => return write!(f, "Unknown exploration rank nr: {}", unknown),
+        })
+    }
+}

@@ -11,6 +11,12 @@ pub enum FactionHappiness {
     #[serde(rename = "$Faction_HappinessBand3;")]
     Content,
 
+    #[serde(rename = "$Faction_HappinessBand4;")]
+    Unhappy,
+
+    #[serde(rename = "$Faction_HappinessBand5;")]
+    Despondent,
+
     // TODO check what this one should actually be
     #[serde(rename = "")]
     Unspecified,

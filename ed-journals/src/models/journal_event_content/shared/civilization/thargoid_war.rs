@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -36,4 +37,19 @@ pub enum ThargoidWarState {
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
+}
+
+impl Display for ThargoidWarState {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            ThargoidWarState::Stronghold => "Stronghold",
+            ThargoidWarState::Probing => "Probing",
+            ThargoidWarState::Controlled => "Controlled",
+            ThargoidWarState::Recovery => "Recovery",
+            ThargoidWarState::Unspecified => "Unspecified",
+
+            #[cfg(not(feature = "strict"))]
+            ThargoidWarState::Unknown(unknown) => return write!(f, "Unknown thargoid war state: {}", unknown),
+        })
+    }
 }

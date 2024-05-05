@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::trading::commodity::Commodity;
@@ -28,4 +29,21 @@ pub enum PlanetarySignalType {
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
+}
+
+impl Display for PlanetarySignalType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            PlanetarySignalType::Human => "Human",
+            PlanetarySignalType::Biological => "Biological",
+            PlanetarySignalType::Geological => "Geological",
+            PlanetarySignalType::Thargoid => "Thargoid",
+            PlanetarySignalType::Guardian => "Guardian",
+            PlanetarySignalType::Other => "Other",
+            PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
+
+            #[cfg(not(feature = "strict"))]
+            PlanetarySignalType::Unknown(unknown) => return write!(f, "Unknown planetary signal: {}", unknown),
+        })
+    }
 }

@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -265,5 +266,153 @@ impl FromStr for Species {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         serde_json::from_value(Value::String(s.to_string()))
+    }
+}
+
+impl Display for Species {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            Species::AleoidaLaminiae => "Aleoida Laminiae",
+            Species::AleoidaGravis => "Aleoida Gravis",
+            Species::AleoidaSpica => "Aleoida Spica",
+            Species::AleoidaCoronamus => "Aleoida Coronamus",
+            Species::AleoidaArcus => "Aleoida Arcus",
+            Species::AmphoraPlant => "Amphora Plant",
+
+            Species::AnemonePrasinusBioluminescent => "Anemone Prasinus Bioluminescent",
+            Species::AnemonePrasinumBioluminescent => "Anemone Prasinum Bioluminescent",
+            Species::AnemonePuniceus => "Anemone Puniceus",
+            Species::AnemonePuniceum => "Anemone Puniceum",
+            Species::AnemoneRoseusBioluminescent => "Anemone Roseus Bioluminescent",
+            Species::AnemoneRoseumBioluminescent => "Anemone Roseum Bioluminescent",
+            Species::AnemoneRoseus => "Anemone Roseus",
+            Species::AnemoneRoseum => "Anemone Roseum",
+            Species::AnemoneBlattinusBioluminescent => "Anemone Blattinus Bioluminescent",
+            Species::AnemoneBlatteumBioluminescent => "Anemone Blatteum Bioluminescent",
+            Species::AnemoneLuteus => "Anemone Luteus",
+            Species::AnemoneLuteolum => "Anemone Luteolum",
+            Species::AnemoneRubensBioluminescent => "Anemone Rubens Bioluminescent",
+            Species::AnemoneRubeumBioluminescent => "Anemone Rubeum Bioluminescent",
+            Species::AnemoneCroceus => "Anemone Croceus",
+            Species::AnemoneCroceum => "Anemone Croceum",
+
+            Species::BarkMound => "Bark Mound",
+
+            Species::BacteriumNebulus => "Bacterium Nebulus",
+            Species::BacteriumAcies => "Bacterium Acies",
+            Species::BacteriumOmentum => "Bacterium Omentum",
+            Species::BacteriumScopulum => "Bacterium Scopulum",
+            Species::BacteriumVerrata => "Bacterium Verrata",
+            Species::BacteriumBullaris => "Bacterium Bullaris",
+            Species::BacteriumAlcyoneum => "Bacterium Alcyoneum",
+            Species::BacteriumVesicula => "Bacterium Vesicula",
+            Species::BacteriumCerbrus => "Bacterium Cerbrus",
+            Species::BacteriumAurasus => "Bacterium Aurasus",
+            Species::BacteriumInformem => "Bacterium Informem",
+            Species::BacteriumVolu => "Bacterium Volu",
+            Species::BacteriumTela => "Bacterium Tela",
+
+            Species::BrainTreeAureum => "Brain Tree Aureum",
+            Species::BrainTreeOstrinum => "Brain Tree Ostrinum",
+            Species::BrainTreePuniceum => "Brain Tree Puniceum",
+            Species::BrainTreeLindigoticum => "Brain Tree Lindigoticum",
+            Species::BrainTreeGypseeum => "Brain Tree Gypseeum",
+            Species::BrainTreeLividum => "Brain Tree Lividum",
+            Species::BrainTreeViride => "Brain Tree Viride",
+            Species::BrainTreeRoseum => "Brain Tree Roseum",
+
+            Species::CactoidaLapis => "Cactoida Lapis",
+            Species::CactoidaPullulanta => "Cactoida Pullulanta",
+            Species::CactoidaCortexum => "Cactoida Cortexum",
+            Species::CactoidaVermis => "Cactoida Vermis",
+
+            Species::ClypeusSpeculumi => "Clypeus Speculumi",
+            Species::ClypeusLacrimam => "Clypeus Lacrimam",
+            Species::ClypeusMargaritus => "Clypeus Margaritus",
+
+            Species::ConchaRenibus => "Concha Renibus",
+            Species::ConchaAureolas => "Concha Aureolas",
+            Species::ConchaLabiata => "Concha Labiata",
+            Species::ConchaBiconcavis => "Concha Biconcavis",
+
+            Species::ElectricaePluma => "Electricae Pluma",
+            Species::ElectricaeRadialem => "Electricae Radialem",
+
+            Species::FonticuluaCampestris => "Fonticulua Campestris",
+            Species::FonticuluaSegmentatus => "Fonticulua Segmentatus",
+            Species::FonticuluaDigitos => "Fonticulua Digitos",
+            Species::FonticuluaUpupam => "Fonticulua Upupam",
+            Species::FonticuluaLapida => "Fonticulua Lapida",
+            Species::FonticuluaFluctus => "Fonticulua Fluctus",
+
+            Species::FrutexaFlabellum => "Frutexa Flabellum",
+            Species::FrutexaFlammasis => "Frutexa Flammasis",
+            Species::FrutexaMetallicum => "Frutexa Metallicum",
+            Species::FrutexaAcus => "Frutexa Acus",
+            Species::FrutexaFera => "Frutexa Fera",
+            Species::FrutexaSponsae => "Frutexa Sponsae",
+            Species::FrutexaCollum => "Frutexa Collum",
+
+            Species::FumerolaAquatis => "Fumerola Aquatis",
+            Species::FumerolaCarbosis => "Fumerola Carbosis",
+            Species::FumerolaExtremus => "Fumerola Extremus",
+            Species::FumerolaNitris => "Fumerola Nitris",
+
+            Species::FungoidaSetisis => "Fungoida Setisis",
+            Species::FungoidaStabitis => "Fungoida Stabitis",
+            Species::FungoidaBullarum => "Fungoida Bullarum",
+            Species::FungoidaGelata => "Fungoida Gelata",
+
+            Species::OsseusFractus => "Osseus Fractus",
+            Species::OsseusSpiralis => "Osseus Spiralis",
+            Species::OsseusPumice => "Osseus Pumice",
+            Species::OsseusCornibus => "Osseus Cornibus",
+            Species::OsseusPellebantus => "Osseus Pellebantus",
+            Species::OsseusDiscus => "Osseus Discus",
+
+            Species::ReceptaUmbrux => "Recepta Umbrux",
+            Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
+            Species::ReceptaConditivus => "Recepta Conditivus",
+
+            Species::SinuousTubersAlbidum => "Sinuous Tubers Albidum",
+            Species::SinuousTubersBlatteum => "Sinuous Tubers Blatteum",
+            Species::SinuousTubersCaeruleum => "Sinuous Tubers Caeruleum",
+            Species::SinuousTubersLindigoticum => "Sinuous Tubers Lindigoticum",
+            Species::SinuousTubersPrasinum => "Sinuous Tubers Prasinum",
+            Species::SinuousTubersRoseum => "Sinuous Tubers Roseum",
+            Species::SinuousTubersViolaceum => "Sinuous Tubers Violaceum",
+            Species::SinuousTubersViride => "Sinuous Tubers Viride",
+
+            Species::StratumTectonicas => "Stratum Tectonicas",
+            Species::StratumPaleas => "Stratum Paleas",
+            Species::StratumFrigus => "Stratum Frigus",
+            Species::StratumLaminamus => "Stratum Laminamus",
+            Species::StratumExcutitus => "Stratum Excutitus",
+            Species::StratumLimaxus => "Stratum Limaxus",
+            Species::StratumCucumisis => "Stratum Cucumisis",
+            Species::StratumAraneamus => "Stratum Araneamus",
+
+            Species::TubusConifer => "Tubus Conifer",
+            Species::TubusSororibus => "Tubus Sororibus",
+            Species::TubusRosarium => "Tubus Rosarium",
+            Species::TubusCavas => "Tubus Cavas",
+            Species::TubusCompagibus => "Tubus Compagibus",
+
+            Species::TussockPennata => "Tussock Pennata",
+            Species::TussockVentusa => "Tussock Ventusa",
+            Species::TussockIgnis => "Tussock Ignis",
+            Species::TussockCultro => "Tussock Cultro",
+            Species::TussockSerrati => "Tussock Serrati",
+            Species::TussockAlbata => "Tussock Albata",
+            Species::TussockDivisa => "Tussock Divisa",
+            Species::TussockCaputus => "Tussock Caputus",
+            Species::TussockTriticum => "Tussock Triticum",
+            Species::TussockStigmasis => "Tussock Stigmasis",
+            Species::TussockCapillum => "Tussock Capillum",
+            Species::TussockCatena => "Tussock Catena",
+            Species::TussockPropagito => "Tussock Propagito",
+            Species::TussockPennatis => "Tussock Pennatis",
+            Species::TussockVirgam => "Tussock Virgam",
+        })
     }
 }

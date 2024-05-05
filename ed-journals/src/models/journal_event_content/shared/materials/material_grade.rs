@@ -15,6 +15,22 @@ pub enum MaterialGrade {
     Unknown,
 }
 
+impl MaterialGrade {
+    pub fn grade_nr(&self) -> u8 {
+        match self {
+            MaterialGrade::Grade1 => 1,
+            MaterialGrade::Grade2 => 2,
+            MaterialGrade::Grade3 => 3,
+            MaterialGrade::Grade4 => 4,
+            MaterialGrade::Grade5 => 5,
+            MaterialGrade::None => 0,
+
+            #[cfg(not(feature = "strict"))]
+            MaterialGrade::Unknown => 0,
+        }
+    }
+}
+
 impl From<Material> for MaterialGrade {
     fn from(value: Material) -> Self {
         match value {
@@ -194,8 +210,6 @@ impl From<Material> for MaterialGrade {
             Material::GuardianVesselBlueprintFragment => MaterialGrade::Grade5,
             Material::GuardianWeaponBlueprintFragment => MaterialGrade::Grade5,
 
-            // Material::ExtractionYieldData
-            // | Material::StellarActivityLogs => MaterialGrade::None,
             #[cfg(not(feature = "strict"))]
             Material::Unknown(_) => MaterialGrade::Unknown,
         }

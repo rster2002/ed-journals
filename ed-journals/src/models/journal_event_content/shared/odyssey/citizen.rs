@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -29,4 +30,16 @@ pub enum Citizen {
         alias = "rangedsuitai_class3"
     )]
     Sniper,
+}
+
+impl Display for Citizen {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            Citizen::Researcher => "Researcher",
+            Citizen::Commando => "Commando",
+            Citizen::Scout => "Scout",
+            Citizen::Striker => "Striker",
+            Citizen::Sniper => "Sniper",
+        })
+    }
 }

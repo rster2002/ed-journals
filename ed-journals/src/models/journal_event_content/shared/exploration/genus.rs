@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::exploration::species::Species;
@@ -215,31 +216,40 @@ impl From<&Species> for Genus {
     }
 }
 
-// impl FromStr for Genus {
-//     type Err = String;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "$Codex_Ent_Stratum_Genus_Name;" => Ok(Genus::Stratum),
-//             "$Codex_Ent_Ground_Struct_Ice_Name;" => Ok(Genus::CrystallineShards),
-//             "$Codex_Ent_Bacterial_Genus_Name;" => Ok(Genus::Bacterium),
-//             "$Codex_Ent_Aleoids_Genus_Name;" => Ok(Genus::Aleoida),
-//             "$Codex_Ent_Conchas_Genus_Name;" => Ok(Genus::Concha),
-//             "$Codex_Ent_Fungoids_Genus_Name;" => Ok(Genus::Fungoida),
-//             "$Codex_Ent_Osseus_Genus_Name;" => Ok(Genus::Osseus),
-//             "$Codex_Ent_Shrubs_Genus_Name;" => Ok(Genus::Frutexa),
-//             "$Codex_Ent_Tussocks_Genus_Name;" => Ok(Genus::Tussock),
-//             "$Codex_Ent_Cactoid_Genus_Name;" => Ok(Genus::Cactoida),
-//             "$Codex_Ent_Clypeus_Genus_Name;" => Ok(Genus::Clypeus),
-//             "$Codex_Ent_Recepta_Genus_Name;" => Ok(Genus::Recepta),
-//
-//             #[cfg(not(feature = "strict"))]
-//             _ => Ok(Genus::Unknown(s.to_string())),
-//
-//             #[cfg(feature = "strict")]
-//             _ => Err(s.to_string()),
-//         }
-//     }
-// }
-//
-// from_str_deserialize_impl!(Genus);
+impl From<Species> for Genus {
+    fn from(value: Species) -> Self {
+        (&value).into()
+    }
+}
+
+impl Display for Genus {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            Genus::Aleoida => "Aleoida",
+            Genus::AmphoraPlant => "Amphora Plant",
+            Genus::Anemone => "Anemone",
+            Genus::BarkMound => "Bark Mound",
+            Genus::Bacterium => "Bacterium",
+            Genus::BrainTree => "Brain Tree",
+            Genus::Cactoida => "Cactoida",
+            Genus::Clypeus => "Clypeus",
+            Genus::Concha => "Concha",
+            Genus::CrystallineShards => "Crystalline Shards",
+            Genus::Electricae => "Electricae",
+            Genus::Fonticulua => "Fonticulua",
+            Genus::Fruxeta => "Fruxeta",
+            Genus::Fumerola => "Fumerola",
+            Genus::Fungoida => "Fungoida",
+            Genus::Osseus => "Osseus",
+            Genus::Recepta => "Recepta",
+            Genus::SinuousTubers => "Sinuous Tubers",
+            Genus::Stratum => "Stratum",
+            Genus::Tubus => "Tubus",
+            Genus::Tussock => "Tussock",
+            Genus::Trutexa => "Trutexa",
+
+            #[cfg(not(feature = "strict"))]
+            Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
+        })
+    }
+}

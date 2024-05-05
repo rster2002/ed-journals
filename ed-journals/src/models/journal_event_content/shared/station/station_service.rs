@@ -1,4 +1,6 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
+use crate::journal_event_content::carrier_stats_event::CarrierStatsEventCrewRole::Unknown;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum StationService {
@@ -123,4 +125,52 @@ pub enum StationService {
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
+}
+
+impl Display for StationService {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            StationService::OnDockMission => "On-Dock Mission",
+            StationService::BlackMarket => "Black Market",
+            StationService::Missions => "Missions",
+            StationService::MissionsGenerated => "Missions Generated",
+            StationService::Facilitator => "Facilitator",
+            StationService::Powerplay => "Powerplay",
+            StationService::Outfitting => "Outfitting",
+            StationService::Livery => "Livery",
+            StationService::Tuning => "Tuning",
+            StationService::SearchAndRescue => "Search & Rescue",
+            StationService::Dock => "Dock",
+            StationService::AutoDock => "Auto Dock",
+            StationService::Commodities => "Commodities",
+            StationService::Contacts => "Contacts",
+            StationService::Exploration => "Exploration",
+            StationService::CrewLounge => "Crew Lounge",
+            StationService::Rearm => "Rearm",
+            StationService::Refuel => "Refuel",
+            StationService::Repair => "Repair",
+            StationService::Engineer => "Engineer",
+            StationService::FlightController => "Flight Controller",
+            StationService::StationOperations => "Station Operations",
+            StationService::StationMenu => "Station Menu",
+            StationService::CarrierVendor => "Carrier Vendor",
+            StationService::CarrierFuel => "Carrier Fuel",
+            StationService::CarrierManagement => "Carrier Management",
+            StationService::SocialSpace => "Social Space",
+            StationService::Bartender => "Bartender",
+            StationService::ApexInterstellar => "Apex Interstellar",
+            StationService::VistaGenomics => "Vista Genomics",
+            StationService::PioneerSupplies => "Pioneer Supplies",
+            StationService::Shipyard => "Shipyard",
+            StationService::RedemptionOffice => "Redemption Office",
+            StationService::FrontlineSolutions => "Frontline Solutions",
+            StationService::MaterialTrader => "Material Trader",
+            StationService::TechnologyBroker => "Technology Broker",
+            StationService::Shop => "Shop",
+            StationService::ModulePacks => "Module Packs",
+
+            #[cfg(not(feature = "strict"))]
+            StationService::Unknown(unknown) => return write!(f, "Unknown station service: {}", unknown),
+        })
+    }
 }

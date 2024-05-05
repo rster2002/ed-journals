@@ -1,9 +1,14 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum Suit {
+    FlightSuit,
+
     #[serde(rename = "ExplorationSuit_Class1", alias = "explorationsuit_class1")]
     ArtemisSuit,
+
+    DominatorSuit,
 
     #[serde(rename = "UtilitySuit_Class1", alias = "utilitysuit_class1")]
     MaverickSuit,
@@ -11,4 +16,18 @@ pub enum Suit {
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
+}
+
+impl Display for Suit {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            Suit::FlightSuit => "Flight Suit",
+            Suit::ArtemisSuit => "Artemis Suit",
+            Suit::DominatorSuit => "Dominator Suit",
+            Suit::MaverickSuit => "Maverick Suit",
+
+            #[cfg(not(feature = "strict"))]
+            Suit::Unknown(unknown) => return write!(f, "Unknown suit: {}", unknown),
+        })
+    }
 }

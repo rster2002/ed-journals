@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use lazy_static::lazy_static;
@@ -69,6 +70,16 @@ impl FromStr for Variant {
 }
 
 from_str_deserialize_impl!(Variant);
+
+impl Display for Variant {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        if let VariantColor::None = self.color {
+            return self.species.fmt(f);
+        }
+
+        write!(f, "{} - {}", self.species, self.color)
+    }
+}
 
 #[cfg(test)]
 mod tests {

@@ -15,8 +15,6 @@ pub struct Faction {
     pub government: Government,
     pub influence: f32,
     pub allegiance: Superpower,
-
-    // TODO check possible values
     pub happiness: FactionHappiness,
 
     #[serde(rename = "Happiness_Localised")]

@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -19,24 +20,23 @@ pub enum StationType {
     Unknown(String),
 }
 
-// impl FromStr for StationType {
-//     type Err = String;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "Orbis" => Ok(StationType::Orbis),
-//             "Coriolis" => Ok(StationType::Coriolis),
-//             "Ocellus" => Ok(StationType::Ocellus),
-//             "Outpost" => Ok(StationType::Outpost),
-//             "FleetCarrier" => Ok(StationType::FleetCarrier),
-//
-//             #[cfg(not(feature = "strict"))]
-//             _ => Ok(StationType::Unknown(s.to_string())),
-//
-//             #[cfg(feature = "strict")]
-//             _ => Err(s.to_string()),
-//         }
-//     }
-// }
-//
-// from_str_deserialize_impl!(StationType);
+impl Display for StationType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            StationType::AsteroidBase => "Asteroid Base",
+            StationType::Bernal => "Bernal",
+            StationType::Orbis => "Orbis",
+            StationType::Coriolis => "Coriolis",
+            StationType::Ocellus => "Ocellus",
+            StationType::Outpost => "Outpost",
+            StationType::FleetCarrier => "Fleet Carrier",
+            StationType::MegaShip => "Mega Ship",
+            StationType::CraterOutpost => "Crater Outpost",
+            StationType::CraterPort => "Crater Port",
+            StationType::OnFootSettlement => "On-Foot Settlement",
+
+            #[cfg(not(feature = "strict"))]
+            StationType::Unknown(unknown) => return write!(f, "Unknown station type: {}", unknown),
+        })
+    }
+}

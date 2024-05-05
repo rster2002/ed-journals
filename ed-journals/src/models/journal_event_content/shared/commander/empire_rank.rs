@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
 use crate::try_from_deserialize_impl;
@@ -61,3 +62,28 @@ impl TryFrom<u8> for EmpireRank {
 }
 
 try_from_deserialize_impl!(u8 => EmpireRank);
+
+impl Display for EmpireRank {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            EmpireRank::None => "None",
+            EmpireRank::Outsider => "Outsider",
+            EmpireRank::Serf => "Serf",
+            EmpireRank::Master => "Master",
+            EmpireRank::Squire => "Squire",
+            EmpireRank::Knight => "Knight",
+            EmpireRank::Lord => "Lord",
+            EmpireRank::Baron => "Baron",
+            EmpireRank::Viscount => "Viscount",
+            EmpireRank::Count => "Count",
+            EmpireRank::Earl => "Earl",
+            EmpireRank::Marquis => "Marquis",
+            EmpireRank::Duke => "Duke",
+            EmpireRank::Prince => "Prince",
+            EmpireRank::King => "King",
+
+            #[cfg(not(feature = "strict"))]
+            EmpireRank::Unknown(unknown) => return write!(f, "Unknown empire rank nr: {}", unknown),
+        })
+    }
+}

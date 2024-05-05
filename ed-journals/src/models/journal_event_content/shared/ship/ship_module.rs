@@ -41,6 +41,8 @@ impl Display for ShipModule {
             ShipModule::Internal(internal_module) => internal_module.fmt(f),
             ShipModule::Hardpoint(hardpoint_module) => hardpoint_module.fmt(f),
             ShipModule::Cockpit(_) => write!(f, "Cockpit"),
+
+            #[cfg(not(feature = "strict"))]
             ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),
         }
     }
