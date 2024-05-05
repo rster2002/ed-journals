@@ -133,9 +133,15 @@ pub enum BlueprintModifier {
     BoostAugmenterPowerUse,
     ModuleDefenceAbsorption,
     FalloffRange,
-    DSS_RangeMult,
-    DSS_AngleMult,
-    DSS_RateMult,
+
+    #[serde(rename = "DSS_RangeMult")]
+    DSSRangeMultiplier,
+
+    #[serde(rename = "DSS_AngleMult")]
+    DSSAngleMultiplier,
+
+    #[serde(rename = "DSS_RateMult")]
+    DSSRateMultiplier,
     DamageFalloffRange,
 
     #[cfg(not(feature = "strict"))]

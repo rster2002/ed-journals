@@ -1,8 +1,9 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::odyssey::suit::Suit;
 use crate::models::journal_event_content::shared::odyssey::suit_slot::SuitSlot;
 use crate::models::journal_event_content::shared::odyssey::weapon::Weapon;
 use crate::models::journal_event_content::shared::odyssey::weapon_mod::WeaponMod;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

@@ -1,8 +1,9 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::commander::combat_rank::CombatRank;
 use crate::models::journal_event_content::shared::odyssey::citizen::Citizen;
 use crate::models::journal_event_content::shared::ship::ship_type::ShipType;
 use crate::models::journal_event_content::shared::thargoid::thargoid_ship::ThargoidShip;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]

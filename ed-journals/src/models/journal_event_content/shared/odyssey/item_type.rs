@@ -1,5 +1,6 @@
-use crate::journal_event_content::shared::odyssey::item::Item;
 use serde::Deserialize;
+
+use crate::journal_event_content::shared::odyssey::item::Item;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum ItemType {

@@ -1,9 +1,10 @@
-use crate::from_str_deserialize_impl;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use serde::Deserialize;
 use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
 use thiserror::Error;
+
+use crate::from_str_deserialize_impl;
 
 /// Mission_Sightseeing_Criminal_BOOM
 #[derive(Debug, Clone, PartialEq)]
@@ -21,8 +22,10 @@ pub enum SightSeeingMissionError {
     FailedToParse(String),
 }
 
-const SIGHTSEEING_MISSION_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^Mission_Sightseeing_([a-zA-Z]+?)_([A-Z]+?)(_name)?$"#).unwrap());
+lazy_static! {
+    static ref SIGHTSEEING_MISSION_REGEX: Regex =
+        Regex::new(r#"^Mission_Sightseeing_([a-zA-Z]+?)_([A-Z]+?)(_name)?$"#).unwrap();
+}
 
 impl FromStr for SightseeingMission {
     type Err = SightSeeingMissionError;

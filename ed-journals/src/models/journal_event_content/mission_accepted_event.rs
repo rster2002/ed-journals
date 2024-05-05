@@ -1,6 +1,6 @@
-use crate::models::journal_event_content::shared::shared_commodity::SharedCommodity;
 use serde::Deserialize;
 
+use crate::models::journal_event_content::shared::shared_commodity::SharedCommodity;
 use crate::models::journal_event_content::shared::station::mission_type::MissionType;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]

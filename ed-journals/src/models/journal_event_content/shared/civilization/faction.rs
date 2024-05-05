@@ -1,10 +1,11 @@
-mod faction_happiness;
+use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::civilization::faction::faction_happiness::FactionHappiness;
 use crate::models::journal_event_content::shared::civilization::faction_state::FactionState;
 use crate::models::journal_event_content::shared::civilization::government::Government;
 use crate::models::journal_event_content::shared::civilization::superpower::Superpower;
-use serde::Deserialize;
+
+mod faction_happiness;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

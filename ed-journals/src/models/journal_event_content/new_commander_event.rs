@@ -12,8 +12,9 @@ pub struct NewCommanderEvent {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::journal_event_content::new_commander_event::NewCommanderEvent;
     use serde_json::json;
+
+    use crate::models::journal_event_content::new_commander_event::NewCommanderEvent;
 
     #[test]
     fn new_commander_event_is_parsed_correctly() {

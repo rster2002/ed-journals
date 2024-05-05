@@ -1,3 +1,9 @@
+use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
+use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::exploration::species::Species;
 use crate::models::journal_event_content::shared::exploration::variant_color::{
@@ -6,11 +12,6 @@ use crate::models::journal_event_content::shared::exploration::variant_color::{
 use crate::models::journal_event_content::shared::exploration::variant_source::{
     VariantSource, VariantSourceError,
 };
-use once_cell::sync::Lazy;
-use regex::Regex;
-use serde::Deserialize;
-use std::str::FromStr;
-use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Variant {
@@ -33,8 +34,10 @@ pub enum VariantError {
     FailedToParse(String),
 }
 
-const VARIANT_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap());
+lazy_static! {
+    static ref VARIANT_REGEX: Regex =
+        Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap();
+}
 
 impl FromStr for Variant {
     type Err = VariantError;
@@ -69,10 +72,11 @@ from_str_deserialize_impl!(Variant);
 
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+
     use crate::models::journal_event_content::shared::exploration::species::Species;
     use crate::models::journal_event_content::shared::exploration::variant::Variant;
     use crate::models::journal_event_content::shared::exploration::variant_color::VariantColor;
-    use std::str::FromStr;
 
     #[test]
     fn variant_test_cases_are_processed_correctly() {

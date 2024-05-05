@@ -1,9 +1,11 @@
-use crate::models::journal_event_content::shared::galaxy::star_class::StarClass;
-use crate::models::journal_event_content::shared::materials::material::Material;
+use std::str::FromStr;
+
 use serde::Deserialize;
 use serde_json::Value;
-use std::str::FromStr;
 use thiserror::Error;
+
+use crate::models::journal_event_content::shared::galaxy::star_class::StarClass;
+use crate::models::journal_event_content::shared::materials::material::Material;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]

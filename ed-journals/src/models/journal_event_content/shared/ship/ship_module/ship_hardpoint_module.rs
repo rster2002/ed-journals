@@ -1,9 +1,10 @@
 use std::num::ParseIntError;
 use std::str::FromStr;
-use once_cell::sync::Lazy;
+
+use lazy_static::lazy_static;
 use regex::{Captures, Regex};
-use serde::Deserialize;
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
 use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::hardpoint_module::HardpointModule;
@@ -13,7 +14,7 @@ use crate::models::journal_event_content::shared::ship::ship_slot::hardpoint_siz
 
 pub mod hardpoint_module;
 pub mod hardpoint_mounting;
-mod hardpoint_type;
+pub mod hardpoint_type;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ShipHardpointModule {
@@ -47,11 +48,10 @@ pub enum ShipHardpointModuleError {
     FailedToParse(String),
 }
 
-const GRADED_HARDPOINT_MODULE_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^\$?[hH]pt_(\w+?)_size(\d+)_class(\d+)(_name;)?$"#).unwrap());
-const HARDPOINT_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fF]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mM]edium|[lL]arge|[hH]uge)(_[a-zA-Z0-9_]+?)?(_name;)?$"#).unwrap()
-});
+lazy_static! {
+    static ref GRADED_HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)_size(\d+)_class(\d+)(_name;)?$"#).unwrap();
+    static ref HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fF]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mM]edium|[lL]arge|[hH]uge)(_[a-zA-Z0-9_]+?)?(_name;)?$"#).unwrap();
+}
 
 impl FromStr for ShipHardpointModule {
     type Err = ShipHardpointModuleError;
@@ -165,10 +165,11 @@ impl ShipHardpointModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::models::journal_event_content::shared::ship::ship_module::module_class::ModuleClass;
     use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::hardpoint_module::HardpointModule;
     use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
-    use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::{ShipHardpointModule};
+    use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
     use crate::models::journal_event_content::shared::ship::ship_slot::hardpoint_size::HardpointSize;
 
     #[test]

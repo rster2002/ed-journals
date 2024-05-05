@@ -1,16 +1,18 @@
-mod core_slot;
-pub mod hardpoint_size;
+use std::num::ParseIntError;
+use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
+use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::ship::ship_slot::core_slot::CoreSlot;
 use crate::models::journal_event_content::shared::ship::ship_slot::hardpoint_size::{
     HardpointSize, HardpointSizeParseError,
 };
-use once_cell::sync::Lazy;
-use regex::Regex;
-use std::num::ParseIntError;
-use std::str::FromStr;
-use thiserror::Error;
+
+mod core_slot;
+pub mod hardpoint_size;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ShipSlot {
@@ -43,13 +45,13 @@ pub enum ParseShipSlotError {
     FailedToParse(String),
 }
 
-const UTILITY_HARDPOINT_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap());
-const HARDPOINT_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap());
-const OPTIONAL_INTERNAL_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap());
-const MILITARY_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^Military(\d+)$"#).unwrap());
+lazy_static! {
+    static ref UTILITY_HARDPOINT_REGEX: Regex = Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap();
+    static ref HARDPOINT_REGEX: Regex =
+        Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap();
+    static ref OPTIONAL_INTERNAL_REGEX: Regex = Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap();
+    static ref MILITARY_REGEX: Regex = Regex::new(r#"^Military(\d+)$"#).unwrap();
+}
 
 impl FromStr for ShipSlot {
     type Err = ParseShipSlotError;
@@ -136,50 +138,3 @@ impl FromStr for ShipSlot {
 }
 
 from_str_deserialize_impl!(ShipSlot);
-
-// pub struct ShipSlot {
-//     pub slot_nr: u8,
-//     pub slot_size: u8,
-// }
-//
-
-// pub enum ParseShipSlotError {
-//     #[error("Ship slot string was not formatted correctly")]
-//     IncorrectFormat,
-//
-//     #[error("Failed to parse the slot nr")]
-//     FailedToParseNr,
-//
-//     #[error("Failed to parse the size of the slot")]
-//     FailedToParseSize,
-// }
-//
-// const SLOT_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"Slot02_Size5"#).unwrap());
-//
-// impl FromStr for ShipSlot {
-//     type Err = ParseShipSlotError;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         let captures = SLOT_REGEX.captures(s)
-//             .ok_or(ParseShipSlotError::IncorrectFormat)?;
-//
-//         let slot_nr = captures.get(1)
-//             .expect("Regex should have already been matched")
-//             .as_str()
-//             .parse()
-//             .map_err(|_| ParseShipSlotError::FailedToParseNr)?;
-//
-//         let slot_size = captures.get(2)
-//             .expect("Regex should have already been matched")
-//             .as_str()
-//             .parse()
-//             .map_err(|_| ParseShipSlotError::FailedToParseSize)?;
-//
-//         Ok(ShipSlot {
-//             slot_nr,
-//             slot_size,
-//         })
-//     }
-// }
-//
-// from_str_deserialize_impl!(ShipSlot);

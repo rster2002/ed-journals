@@ -1,6 +1,8 @@
 use std::str::FromStr;
+
 use serde::Deserialize;
 use serde_json::Value;
+
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::internal_type::InternalType;
 

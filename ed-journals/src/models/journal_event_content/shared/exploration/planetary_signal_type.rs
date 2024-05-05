@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::trading::commodity::Commodity;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::trading::commodity::Commodity;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum PlanetarySignalType {

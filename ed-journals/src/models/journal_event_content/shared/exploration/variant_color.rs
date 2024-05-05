@@ -1,9 +1,10 @@
+use thiserror::Error;
+
 use crate::models::journal_event_content::shared::exploration::genus::Genus;
 use crate::models::journal_event_content::shared::exploration::species::Species;
 use crate::models::journal_event_content::shared::exploration::variant_source::VariantSource;
 use crate::models::journal_event_content::shared::galaxy::star_class::StarClass;
 use crate::models::journal_event_content::shared::materials::material::Material;
-use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum VariantColor {

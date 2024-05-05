@@ -1,5 +1,6 @@
-use serde::{Deserialize, Deserializer};
 use std::str::FromStr;
+
+use serde::{Deserialize, Deserializer};
 use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]

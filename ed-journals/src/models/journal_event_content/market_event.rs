@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::station::station_type::StationType;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::station::station_type::StationType;
 
 /// Market data is written to a separate file called `market.json`.
 #[derive(Debug, Deserialize, Clone, PartialEq)]

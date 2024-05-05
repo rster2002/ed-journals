@@ -1,9 +1,10 @@
-use crate::from_str_deserialize_impl;
-use once_cell::sync::Lazy;
-use regex::Regex;
 use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
 use thiserror::Error;
 
+use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::ship::ship_type::ShipType;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -18,8 +19,9 @@ pub enum CockpitModuleParseError {
     UnknownShipType,
 }
 
-const COCKPIT_MODULE_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap());
+lazy_static! {
+    static ref COCKPIT_MODULE_REGEX: Regex = Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap();
+}
 
 impl FromStr for ShipCockpitModule {
     type Err = CockpitModuleParseError;

@@ -1,7 +1,7 @@
+use std::{io, mem};
 use std::collections::VecDeque;
 use std::io::{Read, Seek, SeekFrom};
 use std::string::FromUtf8Error;
-use std::{io, mem};
 
 use thiserror::Error;
 
@@ -148,9 +148,9 @@ mod tests {
     use chrono::{TimeZone, Utc};
 
     use crate::models::journal_event::JournalEvent;
+    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_event_content::commander_event::CommanderEvent;
     use crate::models::journal_event_content::file_header_event::FileHeaderEvent;
-    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_reader::JournalReader;
 
     #[test]

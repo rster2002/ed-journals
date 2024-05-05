@@ -1,6 +1,7 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::ship::ship_slot::ShipSlot;
 use crate::models::journal_event_content::shared::ship::ship_type::ShipType;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

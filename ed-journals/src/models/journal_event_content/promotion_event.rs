@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::commander::combat_rank::CombatRank;
 use crate::models::journal_event_content::shared::commander::empire_rank::EmpireRank;
 use crate::models::journal_event_content::shared::commander::exobiology_rank::ExobiologyRank;
@@ -5,7 +7,6 @@ use crate::models::journal_event_content::shared::commander::exploration_rank::E
 use crate::models::journal_event_content::shared::commander::federation_rank::FederationRank;
 use crate::models::journal_event_content::shared::commander::mercenary_rank::MercenaryRank;
 use crate::models::journal_event_content::shared::commander::trade_rank::TradeRank;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

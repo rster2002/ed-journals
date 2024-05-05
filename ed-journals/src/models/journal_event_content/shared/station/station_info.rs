@@ -1,8 +1,9 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::civilization::economy::Economy;
 use crate::models::journal_event_content::shared::civilization::faction_state::FactionState;
 use crate::models::journal_event_content::shared::civilization::government::Government;
 use crate::models::journal_event_content::shared::station::station_service::StationService;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

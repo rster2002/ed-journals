@@ -1,14 +1,15 @@
-use chrono::NaiveDateTime;
-use once_cell::sync::Lazy;
-use regex::Regex;
 use std::cmp::Ordering;
 use std::fs::{DirEntry, File};
 use std::io;
 use std::num::ParseIntError;
 use std::path::PathBuf;
 
-use crate::models::journal_reader::JournalReader;
+use chrono::NaiveDateTime;
+use lazy_static::lazy_static;
+use regex::Regex;
 use thiserror::Error;
+
+use crate::models::journal_reader::JournalReader;
 
 /// A representation of a journal log file. Can then be read using a [JournalReader].
 #[derive(Debug)]
@@ -36,8 +37,10 @@ pub enum JournalFileError {
     IO(#[from] io::Error),
 }
 
-const FILE_NAME_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap());
+lazy_static! {
+    static ref FILE_NAME_REGEX: Regex =
+        Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap();
+}
 
 impl JournalFile {
     /// Checks if the given file name (including the extension) matches that of a journal log file.
@@ -105,7 +108,7 @@ impl PartialEq<Self> for JournalFile {
 
 impl PartialOrd<Self> for JournalFile {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.naive_date_time.partial_cmp(&other.naive_date_time)
+        Some(self.cmp(other))
     }
 }
 

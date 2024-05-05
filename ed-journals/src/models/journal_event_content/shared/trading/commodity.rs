@@ -1,9 +1,10 @@
-use crate::from_str_deserialize_impl;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use serde::Deserialize;
 use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
 use thiserror::Error;
+
+use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Commodity {
@@ -856,8 +857,10 @@ impl Commodity {
     }
 }
 
-const COMMODITY_NAME_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^\$?(USSCargo)?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+lazy_static! {
+    static ref COMMODITY_NAME_REGEX: Regex =
+        Regex::new(r#"^\$?(USSCargo)?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap();
+}
 
 impl FromStr for Commodity {
     type Err = CommodityError;

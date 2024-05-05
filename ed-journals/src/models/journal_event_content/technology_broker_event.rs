@@ -1,8 +1,9 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::materials::material::Material;
 use crate::models::journal_event_content::shared::materials::material_category::MaterialCategory;
 use crate::models::journal_event_content::shared::ship::ship_module::ShipModule;
 use crate::models::journal_event_content::shared::trading::commodity::Commodity;
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

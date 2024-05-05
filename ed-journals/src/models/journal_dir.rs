@@ -1,6 +1,8 @@
-use crate::models::journal_file::{JournalFile, JournalFileError};
 use std::path::PathBuf;
+
 use thiserror::Error;
+
+use crate::models::journal_file::{JournalFile, JournalFileError};
 
 /// Provides an abstraction on top of the journal directory making it easy to access its contents.
 pub struct JournalDir {
@@ -72,8 +74,9 @@ impl JournalDir {
 
 #[cfg(test)]
 mod tests {
-    use crate::JournalDir;
     use std::env::current_dir;
+
+    use crate::JournalDir;
 
     #[test]
     fn journal_files_oldest_first_are_returned_in_the_correct_order() {

@@ -1,9 +1,10 @@
-use crate::from_str_deserialize_impl;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use serde::Deserialize;
 use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
 use thiserror::Error;
+
+use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Item {
@@ -246,8 +247,9 @@ impl Item {
     }
 }
 
-const ITEM_NAME_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap());
+lazy_static! {
+    static ref ITEM_NAME_REGEX: Regex = Regex::new(r#"^\$?([a-zA-Z_]+?)(_[nN]ame;)?$"#).unwrap();
+}
 
 impl FromStr for Item {
     type Err = ItemError;
@@ -270,8 +272,9 @@ from_str_deserialize_impl!(Item);
 
 #[cfg(test)]
 mod tests {
-    use crate::models::journal_event_content::shared::odyssey::item::Item;
     use std::str::FromStr;
+
+    use crate::models::journal_event_content::shared::odyssey::item::Item;
 
     #[test]
     fn item_test_cases_are_parsed_correctly() {

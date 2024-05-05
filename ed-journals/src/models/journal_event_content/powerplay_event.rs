@@ -12,8 +12,9 @@ pub struct PowerplayEvent {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::journal_event_content::powerplay_event::PowerplayEvent;
     use serde_json::json;
+
+    use crate::models::journal_event_content::powerplay_event::PowerplayEvent;
 
     #[test]
     fn powerplay_event_is_parsed_correctly() {

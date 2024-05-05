@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::exploration::species::Species;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::exploration::species::Species;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum Genus {

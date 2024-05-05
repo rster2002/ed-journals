@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::ship::fighter_loadout::FighterLoadout;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::ship::fighter_loadout::FighterLoadout;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

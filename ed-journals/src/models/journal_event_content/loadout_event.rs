@@ -28,8 +28,9 @@ pub struct LoadoutModule {
 
 #[cfg(test)]
 mod tests {
-    use crate::models::journal_event_content::loadout_event::LoadoutEvent;
     use serde_json::json;
+
+    use crate::models::journal_event_content::loadout_event::LoadoutEvent;
 
     #[test]
     fn loadout_event_is_parsed_correctly() {

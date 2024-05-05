@@ -1,8 +1,10 @@
 use std::num::ParseIntError;
 use std::str::FromStr;
-use once_cell::sync::Lazy;
+
+use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::{ArmorModule, ArmorModuleError};
@@ -42,9 +44,10 @@ pub enum ShipInternalModuleError {
     FailedToParse(String),
 }
 
-const SHIP_INTERNAL_MODULE_REGEX: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r#"^\$?[iI]nt_([a-zA-Z_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_[a-zA-Z_]+?)?(_name;)?$"#).unwrap()
-});
+lazy_static! {
+    static ref SHIP_INTERNAL_MODULE_REGEX: Regex =
+        Regex::new(r#"^\$?[iI]nt_([a-zA-Z_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_[a-zA-Z_]+?)?(_name;)?$"#).unwrap();
+}
 
 impl FromStr for ShipInternalModule {
     type Err = ShipInternalModuleError;

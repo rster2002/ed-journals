@@ -1,6 +1,8 @@
-use crate::from_str_deserialize_impl;
 use std::str::FromStr;
+
 use thiserror::Error;
+
+use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum StarClass {

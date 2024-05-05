@@ -11,25 +11,24 @@
 //! and `Status.json` etc will be added in the future. Best place to get started is the [JournalDir]
 //! model.
 
-mod macros;
-mod models;
-
 pub use models::journal_dir::JournalDir;
 pub use models::journal_event::JournalEvent;
+pub use models::journal_event_content;
 pub use models::journal_event_content::JournalEventContent;
 pub use models::journal_event_content::JournalEventContentKind;
 pub use models::journal_file::JournalFile;
 pub use models::journal_reader::JournalReader;
 
-pub use models::journal_event_content;
+mod macros;
+mod models;
 
 #[cfg(test)]
 mod tests {
+    use std::env::current_dir;
 
     use crate::models::journal_dir::JournalDir;
-    use crate::models::journal_event_content::scan_event::ScanEventKind;
     use crate::models::journal_event_content::JournalEventContent;
-    use std::env::current_dir;
+    use crate::models::journal_event_content::scan_event::ScanEventKind;
 
     #[test]
     fn sandbox() {

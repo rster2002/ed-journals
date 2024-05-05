@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::materials::material_category::MaterialCategory;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::materials::material_category::MaterialCategory;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum Material {

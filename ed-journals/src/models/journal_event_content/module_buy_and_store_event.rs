@@ -1,6 +1,7 @@
+use serde::Deserialize;
+
 use crate::models::journal_event_content::shared::ship::ship_module::ShipModule;
 use crate::models::journal_event_content::shared::ship::ship_type::ShipType;
-use serde::Deserialize;
 
 /// When buying a module but storing at the current location instead of equipping it to the current
 /// ship.

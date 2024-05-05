@@ -1,6 +1,7 @@
+use std::str::FromStr;
+
 use serde::Deserialize;
 use serde_json::Value;
-use std::str::FromStr;
 
 use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::hardpoint_type::HardpointType;
 

@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::commit_crime_event::CommitCrimeEventType;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::commit_crime_event::CommitCrimeEventType;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

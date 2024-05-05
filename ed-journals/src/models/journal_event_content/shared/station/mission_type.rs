@@ -1,7 +1,8 @@
-mod sightseeing_mission;
+use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::station::mission_type::sightseeing_mission::SightseeingMission;
-use serde::Deserialize;
+
+mod sightseeing_mission;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum MissionType {

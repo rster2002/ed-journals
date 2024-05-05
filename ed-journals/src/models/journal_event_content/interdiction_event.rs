@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::commander::combat_rank::CombatRank;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::commander::combat_rank::CombatRank;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

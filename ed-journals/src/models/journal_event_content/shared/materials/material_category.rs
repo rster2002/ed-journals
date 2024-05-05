@@ -1,5 +1,6 @@
-use crate::models::journal_event_content::shared::materials::material::Material;
 use serde::Deserialize;
+
+use crate::models::journal_event_content::shared::materials::material::Material;
 
 /// The type of material, either Raw, Manufactured, or Encoded.
 #[derive(Debug, Deserialize, Clone, PartialEq)]

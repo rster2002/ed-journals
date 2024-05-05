@@ -1,10 +1,11 @@
+use std::str::FromStr;
+
+use lazy_static::lazy_static;
+use regex::Regex;
+use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::galaxy::volcanism_type::VolcanismType;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use serde::Deserialize;
-use std::str::FromStr;
-use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Volcanism {
@@ -28,8 +29,10 @@ pub enum VolcanismError {
     FailedToParse(String),
 }
 
-const VOLCANISM_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new("(^minor |^major |^)([a-zA-Z ]+) volcanism$").unwrap());
+lazy_static! {
+    static ref VOLCANISM_REGEX: Regex =
+        Regex::new("(^minor |^major |^)([a-zA-Z ]+) volcanism$").unwrap();
+}
 
 impl FromStr for Volcanism {
     type Err = VolcanismError;
@@ -76,11 +79,12 @@ from_str_deserialize_impl!(Volcanism);
 
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+
     use crate::models::journal_event_content::shared::galaxy::volcanism::{
         Volcanism, VolcanismClassification,
     };
     use crate::models::journal_event_content::shared::galaxy::volcanism_type::VolcanismType;
-    use std::str::FromStr;
 
     #[test]
     fn volcanism_test_cases_are_parsed_correctly() {

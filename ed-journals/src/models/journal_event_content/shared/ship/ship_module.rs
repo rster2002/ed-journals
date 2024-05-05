@@ -1,12 +1,13 @@
-pub mod module_class;
-pub mod ship_cockpit_module;
-pub mod ship_hardpoint_module;
-pub mod ship_internal_module;
+use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::ship::ship_module::ship_cockpit_module::ShipCockpitModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::ShipInternalModule;
-use serde::Deserialize;
+
+pub mod module_class;
+pub mod ship_cockpit_module;
+pub mod ship_hardpoint_module;
+pub mod ship_internal_module;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {

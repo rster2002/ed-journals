@@ -1,11 +1,12 @@
 use std::num::ParseIntError;
 use std::str::FromStr;
-use once_cell::sync::Lazy;
+
+use lazy_static::lazy_static;
 use regex::Regex;
-use serde::Deserialize;
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
-use crate::models::journal_event_content::shared::ship::ship_module::module_class::{ModuleClassError};
+use crate::models::journal_event_content::shared::ship::ship_module::module_class::ModuleClassError;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::{ArmorGrade, ArmorGradeError};
 use crate::models::journal_event_content::shared::ship::ship_type::ShipType;
 
@@ -36,8 +37,10 @@ pub enum ArmorModuleError {
     FailedToParse(String),
 }
 
-const ARMOR_MODULE_REGEX: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"^\$?(\w+?)_armour_grade(\d+)(_name;)?$"#).unwrap());
+lazy_static! {
+    static ref ARMOR_MODULE_REGEX: Regex =
+        Regex::new(r#"^\$?(\w+?)_armour_grade(\d+)(_name;)?$"#).unwrap();
+}
 
 impl FromStr for ArmorModule {
     type Err = ArmorModuleError;
