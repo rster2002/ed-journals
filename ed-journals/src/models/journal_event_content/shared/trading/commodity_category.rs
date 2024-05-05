@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use crate::models::journal_event_content::shared::trading::commodity::Commodity;
 
 #[derive(Debug)]
@@ -18,13 +19,6 @@ pub enum CommodityCategory {
     Waste,
     Weapons,
     Rare,
-
-    Data,
-    Goods,
-    OdysseyChemicals,
-    Circuits,
-    Tech,
-    Consumables,
 
     None,
 
@@ -77,7 +71,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::CMMComposite
             | Commodity::InsulatingMembrane
             | Commodity::MetaAlloys
-            | Commodity::MicroWeaveCollingHoses
+            | Commodity::MicroWeaveCoolingHoses
             | Commodity::NeofabricInsulation
             | Commodity::Polymers
             | Commodity::Semiconductors
@@ -453,5 +447,32 @@ impl From<Commodity> for CommodityCategory {
                 CommodityCategory::Unknown(format!("Unknown commodity: '{}'", value))
             }
         }
+    }
+}
+
+impl Display for CommodityCategory {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            CommodityCategory::Chemicals => "Chemicals",
+            CommodityCategory::ConsumerItems => "Consumer Items",
+            CommodityCategory::LegalDrugs => "Legal Drugs",
+            CommodityCategory::Foods => "Foods",
+            CommodityCategory::IndustrialMaterials => "Industrial Materials",
+            CommodityCategory::Machinery => "Machinery",
+            CommodityCategory::Medicines => "Medicines",
+            CommodityCategory::Metals => "Metals",
+            CommodityCategory::Minerals => "Minerals",
+            CommodityCategory::Salvage => "Salvage",
+            CommodityCategory::Slaves => "Slaves",
+            CommodityCategory::Technology => "Technology",
+            CommodityCategory::Textiles => "Textiles",
+            CommodityCategory::Waste => "Waste",
+            CommodityCategory::Weapons => "Weapons",
+            CommodityCategory::Rare => "Rare",
+            CommodityCategory::None => "None",
+
+            #[cfg(not(feature = "strict"))]
+            CommodityCategory::Unknown(unknown) => unknown,
+        })
     }
 }

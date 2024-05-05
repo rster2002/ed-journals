@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -131,6 +132,12 @@ impl ShipInternalModule {
     }
 }
 
+impl Display for ShipInternalModule {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}{} {}", self.size, self.class, self.module)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
@@ -221,7 +228,7 @@ mod tests {
                 "$type9_military_armour_grade1_name;",
                 ShipInternalModule {
                     module: InternalModule::Armor(ArmorModule {
-                        ship: ShipType::Type10,
+                        ship: ShipType::Type10Defender,
                         grade: ArmorGrade::LightweightAlloy,
                     }),
                     size: 1,

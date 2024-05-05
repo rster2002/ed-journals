@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -35,5 +36,20 @@ impl TryFrom<u8> for ArmorGrade {
             #[cfg(feature = "strict")]
             _ => Err(ArmorGradeError::UnknownArmorGrade(value)),
         }
+    }
+}
+
+impl Display for ArmorGrade {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            ArmorGrade::LightweightAlloy => "Lightweight Alloy",
+            ArmorGrade::ReinforcedAlloy => "Reinforced Alloy",
+            ArmorGrade::MilitaryGradeComposite => "Military Grade Composite",
+            ArmorGrade::MirroredSurfaceComposite => "Mirrored Surface Composite",
+            ArmorGrade::ReactiveSurfaceComposite => "Reactive Surface Composite",
+
+            #[cfg(not(feature = "strict"))]
+            ArmorGrade::Unknown(_) => "Unknown composite",
+        })
     }
 }

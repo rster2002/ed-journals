@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -101,7 +102,11 @@ impl HardpointModule {
             HardpointModule::HeatsinkLauncher
             | HardpointModule::PointDefenceTurret
             | HardpointModule::ChaffLauncher
-            | HardpointModule::CausticSinkLauncher => HardpointType::Utility,
+            | HardpointModule::CausticSinkLauncher
+            | HardpointModule::ThargoidPulseNeutralizer
+            | HardpointModule::ShutdownFieldNeutralizer
+            | HardpointModule::ElectronicCountermeasures
+            | HardpointModule::WakeScanner => HardpointType::Utility,
 
             _ => HardpointType::FullSized,
         }
@@ -114,11 +119,39 @@ impl HardpointModule {
     pub fn is_utility(&self) -> bool {
         matches!(self.hardpoint_type(), HardpointType::Utility)
     }
+}
 
-    // pub fn fixed_class(&self, mounting: &HardpointMounting, size: &HardpointSize) -> Option<ModuleClass> {
-    //     match (self, mounting, size) {
-    //         (HardpointModule::BeamLaser, )
-    //         _ => None,
-    //     }
-    // }
+impl Display for HardpointModule {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            HardpointModule::BeamLaser => "Beam Laser",
+            HardpointModule::PulseLaser => "Pulse Laser",
+            HardpointModule::MultiCannon => "Multi-Cannon",
+            HardpointModule::GuardianGaussCannon => "Guardian Gauss Cannon",
+            HardpointModule::EnhancedXenoScanner => "Enhanced Xeno Scanner",
+            HardpointModule::PulseWaveXenoScanner => "Pulse Wave Xeno Scanner",
+            HardpointModule::NaniteTorpedoPylon => "Nanite Torpedo Pylon",
+            HardpointModule::HeatsinkLauncher => "Heatsink Launcher",
+            HardpointModule::CausticSinkLauncher => "Caustic Sink Launcher",
+            HardpointModule::PointDefenceTurret => "Point Defence Turret",
+            HardpointModule::ChaffLauncher => "Chaff Launcher",
+            HardpointModule::MissileRack => "Missile Rack",
+            HardpointModule::ShieldBooster => "Shield Booster",
+            HardpointModule::EnhancedAXMultiCannon => "Enhanced AX Multi-Cannon",
+            HardpointModule::AXMissileRack => "AX Missile Rack",
+            HardpointModule::EnhancedAXMissileRack => "Enhanced AX Missile Rack",
+            HardpointModule::RemoteFlakLauncher => "Remote Flak Launcher",
+            HardpointModule::ElectronicCountermeasures => "Electronic Countermeasures",
+            HardpointModule::ShutdownFieldNeutralizer => "Shutdown Field Neutralizer",
+            HardpointModule::AbrasionBlaster => "Abrasion Blaster",
+            HardpointModule::SeismicCharge => "Seismic Charge",
+            HardpointModule::DisplacementMissile => "Displacement Missile",
+            HardpointModule::MiningLaser => "Mining Laser",
+            HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
+            HardpointModule::WakeScanner => "Wake Scanner",
+
+            #[cfg(not(feature = "strict"))]
+            HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
+        })
+    }
 }

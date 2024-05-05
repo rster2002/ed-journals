@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter, write};
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -6,6 +7,7 @@ use regex::Regex;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::journal_event_content::shared::ship::ship_module::ShipModule;
 use crate::models::journal_event_content::shared::ship::ship_slot::core_slot::CoreSlot;
 use crate::models::journal_event_content::shared::ship::ship_slot::hardpoint_size::{
     HardpointSize, HardpointSizeParseError,
@@ -17,12 +19,12 @@ pub mod hardpoint_size;
 #[derive(Debug, Clone, PartialEq)]
 pub struct ShipSlot {
     pub slot_nr: u8,
-    pub kind: SkipSlotKind,
+    pub kind: ShipSlotKind,
 }
 
 // TODO kinda want to refactor this to use untagged variants
 #[derive(Debug, Clone, PartialEq)]
-pub enum SkipSlotKind {
+pub enum ShipSlotKind {
     UtilityMount,
     Hardpoint(HardpointSize),
     OptionalInternal(u8),
@@ -67,7 +69,7 @@ impl FromStr for ShipSlot {
 
             return Ok(ShipSlot {
                 slot_nr,
-                kind: SkipSlotKind::UtilityMount,
+                kind: ShipSlotKind::UtilityMount,
             });
         }
 
@@ -87,7 +89,7 @@ impl FromStr for ShipSlot {
 
             return Ok(ShipSlot {
                 slot_nr,
-                kind: SkipSlotKind::Hardpoint(size),
+                kind: ShipSlotKind::Hardpoint(size),
             });
         }
 
@@ -108,7 +110,7 @@ impl FromStr for ShipSlot {
 
             return Ok(ShipSlot {
                 slot_nr,
-                kind: SkipSlotKind::OptionalInternal(size),
+                kind: ShipSlotKind::OptionalInternal(size),
             });
         }
 
@@ -122,14 +124,14 @@ impl FromStr for ShipSlot {
 
             return Ok(ShipSlot {
                 slot_nr,
-                kind: SkipSlotKind::Military,
+                kind: ShipSlotKind::Military,
             });
         }
 
         if let Ok(core_slot) = s.parse() {
             return Ok(ShipSlot {
                 slot_nr: 1,
-                kind: SkipSlotKind::CoreInternal(core_slot),
+                kind: ShipSlotKind::CoreInternal(core_slot),
             });
         }
 
@@ -138,3 +140,15 @@ impl FromStr for ShipSlot {
 }
 
 from_str_deserialize_impl!(ShipSlot);
+
+impl Display for ShipSlot {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match &self.kind {
+            ShipSlotKind::UtilityMount => write!(f, "Utility Mount"),
+            ShipSlotKind::Hardpoint(size) => write!(f, "{} Hardpoint", size.size_str()),
+            ShipSlotKind::OptionalInternal(size) => write!(f, "Size {} Optional Internal", size),
+            ShipSlotKind::Military => write!(f, "Military Slot"),
+            ShipSlotKind::CoreInternal(core_slot) => write!(f, "{} Core Internal", core_slot),
+        }
+    }
+}

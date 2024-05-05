@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -20,5 +21,15 @@ impl FromStr for HardpointMounting {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         serde_json::from_value(Value::String(s.to_string()))
+    }
+}
+
+impl Display for HardpointMounting {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            HardpointMounting::Fixed => "Fixed",
+            HardpointMounting::Gimballed => "Gimballed",
+            HardpointMounting::Turreted => "Turreted",
+        })
     }
 }

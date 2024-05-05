@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -21,7 +22,7 @@ pub struct ShipHardpointModule {
     pub module: HardpointModule,
     pub mounting: HardpointMounting,
     pub size: HardpointSize,
-    pub class: Option<ModuleClass>,
+    pub class: ModuleClass,
 }
 
 #[derive(Debug, Error)]
@@ -70,6 +71,18 @@ impl FromStr for ShipHardpointModule {
 }
 
 impl ShipHardpointModule {
+    pub fn hardpoint_type(&self) -> HardpointType {
+        self.module.hardpoint_type()
+    }
+
+    pub fn is_full_sized(&self) -> bool {
+        self.module.is_full_sized()
+    }
+
+    pub fn is_utility(&self) -> bool {
+        self.module.is_utility()
+    }
+
     fn from_graded_hardpoint_captures(
         captures: Captures,
     ) -> Result<ShipHardpointModule, ShipHardpointModuleError> {
@@ -92,7 +105,7 @@ impl ShipHardpointModule {
             module,
             mounting: HardpointMounting::Turreted,
             size: HardpointSize::Tiny,
-            class: Some(class),
+            class,
         })
     }
 
@@ -137,10 +150,10 @@ impl ShipHardpointModule {
         Ok(ShipHardpointModule {
             module,
             mounting,
-            class: Some(match &size {
+            class: match &size {
                 HardpointSize::Tiny => ModuleClass::I,
                 _ => ModuleClass::E,
-            }),
+            },
             size,
         })
     }
@@ -148,17 +161,13 @@ impl ShipHardpointModule {
 
 from_str_deserialize_impl!(ShipHardpointModule);
 
-impl ShipHardpointModule {
-    pub fn hardpoint_type(&self) -> HardpointType {
-        self.module.hardpoint_type()
-    }
+impl Display for ShipHardpointModule {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        if let HardpointSize::Tiny = self.size {
+            return write!(f, "{}{} {}", self.size.size_nr(), self.class, self.module)
+        }
 
-    pub fn is_full_sized(&self) -> bool {
-        self.module.is_full_sized()
-    }
-
-    pub fn is_utility(&self) -> bool {
-        self.module.is_utility()
+        write!(f, "{}{}/{} {}", self.size.size_nr(), self.class, self.mounting, self.module)
     }
 }
 
@@ -181,7 +190,7 @@ mod tests {
                     module: HardpointModule::BeamLaser,
                     mounting: HardpointMounting::Gimballed,
                     size: HardpointSize::Medium,
-                    class: Some(ModuleClass::E),
+                    class: ModuleClass::E,
                 },
             ),
             (
@@ -190,7 +199,7 @@ mod tests {
                     module: HardpointModule::HeatsinkLauncher,
                     mounting: HardpointMounting::Turreted,
                     size: HardpointSize::Tiny,
-                    class: Some(ModuleClass::I),
+                    class: ModuleClass::I,
                 },
             ),
             (
@@ -199,7 +208,7 @@ mod tests {
                     module: HardpointModule::CausticSinkLauncher,
                     mounting: HardpointMounting::Turreted,
                     size: HardpointSize::Tiny,
-                    class: Some(ModuleClass::I),
+                    class: ModuleClass::I,
                 },
             ),
             (
@@ -208,7 +217,7 @@ mod tests {
                     module: HardpointModule::ChaffLauncher,
                     mounting: HardpointMounting::Turreted,
                     size: HardpointSize::Tiny,
-                    class: Some(ModuleClass::I),
+                    class: ModuleClass::I,
                 },
             ),
             (
@@ -217,7 +226,7 @@ mod tests {
                     module: HardpointModule::ShieldBooster,
                     mounting: HardpointMounting::Turreted,
                     size: HardpointSize::Tiny,
-                    class: Some(ModuleClass::A),
+                    class: ModuleClass::A,
                 },
             ),
             (
@@ -228,7 +237,7 @@ mod tests {
                     size: HardpointSize::Medium,
 
                     // TODO this should be B
-                    class: Some(ModuleClass::E),
+                    class: ModuleClass::E,
                 },
             ),
         ];

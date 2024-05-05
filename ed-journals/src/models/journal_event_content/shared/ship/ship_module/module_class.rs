@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
@@ -40,6 +41,23 @@ impl TryFrom<u8> for ModuleClass {
             #[cfg(feature = "strict")]
             _ => Err(ModuleClassError::UnknownModuleClass(value)),
         }
+    }
+}
+
+impl Display for ModuleClass {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            ModuleClass::A => "A",
+            ModuleClass::B => "B",
+            ModuleClass::C => "C",
+            ModuleClass::D => "D",
+            ModuleClass::E => "E",
+            ModuleClass::F => "F",
+            ModuleClass::I => "I",
+
+            #[cfg(not(feature = "strict"))]
+            ModuleClass::Unknown => "U",
+        })
     }
 }
 

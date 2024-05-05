@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -132,5 +133,44 @@ impl InternalModule {
 
     pub fn is_optional(&self) -> bool {
         matches!(self.internal_type(), InternalType::Optional)
+    }
+}
+
+impl Display for InternalModule {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            InternalModule::FrameShiftDrive => "Frame Shift Drive",
+            InternalModule::PowerPlant => "Power Plant",
+            InternalModule::ModuleReinforcement => "Module Reinforcement",
+            InternalModule::GuardianModuleReinforcement => "Guardian Module Reinforcement",
+            InternalModule::GuardianShieldReinforcement => "Guardian Shield Reinforcement",
+            InternalModule::HullReinforcement => "Hull Reinforcement",
+            InternalModule::AdvancedDockingComputer => "Advanced Docking Computer",
+            InternalModule::CollectorLimpetController => "Collector Limpet Controller",
+            InternalModule::RepairLimpetController => "Repair Limpet Controller",
+            InternalModule::MiningMultiLimpetController => "Mining Limpet Controller",
+            InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
+            InternalModule::CargoRack => "Cargo Rack",
+            InternalModule::AntiCorrosionCargoRack => "Anti-Corrosion Cargo Rack",
+            InternalModule::SupercruiseAssist => "Supercruise Assist",
+            InternalModule::Thrusters => "Thrusters",
+            InternalModule::FuelScoop => "Fuel Scoop",
+            InternalModule::LifeSupport => "Life Support",
+            InternalModule::ShieldGenerator => "Shield Generator",
+            InternalModule::BiWeaveShieldGenerator => "Bi-Weave Shield Generator",
+            InternalModule::ShieldCellBank => "Shield Cell Bank",
+            InternalModule::GuardianFSDBooster => "Guardian FSD Booster",
+            InternalModule::RescueLimpetController => "Rescue Limpet Controller",
+            InternalModule::DetailedSurfaceScanner => "Detailed Surface Scanner",
+            InternalModule::PlanetaryVehicleHangar => "Planetary Vehicle Hangar",
+            InternalModule::PowerDistributor => "Power Distributor",
+            InternalModule::Sensors => "Sensors",
+            InternalModule::AFMU => "Auto Field-Maintenance Unit",
+            InternalModule::FighterHangar => "Fighter Hangar",
+            InternalModule::PassengerCabin => "Passenger Cabin",
+            InternalModule::FuelTank => "Fuel Tank",
+            InternalModule::FSDInterdictor => "FSD Interdictor",
+            InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
+        })
     }
 }

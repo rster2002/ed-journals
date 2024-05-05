@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use thiserror::Error;
@@ -9,6 +10,38 @@ pub enum HardpointSize {
     Medium,
     Large,
     Huge,
+}
+
+impl HardpointSize {
+    pub fn size_nr(&self) -> u8 {
+        match self {
+            HardpointSize::Tiny => 0,
+            HardpointSize::Small => 1,
+            HardpointSize::Medium => 2,
+            HardpointSize::Large => 3,
+            HardpointSize::Huge => 4,
+        }
+    }
+
+    pub fn size_char(&self) -> char {
+        match self {
+            HardpointSize::Tiny => 'T',
+            HardpointSize::Small => 'S',
+            HardpointSize::Medium => 'M',
+            HardpointSize::Large => 'L',
+            HardpointSize::Huge => 'H',
+        }
+    }
+
+    pub fn size_str(&self) -> &'static str {
+        match self {
+            HardpointSize::Tiny => "Tiny",
+            HardpointSize::Small => "Small",
+            HardpointSize::Medium => "Medium",
+            HardpointSize::Large => "Large",
+            HardpointSize::Huge => "Huge",
+        }
+    }
 }
 
 #[derive(Debug, Error)]
@@ -34,5 +67,11 @@ impl FromStr for HardpointSize {
             "huge" => Ok(HardpointSize::Huge),
             _ => Err(HardpointSizeParseError::UnknownHardpointSize(s.to_string())),
         }
+    }
+}
+
+impl Display for HardpointSize {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.size_char())
     }
 }
