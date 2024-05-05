@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_content::shared::exploration::species::Species;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum Genus {
@@ -124,17 +124,16 @@ impl From<&Species> for Genus {
             | Species::CactoidaCortexum
             | Species::CactoidaVermis => Genus::Cactoida,
 
-            Species::ClypeusSpeculumi
-            | Species::ClypeusLacrimam
-            | Species::ClypeusMargaritus => Genus::Clypeus,
+            Species::ClypeusSpeculumi | Species::ClypeusLacrimam | Species::ClypeusMargaritus => {
+                Genus::Clypeus
+            }
 
             Species::ConchaRenibus
             | Species::ConchaAureolas
             | Species::ConchaLabiata
             | Species::ConchaBiconcavis => Genus::Concha,
 
-            Species::ElectricaePluma
-            | Species::ElectricaeRadialem => Genus::Electricae,
+            Species::ElectricaePluma | Species::ElectricaeRadialem => Genus::Electricae,
 
             Species::FonticuluaCampestris
             | Species::FonticuluaSegmentatus
@@ -168,9 +167,9 @@ impl From<&Species> for Genus {
             | Species::OsseusPellebantus
             | Species::OsseusDiscus => Genus::Osseus,
 
-            Species::ReceptaUmbrux
-            | Species::ReceptaDeltahedronix
-            | Species::ReceptaConditivus => Genus::Recepta,
+            Species::ReceptaUmbrux | Species::ReceptaDeltahedronix | Species::ReceptaConditivus => {
+                Genus::Recepta
+            }
 
             Species::SinuousTubersAlbidum
             | Species::SinuousTubersBlatteum

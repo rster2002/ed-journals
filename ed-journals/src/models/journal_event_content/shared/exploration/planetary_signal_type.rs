@@ -21,7 +21,7 @@ pub enum PlanetarySignalType {
     #[serde(rename = "$SAA_SignalType_Other;")]
     Other,
 
-#[serde(untagged)]
+    #[serde(untagged)]
     Commodity(Commodity),
 
     #[cfg(not(feature = "strict"))]

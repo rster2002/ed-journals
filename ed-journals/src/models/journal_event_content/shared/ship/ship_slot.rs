@@ -111,7 +111,8 @@ impl FromStr for ShipSlot {
         }
 
         if let Some(captures) = MILITARY_REGEX.captures(s) {
-            let slot_nr = captures.get(1)
+            let slot_nr = captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()
@@ -120,7 +121,7 @@ impl FromStr for ShipSlot {
             return Ok(ShipSlot {
                 slot_nr,
                 kind: SkipSlotKind::Military,
-            })
+            });
         }
 
         if let Ok(core_slot) = s.parse() {

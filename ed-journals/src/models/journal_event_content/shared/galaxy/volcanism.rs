@@ -1,10 +1,10 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
+use crate::models::journal_event_content::shared::galaxy::volcanism_type::VolcanismType;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
-use crate::models::journal_event_content::shared::galaxy::volcanism_type::VolcanismType;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Volcanism {
@@ -28,7 +28,8 @@ pub enum VolcanismError {
     FailedToParse(String),
 }
 
-const VOLCANISM_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new("(^minor |^major |^)([a-zA-Z ]+) volcanism$").unwrap());
+const VOLCANISM_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new("(^minor |^major |^)([a-zA-Z ]+) volcanism$").unwrap());
 
 impl FromStr for Volcanism {
     type Err = VolcanismError;
@@ -36,26 +37,29 @@ impl FromStr for Volcanism {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         // TODO I would prefer to move this to a impl FromStr for Option<Volcanism> but this is not
         //  possible. Some other way needs to be found.
-        if s == "" {
+        if s.is_empty() {
             return Ok(Volcanism {
                 kind: VolcanismType::None,
                 classification: VolcanismClassification::Normal,
-            })
+            });
         }
 
         let Some(captures) = VOLCANISM_REGEX.captures(s) else {
             return Err(VolcanismError::FailedToParse(s.to_string()));
         };
 
-        let kind = captures.get(2)
+        let kind = captures
+            .get(2)
             .expect("Should have been captured already")
             .as_str()
             .parse()
-            .map_err(|e| VolcanismError::UnknownVolcanismType(e))?;
+            .map_err(VolcanismError::UnknownVolcanismType)?;
 
-        let classification = match captures.get(1)
+        let classification = match captures
+            .get(1)
             .expect("Should have been captured already")
-            .as_str() {
+            .as_str()
+        {
             "minor " => VolcanismClassification::Minor,
             "major " => VolcanismClassification::Major,
             _ => VolcanismClassification::Normal,
@@ -72,25 +76,36 @@ from_str_deserialize_impl!(Volcanism);
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-    use crate::models::journal_event_content::shared::galaxy::volcanism::{Volcanism, VolcanismClassification};
+    use crate::models::journal_event_content::shared::galaxy::volcanism::{
+        Volcanism, VolcanismClassification,
+    };
     use crate::models::journal_event_content::shared::galaxy::volcanism_type::VolcanismType;
+    use std::str::FromStr;
 
     #[test]
     fn volcanism_test_cases_are_parsed_correctly() {
         let test_cases = [
-            ("minor silicate vapour geysers volcanism", Volcanism {
-                kind: VolcanismType::SilicateVapourGeysers,
-                classification: VolcanismClassification::Minor,
-            }),
-            ("major rocky magma volcanism", Volcanism {
-                kind: VolcanismType::RockyMagma,
-                classification: VolcanismClassification::Major,
-            }),
-            ("minor metallic magma volcanism", Volcanism {
-                kind: VolcanismType::MetallicMagma,
-                classification: VolcanismClassification::Minor,
-            }),
+            (
+                "minor silicate vapour geysers volcanism",
+                Volcanism {
+                    kind: VolcanismType::SilicateVapourGeysers,
+                    classification: VolcanismClassification::Minor,
+                },
+            ),
+            (
+                "major rocky magma volcanism",
+                Volcanism {
+                    kind: VolcanismType::RockyMagma,
+                    classification: VolcanismClassification::Major,
+                },
+            ),
+            (
+                "minor metallic magma volcanism",
+                Volcanism {
+                    kind: VolcanismType::MetallicMagma,
+                    classification: VolcanismClassification::Minor,
+                },
+            ),
         ];
 
         for (case, expected) in test_cases {

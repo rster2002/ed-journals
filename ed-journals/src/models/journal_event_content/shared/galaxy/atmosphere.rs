@@ -1,10 +1,10 @@
-use std::str::FromStr;
-use once_cell::sync::Lazy;
-use regex::{Match, Regex};
-use serde::Deserialize;
-use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::galaxy::atmosphere_type::AtmosphereType;
+use once_cell::sync::Lazy;
+use regex::Regex;
+use serde::Deserialize;
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Atmosphere {
@@ -29,13 +29,14 @@ pub enum AtmosphereError {
     FailedToParse(String),
 }
 
-const ATMOSPHERE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^(hot )?((thin|thick) )?([a-zA-Z ]+)? atmosphere$"#).unwrap());
+const ATMOSPHERE_REGEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"^(hot )?((thin|thick) )?([a-zA-Z ]+)? atmosphere$"#).unwrap());
 
 impl FromStr for Atmosphere {
     type Err = AtmosphereError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "" {
+        if s.is_empty() {
             return Ok(Atmosphere {
                 hot: false,
                 density: AtmosphereDensity::Normal,
@@ -70,13 +71,9 @@ impl FromStr for Atmosphere {
         let kind = kind_capture
             .as_str()
             .parse()
-            .map_err(|e| AtmosphereError::UnknownAtmosphereType(e))?;
+            .map_err(AtmosphereError::UnknownAtmosphereType)?;
 
-        Ok(Atmosphere {
-            kind,
-            hot,
-            density,
-        })
+        Ok(Atmosphere { kind, hot, density })
     }
 }
 

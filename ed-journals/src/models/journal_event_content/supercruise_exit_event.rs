@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::models::journal_event_content::shared::galaxy::body_type::BodyType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

@@ -1,6 +1,6 @@
+use crate::from_str_deserialize_impl;
 use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum StarClass {
@@ -60,10 +60,10 @@ pub enum StarClass {
     SupermassiveBlackHole,
 
     ABlueWhiteSuperGiant, // A_BlueWhiteSuperGiant
-    FWhiteSuperGiant, // F_WhiteSuperGiant
-    MRedSuperGiant, // M_RedSuperGiant
-    MRedGiant, // M_RedGiant
-    KOrangeGiant, // K_OrangeGiant
+    FWhiteSuperGiant,     // F_WhiteSuperGiant
+    MRedSuperGiant,       // M_RedSuperGiant
+    MRedGiant,            // M_RedGiant
+    KOrangeGiant,         // K_OrangeGiant
     RoguePlanet,
     Nebula,
     StellarRemnantNebula,
@@ -134,8 +134,12 @@ impl FromStr for StarClass {
             "X" | "x" => StarClass::X,
             "SupermassiveBlackHole" | "supermassiveblackhole" => StarClass::SupermassiveBlackHole,
 
-            "ABlueWhiteSuperGiant" | "abluewhitesupergiant" | "A_BlueWhiteSuperGiant" => StarClass::ABlueWhiteSuperGiant,
-            "FWhiteSuperGiant" | "fwhitesupergiant" | "F_WhiteSuperGiant" => StarClass::FWhiteSuperGiant,
+            "ABlueWhiteSuperGiant" | "abluewhitesupergiant" | "A_BlueWhiteSuperGiant" => {
+                StarClass::ABlueWhiteSuperGiant
+            }
+            "FWhiteSuperGiant" | "fwhitesupergiant" | "F_WhiteSuperGiant" => {
+                StarClass::FWhiteSuperGiant
+            }
             "MRedSuperGiant" | "mredsupergiant" | "M_RedSuperGiant" => StarClass::MRedSuperGiant,
             "MRedGiant" | "mredgiant" | "M_RedGiant" => StarClass::KOrangeGiant,
             "KOrangeGiant" | "korangegiant" | "K_OrangeGiant" => StarClass::KOrangeGiant,

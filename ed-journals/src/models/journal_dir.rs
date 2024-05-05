@@ -72,21 +72,20 @@ impl JournalDir {
 
 #[cfg(test)]
 mod tests {
-    use std::env::current_dir;
     use crate::JournalDir;
+    use std::env::current_dir;
 
     #[test]
     fn journal_files_oldest_first_are_returned_in_the_correct_order() {
-        let dir_path = current_dir().unwrap()
+        let dir_path = current_dir()
+            .unwrap()
             .parent()
             .unwrap()
             .join("test-journals");
 
         let journal_dir = JournalDir::try_from(dir_path).unwrap();
 
-        let mut journal_files = journal_dir.journal_logs_oldest_first()
-            .unwrap()
-            .into_iter();
+        let mut journal_files = journal_dir.journal_logs_oldest_first().unwrap().into_iter();
 
         let journal_1 = journal_files.next().unwrap();
         let journal_2 = journal_files.next().unwrap();
@@ -99,16 +98,15 @@ mod tests {
 
     #[test]
     fn journal_files_newest_first_are_returned_in_the_correct_order() {
-        let dir_path = current_dir().unwrap()
+        let dir_path = current_dir()
+            .unwrap()
             .parent()
             .unwrap()
             .join("test-journals");
 
         let journal_dir = JournalDir::try_from(dir_path).unwrap();
 
-        let mut journal_files = journal_dir.journal_logs_newest_first()
-            .unwrap()
-            .into_iter();
+        let mut journal_files = journal_dir.journal_logs_newest_first().unwrap().into_iter();
 
         let journal_1 = journal_files.next().unwrap();
         let journal_2 = journal_files.next().unwrap();

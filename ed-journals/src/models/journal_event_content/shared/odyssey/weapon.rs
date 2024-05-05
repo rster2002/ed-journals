@@ -16,7 +16,7 @@ pub enum Weapon {
 
     #[serde(
         alias = "Wpn_M_AssaultRifle_Plasma_FAuto",
-        alias = "wpn_m_assaultrifle_plasma_fauto",
+        alias = "wpn_m_assaultrifle_plasma_fauto"
     )]
     ManticoreOppressor,
 
@@ -28,13 +28,13 @@ pub enum Weapon {
 
     #[serde(
         alias = "Wpn_M_SubMachineGun_Laser_FAuto",
-        alias = "wpn_m_submachinegun_laser_fauto",
+        alias = "wpn_m_submachinegun_laser_fauto"
     )]
     TKEclipse,
 
     #[serde(
         alias = "Wpn_M_SubMachineGun_Kinetic_FAuto",
-        alias = "wpn_m_submachinegun_kinetic_fauto",
+        alias = "wpn_m_submachinegun_kinetic_fauto"
     )]
     KarmaC44,
 }

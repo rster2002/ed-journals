@@ -1,12 +1,11 @@
-use std::{io, mem};
 use std::collections::VecDeque;
-use std::io::{Read, Seek, SeekFrom, Write};
+use std::io::{Read, Seek, SeekFrom};
 use std::string::FromUtf8Error;
+use std::{io, mem};
 
 use thiserror::Error;
 
 use crate::models::journal_event::JournalEvent;
-use crate::JournalFile;
 
 /// Used for reading entries from a journal log file. The reader takes care of things like partial
 /// lines if that ever happens and parsing them to a usable [JournalEvent].
@@ -45,7 +44,8 @@ use crate::JournalFile;
 /// ```
 #[derive(Debug)]
 pub struct JournalReader<T>
-    where T : Read + Seek
+where
+    T: Read + Seek,
 {
     source: T,
     position: usize,
@@ -66,22 +66,21 @@ pub enum JournalReaderError {
 }
 
 impl<T> JournalReader<T>
-    where T : Read + Seek
+where
+    T: Read + Seek,
 {
     fn read_next(&mut self) -> Result<(), JournalReaderError> {
         self.source.seek(SeekFrom::Start(self.position as u64))?;
         self.position += self.source.read_to_string(&mut self.file_read_buffer)?;
 
-        let mut lines = self.file_read_buffer
-            .lines()
-            .peekable();
+        let mut lines = self.file_read_buffer.lines().peekable();
 
         loop {
             let Some(line) = lines.next() else {
                 break;
             };
 
-            if let None = lines.peek() {
+            if lines.peek().is_none() {
                 if self.file_read_buffer == line {
                     break;
                 }
@@ -112,7 +111,8 @@ impl<T> JournalReader<T>
 }
 
 impl<T> From<T> for JournalReader<T>
-    where T : Read + Seek
+where
+    T: Read + Seek,
 {
     fn from(value: T) -> Self {
         JournalReader {
@@ -125,7 +125,8 @@ impl<T> From<T> for JournalReader<T>
 }
 
 impl<T> Iterator for JournalReader<T>
-    where T : Read + Seek
+where
+    T: Read + Seek,
 {
     type Item = Result<JournalEvent, JournalReaderError>;
 
@@ -147,62 +148,70 @@ mod tests {
     use chrono::{TimeZone, Utc};
 
     use crate::models::journal_event::JournalEvent;
-    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_event_content::commander_event::CommanderEvent;
     use crate::models::journal_event_content::file_header_event::FileHeaderEvent;
+    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_reader::JournalReader;
 
     #[test]
     fn journal_events_are_read_in_the_correct_order() {
-        let test_journal_contents = include_str!("../../test-files/Journal.2022-10-22T171117.01.log");
+        let test_journal_contents =
+            include_str!("../../test-files/Journal.2022-10-22T171117.01.log");
         let cursor = Cursor::new(test_journal_contents);
 
         let mut reader = JournalReader::from(cursor);
 
-        let result = reader.next()
+        let result = reader
+            .next()
             .expect("Should be filled")
             .expect("Should not be an error");
 
-        assert_eq!(result, JournalEvent {
-            timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 10, 41)
-                .unwrap(), // 2022-10-22T15:10:41Z
-            content: JournalEventContent::FileHeader(FileHeaderEvent {
-                part: 1,
-                language: "English/UK".to_string(),
-                odyssey: true,
-                game_version: "4.0.0.1450".to_string(),
-                build: "r286858/r0 ".to_string(),
-            }),
-        });
+        assert_eq!(
+            result,
+            JournalEvent {
+                timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 10, 41).unwrap(), // 2022-10-22T15:10:41Z
+                content: JournalEventContent::FileHeader(FileHeaderEvent {
+                    part: 1,
+                    language: "English/UK".to_string(),
+                    odyssey: true,
+                    game_version: "4.0.0.1450".to_string(),
+                    build: "r286858/r0 ".to_string(),
+                }),
+            }
+        );
 
-        let result = reader.next()
+        let result = reader
+            .next()
             .expect("Should be filled")
             .expect("Should not be an error");
 
-        assert_eq!(result, JournalEvent {
-            timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 12, 05)
-                .unwrap(), // 2022-10-22T15:12:05Z
-            content: JournalEventContent::Commander(CommanderEvent {
-                fid: "F123456789".to_string(),
-                name: "TEST".to_string(),
-            }),
-        });
+        assert_eq!(
+            result,
+            JournalEvent {
+                timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 12, 05).unwrap(), // 2022-10-22T15:12:05Z
+                content: JournalEventContent::Commander(CommanderEvent {
+                    fid: "F123456789".to_string(),
+                    name: "TEST".to_string(),
+                }),
+            }
+        );
     }
 
     #[test]
     fn partial_lines_are_read_correctly() {
-        fs::write("a.tmp", "")
-            .unwrap();
+        fs::write("a.tmp", "").unwrap();
 
-        let file = File::open("a.tmp")
-            .unwrap();
+        let file = File::open("a.tmp").unwrap();
 
         let mut reader = JournalReader::from(file);
 
         assert!(reader.next().is_none());
 
-        fs::write("a.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#)
-            .unwrap();
+        fs::write(
+            "a.tmp",
+            r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
+        )
+        .unwrap();
 
         assert!(reader.next().is_none());
 
@@ -210,8 +219,14 @@ mod tests {
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
             .unwrap();
 
-        assert_eq!(reader.next().unwrap().unwrap().content.kind(), JournalEventContentKind::FileHeader);
-        assert_eq!(reader.next().unwrap().unwrap().content.kind(), JournalEventContentKind::Commander);
+        assert_eq!(
+            reader.next().unwrap().unwrap().content.kind(),
+            JournalEventContentKind::FileHeader
+        );
+        assert_eq!(
+            reader.next().unwrap().unwrap().content.kind(),
+            JournalEventContentKind::Commander
+        );
 
         fs::remove_file("a.tmp").unwrap();
     }

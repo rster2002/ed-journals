@@ -5,10 +5,7 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum MissionType {
-    #[serde(
-        alias = "Mission_Salvage",
-        alias = "Mission_Salvage_name",
-    )]
+    #[serde(alias = "Mission_Salvage", alias = "Mission_Salvage_name")]
     BlackBoxSalvageOperation,
 
     // TODO replace with specific struct, as this is currently incorrect
@@ -24,7 +21,7 @@ pub enum MissionType {
         alias = "Mission_Courier_Expansion",
         alias = "Mission_Courier_Expansion_name",
         alias = "Mission_Courier_Outbreak",
-        alias = "Mission_Courier_Outbreak_name",
+        alias = "Mission_Courier_Outbreak_name"
     )]
     DataCourier,
 
@@ -43,7 +40,7 @@ pub enum MissionType {
         alias = "Mission_AltruismCredits_Bust",
         alias = "Mission_AltruismCredits_Bust_name",
         alias = "Mission_AltruismCredits_Outbreak",
-        alias = "Mission_AltruismCredits_Outbreak_name",
+        alias = "Mission_AltruismCredits_Outbreak_name"
     )]
     DonationMission,
 
@@ -59,7 +56,7 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Onslaught_MB",
         alias = "Mission_OnFoot_Onslaught_MB_name",
         alias = "Mission_OnFoot_Onslaught_Offline_MB",
-        alias = "Mission_OnFoot_Onslaught_Offline_MB_name",
+        alias = "Mission_OnFoot_Onslaught_Offline_MB_name"
     )]
     OnFootMassacreMission,
 
@@ -67,13 +64,13 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Assassination_MB",
         alias = "Mission_OnFoot_Assassination_MB_name",
         alias = "Mission_Assassinate_Planetary",
-        alias = "Mission_Assassinate_Planetary_name",
+        alias = "Mission_Assassinate_Planetary_name"
     )]
     OnFootAssassinationMission,
 
     #[serde(
         alias = "Mission_Assassinate_Legal_Corporate",
-        alias = "Mission_Assassinate_Legal_Corporate_name",
+        alias = "Mission_Assassinate_Legal_Corporate_name"
     )]
     OnFootLegalAssassinationMission,
 
@@ -84,7 +81,7 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Sabotage_Production_002",
         alias = "Mission_OnFoot_Sabotage_Production_002_name",
         alias = "Mission_OnFoot_Sabotage_Production_Covert_001",
-        alias = "Mission_OnFoot_Sabotage_Production_Covert_001_name",
+        alias = "Mission_OnFoot_Sabotage_Production_Covert_001_name"
     )]
     OnFootDisruptionMission,
 
@@ -94,15 +91,12 @@ pub enum MissionType {
     #[serde(alias = "Mission_Sightseeing", alias = "Mission_Sightseeing_name")]
     UnspecifiedSightseeingMission,
 
-    #[serde(
-        alias = "Mission_HackMegaship",
-        alias = "Mission_HackMegaship_name",
-    )]
+    #[serde(alias = "Mission_HackMegaship", alias = "Mission_HackMegaship_name")]
     HackingMission,
 
     #[serde(
         alias = "Mission_Courier_Engineer",
-        alias = "Mission_Courier_Engineer_name",
+        alias = "Mission_Courier_Engineer_name"
     )]
     EngineerInvitationMission,
 
@@ -116,19 +110,19 @@ pub enum MissionType {
 
     #[serde(
         alias = "Mission_OnFoot_Salvage_MB",
-        alias = "Mission_OnFoot_Salvage_MB_name",
+        alias = "Mission_OnFoot_Salvage_MB_name"
     )]
     OnFootSalvageMission,
 
     #[serde(
         alias = "Mission_OnFoot_Collect_002",
-        alias = "Mission_OnFoot_Collect_002_name",
+        alias = "Mission_OnFoot_Collect_002_name"
     )]
     OnFootCollectionMission,
 
     #[serde(
         alias = "Mission_OnFoot_Heist_POI_002",
-        alias = "Mission_OnFoot_Heist_POI_002_name",
+        alias = "Mission_OnFoot_Heist_POI_002_name"
     )]
     OnFootHeistMission,
 
@@ -136,7 +130,7 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Hack_Download_007",
         alias = "Mission_OnFoot_Hack_Download_007_name",
         alias = "Mission_OnFoot_Hack_Download_Covert_007",
-        alias = "Mission_OnFoot_Hack_Download_Covert_007_name",
+        alias = "Mission_OnFoot_Hack_Download_Covert_007_name"
     )]
     OnFootHackingMission,
 

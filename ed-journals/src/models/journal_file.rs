@@ -1,11 +1,11 @@
-use std::cmp::Ordering;
 use chrono::NaiveDateTime;
 use once_cell::sync::Lazy;
 use regex::Regex;
+use std::cmp::Ordering;
 use std::fs::{DirEntry, File};
 use std::io;
 use std::num::ParseIntError;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::models::journal_reader::JournalReader;
 use thiserror::Error;
@@ -111,7 +111,8 @@ impl PartialOrd<Self> for JournalFile {
 
 impl Ord for JournalFile {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.naive_date_time.cmp(&other.naive_date_time)
+        self.naive_date_time
+            .cmp(&other.naive_date_time)
             .then(self.part.cmp(&other.part))
     }
 }

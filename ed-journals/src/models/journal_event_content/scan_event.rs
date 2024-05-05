@@ -1,5 +1,3 @@
-use serde::{Deserialize, Deserializer};
-use serde_json::Value;
 use crate::models::journal_event_content::shared::galaxy::atmosphere::Atmosphere;
 use crate::models::journal_event_content::shared::galaxy::atmosphere_element::AtmosphereElement;
 use crate::models::journal_event_content::shared::galaxy::atmosphere_type::AtmosphereType;
@@ -11,6 +9,8 @@ use crate::models::journal_event_content::shared::galaxy::star_luminosity::StarL
 use crate::models::journal_event_content::shared::galaxy::terraform_state::TerraformState;
 use crate::models::journal_event_content::shared::galaxy::volcanism::Volcanism;
 use crate::models::journal_event_content::shared::materials::material::Material;
+use serde::{Deserialize, Deserializer};
+use serde_json::Value;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -53,7 +53,10 @@ pub enum ScanEventKind {
 }
 
 impl<'de> Deserialize<'de> for ScanEventKind {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: Deserializer<'de> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
         let value = Value::deserialize(deserializer)?;
 
         let Value::Object(map) = &value else {
@@ -65,7 +68,7 @@ impl<'de> Deserialize<'de> for ScanEventKind {
         if map.get("StarType").is_some() {
             return Ok(ScanEventKind::Star(
                 serde_json::from_value(value)
-                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?
+                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
             ));
         }
 
@@ -74,14 +77,14 @@ impl<'de> Deserialize<'de> for ScanEventKind {
         if map.get("TidalLock").is_some() {
             return Ok(ScanEventKind::Planet(
                 serde_json::from_value(value)
-                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?
+                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
             ));
         }
 
         // It none of the above match only then should it be considered a belt cluster.
         Ok(ScanEventKind::BeltCluster(
             serde_json::from_value(value)
-                .map_err(|e| serde::de::Error::custom(format!("{}", e)))?
+                .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
         ))
     }
 }

@@ -11,30 +11,30 @@
 //! and `Status.json` etc will be added in the future. Best place to get started is the [JournalDir]
 //! model.
 
-mod models;
 mod macros;
+mod models;
 
 pub use models::journal_dir::JournalDir;
-pub use models::journal_file::JournalFile;
 pub use models::journal_event::JournalEvent;
-pub use models::journal_reader::JournalReader;
 pub use models::journal_event_content::JournalEventContent;
 pub use models::journal_event_content::JournalEventContentKind;
+pub use models::journal_file::JournalFile;
+pub use models::journal_reader::JournalReader;
 
 pub use models::journal_event_content;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+
     use crate::models::journal_dir::JournalDir;
-    use std::env::current_dir;
-    use crate::models::journal_event_content::JournalEventContent;
     use crate::models::journal_event_content::scan_event::ScanEventKind;
-    use crate::models::journal_event_content::shared::galaxy::atmosphere_type::AtmosphereType;
+    use crate::models::journal_event_content::JournalEventContent;
+    use std::env::current_dir;
 
     #[test]
     fn sandbox() {
-        let dir_path = current_dir().unwrap()
+        let dir_path = current_dir()
+            .unwrap()
             .parent()
             .unwrap()
             .join("test-journals");
@@ -67,8 +67,8 @@ mod tests {
                             }
                             ScanEventKind::BeltCluster(_) => {}
                         }
-                    },
-                    _ => {},
+                    }
+                    _ => {}
                 }
             }
         }

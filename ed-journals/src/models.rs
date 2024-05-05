@@ -1,5 +1,3 @@
-use crate::JournalFile;
-
 pub mod journal_dir;
 pub mod journal_event;
 

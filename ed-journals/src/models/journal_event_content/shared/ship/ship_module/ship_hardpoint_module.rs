@@ -104,7 +104,8 @@ impl ShipHardpointModule {
             .expect("Should have been captured already")
             .as_str();
 
-        let module_suffix = captures.get(5)
+        let module_suffix = captures
+            .get(5)
             .map(|capture| capture.as_str())
             .unwrap_or_default();
 

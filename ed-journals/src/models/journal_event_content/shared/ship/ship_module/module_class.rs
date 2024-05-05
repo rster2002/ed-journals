@@ -1,6 +1,6 @@
 use thiserror::Error;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
-use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::{ArmorModule, ArmorModuleError};
+use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::{ArmorModule};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ModuleClass {

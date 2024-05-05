@@ -5,15 +5,14 @@ use regex::Regex;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::models::journal_event_content::shared::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
-use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::{ArmorModule, ArmorModuleError};
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::internal_module::InternalModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::internal_type::InternalType;
 
-pub mod internal_module;
-pub mod internal_type;
 pub mod armor_grade;
 pub mod armor_module;
+pub mod internal_module;
+pub mod internal_type;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ShipInternalModule {
@@ -54,12 +53,14 @@ impl FromStr for ShipInternalModule {
         let armor_result = ArmorModule::from_str(s);
 
         match armor_result {
-            Ok(armor_module) => return Ok(ShipInternalModule {
-                size: 1,
-                class: (&armor_module).into(),
-                module: InternalModule::Armor(armor_module),
-            }),
-            Err(ArmorModuleError::FailedToParse(_)) => {},
+            Ok(armor_module) => {
+                return Ok(ShipInternalModule {
+                    size: 1,
+                    class: (&armor_module).into(),
+                    module: InternalModule::Armor(armor_module),
+                })
+            }
+            Err(ArmorModuleError::FailedToParse(_)) => {}
             Err(e) => return Err(e.into()),
         }
 
@@ -234,7 +235,7 @@ mod tests {
                     size: 1,
                     class: ModuleClass::A,
                 },
-            )
+            ),
         ];
 
         for (input, expected) in test_cases {

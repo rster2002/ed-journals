@@ -24,7 +24,6 @@ pub enum ShipModule {
 
     // #[serde(untagged)]
     // Armor(ShipArmorModule),
-
     #[serde(untagged)]
     Cockpit(ShipCockpitModule),
 
