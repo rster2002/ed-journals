@@ -2,10 +2,10 @@
 name = "ed-journals"
 description = "Provides models for representing and parsing elite dangerous journal files"
 repository = "https://github.com/rster2002/ed-logs"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "MIT"
-keywords = ["elite-dangrous", "elite-journal"]
+keywords = ["elite-dangerous", "elite-journal"]
 readme = "readme.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
