@@ -10,7 +10,7 @@ pub struct SuitLoadoutEvent {
     pub suit_name: String,
 
     #[serde(rename = "SuitName_Localised")]
-    pub suit_name_localised: String,
+    pub suit_name_localized: String,
     pub suit_mods: Vec<SuitLoadoutMod>,
 
     #[serde(rename = "LoadoutID")]
@@ -37,7 +37,7 @@ pub struct SuitLoadoutModule {
     pub module_name: String,
 
     #[serde(rename = "ModuleName_Localised")]
-    pub module_name_localised: String,
+    pub module_name_localized: String,
     pub class: u8,
     pub weapon_mods: Vec<SuitLoadoutModuleWeaponMod>,
 }

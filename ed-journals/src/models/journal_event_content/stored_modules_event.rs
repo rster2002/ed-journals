@@ -17,7 +17,7 @@ pub struct StoredModulesEventItem {
     pub name: String,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localised: String,
+    pub name_localized: String,
     pub storage_slot: u16,
 
     #[serde(default)]

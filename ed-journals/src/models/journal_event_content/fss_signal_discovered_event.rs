@@ -7,7 +7,7 @@ pub struct FSSSignalDiscoveredEvent {
     pub signal_name: String,
 
     #[serde(rename = "SignalName_Localised")]
-    pub signal_name_localised: Option<String>,
+    pub signal_name_localized: Option<String>,
 
     #[serde(default)]
     pub is_station: bool,

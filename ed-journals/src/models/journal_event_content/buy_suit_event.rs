@@ -9,7 +9,7 @@ pub struct BuySuitEvent {
     pub name: Suit,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localised: String,
+    pub name_localized: String,
     pub price: u64,
 
     #[serde(rename = "SuitID")]

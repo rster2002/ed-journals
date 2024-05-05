@@ -8,7 +8,7 @@ pub struct DockSRVEvent {
     pub srv_type: SRVType,
 
     #[serde(rename = "SRVType_Localised")]
-    pub srv_type_localised: String,
+    pub srv_type_localized: String,
 
     #[serde(rename = "ID")]
     pub id: u8,

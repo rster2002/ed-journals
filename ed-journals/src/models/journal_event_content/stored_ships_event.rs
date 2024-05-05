@@ -22,7 +22,7 @@ pub struct StoredShipEventLocalShip {
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipType_Localised")]
-    pub ship_type_localised: Option<String>,
+    pub ship_type_localized: Option<String>,
     pub name: Option<String>,
     pub value: u64,
     pub hot: bool,
@@ -36,7 +36,7 @@ pub struct StoredShipEventRemoteShip {
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipType_Localised")]
-    pub ship_type_localised: Option<String>,
+    pub ship_type_localized: Option<String>,
     pub name: String,
 
     #[serde(default)]

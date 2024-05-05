@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::journal_event_content::shared::station::mission_type::MissionType;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -13,7 +14,7 @@ pub struct MissionsEvent {
 pub struct MissionEventEntry {
     #[serde(rename = "MissionID")]
     pub mission_id: u32,
-    pub name: String,
+    pub name: MissionType,
     pub passenger_mission: bool,
     pub expires: u32,
 }
@@ -22,6 +23,7 @@ pub struct MissionEventEntry {
 mod tests {
     use crate::models::journal_event_content::missions_event::{MissionEventEntry, MissionsEvent};
     use serde_json::json;
+    use crate::journal_event_content::shared::station::mission_type::MissionType;
 
     #[test]
     fn mission_event_is_parsed_correctly() {
@@ -42,7 +44,7 @@ mod tests {
         let expected = MissionsEvent {
             active: vec![MissionEventEntry {
                 mission_id: 65380900,
-                name: "Mission_Courier_name".to_string(),
+                name: MissionType::DataCourier,
                 passenger_mission: false,
                 expires: 82751,
             }],

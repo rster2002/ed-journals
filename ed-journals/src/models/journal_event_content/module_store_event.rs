@@ -13,7 +13,7 @@ pub struct ModuleStoreEvent {
     pub stored_item: ShipModule,
 
     #[serde(rename = "StoredItem_Localised")]
-    pub stored_item_localised: String,
+    pub stored_item_localized: String,
     pub ship: ShipType,
 
     #[serde(rename = "ShipID")]

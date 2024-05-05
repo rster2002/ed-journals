@@ -9,7 +9,7 @@ pub struct LaunchSRVEvent {
     pub srv_type: SRVType,
 
     #[serde(rename = "SRVType_Localised")]
-    pub srv_type_localised: String,
+    pub srv_type_localized: String,
 
     // TODO check if this can be replaced with an enum
     pub loadout: String,

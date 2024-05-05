@@ -31,7 +31,7 @@ pub struct LocationEventStationEconomy {
     pub name: String,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localised: String,
+    pub name_localized: String,
     pub proportion: f32,
 }
 
@@ -46,7 +46,7 @@ pub struct LocationEventFaction {
     pub happiness: String,
 
     #[serde(rename = "Happiness_Localised")]
-    pub happiness_localised: String,
+    pub happiness_localized: String,
     pub my_reputation: f32,
 
     #[serde(default)]

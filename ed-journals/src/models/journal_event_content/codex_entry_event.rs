@@ -11,19 +11,19 @@ pub struct CodexEntryEvent {
     pub name: CodexEntry,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localised: String,
+    pub name_localized: String,
     pub category: CodexEntryEventCategory,
 
     #[serde(rename = "Category_Localised")]
-    pub category_localised: String,
+    pub category_localized: String,
     pub sub_category: CodexEntryEventSubcategory,
 
     #[serde(rename = "SubCategory_Localised")]
-    pub sub_category_localised: String,
+    pub sub_category_localized: String,
     pub region: Region,
 
     #[serde(rename = "Region_Localised")]
-    pub region_localised: String,
+    pub region_localized: String,
 
     pub system: String,
     pub system_address: u64,

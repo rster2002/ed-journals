@@ -8,6 +8,6 @@ pub struct SupercruiseDestinationDropEvent {
 
     // TODO this appears to be empty if the destination is a fleet carrier
     #[serde(rename = "Type_Localised")]
-    pub type_localised: Option<String>,
+    pub type_localized: Option<String>,
     pub threat: u8,
 }

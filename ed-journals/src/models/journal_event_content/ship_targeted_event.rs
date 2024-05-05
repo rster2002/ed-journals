@@ -27,7 +27,7 @@ pub struct ShipTargetedEventScanStageLocked {
     pub ship: ShipType,
 
     #[serde(rename = "Ship_Localised")]
-    pub ship_localised: Option<String>,
+    pub ship_localized: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -36,11 +36,11 @@ pub struct ShipTargetedEventScanStageOne {
     pub ship: ShipType,
 
     #[serde(rename = "Ship_Localised")]
-    pub ship_localised: String,
+    pub ship_localized: String,
     pub pilot_name: String,
 
     #[serde(rename = "PilotName_Localised")]
-    pub pilot_name_localised: String,
+    pub pilot_name_localized: String,
 
     pub pilot_rank: String,
 }
@@ -51,13 +51,13 @@ pub struct ShipTargetedEventScanStageTwo {
     pub ship: ShipType,
 
     #[serde(rename = "Ship_Localised")]
-    pub ship_localised: String,
+    pub ship_localized: String,
 
     // TODO replace this with an enum
     pub pilot_name: String,
 
     #[serde(rename = "PilotName_Localised")]
-    pub pilot_name_localised: String,
+    pub pilot_name_localized: String,
 
     pub pilot_rank: String,
     pub shield_health: f32,
@@ -70,11 +70,11 @@ pub struct ShipTargetedEventScanStageThree {
     pub ship: ShipType,
 
     #[serde(rename = "Ship_Localised")]
-    pub ship_localised: String,
+    pub ship_localized: String,
     pub pilot_name: String,
 
     #[serde(rename = "PilotName_Localised")]
-    pub pilot_name_localised: String,
+    pub pilot_name_localized: String,
 
     pub pilot_rank: String,
     pub shield_health: f32,

@@ -18,7 +18,7 @@ pub struct Faction {
     pub happiness: FactionHappiness,
 
     #[serde(rename = "Happiness_Localised")]
-    pub happiness_localised: Option<String>,
+    pub happiness_localized: Option<String>,
     pub my_reputation: f32,
 
     #[serde(default)]
