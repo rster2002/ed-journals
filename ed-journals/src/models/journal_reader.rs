@@ -21,8 +21,6 @@ use crate::JournalFile;
 /// let dir_path = current_dir().unwrap()
 ///     .parent()
 ///     .unwrap()
-///     .parent()
-///     .unwrap()
 ///     .join("test-journals");
 ///
 /// let journal_dir = JournalDir::try_from(dir_path)
@@ -33,17 +31,11 @@ use crate::JournalFile;
 ///
 /// for journal_file in logs {
 ///     // Create a reader
-///     let reader = journal_file.create_reader();
+///     let reader = journal_file.create_reader().unwrap();
 ///
 ///     for entry in reader {
 ///         let Ok(log) = entry else {
 ///             println!("Unreadable line");
-///             continue;
-///         };
-///
-///         let Some(entry) = log else {
-///             // If there is no entry that does NOT mean that it's the end of the file. It depends
-///             // a bit on whether the file is 'active' or not.
 ///             continue;
 ///         };
 ///
