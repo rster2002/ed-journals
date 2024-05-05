@@ -25,54 +25,49 @@ mod models;
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
+    use log::log;
 
     use crate::models::journal_dir::JournalDir;
     use crate::models::journal_event_content::JournalEventContent;
     use crate::models::journal_event_content::scan_event::ScanEventKind;
 
     #[test]
-    fn sandbox() {
+    fn test_journals_are_parsed_correctly() {
         let dir_path = current_dir()
             .unwrap()
             .parent()
             .unwrap()
             .join("test-journals");
 
-        let log_dir = JournalDir::try_from(dir_path).unwrap();
+        let log_dir  = JournalDir::try_from(dir_path)
+            .unwrap();
 
-        // let mut unique = HashSet::new();
-        // let mut unique2 = HashSet::new();
+        let logs = log_dir.journal_logs()
+            .unwrap();
 
-        for journal in log_dir.journal_logs().unwrap() {
-            let reader = journal.create_reader().unwrap();
+        assert!(logs.len() > 10);
+
+        let mut file_header_count = 0;
+        let mut entry_count = 0;
+
+        for journal in &logs {
+            let reader = journal.create_reader()
+                .unwrap();
 
             for entry in reader {
+                entry_count += 1;
                 match entry.unwrap().content {
-                    // JournalEventContent::FileHeader(header) => {
-                    //     dbg!(header.game_version);
-                    // },
-                    JournalEventContent::Scan(scan) => {
-                        match scan.kind {
-                            ScanEventKind::Star(_) => {}
-                            ScanEventKind::Planet(planet) => {
-                                // unique.insert(planet.atmosphere);
-                                //
-                                // match planet.atmosphere_type {
-                                //     None => {}
-                                //     Some(value) => {
-                                //         unique2.insert(value);
-                                //     }
-                                // }
-                            }
-                            ScanEventKind::BeltCluster(_) => {}
-                        }
-                    }
-                    _ => {}
-                }
+                    JournalEventContent::FileHeader(_) => {
+                        file_header_count += 1;
+                    },
+                    _ => {},
+                };
             }
         }
 
-        // dbg!(unique);
-        // dbg!(unique2);
+        dbg!(file_header_count);
+        dbg!(entry_count);
+
+        assert_eq!(logs.len(), file_header_count);
     }
 }

@@ -87,6 +87,7 @@ dependencies = [
  "chrono",
  "kinded",
  "lazy_static",
+ "log",
  "once_cell",
  "regex",
  "regex-macro",
