@@ -36,11 +36,17 @@ pub enum InternalModule {
     #[serde(rename = "dronecontrol_repair")]
     RepairLimpetController,
 
+    #[serde(rename = "dronecontrol_prospector")]
+    ProspectorLimpetController,
+
     #[serde(rename = "multidronecontrol_mining")]
     MiningMultiLimpetController,
 
     #[serde(rename = "multidronecontrol_xeno")]
     XenoMultiLimpetController,
+
+    #[serde(rename = "multidronecontrol_rescue")]
+    RescueMultiLimpetController,
 
     #[serde(rename = "cargorack")]
     CargoRack,
@@ -72,9 +78,6 @@ pub enum InternalModule {
     #[serde(rename = "guardianfsdbooster")]
     GuardianFSDBooster,
 
-    #[serde(rename = "multidronecontrol_rescue")]
-    RescueLimpetController,
-
     #[serde(rename = "detailedsurfacescanner")]
     DetailedSurfaceScanner,
 
@@ -102,6 +105,12 @@ pub enum InternalModule {
     #[serde(rename = "fsdinterdictor")]
     FSDInterdictor,
 
+    #[serde(rename = "planetapproachsuite_advanced")]
+    PlanetApproachSuite,
+
+    #[serde(rename = "refinery")]
+    Refinery,
+
     #[serde(untagged)]
     Armor(ArmorModule),
 }
@@ -121,7 +130,9 @@ impl InternalModule {
             | InternalModule::PowerPlant
             | InternalModule::Thrusters
             | InternalModule::PowerDistributor
-            | InternalModule::LifeSupport => InternalType::Core,
+            | InternalModule::LifeSupport
+            | InternalModule::PlanetApproachSuite
+            | InternalModule::Sensors => InternalType::Core,
 
             _ => InternalType::Optional,
         }
@@ -139,37 +150,40 @@ impl InternalModule {
 impl Display for InternalModule {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", match self {
+            InternalModule::AFMU => "Auto Field-Maintenance Unit",
+            InternalModule::AdvancedDockingComputer => "Advanced Docking Computer",
+            InternalModule::AntiCorrosionCargoRack => "Anti-Corrosion Cargo Rack",
+            InternalModule::BiWeaveShieldGenerator => "Bi-Weave Shield Generator",
+            InternalModule::CargoRack => "Cargo Rack",
+            InternalModule::CollectorLimpetController => "Collector Limpet Controller",
+            InternalModule::DetailedSurfaceScanner => "Detailed Surface Scanner",
+            InternalModule::FSDInterdictor => "FSD Interdictor",
+            InternalModule::FighterHangar => "Fighter Hangar",
             InternalModule::FrameShiftDrive => "Frame Shift Drive",
-            InternalModule::PowerPlant => "Power Plant",
-            InternalModule::ModuleReinforcement => "Module Reinforcement",
+            InternalModule::FuelScoop => "Fuel Scoop",
+            InternalModule::FuelTank => "Fuel Tank",
+            InternalModule::GuardianFSDBooster => "Guardian FSD Booster",
             InternalModule::GuardianModuleReinforcement => "Guardian Module Reinforcement",
             InternalModule::GuardianShieldReinforcement => "Guardian Shield Reinforcement",
             InternalModule::HullReinforcement => "Hull Reinforcement",
-            InternalModule::AdvancedDockingComputer => "Advanced Docking Computer",
-            InternalModule::CollectorLimpetController => "Collector Limpet Controller",
-            InternalModule::RepairLimpetController => "Repair Limpet Controller",
-            InternalModule::MiningMultiLimpetController => "Mining Limpet Controller",
-            InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
-            InternalModule::CargoRack => "Cargo Rack",
-            InternalModule::AntiCorrosionCargoRack => "Anti-Corrosion Cargo Rack",
-            InternalModule::SupercruiseAssist => "Supercruise Assist",
-            InternalModule::Thrusters => "Thrusters",
-            InternalModule::FuelScoop => "Fuel Scoop",
             InternalModule::LifeSupport => "Life Support",
-            InternalModule::ShieldGenerator => "Shield Generator",
-            InternalModule::BiWeaveShieldGenerator => "Bi-Weave Shield Generator",
-            InternalModule::ShieldCellBank => "Shield Cell Bank",
-            InternalModule::GuardianFSDBooster => "Guardian FSD Booster",
-            InternalModule::RescueLimpetController => "Rescue Limpet Controller",
-            InternalModule::DetailedSurfaceScanner => "Detailed Surface Scanner",
+            InternalModule::MiningMultiLimpetController => "Mining Limpet Controller",
+            InternalModule::ModuleReinforcement => "Module Reinforcement",
+            InternalModule::PassengerCabin => "Passenger Cabin",
+            InternalModule::PlanetApproachSuite => "Planet Approach Suite",
             InternalModule::PlanetaryVehicleHangar => "Planetary Vehicle Hangar",
             InternalModule::PowerDistributor => "Power Distributor",
+            InternalModule::PowerPlant => "Power Plant",
+            InternalModule::ProspectorLimpetController => "Prospector Limpet Controller",
+            InternalModule::Refinery => "Refinery",
+            InternalModule::RepairLimpetController => "Repair Limpet Controller",
+            InternalModule::RescueMultiLimpetController => "Rescue Limpet Controller",
             InternalModule::Sensors => "Sensors",
-            InternalModule::AFMU => "Auto Field-Maintenance Unit",
-            InternalModule::FighterHangar => "Fighter Hangar",
-            InternalModule::PassengerCabin => "Passenger Cabin",
-            InternalModule::FuelTank => "Fuel Tank",
-            InternalModule::FSDInterdictor => "FSD Interdictor",
+            InternalModule::ShieldCellBank => "Shield Cell Bank",
+            InternalModule::ShieldGenerator => "Shield Generator",
+            InternalModule::SupercruiseAssist => "Supercruise Assist",
+            InternalModule::Thrusters => "Thrusters",
+            InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
             InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
         })
     }

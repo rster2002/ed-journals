@@ -99,13 +99,16 @@ impl FromStr for ShipInternalModule {
             None => 1,
         };
 
-        let class = match captures.get(5) {
-            Some(capture) => capture
-                .as_str()
-                .parse::<u8>()
-                .map_err(ShipInternalModuleError::FailedToParseClassNumber)?
-                .try_into()?,
-            None => ModuleClass::E,
+        let class = match module {
+            InternalModule::PlanetApproachSuite => ModuleClass::I,
+            _ => match captures.get(5) {
+                Some(capture) => capture
+                    .as_str()
+                    .parse::<u8>()
+                    .map_err(ShipInternalModuleError::FailedToParseClassNumber)?
+                    .try_into()?,
+                None => ModuleClass::E,
+            },
         };
 
         Ok(ShipInternalModule {
@@ -245,6 +248,14 @@ mod tests {
                     size: 1,
                     class: ModuleClass::A,
                 },
+            ),
+            (
+                "int_planetapproachsuite_advanced",
+                ShipInternalModule {
+                    module: InternalModule::PlanetApproachSuite,
+                    size: 1,
+                    class: ModuleClass::I,
+                }
             ),
         ];
 

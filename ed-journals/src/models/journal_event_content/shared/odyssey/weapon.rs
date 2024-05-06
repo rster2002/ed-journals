@@ -12,6 +12,11 @@ pub enum Weapon {
     KarmaC44,
 
     KarmaL6,
+
+    #[serde(
+        alias = "Wpn_S_Pistol_Linetic_Sauto",
+        alias = "wpn_s_pistol_kinetic_sauto",
+    )]
     KarmaP15,
 
     #[serde(

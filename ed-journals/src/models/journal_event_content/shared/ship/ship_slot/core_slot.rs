@@ -14,6 +14,8 @@ pub enum CoreSlot {
     Sensors,
     LifeSupport,
     FrameShiftDrive,
+    FuelTank,
+    PlanetaryApproachSuite,
 }
 
 #[derive(Debug, Error)]
@@ -34,6 +36,8 @@ impl FromStr for CoreSlot {
             "LifeSupport" => Ok(CoreSlot::LifeSupport),
             "Armour" => Ok(CoreSlot::Armour),
             "FrameShiftDrive" => Ok(CoreSlot::FrameShiftDrive),
+            "FuelTank" => Ok(CoreSlot::FuelTank),
+            "PlanetaryApproachSuite" => Ok(CoreSlot::FuelTank),
 
             _ => Err(CoreSlotParseError::UnknownCoreSlot(s.to_string())),
         }
@@ -52,6 +56,8 @@ impl Display for CoreSlot {
             CoreSlot::Sensors => "Sensors",
             CoreSlot::LifeSupport => "Life Support",
             CoreSlot::FrameShiftDrive => "Frame Shift Drive",
+            CoreSlot::FuelTank => "Fuel Tank",
+            CoreSlot::PlanetaryApproachSuite => "Planetary Approach Suite",
         })
     }
 }

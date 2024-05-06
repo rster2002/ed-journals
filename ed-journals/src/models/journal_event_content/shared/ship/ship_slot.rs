@@ -25,11 +25,17 @@ pub struct ShipSlot {
 // TODO kinda want to refactor this to use untagged variants
 #[derive(Debug, Clone, PartialEq)]
 pub enum ShipSlotKind {
+    ShipCockpit,
+    CargoHatch,
     UtilityMount,
     Hardpoint(HardpointSize),
     OptionalInternal(u8),
     Military,
     CoreInternal(CoreSlot),
+    PaintJob,
+    Decal,
+    VesselVoice,
+    Nameplate,
 }
 
 #[derive(Debug, Error)]
@@ -53,12 +59,42 @@ lazy_static! {
         Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap();
     static ref OPTIONAL_INTERNAL_REGEX: Regex = Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap();
     static ref MILITARY_REGEX: Regex = Regex::new(r#"^Military(\d+)$"#).unwrap();
+    static ref DECAL_REGEX: Regex = Regex::new(r#"^Decal(\d+)$"#).unwrap();
+    static ref NAMEPLATE_REGEX: Regex = Regex::new(r#"^ShipName(\d+)$"#).unwrap();
 }
 
 impl FromStr for ShipSlot {
     type Err = ParseShipSlotError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "ShipCockpit" {
+            return Ok(ShipSlot {
+                slot_nr: 0,
+                kind: ShipSlotKind::ShipCockpit,
+            });
+        }
+
+        if s == "CargoHatch" {
+            return Ok(ShipSlot {
+                slot_nr: 0,
+                kind: ShipSlotKind::CargoHatch,
+            });
+        }
+
+        if s == "PaintJob" {
+            return Ok(ShipSlot {
+                slot_nr: 0,
+                kind: ShipSlotKind::PaintJob,
+            });
+        }
+
+        if s == "VesselVoice" {
+            return Ok(ShipSlot {
+                slot_nr: 0,
+                kind: ShipSlotKind::VesselVoice,
+            });
+        }
+
         if let Some(captures) = UTILITY_HARDPOINT_REGEX.captures(s) {
             let slot_nr = captures
                 .get(1)
@@ -128,6 +164,34 @@ impl FromStr for ShipSlot {
             });
         }
 
+        if let Some(captures) = DECAL_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::Decal,
+            });
+        }
+
+        if let Some(captures) = NAMEPLATE_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::Nameplate,
+            });
+        }
+
         if let Ok(core_slot) = s.parse() {
             return Ok(ShipSlot {
                 slot_nr: 1,
@@ -144,11 +208,17 @@ from_str_deserialize_impl!(ShipSlot);
 impl Display for ShipSlot {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match &self.kind {
+            ShipSlotKind::ShipCockpit => write!(f, "Ship Cockpit"),
+            ShipSlotKind::CargoHatch => write!(f, "Cargo Hatch"),
             ShipSlotKind::UtilityMount => write!(f, "Utility Mount"),
             ShipSlotKind::Hardpoint(size) => write!(f, "{} Hardpoint", size.size_str()),
             ShipSlotKind::OptionalInternal(size) => write!(f, "Size {} Optional Internal", size),
             ShipSlotKind::Military => write!(f, "Military Slot"),
             ShipSlotKind::CoreInternal(core_slot) => write!(f, "{} Core Internal", core_slot),
+            ShipSlotKind::PaintJob => write!(f, "Paint job"),
+            ShipSlotKind::Decal => write!(f, "Decal"),
+            ShipSlotKind::VesselVoice => write!(f, "COVAS Voice"),
+            ShipSlotKind::Nameplate => write!(f, "Nameplate"),
         }
     }
 }

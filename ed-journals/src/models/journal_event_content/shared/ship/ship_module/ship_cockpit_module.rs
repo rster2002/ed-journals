@@ -20,7 +20,7 @@ pub enum CockpitModuleParseError {
 }
 
 lazy_static! {
-    static ref COCKPIT_MODULE_REGEX: Regex = Regex::new(r#"^\$(.+)_cockpit_name;$"#).unwrap();
+    static ref COCKPIT_MODULE_REGEX: Regex = Regex::new(r#"^(\$)?(.+)_cockpit(_name;)?$"#).unwrap();
 }
 
 impl FromStr for ShipCockpitModule {
@@ -32,7 +32,7 @@ impl FromStr for ShipCockpitModule {
         };
 
         let ship_type = captures
-            .get(1)
+            .get(2)
             .expect("Should have already been matched")
             .as_str()
             .parse()

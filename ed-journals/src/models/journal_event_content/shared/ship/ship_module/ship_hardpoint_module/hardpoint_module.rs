@@ -83,6 +83,12 @@ pub enum HardpointModule {
     #[serde(rename = "cloudscanner")]
     WakeScanner,
 
+    #[serde(rename = "mrascanner")]
+    PulseWaveAnalyzer,
+
+    #[serde(rename = "railgun")]
+    RailGun,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -149,6 +155,8 @@ impl Display for HardpointModule {
             HardpointModule::MiningLaser => "Mining Laser",
             HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
             HardpointModule::WakeScanner => "Wake Scanner",
+            HardpointModule::PulseWaveAnalyzer => "Pulse Wave Analyzer",
+            HardpointModule::RailGun => "Rail Gun",
 
             #[cfg(not(feature = "strict"))]
             HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
