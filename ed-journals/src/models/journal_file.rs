@@ -9,9 +9,9 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
 
-use crate::models::journal_reader::JournalReader;
+use crate::models::journal_file_reader::JournalFileReader;
 
-/// A representation of a journal log file. Can then be read using a [JournalReader].
+/// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]
 pub struct JournalFile {
     path: PathBuf,
@@ -49,8 +49,8 @@ impl JournalFile {
     }
 
     /// Creates a new reader using the path of the journal log file.
-    pub fn create_reader(&self) -> Result<JournalReader<File>, JournalFileError> {
-        Ok(JournalReader::from(File::open(self.path.as_path())?))
+    pub fn create_reader(&self) -> Result<JournalFileReader<File>, JournalFileError> {
+        Ok(JournalFileReader::from(File::open(self.path.as_path())?))
     }
 
     /// Returns the date time that is part of the file name of the file.

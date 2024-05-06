@@ -17,7 +17,8 @@ pub use models::journal_event_content;
 pub use models::journal_event_content::JournalEventContent;
 pub use models::journal_event_content::JournalEventContentKind;
 pub use models::journal_file::JournalFile;
-pub use models::journal_reader::JournalReader;
+pub use models::journal_file_reader::JournalFileReader;
+pub use models::live_journal_file_reader::LiveJournalFileReader;
 
 mod macros;
 mod models;
