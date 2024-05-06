@@ -4,19 +4,43 @@ use serde::Deserialize;
 // This is just for me because RustRover doesn't recognise that this is used in a feature.
 #[allow(unused)]
 use serde_json::Value;
+use crate::journal_event_content::book_dropship_event::BookDropshipEvent;
 use crate::journal_event_content::buy_trade_data_event::BuyTradeDateEvent;
+use crate::journal_event_content::cancel_dropship_event::CancelDropshipEvent;
+use crate::journal_event_content::cancel_taxi_event::CancelTaxiEvent;
 use crate::journal_event_content::cap_ship_bond_event::CapShipBondEvent;
+use crate::journal_event_content::carrier_cancel_decommission_event::CarrierCancelDecommissionEvent;
+use crate::journal_event_content::carrier_decommision_event::CarrierDecommissionEvent;
+use crate::journal_event_content::carrier_docking_permission_event::CarrierDockingPermissionEvent;
+use crate::journal_event_content::carrier_module_pack_event::CarrierModulePackEvent;
+use crate::journal_event_content::carrier_name_changed_event::CarrierNameChangedEvent;
+use crate::journal_event_content::carrier_ship_pack_event::CarrierShipPackEvent;
+use crate::journal_event_content::carrier_trade_order_event::CarrierTradeOrderEvent;
+use crate::journal_event_content::change_crew_role_event::ChangeCrewRoleEvent;
 use crate::journal_event_content::clear_impound_event::ClearImpoundEvent;
 use crate::journal_event_content::community_goal_discard_event::CommunityGoalDiscardEvent;
 use crate::journal_event_content::community_goal_event::CommunityGoalEventGoal;
 use crate::journal_event_content::community_goal_join_event::CommunityGoalJoinEvent;
 use crate::journal_event_content::community_goal_reward_event::CommunityGoalRewardEvent;
+use crate::journal_event_content::continued_event::ContinuedEvent;
 use crate::journal_event_content::crew_fire_event::CrewFireEvent;
+use crate::journal_event_content::crew_launch_fighter_event::CrewLaunchFighterEvent;
+use crate::journal_event_content::crew_member_joins_event::CrewMemberJoinsEvent;
+use crate::journal_event_content::crew_member_quits_event::CrewMemberQuitsEvent;
+use crate::journal_event_content::crew_member_role_change_event::CrewMemberRoleChangeEvent;
+use crate::journal_event_content::datalink_voucher_event::DatalinkVoucherEvent;
+use crate::journal_event_content::delete_suit_loadout_event::DeleteSuitLoadoutEvent;
 use crate::journal_event_content::disbanded_squadron_event::DisbandedSquadronEvent;
+use crate::journal_event_content::drop_ship_deploy_event::DropShipDeployEvent;
+use crate::journal_event_content::end_crew_session_event::EndCrewSessionEvent;
 use crate::journal_event_content::invited_to_squadron_event::InvitedToSquadronEvent;
+use crate::journal_event_content::jet_cone_damage_event::JetConeDamageEvent;
+use crate::journal_event_content::join_a_crew_event::JoinACrewEvent;
 use crate::journal_event_content::joined_squadron_event::JoinedSquadronEvent;
+use crate::journal_event_content::kick_crew_member_event::KickCrewMemberEvent;
 use crate::journal_event_content::kicked_from_squadron_event::KickedFromSquadronEvent;
 use crate::journal_event_content::left_squadron_event::LeftSquadronEvent;
+use crate::journal_event_content::loadout_remove_module_event::LoadoutRemoveModuleEvent;
 use crate::journal_event_content::mass_module_store_event::MassModuleStoreEvent;
 use crate::journal_event_content::material_discarded_event::MaterialDiscarded;
 use crate::journal_event_content::powerplay_collect_event::PowerplayCollectEvent;
@@ -26,16 +50,26 @@ use crate::journal_event_content::powerplay_fast_track_event::PowerplayFastTrack
 use crate::journal_event_content::powerplay_join_event::PowerplayJoinEvent;
 use crate::journal_event_content::powerplay_vote_event::PowerplayVoteEvent;
 use crate::journal_event_content::pvp_kill_event::PVPKillEvent;
+use crate::journal_event_content::quit_a_crew_event::QuitACrewEvent;
+use crate::journal_event_content::reboot_repair_event::RebootRepairEvent;
 use crate::journal_event_content::refuel_partial_event::RefuelPartialEvent;
+use crate::journal_event_content::rename_suit_loadout_event::RenameSuitLoadoutEvent;
 use crate::journal_event_content::scientific_research_event::ScientificResearchEvent;
 use crate::journal_event_content::screenshot_event::ScreenshotEvent;
 use crate::journal_event_content::sell_exploration_date_event::SellExplorationDataEvent;
+use crate::journal_event_content::sell_micro_resources_event::SellMicroResourcesEvent;
 use crate::journal_event_content::sell_ship_on_rebuy_event::SellShipOnRebuyEvent;
+use crate::journal_event_content::sell_suit_event::SellSuitEvent;
+use crate::journal_event_content::sell_weapon_event::SellWeaponEvent;
 use crate::journal_event_content::shared_bookmark_to_squadron_event::ShardedBookmarkToSquadronEvent;
 use crate::journal_event_content::shipyard_sell_event::ShipyardSellEvent;
 use crate::journal_event_content::squadron_created_event::SquadronCreatedEvent;
 use crate::journal_event_content::squadron_demotion_event::SquadronDemotionEvent;
 use crate::journal_event_content::squadron_promotion_event::SquadronPromotionEvent;
+use crate::journal_event_content::trade_micro_resources_event::TradeMicroResourcesEvent;
+use crate::journal_event_content::transfer_micro_resources_event::TransferMicroResourcesEvent;
+use crate::journal_event_content::upgrade_suit_event::UpgradeSuitEvent;
+use crate::journal_event_content::upgrade_weapon_event::UpgradeWeaponEvent;
 use crate::journal_event_content::won_a_trophy_for_squadron_event::WonATrophyForSquadronEvent;
 
 use crate::models::journal_event_content::afmu_repairs_event::AFMURepairsEvent;
@@ -422,6 +456,40 @@ mod squadron_created_event;
 mod squadron_demotion_event;
 mod squadron_promotion_event;
 mod won_a_trophy_for_squadron_event;
+mod carrier_decommision_event;
+mod carrier_cancel_decommission_event;
+mod carrier_ship_pack_event;
+mod carrier_module_pack_event;
+mod carrier_trade_order_event;
+mod carrier_docking_permission_event;
+mod carrier_name_changed_event;
+mod book_dropship_event;
+mod cancel_taxi_event;
+mod cancel_dropship_event;
+mod delete_suit_loadout_event;
+mod drop_ship_deploy_event;
+mod loadout_remove_module_event;
+mod rename_suit_loadout_event;
+mod sell_micro_resources_event;
+mod sell_suit_event;
+mod sell_weapon_event;
+mod transfer_micro_resources_event;
+mod trade_micro_resources_event;
+mod upgrade_suit_event;
+mod upgrade_weapon_event;
+mod change_crew_role_event;
+mod continued_event;
+mod crew_launch_fighter_event;
+mod crew_member_joins_event;
+mod crew_member_quits_event;
+mod crew_member_role_change_event;
+mod datalink_voucher_event;
+mod end_crew_session_event;
+mod jet_cone_damage_event;
+mod join_a_crew_event;
+mod kick_crew_member_event;
+mod quit_a_crew_event;
+mod reboot_repair_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///
@@ -605,50 +673,82 @@ pub enum JournalEventContent {
     CarrierBuy(CarrierBuyEvent),
     CarrierStats(CarrierStatsEvent),
     CarrierJumpRequest(CarrierJumpRequestEvent),
+    CarrierDecommission(CarrierDecommissionEvent),
+    CarrierCancelDecommission(CarrierCancelDecommissionEvent),
     CarrierBankTransfer(CarrierBankTransferEvent),
     CarrierDepositFuel(CarrierDepositFuelEvent),
     CarrierCrewServices(CarrierCrewServicesEvent),
     CarrierFinance(CarrierFinanceEvent),
+    CarrierShipPack(CarrierShipPackEvent),
+    CarrierModulePack(CarrierModulePackEvent),
+    CarrierTradeOrder(CarrierTradeOrderEvent),
+    CarrierDockingPermission(CarrierDockingPermissionEvent),
+    CarrierNameChanged(CarrierNameChangedEvent),
     CarrierJumpCancelled(CarrierJumpCancelled),
 
     // Odyssey
     Backpack(BackpackEvent),
     BackpackChange(BackpackChangeEvent),
+    BookDropship(BookDropshipEvent),
     BookTaxi(BookTaxiEvent),
     BuyMicroResources(BuyMicroResourceEvent),
     BuySuit(BuySuitEvent),
     BuyWeapon(BuyWeaponEvent),
+    CancelDropship(CancelDropshipEvent),
+    CancelTaxi(CancelTaxiEvent),
     CollectItems(CollectItemsEvent),
     CreateSuitLoadout(CreateSuitLoadoutEvent),
+    DeleteSuitLoadout(DeleteSuitLoadoutEvent),
     Disembark(DisembarkEvent),
     DropItems(DropItemsEvent),
+    DropShipDeploy(DropShipDeployEvent),
     Embark(EmbarkEvent),
     FCMaterials(FCMaterialsEvent),
     LoadoutEquipModule(LoadoutEquipModuleEvent),
+    LoadoutRemoveModule(LoadoutRemoveModuleEvent),
+    RenameSuitLoadout(RenameSuitLoadoutEvent),
     Resupply,
     ScanOrganic(ScanOrganicEvent),
+    SellMicroResources(SellMicroResourcesEvent),
     SellOrganicData(SellOrganicDataEvent),
+    SellSuit(SellSuitEvent),
+    SellWeapon(SellWeaponEvent),
     ShipLocker(ShipLockerEvent),
     SwitchSuitLoadout(SwitchSuitLoadoutEvent),
     SuitLoadout(SuitLoadoutEvent),
+    TransferMicroResources(TransferMicroResourcesEvent),
+    TradeMicroResources(TradeMicroResourcesEvent),
+    UpgradeSuit(UpgradeSuitEvent),
+    UpgradeWeapon(UpgradeWeaponEvent),
     UseConsumable(UseConsumableEvent),
 
     // Other
     #[serde(rename = "AfmuRepairs")]
     AFMURepairs(AFMURepairsEvent),
     ApproachSettlement(ApproachSettlementEvent),
-    CommitCrime(CommitCrimeEvent),
     CargoTransfer(CargoTransferEvent),
+    ChangeCrewRole(ChangeCrewRoleEvent),
     CockpitBreached,
+    CommitCrime(CommitCrimeEvent),
+    Continued(ContinuedEvent),
+    CrewLaunchFighter(CrewLaunchFighterEvent),
+    CrewMemberJoins(CrewMemberJoinsEvent),
+    CrewMemberQuits(CrewMemberQuitsEvent),
+    CrewMemberRoleChange(CrewMemberRoleChangeEvent),
     CrimeVictim(CrimeVictimEvent),
-    DatalinkScan(DatalinkScanEvent),
     DataScanned(DataScannedEvent),
+    DatalinkVoucher(DatalinkVoucherEvent),
+    DatalinkScan(DatalinkScanEvent),
     DockFighter(DockFighterEvent),
     DockSRV(DockSRVEvent),
+    EndCrewSession(EndCrewSessionEvent),
     FighterRebuilt(FighterRebuiltEvent),
-    FuelScoop(FuelScoopEvent),
     Friends(FriendsEvent),
+    FuelScoop(FuelScoopEvent),
     JetConeBoost(JetConeBoostEvent),
+    JetConeDamage(JetConeDamageEvent),
+    JoinACrew(JoinACrewEvent),
+    KickCrewMember(KickCrewMemberEvent),
     LaunchDrone(LaunchDroneEvent),
     LaunchFighter(LaunchFighterEvent),
     LaunchSRV(LaunchSRVEvent),
@@ -665,6 +765,8 @@ pub enum JournalEventContent {
     NPCCrewRank(NPCCrewRankEvent),
     Promotion(PromotionEvent),
     ProspectedAsteroid(ProspectedAsteroidEvent),
+    QuitACrew(QuitACrewEvent),
+    RebootRepair(RebootRepairEvent),
     ReceiveText(ReceiveTextEvent),
     RepairDrone(RepairDroneEvent),
     ReservoirReplenished(ReservoirReplenishedEvent),
@@ -673,15 +775,15 @@ pub enum JournalEventContent {
     SelfDestruct,
     SendText(SendTextEvent),
     Shutdown,
+    SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
     Synthesis(SynthesisEvent),
     SystemsShutdown,
     USSDrop(USSDropEvent),
     VehicleSwitch(VehicleSwitchEvent),
-    WingJoin(WingJoinEvent),
-    WingInvite(WingInviteEvent),
     WingAdd(WingAddEvent),
+    WingInvite(WingInviteEvent),
+    WingJoin(WingJoinEvent),
     WingLeave,
-    SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

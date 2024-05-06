@@ -10,7 +10,6 @@ use crate::models::journal_event_content::shared::odyssey::weapon_mod::WeaponMod
 pub struct LoadoutEquipModuleEvent {
     #[serde(rename = "SuitID")]
     pub suit_id: u64,
-
     pub suit_name: Suit,
 
     #[serde(rename = "SuitName_Localised")]
@@ -18,6 +17,7 @@ pub struct LoadoutEquipModuleEvent {
 
     #[serde(rename = "LoadoutID")]
     pub loadout_id: u64,
+    pub loadout_name: String,
     pub slot_name: SuitSlot,
     pub module_name: Weapon,
 
