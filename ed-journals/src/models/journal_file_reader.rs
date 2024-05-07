@@ -278,6 +278,49 @@ mod tests {
     }
 
     #[test]
+    fn partial_last_lines_are_read_correctly_3() {
+        fs::write("e.tmp", "").unwrap();
+
+        let file = File::open("e.tmp").unwrap();
+
+        let mut reader = JournalFileReader::from(file);
+
+        assert!(reader.next().is_none());
+
+        fs::write(
+            "e.tmp",
+            r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+        )
+            .unwrap();
+
+        assert!(reader.next().is_some());
+
+        fs::write("e.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+{"timestamp":"2022-10-22T15:12:05Z",
+"#)
+            .unwrap();
+
+        assert!(reader.next().is_none());
+        assert_eq!(reader.file_read_buffer, r#"{"timestamp":"2022-10-22T15:12:05Z","#);
+
+        fs::write("e.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+{"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}
+"#)
+            .unwrap();
+
+
+        assert_eq!(
+            reader.next().unwrap().unwrap().content.kind(),
+            JournalEventContentKind::Commander
+        );
+
+        assert!(reader.next().is_none());
+
+        fs::remove_file("e.tmp").unwrap();
+    }
+
+
+    #[test]
     fn incorrect_lines_return_an_err_only_when_it_is_expected() {
         fs::write("b.tmp", "").unwrap();
 
