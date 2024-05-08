@@ -22,10 +22,10 @@ use crate::models::journal_event::JournalEvent;
 ///     .unwrap()
 ///     .join("test-journals");
 ///
-/// let journal_dir = JournalDir::try_from(dir_path)
+/// let journal_dir = JournalDir::new(dir_path)
 ///     .unwrap();
 ///
-/// let logs = journal_dir.journal_logs().unwrap();
+/// let logs = journal_dir.journal_logs_oldest_first().unwrap();
 /// assert!(!logs.is_empty());
 ///
 /// for journal_file in logs {
