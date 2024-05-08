@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+
 use serde::Deserialize;
 
 use crate::models::journal_event_content::shared::materials::material_category::MaterialCategory;

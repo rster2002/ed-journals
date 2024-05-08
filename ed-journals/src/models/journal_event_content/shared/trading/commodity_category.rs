@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+
 use crate::models::journal_event_content::shared::trading::commodity::Commodity;
 
 #[derive(Debug)]

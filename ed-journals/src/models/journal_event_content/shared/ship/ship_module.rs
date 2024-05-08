@@ -1,10 +1,11 @@
 use std::fmt::{Display, Formatter};
+
 use serde::Deserialize;
+
 use crate::journal_event_content::shared::ship::ship_module::ship_decal::ShipDecal;
 use crate::journal_event_content::shared::ship::ship_module::ship_nameplate::ShipNameplate;
 use crate::journal_event_content::shared::ship::ship_module::ship_paint_job::ShipPaintJob;
 use crate::journal_event_content::shared::ship::ship_module::ship_voicepack::ShipVoicepack;
-
 use crate::models::journal_event_content::shared::ship::ship_module::ship_cockpit_module::ShipCockpitModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::ShipInternalModule;

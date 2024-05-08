@@ -18,8 +18,8 @@ pub use models::journal_event_content::JournalEventContent;
 pub use models::journal_event_content::JournalEventContentKind;
 pub use models::journal_file::JournalFile;
 pub use models::journal_file_reader::JournalFileReader;
-pub use models::live_journal_file_reader::LiveJournalFileReader;
 pub use models::live_journal_dir_reader::LiveJournalDirReader;
+pub use models::live_journal_file_reader::LiveJournalFileReader;
 
 mod macros;
 mod models;
@@ -27,11 +27,9 @@ mod models;
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
-    use log::log;
 
     use crate::models::journal_dir::JournalDir;
     use crate::models::journal_event_content::JournalEventContent;
-    use crate::models::journal_event_content::scan_event::ScanEventKind;
 
     #[test]
     fn test_journals_are_parsed_correctly() {

@@ -8,8 +8,8 @@ use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
-use crate::LiveJournalFileReader;
 
+use crate::LiveJournalFileReader;
 use crate::models::journal_file_reader::JournalFileReader;
 use crate::models::live_journal_file_reader::LiveJournalFileReaderError;
 

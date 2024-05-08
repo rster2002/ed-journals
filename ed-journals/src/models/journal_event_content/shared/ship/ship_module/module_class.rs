@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+
 use thiserror::Error;
 
 use crate::models::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;

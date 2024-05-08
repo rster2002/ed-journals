@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+
 use thiserror::Error;
 
 use crate::try_from_deserialize_impl;

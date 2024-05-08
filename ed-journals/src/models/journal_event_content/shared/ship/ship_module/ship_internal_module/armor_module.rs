@@ -82,6 +82,7 @@ impl Display for ArmorModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
     use crate::journal_event_content::shared::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
     use crate::journal_event_content::shared::ship::ship_type::ShipType;

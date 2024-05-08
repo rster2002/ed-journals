@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
+
 use serde::Deserialize;
-use crate::journal_event_content::carrier_stats_event::CarrierStatsEventCrewRole::Unknown;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum StationService {

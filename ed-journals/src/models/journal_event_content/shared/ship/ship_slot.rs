@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter, write};
+use std::fmt::{Display, Formatter};
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -7,7 +7,6 @@ use regex::Regex;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::journal_event_content::shared::ship::ship_module::ShipModule;
 use crate::models::journal_event_content::shared::ship::ship_slot::core_slot::CoreSlot;
 use crate::models::journal_event_content::shared::ship::ship_slot::hardpoint_size::{
     HardpointSize, HardpointSizeParseError,
