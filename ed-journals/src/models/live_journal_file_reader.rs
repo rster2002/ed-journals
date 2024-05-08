@@ -1,15 +1,15 @@
+use std::{io, thread};
 use std::collections::VecDeque;
 use std::fs::File;
 use std::path::PathBuf;
-use std::{io, thread};
-use std::sync::{Arc, Mutex, MutexGuard};
+use std::sync::{Arc, Mutex};
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::thread::{JoinHandle, Thread};
+use std::thread::Thread;
+
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
-use notify::RecursiveMode::Recursive;
 use thiserror::Error;
+
 use crate::{JournalEvent, JournalFileReader};
-use crate::journal_event_content::carrier_crew_services_event::CarrierCrewServicesEventOperation::Activate;
 use crate::models::journal_file_reader::JournalReaderError;
 
 #[derive(Debug)]
@@ -19,7 +19,6 @@ pub struct LiveJournalFileReader {
     journal_file_reader: JournalFileReader<File>,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
-    // waiting_threads: Vec<Thread>,
 }
 
 #[derive(Debug, Error)]
@@ -40,7 +39,8 @@ impl LiveJournalFileReader {
         let waiting_thread_local = waiting_thread.clone();
 
         let mut watcher = notify::recommended_watcher(move |res| {
-            let guard = waiting_thread_local.lock().unwrap();
+            let guard = waiting_thread_local.lock()
+                .expect("Should have been locked");
 
             if let Some(a) = guard.0.as_ref() {
                 a.unpark();
@@ -58,28 +58,24 @@ impl LiveJournalFileReader {
         })
     }
 
-    pub fn activation(&self) -> JournalHandle {
-        JournalHandle::new(self.active.clone(), self.waiting_thread.clone())
+    pub fn handle(&self) -> LiveJournalFileHandle {
+        LiveJournalFileHandle {
+            active: self.active.clone(),
+            waiting_thread: self.waiting_thread.clone(),
+        }
     }
 }
 
-pub struct JournalHandle {
+pub struct LiveJournalFileHandle {
     active: Arc<AtomicBool>,
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
 }
 
-impl JournalHandle {
-    pub fn new(active: Arc<AtomicBool>, waiting_thread: Arc<Mutex<(Option<Thread>,)>>) -> JournalHandle {
-        JournalHandle {
-            active,
-            waiting_thread,
-        }
-    }
-
+impl LiveJournalFileHandle {
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
         let guard = self.waiting_thread.lock()
-            .unwrap();
+            .expect("to have gotten a lock");
 
         if let Some(a) = guard.0.as_ref() {
             a.unpark();
@@ -101,7 +97,7 @@ impl Iterator for LiveJournalFileReader {
                 None => {
                     {
                         let mut guard = self.waiting_thread.lock()
-                            .unwrap();
+                            .expect("to have gotten a lock");
 
                         guard.0 = Some(thread::current());
                     }

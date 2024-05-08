@@ -19,6 +19,7 @@ pub use models::journal_event_content::JournalEventContentKind;
 pub use models::journal_file::JournalFile;
 pub use models::journal_file_reader::JournalFileReader;
 pub use models::live_journal_file_reader::LiveJournalFileReader;
+pub use models::live_journal_dir_reader::LiveJournalDirReader;
 
 mod macros;
 mod models;
@@ -40,7 +41,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let log_dir  = JournalDir::try_from(dir_path)
+        let log_dir  = JournalDir::new(dir_path)
             .unwrap();
 
         let logs = log_dir.journal_logs()

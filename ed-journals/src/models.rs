@@ -6,5 +6,5 @@ pub mod journal_event;
 pub mod journal_event_content;
 pub mod journal_file;
 pub mod journal_file_reader;
-pub mod journal_reader;
 pub mod live_journal_file_reader;
+pub mod live_journal_dir_reader;

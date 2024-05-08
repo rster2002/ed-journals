@@ -1,9 +1,5 @@
 use kinded::Kinded;
 use serde::Deserialize;
-
-// This is just for me because RustRover doesn't recognise that this is used in a feature.
-#[allow(unused)]
-use serde_json::Value;
 use crate::journal_event_content::book_dropship_event::BookDropshipEvent;
 use crate::journal_event_content::buy_trade_data_event::BuyTradeDateEvent;
 use crate::journal_event_content::cancel_dropship_event::CancelDropshipEvent;
@@ -245,6 +241,9 @@ use crate::models::journal_event_content::vehicle_switch_event::VehicleSwitchEve
 use crate::models::journal_event_content::wing_add_event::WingAddEvent;
 use crate::models::journal_event_content::wing_invite_event::WingInviteEvent;
 use crate::models::journal_event_content::wing_join_event::WingJoinEvent;
+
+#[cfg(not(feature = "strict"))]
+use serde_json::Value;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;

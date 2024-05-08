@@ -5,13 +5,14 @@ use thiserror::Error;
 use crate::models::journal_file::{JournalFile, JournalFileError};
 
 /// Provides an abstraction on top of the journal directory making it easy to access its contents.
+#[derive(Debug)]
 pub struct JournalDir {
     dir_path: PathBuf,
 }
 
 #[derive(Debug, Error)]
-pub enum EDLogDirError {
-    #[error("Elite dangerous log path is not a directory")]
+pub enum JournalDirError {
+    #[error("Log path is not a directory")]
     PathIsNotADirectory,
 
     #[error("Failed to represent OS string")]
@@ -24,12 +25,10 @@ pub enum EDLogDirError {
     IO(#[from] std::io::Error),
 }
 
-impl TryFrom<PathBuf> for JournalDir {
-    type Error = EDLogDirError;
-
-    fn try_from(dir_path: PathBuf) -> Result<Self, Self::Error> {
+impl JournalDir {
+    pub fn new(dir_path: PathBuf) -> Result<JournalDir, JournalDirError> {
         if !dir_path.is_dir() {
-            return Err(EDLogDirError::PathIsNotADirectory);
+            return Err(JournalDirError::PathIsNotADirectory);
         }
 
         Ok(JournalDir { dir_path })
@@ -38,7 +37,7 @@ impl TryFrom<PathBuf> for JournalDir {
 
 impl JournalDir {
     /// Returns a list of journal log files found in the directory in any order.
-    pub fn journal_logs(&self) -> Result<Vec<JournalFile>, EDLogDirError> {
+    pub fn journal_logs(&self) -> Result<Vec<JournalFile>, JournalDirError> {
         self.dir_path
             .read_dir()?
             .filter_map(|entry| match entry {
@@ -49,12 +48,12 @@ impl JournalDir {
                 },
                 Err(err) => Some(Err(err.into())),
             })
-            .collect::<Result<Vec<JournalFile>, EDLogDirError>>()
+            .collect::<Result<Vec<JournalFile>, JournalDirError>>()
     }
 
     /// Returns a list of journal log files found in the directory, returning the oldest journal
     /// logs first.
-    pub fn journal_logs_oldest_first(&self) -> Result<Vec<JournalFile>, EDLogDirError> {
+    pub fn journal_logs_oldest_first(&self) -> Result<Vec<JournalFile>, JournalDirError> {
         let mut logs = self.journal_logs()?;
         logs.sort();
 
@@ -63,7 +62,7 @@ impl JournalDir {
 
     /// Returns a list of journal log files found in the directory, returning the newest journal
     /// logs first.
-    pub fn journal_logs_newest_first(&self) -> Result<Vec<JournalFile>, EDLogDirError> {
+    pub fn journal_logs_newest_first(&self) -> Result<Vec<JournalFile>, JournalDirError> {
         let mut logs = self.journal_logs()?;
         logs.sort();
         logs.reverse();
@@ -86,7 +85,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let journal_dir = JournalDir::try_from(dir_path).unwrap();
+        let journal_dir = JournalDir::new(dir_path).unwrap();
 
         let mut journal_files = journal_dir.journal_logs_oldest_first().unwrap().into_iter();
 
@@ -107,7 +106,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let journal_dir = JournalDir::try_from(dir_path).unwrap();
+        let journal_dir = JournalDir::new(dir_path).unwrap();
 
         let mut journal_files = journal_dir.journal_logs_newest_first().unwrap().into_iter();
 
