@@ -85,15 +85,13 @@ where
             .peekable();
 
         while let Some(line) = lines.next() {
-            let parse_result = dbg!(serde_json::from_str(line));
+            let parse_result = serde_json::from_str(line);
 
             // If the line didn't parse, but the line is the last line that was read, it will not
             // error and instead add the current line back into the read buffer to hopefully be
             // completed when new lines are added.
             if parse_result.is_err() && lines.peek().is_none() {
-                dbg!(&line);
-                self.file_read_buffer = dbg!(line.to_string());
-                // self.position -= 1;
+                self.file_read_buffer = line.to_string();
                 return Ok(());
             }
 
