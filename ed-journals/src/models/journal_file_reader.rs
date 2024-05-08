@@ -74,24 +74,26 @@ where
         self.source.seek(SeekFrom::Start(self.position as u64))?;
         self.position += self.source.read_to_string(&mut self.file_read_buffer)?;
 
-        let mut lines = self.file_read_buffer.lines().peekable();
+        // Set position back one space to ensure the reader doesn't skip a character during the
+        // next read.
+        if self.file_read_buffer.ends_with("\n") {
+            self.position -= 1;
+        }
+
+        let mut lines = self.file_read_buffer.lines()
+            .filter(|line| !line.is_empty())
+            .peekable();
 
         while let Some(line) = lines.next() {
-            // Primarily here to handle the issue that the [position] points to the last character
-            // of the current line and if you start reading from there again it will include the
-            // \n that will be added by the new line which causes the first line to always start
-            // with an \n. This is just a quick fix that won't ever come back to bite my I swear.
-            if line == "" {
-                continue;
-            }
-
-            let parse_result = serde_json::from_str(line);
+            let parse_result = dbg!(serde_json::from_str(line));
 
             // If the line didn't parse, but the line is the last line that was read, it will not
             // error and instead add the current line back into the read buffer to hopefully be
             // completed when new lines are added.
             if parse_result.is_err() && lines.peek().is_none() {
-                self.file_read_buffer = line.to_string();
+                dbg!(&line);
+                self.file_read_buffer = dbg!(line.to_string());
+                // self.position -= 1;
                 return Ok(());
             }
 
