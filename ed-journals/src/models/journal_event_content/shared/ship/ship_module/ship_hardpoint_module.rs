@@ -164,10 +164,17 @@ from_str_deserialize_impl!(ShipHardpointModule);
 impl Display for ShipHardpointModule {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         if let HardpointSize::Tiny = self.size {
-            return write!(f, "{}{} {}", self.size.size_nr(), self.class, self.module)
+            return write!(f, "{}{} {}", self.size.size_nr(), self.class, self.module);
         }
 
-        write!(f, "{}{}/{} {}", self.size.size_nr(), self.class, self.mounting, self.module)
+        write!(
+            f,
+            "{}{}/{} {}",
+            self.size.size_nr(),
+            self.class,
+            self.mounting,
+            self.module
+        )
     }
 }
 

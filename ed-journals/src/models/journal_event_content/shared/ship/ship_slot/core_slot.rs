@@ -48,16 +48,20 @@ from_str_deserialize_impl!(CoreSlot);
 
 impl Display for CoreSlot {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CoreSlot::Armour => "Armor",
-            CoreSlot::PowerPlant => "Power Plant",
-            CoreSlot::MainEngines => "Thrusters",
-            CoreSlot::PowerDistributor => "Power Distributor",
-            CoreSlot::Sensors => "Sensors",
-            CoreSlot::LifeSupport => "Life Support",
-            CoreSlot::FrameShiftDrive => "Frame Shift Drive",
-            CoreSlot::FuelTank => "Fuel Tank",
-            CoreSlot::PlanetaryApproachSuite => "Planetary Approach Suite",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                CoreSlot::Armour => "Armor",
+                CoreSlot::PowerPlant => "Power Plant",
+                CoreSlot::MainEngines => "Thrusters",
+                CoreSlot::PowerDistributor => "Power Distributor",
+                CoreSlot::Sensors => "Sensors",
+                CoreSlot::LifeSupport => "Life Support",
+                CoreSlot::FrameShiftDrive => "Frame Shift Drive",
+                CoreSlot::FuelTank => "Fuel Tank",
+                CoreSlot::PlanetaryApproachSuite => "Planetary Approach Suite",
+            }
+        )
     }
 }

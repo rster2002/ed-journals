@@ -109,7 +109,7 @@ mod tests {
                 ArmorModule {
                     ship: ShipType::KraitMkII,
                     grade: ArmorGrade::MirroredSurfaceComposite,
-                }
+                },
             ),
         ];
 
@@ -124,18 +124,27 @@ mod tests {
     #[test]
     fn ship_armor_module_is_displayed_correctly() {
         let test_cases = [
-            (ArmorModule {
-                ship: ShipType::Type10Defender,
-                grade: ArmorGrade::LightweightAlloy,
-            }, "1C Lightweight Alloy"),
-            (ArmorModule {
-                ship: ShipType::Type10Defender,
-                grade: ArmorGrade::MilitaryGradeComposite,
-            }, "1A Military Grade Composite"),
-            (ArmorModule {
-                ship: ShipType::KraitMkII,
-                grade: ArmorGrade::MirroredSurfaceComposite,
-            }, "1A Mirrored Surface Composite"),
+            (
+                ArmorModule {
+                    ship: ShipType::Type10Defender,
+                    grade: ArmorGrade::LightweightAlloy,
+                },
+                "1C Lightweight Alloy",
+            ),
+            (
+                ArmorModule {
+                    ship: ShipType::Type10Defender,
+                    grade: ArmorGrade::MilitaryGradeComposite,
+                },
+                "1A Military Grade Composite",
+            ),
+            (
+                ArmorModule {
+                    ship: ShipType::KraitMkII,
+                    grade: ArmorGrade::MirroredSurfaceComposite,
+                },
+                "1A Mirrored Surface Composite",
+            ),
         ];
 
         for (case, expected) in test_cases {

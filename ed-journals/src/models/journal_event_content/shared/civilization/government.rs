@@ -56,26 +56,31 @@ pub enum Government {
 
 impl Display for Government {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Government::Anarchy => "Anarchy",
-            Government::Communism => "Communism",
-            Government::Confederacy => "Confederacy",
-            Government::Cooperative => "Cooperative",
-            Government::Corporate => "Corporate",
-            Government::Democracy => "Democracy",
-            Government::Dictatorship => "Dictatorship",
-            Government::Engineer => "Engineer",
-            Government::Feudal => "Feudal",
-            Government::Patronage => "Patronage",
-            Government::Prison => "Prison",
-            Government::PrisonColony => "Prison Colony",
-            Government::PrivateOwnership => "Private Ownership",
-            Government::Theocracy => "Theocracy",
+        write!(
+            f,
+            "{}",
+            match self {
+                Government::Anarchy => "Anarchy",
+                Government::Communism => "Communism",
+                Government::Confederacy => "Confederacy",
+                Government::Cooperative => "Cooperative",
+                Government::Corporate => "Corporate",
+                Government::Democracy => "Democracy",
+                Government::Dictatorship => "Dictatorship",
+                Government::Engineer => "Engineer",
+                Government::Feudal => "Feudal",
+                Government::Patronage => "Patronage",
+                Government::Prison => "Prison",
+                Government::PrisonColony => "Prison Colony",
+                Government::PrivateOwnership => "Private Ownership",
+                Government::Theocracy => "Theocracy",
 
-            Government::None => "None",
+                Government::None => "None",
 
-            #[cfg(not(feature = "strict"))]
-            Government::Unknown(unknown) => return write!(f, "Unknown government: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                Government::Unknown(unknown) =>
+                    return write!(f, "Unknown government: {}", unknown),
+            }
+        )
     }
 }

@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::journal_event_content::shared::trading::commodity::Commodity;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

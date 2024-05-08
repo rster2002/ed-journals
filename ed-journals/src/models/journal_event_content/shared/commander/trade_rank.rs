@@ -64,24 +64,29 @@ try_from_deserialize_impl!(u8 => TradeRank);
 
 impl Display for TradeRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            TradeRank::Penniless => "Penniless",
-            TradeRank::MostlyPenniless => "Mostly Penniless",
-            TradeRank::Peddler => "Peddler",
-            TradeRank::Dealer => "Dealer",
-            TradeRank::Merchant => "Merchant",
-            TradeRank::Broker => "Broker",
-            TradeRank::Entrepreneur => "Entrepreneur",
-            TradeRank::Tycoon => "Tycoon",
-            TradeRank::Elite => "Elite",
-            TradeRank::EliteI => "Elite I",
-            TradeRank::EliteII => "Elite II",
-            TradeRank::EliteIII => "Elite III",
-            TradeRank::EliteIV => "Elite IV",
-            TradeRank::EliteV => "Elite V",
+        write!(
+            f,
+            "{}",
+            match self {
+                TradeRank::Penniless => "Penniless",
+                TradeRank::MostlyPenniless => "Mostly Penniless",
+                TradeRank::Peddler => "Peddler",
+                TradeRank::Dealer => "Dealer",
+                TradeRank::Merchant => "Merchant",
+                TradeRank::Broker => "Broker",
+                TradeRank::Entrepreneur => "Entrepreneur",
+                TradeRank::Tycoon => "Tycoon",
+                TradeRank::Elite => "Elite",
+                TradeRank::EliteI => "Elite I",
+                TradeRank::EliteII => "Elite II",
+                TradeRank::EliteIII => "Elite III",
+                TradeRank::EliteIV => "Elite IV",
+                TradeRank::EliteV => "Elite V",
 
-            #[cfg(not(feature = "strict"))]
-            TradeRank::Unknown(unknown) => return write!(f, "Unknown trade rank nr: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                TradeRank::Unknown(unknown) =>
+                    return write!(f, "Unknown trade rank nr: {}", unknown),
+            }
+        )
     }
 }

@@ -193,13 +193,17 @@ impl From<Material> for MaterialCategory {
 
 impl Display for MaterialCategory {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            MaterialCategory::Raw => "Raw",
-            MaterialCategory::Manufactured => "Manufactured",
-            MaterialCategory::Encoded => "Encoded",
+        write!(
+            f,
+            "{}",
+            match self {
+                MaterialCategory::Raw => "Raw",
+                MaterialCategory::Manufactured => "Manufactured",
+                MaterialCategory::Encoded => "Encoded",
 
-            #[cfg(not(feature = "strict"))]
-            MaterialCategory::Unknown(unknown) => return write!(f, "{}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                MaterialCategory::Unknown(unknown) => return write!(f, "{}", unknown),
+            }
+        )
     }
 }

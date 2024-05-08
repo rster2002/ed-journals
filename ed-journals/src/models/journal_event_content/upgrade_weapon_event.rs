@@ -1,6 +1,6 @@
-use serde::Deserialize;
 use crate::journal_event_content::shared::odyssey::item::Item;
 use crate::journal_event_content::shared::odyssey::weapon::Weapon;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

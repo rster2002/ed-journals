@@ -1,5 +1,5 @@
-use std::{io, mem};
 use std::collections::VecDeque;
+use std::io;
 use std::io::{Read, Seek, SeekFrom};
 use std::string::FromUtf8Error;
 
@@ -76,11 +76,13 @@ where
 
         // Set position back one space to ensure the reader doesn't skip a character during the
         // next read.
-        if self.file_read_buffer.ends_with("\n") {
+        if self.file_read_buffer.ends_with('\n') {
             self.position -= 1;
         }
 
-        let mut lines = self.file_read_buffer.lines()
+        let mut lines = self
+            .file_read_buffer
+            .lines()
             .filter(|line| !line.is_empty())
             .peekable();
 
@@ -95,7 +97,8 @@ where
                 return Ok(());
             }
 
-            self.entry_buffer.push_back(parse_result.map_err(|e| e.into()));
+            self.entry_buffer
+                .push_back(parse_result.map_err(|e| e.into()));
         }
 
         // If it reaches this point that means that the whole read buffer has been processed, so it
@@ -139,7 +142,7 @@ where
         // cannot be recovered from.
         if let Err(error) = result {
             self.failing = true;
-            return Some(Err(error))
+            return Some(Err(error));
         }
 
         self.entry_buffer.pop_front()
@@ -152,13 +155,13 @@ mod tests {
     use std::fs::File;
     use std::io::Cursor;
 
-    use chrono::{TimeZone, Utc};
     use crate::journal_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+    use chrono::{TimeZone, Utc};
 
     use crate::models::journal_event::JournalEvent;
-    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_event_content::commander_event::CommanderEvent;
     use crate::models::journal_event_content::file_header_event::FileHeaderEvent;
+    use crate::models::journal_event_content::{JournalEventContent, JournalEventContentKind};
     use crate::models::journal_file_reader::JournalFileReader;
 
     #[test]
@@ -255,7 +258,7 @@ mod tests {
             "d.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
         )
-            .unwrap();
+        .unwrap();
 
         assert!(reader.next().is_none());
 
@@ -301,13 +304,15 @@ mod tests {
             .unwrap();
 
         assert!(reader.next().is_none());
-        assert_eq!(reader.file_read_buffer, r#"{"timestamp":"2022-10-22T15:12:05Z","#);
+        assert_eq!(
+            reader.file_read_buffer,
+            r#"{"timestamp":"2022-10-22T15:12:05Z","#
+        );
 
         fs::write("e.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}
 "#)
             .unwrap();
-
 
         assert_eq!(
             reader.next().unwrap().unwrap().content.kind(),
@@ -318,7 +323,6 @@ mod tests {
 
         fs::remove_file("e.tmp").unwrap();
     }
-
 
     #[test]
     fn incorrect_lines_return_an_err_only_when_it_is_expected() {

@@ -26,10 +26,14 @@ impl FromStr for HardpointMounting {
 
 impl Display for HardpointMounting {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            HardpointMounting::Fixed => "Fixed",
-            HardpointMounting::Gimballed => "Gimballed",
-            HardpointMounting::Turreted => "Turreted",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                HardpointMounting::Fixed => "Fixed",
+                HardpointMounting::Gimballed => "Gimballed",
+                HardpointMounting::Turreted => "Turreted",
+            }
+        )
     }
 }

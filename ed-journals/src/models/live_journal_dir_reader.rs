@@ -1,16 +1,15 @@
-use std::fs::File;
-use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::thread;
-use std::thread::Thread;
-use chrono::{NaiveDateTime};
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
-use thiserror::Error;
-use crate::{JournalDir, JournalEvent, JournalFile, JournalFileReader};
 use crate::models::journal_dir::JournalDirError;
 use crate::models::journal_file::JournalFileError;
 use crate::models::journal_file_reader::JournalReaderError;
+use crate::{JournalDir, JournalEvent, JournalFile, JournalFileReader};
+use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use std::fs::File;
+use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::thread::Thread;
+use thiserror::Error;
 
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
@@ -46,8 +45,9 @@ impl LiveJournalDirReader {
         let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
         let waiting_thread_local = waiting_thread.clone();
 
-        let mut watcher = notify::recommended_watcher(move |res| {
-            let guard = waiting_thread_local.lock()
+        let mut watcher = notify::recommended_watcher(move |_| {
+            let guard = waiting_thread_local
+                .lock()
                 .expect("Should have been locked");
 
             if let Some(a) = guard.0.as_ref() {
@@ -68,7 +68,10 @@ impl LiveJournalDirReader {
         })
     }
 
-    fn set_current_file(&mut self, journal_file: JournalFile) -> Result<(), LiveJournalDirReaderError> {
+    fn set_current_file(
+        &mut self,
+        journal_file: JournalFile,
+    ) -> Result<(), LiveJournalDirReaderError> {
         self.current_reader = Some(journal_file.create_reader()?);
         self.current_file = Some(journal_file);
 
@@ -81,7 +84,7 @@ impl LiveJournalDirReader {
         for file in files {
             let Some(current) = &self.current_file else {
                 self.set_current_file(file)?;
-                return Ok(())
+                return Ok(());
             };
 
             if &file > current {
@@ -108,8 +111,7 @@ pub struct LiveJournalDirHandle {
 impl LiveJournalDirHandle {
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
-        let guard = self.waiting_thread.lock()
-            .expect("to have gotten a lock");
+        let guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
         if let Some(a) = guard.0.as_ref() {
             a.unpark();
@@ -130,17 +132,14 @@ impl Iterator for LiveJournalDirReader {
 
             if let Err(error) = result {
                 self.failing = true;
-                return Some(Err(error.into()));
+                return Some(Err(error));
             }
 
-            let Some(reader) = &mut self.current_reader else {
-                return None;
-            };
+            let reader = self.current_reader.as_mut()?;
 
             let Some(result) = reader.next() else {
                 {
-                    let mut guard = self.waiting_thread.lock()
-                        .expect("to have gotten a lock");
+                    let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
                     guard.0 = Some(thread::current());
                 }

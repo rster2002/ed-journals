@@ -453,27 +453,31 @@ impl From<Commodity> for CommodityCategory {
 
 impl Display for CommodityCategory {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CommodityCategory::Chemicals => "Chemicals",
-            CommodityCategory::ConsumerItems => "Consumer Items",
-            CommodityCategory::LegalDrugs => "Legal Drugs",
-            CommodityCategory::Foods => "Foods",
-            CommodityCategory::IndustrialMaterials => "Industrial Materials",
-            CommodityCategory::Machinery => "Machinery",
-            CommodityCategory::Medicines => "Medicines",
-            CommodityCategory::Metals => "Metals",
-            CommodityCategory::Minerals => "Minerals",
-            CommodityCategory::Salvage => "Salvage",
-            CommodityCategory::Slaves => "Slaves",
-            CommodityCategory::Technology => "Technology",
-            CommodityCategory::Textiles => "Textiles",
-            CommodityCategory::Waste => "Waste",
-            CommodityCategory::Weapons => "Weapons",
-            CommodityCategory::Rare => "Rare",
-            CommodityCategory::None => "None",
+        write!(
+            f,
+            "{}",
+            match self {
+                CommodityCategory::Chemicals => "Chemicals",
+                CommodityCategory::ConsumerItems => "Consumer Items",
+                CommodityCategory::LegalDrugs => "Legal Drugs",
+                CommodityCategory::Foods => "Foods",
+                CommodityCategory::IndustrialMaterials => "Industrial Materials",
+                CommodityCategory::Machinery => "Machinery",
+                CommodityCategory::Medicines => "Medicines",
+                CommodityCategory::Metals => "Metals",
+                CommodityCategory::Minerals => "Minerals",
+                CommodityCategory::Salvage => "Salvage",
+                CommodityCategory::Slaves => "Slaves",
+                CommodityCategory::Technology => "Technology",
+                CommodityCategory::Textiles => "Textiles",
+                CommodityCategory::Waste => "Waste",
+                CommodityCategory::Weapons => "Weapons",
+                CommodityCategory::Rare => "Rare",
+                CommodityCategory::None => "None",
 
-            #[cfg(not(feature = "strict"))]
-            CommodityCategory::Unknown(unknown) => unknown,
-        })
+                #[cfg(not(feature = "strict"))]
+                CommodityCategory::Unknown(unknown) => unknown,
+            }
+        )
     }
 }

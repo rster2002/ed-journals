@@ -225,32 +225,36 @@ impl From<Species> for Genus {
 
 impl Display for Genus {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Genus::Aleoida => "Aleoida",
-            Genus::AmphoraPlant => "Amphora Plant",
-            Genus::Anemone => "Anemone",
-            Genus::BarkMound => "Bark Mound",
-            Genus::Bacterium => "Bacterium",
-            Genus::BrainTree => "Brain Tree",
-            Genus::Cactoida => "Cactoida",
-            Genus::Clypeus => "Clypeus",
-            Genus::Concha => "Concha",
-            Genus::CrystallineShards => "Crystalline Shards",
-            Genus::Electricae => "Electricae",
-            Genus::Fonticulua => "Fonticulua",
-            Genus::Fruxeta => "Fruxeta",
-            Genus::Fumerola => "Fumerola",
-            Genus::Fungoida => "Fungoida",
-            Genus::Osseus => "Osseus",
-            Genus::Recepta => "Recepta",
-            Genus::SinuousTubers => "Sinuous Tubers",
-            Genus::Stratum => "Stratum",
-            Genus::Tubus => "Tubus",
-            Genus::Tussock => "Tussock",
-            Genus::Trutexa => "Trutexa",
+        write!(
+            f,
+            "{}",
+            match self {
+                Genus::Aleoida => "Aleoida",
+                Genus::AmphoraPlant => "Amphora Plant",
+                Genus::Anemone => "Anemone",
+                Genus::BarkMound => "Bark Mound",
+                Genus::Bacterium => "Bacterium",
+                Genus::BrainTree => "Brain Tree",
+                Genus::Cactoida => "Cactoida",
+                Genus::Clypeus => "Clypeus",
+                Genus::Concha => "Concha",
+                Genus::CrystallineShards => "Crystalline Shards",
+                Genus::Electricae => "Electricae",
+                Genus::Fonticulua => "Fonticulua",
+                Genus::Fruxeta => "Fruxeta",
+                Genus::Fumerola => "Fumerola",
+                Genus::Fungoida => "Fungoida",
+                Genus::Osseus => "Osseus",
+                Genus::Recepta => "Recepta",
+                Genus::SinuousTubers => "Sinuous Tubers",
+                Genus::Stratum => "Stratum",
+                Genus::Tubus => "Tubus",
+                Genus::Tussock => "Tussock",
+                Genus::Trutexa => "Trutexa",
 
-            #[cfg(not(feature = "strict"))]
-            Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
+            }
+        )
     }
 }

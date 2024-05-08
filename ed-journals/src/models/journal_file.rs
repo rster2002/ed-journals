@@ -9,9 +9,9 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
 
-use crate::LiveJournalFileReader;
 use crate::models::journal_file_reader::JournalFileReader;
 use crate::models::live_journal_file_reader::LiveJournalFileReaderError;
+use crate::LiveJournalFileReader;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]

@@ -10,8 +10,12 @@ pub enum SRVType {
 
 impl Display for SRVType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            SRVType::Scarab => "Scarab",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                SRVType::Scarab => "Scarab",
+            }
+        )
     }
 }

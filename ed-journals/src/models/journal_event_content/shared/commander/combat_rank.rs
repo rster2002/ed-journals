@@ -125,27 +125,33 @@ impl<'de> serde::Deserialize<'de> for CombatRank {
 
 impl Display for CombatRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CombatRank::Harmless => "Harmless",
-            CombatRank::MostlyHarmless => "Mostly Harmless",
-            CombatRank::Novice => "Novice",
-            CombatRank::Competent => "Competent",
-            CombatRank::Expert => "Expert",
-            CombatRank::Master => "Master",
-            CombatRank::Dangerous => "Dangerous",
-            CombatRank::Deadly => "Deadly",
-            CombatRank::Elite => "Elite",
-            CombatRank::EliteI => "Elite I",
-            CombatRank::EliteII => "Elite II",
-            CombatRank::EliteIII => "Elite III",
-            CombatRank::EliteIV => "Elite IV",
-            CombatRank::EliteV => "Elite V",
+        write!(
+            f,
+            "{}",
+            match self {
+                CombatRank::Harmless => "Harmless",
+                CombatRank::MostlyHarmless => "Mostly Harmless",
+                CombatRank::Novice => "Novice",
+                CombatRank::Competent => "Competent",
+                CombatRank::Expert => "Expert",
+                CombatRank::Master => "Master",
+                CombatRank::Dangerous => "Dangerous",
+                CombatRank::Deadly => "Deadly",
+                CombatRank::Elite => "Elite",
+                CombatRank::EliteI => "Elite I",
+                CombatRank::EliteII => "Elite II",
+                CombatRank::EliteIII => "Elite III",
+                CombatRank::EliteIV => "Elite IV",
+                CombatRank::EliteV => "Elite V",
 
-            #[cfg(not(feature = "strict"))]
-            CombatRank::UnknownU8(unknown) => return write!(f, "Unknown combat rank nr: {}", unknown),
+                #[cfg(not(feature = "strict"))]
+                CombatRank::UnknownU8(unknown) =>
+                    return write!(f, "Unknown combat rank nr: {}", unknown),
 
-            #[cfg(not(feature = "strict"))]
-            CombatRank::UnknownString(unknown) => return write!(f, "Unknown combat rank: {}", unknown)
-        })
+                #[cfg(not(feature = "strict"))]
+                CombatRank::UnknownString(unknown) =>
+                    return write!(f, "Unknown combat rank: {}", unknown),
+            }
+        )
     }
 }

@@ -10,7 +10,7 @@ pub struct DropShipDeployEvent {
 
     #[serde(default)]
     pub on_station: bool,
-    
+
     #[serde(default)]
     pub on_planet: bool,
 }

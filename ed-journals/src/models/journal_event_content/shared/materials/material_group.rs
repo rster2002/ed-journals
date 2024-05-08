@@ -202,35 +202,39 @@ impl MaterialGroup {
 
 impl Display for MaterialGroup {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            // Raw
-            MaterialGroup::RawMaterials1 => "Raw Materials 1",
-            MaterialGroup::RawMaterials2 => "Raw Materials 2",
-            MaterialGroup::RawMaterials3 => "Raw Materials 3",
-            MaterialGroup::RawMaterials4 => "Raw Materials 4",
-            MaterialGroup::RawMaterials5 => "Raw Materials 5",
-            MaterialGroup::RawMaterials6 => "Raw Materials 6",
-            MaterialGroup::RawMaterials7 => "Raw Materials 7",
+        write!(
+            f,
+            "{}",
+            match self {
+                // Raw
+                MaterialGroup::RawMaterials1 => "Raw Materials 1",
+                MaterialGroup::RawMaterials2 => "Raw Materials 2",
+                MaterialGroup::RawMaterials3 => "Raw Materials 3",
+                MaterialGroup::RawMaterials4 => "Raw Materials 4",
+                MaterialGroup::RawMaterials5 => "Raw Materials 5",
+                MaterialGroup::RawMaterials6 => "Raw Materials 6",
+                MaterialGroup::RawMaterials7 => "Raw Materials 7",
 
-            // Manufactured
-            MaterialGroup::Chemical => "Chemical",
-            MaterialGroup::Thermic => "Thermic",
-            MaterialGroup::Heat => "Heat",
-            MaterialGroup::Conductive => "Conductive",
-            MaterialGroup::MechanicalComponents => "Mechanical Components",
-            MaterialGroup::Capacitors => "Capacitors",
-            MaterialGroup::Shielding => "Shielding",
-            MaterialGroup::Composite => "Composite",
-            MaterialGroup::Crystal => "Crystal",
-            MaterialGroup::Alloys => "Alloys",
+                // Manufactured
+                MaterialGroup::Chemical => "Chemical",
+                MaterialGroup::Thermic => "Thermic",
+                MaterialGroup::Heat => "Heat",
+                MaterialGroup::Conductive => "Conductive",
+                MaterialGroup::MechanicalComponents => "Mechanical Components",
+                MaterialGroup::Capacitors => "Capacitors",
+                MaterialGroup::Shielding => "Shielding",
+                MaterialGroup::Composite => "Composite",
+                MaterialGroup::Crystal => "Crystal",
+                MaterialGroup::Alloys => "Alloys",
 
-            // Encoded
-            MaterialGroup::EmissionData => "Emission Data",
-            MaterialGroup::WakeScans => "Wake Scans",
-            MaterialGroup::ShieldData => "Shield Data",
-            MaterialGroup::EncryptionFiles => "Encryption Files",
-            MaterialGroup::DataArchives => "Data Archives",
-            MaterialGroup::EncodedFirmware => "Encoded Firmware",
-        })
+                // Encoded
+                MaterialGroup::EmissionData => "Emission Data",
+                MaterialGroup::WakeScans => "Wake Scans",
+                MaterialGroup::ShieldData => "Shield Data",
+                MaterialGroup::EncryptionFiles => "Encryption Files",
+                MaterialGroup::DataArchives => "Data Archives",
+                MaterialGroup::EncodedFirmware => "Encoded Firmware",
+            }
+        )
     }
 }

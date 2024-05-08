@@ -129,37 +129,41 @@ impl HardpointModule {
 
 impl Display for HardpointModule {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            HardpointModule::BeamLaser => "Beam Laser",
-            HardpointModule::PulseLaser => "Pulse Laser",
-            HardpointModule::MultiCannon => "Multi-Cannon",
-            HardpointModule::GuardianGaussCannon => "Guardian Gauss Cannon",
-            HardpointModule::EnhancedXenoScanner => "Enhanced Xeno Scanner",
-            HardpointModule::PulseWaveXenoScanner => "Pulse Wave Xeno Scanner",
-            HardpointModule::NaniteTorpedoPylon => "Nanite Torpedo Pylon",
-            HardpointModule::HeatsinkLauncher => "Heatsink Launcher",
-            HardpointModule::CausticSinkLauncher => "Caustic Sink Launcher",
-            HardpointModule::PointDefenceTurret => "Point Defence Turret",
-            HardpointModule::ChaffLauncher => "Chaff Launcher",
-            HardpointModule::MissileRack => "Missile Rack",
-            HardpointModule::ShieldBooster => "Shield Booster",
-            HardpointModule::EnhancedAXMultiCannon => "Enhanced AX Multi-Cannon",
-            HardpointModule::AXMissileRack => "AX Missile Rack",
-            HardpointModule::EnhancedAXMissileRack => "Enhanced AX Missile Rack",
-            HardpointModule::RemoteFlakLauncher => "Remote Flak Launcher",
-            HardpointModule::ElectronicCountermeasures => "Electronic Countermeasures",
-            HardpointModule::ShutdownFieldNeutralizer => "Shutdown Field Neutralizer",
-            HardpointModule::AbrasionBlaster => "Abrasion Blaster",
-            HardpointModule::SeismicCharge => "Seismic Charge",
-            HardpointModule::DisplacementMissile => "Displacement Missile",
-            HardpointModule::MiningLaser => "Mining Laser",
-            HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
-            HardpointModule::WakeScanner => "Wake Scanner",
-            HardpointModule::PulseWaveAnalyzer => "Pulse Wave Analyzer",
-            HardpointModule::RailGun => "Rail Gun",
+        write!(
+            f,
+            "{}",
+            match self {
+                HardpointModule::BeamLaser => "Beam Laser",
+                HardpointModule::PulseLaser => "Pulse Laser",
+                HardpointModule::MultiCannon => "Multi-Cannon",
+                HardpointModule::GuardianGaussCannon => "Guardian Gauss Cannon",
+                HardpointModule::EnhancedXenoScanner => "Enhanced Xeno Scanner",
+                HardpointModule::PulseWaveXenoScanner => "Pulse Wave Xeno Scanner",
+                HardpointModule::NaniteTorpedoPylon => "Nanite Torpedo Pylon",
+                HardpointModule::HeatsinkLauncher => "Heatsink Launcher",
+                HardpointModule::CausticSinkLauncher => "Caustic Sink Launcher",
+                HardpointModule::PointDefenceTurret => "Point Defence Turret",
+                HardpointModule::ChaffLauncher => "Chaff Launcher",
+                HardpointModule::MissileRack => "Missile Rack",
+                HardpointModule::ShieldBooster => "Shield Booster",
+                HardpointModule::EnhancedAXMultiCannon => "Enhanced AX Multi-Cannon",
+                HardpointModule::AXMissileRack => "AX Missile Rack",
+                HardpointModule::EnhancedAXMissileRack => "Enhanced AX Missile Rack",
+                HardpointModule::RemoteFlakLauncher => "Remote Flak Launcher",
+                HardpointModule::ElectronicCountermeasures => "Electronic Countermeasures",
+                HardpointModule::ShutdownFieldNeutralizer => "Shutdown Field Neutralizer",
+                HardpointModule::AbrasionBlaster => "Abrasion Blaster",
+                HardpointModule::SeismicCharge => "Seismic Charge",
+                HardpointModule::DisplacementMissile => "Displacement Missile",
+                HardpointModule::MiningLaser => "Mining Laser",
+                HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
+                HardpointModule::WakeScanner => "Wake Scanner",
+                HardpointModule::PulseWaveAnalyzer => "Pulse Wave Analyzer",
+                HardpointModule::RailGun => "Rail Gun",
 
-            #[cfg(not(feature = "strict"))]
-            HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
+            }
+        )
     }
 }

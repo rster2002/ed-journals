@@ -66,25 +66,30 @@ try_from_deserialize_impl!(u8 => FederationRank);
 
 impl Display for FederationRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            FederationRank::None => "None",
-            FederationRank::Recruit => "Recruit",
-            FederationRank::Cadet => "Cadet",
-            FederationRank::Midshipman => "Midshipman",
-            FederationRank::PettyOfficer => "Petty Officer",
-            FederationRank::ChiefPettyOfficer => "Chief Petty Officer",
-            FederationRank::WarrantOfficer => "WarrantOfficer",
-            FederationRank::Ensign => "Ensign",
-            FederationRank::Lieutenant => "Lieutenant",
-            FederationRank::LieutenantCommander => "Lieutenant Commander",
-            FederationRank::PostCommander => "Post Commander",
-            FederationRank::PostCaptain => "Post Captain",
-            FederationRank::RearAdmiral => "Rear Admiral",
-            FederationRank::ViceAdmiral => "Vice Admiral",
-            FederationRank::Admiral => "Admiral",
+        write!(
+            f,
+            "{}",
+            match self {
+                FederationRank::None => "None",
+                FederationRank::Recruit => "Recruit",
+                FederationRank::Cadet => "Cadet",
+                FederationRank::Midshipman => "Midshipman",
+                FederationRank::PettyOfficer => "Petty Officer",
+                FederationRank::ChiefPettyOfficer => "Chief Petty Officer",
+                FederationRank::WarrantOfficer => "WarrantOfficer",
+                FederationRank::Ensign => "Ensign",
+                FederationRank::Lieutenant => "Lieutenant",
+                FederationRank::LieutenantCommander => "Lieutenant Commander",
+                FederationRank::PostCommander => "Post Commander",
+                FederationRank::PostCaptain => "Post Captain",
+                FederationRank::RearAdmiral => "Rear Admiral",
+                FederationRank::ViceAdmiral => "Vice Admiral",
+                FederationRank::Admiral => "Admiral",
 
-            #[cfg(not(feature = "strict"))]
-            FederationRank::Unknown(unknown) => return write!(f, "Unknown federation rank nr: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                FederationRank::Unknown(unknown) =>
+                    return write!(f, "Unknown federation rank nr: {}", unknown),
+            }
+        )
     }
 }

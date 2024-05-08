@@ -1,21 +1,20 @@
-use std::{io, thread};
 use std::collections::VecDeque;
 use std::fs::File;
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Mutex};
 use std::thread::Thread;
+use std::{io, thread};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::{JournalEvent, JournalFileReader};
 use crate::models::journal_file_reader::JournalReaderError;
+use crate::{JournalEvent, JournalFileReader};
 
 #[derive(Debug)]
 pub struct LiveJournalFileReader {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
-    entry_buffer: VecDeque<JournalEvent>,
     journal_file_reader: JournalFileReader<File>,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
@@ -38,8 +37,9 @@ impl LiveJournalFileReader {
         let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
         let waiting_thread_local = waiting_thread.clone();
 
-        let mut watcher = notify::recommended_watcher(move |res| {
-            let guard = waiting_thread_local.lock()
+        let mut watcher = notify::recommended_watcher(move |_| {
+            let guard = waiting_thread_local
+                .lock()
                 .expect("Should have been locked");
 
             if let Some(a) = guard.0.as_ref() {
@@ -51,7 +51,6 @@ impl LiveJournalFileReader {
 
         Ok(LiveJournalFileReader {
             waiting_thread,
-            entry_buffer: VecDeque::new(),
             journal_file_reader,
             watcher,
             active: Arc::new(AtomicBool::new(true)),
@@ -74,8 +73,7 @@ pub struct LiveJournalFileHandle {
 impl LiveJournalFileHandle {
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
-        let guard = self.waiting_thread.lock()
-            .expect("to have gotten a lock");
+        let guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
         if let Some(a) = guard.0.as_ref() {
             a.unpark();
@@ -96,8 +94,7 @@ impl Iterator for LiveJournalFileReader {
                 Some(value) => return Some(value),
                 None => {
                     {
-                        let mut guard = self.waiting_thread.lock()
-                            .expect("to have gotten a lock");
+                        let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
                         guard.0 = Some(thread::current());
                     }

@@ -829,35 +829,39 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
 
 impl Display for VariantColor {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            VariantColor::Amethyst => "Amethyst",
-            VariantColor::Aquamarine => "Aquamarine",
-            VariantColor::Blue => "Blue",
-            VariantColor::Cobalt => "Cobalt",
-            VariantColor::Cyan => "Cyan",
-            VariantColor::Emerald => "Emerald",
-            VariantColor::Gold => "Gold",
-            VariantColor::Green => "Green",
-            VariantColor::Grey => "Grey",
-            VariantColor::Indigo => "Indigo",
-            VariantColor::Lime => "Lime",
-            VariantColor::Magenta => "Magenta",
-            VariantColor::Maroon => "Maroon",
-            VariantColor::Mauve => "Mauve",
-            VariantColor::Mulberry => "Mulberry",
-            VariantColor::Ocher => "Ocher",
-            VariantColor::Orange => "Orange",
-            VariantColor::Peach => "Peach",
-            VariantColor::Red => "Red",
-            VariantColor::Sage => "Sage",
-            VariantColor::Teal => "Teal",
-            VariantColor::Turquoise => "Turquoise",
-            VariantColor::White => "White",
-            VariantColor::Yellow => "Yellow",
-            VariantColor::None => "None",
+        write!(
+            f,
+            "{}",
+            match self {
+                VariantColor::Amethyst => "Amethyst",
+                VariantColor::Aquamarine => "Aquamarine",
+                VariantColor::Blue => "Blue",
+                VariantColor::Cobalt => "Cobalt",
+                VariantColor::Cyan => "Cyan",
+                VariantColor::Emerald => "Emerald",
+                VariantColor::Gold => "Gold",
+                VariantColor::Green => "Green",
+                VariantColor::Grey => "Grey",
+                VariantColor::Indigo => "Indigo",
+                VariantColor::Lime => "Lime",
+                VariantColor::Magenta => "Magenta",
+                VariantColor::Maroon => "Maroon",
+                VariantColor::Mauve => "Mauve",
+                VariantColor::Mulberry => "Mulberry",
+                VariantColor::Ocher => "Ocher",
+                VariantColor::Orange => "Orange",
+                VariantColor::Peach => "Peach",
+                VariantColor::Red => "Red",
+                VariantColor::Sage => "Sage",
+                VariantColor::Teal => "Teal",
+                VariantColor::Turquoise => "Turquoise",
+                VariantColor::White => "White",
+                VariantColor::Yellow => "Yellow",
+                VariantColor::None => "None",
 
-            #[cfg(not(feature = "strict"))]
-            VariantColor::Unknown => "Unknown",
-        })
+                #[cfg(not(feature = "strict"))]
+                VariantColor::Unknown => "Unknown",
+            }
+        )
     }
 }

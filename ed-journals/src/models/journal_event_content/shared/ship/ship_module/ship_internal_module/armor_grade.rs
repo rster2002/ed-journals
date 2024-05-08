@@ -42,15 +42,19 @@ impl TryFrom<u8> for ArmorGrade {
 
 impl Display for ArmorGrade {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            ArmorGrade::LightweightAlloy => "Lightweight Alloy",
-            ArmorGrade::ReinforcedAlloy => "Reinforced Alloy",
-            ArmorGrade::MilitaryGradeComposite => "Military Grade Composite",
-            ArmorGrade::MirroredSurfaceComposite => "Mirrored Surface Composite",
-            ArmorGrade::ReactiveSurfaceComposite => "Reactive Surface Composite",
+        write!(
+            f,
+            "{}",
+            match self {
+                ArmorGrade::LightweightAlloy => "Lightweight Alloy",
+                ArmorGrade::ReinforcedAlloy => "Reinforced Alloy",
+                ArmorGrade::MilitaryGradeComposite => "Military Grade Composite",
+                ArmorGrade::MirroredSurfaceComposite => "Mirrored Surface Composite",
+                ArmorGrade::ReactiveSurfaceComposite => "Reactive Surface Composite",
 
-            #[cfg(not(feature = "strict"))]
-            ArmorGrade::Unknown(_) => "Unknown composite",
-        })
+                #[cfg(not(feature = "strict"))]
+                ArmorGrade::Unknown(_) => "Unknown composite",
+            }
+        )
     }
 }

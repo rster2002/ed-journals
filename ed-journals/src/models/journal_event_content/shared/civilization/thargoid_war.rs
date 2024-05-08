@@ -42,15 +42,20 @@ pub enum ThargoidWarState {
 
 impl Display for ThargoidWarState {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            ThargoidWarState::Stronghold => "Stronghold",
-            ThargoidWarState::Probing => "Probing",
-            ThargoidWarState::Controlled => "Controlled",
-            ThargoidWarState::Recovery => "Recovery",
-            ThargoidWarState::Unspecified => "Unspecified",
+        write!(
+            f,
+            "{}",
+            match self {
+                ThargoidWarState::Stronghold => "Stronghold",
+                ThargoidWarState::Probing => "Probing",
+                ThargoidWarState::Controlled => "Controlled",
+                ThargoidWarState::Recovery => "Recovery",
+                ThargoidWarState::Unspecified => "Unspecified",
 
-            #[cfg(not(feature = "strict"))]
-            ThargoidWarState::Unknown(unknown) => return write!(f, "Unknown thargoid war state: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                ThargoidWarState::Unknown(unknown) =>
+                    return write!(f, "Unknown thargoid war state: {}", unknown),
+            }
+        )
     }
 }

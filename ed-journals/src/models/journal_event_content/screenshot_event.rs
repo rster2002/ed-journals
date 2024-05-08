@@ -13,4 +13,3 @@ pub struct ScreenshotEvent {
     pub altitude: Option<f32>,
     pub heading: Option<f32>,
 }
-

@@ -64,24 +64,29 @@ try_from_deserialize_impl!(u8 => MercenaryRank);
 
 impl Display for MercenaryRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            MercenaryRank::Defenceless => "Defenceless",
-            MercenaryRank::MostlyDefenceless => "Mostly Defenceless",
-            MercenaryRank::Rookie => "Rookie",
-            MercenaryRank::Soldier => "Soldier",
-            MercenaryRank::Gunslinger => "Gunslinger",
-            MercenaryRank::Warrior => "Warrior",
-            MercenaryRank::Gladiator => "Gladiator",
-            MercenaryRank::Deadeye => "Deadeye",
-            MercenaryRank::Elite => "Elite",
-            MercenaryRank::EliteI => "Elite I",
-            MercenaryRank::EliteII => "Elite II",
-            MercenaryRank::EliteIII => "Elite III",
-            MercenaryRank::EliteIV => "Elite IV",
-            MercenaryRank::EliteV => "Elite V",
+        write!(
+            f,
+            "{}",
+            match self {
+                MercenaryRank::Defenceless => "Defenceless",
+                MercenaryRank::MostlyDefenceless => "Mostly Defenceless",
+                MercenaryRank::Rookie => "Rookie",
+                MercenaryRank::Soldier => "Soldier",
+                MercenaryRank::Gunslinger => "Gunslinger",
+                MercenaryRank::Warrior => "Warrior",
+                MercenaryRank::Gladiator => "Gladiator",
+                MercenaryRank::Deadeye => "Deadeye",
+                MercenaryRank::Elite => "Elite",
+                MercenaryRank::EliteI => "Elite I",
+                MercenaryRank::EliteII => "Elite II",
+                MercenaryRank::EliteIII => "Elite III",
+                MercenaryRank::EliteIV => "Elite IV",
+                MercenaryRank::EliteV => "Elite V",
 
-            #[cfg(not(feature = "strict"))]
-            MercenaryRank::Unknown(unknown) => return write!(f, "Unknown mercenary rank nr: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                MercenaryRank::Unknown(unknown) =>
+                    return write!(f, "Unknown mercenary rank nr: {}", unknown),
+            }
+        )
     }
 }

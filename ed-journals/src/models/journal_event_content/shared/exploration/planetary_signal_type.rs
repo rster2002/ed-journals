@@ -34,17 +34,22 @@ pub enum PlanetarySignalType {
 
 impl Display for PlanetarySignalType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            PlanetarySignalType::Human => "Human",
-            PlanetarySignalType::Biological => "Biological",
-            PlanetarySignalType::Geological => "Geological",
-            PlanetarySignalType::Thargoid => "Thargoid",
-            PlanetarySignalType::Guardian => "Guardian",
-            PlanetarySignalType::Other => "Other",
-            PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
+        write!(
+            f,
+            "{}",
+            match self {
+                PlanetarySignalType::Human => "Human",
+                PlanetarySignalType::Biological => "Biological",
+                PlanetarySignalType::Geological => "Geological",
+                PlanetarySignalType::Thargoid => "Thargoid",
+                PlanetarySignalType::Guardian => "Guardian",
+                PlanetarySignalType::Other => "Other",
+                PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
 
-            #[cfg(not(feature = "strict"))]
-            PlanetarySignalType::Unknown(unknown) => return write!(f, "Unknown planetary signal: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                PlanetarySignalType::Unknown(unknown) =>
+                    return write!(f, "Unknown planetary signal: {}", unknown),
+            }
+        )
     }
 }

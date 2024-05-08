@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::journal_event_content::shared::station::mission_type::MissionType;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -21,9 +21,9 @@ pub struct MissionEventEntry {
 
 #[cfg(test)]
 mod tests {
+    use crate::journal_event_content::shared::station::mission_type::MissionType;
     use crate::models::journal_event_content::missions_event::{MissionEventEntry, MissionsEvent};
     use serde_json::json;
-    use crate::journal_event_content::shared::station::mission_type::MissionType;
 
     #[test]
     fn mission_event_is_parsed_correctly() {

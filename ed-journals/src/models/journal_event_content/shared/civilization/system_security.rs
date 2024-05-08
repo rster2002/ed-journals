@@ -23,14 +23,19 @@ pub enum SystemSecurity {
 
 impl Display for SystemSecurity {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            SystemSecurity::High => "High",
-            SystemSecurity::Medium => "Medium",
-            SystemSecurity::Low => "Low",
-            SystemSecurity::Anarchy => "Anarchy",
+        write!(
+            f,
+            "{}",
+            match self {
+                SystemSecurity::High => "High",
+                SystemSecurity::Medium => "Medium",
+                SystemSecurity::Low => "Low",
+                SystemSecurity::Anarchy => "Anarchy",
 
-            #[cfg(not(feature = "strict"))]
-            SystemSecurity::Unknown(unknown) => return write!(f, "Unknown system security: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                SystemSecurity::Unknown(unknown) =>
+                    return write!(f, "Unknown system security: {}", unknown),
+            }
+        )
     }
 }

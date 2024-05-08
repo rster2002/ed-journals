@@ -12,12 +12,12 @@ use crate::models::journal_event_content::shared::ship::ship_module::ship_intern
 
 pub mod module_class;
 pub mod ship_cockpit_module;
+mod ship_decal;
 pub mod ship_hardpoint_module;
 pub mod ship_internal_module;
-mod ship_paint_job;
-mod ship_decal;
-mod ship_voicepack;
 mod ship_nameplate;
+mod ship_paint_job;
+mod ship_voicepack;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {
@@ -25,7 +25,7 @@ pub enum ShipModule {
     #[serde(
         alias = "modularcargobaydoor",
         alias = "modularcargobaydoorfdl",
-        alias = "$modularcargobaydoor_name;",
+        alias = "$modularcargobaydoor_name;"
     )]
     CargoBayDoor,
 

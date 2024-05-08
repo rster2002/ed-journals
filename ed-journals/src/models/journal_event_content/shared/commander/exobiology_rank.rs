@@ -64,24 +64,29 @@ try_from_deserialize_impl!(u8 => ExobiologyRank);
 
 impl Display for ExobiologyRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            ExobiologyRank::Directionless => "Directionless",
-            ExobiologyRank::MostlyDirectionless => "Mostly Directionless",
-            ExobiologyRank::Compiler => "Compiler",
-            ExobiologyRank::Collector => "Collector",
-            ExobiologyRank::Cataloguer => "Cataloguer",
-            ExobiologyRank::Taxonomist => "Taxonomist",
-            ExobiologyRank::Ecologist => "Ecologist",
-            ExobiologyRank::Geneticist => "Geneticist",
-            ExobiologyRank::Elite => "Elite",
-            ExobiologyRank::EliteI => "Elite I",
-            ExobiologyRank::EliteII => "Elite II",
-            ExobiologyRank::EliteIII => "Elite III",
-            ExobiologyRank::EliteIV => "Elite IV",
-            ExobiologyRank::EliteV => "Elite V",
+        write!(
+            f,
+            "{}",
+            match self {
+                ExobiologyRank::Directionless => "Directionless",
+                ExobiologyRank::MostlyDirectionless => "Mostly Directionless",
+                ExobiologyRank::Compiler => "Compiler",
+                ExobiologyRank::Collector => "Collector",
+                ExobiologyRank::Cataloguer => "Cataloguer",
+                ExobiologyRank::Taxonomist => "Taxonomist",
+                ExobiologyRank::Ecologist => "Ecologist",
+                ExobiologyRank::Geneticist => "Geneticist",
+                ExobiologyRank::Elite => "Elite",
+                ExobiologyRank::EliteI => "Elite I",
+                ExobiologyRank::EliteII => "Elite II",
+                ExobiologyRank::EliteIII => "Elite III",
+                ExobiologyRank::EliteIV => "Elite IV",
+                ExobiologyRank::EliteV => "Elite V",
 
-            #[cfg(not(feature = "strict"))]
-            ExobiologyRank::Unknown(unknown) => return write!(f, "Unknown exobiology rank nr: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                ExobiologyRank::Unknown(unknown) =>
+                    return write!(f, "Unknown exobiology rank nr: {}", unknown),
+            }
+        )
     }
 }

@@ -16,7 +16,7 @@ pub enum Weapon {
 
     #[serde(
         alias = "Wpn_S_Pistol_Linetic_Sauto",
-        alias = "wpn_s_pistol_kinetic_sauto",
+        alias = "wpn_s_pistol_kinetic_sauto"
     )]
     KarmaP15,
 
@@ -57,20 +57,24 @@ pub enum Weapon {
 
 impl Display for Weapon {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Weapon::KarmaAR50 => "Karma AR-50",
-            Weapon::KarmaC44 => "Karma C-44",
-            Weapon::KarmaL6 => "Karma L-6",
-            Weapon::KarmaP15 => "Karma P-15",
+        write!(
+            f,
+            "{}",
+            match self {
+                Weapon::KarmaAR50 => "Karma AR-50",
+                Weapon::KarmaC44 => "Karma C-44",
+                Weapon::KarmaL6 => "Karma L-6",
+                Weapon::KarmaP15 => "Karma P-15",
 
-            Weapon::ManticoreExecutioner => "Manticore Executioner",
-            Weapon::ManticoreIntimidator => "Manticore Intimidator",
-            Weapon::ManticoreOppressor => "Manticore Oppressor",
-            Weapon::ManticoreTormentor => "Manticore Tormentor",
+                Weapon::ManticoreExecutioner => "Manticore Executioner",
+                Weapon::ManticoreIntimidator => "Manticore Intimidator",
+                Weapon::ManticoreOppressor => "Manticore Oppressor",
+                Weapon::ManticoreTormentor => "Manticore Tormentor",
 
-            Weapon::TKAphelion => "TK Aphelion",
-            Weapon::TKEclipse => "TK Eclipse",
-            Weapon::TKZenith => "TK Zenith ",
-        })
+                Weapon::TKAphelion => "TK Aphelion",
+                Weapon::TKEclipse => "TK Eclipse",
+                Weapon::TKZenith => "TK Zenith ",
+            }
+        )
     }
 }

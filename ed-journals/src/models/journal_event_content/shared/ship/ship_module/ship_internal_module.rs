@@ -255,7 +255,7 @@ mod tests {
                     module: InternalModule::PlanetApproachSuite,
                     size: 1,
                     class: ModuleClass::I,
-                }
+                },
             ),
         ];
 

@@ -16,14 +16,19 @@ pub enum Superpower {
 
 impl Display for Superpower {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Superpower::Independent => "Independent",
-            Superpower::Federation => "Federation",
-            Superpower::Empire => "Empire",
-            Superpower::Alliance => "Alliance",
+        write!(
+            f,
+            "{}",
+            match self {
+                Superpower::Independent => "Independent",
+                Superpower::Federation => "Federation",
+                Superpower::Empire => "Empire",
+                Superpower::Alliance => "Alliance",
 
-            #[cfg(not(feature = "strict"))]
-            Superpower::Unknown(unknown) => return write!(f, "Unknown superpower: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                Superpower::Unknown(unknown) =>
+                    return write!(f, "Unknown superpower: {}", unknown),
+            }
+        )
     }
 }

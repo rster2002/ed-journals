@@ -39,11 +39,9 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let log_dir  = JournalDir::new(dir_path)
-            .unwrap();
+        let log_dir = JournalDir::new(dir_path).unwrap();
 
-        let logs = log_dir.journal_logs()
-            .unwrap();
+        let logs = log_dir.journal_logs().unwrap();
 
         assert!(logs.len() > 10);
 
@@ -51,17 +49,14 @@ mod tests {
         let mut entry_count = 0;
 
         for journal in &logs {
-            let reader = journal.create_reader()
-                .unwrap();
+            let reader = journal.create_reader().unwrap();
 
             for entry in reader {
                 entry_count += 1;
-                match entry.unwrap().content {
-                    JournalEventContent::FileHeader(_) => {
-                        file_header_count += 1;
-                    },
-                    _ => {},
-                };
+
+                if let JournalEventContent::FileHeader(_) = entry.unwrap().content {
+                    file_header_count += 1;
+                }
             }
         }
 

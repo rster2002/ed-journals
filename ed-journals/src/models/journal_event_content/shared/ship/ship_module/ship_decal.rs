@@ -29,14 +29,13 @@ impl FromStr for ShipDecal {
             return Err(ShipDecalError::FailedToParse(s.to_string()));
         };
 
-        let name = captures.get(1)
+        let name = captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_string();
 
-        Ok(ShipDecal {
-            name,
-        })
+        Ok(ShipDecal { name })
     }
 }
 

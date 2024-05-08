@@ -35,12 +35,16 @@ pub enum Citizen {
 
 impl Display for Citizen {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Citizen::Researcher => "Researcher",
-            Citizen::Commando => "Commando",
-            Citizen::Scout => "Scout",
-            Citizen::Striker => "Striker",
-            Citizen::Sniper => "Sniper",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                Citizen::Researcher => "Researcher",
+                Citizen::Commando => "Commando",
+                Citizen::Scout => "Scout",
+                Citizen::Striker => "Striker",
+                Citizen::Sniper => "Sniper",
+            }
+        )
     }
 }

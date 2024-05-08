@@ -47,18 +47,22 @@ impl TryFrom<u8> for ModuleClass {
 
 impl Display for ModuleClass {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            ModuleClass::A => "A",
-            ModuleClass::B => "B",
-            ModuleClass::C => "C",
-            ModuleClass::D => "D",
-            ModuleClass::E => "E",
-            ModuleClass::F => "F",
-            ModuleClass::I => "I",
+        write!(
+            f,
+            "{}",
+            match self {
+                ModuleClass::A => "A",
+                ModuleClass::B => "B",
+                ModuleClass::C => "C",
+                ModuleClass::D => "D",
+                ModuleClass::E => "E",
+                ModuleClass::F => "F",
+                ModuleClass::I => "I",
 
-            #[cfg(not(feature = "strict"))]
-            ModuleClass::Unknown => "U",
-        })
+                #[cfg(not(feature = "strict"))]
+                ModuleClass::Unknown => "U",
+            }
+        )
     }
 }
 
