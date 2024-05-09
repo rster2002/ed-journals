@@ -12,6 +12,24 @@ use thiserror::Error;
 use crate::models::journal_file_reader::JournalReaderError;
 use crate::{JournalEvent, JournalFileReader};
 
+/// Allows you to iterate over a journal log file and blocks when there are no entries to read, then
+/// when the file changes it will unblock and return the new line(s).
+///
+/// ```no_run
+/// use std::path::PathBuf;
+/// use ed_journals::LiveJournalFileReader;
+///
+/// let path = PathBuf::from("somePath")
+///     .unwrap();
+///
+/// let live_reader = LiveJournalFileReader::new(path)
+///     .unwrap();
+///
+/// // This will block the current thread until there are new entries.
+/// for entry in live_reader {
+///     // Do something with the entry
+/// }
+/// ```
 #[derive(Debug)]
 pub struct LiveJournalFileReader {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,

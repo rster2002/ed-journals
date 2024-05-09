@@ -11,6 +11,26 @@ use std::thread;
 use std::thread::Thread;
 use thiserror::Error;
 
+/// Watches the whole journal dir and reads all files. Once all historic files have been read it
+/// will block the current thread until the newest log file is changed at which it will read the
+/// active log file and return the entry.
+///
+/// ```no_run
+/// use std::path::PathBuf;
+/// use ed_journals::LiveJournalDirReader;
+///
+/// let path = PathBuf::from("somePath")
+///     .unwrap();
+///
+/// let live_dir_reader = LiveJournalDirReader::new(path)
+///     .unwrap();
+///
+/// // At first this will read all existing lines from the journal logs, after which it will block
+/// // the current thread until it detects new entries in the latest log file.
+/// for entry in live_dir_reader {
+///     // Do something with the entry
+/// }
+/// ```
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,

@@ -1,6 +1,6 @@
 # ED Journals
 
-> **Warn** this project is currently in pre-release versions, which means that it is very much work in progress. Breaking
+> **Warn** this project is currently in beta, which means that it is very much work in progress. Breaking
 > changes are likely to happen.
 
 Work in progress parsing and utilities for working with journal files from Elite Dangerous, with specific emphasis on

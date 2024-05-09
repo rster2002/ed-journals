@@ -2,7 +2,7 @@
 //!
 //! This library provides models and utilities to work with Elite Dangerous journal files.
 //!
-//! > **Warning** this project is currently in version 0.1.0, which means that it is very much work in progress. Breaking
+//! > **Warning** this project is currently in beta, which means that it is very much work in progress. Breaking
 //! > changes are likely to happen.
 //!
 //! ## Getting started
