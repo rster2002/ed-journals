@@ -19,8 +19,7 @@ use thiserror::Error;
 /// use std::path::PathBuf;
 /// use ed_journals::LiveJournalDirReader;
 ///
-/// let path = PathBuf::from("somePath")
-///     .unwrap();
+/// let path = PathBuf::from("somePath");
 ///
 /// let live_dir_reader = LiveJournalDirReader::new(path)
 ///     .unwrap();

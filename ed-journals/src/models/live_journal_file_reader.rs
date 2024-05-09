@@ -19,8 +19,7 @@ use crate::{JournalEvent, JournalFileReader};
 /// use std::path::PathBuf;
 /// use ed_journals::LiveJournalFileReader;
 ///
-/// let path = PathBuf::from("somePath")
-///     .unwrap();
+/// let path = PathBuf::from("somePath");
 ///
 /// let live_reader = LiveJournalFileReader::new(path)
 ///     .unwrap();
