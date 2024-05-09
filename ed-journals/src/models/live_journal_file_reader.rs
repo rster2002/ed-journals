@@ -42,8 +42,8 @@ impl LiveJournalFileReader {
                 .lock()
                 .expect("Should have been locked");
 
-            if let Some(a) = guard.0.as_ref() {
-                a.unpark();
+            if let Some(thread) = guard.0.as_ref() {
+                thread.unpark();
             };
         })?;
 
