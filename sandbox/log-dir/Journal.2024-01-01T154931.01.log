@@ -987,7 +987,36 @@
 {"timestamp":"2024-01-01T17:31:56Z","event":"SupercruiseExit","Taxi":false,"Multicrew":false,"StarSystem":"Col 285 Sector UD-O b8-1","SystemAddress":2871857259873,"Body":"Col 285 Sector UD-O b8-1","BodyID":0,"BodyType":"Star"}
 {"timestamp":"2024-01-01T17:31:56Z","event":"ShipLocker","Items":[],"Components":[],"Consumables":[{"Name":"energycell","Name_Localised":"Energy Cell","OwnerID":0,"Count":2}],"Data":[{"Name":"evacuationprotocols","Name_Localised":"Evacuation Protocols","OwnerID":0,"Count":1}]}
 {"timestamp":"2024-01-01T17:31:56Z","event":"Music","MusicTrack":"Exploration"}
-{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
 {"timestamp":"2024-01-01T17:31:56Z","event":"ShipLocker","Items":[],"Components":[],"Consumables":[{"Name":"energycell","Name_Localised":"Energy Cell","OwnerID":0,"Count":2}],"Data":[{"Name":"evacuationprotocols","Name_Localised":"Evacuation Protocols","OwnerID":0,"Count":1}]}
 {"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
-{"timestamp":"2024-01-01T17:31:56Z","event":"Music","MusicTrack":"Exploration"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}
+{"timestamp":"2024-01-01T17:32:12Z","event":"Shutdown"}

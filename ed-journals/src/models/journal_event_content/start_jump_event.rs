@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use crate::journal_event_content::shared::galaxy::star_class::StarClass;
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -17,7 +18,7 @@ pub enum StartJumpType {
     Hyperspace {
         star_system: String,
         system_address: u64,
-        star_class: String,
+        star_class: StarClass,
     },
     Supercruise,
 }

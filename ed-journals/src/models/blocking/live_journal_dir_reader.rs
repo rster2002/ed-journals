@@ -1,7 +1,5 @@
-use crate::models::journal_dir::JournalDirError;
+
 use crate::models::journal_file::JournalFileError;
-use crate::models::journal_file_reader::JournalReaderError;
-use crate::{JournalDir, JournalEvent, JournalFile, JournalFileReader};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::fs::File;
 use std::path::PathBuf;
@@ -10,6 +8,8 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::thread::Thread;
 use thiserror::Error;
+use crate::blocking::{JournalFileReader, JournalFileReaderError};
+use crate::{JournalDir, JournalDirError, JournalEvent, JournalFile};
 
 /// Watches the whole journal dir and reads all files. Once all historic files have been read it
 /// will block the current thread until the newest log file is changed at which it will read the
@@ -17,11 +17,11 @@ use thiserror::Error;
 ///
 /// ```no_run
 /// use std::path::PathBuf;
-/// use ed_journals::LiveJournalDirReader;
+/// use ed_journals::blocking::LiveJournalDirReader;
 ///
 /// let path = PathBuf::from("somePath");
 ///
-/// let live_dir_reader = LiveJournalDirReader::new(path)
+/// let live_dir_reader = LiveJournalDirReader::create(path)
 ///     .unwrap();
 ///
 /// // At first this will read all existing lines from the journal logs, after which it will block
@@ -35,7 +35,7 @@ pub struct LiveJournalDirReader {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
     dir: JournalDir,
     current_file: Option<JournalFile>,
-    current_reader: Option<JournalFileReader<File>>,
+    current_reader: Option<JournalFileReader>,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
     failing: bool,
@@ -50,7 +50,7 @@ pub enum LiveJournalDirReaderError {
     JournalFileError(#[from] JournalFileError),
 
     #[error(transparent)]
-    JournalReaderError(#[from] JournalReaderError),
+    JournalReaderError(#[from] JournalFileReaderError),
 
     #[error(transparent)]
     JournalDirError(#[from] JournalDirError),
@@ -60,7 +60,7 @@ pub enum LiveJournalDirReaderError {
 }
 
 impl LiveJournalDirReader {
-    pub fn new(dir_path: PathBuf) -> Result<LiveJournalDirReader, LiveJournalDirReaderError> {
+    pub fn create(dir_path: PathBuf) -> Result<LiveJournalDirReader, LiveJournalDirReaderError> {
         let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
         let waiting_thread_local = waiting_thread.clone();
 
@@ -91,7 +91,7 @@ impl LiveJournalDirReader {
         &mut self,
         journal_file: JournalFile,
     ) -> Result<(), LiveJournalDirReaderError> {
-        self.current_reader = Some(journal_file.create_reader()?);
+        self.current_reader = Some(journal_file.create_blocking_reader()?);
         self.current_file = Some(journal_file);
 
         Ok(())
@@ -114,7 +114,7 @@ impl LiveJournalDirReader {
         Ok(())
     }
 
-    fn handle(&self) -> LiveJournalDirHandle {
+    pub fn handle(&self) -> LiveJournalDirHandle {
         LiveJournalDirHandle {
             active: self.active.clone(),
             waiting_thread: self.waiting_thread.clone(),
@@ -132,8 +132,8 @@ impl LiveJournalDirHandle {
         self.active.swap(false, Ordering::Relaxed);
         let guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
-        if let Some(a) = guard.0.as_ref() {
-            a.unpark();
+        if let Some(thread) = guard.0.as_ref() {
+            thread.unpark();
         };
     }
 }
