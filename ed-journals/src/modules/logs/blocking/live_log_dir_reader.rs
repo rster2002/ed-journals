@@ -114,27 +114,23 @@ impl LiveLogDirReader {
         Ok(())
     }
 
-    pub fn handle(&self) -> LiveJournalDirHandle {
-        LiveJournalDirHandle {
+    pub fn handle(&self) -> LiveLogDirHandle {
+        LiveLogDirHandle {
             active: self.active.clone(),
-            waiting_thread: self.waiting_thread.clone(),
+            blocker: self.blocker.clone(),
         }
     }
 }
 
-pub struct LiveJournalDirHandle {
+pub struct LiveLogDirHandle {
     active: Arc<AtomicBool>,
-    waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+    blocker: SyncBlocker,
 }
 
-impl LiveJournalDirHandle {
+impl LiveLogDirHandle {
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
-        let guard = self.waiting_thread.lock().expect("to have gotten a lock");
-
-        if let Some(thread) = guard.0.as_ref() {
-            thread.unpark();
-        };
+        self.blocker.unblock();
     }
 }
 
