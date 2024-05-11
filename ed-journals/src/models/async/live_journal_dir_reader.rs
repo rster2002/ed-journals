@@ -45,7 +45,7 @@ impl LiveJournalDirReader {
         let waiting_sender_local = waiting_sender.clone();
 
         let mut watcher = notify::recommended_watcher(move |res| {
-            let guard = waiting_sender_local
+            let mut guard = waiting_sender_local
                 .lock()
                 .expect("Should have been locked");
 
@@ -54,8 +54,10 @@ impl LiveJournalDirReader {
                     return;
                 }
 
-                dbg!(sender.blocking_send(()))
+                sender.blocking_send(())
                     .expect("Failed to send");
+
+                guard.0 = None;
             }
         })?;
 
@@ -103,49 +105,36 @@ impl LiveJournalDirReader {
 
     pub async fn next(&mut self) -> Option<Result<JournalEvent, LiveJournalDirReaderError>> {
         loop {
-            // if !self.active.load(Ordering::Relaxed) || self.failing {
-            //     return None;
-            // }
-
-            let (sender, mut receiver) = channel(2);
-
-            {
-                let mut guard = dbg!(self.waiting_sender.lock())
-                    .expect("to gotten lock");
-
-                guard.0 = Some(sender);
+            if !self.active.load(Ordering::Relaxed) || self.failing {
+                return None;
             }
 
-            receiver.recv().await?;
+            let result = self.set_next_file()
+                .await;
 
-            dbg!("Hi");
+            if let Err(error) = result {
+                self.failing = true;
+                return Some(Err(error));
+            }
 
-            // let result = self.set_next_file()
-            //     .await;
-            //
-            // if let Err(error) = result {
-            //     self.failing = true;
-            //     return Some(Err(error));
-            // }
-            //
-            // let reader = self.current_reader.as_mut()?;
-            //
-            // let Some(result) = reader.next().await else {
-            //     let (sender, mut receiver) = channel(2);
-            //
-            //     {
-            //         let mut guard = dbg!(self.waiting_sender.lock())
-            //             .expect("to gotten lock");
-            //
-            //         guard.0 = Some(sender);
-            //     }
-            //
-            //     receiver.recv().await?;
-            //
-            //     continue;
-            // };
-            //
-            // return Some(result.map_err(|e| e.into()));
+            let reader = self.current_reader.as_mut()?;
+
+            let Some(result) = reader.next().await else {
+                let (sender, mut receiver) = channel(2);
+
+                {
+                    let mut guard = self.waiting_sender.lock()
+                        .expect("to gotten lock");
+
+                    guard.0 = Some(sender);
+                }
+
+                receiver.recv().await?;
+
+                continue;
+            };
+
+            return Some(result.map_err(|e| e.into()));
         }
     }
 }

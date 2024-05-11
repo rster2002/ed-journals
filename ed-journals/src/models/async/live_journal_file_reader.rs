@@ -38,7 +38,7 @@ impl LiveJournalFileReader {
         let waiting_sender_local = waiting_sender.clone();
 
         let mut watcher = notify::recommended_watcher(move |res| {
-            let guard = waiting_sender_local
+            let mut guard = waiting_sender_local
                 .lock()
                 .expect("Should have been locked");
 
@@ -49,6 +49,8 @@ impl LiveJournalFileReader {
 
                 sender.blocking_send(())
                     .expect("Failed to send");
+
+                guard.0 = None;
             }
         })?;
 
@@ -74,7 +76,7 @@ impl LiveJournalFileReader {
                     let (sender, mut receiver) = channel(2);
 
                     {
-                        let mut guard = dbg!(self.waiting_sender.lock())
+                        let mut guard = self.waiting_sender.lock()
                             .expect("to gotten lock");
 
                         guard.0 = Some(sender);

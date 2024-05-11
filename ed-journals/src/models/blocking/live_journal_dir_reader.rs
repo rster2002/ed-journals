@@ -65,12 +65,13 @@ impl LiveJournalDirReader {
         let waiting_thread_local = waiting_thread.clone();
 
         let mut watcher = notify::recommended_watcher(move |_| {
-            let guard = waiting_thread_local
+            let mut guard = waiting_thread_local
                 .lock()
                 .expect("Should have been locked");
 
             if let Some(thread) = guard.0.as_ref() {
                 thread.unpark();
+                guard.0 = None;
             };
         })?;
 
