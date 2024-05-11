@@ -1,0 +1,16 @@
+use serde::Deserialize;
+
+use crate::modules::shared::odyssey::item::Item;
+use crate::modules::shared::odyssey::item_type::ItemType;
+
+#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct UseConsumableEvent {
+    pub name: Item,
+
+    #[serde(rename = "Name_Localised")]
+    pub name_localized: Option<String>,
+
+    #[serde(rename = "Type")]
+    pub kind: ItemType,
+}
