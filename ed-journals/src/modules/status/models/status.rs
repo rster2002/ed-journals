@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::modules::status::models::destination_status::DestinationStatus;
 use crate::modules::status::models::flags2::Flags2;
 use crate::modules::status::models::flags::Flags;

@@ -244,6 +244,8 @@ use wing_join_event::WingJoinEvent;
 
 #[cfg(not(feature = "strict"))]
 use serde_json::Value;
+use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
+use crate::shared::small::small_system_info::SmallSystemInfo;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -784,4 +786,109 @@ pub enum LogEventContent {
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(Value),
+}
+
+impl LogEventContent {
+    pub fn system_address(&self) -> Option<u64> {
+        Some(match self {
+            LogEventContent::ApproachSettlement(event) => event.system_address,
+            LogEventContent::CarrierBuy(event) => event.system_address,
+            LogEventContent::CarrierJumpRequest(event) => event.system_address,
+            LogEventContent::CodexEntry(event) => event.system_address,
+            LogEventContent::DiscoveryScan(event) => event.system_address,
+            LogEventContent::Disembark(event) => event.system_address,
+            LogEventContent::Docked(event) => event.system_address,
+            LogEventContent::DropShipDeploy(event) => event.system_address,
+            LogEventContent::Embark(event) => event.system_address,
+            LogEventContent::FSSAllBodiesFound(event) => event.system_address,
+            LogEventContent::FSSBodySignals(event) => event.system_address,
+            LogEventContent::FSSDiscoveryScan(event) => event.system_address,
+            LogEventContent::FSSSignalDiscovered(event) => event.system_address,
+            LogEventContent::LeaveBody(event) => event.system_address,
+            LogEventContent::Liftoff(event) => event.system_address,
+            LogEventContent::NavBeaconScan(event) => event.system_address,
+            LogEventContent::SAAScanComplete(event) => event.system_address,
+            LogEventContent::SAASignalsFound(event) => event.system_address,
+            LogEventContent::Scan(event) => event.system_address,
+            LogEventContent::ScanBaryCentre(event) => event.system_address,
+            LogEventContent::ScanOrganic(event) => event.system_address,
+            LogEventContent::StartJump(event) => match event.jump {
+                StartJumpType::Hyperspace { system_address, .. } => system_address,
+                StartJumpType::Supercruise => return None,
+            },
+            LogEventContent::SupercruiseEntry(event) => event.system_address,
+            LogEventContent::SupercruiseExit(event) => event.system_address,
+            LogEventContent::Touchdown(event) => event.system_address,
+            _ => return None,
+        })
+    }
+
+    pub fn star_name(&self) -> Option<&str> {
+        Some(match self {
+            LogEventContent::CarrierBuy(event) => &event.location,
+            LogEventContent::CarrierJumpRequest(event) => &event.system_name,
+            LogEventContent::CodexEntry(event) => &event.system,
+            LogEventContent::Disembark(event) => &event.star_system,
+            LogEventContent::Docked(event) => &event.star_system,
+            LogEventContent::DropShipDeploy(event) => &event.star_system,
+            LogEventContent::Embark(event) => &event.star_system,
+            LogEventContent::FSSAllBodiesFound(event) => &event.system_name,
+            LogEventContent::FSSDiscoveryScan(event) => &event.system_name,
+            LogEventContent::LeaveBody(event) => &event.star_system,
+            LogEventContent::Liftoff(event) => &event.star_system,
+            LogEventContent::Scan(event) => &event.star_system,
+            LogEventContent::ScanBaryCentre(event) => &event.star_system,
+            LogEventContent::StartJump(event) => match &event.jump {
+                StartJumpType::Hyperspace { star_system, .. } => star_system,
+                StartJumpType::Supercruise => return None,
+            },
+            LogEventContent::SupercruiseEntry(event) => &event.star_system,
+            LogEventContent::SupercruiseExit(event) => &event.star_system,
+            LogEventContent::Touchdown(event) => &event.star_system,
+            _ => return None,
+        })
+    }
+
+    pub fn small_system_info(&self) -> Option<SmallSystemInfo> {
+        match (self.system_address(), self.star_name()) {
+            (Some(system_address), Some(star_name)) => Some(SmallSystemInfo {
+                system_address,
+                star_name: star_name.to_string(),
+            }),
+            (_, _) => None,
+        }
+    }
+
+    pub fn body_id(&self) -> Option<u8> {
+        Some(match self {
+            LogEventContent::ApproachSettlement(event) => event.body_id,
+            LogEventContent::CarrierJumpRequest(event) => event.body_id,
+            LogEventContent::CodexEntry(event) => event.body_id,
+            LogEventContent::DropShipDeploy(event) => event.body_id,
+            LogEventContent::FSSBodySignals(event) => event.body_id,
+            LogEventContent::LeaveBody(event) => event.body_id,
+            LogEventContent::SAAScanComplete(event) => event.body_id,
+            LogEventContent::ScanBaryCentre(event) => event.body_id,
+            LogEventContent::Scan(event) => event.body_id,
+            LogEventContent::Touchdown(event) => event.body_id,
+            _ => return None,
+        })
+    }
+
+    pub fn body_name(&self) -> Option<&str> {
+        Some(match self {
+            LogEventContent::ApproachSettlement(event) => &event.body_name,
+            LogEventContent::CarrierJumpRequest(event) => match &event.body {
+                Some(name) => name,
+                None => return None,
+            },
+            LogEventContent::DropShipDeploy(event) => &event.body,
+            LogEventContent::FSSBodySignals(event) => &event.body_name,
+            LogEventContent::LeaveBody(event) => &event.body,
+            LogEventContent::SAAScanComplete(event) => &event.body_name,
+            LogEventContent::Scan(event) => &event.body_name,
+            LogEventContent::Touchdown(event) => &event.body,
+            _ => return None,
+        })
+    }
 }

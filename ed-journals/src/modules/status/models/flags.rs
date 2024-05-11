@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Deserialize, PartialEq, Eq)]
 pub struct Flags(u64);

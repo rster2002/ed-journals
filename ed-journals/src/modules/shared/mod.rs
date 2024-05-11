@@ -41,3 +41,4 @@ pub mod thargoid;
 
 /// Primarily provides the [trading::commodity::Commodity] enum.
 pub mod trading;
+pub mod small;

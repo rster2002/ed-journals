@@ -17,6 +17,7 @@ pub use modules::logs;
 pub use modules::shared;
 pub use modules::status;
 pub use modules::journal;
+pub use modules::state;
 
 #[cfg(test)]
 mod tests {
@@ -35,7 +36,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let log_dir = LogDir::new(dir_path).unwrap();
+        let log_dir = LogDir::new(dir_path);
 
         let logs = log_dir.journal_logs().unwrap();
 

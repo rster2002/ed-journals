@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use thiserror::Error;
 use crate::try_from_deserialize_impl;
 
