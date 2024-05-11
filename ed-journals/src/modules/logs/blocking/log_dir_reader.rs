@@ -44,21 +44,22 @@ impl LogDirReader {
         Ok(())
     }
 
-    fn set_next_file(&mut self) -> Result<(), LogDirReaderError> {
+    fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
         let files = self.dir.journal_logs_oldest_first()?;
 
         for file in files {
             let Some(current) = &self.current_file else {
                 self.set_current_file(file)?;
-                return Ok(());
+                return Ok(true);
             };
 
             if &file > current {
                 self.set_current_file(file)?;
+                return Ok(true);
             }
         }
 
-        Ok(())
+        Ok(false)
     }
 
     pub fn is_failing(&self) -> bool {
@@ -70,14 +71,58 @@ impl Iterator for LogDirReader {
     type Item = Result<LogEvent, LogDirReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let result = self.set_next_file();
+        loop {
+            if self.failing {
+                return None;
+            }
 
-        if let Err(error) = result {
-            self.failing = true;
-            return Some(Err(error));
+            let Some(reader) = &mut self.current_reader else {
+                let result = self.set_next_file();
+
+                if let Err(error) = result {
+                    self.failing = true;
+                    return Some(Err(error));
+                }
+
+                continue;
+            };
+
+            let Some(entry) = reader.next() else {
+                match self.set_next_file() {
+                    Ok(true) => continue,
+                    Ok(false) => return None,
+                    Err(error) => {
+                        self.failing = true;
+                        return Some(Err(error));
+                    }
+                }
+            };
+
+            return Some(entry.map_err(|e| e.into()));
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::env::current_dir;
+    use crate::logs::blocking::LogDirReader;
+
+    #[test]
+    fn all_entries_are_read_correctly() {
+        let dir_path = current_dir()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .join("test-journals");
+
+        let mut reader = LogDirReader::open(dir_path);
+
+        let mut count = 0;
+        while let Some(entry) = reader.next() {
+            count += 1;
         }
 
-        let reader = self.current_reader.as_mut()?;
-        Some(reader.next()?.map_err(|e| e.into()))
+        assert_eq!(count, 184038);
     }
 }

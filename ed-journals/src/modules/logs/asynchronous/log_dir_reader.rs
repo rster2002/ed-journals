@@ -45,23 +45,26 @@ impl LogDirReader {
         Ok(())
     }
 
-    async fn set_next_file(&mut self) -> Result<(), LogDirReaderError> {
+    async fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
         let files = self.dir.journal_logs_oldest_first()?;
 
         for file in files {
             let Some(current) = &self.current_file else {
                 self.set_current_file(file)
                     .await?;
-                return Ok(());
+
+                return Ok(true);
             };
 
             if &file > current {
                 self.set_current_file(file)
                     .await?;
+
+                return Ok(true);
             }
         }
 
-        Ok(())
+        Ok(false)
     }
 
     pub fn is_failing(&self) -> bool {
@@ -70,16 +73,33 @@ impl LogDirReader {
 
     pub async fn next(&mut self) -> Option<Result<LogEvent, LogDirReaderError>> {
         loop {
-            let result = self.set_next_file()
-                .await;
-
-            if let Err(error) = result {
-                self.failing = true;
-                return Some(Err(error));
+            if self.failing {
+                return None;
             }
 
-            let reader = self.current_reader.as_mut()?;
-            return Some(reader.next().await?.map_err(|e| e.into()));
+            let Some(reader) = &mut self.current_reader else {
+                let result = self.set_next_file().await;
+
+                if let Err(error) = result {
+                    self.failing = true;
+                    return Some(Err(error));
+                }
+
+                continue;
+            };
+
+            let Some(entry) = reader.next().await else {
+                match self.set_next_file().await {
+                    Ok(true) => continue,
+                    Ok(false) => return None,
+                    Err(error) => {
+                        self.failing = true;
+                        return Some(Err(error));
+                    }
+                }
+            };
+
+            return Some(entry.map_err(|e| e.into()));
         }
     }
 }

@@ -79,7 +79,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let journal_dir = LogDir::new(dir_path).unwrap();
+        let journal_dir = LogDir::new(dir_path);
 
         let mut journal_files = journal_dir.journal_logs_oldest_first().unwrap().into_iter();
 
@@ -100,7 +100,7 @@ mod tests {
             .unwrap()
             .join("test-journals");
 
-        let journal_dir = LogDir::new(dir_path).unwrap();
+        let journal_dir = LogDir::new(dir_path);
 
         let mut journal_files = journal_dir.journal_logs_newest_first().unwrap().into_iter();
 
