@@ -8,6 +8,7 @@ use thiserror::Error;
 use tokio::fs::File;
 use tokio::sync::mpsc::{channel, Sender};
 use crate::logs::{LogDir, LogDirError, LogFile};
+use crate::logs::asynchronous::log_dir_reader::{LogDirReader, LogDirReaderError};
 use crate::logs::content::LogEvent;
 use crate::logs::asynchronous::LogFileReader;
 use crate::modules::blockers::async_blocker::AsyncBlocker;
@@ -36,27 +37,31 @@ use crate::modules::logs::LogFileError;
 #[derive(Debug)]
 pub struct LiveLogDirReader {
     blocker: AsyncBlocker,
-    dir: LogDir,
-    current_file: Option<LogFile>,
-    current_reader: Option<LogFileReader>,
+    // dir: LogDir,
+    // current_file: Option<LogFile>,
+    // current_reader: Option<LogFileReader>,
+    log_dir_reader: LogDirReader,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
-    failing: bool,
+    // failing: bool,
 }
 
 #[derive(Debug, Error)]
 pub enum LiveLogDirReaderError {
-    #[error("Log path is not a directory")]
-    PathIsNotADirectory,
+    // #[error("Log path is not a directory")]
+    // PathIsNotADirectory,
+    //
+    // #[error(transparent)]
+    // JournalFileError(#[from] LogFileError),
+    //
+    // #[error(transparent)]
+    // JournalReaderError(#[from] LogFileReaderError),
+    //
+    // #[error(transparent)]
+    // JournalDirError(#[from] LogDirError),
 
     #[error(transparent)]
-    JournalFileError(#[from] LogFileError),
-
-    #[error(transparent)]
-    JournalReaderError(#[from] LogFileReaderError),
-
-    #[error(transparent)]
-    JournalDirError(#[from] LogDirError),
+    LogDirReaderError(#[from] LogDirReaderError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -64,6 +69,8 @@ pub enum LiveLogDirReaderError {
 
 impl LiveLogDirReader {
     pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
+        let log_dir_reader = LogDirReader::open(&dir_path);
+
         let blocker = AsyncBlocker::new();
         let local_blocker = blocker.clone();
 
@@ -75,61 +82,19 @@ impl LiveLogDirReader {
 
         Ok(LiveLogDirReader {
             blocker,
-            dir: LogDir::new(dir_path.as_ref().to_path_buf())?,
-            current_file: None,
-            current_reader: None,
             active: Arc::new(AtomicBool::new(true)),
             watcher,
-            failing: false,
+            log_dir_reader,
         })
-    }
-
-    async fn set_current_file(
-        &mut self,
-        journal_file: LogFile,
-    ) -> Result<(), LiveLogDirReaderError> {
-        self.current_reader = Some(journal_file.create_async_reader().await?);
-        self.current_file = Some(journal_file);
-
-        Ok(())
-    }
-
-    async fn set_next_file(&mut self) -> Result<(), LiveLogDirReaderError> {
-        let files = self.dir.journal_logs_oldest_first()?;
-
-        for file in files {
-            let Some(current) = &self.current_file else {
-                self.set_current_file(file)
-                    .await?;
-                return Ok(());
-            };
-
-            if &file > current {
-                self.set_current_file(file)
-                    .await?;
-            }
-        }
-
-        Ok(())
     }
 
     pub async fn next(&mut self) -> Option<Result<LogEvent, LiveLogDirReaderError>> {
         loop {
-            if !self.active.load(Ordering::Relaxed) || self.failing {
+            if !self.active.load(Ordering::Relaxed) || self.log_dir_reader.is_failing() {
                 return None;
             }
 
-            let result = self.set_next_file()
-                .await;
-
-            if let Err(error) = result {
-                self.failing = true;
-                return Some(Err(error));
-            }
-
-            let reader = self.current_reader.as_mut()?;
-
-            let Some(result) = reader.next().await else {
+            let Some(result) = self.log_dir_reader.next().await else {
                 self.blocker.block().await;
                 continue;
             };

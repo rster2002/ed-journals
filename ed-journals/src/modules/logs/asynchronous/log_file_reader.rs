@@ -1,8 +1,7 @@
 use std::collections::VecDeque;
 use std::io;
 use std::io::SeekFrom;
-use std::pin::Pin;
-use std::task::{Context, Poll};
+use std::path::Path;
 use thiserror::Error;
 use tokio::fs::File;
 use tokio::io::{AsyncSeek, AsyncSeekExt};
@@ -28,14 +27,14 @@ pub enum LogFileReaderError {
 }
 
 impl LogFileReader {
-    pub fn new(file: File) -> Self {
-        LogFileReader {
-            source: file,
+    pub async fn open<P: AsRef<Path>>(path: P) -> Result<Self, LogFileReaderError> {
+        Ok(LogFileReader {
+            source: File::open(path).await?,
             position: 0,
             file_read_buffer: String::new(),
             entry_buffer: VecDeque::new(),
             failing: false,
-        }
+        })
     }
 
     async fn read_next(&mut self) -> Result<(), LogFileReaderError> {

@@ -1,7 +1,7 @@
 /// Contains modules for working with journal log files providing readers for individual files or
 /// all files at once.
 pub mod logs;
-pub mod journal_dir;
+pub mod journal;
 pub mod status;
 
 /// Contains structs and enums which are shared across events. Things like commodity and material

@@ -16,6 +16,7 @@ mod modules;
 pub use modules::logs;
 pub use modules::shared;
 pub use modules::status;
+pub use modules::journal;
 
 #[cfg(test)]
 mod tests {

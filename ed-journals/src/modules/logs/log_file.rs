@@ -70,15 +70,12 @@ impl LogFile {
 
     #[cfg(feature = "asynchronous")]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
-        let file = tokio::fs::File::open(self.path.as_path())
-            .await?;
-
-        Ok(asynchronous::LogFileReader::new(file))
+        Ok(asynchronous::LogFileReader::open(self.path.as_path()).await.map_err(|_| LogFileError::FailedToOpenReader)?)
     }
 
     #[cfg(feature = "asynchronous")]
     pub async fn create_live_async_reader(&self) -> Result<asynchronous::LiveLogFileReader, asynchronous::LiveLogFileReaderError> {
-        Ok(asynchronous::LiveLogFileReader::create(self.path.to_path_buf()).await?)
+        Ok(asynchronous::LiveLogFileReader::open(self.path.to_path_buf()).await?)
     }
 
     /// Returns the date time that is part of the file name of the file.

@@ -1,5 +1,5 @@
 use std::io;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::sync::atomic::{AtomicBool, Ordering};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
@@ -25,14 +25,14 @@ pub enum LiveLogFileReaderError {
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
+
+    #[error(transparent)]
+    LogFileReaderError(#[from] LogFileReaderError),
 }
 
 impl LiveLogFileReader {
-    pub async fn create(path: PathBuf) -> Result<Self, LiveLogFileReaderError> {
-        let file = File::open(&path)
-            .await?;
-
-        let journal_file_reader = LogFileReader::new(file);
+    pub async fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveLogFileReaderError> {
+        let journal_file_reader = LogFileReader::open(path.as_ref()).await?;
 
         let blocker = AsyncBlocker::new();
         let local_blocker = blocker.clone();
@@ -41,7 +41,7 @@ impl LiveLogFileReader {
             local_blocker.unblock_blocking();
         })?;
 
-        watcher.watch(&path, RecursiveMode::NonRecursive)?;
+        watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LiveLogFileReader {
             blocker,

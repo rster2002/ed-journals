@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use thiserror::Error;
 
@@ -12,9 +12,6 @@ pub struct LogDir {
 
 #[derive(Debug, Error)]
 pub enum LogDirError {
-    #[error("Log path is not a directory")]
-    PathIsNotADirectory,
-
     #[error("Failed to represent OS string")]
     FailedToRepresentOsString,
 
@@ -26,16 +23,14 @@ pub enum LogDirError {
 }
 
 impl LogDir {
-    pub fn new(dir_path: PathBuf) -> Result<LogDir, LogDirError> {
-        if !dir_path.is_dir() {
-            return Err(LogDirError::PathIsNotADirectory);
-        }
-
-        Ok(LogDir { dir_path })
+    pub fn new(dir_path: PathBuf) -> LogDir {
+        LogDir { dir_path }
     }
-}
 
-impl LogDir {
+    pub fn path(&self) -> &Path {
+        self.dir_path.as_path()
+    }
+
     /// Returns a list of journal log files found in the directory in any order.
     pub fn journal_logs(&self) -> Result<Vec<LogFile>, LogDirError> {
         self.dir_path
