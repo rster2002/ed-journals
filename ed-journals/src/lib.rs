@@ -10,16 +10,21 @@
 //! Currently, the only files that are parsed are the log files. Models for working `Market.json`
 //! and `Status.json` etc will be added in the future. Best place to get started is the [JournalDir]
 //! model.
-
-pub use models::journal_dir::JournalDir;
-pub use models::journal_event::JournalEvent;
 pub use models::journal_event_content;
+pub use models::journal_dir::JournalDir;
+pub use models::journal_dir::JournalDirError;
+pub use models::journal_file::JournalFile;
+pub use models::journal_file::JournalFileError;
+
+pub use models::journal_event::JournalEvent;
 pub use models::journal_event_content::JournalEventContent;
 pub use models::journal_event_content::JournalEventContentKind;
-pub use models::journal_file::JournalFile;
-pub use models::journal_file_reader::JournalFileReader;
-pub use models::live_journal_dir_reader::LiveJournalDirReader;
-pub use models::live_journal_file_reader::LiveJournalFileReader;
+
+#[cfg(feature = "blocking")]
+pub use models::blocking;
+
+#[cfg(feature = "async")]
+pub use models::r#async;
 
 mod macros;
 mod models;
@@ -27,8 +32,8 @@ mod models;
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
+    use crate::blocking::JournalDir;
 
-    use crate::models::journal_dir::JournalDir;
     use crate::models::journal_event_content::JournalEventContent;
 
     #[test]
@@ -49,7 +54,7 @@ mod tests {
         let mut entry_count = 0;
 
         for journal in &logs {
-            let reader = journal.create_reader().unwrap();
+            let reader = journal.create_blocking_reader().unwrap();
 
             for entry in reader {
                 entry_count += 1;

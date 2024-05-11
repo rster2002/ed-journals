@@ -74,8 +74,7 @@ impl JournalDir {
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
-
-    use crate::JournalDir;
+    use crate::blocking::JournalDir;
 
     #[test]
     fn journal_files_oldest_first_are_returned_in_the_correct_order() {

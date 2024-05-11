@@ -8,10 +8,10 @@ use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
+use crate::r#async;
 
-use crate::models::journal_file_reader::JournalFileReader;
-use crate::models::live_journal_file_reader::LiveJournalFileReaderError;
-use crate::LiveJournalFileReader;
+#[cfg(feature = "blocking")]
+use crate::blocking;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]
@@ -51,13 +51,28 @@ impl JournalFile {
     }
 
     /// Creates a new reader using the path of the journal log file.
-    pub fn create_reader(&self) -> Result<JournalFileReader<File>, JournalFileError> {
-        Ok(JournalFileReader::from(File::open(self.path.as_path())?))
+    #[cfg(feature = "blocking")]
+    pub fn create_blocking_reader(&self) -> Result<blocking::JournalFileReader, JournalFileError> {
+        Ok(blocking::JournalFileReader::new(File::open(self.path.as_path())?))
     }
 
     /// Creates a new live reader using the path of the journal log file.
-    pub fn create_live_reader(&self) -> Result<LiveJournalFileReader, LiveJournalFileReaderError> {
-        LiveJournalFileReader::new(self.path.to_path_buf())
+    #[cfg(feature = "blocking")]
+    pub fn create_live_blocking_reader(&self) -> Result<blocking::LiveJournalFileReader, blocking::LiveJournalFileReaderError> {
+        blocking::LiveJournalFileReader::create(self.path.to_path_buf())
+    }
+
+    #[cfg(feature = "async")]
+    pub async fn create_async_reader(&self) -> Result<r#async::JournalFileReader, JournalFileError> {
+        let file = tokio::fs::File::open(self.path.as_path())
+            .await?;
+
+        Ok(r#async::JournalFileReader::new(file))
+    }
+
+    #[cfg(feature = "async")]
+    pub async fn create_live_async_reader(&self) -> Result<r#async::LiveJournalFileReader, r#async::LiveJournalFileReaderError> {
+        Ok(r#async::LiveJournalFileReader::create(self.path.to_path_buf()).await?)
     }
 
     /// Returns the date time that is part of the file name of the file.
