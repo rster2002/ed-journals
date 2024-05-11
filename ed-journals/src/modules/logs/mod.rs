@@ -5,7 +5,6 @@ mod log_dir;
 pub mod content;
 
 /// Contains readers for when working in a synchronous environment like a manually spawned thread.
-#[cfg(feature = "blocking")]
 pub mod blocking;
 
 /// Contains readers for when working in an asynchronous environment like Tokio.

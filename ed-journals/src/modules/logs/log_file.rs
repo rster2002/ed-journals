@@ -9,7 +9,6 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
 
-#[cfg(feature = "blocking")]
 use super::blocking;
 
 #[cfg(feature = "asynchronous")]
@@ -56,14 +55,12 @@ impl LogFile {
     }
 
     /// Creates a new reader using the path of the journal log file.
-    #[cfg(feature = "blocking")]
     pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader, LogFileError> {
         Ok(blocking::LogFileReader::open(self.path.as_path())
             .map_err(|_| LogFileError::FailedToOpenReader)?)
     }
 
     /// Creates a new live reader using the path of the journal log file.
-    #[cfg(feature = "blocking")]
     pub fn create_live_blocking_reader(&self) -> Result<blocking::LiveLogFileReader, blocking::LiveLogFileReaderError> {
         blocking::LiveLogFileReader::open(self.path.to_path_buf())
     }

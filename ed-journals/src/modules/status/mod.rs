@@ -1,6 +1,5 @@
 mod models;
 
-#[cfg(feature = "blocking")]
 pub mod blocking;
 
 #[cfg(feature = "asynchronous")]
