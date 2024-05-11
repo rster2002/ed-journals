@@ -15,16 +15,6 @@ impl SyncBlocker {
     }
 
     pub fn unblock(&self) {
-        {
-            let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
-
-            guard.0 = Some(thread::current());
-        }
-
-        thread::park();
-    }
-
-    pub fn block(&self) {
         let mut guard = self.waiting_thread
             .lock()
             .expect("Should have been locked");
@@ -33,5 +23,15 @@ impl SyncBlocker {
             thread.unpark();
             guard.0 = None;
         };
+    }
+
+    pub fn block(&self) {
+        {
+            let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
+
+            guard.0 = Some(thread::current());
+        }
+
+        thread::park();
     }
 }
