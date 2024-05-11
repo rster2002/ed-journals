@@ -9,12 +9,33 @@ use tokio::sync::mpsc::{channel, Sender};
 use crate::logs::{LogDir, LogDirError, LogFile};
 use crate::logs::content::LogEvent;
 use crate::logs::r#async::LogFileReader;
+use crate::modules::blockers::async_blocker::AsyncBlocker;
 use crate::modules::logs::r#async::LogFileReaderError;
 use crate::modules::logs::LogFileError;
 
+/// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and
+/// reads all files. Once all historic files have been read the current read will only resolve once
+/// the newest log file is changed at which it will read the active log file and return the entry.
+///
+/// ```no_run
+/// use std::path::PathBuf;
+/// use ed_journals::logs::r#async::LiveLogDirReader;
+///
+/// let path = PathBuf::from("somePath");
+///
+/// let mut live_dir_reader = LiveLogDirReader::open(path)
+///     .unwrap();
+///
+/// // At first this will read all existing lines from the journal logs, after which it will wait
+/// // until it detects new entries in the latest log file.
+/// while let Some(entry) = live_dir_reader.next().await {
+///     // Do something with the entry
+/// }
+/// ```
 #[derive(Debug)]
 pub struct LiveLogDirReader {
-    waiting_sender: Arc<Mutex<(Option<Sender<()>>,)>>,
+    blocker: AsyncBlocker,
+    // waiting_sender: Arc<Mutex<(Option<Sender<()>>,)>>,
     dir: LogDir,
     current_file: Option<LogFile>,
     current_reader: Option<LogFileReader>,
@@ -43,30 +64,17 @@ pub enum LiveLogDirReaderError {
 
 impl LiveLogDirReader {
     pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
-        let waiting_sender = Arc::new(Mutex::new((None::<Sender<()>>,)));
-        let waiting_sender_local = waiting_sender.clone();
+        let blocker = AsyncBlocker::new();
+        let local_blocker = blocker.clone();
 
         let mut watcher = notify::recommended_watcher(move |res| {
-            let mut guard = waiting_sender_local
-                .lock()
-                .expect("Should have been locked");
-
-            if let Some(sender) = guard.0.as_ref() {
-                if sender.is_closed() {
-                    return;
-                }
-
-                sender.blocking_send(())
-                    .expect("Failed to send");
-
-                guard.0 = None;
-            }
+            local_blocker.unblock_blocking();
         })?;
 
         watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LiveLogDirReader {
-            waiting_sender,
+            blocker,
             dir: LogDir::new(dir_path.as_ref().to_path_buf())?,
             current_file: None,
             current_reader: None,
@@ -122,17 +130,7 @@ impl LiveLogDirReader {
             let reader = self.current_reader.as_mut()?;
 
             let Some(result) = reader.next().await else {
-                let (sender, mut receiver) = channel(2);
-
-                {
-                    let mut guard = self.waiting_sender.lock()
-                        .expect("to gotten lock");
-
-                    guard.0 = Some(sender);
-                }
-
-                receiver.recv().await?;
-
+                self.blocker.block().await;
                 continue;
             };
 

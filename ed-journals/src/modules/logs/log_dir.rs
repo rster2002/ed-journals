@@ -4,7 +4,7 @@ use thiserror::Error;
 
 use crate::modules::logs::{LogFile, LogFileError};
 
-/// Provides an abstraction on top of the journal directory making it easy to access its contents.
+/// Provides an abstraction for all the log files in the journal directory.
 #[derive(Debug)]
 pub struct LogDir {
     dir_path: PathBuf,

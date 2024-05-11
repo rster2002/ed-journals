@@ -12,6 +12,7 @@ use crate::logs::blocking::LogFileReader;
 use crate::logs::content::LogEvent;
 use crate::logs::blocking::LogFileReaderError;
 use crate::logs::log_file::{LogFile, LogFileError};
+use crate::modules::blockers::sync_blocker::SyncBlocker;
 
 /// Watches the whole journal dir and reads all files. Once all historic files have been read it
 /// will block the current thread until the newest log file is changed at which it will read the
@@ -34,7 +35,8 @@ use crate::logs::log_file::{LogFile, LogFileError};
 /// ```
 #[derive(Debug)]
 pub struct LiveLogDirReader {
-    waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+    blocker: SyncBlocker,
+    // waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
     dir: LogDir,
     current_file: Option<LogFile>,
     current_reader: Option<LogFileReader>,
@@ -63,24 +65,19 @@ pub enum LiveLogDirReaderError {
 
 impl LiveLogDirReader {
     pub fn open(dir_path: PathBuf) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
-        let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
-        let waiting_thread_local = waiting_thread.clone();
+        let blocker = SyncBlocker::new();
+        let local_blocker = blocker.clone();
+        // let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
+        // let waiting_thread_local = waiting_thread.clone();
 
         let mut watcher = notify::recommended_watcher(move |_| {
-            let mut guard = waiting_thread_local
-                .lock()
-                .expect("Should have been locked");
-
-            if let Some(thread) = guard.0.as_ref() {
-                thread.unpark();
-                guard.0 = None;
-            };
+            local_blocker.unblock();
         })?;
 
         watcher.watch(&dir_path, RecursiveMode::NonRecursive)?;
 
         Ok(Self {
-            waiting_thread,
+            blocker,
             dir: LogDir::new(dir_path)?,
             current_file: None,
             current_reader: None,
@@ -160,14 +157,7 @@ impl Iterator for LiveLogDirReader {
             let reader = self.current_reader.as_mut()?;
 
             let Some(result) = reader.next() else {
-                {
-                    let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
-
-                    guard.0 = Some(thread::current());
-                }
-
-                thread::park();
-
+                self.blocker.block();
                 continue;
             };
 

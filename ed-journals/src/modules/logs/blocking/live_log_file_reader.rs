@@ -9,6 +9,7 @@ use std::{io, thread};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 use crate::logs::content::LogEvent;
+use crate::modules::blockers::sync_blocker::SyncBlocker;
 use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
 
 /// Allows you to iterate over a journal log file and blocks when there are no entries to read, then
@@ -30,7 +31,7 @@ use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
 /// ```
 #[derive(Debug)]
 pub struct LiveLogFileReader {
-    waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+    blocker: SyncBlocker,
     log_file_reader: LogFileReader,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
@@ -52,25 +53,18 @@ impl LiveLogFileReader {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveLogFileReaderError> {
         let journal_file_reader = LogFileReader::open(&path)?;
 
-        let waiting_thread = Arc::new(Mutex::new((None::<Thread>,)));
-        let waiting_thread_local = waiting_thread.clone();
+        let blocker = SyncBlocker::new();
+        let local_blocker = blocker.clone();
 
         // This is stopped when it is dropped
         let mut watcher = notify::recommended_watcher(move |_| {
-            let mut guard = waiting_thread_local
-                .lock()
-                .expect("Should have been locked");
-
-            if let Some(thread) = guard.0.as_ref() {
-                thread.unpark();
-                guard.0 = None;
-            };
+            local_blocker.unblock();
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LiveLogFileReader {
-            waiting_thread,
+            blocker,
             log_file_reader: journal_file_reader,
             watcher,
             active: Arc::new(AtomicBool::new(true)),
@@ -80,7 +74,7 @@ impl LiveLogFileReader {
     pub fn handle(&self) -> LiveLogFileHandle {
         LiveLogFileHandle {
             active: self.active.clone(),
-            waiting_thread: self.waiting_thread.clone(),
+            blocker: self.blocker.clone(),
         }
     }
 }
@@ -88,17 +82,13 @@ impl LiveLogFileReader {
 #[derive(Debug, Clone)]
 pub struct LiveLogFileHandle {
     active: Arc<AtomicBool>,
-    waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+    blocker: SyncBlocker,
 }
 
 impl LiveLogFileHandle {
     pub fn stop(&self) {
         self.active.swap(false, Ordering::Relaxed);
-        let guard = self.waiting_thread.lock().expect("to have gotten a lock");
-
-        if let Some(thread) = guard.0.as_ref() {
-            thread.unpark();
-        };
+        self.blocker.unblock();
     }
 }
 
@@ -113,15 +103,7 @@ impl Iterator for LiveLogFileReader {
 
             match self.log_file_reader.next() {
                 Some(value) => return Some(value),
-                None => {
-                    {
-                        let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
-
-                        guard.0 = Some(thread::current());
-                    }
-
-                    thread::park();
-                }
+                None => self.blocker.block(),
             }
         }
     }
