@@ -12,7 +12,7 @@ use thiserror::Error;
 #[cfg(feature = "blocking")]
 use super::blocking;
 
-#[cfg(feature = "async")]
+#[cfg(feature = "asynchronous")]
 use super::asynchronous;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
@@ -68,7 +68,7 @@ impl LogFile {
         blocking::LiveLogFileReader::open(self.path.to_path_buf())
     }
 
-    #[cfg(feature = "async")]
+    #[cfg(feature = "asynchronous")]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         let file = tokio::fs::File::open(self.path.as_path())
             .await?;
@@ -76,7 +76,7 @@ impl LogFile {
         Ok(asynchronous::LogFileReader::new(file))
     }
 
-    #[cfg(feature = "async")]
+    #[cfg(feature = "asynchronous")]
     pub async fn create_live_async_reader(&self) -> Result<asynchronous::LiveLogFileReader, asynchronous::LiveLogFileReaderError> {
         Ok(asynchronous::LiveLogFileReader::create(self.path.to_path_buf()).await?)
     }

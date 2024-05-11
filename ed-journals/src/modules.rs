@@ -2,6 +2,7 @@
 /// all files at once.
 pub mod logs;
 pub mod journal_dir;
+pub mod status;
 
 /// Contains structs and enums which are shared across events. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
