@@ -13,7 +13,7 @@ use thiserror::Error;
 use super::blocking;
 
 #[cfg(feature = "async")]
-use super::r#async;
+use super::asynchronous;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]
@@ -69,16 +69,16 @@ impl LogFile {
     }
 
     #[cfg(feature = "async")]
-    pub async fn create_async_reader(&self) -> Result<r#async::LogFileReader, LogFileError> {
+    pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         let file = tokio::fs::File::open(self.path.as_path())
             .await?;
 
-        Ok(r#async::LogFileReader::new(file))
+        Ok(asynchronous::LogFileReader::new(file))
     }
 
     #[cfg(feature = "async")]
-    pub async fn create_live_async_reader(&self) -> Result<r#async::LiveLogFileReader, r#async::LiveLogFileReaderError> {
-        Ok(r#async::LiveLogFileReader::create(self.path.to_path_buf()).await?)
+    pub async fn create_live_async_reader(&self) -> Result<asynchronous::LiveLogFileReader, asynchronous::LiveLogFileReaderError> {
+        Ok(asynchronous::LiveLogFileReader::create(self.path.to_path_buf()).await?)
     }
 
     /// Returns the date time that is part of the file name of the file.

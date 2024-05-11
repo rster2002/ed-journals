@@ -2,15 +2,16 @@ use std::io;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::sync::atomic::{AtomicBool, Ordering};
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
 use tokio::fs::File;
 use tokio::sync::mpsc::{channel, Sender};
 use crate::logs::{LogDir, LogDirError, LogFile};
 use crate::logs::content::LogEvent;
-use crate::logs::r#async::LogFileReader;
+use crate::logs::asynchronous::LogFileReader;
 use crate::modules::blockers::async_blocker::AsyncBlocker;
-use crate::modules::logs::r#async::LogFileReaderError;
+use crate::modules::logs::asynchronous::LogFileReaderError;
 use crate::modules::logs::LogFileError;
 
 /// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and
@@ -19,7 +20,7 @@ use crate::modules::logs::LogFileError;
 ///
 /// ```no_run
 /// use std::path::PathBuf;
-/// use ed_journals::logs::r#async::LiveLogDirReader;
+/// use ed_journals::logs::asynchronous::LiveLogDirReader;
 ///
 /// let path = PathBuf::from("somePath");
 ///
@@ -35,7 +36,6 @@ use crate::modules::logs::LogFileError;
 #[derive(Debug)]
 pub struct LiveLogDirReader {
     blocker: AsyncBlocker,
-    // waiting_sender: Arc<Mutex<(Option<Sender<()>>,)>>,
     dir: LogDir,
     current_file: Option<LogFile>,
     current_reader: Option<LogFileReader>,
@@ -67,7 +67,7 @@ impl LiveLogDirReader {
         let blocker = AsyncBlocker::new();
         let local_blocker = blocker.clone();
 
-        let mut watcher = notify::recommended_watcher(move |res| {
+        let mut watcher = notify::recommended_watcher(move |_| {
             local_blocker.unblock_blocking();
         })?;
 

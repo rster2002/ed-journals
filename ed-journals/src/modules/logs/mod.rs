@@ -10,7 +10,7 @@ pub mod blocking;
 
 /// Contains readers for when working in an asynchronous environment like Tokio.
 #[cfg(feature = "async")]
-pub mod r#async;
+pub mod asynchronous;
 
 pub use log_file::LogFile;
 pub use log_file::LogFileError;

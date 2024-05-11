@@ -5,10 +5,10 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 use tokio::fs::File;
-use crate::logs::r#async::LogFileReaderError;
+use crate::logs::asynchronous::LogFileReaderError;
 use crate::logs::content::LogEvent;
 use crate::modules::blockers::async_blocker::AsyncBlocker;
-use crate::modules::logs::r#async::LogFileReader;
+use crate::modules::logs::asynchronous::LogFileReader;
 
 #[derive(Debug)]
 pub struct LiveLogFileReader {
