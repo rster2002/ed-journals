@@ -871,6 +871,8 @@ impl LogEventContent {
             LogEventContent::ScanBaryCentre(event) => event.body_id,
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
+            LogEventContent::ScanOrganic(event) => event.body,
+            LogEventContent::Touchdown(event) => event.body_id,
             _ => return None,
         })
     }

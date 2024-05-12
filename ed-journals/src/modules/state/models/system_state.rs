@@ -44,14 +44,18 @@ impl SystemState {
             },
             LogEventContent::Scan(event) => {
                 if !self.bodies.contains_key(&event.body_id) {
-                    self.bodies.insert(event.body_id, BodyState {
-                        scan: event.clone(),
-                    });
+                    self.bodies.insert(event.body_id, BodyState::new(event.clone()));
                 }
             },
 
             _ => {
+                if let Some(body_id) = log_event.content.body_id() {
+                    let Some(body) = self.bodies.get_mut(&body_id) else {
+                        return FeedResult::Later;
+                    };
 
+                    return body.feed_log_event(log_event);
+                }
             }
         }
 

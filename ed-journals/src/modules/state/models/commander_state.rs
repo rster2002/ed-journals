@@ -12,13 +12,15 @@ pub struct CommanderState {
     pub fid: String,
     pub name: String,
     pub systems: HashMap<u64, SystemState>,
-    pub queued_events: Vec<LogEvent>,
+    pub current_system: Option<u64>,
 }
 
 impl CommanderState {
     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
         match &log_event.content {
             LogEventContent::Location(location) => {
+                self.current_system = Some(location.system_info.system_address);
+
                 let system = self.upset_system(&location.system_info);
                 system.visit(&log_event.timestamp);
             },
@@ -27,6 +29,8 @@ impl CommanderState {
                 system.carrier_visit(&log_event.timestamp);
             },
             LogEventContent::FSDJump(fsd_jump) => {
+                self.current_system = Some(fsd_jump.system_info.system_address);
+
                 let system = self.upset_system(&fsd_jump.system_info);
                 system.visit(&log_event.timestamp);
             },
@@ -52,6 +56,10 @@ impl CommanderState {
 
         self.systems.get_mut(&system_info.system_address)
             .expect("Should have been added")
+    }
+
+    pub fn current_system(&self) -> Option<&SystemState> {
+        self.systems.get(&self.current_system?)
     }
 }
 
@@ -83,7 +91,7 @@ impl From<&CommanderEvent> for CommanderState {
             fid: value.fid.to_string(),
             name: value.name.to_string(),
             systems: HashMap::new(),
-            queued_events: Vec::new(),
+            current_system: None,
         }
     }
 }

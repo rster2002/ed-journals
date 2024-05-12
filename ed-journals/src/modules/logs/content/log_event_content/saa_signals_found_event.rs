@@ -10,13 +10,13 @@ pub struct SAASignalsFoundEvent {
 
     #[serde(rename = "BodyID")]
     pub body_id: u8,
-    pub signals: Vec<SAAScanCompleteEventSignal>,
-    pub genuses: Vec<SAAScanCompleteEventGenus>,
+    pub signals: Vec<SAASignalsFoundEventSignal>,
+    pub genuses: Vec<SAASignalsFoundEventGenus>,
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct SAAScanCompleteEventSignal {
+pub struct SAASignalsFoundEventSignal {
     #[serde(rename = "Type")]
     pub kind: PlanetarySignalType,
 
@@ -27,7 +27,7 @@ pub struct SAAScanCompleteEventSignal {
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct SAAScanCompleteEventGenus {
+pub struct SAASignalsFoundEventGenus {
     pub genus: Genus,
 
     #[serde(rename = "Genus_Localised")]

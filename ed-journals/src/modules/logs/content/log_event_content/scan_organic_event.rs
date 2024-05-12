@@ -31,7 +31,7 @@ pub struct ScanOrganicEvent {
     pub body: u8,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanOrganicEventScanType {
     Sample,
