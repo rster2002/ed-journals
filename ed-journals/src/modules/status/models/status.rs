@@ -25,7 +25,7 @@ pub struct Status {
     pub cargo: f32,
     pub legal_state: LegalStatus,
     pub balance: u64,
-    pub destination: DestinationStatus,
+    pub destination: Option<DestinationStatus>,
 
     #[serde(flatten)]
     pub planet_status: Option<PlanetStatus>,
