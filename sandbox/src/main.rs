@@ -1,17 +1,56 @@
 use std::env::current_dir;
+use std::fs;
 use std::path::PathBuf;
 use tokio::fs::File;
-use ed_journals::logs::asynchronous::LiveLogDirReader;
+use ed_journals::journal::asynchronous::LiveJournalDirReader;
+use ed_journals::journal::JournalEvent;
+use ed_journals::logs::asynchronous::{LiveLogDirReader, LogDirReader};
+use ed_journals::state::GameState;
 use ed_journals::status::blocking::StatusFileWatcher;
 
 #[tokio::main]
 async fn main() {
-    let watcher = StatusFileWatcher::new(PathBuf::from("./log-dir/Status.json"))
+    let mut log_reader = LogDirReader::open("../test-journals");
+
+    let mut state = GameState::new();
+
+    let mut count = 0;
+    while let Some(entry) = log_reader.next().await  {
+        state.feed_log_event(&entry.unwrap());
+        count += 1;
+
+        // dbg!(count);
+    }
+
+    dbg!("Hi");
+
+    let string = serde_json::to_string_pretty(&state)
         .unwrap();
 
-    for update in watcher {
-        dbg!(update);
-    }
+    dbg!("Here");
+
+    fs::write("temp.json", string)
+        .unwrap();
+
+    // let mut journal_watcher = LiveJournalDirReader::open("../test-journals")
+    //     .unwrap();
+
+    //
+    // while let Some(entry) = journal_watcher.next().await  {
+    //     match entry.unwrap() {
+    //         JournalEvent::LogEvent(event) => {
+    //             state.feed_log_event(&event);
+    //         }
+    //         JournalEvent::StatusEvent(_) => {}
+    //     }
+    // }
+
+    // let watcher = StatusFileWatcher::new(PathBuf::from("./log-dir/Status.json"))
+    //     .unwrap();
+    //
+    // for update in watcher {
+    //     dbg!(update);
+    // }
 
     // let status = ed_journals::status::blocking::read_status_file("./log-dir/Status.json")
     //     .unwrap();

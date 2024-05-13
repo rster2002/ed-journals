@@ -80,19 +80,18 @@ impl From<&Species> for Genus {
 
             Species::AmphoraPlant => Genus::AmphoraPlant,
 
-            Species::AnemonePrasinusBioluminescent
+            Species::AnemonePrasinus
             | Species::AnemonePrasinumBioluminescent
             | Species::AnemonePuniceus
             | Species::AnemonePuniceum
-            | Species::AnemoneRoseusBioluminescent
-            | Species::AnemoneRoseumBioluminescent
             | Species::AnemoneRoseus
+            | Species::AnemoneRoseumBioluminescent
             | Species::AnemoneRoseum
-            | Species::AnemoneBlattinusBioluminescent
+            | Species::AnemoneBlattinus
             | Species::AnemoneBlatteumBioluminescent
             | Species::AnemoneLuteus
             | Species::AnemoneLuteolum
-            | Species::AnemoneRubensBioluminescent
+            | Species::AnemoneRubens
             | Species::AnemoneRubeumBioluminescent
             | Species::AnemoneCroceus
             | Species::AnemoneCroceum => Genus::Anemone,
@@ -125,7 +124,10 @@ impl From<&Species> for Genus {
             Species::CactoidaLapis
             | Species::CactoidaPullulanta
             | Species::CactoidaCortexum
-            | Species::CactoidaVermis => Genus::Cactoida,
+            | Species::CactoidaVermis
+            | Species::CactoidaPeperatis => Genus::Cactoida,
+
+            Species::CrystallineShards => Genus::CrystallineShards,
 
             Species::ClypeusSpeculumi | Species::ClypeusLacrimam | Species::ClypeusMargaritus => {
                 Genus::Clypeus
@@ -256,5 +258,38 @@ impl Display for Genus {
                 Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
             }
         )
+    }
+}
+
+impl Genus {
+    /// The minimum distance in meters required between two samples.
+    pub fn minimum_distance(&self) -> u16 {
+        match self {
+            Genus::Aleoida => 150,
+            Genus::AmphoraPlant => 100,
+            Genus::Anemone => 0,
+            Genus::BarkMound => 0,
+            Genus::Bacterium => 0,
+            Genus::BrainTree => 0,
+            Genus::Cactoida => 0,
+            Genus::Clypeus => 0,
+            Genus::Concha => 0,
+            Genus::CrystallineShards => 0,
+            Genus::Electricae => 0,
+            Genus::Fonticulua => 0,
+            Genus::Fruxeta => 0,
+            Genus::Fumerola => 0,
+            Genus::Fungoida => 0,
+            Genus::Osseus => 0,
+            Genus::Recepta => 0,
+            Genus::SinuousTubers => 0,
+            Genus::Stratum => 0,
+            Genus::Tubus => 0,
+            Genus::Tussock => 0,
+            Genus::Trutexa => 0,
+
+            #[cfg(not(feature = "strict"))]
+            Genus::Unknown(_) => 0,
+        }
     }
 }

@@ -11,3 +11,4 @@ pub mod star_luminosity;
 pub mod terraform_state;
 pub mod volcanism;
 pub mod volcanism_type;
+mod nebula;
