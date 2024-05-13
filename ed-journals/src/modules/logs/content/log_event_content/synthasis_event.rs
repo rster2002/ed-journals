@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SynthesisEvent {
     // TODO replace with enum
@@ -10,7 +10,7 @@ pub struct SynthesisEvent {
     pub materials: Vec<SynthesisEventMaterial>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SynthesisEventMaterial {
     pub name: Material,

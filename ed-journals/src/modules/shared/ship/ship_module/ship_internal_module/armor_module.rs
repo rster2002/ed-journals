@@ -4,6 +4,7 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -12,7 +13,7 @@ use crate::modules::shared::ship::ship_module::module_class::ModuleClassError;
 use crate::modules::shared::ship::ship_module::ship_internal_module::armor_grade::{ArmorGrade, ArmorGradeError};
 use crate::modules::shared::ship::ship_type::ShipType;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ArmorModule {
     pub ship: ShipType,
     pub grade: ArmorGrade,

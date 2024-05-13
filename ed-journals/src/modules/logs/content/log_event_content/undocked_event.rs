@@ -1,7 +1,7 @@
 use crate::modules::shared::station::station_type::StationType;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct UndockedEvent {
     pub station_name: String,

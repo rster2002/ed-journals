@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierModulePackEvent {
     #[serde(rename = "CarrierID")]
@@ -12,7 +12,7 @@ pub struct CarrierModulePackEvent {
     pub refund: Option<u64>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierModulePackEventOperation {
     BuyPack,
     SellPack,

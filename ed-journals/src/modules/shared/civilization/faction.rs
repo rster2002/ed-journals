@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::civilization::faction::faction_happiness::FactionHappiness;
 use crate::modules::shared::civilization::faction_state::FactionState;
@@ -7,7 +7,7 @@ use crate::modules::shared::civilization::superpower::Superpower;
 
 mod faction_happiness;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Faction {
     pub name: String,
@@ -40,7 +40,7 @@ pub struct Faction {
     pub home_system: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct FactionActiveState {
     pub state: FactionState,

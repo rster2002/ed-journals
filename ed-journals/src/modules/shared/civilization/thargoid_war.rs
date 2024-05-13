@@ -1,8 +1,8 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ThargoidWar {
     pub current_state: ThargoidWarState,
@@ -17,7 +17,7 @@ pub struct ThargoidWar {
     pub estimated_remaining_time: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ThargoidWarState {
     #[serde(rename = "Thargoid_Stronghold")]

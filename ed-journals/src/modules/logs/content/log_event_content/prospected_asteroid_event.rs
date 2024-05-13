@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ProspectedAsteroidEvent {
     pub materials: Vec<ProspectedAsteroidEventMaterial>,
@@ -18,7 +18,7 @@ pub struct ProspectedAsteroidEvent {
     pub remaining: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ProspectedAsteroidEventMaterial {
     pub name: Commodity,
@@ -28,7 +28,7 @@ pub struct ProspectedAsteroidEventMaterial {
     pub proportion: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ProspectedAsteroidEventContent {
     #[serde(rename = "$AsteroidMaterialContent_High;")]

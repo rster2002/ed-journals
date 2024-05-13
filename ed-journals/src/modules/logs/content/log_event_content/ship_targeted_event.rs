@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::ship::ship_type::ShipType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEvent {
     pub target_locked: bool,
@@ -12,7 +12,7 @@ pub struct ShipTargetedEvent {
     pub scan_stage: Option<ShipTargetedEventScanStage>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum ShipTargetedEventScanStage {
     Locked(ShipTargetedEventScanStageLocked),
@@ -21,7 +21,7 @@ pub enum ShipTargetedEventScanStage {
     StageThree(ShipTargetedEventScanStageThree),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageLocked {
     pub ship: ShipType,
@@ -30,7 +30,7 @@ pub struct ShipTargetedEventScanStageLocked {
     pub ship_localized: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageOne {
     pub ship: ShipType,
@@ -45,7 +45,7 @@ pub struct ShipTargetedEventScanStageOne {
     pub pilot_rank: String,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageTwo {
     pub ship: ShipType,
@@ -64,7 +64,7 @@ pub struct ShipTargetedEventScanStageTwo {
     pub hull_health: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageThree {
     pub ship: ShipType,

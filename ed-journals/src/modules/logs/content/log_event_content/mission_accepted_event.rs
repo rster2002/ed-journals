@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::shared_commodity::SharedCommodity;
 use crate::modules::shared::station::mission_type::MissionType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionAcceptedEvent {
     pub name: MissionType,

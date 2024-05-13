@@ -2,18 +2,19 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 use crate::modules::shared::galaxy::volcanism_type::VolcanismType;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Volcanism {
     pub kind: VolcanismType,
     pub classification: VolcanismClassification,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum VolcanismClassification {
     Minor,
     Normal,

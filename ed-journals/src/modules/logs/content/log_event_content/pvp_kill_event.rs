@@ -1,7 +1,7 @@
 use crate::modules::shared::commander::combat_rank::CombatRank;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct PVPKillEvent {
     pub combat_rank: CombatRank,

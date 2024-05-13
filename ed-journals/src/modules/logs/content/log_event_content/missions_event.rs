@@ -1,7 +1,7 @@
 use crate::modules::shared::station::mission_type::MissionType;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionsEvent {
     pub active: Vec<MissionEventEntry>,
@@ -9,7 +9,7 @@ pub struct MissionsEvent {
     pub complete: Vec<MissionEventEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionEventEntry {
     #[serde(rename = "MissionID")]

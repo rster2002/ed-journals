@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CargoDepotEvent {
     #[serde(rename = "MissionID")]
@@ -22,7 +22,7 @@ pub struct CargoDepotEvent {
     pub progress: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CargoDepotEventUpdateType {
     Collect,
     Deliver,

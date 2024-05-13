@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::odyssey::item::Item;
 use crate::modules::shared::odyssey::item_type::ItemType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DropItemsEvent {
     pub name: Item,

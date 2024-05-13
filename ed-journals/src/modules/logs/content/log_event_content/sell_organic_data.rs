@@ -1,10 +1,10 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::genus::Genus;
 use crate::modules::shared::exploration::species::Species;
 use crate::modules::shared::exploration::variant::Variant;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SellOrganicDataEvent {
     #[serde(rename = "MarketID")]
@@ -12,7 +12,7 @@ pub struct SellOrganicDataEvent {
     pub bio_data: Vec<SellOrganicDataEventBioData>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SellOrganicDataEventBioData {
     pub genus: Genus,

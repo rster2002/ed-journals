@@ -1,4 +1,4 @@
-use serde::{Deserialize, Deserializer};
+use serde::{Serialize, Deserialize, Deserializer};
 use serde_json::Value;
 
 use crate::modules::shared::galaxy::atmosphere::Atmosphere;
@@ -13,7 +13,7 @@ use crate::modules::shared::galaxy::terraform_state::TerraformState;
 use crate::modules::shared::galaxy::volcanism::Volcanism;
 use crate::modules::shared::materials::material::Material;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEvent {
     pub scan_type: ScanEventScanType,
@@ -37,7 +37,7 @@ pub struct ScanEvent {
     pub kind: ScanEventKind,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventScanType {
     Basic,
@@ -46,7 +46,7 @@ pub enum ScanEventScanType {
     Detailed,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ScanEventKind {
     Star(ScanEventStar),
     Planet(ScanEventPlanet),
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for ScanEventKind {
     }
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventStar {
     pub star_type: StarClass,
@@ -113,7 +113,7 @@ pub struct ScanEventStar {
     pub rings: Vec<ScanEventRing>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanet {
     pub tidal_lock: bool,
@@ -144,21 +144,21 @@ pub struct ScanEventPlanet {
     pub axial_tilt: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetAtmosphereComposition {
     pub name: AtmosphereElement,
     pub percent: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetMaterial {
     pub name: Material,
     pub percent: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetComposition {
     pub ice: f32,
@@ -166,7 +166,7 @@ pub struct ScanEventPlanetComposition {
     pub metal: f32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventParent {
     Null(u8),
@@ -175,7 +175,7 @@ pub enum ScanEventParent {
     Planet(u8),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventRing {
     pub name: String,
@@ -188,7 +188,7 @@ pub struct ScanEventRing {
 }
 
 /// This struct is always empty and is just here to make sure [serde] recognizes the empty variant.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct ScanEventBeltCluster {}
 
 #[cfg(test)]

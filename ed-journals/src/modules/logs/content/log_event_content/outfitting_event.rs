@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 /// Emitted when opening the outfitting menu. The contents of the outfitting menu are written to a
 /// separate file called `Outfitting.json` in the journal directory.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct OutfittingEvent {
     #[serde(rename = "MarketID")]

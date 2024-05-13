@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::modules::shared::galaxy::star_class::StarClass;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StartJumpEvent {
     #[serde(flatten)]
@@ -11,7 +11,7 @@ pub struct StartJumpEvent {
     pub taxi: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", tag = "JumpType")]
 pub enum StartJumpType {
     #[serde(rename_all = "PascalCase")]

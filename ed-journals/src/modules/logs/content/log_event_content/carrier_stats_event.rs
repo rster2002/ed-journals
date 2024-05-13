@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEvent {
     #[serde(rename = "CarrierID")]
@@ -23,7 +23,7 @@ pub struct CarrierStatsEvent {
     pub module_packs: Vec<CarrierStatsEventPack>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierStatsEventDockingAccess {
     #[serde(rename = "all")]
     All,
@@ -38,7 +38,7 @@ pub enum CarrierStatsEventDockingAccess {
     SquadronAndFriends,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventSpaceUsage {
     pub total_capacity: u16,
@@ -50,7 +50,7 @@ pub struct CarrierStatsEventSpaceUsage {
     pub free_space: u16,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventFinance {
     pub carrier_balance: u64,
@@ -70,7 +70,7 @@ pub struct CarrierStatsEventFinance {
     pub tax_rate_repair: u64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventCrewEntry {
     #[serde(default)]
@@ -82,7 +82,7 @@ pub struct CarrierStatsEventCrewEntry {
     pub crew_name: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 #[derive(Default)]
 pub enum CarrierStatsEventCrewRole {
@@ -104,7 +104,7 @@ pub enum CarrierStatsEventCrewRole {
     Unknown,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventPack {
     pub pack_theme: String,

@@ -3,6 +3,7 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -14,7 +15,7 @@ use crate::modules::shared::exploration::variant_source::{
     VariantSource, VariantSourceError,
 };
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Variant {
     pub species: Species,
     pub color: VariantColor,

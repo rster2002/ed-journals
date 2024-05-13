@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 use crate::modules::shared::materials::material_category::MaterialCategory;
 use crate::modules::shared::ship::ship_module::ShipModule;
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEvent {
     pub broker_type: TechnologyBrokerEventBrokerType,
@@ -17,7 +17,7 @@ pub struct TechnologyBrokerEvent {
     pub materials: Vec<TechnologyBrokerEventMaterial>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum TechnologyBrokerEventBrokerType {
     #[serde(rename = "guardian")]
     Guardian,
@@ -32,7 +32,7 @@ pub enum TechnologyBrokerEventBrokerType {
     Sirius,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventUnlockedItem {
     pub name: ShipModule,
@@ -41,7 +41,7 @@ pub struct TechnologyBrokerEventUnlockedItem {
     pub name_localized: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventCommodity {
     pub name: Commodity,
@@ -51,7 +51,7 @@ pub struct TechnologyBrokerEventCommodity {
     pub count: u16,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventMaterial {
     pub name: Material,

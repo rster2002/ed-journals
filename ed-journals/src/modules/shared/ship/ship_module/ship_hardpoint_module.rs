@@ -4,6 +4,7 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::{Captures, Regex};
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -17,7 +18,7 @@ pub mod hardpoint_module;
 pub mod hardpoint_mounting;
 pub mod hardpoint_type;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipHardpointModule {
     pub module: HardpointModule,
     pub mounting: HardpointMounting,

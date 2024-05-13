@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::species::Species;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Genus {
     #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
     Aleoida,

@@ -1,7 +1,7 @@
 use crate::modules::shared::civilization::system_info::SystemInfo;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LocationEvent {
     // TODO check when this is filled
@@ -19,13 +19,13 @@ pub struct LocationEvent {
     pub system_info: SystemInfo,
 }
 
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventStationFaction {
 //     pub name: String,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventStationEconomy {
 //     pub name: String,
@@ -35,7 +35,7 @@ pub struct LocationEvent {
 //     pub proportion: f32,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventFaction {
 //     pub name: String,
@@ -56,26 +56,26 @@ pub struct LocationEvent {
 //     pub recovering_states: Vec<LocationEventFactionRecoveringState>,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventFactionActiveState {
 //     pub state: String,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventFactionRecoveringState {
 //     pub state: String,
 //     pub trend: u32,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventSystemFaction {
 //     pub name: String,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventConflict {
 //     pub war_type: String,
@@ -84,7 +84,7 @@ pub struct LocationEvent {
 //     pub faction_2: LocationEventConflictFaction,
 // }
 //
-// #[derive(Debug, Deserialize, Clone, PartialEq)]
+// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct LocationEventConflictFaction {
 //     pub name: String,

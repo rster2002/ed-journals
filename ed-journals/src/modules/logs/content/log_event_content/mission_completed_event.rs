@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::shared_material::SharedMaterial;
 use crate::modules::shared::shared_material_category::SharedMaterialCategory;
 use crate::modules::shared::station::mission_type::MissionType;
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEvent {
     pub faction: String,
@@ -41,7 +41,7 @@ pub struct MissionCompletedEvent {
     pub faction_effects: Vec<MissionCompletedEventFactionEffect>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffect {
     pub faction: String,
@@ -54,7 +54,7 @@ pub struct MissionCompletedEventFactionEffect {
 }
 
 // Ah yes, the FactionEffectEffect
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffectEffect {
     pub effect: MissionCompletedEventFactionEffectEffectEffect,
@@ -62,7 +62,7 @@ pub struct MissionCompletedEventFactionEffectEffect {
 }
 
 // Well, I, uh. Leave me alone alright!
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_EP_up;")]
@@ -79,7 +79,7 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     Unknown(String),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum MissionCompletedEventTrend {
     UpGood,
@@ -92,7 +92,7 @@ pub enum MissionCompletedEventTrend {
     Unknown(String),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffectInfluence {
     pub system_address: u64,
@@ -102,14 +102,14 @@ pub struct MissionCompletedEventFactionEffectInfluence {
     pub influence: String,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventCommodityReward {
     pub name: Commodity,
     pub count: u16,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventMaterialsReward {
     pub name: SharedMaterial,

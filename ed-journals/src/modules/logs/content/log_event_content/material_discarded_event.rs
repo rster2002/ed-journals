@@ -1,8 +1,8 @@
 use crate::modules::shared::materials::material::Material;
 use crate::modules::shared::materials::material_category::MaterialCategory;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialDiscarded {
     pub category: MaterialCategory,

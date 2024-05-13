@@ -2,9 +2,9 @@ use crate::modules::shared::odyssey::suit::Suit;
 use crate::modules::shared::odyssey::suit_slot::SuitSlot;
 use crate::modules::shared::odyssey::weapon::Weapon;
 use crate::modules::shared::odyssey::weapon_mod::WeaponMod;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadoutRemoveModuleEvent {
     #[serde(rename = "SuitID")]

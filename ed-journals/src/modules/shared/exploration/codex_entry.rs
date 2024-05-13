@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::genus::Genus;
 use crate::modules::shared::exploration::species::Species;
 use crate::modules::shared::exploration::star_class_codex_entry::StarClassCodexEntry;
 use crate::modules::shared::exploration::variant::Variant;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CodexEntry {
     #[serde(untagged)]
     Genus(Genus),

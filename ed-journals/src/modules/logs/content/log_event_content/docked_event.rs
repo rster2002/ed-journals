@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::station::station_info::StationInfo;
 use crate::modules::shared::station::station_type::StationType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DockedEvent {
     pub station_name: String,

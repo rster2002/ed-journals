@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum PlanetarySignalType {
     #[serde(rename = "$SAA_SignalType_Human;")]
     Human,

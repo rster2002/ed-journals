@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::commander::combat_rank::CombatRank;
 use crate::modules::shared::odyssey::citizen::Citizen;
 use crate::modules::shared::ship::ship_type::ShipType;
 use crate::modules::shared::thargoid::thargoid_ship::ThargoidShip;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum DiedEvent {
     None(DiedEventNone),
@@ -14,11 +14,11 @@ pub enum DiedEvent {
 }
 
 /// This should not contain any fields and is just here to make [serde] happy.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventNone {}
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventIndividualKill {
     pub killer_name: Option<String>,
@@ -29,13 +29,13 @@ pub struct DiedEventIndividualKill {
     pub killer_rank: CombatRank,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventWingKill {
     pub killers: Vec<DiedEventWingKiller>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventWingKiller {
     pub name: String,
@@ -43,7 +43,7 @@ pub struct DiedEventWingKiller {
     pub rank: CombatRank,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum DiedEventKillerShip {
     /// When killed by a human ship.

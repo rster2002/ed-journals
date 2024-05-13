@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ResurrectEvent {
     pub option: ResurrectEventOption,
@@ -8,7 +8,7 @@ pub struct ResurrectEvent {
     pub bankrupt: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ResurrectEventOption {
     #[serde(rename = "recover")]
     Recover,

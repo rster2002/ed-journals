@@ -1,14 +1,14 @@
 use crate::modules::shared::odyssey::item::Item;
 use crate::modules::shared::odyssey::item_type::ItemType;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TransferMicroResourcesEvent {
     pub transfers: Vec<TransferMicroResourcesEventTransfer>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct TransferMicroResourcesEventTransfer {
     pub name: Item,
@@ -20,7 +20,7 @@ pub struct TransferMicroResourcesEventTransfer {
     pub direction: TransferMicroResourcesEventTransferDirection,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum TransferMicroResourcesEventTransferDirection {
     ToBackpack,
     // TODO the other way -_-

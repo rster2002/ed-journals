@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEvent {
     #[serde(rename = "MarketID")]
@@ -10,7 +10,7 @@ pub struct StoredModulesEvent {
     pub items: Vec<StoredModulesEventItem>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEventItem {
     // TODO look into replacing this with an enum
@@ -31,7 +31,7 @@ pub struct StoredModulesEventItem {
     pub hot: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEventStorageLocation {
     pub star_system: String,

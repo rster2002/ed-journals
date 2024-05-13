@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::shared::odyssey::item::Item;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackEvent {
     pub items: Vec<BackpackEventObject>,
@@ -11,7 +11,7 @@ pub struct BackpackEvent {
 }
 
 // TODO this is the same as ship_locker_event
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackEventObject {
     pub name: Item,

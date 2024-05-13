@@ -4,6 +4,7 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -15,14 +16,14 @@ use crate::modules::shared::ship::ship_slot::hardpoint_size::{
 mod core_slot;
 pub mod hardpoint_size;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipSlot {
     pub slot_nr: u8,
     pub kind: ShipSlotKind,
 }
 
 // TODO kinda want to refactor this to use untagged variants
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ShipSlotKind {
     ShipCockpit,
     CargoHatch,

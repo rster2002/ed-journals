@@ -1,7 +1,7 @@
 use crate::modules::shared::materials::material::Material;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct MaterialsEvent {
     #[serde(rename = "Raw")]
     pub raw: Vec<MaterialEventEntry>,
@@ -13,7 +13,7 @@ pub struct MaterialsEvent {
     pub manufactured: Vec<MaterialEventEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct MaterialEventEntry {
     #[serde(rename = "Name")]
     pub name: Material,

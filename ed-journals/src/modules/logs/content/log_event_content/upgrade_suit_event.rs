@@ -1,8 +1,8 @@
 use crate::modules::shared::odyssey::item::Item;
 use crate::modules::shared::odyssey::suit::Suit;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeSuitEvent {
     #[serde(rename = "SuitID")]
@@ -16,7 +16,7 @@ pub struct UpgradeSuitEvent {
     pub resources: Vec<UpgradeSuitEventResource>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeSuitEventResource {
     pub name: Item,

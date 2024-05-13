@@ -1,8 +1,9 @@
 use std::fmt::{Display, Formatter};
+use serde::Serialize;
 
 use thiserror::Error;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ArmorGrade {
     LightweightAlloy,
     ReinforcedAlloy,

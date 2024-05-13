@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::commander::combat_rank::CombatRank;
 use crate::modules::shared::commander::empire_rank::EmpireRank;
@@ -8,7 +8,7 @@ use crate::modules::shared::commander::federation_rank::FederationRank;
 use crate::modules::shared::commander::mercenary_rank::MercenaryRank;
 use crate::modules::shared::commander::trade_rank::TradeRank;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum PromotionEvent {
     Exobiologist(ExobiologyRank),

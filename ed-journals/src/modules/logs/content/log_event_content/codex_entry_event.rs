@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::codex_entry::CodexEntry;
 use crate::modules::shared::galaxy::region::Region;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CodexEntryEvent {
     #[serde(rename = "EntryID")]
@@ -41,7 +41,7 @@ pub struct CodexEntryEvent {
     pub is_new_entry: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CodexEntryEventCategory {
     #[serde(rename = "$Codex_Category_Biology;")]
     Biology,
@@ -54,7 +54,7 @@ pub enum CodexEntryEventCategory {
     Unknown(String),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CodexEntryEventSubcategory {
     #[serde(rename = "$Codex_SubCategory_Organic_Structures;")]
     OrganicStructures,
@@ -73,7 +73,7 @@ pub enum CodexEntryEventSubcategory {
     Unknown(String),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CodexEntryEventPlanetaryLocation {
     pub latitude: f32,

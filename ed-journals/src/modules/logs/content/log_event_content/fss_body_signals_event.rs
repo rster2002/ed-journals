@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::planetary_signal_type::PlanetarySignalType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSBodySignalsEvent {
     pub body_name: String,
@@ -13,7 +13,7 @@ pub struct FSSBodySignalsEvent {
     pub signals: Vec<FSSBodySignalEventSignal>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSBodySignalEventSignal {
     #[serde(rename = "Type")]

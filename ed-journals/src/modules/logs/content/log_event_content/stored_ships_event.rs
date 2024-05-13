@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::ship::ship_type::ShipType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipsEvent {
     pub station_name: String,
@@ -14,7 +14,7 @@ pub struct StoredShipsEvent {
     pub ships_remote: Vec<StoredShipEventRemoteShip>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventLocalShip {
     #[serde(rename = "ShipID")]
@@ -28,7 +28,7 @@ pub struct StoredShipEventLocalShip {
     pub hot: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventRemoteShip {
     #[serde(rename = "ShipID")]
@@ -49,7 +49,7 @@ pub struct StoredShipEventRemoteShip {
     pub hot: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventStorageLocation {
     pub star_system: String,

@@ -1,10 +1,10 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::station::mission_type::sightseeing_mission::SightseeingMission;
 
 mod sightseeing_mission;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum MissionType {
     #[serde(alias = "Mission_Salvage", alias = "Mission_Salvage_name")]
     BlackBoxSalvageOperation,

@@ -2,12 +2,13 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 
 /// Mission_Sightseeing_Criminal_BOOM
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct SightseeingMission {
     // TODO use enum
     pub citizen: String,

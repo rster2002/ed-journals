@@ -1,14 +1,17 @@
 use std::collections::HashMap;
+use serde::Serialize;
 use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalEventSignal;
 use crate::logs::content::log_event_content::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::logs::content::log_event_content::saa_signals_found_event::{SAASignalsFoundEventGenus, SAASignalsFoundEventSignal};
+use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
 use crate::shared::exploration::genus::Genus;
 use crate::shared::exploration::species::Species;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::models::organic_state::OrganicState;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct BodyState {
     pub scan: ScanEvent,
 
@@ -17,6 +20,9 @@ pub struct BodyState {
     pub saa_scan: Option<SAAScanCompleteEvent>,
     pub saa_signals: Vec<SAASignalsFoundEventSignal>,
     pub saa_genuses: Vec<Genus>,
+
+    pub touchdowns: Vec<TouchdownEvent>,
+    pub organics: HashMap<Species, OrganicState>,
 
     // pub scanned_organics: HashMap<>
 
@@ -33,6 +39,8 @@ impl BodyState {
             saa_scan: None,
             saa_signals: Vec::new(),
             saa_genuses: Vec::new(),
+            touchdowns: Vec::new(),
+            organics: HashMap::new(),
         }
     }
 
@@ -58,6 +66,11 @@ impl BodyState {
             LogEventContent::FSSBodySignals(body_signals) => {
                 self.fss_signals = body_signals.signals.clone();
             },
+            LogEventContent::Touchdown(touchdown) => {
+                if touchdown.on_planet {
+                    self.touchdowns.push(touchdown.clone());
+                }
+            },
             LogEventContent::ScanOrganic(scanned_organic) => {
 
             },
@@ -66,5 +79,11 @@ impl BodyState {
         }
 
         FeedResult::Accepted
+    }
+
+    pub fn clear_organic_process(&mut self) {
+        for organic in self.organics.values_mut() {
+            organic.clear_process();
+        }
     }
 }

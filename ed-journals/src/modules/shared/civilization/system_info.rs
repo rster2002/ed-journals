@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::civilization::conflict::Conflict;
 use crate::modules::shared::civilization::economy::Economy;
@@ -9,7 +9,7 @@ use crate::modules::shared::civilization::system_security::SystemSecurity;
 use crate::modules::shared::civilization::thargoid_war::ThargoidWar;
 use crate::modules::shared::galaxy::body_type::BodyType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SystemInfo {
     /// The name of the star system that is displayed to the player.

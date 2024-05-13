@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::odyssey::weapon::Weapon;
 use crate::modules::shared::odyssey::weapon_mod::WeaponMod;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BuyWeaponEvent {
     pub name: Weapon,

@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use serde_json::Value;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum HardpointMounting {
     #[serde(rename = "Fixed", alias = "fixed")]
     Fixed,

@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsEvent {
     #[serde(rename = "Bank_Account")]
@@ -20,7 +20,7 @@ pub struct StatisticsEvent {
     pub multicrew: StatisticsMulticrew,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsBankAccount {
     #[serde(rename = "Current_Wealth")]
     pub current_wealth: u64,
@@ -47,7 +47,7 @@ pub struct StatisticsBankAccount {
     pub spent_on_insurance: u64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     pub bounties_claimed: u32,
@@ -74,7 +74,7 @@ pub struct StatisticsCombat {
     pub skimmers_killed: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrime {
     #[serde(rename = "Fines")]
     pub fines: u64,
@@ -92,7 +92,7 @@ pub struct StatisticsCrime {
     pub highest_bounty: u64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsSmuggling {
     #[serde(rename = "Black_Markets_Traded_With")]
     pub black_markets_traded_with: u32,
@@ -110,7 +110,7 @@ pub struct StatisticsSmuggling {
     pub highest_single_transaction: i64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsTrading {
     #[serde(rename = "Markets_Traded_With")]
     pub markets_traded_with: u32,
@@ -128,7 +128,7 @@ pub struct StatisticsTrading {
     pub highest_single_transaction: i64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsMining {
     #[serde(rename = "Mining_Profits")]
     mining_profits: i64,
@@ -140,7 +140,7 @@ pub struct StatisticsMining {
     materials_collected: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsExploration {
     #[serde(rename = "Systems_Visited")]
     pub systems_visited: u32,
@@ -170,7 +170,7 @@ pub struct StatisticsExploration {
     pub time_played: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsPassengers {
     #[serde(rename = "Passengers_Missions_Bulk")]
     pub passengers_missions_bulk: u32,
@@ -185,7 +185,7 @@ pub struct StatisticsPassengers {
     pub passengers_missions_ejected: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsSearchAndRescue {
     #[serde(rename = "SearchRescue_Traded")]
@@ -198,7 +198,7 @@ pub struct StatisticsSearchAndRescue {
     pub search_rescue_count: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
@@ -223,7 +223,7 @@ pub struct StatisticsCrafting {
     pub recipes_generated_rank_5: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages")]
     pub npc_crew_total_wages: u64,
@@ -238,7 +238,7 @@ pub struct StatisticsCrew {
     pub npc_crew_died: u32,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]

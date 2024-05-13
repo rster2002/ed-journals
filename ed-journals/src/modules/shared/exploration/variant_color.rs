@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use serde::Serialize;
 
 use thiserror::Error;
 
@@ -8,7 +9,7 @@ use crate::modules::shared::exploration::variant_source::VariantSource;
 use crate::modules::shared::galaxy::star_class::StarClass;
 use crate::modules::shared::materials::material::Material;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum VariantColor {
     Amethyst,
     Aquamarine,

@@ -2,9 +2,9 @@ use crate::modules::shared::ship::blueprint::Blueprint;
 use crate::modules::shared::ship::ship_module::ShipModule;
 use crate::modules::shared::ship::ship_slot::ShipSlot;
 use crate::modules::shared::ship::ship_type::ShipType;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MassModuleStoreEvent {
     #[serde(rename = "MarketID")]
@@ -16,7 +16,7 @@ pub struct MassModuleStoreEvent {
     pub items: Vec<MassModuleStoreEventItem>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MassModuleStoreEventItem {
     pub slot: ShipSlot,

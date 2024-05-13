@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 /// Fired when changes were made to the crew of a service.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierCrewServicesEvent {
     /// The ID of the carrier of which the crew was changed.
@@ -18,7 +18,7 @@ pub struct CarrierCrewServicesEvent {
     pub crew_name: String,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventCrewRole {
     Refuel,
     Repair,
@@ -32,7 +32,7 @@ pub enum CarrierCrewServicesEventCrewRole {
     Outfitting,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventOperation {
     Active,
     Activate,

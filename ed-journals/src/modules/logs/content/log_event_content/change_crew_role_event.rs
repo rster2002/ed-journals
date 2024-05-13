@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 /// Fired when in a multi-crew session and the current player changes their role.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ChangeCrewRoleEvent {
     #[serde(default)]
@@ -9,7 +9,7 @@ pub struct ChangeCrewRoleEvent {
     pub role: ChangeCrewRoleEventRole,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ChangeCrewRoleEventRole {
     Idle,
     FireCon,

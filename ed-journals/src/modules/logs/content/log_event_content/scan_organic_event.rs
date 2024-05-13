@@ -1,10 +1,10 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::exploration::genus::Genus;
 use crate::modules::shared::exploration::species::Species;
 use crate::modules::shared::exploration::variant::Variant;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanOrganicEvent {
     /// Possible values seem to be "Sample", "Analyze", "Log". It seems that the first scan for
@@ -31,7 +31,7 @@ pub struct ScanOrganicEvent {
     pub body: u8,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanOrganicEventScanType {
     Sample,

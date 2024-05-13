@@ -66,7 +66,7 @@ use upgrade_suit_event::UpgradeSuitEvent;
 use upgrade_weapon_event::UpgradeWeaponEvent;
 use won_a_trophy_for_squadron_event::WonATrophyForSquadronEvent;
 use kinded::Kinded;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use afmu_repairs_event::AFMURepairsEvent;
 use applied_to_squadron_event::AppliedToSquadronEvent;
@@ -494,7 +494,7 @@ pub mod won_a_trophy_for_squadron_event;
 /// > **Note** not all events might already be parsed or be parsed correctly. If you feel that
 /// > an existing entry is not parsed correctly or if there is a missing entry, please open an issue
 /// > on [GitHub](https://github.com/rster2002/ed-journals/issues/new).
-#[derive(Debug, Deserialize, Kinded, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Kinded, Clone, PartialEq)]
 #[serde(tag = "event")]
 pub enum LogEventContent {
     // Startup

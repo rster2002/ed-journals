@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::ship::ship_type::ShipType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEvent {
     pub ship_type: ShipType,
@@ -15,14 +15,14 @@ pub struct ShipyardBuyEvent {
     pub old_ship_action: ShipyardBuyEventOldShipAction,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum ShipyardBuyEventOldShipAction {
     Store(ShipyardBuyEventStoreCurrentShip),
     Sell(ShipyardBuyEventSellCurrentShip),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEventStoreCurrentShip {
     pub store_old_ship: ShipType,
@@ -31,7 +31,7 @@ pub struct ShipyardBuyEventStoreCurrentShip {
     pub store_ship_id: u8,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEventSellCurrentShip {
     pub sell_old_ship: ShipType,

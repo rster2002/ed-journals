@@ -1,12 +1,12 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use serde_json::Value;
 
 use crate::modules::shared::ship::ship_module::ship_hardpoint_module::hardpoint_type::HardpointType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum HardpointModule {
     #[serde(rename = "beamlaser")]
     BeamLaser,

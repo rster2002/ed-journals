@@ -1,8 +1,8 @@
 use crate::modules::shared::odyssey::item::Item;
 use crate::modules::shared::odyssey::weapon::Weapon;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeWeaponEvent {
     pub name: Weapon,
@@ -13,7 +13,7 @@ pub struct UpgradeWeaponEvent {
     pub resources: Vec<UpgradeWeaponEventResource>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeWeaponEventResource {
     pub name: Item,

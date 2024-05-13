@@ -1,7 +1,7 @@
 use crate::modules::shared::odyssey::item::Item;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SellMicroResourcesEvent {
     #[serde(rename = "MarketID")]
@@ -10,7 +10,7 @@ pub struct SellMicroResourcesEvent {
     pub micro_resources: Vec<SellMicroResourcesEventResource>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SellMicroResourcesEventResource {
     pub name: Item,

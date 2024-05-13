@@ -8,6 +8,7 @@ use crate::logs::content::{LogEvent, LogEventContent};
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
+#[derive(Serialize)]
 pub struct GameState {
     commanders: HashMap<String, CommanderState>,
     current_commander: Option<String>,
@@ -104,26 +105,6 @@ impl GameState {
         }
 
         FeedResult::Accepted
-    }
-}
-
-impl Debug for GameState {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", "{")?;
-
-        write!(f, "current_commander: {:?}, ", self.current_commander)?;
-        write!(f, "file_header: {:?}, ", self.file_header)?;
-        write!(f, "header_count: {}, ", self.header_count)?;
-
-        write!(f, "commanders({}): [", self.commanders.len())?;
-        for commander in self.commanders.values() {
-            write!(f, "{:?}, ", commander)?;
-        }
-        write!(f, "]")?;
-
-        write!(f, "{}", "}")?;
-
-        Ok(())
     }
 }
 

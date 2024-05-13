@@ -1,9 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
+use serde::Serialize;
 
 use thiserror::Error;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum HardpointSize {
     Tiny,
     Small,

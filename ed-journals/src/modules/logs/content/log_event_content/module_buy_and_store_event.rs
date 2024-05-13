@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::ship::ship_module::ShipModule;
 use crate::modules::shared::ship::ship_type::ShipType;
 
 /// When buying a module but storing at the current location instead of equipping it to the current
 /// ship.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleBuyAndStoreEvent {
     /// The purchased module that has been stored at the current location.

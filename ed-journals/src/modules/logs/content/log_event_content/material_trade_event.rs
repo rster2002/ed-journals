@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 use crate::modules::shared::materials::material_category::MaterialCategory;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialTradeEvent {
     #[serde(rename = "MarketID")]
@@ -11,7 +11,7 @@ pub struct MaterialTradeEvent {
     pub trader_type: MaterialCategory,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialTradeEventExchange {
     pub material: Material,

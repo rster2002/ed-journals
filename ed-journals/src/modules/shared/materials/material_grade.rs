@@ -1,6 +1,7 @@
+use serde::Serialize;
 use crate::modules::shared::materials::material::Material;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub enum MaterialGrade {
     Grade1,
     Grade2,

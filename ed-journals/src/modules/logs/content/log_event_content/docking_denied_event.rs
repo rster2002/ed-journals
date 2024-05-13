@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::station::station_type::StationType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DockingDeniedEvent {
     pub station_name: String,
@@ -13,7 +13,7 @@ pub struct DockingDeniedEvent {
     pub reason: DockingDeniedReason,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum DockingDeniedReason {
     NoSpace,

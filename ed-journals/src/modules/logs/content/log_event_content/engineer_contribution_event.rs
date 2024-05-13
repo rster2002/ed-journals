@@ -1,9 +1,9 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEvent {
     pub engineer: String,
@@ -15,14 +15,14 @@ pub struct EngineerContributionEvent {
     pub kind: EngineerContributionEventType,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", tag = "Type")]
 pub enum EngineerContributionEventType {
     Commodity(EngineerContributionEventCommodityContribution),
     Materials(EngineerContributionEventMaterialContribution),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEventCommodityContribution {
     pub commodity: Commodity,
@@ -30,7 +30,7 @@ pub struct EngineerContributionEventCommodityContribution {
     pub total_quantity: u16,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEventMaterialContribution {
     pub material: Material,

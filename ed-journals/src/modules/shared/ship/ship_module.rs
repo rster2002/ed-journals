@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::ship::ship_module::ship_decal::ShipDecal;
 use crate::modules::shared::ship::ship_module::ship_nameplate::ShipNameplate;
@@ -19,7 +19,7 @@ mod ship_nameplate;
 mod ship_paint_job;
 mod ship_voicepack;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {
     /// Special case for the cargo bay door.
     #[serde(

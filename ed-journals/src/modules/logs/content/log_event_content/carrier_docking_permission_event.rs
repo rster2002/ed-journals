@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierDockingPermissionEvent {
     #[serde(rename = "CarrierID")]
@@ -9,7 +9,7 @@ pub struct CarrierDockingPermissionEvent {
     pub allow_notorious: bool,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierDockingPermissionEventDockingAccess {
     #[serde(rename = "all")]
     All,

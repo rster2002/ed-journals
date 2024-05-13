@@ -1,8 +1,8 @@
 use crate::modules::shared::odyssey::suit::Suit;
 use crate::modules::shared::odyssey::suit_mod::SuitMod;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SellSuitEvent {
     #[serde(rename = "SuitID")]

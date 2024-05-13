@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CommitCrimeEvent {
     pub crime_type: CommitCrimeEventType,
@@ -10,7 +10,7 @@ pub struct CommitCrimeEvent {
 }
 
 // TODO this should be moved to its own file
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum CommitCrimeEventType {
     Assault,

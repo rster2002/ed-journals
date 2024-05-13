@@ -1,7 +1,7 @@
 use crate::modules::shared::odyssey::suit::Suit;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct RenameSuitLoadoutEvent {
     #[serde(rename = "SuitID")]

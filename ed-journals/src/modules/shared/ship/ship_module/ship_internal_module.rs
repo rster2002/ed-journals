@@ -4,6 +4,7 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -17,7 +18,7 @@ pub mod armor_module;
 pub mod internal_module;
 pub mod internal_type;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipInternalModule {
     pub module: InternalModule,
     pub size: u8,

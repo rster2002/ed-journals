@@ -1,20 +1,20 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum EngineerProgressEvent {
     Startup(EngineerProgressStartup),
     Update(EngineerProgressUpdate),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressStartup {
     pub engineers: Vec<EngineerProgressStartupEntry>,
 }
 
 // TODO the data for this struct is so inconsistent, it could use some work.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressStartupEntry {
     pub engineer: Option<String>,
@@ -28,14 +28,14 @@ pub struct EngineerProgressStartupEntry {
     pub rank_progress: Option<f32>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum EngineerProgressStartupProgress {
     Unlocked,
     Known,
     Invited,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressUpdate {
     pub engineer: String,

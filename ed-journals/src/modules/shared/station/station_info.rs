@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::civilization::economy::Economy;
 use crate::modules::shared::civilization::faction_state::FactionState;
 use crate::modules::shared::civilization::government::Government;
 use crate::modules::shared::station::station_service::StationService;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfo {
     #[serde(rename = "MarketID")]
@@ -23,14 +23,14 @@ pub struct StationInfo {
     pub station_economies: Vec<StationInfoEconomy>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfoFaction {
     pub name: String,
     pub faction_state: Option<FactionState>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfoEconomy {
     pub name: Economy,

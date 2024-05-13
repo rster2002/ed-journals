@@ -1,18 +1,21 @@
 use std::collections::HashMap;
-use std::fmt::{Debug, Formatter};
-use chrono::NaiveDateTime;
+use std::fmt::{Debug};
 use serde::Serialize;
 use crate::logs::content::log_event_content::commander_event::CommanderEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
 use crate::shared::civilization::system_info::SystemInfo;
+use crate::state::models::current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::SystemState;
 
+#[derive(Serialize)]
 pub struct CommanderState {
     pub fid: String,
     pub name: String,
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
+    pub current_organic: Option<CurrentOrganic>,
 }
 
 impl CommanderState {
@@ -34,16 +37,25 @@ impl CommanderState {
                 let system = self.upset_system(&fsd_jump.system_info);
                 system.visit(&log_event.timestamp);
             },
-
-            _ => {
-                if let Some(address) = log_event.content.system_address() {
-                    let Some(system) = self.systems.get_mut(&address) else {
-                        return FeedResult::Later;
-                    };
-
-                    return system.feed_log_event(log_event);
+            LogEventContent::ScanOrganic(scan_organic) => {
+                match &scan_organic.scan_type {
+                    ScanOrganicEventScanType::Sample => {}
+                    ScanOrganicEventScanType::Analyse => {}
+                    ScanOrganicEventScanType::Log => {
+                        self.current_organic = None;
+                    }
                 }
             },
+
+            _ => {},
+        }
+
+        if let Some(address) = log_event.content.system_address() {
+            let Some(system) = self.systems.get_mut(&address) else {
+                return FeedResult::Later;
+            };
+
+            return system.feed_log_event(log_event);
         }
 
         FeedResult::Accepted
@@ -63,28 +75,6 @@ impl CommanderState {
     }
 }
 
-
-impl Debug for CommanderState {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", "{")?;
-
-        write!(f, "fid: {}, ", self.fid)?;
-        write!(f, "name: {}, ", self.name)?;
-
-        write!(f, "systems({}): [", self.systems.len())?;
-
-        for system in self.systems.values() {
-            write!(f, "{:?}, ", system)?;
-        }
-
-        write!(f, "]")?;
-
-        write!(f, "{}", "}")?;
-
-        Ok(())
-    }
-}
-
 impl From<&CommanderEvent> for CommanderState {
     fn from(value: &CommanderEvent) -> Self {
         CommanderState {
@@ -92,6 +82,7 @@ impl From<&CommanderEvent> for CommanderState {
             name: value.name.to_string(),
             systems: HashMap::new(),
             current_system: None,
+            current_organic: None,
         }
     }
 }

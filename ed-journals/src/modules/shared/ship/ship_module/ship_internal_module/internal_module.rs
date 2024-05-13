@@ -1,13 +1,13 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use serde_json::Value;
 
 use crate::modules::shared::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
 use crate::modules::shared::ship::ship_module::ship_internal_module::internal_type::InternalType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum InternalModule {
     #[serde(rename = "hyperdrive")]
     FrameShiftDrive,

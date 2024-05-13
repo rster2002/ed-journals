@@ -1,13 +1,13 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CommunityGoalEvent {
     pub current_goals: Vec<CommunityGoalEventGoal>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CommunityGoalEventGoal {
     #[serde(rename = "GCID")]

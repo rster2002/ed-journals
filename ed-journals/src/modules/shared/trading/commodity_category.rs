@@ -1,8 +1,9 @@
 use std::fmt::{Display, Formatter};
+use serde::Serialize;
 
 use crate::modules::shared::trading::commodity::Commodity;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub enum CommodityCategory {
     Chemicals,
     ConsumerItems,

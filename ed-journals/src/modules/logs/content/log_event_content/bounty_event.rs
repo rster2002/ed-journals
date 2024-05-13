@@ -1,16 +1,16 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::odyssey::citizen::Citizen;
 use crate::modules::shared::ship::ship_type::ShipType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum BountyEvent {
     Normal(BountyEventNormal),
     Skimmer(BountyEventSkimmer),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventNormal {
     pub rewards: Vec<BountyEventNormalReward>,
@@ -26,21 +26,21 @@ pub struct BountyEventNormal {
     pub victim_faction: String,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum BountyEventTarget {
     Ship(ShipType),
     Citizen(Citizen),
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventNormalReward {
     pub faction: String,
     pub reward: u64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventSkimmer {
     pub faction: String,

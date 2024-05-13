@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 use crate::modules::shared::ship::blueprint::Blueprint;
@@ -6,7 +6,7 @@ use crate::modules::shared::ship::blueprint_modifier::BlueprintModifier;
 use crate::modules::shared::ship::ship_module::ShipModule;
 use crate::modules::shared::ship::ship_slot::ShipSlot;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEvent {
     pub slot: ShipSlot,
@@ -25,14 +25,14 @@ pub struct EngineerCraftEvent {
     pub modifiers: Vec<EngineerCraftEventModifier>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventIngredient {
     pub name: Material,
     pub count: u8,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventModifier {
     pub label: BlueprintModifier,

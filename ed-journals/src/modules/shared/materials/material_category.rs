@@ -1,11 +1,11 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::materials::material::Material;
 
 /// The type of material, either Raw, Manufactured, or Encoded.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialCategory {
     #[serde(alias = "raw", alias = "$MICRORESOURCE_CATEGORY_Raw;")]

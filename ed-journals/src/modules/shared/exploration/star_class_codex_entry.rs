@@ -2,12 +2,13 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 use crate::modules::shared::galaxy::star_class::{StarClass, StarClassError};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct StarClassCodexEntry(pub StarClass);
 
 #[derive(Debug, Error)]

@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::odyssey::suit::Suit;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CreateSuitLoadoutEvent {
     #[serde(rename = "SuitID")]
@@ -21,11 +21,11 @@ pub struct CreateSuitLoadoutEvent {
 
 // TODO not sure what this should contain
 // TODO this might be the same as in suit_loadout_event
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CreateSuitLoadoutEventMod {}
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CreateSuitLoadoutEventModule {
     // TODO look if this can be an enum
@@ -44,6 +44,6 @@ pub struct CreateSuitLoadoutEventModule {
 }
 
 // TODO I'm not yet sure what this should contain
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CreateSuitLoadoutEventModuleWeaponMod {}

@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::shared::odyssey::item::Item;
 use crate::shared::odyssey::item_type::ItemType;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackChangeEvent {
     #[serde(default)]
@@ -12,7 +12,7 @@ pub struct BackpackChangeEvent {
     pub removed: Vec<BackpackChangeEventItem>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackChangeEventItem {
     pub name: Item,

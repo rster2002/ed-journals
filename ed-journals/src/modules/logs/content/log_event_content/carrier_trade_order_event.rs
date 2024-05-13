@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::shared::trading::commodity::Commodity;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierTradeOrderEvent {
     #[serde(rename = "CarrierID")]
@@ -17,7 +17,7 @@ pub struct CarrierTradeOrderEvent {
     pub price: u64,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierTradeOrderEventOrder {
     PurchaseOrder(u32),
     SaleOrder(u32),

@@ -1,13 +1,13 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DataScannedEvent {
     #[serde(rename = "Type")]
     pub kind: DataScannedEventType,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum DataScannedEventType {
     #[serde(rename = "$Datascan_AbandonedDataLog;")]
     AbandonedDataLog,

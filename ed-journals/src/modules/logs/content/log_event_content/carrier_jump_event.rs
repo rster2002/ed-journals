@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 use crate::modules::shared::civilization::system_info::SystemInfo;
 
 // TODO check when this is fired during the jump. Is it when it lockdown happens, the actual jump,
 //  after the jump?
 /// Fired when the carrier performs the jump after the jump countdown.
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierJumpEvent {
     // TODO check when this is true, specifically if this is true if you're on the ship when jumping

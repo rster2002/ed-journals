@@ -1,13 +1,13 @@
 use std::str::FromStr;
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use serde_json::Value;
 use thiserror::Error;
 
 use crate::modules::shared::galaxy::star_class::StarClass;
 use crate::modules::shared::materials::material::Material;
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum VariantSource {
     StarClass(StarClass),

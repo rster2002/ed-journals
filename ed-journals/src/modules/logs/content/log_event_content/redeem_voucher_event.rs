@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct RedeemVoucherEvent {
     #[serde(rename = "Type")]
@@ -16,7 +16,7 @@ pub struct RedeemVoucherEvent {
     pub broker_percentage: Option<f32>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum RedeemVoucherEventType {
     CombatBond,
@@ -31,7 +31,7 @@ pub enum RedeemVoucherEventType {
     Codex,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct RedeemVoucherEventFaction {
     pub faction: String,

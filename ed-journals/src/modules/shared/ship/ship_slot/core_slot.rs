@@ -1,11 +1,12 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
+use serde::Serialize;
 
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum CoreSlot {
     Armour,
     PowerPlant,

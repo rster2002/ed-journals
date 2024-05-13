@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SwitchSuitLoadoutEvent {
     #[serde(rename = "SuitID")]
@@ -21,11 +21,11 @@ pub struct SwitchSuitLoadoutEvent {
 
 // TODO not sure what this should contain
 // TODO this might be the same as in suit_loadout_event
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SwitchSuitLoadoutEventMod {}
 
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SwitchSuitLoadoutEventModule {
     // TODO look if this can be an enum
@@ -44,6 +44,6 @@ pub struct SwitchSuitLoadoutEventModule {
 }
 
 // TODO I'm not yet sure what this should contain
-#[derive(Debug, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SwitchSuitLoadoutEventModuleWeaponMod {}

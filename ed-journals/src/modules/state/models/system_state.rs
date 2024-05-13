@@ -1,12 +1,14 @@
 use std::collections::{HashMap, VecDeque};
 use std::fmt::{Debug, Formatter};
 use chrono::{DateTime, NaiveDateTime, Utc};
+use serde::Serialize;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use crate::shared::civilization::system_info::SystemInfo;
 use crate::state::models::body_state::BodyState;
 use crate::state::models::feed_result::FeedResult;
 
+#[derive(Serialize)]
 pub struct SystemState {
     pub system_info: SystemInfo,
     pub bodies: HashMap<u8, BodyState>,
@@ -69,6 +71,12 @@ impl SystemState {
     pub fn carrier_visit(&mut self, date_time: &DateTime<Utc>) {
         self.carrier_visits.push(date_time.clone());
     }
+
+    pub fn clear_organic_progress(&mut self) {
+        for body in self.bodies.values_mut() {
+            body.clear_organic_process();
+        }
+    }
 }
 
 impl From<&SystemInfo> for SystemState {
@@ -83,30 +91,5 @@ impl From<&SystemInfo> for SystemState {
             all_found: false,
             station_signals: Vec::new()
         }
-    }
-}
-
-impl Debug for SystemState {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", "{")?;
-
-        write!(f, "system_info: {:?}, ", self.system_info)?;
-        write!(f, "visits: {:?}, ", self.visits)?;
-        write!(f, "carrier_visits: {:?}, ", self.carrier_visits)?;
-        write!(f, "number_of_bodies: {:?}, ", self.number_of_bodies)?;
-        write!(f, "progress: {:?}, ", self.progress)?;
-        write!(f, "all_found: {:?}, ", self.all_found)?;
-
-        write!(f, "bodies({}): [", self.bodies.len())?;
-
-        for body in self.bodies.values() {
-            write!(f, "{:?}, ", body)?;
-        }
-
-        write!(f, "]")?;
-
-        write!(f, "{}", "}")?;
-
-        Ok(())
     }
 }
