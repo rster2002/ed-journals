@@ -18,30 +18,30 @@ pub struct Status {
     pub event: String,
     pub flags: Flags,
     pub flags2: Flags2,
-    pub pips: [u8; 3],
+    pub pips: Option<[u8; 3]>,
     pub fire_group: u8,
     pub gui_focus: GuiFocus,
     pub fuel: FuelStatus,
     pub cargo: f32,
     pub legal_state: LegalStatus,
     pub balance: u64,
-    pub destination: DestinationStatus,
+    pub destination: Option<DestinationStatus>,
 
     #[serde(flatten)]
     pub planet_status: Option<PlanetStatus>,
 }
 
-impl Status {
-    pub fn system_pips(&self) -> u8 {
-        self.pips[0]
-    }
+// impl Status {
+//     pub fn system_pips(&self) -> u8 {
+//         self.pips[0]
+//     }
 
-    pub fn engine_pips(&self) -> u8 {
-        self.pips[1]
-    }
+//     pub fn engine_pips(&self) -> u8 {
+//         self.pips[1]
+//     }
 
-    pub fn weapon_pips(&self) -> u8 {
-        self.pips[2]
-    }
-}
+//     pub fn weapon_pips(&self) -> u8 {
+//         self.pips[2]
+//     }
+// }
 
