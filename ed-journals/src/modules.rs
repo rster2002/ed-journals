@@ -5,6 +5,7 @@ pub mod journal;
 pub mod status;
 pub mod state;
 pub mod exobiology;
+pub mod exploration;
 
 /// Contains structs and enums which are shared across events. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
