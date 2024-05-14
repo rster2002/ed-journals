@@ -19,7 +19,7 @@ use crate::modules::logs::LogFileError;
 /// reads all files. Once all historic files have been read the current read will only resolve once
 /// the newest log file is changed at which it will read the active log file and return the entry.
 ///
-/// ```rust
+/// ```no_run
 /// use std::path::PathBuf;
 /// use ed_journals::logs::asynchronous::LiveLogDirReader;
 ///
