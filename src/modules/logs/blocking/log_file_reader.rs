@@ -92,6 +92,11 @@ impl LogFileReader {
         while let Some(line) = lines.next() {
             let parse_result = serde_json::from_str(line);
 
+            #[cfg(test)]
+            if parse_result.is_err() {
+                dbg!(&line);
+            }
+
             // If the line didn't parse, but the line is the last line that was read, it will not
             // error and instead add the current line back into the read buffer to hopefully be
             // completed when new lines are added.

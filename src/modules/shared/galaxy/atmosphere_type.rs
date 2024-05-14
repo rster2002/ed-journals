@@ -61,7 +61,7 @@ pub enum AtmosphereType {
     #[serde(alias = "ammonia oxygen")]
     AmmoniaOxygen,
 
-    #[serde(alias = "sulfur dioxide")]
+    #[serde(alias = "sulfur dioxide", alias = "SulphurDioxide")]
     SulfurDioxide,
 }
 
