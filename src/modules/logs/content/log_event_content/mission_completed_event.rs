@@ -1,9 +1,9 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::shared_material::SharedMaterial;
-use crate::modules::shared::shared_material_category::SharedMaterialCategory;
-use crate::modules::shared::station::mission_type::MissionType;
-use crate::modules::shared::trading::commodity::Commodity;
+use crate::modules::models::shared_material::SharedMaterial;
+use crate::modules::models::shared_material_category::SharedMaterialCategory;
+use crate::modules::models::station::mission_type::MissionType;
+use crate::modules::models::trading::commodity::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

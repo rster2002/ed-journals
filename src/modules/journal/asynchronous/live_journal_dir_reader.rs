@@ -6,10 +6,11 @@ use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
-use crate::modules::blockers::async_blocker::AsyncBlocker;
+use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
+use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
-use crate::status::Status;
 
+// TODO this is in need of some abstracting
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     blocker: AsyncBlocker,
@@ -25,6 +26,9 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadStatusFileError(#[from] ReadStatusFileError),
+
+    #[error(transparent)]
+    ReadOutfittingFileError(#[from] ReadOutfittingFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -52,6 +56,15 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_status_file(dir_path.join("Status.json")) {
                                 Ok(status) => Ok(JournalEvent::StatusEvent(status)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("Outfitting.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_outfitting_file(dir_path.join("Outfitting.json")) {
+                                Ok(status) => Ok(JournalEvent::OutfittingEvent(status)),
                                 Err(error) => Err(error.into()),
                             });
                     }

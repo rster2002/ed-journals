@@ -4,7 +4,7 @@ use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Serialize;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::shared::civilization::system_info::SystemInfo;
+use crate::modules::models::civilization::system_info::SystemInfo;
 use crate::state::models::body_state::BodyState;
 use crate::state::models::feed_result::FeedResult;
 

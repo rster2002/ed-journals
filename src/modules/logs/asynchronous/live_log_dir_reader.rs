@@ -11,9 +11,9 @@ use crate::logs::{LogDir, LogDirError, LogFile};
 use crate::logs::asynchronous::log_dir_reader::{LogDirReader, LogDirReaderError};
 use crate::logs::content::LogEvent;
 use crate::logs::asynchronous::LogFileReader;
-use crate::modules::blockers::async_blocker::AsyncBlocker;
 use crate::modules::logs::asynchronous::LogFileReaderError;
 use crate::modules::logs::LogFileError;
+use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 /// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and
 /// reads all files. Once all historic files have been read the current read will only resolve once
@@ -39,29 +39,13 @@ use crate::modules::logs::LogFileError;
 #[derive(Debug)]
 pub struct LiveLogDirReader {
     blocker: AsyncBlocker,
-    // dir: LogDir,
-    // current_file: Option<LogFile>,
-    // current_reader: Option<LogFileReader>,
     log_dir_reader: LogDirReader,
     watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
-    // failing: bool,
 }
 
 #[derive(Debug, Error)]
 pub enum LiveLogDirReaderError {
-    // #[error("Log path is not a directory")]
-    // PathIsNotADirectory,
-    //
-    // #[error(transparent)]
-    // JournalFileError(#[from] LogFileError),
-    //
-    // #[error(transparent)]
-    // JournalReaderError(#[from] LogFileReaderError),
-    //
-    // #[error(transparent)]
-    // JournalDirError(#[from] LogDirError),
-
     #[error(transparent)]
     LogDirReaderError(#[from] LogDirReaderError),
 

@@ -9,8 +9,8 @@ use std::{io, thread};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 use crate::logs::content::LogEvent;
-use crate::modules::blockers::sync_blocker::SyncBlocker;
 use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
+use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 /// Allows you to iterate over a journal log file and blocks when there are no entries to read, then
 /// when the file changes it will unblock and return the new line(s).

@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::materials::material::Material;
-use crate::modules::shared::materials::material_category::MaterialCategory;
+use crate::modules::models::materials::material::Material;
+use crate::modules::models::materials::material_category::MaterialCategory;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

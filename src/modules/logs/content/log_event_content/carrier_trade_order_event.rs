@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::shared::trading::commodity::Commodity;
+use crate::modules::models::trading::commodity::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -41,7 +41,7 @@ impl CarrierTradeOrderEventOrder {
 #[cfg(test)]
 mod tests {
     use crate::logs::content::log_event_content::carrier_trade_order_event::{CarrierTradeOrderEvent, CarrierTradeOrderEventOrder};
-    use crate::shared::trading::commodity::Commodity;
+    use crate::modules::models::trading::commodity::Commodity;
 
     #[test]
     fn carrier_trade_purchase_order_is_parsed_correctly() {

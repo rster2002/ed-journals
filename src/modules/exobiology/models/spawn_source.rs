@@ -1,6 +1,6 @@
-use crate::shared::galaxy::atmosphere::Atmosphere;
-use crate::shared::galaxy::planet_class::PlanetClass;
-use crate::shared::galaxy::star_class::StarClass;
+use crate::modules::models::galaxy::atmosphere::Atmosphere;
+use crate::modules::models::galaxy::planet_class::PlanetClass;
+use crate::modules::models::galaxy::star_class::StarClass;
 
 #[derive(Debug)]
 pub struct SpawnSource {

@@ -1,4 +1,4 @@
-use crate::modules::shared::station::mission_type::MissionType;
+use crate::modules::models::station::mission_type::MissionType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -21,7 +21,7 @@ pub struct MissionEventEntry {
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::shared::station::mission_type::MissionType;
+    use crate::modules::models::station::mission_type::MissionType;
     use serde_json::json;
     use crate::logs::content::log_event_content::missions_event::{MissionEventEntry, MissionsEvent};
 

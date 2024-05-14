@@ -1,5 +1,5 @@
-use crate::modules::shared::exploration::genus::Genus;
-use crate::modules::shared::exploration::planetary_signal_type::PlanetarySignalType;
+use crate::modules::models::exploration::genus::Genus;
+use crate::modules::models::exploration::planetary_signal_type::PlanetarySignalType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

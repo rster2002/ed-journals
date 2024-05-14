@@ -1,4 +1,4 @@
-use crate::modules::shared::materials::material::Material;
+use crate::modules::models::materials::material::Material;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

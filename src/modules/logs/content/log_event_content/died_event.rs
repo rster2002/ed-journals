@@ -1,9 +1,9 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::commander::combat_rank::CombatRank;
-use crate::modules::shared::odyssey::citizen::Citizen;
-use crate::modules::shared::ship::ship_type::ShipType;
-use crate::modules::shared::thargoid::thargoid_ship::ThargoidShip;
+use crate::modules::models::commander::combat_rank::CombatRank;
+use crate::modules::models::odyssey::citizen::Citizen;
+use crate::modules::models::ship::ship_type::ShipType;
+use crate::modules::models::thargoid::thargoid_ship::ThargoidShip;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]

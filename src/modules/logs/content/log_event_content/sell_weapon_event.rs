@@ -1,5 +1,5 @@
-use crate::modules::shared::odyssey::weapon::Weapon;
-use crate::modules::shared::odyssey::weapon_mod::WeaponMod;
+use crate::modules::models::odyssey::weapon::Weapon;
+use crate::modules::models::odyssey::weapon_mod::WeaponMod;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

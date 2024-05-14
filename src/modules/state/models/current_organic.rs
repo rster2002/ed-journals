@@ -1,6 +1,6 @@
 use serde::Serialize;
 use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEvent;
-use crate::shared::exploration::species::Species;
+use crate::modules::models::exploration::species::Species;
 
 #[derive(Debug, Serialize)]
 pub struct CurrentOrganic {

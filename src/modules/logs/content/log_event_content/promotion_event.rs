@@ -1,12 +1,12 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::commander::combat_rank::CombatRank;
-use crate::modules::shared::commander::empire_rank::EmpireRank;
-use crate::modules::shared::commander::exobiology_rank::ExobiologyRank;
-use crate::modules::shared::commander::exploration_rank::ExplorationRank;
-use crate::modules::shared::commander::federation_rank::FederationRank;
-use crate::modules::shared::commander::mercenary_rank::MercenaryRank;
-use crate::modules::shared::commander::trade_rank::TradeRank;
+use crate::modules::models::commander::combat_rank::CombatRank;
+use crate::modules::models::commander::empire_rank::EmpireRank;
+use crate::modules::models::commander::exobiology_rank::ExobiologyRank;
+use crate::modules::models::commander::exploration_rank::ExplorationRank;
+use crate::modules::models::commander::federation_rank::FederationRank;
+use crate::modules::models::commander::mercenary_rank::MercenaryRank;
+use crate::modules::models::commander::trade_rank::TradeRank;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

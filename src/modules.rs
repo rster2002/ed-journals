@@ -6,14 +6,14 @@ pub mod status;
 pub mod state;
 pub mod exobiology;
 pub mod exploration;
+pub mod outfitting;
 
-/// Contains structs and enums which are shared across events. Things like commodity and material
+/// Contains structs and enums which are used in multiple places. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
-pub mod shared;
-
-/// Provides different implementations for blocking current execution, whether it be synchronous or
-/// asynchronous.
-mod blockers;
+pub mod models;
 
 /// Provides some utility functions and macros that are used internally.
 mod utils;
+
+/// Module for shared internal code.
+mod shared;

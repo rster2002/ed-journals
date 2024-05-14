@@ -1,4 +1,4 @@
-use crate::modules::shared::station::mission_type::MissionType;
+use crate::modules::models::station::mission_type::MissionType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

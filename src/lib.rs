@@ -14,7 +14,7 @@
 mod modules;
 
 pub use modules::logs;
-pub use modules::shared;
+pub use modules::models;
 pub use modules::status;
 pub use modules::journal;
 pub use modules::state;
@@ -32,7 +32,8 @@ mod tests {
     fn test_journals_are_parsed_correctly() {
         let dir_path = current_dir()
             .unwrap()
-            .join("test-journals");
+            .join("test-files")
+            .join("journals");
 
         let log_dir = LogDir::new(dir_path);
 

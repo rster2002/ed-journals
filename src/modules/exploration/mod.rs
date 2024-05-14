@@ -1,5 +1,5 @@
 use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
-use crate::shared::galaxy::terraform_state::TerraformState;
+use crate::modules::models::galaxy::terraform_state::TerraformState;
 
 pub fn calculate_estimated_worth(scan: &ScanEvent) -> f32 {
     match &scan.kind {

@@ -75,7 +75,8 @@ mod tests {
     fn journal_files_oldest_first_are_returned_in_the_correct_order() {
         let dir_path = current_dir()
             .unwrap()
-            .join("test-journals");
+            .join("test-files")
+            .join("journals");
 
         let journal_dir = LogDir::new(dir_path);
 
@@ -94,7 +95,8 @@ mod tests {
     fn journal_files_newest_first_are_returned_in_the_correct_order() {
         let dir_path = current_dir()
             .unwrap()
-            .join("test-journals");
+            .join("test-files")
+            .join("journals");
 
         let journal_dir = LogDir::new(dir_path);
 
