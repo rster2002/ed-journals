@@ -18,8 +18,7 @@ use crate::logs::content::LogEvent;
 /// use std::env::current_dir;
 /// use ed_journals::logs::LogDir;
 ///
-/// let dir_path = current_dir().unwrap()
-///     .parent()
+/// let dir_path = current_dir()
 ///     .unwrap()
 ///     .join("test-journals");
 ///
