@@ -29,9 +29,4 @@ pub enum SpawnCondition {
 
     Any(Vec<SpawnCondition>),
     All(Vec<SpawnCondition>),
-
-    /// If the first spawn condition is true, then the second condition must also return `true`, but
-    /// if the first spawn condition is false, then it returns `true` and the second condition isn't
-    /// tested.
-    Conditional(SpawnCondition, SpawnCondition),
 }
