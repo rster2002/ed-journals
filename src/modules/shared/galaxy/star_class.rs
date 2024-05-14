@@ -159,3 +159,32 @@ impl FromStr for StarClass {
 }
 
 from_str_deserialize_impl!(StarClass);
+
+impl StarClass {
+    /// Returns the base exploration value of the star class. The value is returned as a f32 instead
+    /// of an u64 like how most credit values are represented as the base value
+    /// [StarClass::SupermassiveBlackHole] contains decimal places.
+    pub fn base_value(&self) -> f32 {
+        match self {
+            StarClass::D => 14_057.0,
+            StarClass::DA => 14_057.0,
+            StarClass::DAB => 14_057.0,
+            StarClass::DAO => 14_057.0,
+            StarClass::DAZ => 14_057.0,
+            StarClass::DAV => 14_057.0,
+            StarClass::DB => 14_057.0,
+            StarClass::DBZ => 14_057.0,
+            StarClass::DBV => 14_057.0,
+            StarClass::DO => 14_057.0,
+            StarClass::DOV => 14_057.0,
+            StarClass::DQ => 14_057.0,
+            StarClass::DC => 14_057.0,
+            StarClass::DCV => 14_057.0,
+            StarClass::DX => 14_057.0,
+            StarClass::N => 22_628.0,
+            StarClass::H => 22_628.0,
+            StarClass::SupermassiveBlackHole => 33.5678,
+            _ => 1_200.0,
+        }
+    }
+}
