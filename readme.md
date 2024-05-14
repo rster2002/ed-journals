@@ -15,7 +15,7 @@ release.
 - [x] Journal reader to read entries from journal files.
 - [x] Serde models for journal entries.
 - [ ] Parsing dynamic files like `Market.json`, `Status.json` etc.
-- [ ] Async variants of models, especially the `JournalReader`.
+- [x] Async variants of models, especially the `JournalReader`.
 - [ ] Automatic journal detection based on platform etc.
 - [ ] Exobiology utilities for things like predicting available species based on planet scan etc.
 - [ ] Exploration utilities for pointing out special or unusual discoveries.
@@ -24,7 +24,7 @@ release.
 
 One of the best ways to contribute to this project is by contributing journal logs to the test-suite. Doing this will
 allow the project to be more and more accurate. Note that this project currently only focuses on the live version of the
-game, so game version 4 and up. 
+game, so game version 4 and up.
 
 You can contribute journal files by following these steps:
 

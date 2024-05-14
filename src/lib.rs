@@ -32,8 +32,6 @@ mod tests {
     fn test_journals_are_parsed_correctly() {
         let dir_path = current_dir()
             .unwrap()
-            .parent()
-            .unwrap()
             .join("test-journals");
 
         let log_dir = LogDir::new(dir_path);

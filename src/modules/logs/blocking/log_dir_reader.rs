@@ -112,8 +112,6 @@ mod tests {
     fn all_entries_are_read_correctly() {
         let dir_path = current_dir()
             .unwrap()
-            .parent()
-            .unwrap()
             .join("test-journals");
 
         let mut reader = LogDirReader::open(dir_path);
