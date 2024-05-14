@@ -339,7 +339,7 @@ impl Display for Species {
                 Species::CactoidaVermis => "Cactoida Vermis",
                 Species::CactoidaPeperatis => "Cactoida Peperatis",
 
-                Species::CrystallineShards => "Crystaline Shards"
+                Species::CrystallineShards => "Crystaline Shards",
 
                 Species::ClypeusLacrimam => "Clypeus Lacrimam",
                 Species::ClypeusMargaritus => "Clypeus Margaritus",
