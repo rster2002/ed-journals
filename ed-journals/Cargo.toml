@@ -25,6 +25,9 @@ notify = "6.1.1"
 tokio = { version = "1.37.0", features = ["fs", "sync", "io-util"], default-features = false, optional = true }
 async-mutex = { version = "1.4.0", optional = true }
 
+[dev-dependencies]
+tokio-test = "0.4.4"
+
 [features]
 default = []
 asynchronous = ["dep:tokio", "dep:async-mutex"]

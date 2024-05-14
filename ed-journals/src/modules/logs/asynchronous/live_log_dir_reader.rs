@@ -19,10 +19,11 @@ use crate::modules::logs::LogFileError;
 /// reads all files. Once all historic files have been read the current read will only resolve once
 /// the newest log file is changed at which it will read the active log file and return the entry.
 ///
-/// ```no_run
+/// ```rust
 /// use std::path::PathBuf;
 /// use ed_journals::logs::asynchronous::LiveLogDirReader;
 ///
+/// # tokio_test::block_on(async {
 /// let path = PathBuf::from("somePath");
 ///
 /// let mut live_dir_reader = LiveLogDirReader::open(path)
@@ -33,6 +34,7 @@ use crate::modules::logs::LogFileError;
 /// while let Some(entry) = live_dir_reader.next().await {
 ///     // Do something with the entry
 /// }
+/// # });
 /// ```
 #[derive(Debug)]
 pub struct LiveLogDirReader {
