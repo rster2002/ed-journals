@@ -437,49 +437,29 @@ impl Species {
     pub fn spawn_conditions(&self) -> Vec<SpawnCondition> {
         match self {
             Species::AleoidaArcus => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::CarbonDioxide,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(175.0),
-                SpawnCondition::MaxSurfaceTemperature(180.0),
+                SpawnCondition::MinMeanTemperature(175.0),
+                SpawnCondition::MaxMeanTemperature(180.0),
             ],
             Species::AleoidaCoronamus => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::CarbonDioxide,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(180.0),
-                SpawnCondition::MaxSurfaceTemperature(190.0),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::AleoidaGravis => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::CarbonDioxide,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(190.0),
-                SpawnCondition::MaxSurfaceTemperature(195.0),
+                SpawnCondition::MinMeanTemperature(190.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::AleoidaLaminiae => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::AleoidaSpica => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
                 SpawnCondition::MaxGravity(0.27),
             ],
 
@@ -654,38 +634,18 @@ impl Species {
             ],
 
             Species::BacteriumNebulus => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Helium,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Helium),
             ],
             Species::BacteriumAcies => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::NeonRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::NeonRich),
                 ]),
             ],
             Species::BacteriumOmentum => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::NeonRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::NeonRich),
                 ]),
                 SpawnCondition::Any(vec![
                     SpawnCondition::VolcanismType(VolcanismType::NitrogenMagma),
@@ -696,16 +656,8 @@ impl Species {
             ],
             Species::BacteriumScopulum => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::NeonRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::NeonRich),
                 ]),
                 SpawnCondition::Any(vec![
                     SpawnCondition::VolcanismType(VolcanismType::CarbonDioxideGeysers),
@@ -715,16 +667,8 @@ impl Species {
             ],
             Species::BacteriumVerrata => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::NeonRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::NeonRich),
                 ]),
                 SpawnCondition::Any(vec![
                     SpawnCondition::VolcanismType(VolcanismType::WaterMagma),
@@ -733,73 +677,33 @@ impl Species {
             ],
             Species::BacteriumBullaris => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Methane,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::MethaneRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::MethaneRich),
                 ]),
             ],
             Species::BacteriumAlcyoneum => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
             ],
             Species::BacteriumVesicula => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Argon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::ArgonRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
                 ]),
             ],
             Species::BacteriumCerbrus => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::SulfurDioxide,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
             ],
             Species::BacteriumAurasus => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxideRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxideRich),
                 ]),
             ],
             Species::BacteriumInformem => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Nitrogen,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Nitrogen),
             ],
             Species::BacteriumVolu => vec![
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Oxygen,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Oxygen),
             ],
             Species::BacteriumTela => vec![
                 SpawnCondition::Any(vec![
@@ -848,11 +752,7 @@ impl Species {
                     SpawnCondition::PlanetClass(PlanetClass::RockyBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
             ],
             Species::CactoidaPullulanta => vec![
                 SpawnCondition::MaxGravity(0.27),
@@ -861,19 +761,11 @@ impl Species {
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxideRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxideRich),
                 ]),
-                SpawnCondition::MinSurfaceTemperature(180.0),
-                SpawnCondition::MaxSurfaceTemperature(195.0),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::CactoidaCortexum => vec![
                 SpawnCondition::MaxGravity(0.27),
@@ -882,19 +774,11 @@ impl Species {
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxideRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxideRich),
                 ]),
-                SpawnCondition::MinSurfaceTemperature(180.0),
-                SpawnCondition::MaxSurfaceTemperature(195.0),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::CactoidaVermis => vec![
                 SpawnCondition::MaxGravity(0.27),
@@ -902,11 +786,7 @@ impl Species {
                     SpawnCondition::PlanetClass(PlanetClass::RockyBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Water,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
             ],
             Species::CactoidaPeperatis => vec![
                 SpawnCondition::MaxGravity(0.27),
@@ -914,60 +794,32 @@ impl Species {
                     SpawnCondition::PlanetClass(PlanetClass::RockyBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
             ],
 
             Species::ClypeusSpeculumi => vec![
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(190.0),
+                SpawnCondition::MinMeanTemperature(190.0),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Water,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                 ]),
                 SpawnCondition::MinDistanceFromParentSun(5.0),
             ],
             Species::ClypeusLacrimam => vec![
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(190.0),
+                SpawnCondition::MinMeanTemperature(190.0),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Water,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                 ]),
             ],
             Species::ClypeusMargaritus => vec![
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::MinSurfaceTemperature(190.0),
+                SpawnCondition::MinMeanTemperature(190.0),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Water,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                 ]),
             ],
 
@@ -976,68 +828,36 @@ impl Species {
                     SpawnCondition::All(vec![
                         SpawnCondition::MaxGravity(0.27),
                         SpawnCondition::Any(vec![
-                            SpawnCondition::Atmosphere(Atmosphere {
-                                hot: false,
-                                density: AtmosphereDensity::Thin,
-                                kind: AtmosphereType::CarbonDioxide,
-                            }),
-                            SpawnCondition::Atmosphere(Atmosphere {
-                                hot: false,
-                                density: AtmosphereDensity::Thin,
-                                kind: AtmosphereType::CarbonDioxideRich,
-                            }),
+                            SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                            SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxideRich),
                         ]),
-                        SpawnCondition::MinSurfaceTemperature(180.0),
-                        SpawnCondition::MaxSurfaceTemperature(195.0),
+                        SpawnCondition::MinMeanTemperature(180.0),
+                        SpawnCondition::MaxMeanTemperature(195.0),
                     ]),
                     SpawnCondition::All(vec![
                         SpawnCondition::MaxGravity(0.27),
                         SpawnCondition::Any(vec![
-                            SpawnCondition::Atmosphere(Atmosphere {
-                                hot: false,
-                                density: AtmosphereDensity::Thin,
-                                kind: AtmosphereType::Water,
-                            }),
-                            SpawnCondition::Atmosphere(Atmosphere {
-                                hot: false,
-                                density: AtmosphereDensity::Thin,
-                                kind: AtmosphereType::WaterRich,
-                            }),
+                            SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                            SpawnCondition::ThinAtmosphere(AtmosphereType::WaterRich),
                         ]),
                     ]),
                 ]),
             ],
             Species::ConchaAureolas => vec![
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Ammonia,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
             ],
             Species::ConchaLabiata => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxide,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::CarbonDioxideRich,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxideRich),
                 ]),
-                SpawnCondition::MaxSurfaceTemperature(190.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::ConchaBiconcavis => vec![
                 SpawnCondition::MaxGravity(0.27),
-                SpawnCondition::Atmosphere(Atmosphere {
-                    hot: false,
-                    density: AtmosphereDensity::Thin,
-                    kind: AtmosphereType::Nitrogen,
-                }),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Nitrogen),
             ],
 
             Species::CrystallineShards => vec![
@@ -1050,8 +870,8 @@ impl Species {
                     SpawnCondition::ParentStarClass(StarClass::M),
                     SpawnCondition::ParentStarClass(StarClass::S),
                 ]),
-                SpawnCondition::MinSurfaceTemperature(0.0),
-                SpawnCondition::MaxSurfaceTemperature(273.0),
+                SpawnCondition::MinMeanTemperature(0.0),
+                SpawnCondition::MaxMeanTemperature(273.0),
                 SpawnCondition::Any(vec![
                     SpawnCondition::SystemContainsPlanetClass(PlanetClass::EarthlikeBody),
                     SpawnCondition::SystemContainsPlanetClass(PlanetClass::AmmoniaWorld),
@@ -1064,21 +884,9 @@ impl Species {
 
             Species::ElectricaePluma => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Helium,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Argon,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Helium),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
                 ]),
                 SpawnCondition::PlanetClass(PlanetClass::IcyBody),
                 SpawnCondition::ParentStarClass(StarClass::A),
@@ -1090,102 +898,501 @@ impl Species {
             ],
             Species::ElectricaeRadialem => vec![
                 SpawnCondition::Any(vec![
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Helium,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Neon,
-                    }),
-                    SpawnCondition::Atmosphere(Atmosphere {
-                        hot: false,
-                        density: AtmosphereDensity::Thin,
-                        kind: AtmosphereType::Argon,
-                    }),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Helium),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
                 ]),
                 SpawnCondition::PlanetClass(PlanetClass::IcyBody),
                 SpawnCondition::WithinNebulaRange(150.0),
                 SpawnCondition::MaxGravity(0.27),
             ],
 
-            Species::FonticuluaCampestris => vec![],
-            Species::FonticuluaSegmentatus => vec![],
-            Species::FonticuluaDigitos => vec![],
-            Species::FonticuluaUpupam => vec![],
-            Species::FonticuluaLapida => vec![],
-            Species::FonticuluaFluctus => vec![],
+            Species::FonticuluaCampestris => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FonticuluaSegmentatus => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Neon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::NeonRich),
+                ]),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FonticuluaDigitos => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::MethaneRich),
+                ]),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FonticuluaUpupam => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FonticuluaLapida => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Nitrogen),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FonticuluaFluctus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Oxygen),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::FrutexaFlabellum => vec![],
-            Species::FrutexaFlammasis => vec![],
-            Species::FrutexaMetallicum => vec![],
-            Species::FrutexaAcus => vec![],
-            Species::FrutexaFera => vec![],
-            Species::FrutexaSponsae => vec![],
-            Species::FrutexaCollum => vec![],
+            Species::FrutexaAcus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::FrutexaCollum => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FrutexaFera => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::FrutexaFlabellum => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FrutexaFlammasis => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FrutexaMetallicum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::All(vec![
+                        SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                        SpawnCondition::MaxMeanTemperature(195.0),
+                    ]),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FrutexaSponsae => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::FumerolaAquatis => vec![],
-            Species::FumerolaCarbosis => vec![],
-            Species::FumerolaExtremus => vec![],
-            Species::FumerolaNitris => vec![],
+            Species::FumerolaAquatis => vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::GeologicalSignalsPresent,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::VolcanismType(VolcanismType::WaterMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::WaterGeysers),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FumerolaCarbosis => vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::GeologicalSignalsPresent,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::VolcanismType(VolcanismType::CarbonDioxideGeysers),
+                    SpawnCondition::VolcanismType(VolcanismType::MethaneMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::MethaneGeysers),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FumerolaExtremus => vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::GeologicalSignalsPresent,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::VolcanismType(VolcanismType::CarbonDioxideGeysers),
+                    SpawnCondition::VolcanismType(VolcanismType::MethaneMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::MethaneGeysers),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FumerolaNitris => vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::GeologicalSignalsPresent,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::VolcanismType(VolcanismType::NitrogenMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::NitrogenGeysers),
+                    SpawnCondition::VolcanismType(VolcanismType::AmmoniaMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::AmmoniaGeysers),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::FungoidaSetisis => vec![],
-            Species::FungoidaStabitis => vec![],
-            Species::FungoidaBullarum => vec![],
-            Species::FungoidaGelata => vec![],
+            Species::FungoidaBullarum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FungoidaGelata => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                    SpawnCondition::All(vec![
+                        SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
+                        SpawnCondition::MinMeanTemperature(180.0),
+                        SpawnCondition::MaxMeanTemperature(195.0),
+                    ]),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FungoidaSetisis => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::FungoidaStabitis => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                    SpawnCondition::All(vec![
+                        SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
+                        SpawnCondition::MinMeanTemperature(180.0),
+                        SpawnCondition::MaxMeanTemperature(195.0),
+                    ]),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::OsseusFractus => vec![],
-            Species::OsseusSpiralis => vec![],
-            Species::OsseusPumice => vec![],
-            Species::OsseusCornibus => vec![],
-            Species::OsseusPellebantus => vec![],
-            Species::OsseusDiscus => vec![],
+            Species::OsseusCornibus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::OsseusDiscus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::OsseusFractus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::OsseusPellebantus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::OsseusPumice => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Nitrogen),
+                ]),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::OsseusSpiralis => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::ReceptaUmbrux => vec![],
-            Species::ReceptaDeltahedronix => vec![],
-            Species::ReceptaConditivus => vec![],
+            Species::ReceptaConditivus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::ReceptaDeltahedronix => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::ReceptaUmbrux => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::MaxGravity(0.27),
+            ],
 
-            Species::SinuousTubersAlbidum => vec![],
-            Species::SinuousTubersBlatteum => vec![],
-            Species::SinuousTubersCaeruleum => vec![],
-            Species::SinuousTubersLindigoticum => vec![],
-            Species::SinuousTubersPrasinum => vec![],
-            Species::SinuousTubersRoseum => vec![],
-            Species::SinuousTubersViolaceum => vec![],
-            Species::SinuousTubersViride => vec![],
+            Species::SinuousTubersAlbidum => vec![
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+            ],
+            Species::SinuousTubersBlatteum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ],
+            Species::SinuousTubersCaeruleum => vec![
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+            ],
+            Species::SinuousTubersLindigoticum => vec![
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+            ],
+            Species::SinuousTubersPrasinum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ],
+            Species::SinuousTubersRoseum => vec![
+                SpawnCondition::VolcanismType(VolcanismType::SilicateMagma),
+            ],
+            Species::SinuousTubersViolaceum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ],
+            Species::SinuousTubersViride => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ],
 
-            Species::StratumTectonicas => vec![],
-            Species::StratumPaleas => vec![],
-            Species::StratumFrigus => vec![],
-            Species::StratumLaminamus => vec![],
-            Species::StratumExcutitus => vec![],
-            Species::StratumLimaxus => vec![],
-            Species::StratumCucumisis => vec![],
-            Species::StratumAraneamus => vec![],
+            Species::StratumAraneamus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+            ],
+            Species::StratumCucumisis => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(190.0),
+            ],
+            Species::StratumExcutitus => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::StratumFrigus => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(190.0),
+            ],
+            Species::StratumLaminamus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+            ],
+            Species::StratumLimaxus => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::StratumPaleas => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+            ],
+            Species::StratumTectonicas => vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                SpawnCondition::MinMeanTemperature(165.0),
+            ],
 
-            Species::TubusConifer => vec![],
-            Species::TubusSororibus => vec![],
-            Species::TubusRosarium => vec![],
-            Species::TubusCavas => vec![],
-            Species::TubusCompagibus => vec![],
+            Species::TubusCavas => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.15),
+                SpawnCondition::MinMeanTemperature(160.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::TubusCompagibus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.15),
+                SpawnCondition::MinMeanTemperature(160.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::TubusConifer => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.15),
+                SpawnCondition::MinMeanTemperature(160.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::TubusRosarium => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.15),
+                SpawnCondition::MinMeanTemperature(160.0),
+            ],
+            Species::TubusSororibus => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                SpawnCondition::MaxGravity(0.15),
+                SpawnCondition::MinMeanTemperature(160.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
 
-            Species::TussockPennata => vec![],
-            Species::TussockVentusa => vec![],
-            Species::TussockIgnis => vec![],
-            Species::TussockCultro => vec![],
-            Species::TussockSerrati => vec![],
-            Species::TussockAlbata => vec![],
-            Species::TussockDivisa => vec![],
-            Species::TussockCaputus => vec![],
-            Species::TussockTriticum => vec![],
-            Species::TussockStigmasis => vec![],
-            Species::TussockCapillum => vec![],
-            Species::TussockCatena => vec![],
-            Species::TussockPropagito => vec![],
-            Species::TussockPennatis => vec![],
-            Species::TussockVirgam => vec![],
+            Species::TussockAlbata => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(175.0),
+                SpawnCondition::MaxMeanTemperature(180.0),
+            ],
+            Species::TussockCapillum => vec![
+                SpawnCondition::Any(vec![
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
+                    SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
+                ]),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::TussockCaputus => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(180.0),
+                SpawnCondition::MaxMeanTemperature(190.0),
+            ],
+            Species::TussockCatena => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::TussockCultro => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::TussockDivisa => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::TussockIgnis => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(160.0),
+                SpawnCondition::MaxMeanTemperature(170.0),
+            ],
+            Species::TussockPennata => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(145.0),
+                SpawnCondition::MaxMeanTemperature(155.0),
+            ],
+            Species::TussockPennatis => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::TussockPropagito => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::TussockSerrati => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(170.0),
+                SpawnCondition::MaxMeanTemperature(175.0),
+            ],
+            Species::TussockStigmasis => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
+            Species::TussockTriticum => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(190.0),
+                SpawnCondition::MaxMeanTemperature(195.0),
+            ],
+            Species::TussockVentusa => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+                SpawnCondition::MinMeanTemperature(155.0),
+                SpawnCondition::MaxMeanTemperature(160.0),
+            ],
+            Species::TussockVirgam => vec![
+                SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
+                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::MaxGravity(0.27),
+            ],
         }
     }
 }

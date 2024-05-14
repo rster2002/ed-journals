@@ -52,9 +52,6 @@ pub enum AtmosphereType {
     #[serde(alias = "earth like")]
     EarthLike,
 
-    #[serde(alias = "sulphur  dioxide")]
-    SulphurDioxide,
-
     #[serde(alias = "neon rich")]
     NeonRich,
 
