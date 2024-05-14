@@ -59,3 +59,33 @@ pub enum PlanetClass {
     #[serde(rename = "Helium gas giant")]
     HeliumGasGiant,
 }
+
+impl PlanetClass {
+    /// Returns the base exploration value of the star planet class.
+    pub fn base_value(&self) -> u64 {
+        match self {
+            PlanetClass::MetalRichBody => 21_790,
+            PlanetClass::AmmoniaWorld => 96_932,
+            PlanetClass::SudarskyClassIGasGiant => 1_656,
+            PlanetClass::SudarskyClassIiGasGiant => 9_654,
+            PlanetClass::HighMetalContentBody => 9_654,
+            PlanetClass::WaterWorld => 64_831,
+            PlanetClass::EarthlikeBody => 64_831,
+            _ => 300,
+        }
+    }
+
+    /// Returns the bonus exploration value if the planet is terraformable.
+    pub fn terraformable_bonus(&self) -> u64 {
+        match self {
+            PlanetClass::MetalRichBody => 65_631,
+            PlanetClass::AmmoniaWorld => 0,
+            PlanetClass::SudarskyClassIGasGiant => 0,
+            PlanetClass::SudarskyClassIiGasGiant => 100_677,
+            PlanetClass::HighMetalContentBody => 100_677,
+            PlanetClass::WaterWorld => 116_295,
+            PlanetClass::EarthlikeBody => 116_295,
+            _ => 93_328,
+        }
+    }
+}

@@ -1,12 +1,5 @@
-use crate::{
-    logs::content::log_event_content::scan_event::{
-        ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
-    },
-    shared::galaxy::terraform_state::TerraformState,
-};
-
-use crate::shared::galaxy::planet_class::PlanetClass;
-use crate::shared::galaxy::star_class::StarClass;
+use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
+use crate::shared::galaxy::terraform_state::TerraformState;
 
 pub fn calculate_estimated_worth(scan: &ScanEvent) -> f32 {
     match &scan.kind {
@@ -21,36 +14,14 @@ pub fn calculate_estimated_worth(scan: &ScanEvent) -> f32 {
 }
 
 fn calculate_estimated_star_worth(scan: &ScanEventStar, is_first_discovery: bool) -> f32 {
-    let k: f32 = match scan.star_type {
-        StarClass::D => 14_057.0,
-        StarClass::DA => 14_057.0,
-        StarClass::DAB => 14_057.0,
-        StarClass::DAO => 14_057.0,
-        StarClass::DAZ => 14_057.0,
-        StarClass::DAV => 14_057.0,
-        StarClass::DB => 14_057.0,
-        StarClass::DBZ => 14_057.0,
-        StarClass::DBV => 14_057.0,
-        StarClass::DO => 14_057.0,
-        StarClass::DOV => 14_057.0,
-        StarClass::DQ => 14_057.0,
-        StarClass::DC => 14_057.0,
-        StarClass::DCV => 14_057.0,
-        StarClass::DX => 14_057.0,
-        StarClass::N => 22_628.0,
-        StarClass::H => 22_628.0,
-        StarClass::SupermassiveBlackHole => 33.5678,
-        _ => 1_200.0,
-    };
-
-    let m = f32::max(scan.stellar_mass, 1.0);
-
-    let base_value = k + m * k / 66.25;
+    let base_value = scan.star_type.base_value();
+    let mass_factor = f32::max(scan.stellar_mass, 1.0);
+    let body_value = base_value + mass_factor * base_value / 66.25;
 
     if is_first_discovery {
-        base_value * 2.6
+        body_value * 2.6
     } else {
-        base_value
+        body_value
     }
 }
 
@@ -59,26 +30,20 @@ fn calculate_estimated_planet_worth(
     is_first_discovery: bool,
     is_first_map: bool,
 ) -> f32 {
-    let t = scan.terraform_state == TerraformState::Terraformable;
-
-    let k = match scan.planet_class {
-        PlanetClass::MetalRichBody => 21_790.0 + (if t { 65_631.0 } else { 0.0 }),
-        PlanetClass::AmmoniaWorld => 96_932.0,
-        PlanetClass::SudarskyClassIGasGiant => 1_656.0,
-        PlanetClass::SudarskyClassIiGasGiant => 9_654.0 + (if t { 100_677.0 } else { 0.0 }),
-        PlanetClass::HighMetalContentBody => 9_654.0 + (if t { 100_677.0 } else { 0.0 }),
-        PlanetClass::WaterWorld => 64_831.0 + (if t { 116_295.0 } else { 0.0 }),
-        PlanetClass::EarthlikeBody => 64_831.0 + (if t { 116_295.0 } else { 0.0 }),
-        _ => 300.0 + (if t { 93_328.0 } else { 0.0 }),
+    let base_value = scan.planet_class.base_value();
+    let terraformable_bonus = if scan.terraform_state == TerraformState::Terraformable {
+        scan.planet_class.terraformable_bonus()
+    } else {
+        0
     };
 
-    let m = f32::max(scan.mass_em, 1.0);
-
-    let base_value = f32::max(k + k * f32::powf(m, 0.2) * 0.56591828, 500.0);
+    let scan_value = (base_value + terraformable_bonus) as f32;
+    let mass_factor = f32::max(scan.mass_em, 1.0);
+    let body_value = f32::max(scan_value + scan_value * f32::powf(mass_factor, 0.2) * 0.56591828, 500.0);
 
     match (is_first_discovery, is_first_map) {
-        (true, true) => base_value * 9.6190186404,
-        (false, true) => base_value * 8.0956,
-        _ => base_value * 3.3333333333,
+        (true, true) => body_value * 9.6190186404,
+        (false, true) => body_value * 8.0956,
+        _ => body_value * 3.3333333333,
     }
 }
