@@ -21,7 +21,7 @@ use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
 ///
 /// let path = PathBuf::from("somePath");
 ///
-/// let live_reader = LiveLogFileReader::new(path)
+/// let live_reader = LiveLogFileReader::open(path)
 ///     .unwrap();
 ///
 /// // This will block the current thread until there are new entries.

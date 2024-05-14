@@ -23,15 +23,14 @@ use crate::logs::content::LogEvent;
 ///     .unwrap()
 ///     .join("test-journals");
 ///
-/// let journal_dir = LogDir::new(dir_path)
-///     .unwrap();
+/// let journal_dir = LogDir::new(dir_path);
 ///
 /// let logs = journal_dir.journal_logs_oldest_first().unwrap();
 /// assert!(!logs.is_empty());
 ///
 /// for journal_file in logs {
 ///     // Create a reader
-///     let reader = journal_file.create_reader().unwrap();
+///     let reader = journal_file.create_blocking_reader().unwrap();
 ///
 ///     for entry in reader {
 ///         let Ok(log) = entry else {

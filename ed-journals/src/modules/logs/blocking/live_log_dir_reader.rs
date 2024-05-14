@@ -25,7 +25,7 @@ use crate::modules::blockers::sync_blocker::SyncBlocker;
 ///
 /// let path = PathBuf::from("somePath");
 ///
-/// let live_dir_reader = LiveLogDirReader::create(path)
+/// let live_dir_reader = LiveLogDirReader::open(path)
 ///     .unwrap();
 ///
 /// // At first this will read all existing lines from the journal logs, after which it will block
