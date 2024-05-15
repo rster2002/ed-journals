@@ -12,6 +12,9 @@ pub enum InternalModule {
     #[serde(rename = "hyperdrive")]
     FrameShiftDrive,
 
+    #[serde(rename = "hyperdrive_overcharge")]
+    FrameShiftDriveOvercharged,
+
     #[serde(rename = "powerplant")]
     PowerPlant,
 
@@ -21,11 +24,20 @@ pub enum InternalModule {
     #[serde(rename = "guardianmodulereinforcement")]
     GuardianModuleReinforcement,
 
+    #[serde(rename = "guardianhullreinforcement")]
+    GuardianHullReinforcement,
+
     #[serde(rename = "guardianshieldreinforcement")]
     GuardianShieldReinforcement,
 
+    #[serde(rename = "metaalloyhullreinforcement")]
+    MetaAlloyHullReinforcement,
+
     #[serde(rename = "hullreinforcement")]
     HullReinforcement,
+
+    #[serde(rename = "dockingcomputer_standard")]
+    StandardDockingComputer,
 
     #[serde(rename = "dockingcomputer_advanced")]
     AdvancedDockingComputer,
@@ -33,11 +45,26 @@ pub enum InternalModule {
     #[serde(rename = "dronecontrol_collection")]
     CollectorLimpetController,
 
+    #[serde(rename = "dronecontrol_decontamination")]
+    DecontaminationLimpetController,
+
     #[serde(rename = "dronecontrol_repair")]
     RepairLimpetController,
 
     #[serde(rename = "dronecontrol_prospector")]
     ProspectorLimpetController,
+
+    #[serde(rename = "dronecontrol_fueltransfer")]
+    FuelTransferLimpetController,
+
+    #[serde(rename = "dronecontrol_recon")]
+    ReconLimpetController,
+
+    #[serde(rename = "dronecontrol_resourcesiphon")]
+    HatchBreakerLimpetController,
+
+    #[serde(rename = "dronecontrol_unkvesselresearch")]
+    ResearchLimpetController,
 
     #[serde(rename = "multidronecontrol_mining")]
     MiningMultiLimpetController,
@@ -47,6 +74,15 @@ pub enum InternalModule {
 
     #[serde(rename = "multidronecontrol_rescue")]
     RescueMultiLimpetController,
+
+    #[serde(rename = "multidronecontrol_operations")]
+    OperationsMultiLimpetController,
+
+    #[serde(rename = "multidronecontrol_universal")]
+    UniversalMultiLimpetController,
+
+    #[serde(rename = "expmodulestabiliser")]
+    ExperimentalWeaponStabilizer,
 
     #[serde(rename = "cargorack")]
     CargoRack,
@@ -71,6 +107,9 @@ pub enum InternalModule {
 
     #[serde(rename = "shieldgenerator_fast")]
     BiWeaveShieldGenerator,
+
+    #[serde(rename = "shieldgenerator_strong")]
+    PrismaticShieldGenerator,
 
     #[serde(rename = "shieldcellbank")]
     ShieldCellBank,
@@ -105,11 +144,17 @@ pub enum InternalModule {
     #[serde(rename = "fsdinterdictor")]
     FSDInterdictor,
 
-    #[serde(rename = "planetapproachsuite_advanced")]
+    #[serde(rename = "planetapproachsuite_advanced", alias = "planetapproachsuite")]
     PlanetApproachSuite,
 
     #[serde(rename = "refinery")]
     Refinery,
+
+    #[serde(rename = "guardianpowerplant")]
+    GuardianHybridPowerPlant,
+
+    #[serde(rename = "guardianpowerdistributor")]
+    GuardianHybridPowerDistributor,
 
     #[serde(untagged)]
     Armor(ArmorModule),
@@ -144,6 +189,25 @@ impl InternalModule {
 
     pub fn is_optional(&self) -> bool {
         matches!(self.internal_type(), InternalType::Optional)
+    }
+
+    pub fn is_powerplay_module(&self) -> bool {
+        match self {
+            InternalModule::PrismaticShieldGenerator => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_guardian_module(&self) -> bool {
+        match self {
+            InternalModule::GuardianHybridPowerDistributor
+            | InternalModule::GuardianHybridPowerPlant
+            | InternalModule::GuardianModuleReinforcement
+            | InternalModule::GuardianFSDBooster
+            | InternalModule::GuardianHullReinforcement
+            | InternalModule::GuardianShieldReinforcement => true,
+            _ => false,
+        }
     }
 }
 
@@ -188,6 +252,21 @@ impl Display for InternalModule {
                 InternalModule::Thrusters => "Thrusters",
                 InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
                 InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
+                InternalModule::FrameShiftDriveOvercharged => "Frame Shift Drive (SCO)",
+                InternalModule::GuardianHullReinforcement => "Guardian Hull Reinforcement Package",
+                InternalModule::MetaAlloyHullReinforcement => "Meta Alloy Hull Reinforcement Package",
+                InternalModule::StandardDockingComputer => "Standard Docking Computer",
+                InternalModule::DecontaminationLimpetController => "Decontamination Limpet Controller",
+                InternalModule::FuelTransferLimpetController => "Fuel Transfer Limpet Controller",
+                InternalModule::ReconLimpetController => "Recon Limpet Controller",
+                InternalModule::HatchBreakerLimpetController => "Hatch Breaker Limpet Controller",
+                InternalModule::OperationsMultiLimpetController => "Operations Multi Limpet Controller",
+                InternalModule::ExperimentalWeaponStabilizer => "Experimental Weapon Stabilizer",
+                InternalModule::PrismaticShieldGenerator => "Prismatic Shield Generator",
+                InternalModule::GuardianHybridPowerPlant => "Guardian Hybrid Power Plant",
+                InternalModule::GuardianHybridPowerDistributor => "Guardian Hybrid Power Distributor",
+                InternalModule::ResearchLimpetController => "Research Limpet Controller",
+                InternalModule::UniversalMultiLimpetController => "Universal Multi Limpet Controller",
             }
         )
     }

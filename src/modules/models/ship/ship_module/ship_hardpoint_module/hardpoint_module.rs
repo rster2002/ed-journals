@@ -89,6 +89,9 @@ pub enum HardpointModule {
     #[serde(rename = "dumbfiremissilerack")]
     MissileRack,
 
+    #[serde(rename = "dumbfiremissilerack_advanced")]
+    AdvancedMissileRack,
+
     #[serde(rename = "basicmissilerack")]
     SeekerMissileRack,
 
@@ -173,6 +176,9 @@ pub enum HardpointModule {
     #[serde(rename = "railgun_burst")]
     ImperialHammerRailGun,
 
+    #[serde(rename = "xenoscanner_basic")]
+    XenoScanner,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -196,7 +202,13 @@ impl HardpointModule {
             | HardpointModule::ThargoidPulseNeutralizer
             | HardpointModule::ShutdownFieldNeutralizer
             | HardpointModule::ElectronicCountermeasures
-            | HardpointModule::WakeScanner => HardpointType::Utility,
+            | HardpointModule::WakeScanner
+            | HardpointModule::PulseWaveAnalyzer
+            | HardpointModule::ManifestScanner
+            | HardpointModule::KillWarrantScanner
+            | HardpointModule::EnhancedXenoScanner
+            | HardpointModule::XenoScanner
+            | HardpointModule::ShieldBooster => HardpointType::Utility,
 
             _ => HardpointType::FullSized,
         }
@@ -208,6 +220,23 @@ impl HardpointModule {
 
     pub fn is_utility(&self) -> bool {
         matches!(self.hardpoint_type(), HardpointType::Utility)
+    }
+
+    pub fn is_powerplay_module(&self) -> bool {
+        match self {
+            HardpointModule::RetributorBeamLaser
+            | HardpointModule::CytoscramblerBurstLaser
+            | HardpointModule::PacifierFragCannon
+            | HardpointModule::MiningLanceBeamLaser
+            | HardpointModule::PackHoundMissileRack
+            | HardpointModule::RocketPropelledFSDDisruptor
+            | HardpointModule::EnforcerCannon
+            | HardpointModule::AdvancedPlasmaAccelerator
+            | HardpointModule::PulseDisruptorLaser
+            | HardpointModule::ImperialHammerRailGun => true,
+
+            _ => false,
+        }
     }
 }
 
@@ -244,6 +273,36 @@ impl Display for HardpointModule {
                 HardpointModule::WakeScanner => "Wake Scanner",
                 HardpointModule::PulseWaveAnalyzer => "Pulse Wave Analyzer",
                 HardpointModule::RailGun => "Rail Gun",
+                HardpointModule::RetributorBeamLaser => "Retributor Beam Laser",
+                HardpointModule::PulseDisruptorLaser => "Pulse Disruptor Laser",
+                HardpointModule::BurstLaser => "Burst Laser",
+                HardpointModule::CytoscramblerBurstLaser => "Cytoscrambler Burst Laser",
+                HardpointModule::FragmentCannon => "Fragment Cannon",
+                HardpointModule::PacifierFragCannon => "Pacifier Frag-Cannon",
+                HardpointModule::Cannon => "Cannon",
+                HardpointModule::AdvancedMultiCannon => "Advanced Multi-Cannon",
+                HardpointModule::EnforcerCannon => "Enforcer Cannon",
+                HardpointModule::RocketPropelledFSDDisruptor => "Rocket Propelled FSD Disruptor",
+                HardpointModule::GuardianPlasmaCharger => "Guardian Plasma Charger",
+                HardpointModule::GuardianShardCannon => "Guardian Shard Cannon",
+                HardpointModule::KillWarrantScanner => "Kill Warrant Scanner",
+                HardpointModule::ManifestScanner => "Manifest Scanner",
+                HardpointModule::ShockCannon => "Shock Cannon",
+                HardpointModule::SeekerMissileRack => "Seeker Missile Rack",
+                HardpointModule::PackHoundMissileRack => "Pack-Hound Missile Rack",
+                HardpointModule::ShockMineLauncher => "Shock Mine Launcher",
+                HardpointModule::MineLauncher => "Mine Launcher",
+                HardpointModule::TorpedoPylon => "Torpedo Pylon",
+                HardpointModule::PlasmaAccelerator => "Plasma Accelerator",
+                HardpointModule::AdvancedPlasmaAccelerator => "Advanced Plasma Accelerator",
+                HardpointModule::EnhancedAXMultiCannon => "Enhanced AX Multi-Cannon",
+                HardpointModule::RemoteReleaseFlechetteLauncher => "Remote Release Flechette Launcher",
+                HardpointModule::EnzymeMissileRack => "Enzyme Missile Rack",
+                HardpointModule::MiningLanceBeamLaser => "Mining Lance Beam Laser",
+                HardpointModule::SubSurfaceExtractionMissile => "Sub-Surface Extraction Missile",
+                HardpointModule::ImperialHammerRailGun => "Imperial Hammer Rail Gun",
+                HardpointModule::XenoScanner => "Xeno Scanner",
+                HardpointModule::AdvancedMissileRack => "Advanced Missile Rack",
 
                 #[cfg(not(feature = "strict"))]
                 HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),

@@ -74,3 +74,31 @@ impl Display for ShipModule {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use serde_json::{Error, Value};
+    use crate::models::ship::ship_module::ShipModule;
+
+    #[test]
+    fn modules_are_parsed_correctly() {
+        let mut test_cases = include_str!("zz_ship_module_test_cases.txt")
+            .lines();
+
+        let mut count = 0;
+
+        for line in test_cases {
+            let result = serde_json::from_value::<ShipModule>(Value::String(line.to_string()));
+            count += 1;
+
+            if result.is_err() {
+                dbg!(&line);
+                dbg!(&result);
+            }
+
+            assert!(result.is_ok());
+        }
+
+        assert!(count > 1000);
+    }
+}
