@@ -6,9 +6,11 @@ use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::blocking::{LogDirReader, LogDirReaderError};
+use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
 #[derive(Debug)]
@@ -29,6 +31,12 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadOutfittingFileError(#[from] ReadOutfittingFileError),
+
+    #[error(transparent)]
+    ReadShipyardFileError(#[from] ReadShipyardFileError),
+
+    #[error(transparent)]
+    ReadMarketFileError(#[from] ReadMarketFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -65,6 +73,24 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_outfitting_file(dir_path.join("Outfitting.json")) {
                                 Ok(status) => Ok(JournalEvent::OutfittingEvent(status)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("Shipyard.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_shipyard_file(dir_path.join("Shipyard.json")) {
+                                Ok(shipyard) => Ok(JournalEvent::ShipyardEvent(shipyard)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("Market.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_market_file(dir_path.join("Market.json")) {
+                                Ok(market) => Ok(JournalEvent::MarketEvent(market)),
                                 Err(error) => Err(error.into()),
                             });
                     }
