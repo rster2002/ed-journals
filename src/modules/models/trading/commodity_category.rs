@@ -1,30 +1,62 @@
 use std::fmt::{Display, Formatter};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::modules::models::trading::commodity::Commodity;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum CommodityCategory {
+    #[serde(rename = "$MARKET_category_chemicals;")]
     Chemicals,
+
+    #[serde(rename = "$MARKET_category_consumer_items;")]
     ConsumerItems,
+
+    #[serde(rename = "$MARKET_category_legal_drugs;")]
     LegalDrugs,
+
+    #[serde(rename = "$MARKET_category_foods;")]
     Foods,
+
+    #[serde(rename = "$MARKET_category_industrial_materials;")]
     IndustrialMaterials,
+
+    #[serde(rename = "$MARKET_category_machinery;")]
     Machinery,
+
+    #[serde(rename = "$MARKET_category_medicines;")]
     Medicines,
+
+    #[serde(rename = "$MARKET_category_metals;")]
     Metals,
+
+    #[serde(rename = "$MARKET_category_minerals;")]
     Minerals,
+
+    #[serde(rename = "$MARKET_category_salvage;")]
     Salvage,
+
+    #[serde(rename = "$MARKET_category_slaves;")]
     Slaves,
+
+    #[serde(rename = "$MARKET_category_technology;")]
     Technology,
+
+    #[serde(rename = "$MARKET_category_textiles;")]
     Textiles,
+
+    #[serde(rename = "$MARKET_category_waste;")]
     Waste,
+
+    #[serde(rename = "$MARKET_category_weapons;")]
     Weapons,
+
+    #[serde(rename = "$MARKET_category_rare;")]
     Rare,
 
     None,
 
     #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
     Unknown(String),
 }
 
