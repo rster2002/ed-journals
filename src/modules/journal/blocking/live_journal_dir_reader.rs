@@ -10,6 +10,7 @@ use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
 use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
@@ -37,6 +38,9 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadMarketFileError(#[from] ReadMarketFileError),
+
+    #[serde(transparent)]
+    ReadNavRouteFileError(#[from] ReadNavRouteFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -91,6 +95,15 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_market_file(dir_path.join("Market.json")) {
                                 Ok(market) => Ok(JournalEvent::MarketEvent(market)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("NavRoute.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_nav_route_file(dir_path.join("NavRoute.json")) {
+                                Ok(nav_route) => Ok(JournalEvent::NavRoute(nav_route)),
                                 Err(error) => Err(error.into()),
                             });
                     }
