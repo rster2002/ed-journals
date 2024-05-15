@@ -29,6 +29,6 @@ async-mutex = { version = "1.4.0", optional = true }
 tokio-test = "0.4.4"
 
 [features]
-default = []
+default = ["asynchronous", "strict"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 strict = []
