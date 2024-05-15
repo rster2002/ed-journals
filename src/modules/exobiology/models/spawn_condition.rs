@@ -4,6 +4,7 @@ use crate::modules::models::galaxy::star_class::StarClass;
 use crate::modules::models::galaxy::star_luminosity::StarLuminosity;
 use crate::modules::models::galaxy::volcanism_type::VolcanismType;
 
+#[derive(Debug)]
 pub enum SpawnCondition {
     MinMeanTemperature(f32),
     MaxMeanTemperature(f32),
