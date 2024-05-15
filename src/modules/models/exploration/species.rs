@@ -10,8 +10,9 @@ use crate::modules::models::galaxy::planet_class::PlanetClass;
 use crate::modules::models::galaxy::star_class::StarClass;
 use crate::modules::models::galaxy::star_luminosity::StarLuminosity;
 use crate::modules::models::galaxy::volcanism_type::VolcanismType;
+use strum::EnumIter;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, EnumIter)]
 pub enum Species {
     // Aleoids
     AleoidaLaminiae,
