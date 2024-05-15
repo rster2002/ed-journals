@@ -15,9 +15,13 @@ mod modules;
 
 pub use modules::logs;
 pub use modules::models;
-pub use modules::status;
 pub use modules::journal;
 pub use modules::state;
+
+pub use modules::status;
+pub use modules::outfitting;
+pub use modules::shipyard;
+pub use modules::market;
 
 #[cfg(test)]
 mod tests {
