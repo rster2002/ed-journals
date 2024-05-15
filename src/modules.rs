@@ -7,6 +7,7 @@ pub mod state;
 pub mod exobiology;
 pub mod exploration;
 pub mod outfitting;
+pub mod shipyard;
 
 /// Contains structs and enums which are used in multiple places. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
