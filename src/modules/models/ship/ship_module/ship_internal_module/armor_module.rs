@@ -42,7 +42,7 @@ pub enum ArmorModuleError {
 
 lazy_static! {
     static ref ARMOR_MODULE_REGEX: Regex =
-        Regex::new(r#"^\$?(\w+?)_armour_grade(\d+)(_name;)?$"#).unwrap();
+        Regex::new(r#"^\$?(\w+?)_armour(_grade(\d+)|_(\w+))(_name;)?$"#).unwrap();
 }
 
 impl FromStr for ArmorModule {
@@ -60,14 +60,24 @@ impl FromStr for ArmorModule {
             .parse()
             .map_err(ArmorModuleError::FailedToParseShipType)?;
 
-        let grade = captures
-            .get(2)
-            .expect("Should have already been matched")
-            .as_str()
-            .parse::<u8>()?
-            .try_into()?;
+        if let Some(capture) = captures.get(3) {
+            return Ok(ArmorModule {
+                ship,
+                grade: capture.as_str()
+                    .parse::<u8>()?
+                    .try_into()?,
+            });
+        }
 
-        Ok(ArmorModule { ship, grade })
+        if let Some(capture) = captures.get(4) {
+            return Ok(ArmorModule {
+                ship,
+                grade: capture.as_str()
+                    .parse()?,
+            });
+        }
+
+        Err(ArmorModuleError::FailedToParse(s.to_string()))
     }
 }
 
@@ -110,6 +120,13 @@ mod tests {
                 ArmorModule {
                     ship: ShipType::KraitMkII,
                     grade: ArmorGrade::MirroredSurfaceComposite,
+                },
+            ),
+            (
+                "dolphin_armour_reactive",
+                ArmorModule {
+                    ship: ShipType::Dolphin,
+                    grade: ArmorGrade::ReactiveSurfaceComposite,
                 },
             ),
         ];
