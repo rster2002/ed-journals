@@ -4,7 +4,7 @@ use tokio::fs;
 use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
 use crate::modules::shipyard::models::shipyard::Shipyard;
 
-pub type StatusFileWatcher = LiveJsonFileWatcher<Shipyard>;
+pub type ShipyardFileWatcher = LiveJsonFileWatcher<Shipyard>;
 pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as ShipyardFileWatcherError;
 
 pub async fn read_shipyard_file<P: AsRef<Path>>(path: P) -> Result<Shipyard, ReadShipyardFileError> {
@@ -17,6 +17,6 @@ pub enum ReadShipyardFileError {
     #[error(transparent)]
     IO(#[from] std::io::Error),
 
-    #[error("Failed to parse status file: {0}")]
+    #[error("Failed to parse shipyard file: {0}")]
     SerdeJson(#[from] serde_json::Error),
 }

@@ -4,8 +4,8 @@ use crate::modules::shipyard::models::shipyard::Shipyard;
 use thiserror::Error;
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
 
-pub type StatusFileWatcher = LiveJsonFileWatcher<Shipyard>;
-pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as StatusFileWatcherError;
+pub type ShipyardFileWatcher = LiveJsonFileWatcher<Shipyard>;
+pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as ShipyardFileWatcherError;
 
 pub fn read_shipyard_file<P: AsRef<Path>>(path: P) -> Result<Shipyard, ReadShipyardFileError> {
     Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
@@ -16,7 +16,7 @@ pub enum ReadShipyardFileError {
     #[error(transparent)]
     IO(#[from] std::io::Error),
 
-    #[error("Failed to parse status file: {0}")]
+    #[error("Failed to parse shipyard file: {0}")]
     SerdeJson(#[from] serde_json::Error),
 }
 
