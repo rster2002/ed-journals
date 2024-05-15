@@ -39,7 +39,7 @@ pub enum JournalDirWatcherError {
     #[error(transparent)]
     ReadMarketFileError(#[from] ReadMarketFileError),
 
-    #[serde(transparent)]
+    #[error(transparent)]
     ReadNavRouteFileError(#[from] ReadNavRouteFileError),
 
     #[error(transparent)]
