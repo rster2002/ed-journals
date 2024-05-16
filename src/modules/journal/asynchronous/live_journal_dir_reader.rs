@@ -4,6 +4,7 @@ use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
+use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
@@ -45,6 +46,9 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadModulesInfoFileError(#[from] ReadModulesInfoFileError),
+
+    #[error(transparent)]
+    ReadBackpackFileError(#[from] ReadBackpackFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -117,6 +121,15 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_modules_info_file(dir_path.join("ModulesInfo.json")) {
                                 Ok(modules_info) => Ok(JournalEvent::ModulesInfo(modules_info)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("Backpack.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_backpack_file(dir_path.join("Backpack.json")) {
+                                Ok(backpack) => Ok(JournalEvent::Backpack(backpack)),
                                 Err(error) => Err(error.into()),
                             });
                     }
