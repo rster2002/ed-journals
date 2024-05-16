@@ -10,6 +10,7 @@ pub mod outfitting;
 pub mod shipyard;
 pub mod market;
 pub mod nav_route;
+pub mod modules_info;
 
 /// Contains structs and enums which are used in multiple places. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
