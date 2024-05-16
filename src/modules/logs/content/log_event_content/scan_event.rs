@@ -144,51 +144,19 @@ pub struct ScanEventPlanet {
     pub axial_tilt: f32,
 }
 
-#[derive(Debug, Clone, PartialEq)]
-pub enum Gravity {
-    Ms2(f32),
-    G(f32),
-}
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Gravity in m/s².
+pub struct Gravity(pub f32);
 
 impl Gravity {
-    /// Returns the value in G.
+    /// Returns the value of gravity in G.
     pub fn as_g(&self) -> f32 {
-        match self {
-            Gravity::Ms2(ms2) => ms2 / 9.812,
-            Gravity::G(g) => *g,
-        }
+        self.0 / 9.812
     }
 
-    /// Returns the value in m/s².
+    /// Returns the value of gravity in m/s².
     pub fn as_ms2(&self) -> f32 {
-        match self {
-            Gravity::Ms2(ms2) => *ms2,
-            Gravity::G(g) => g * 9.812,
-        }
-    }
-}
-
-impl<'de> Deserialize<'de> for Gravity {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let value = f32::deserialize(deserializer)?;
-        Ok(Gravity::Ms2(value))
-    }
-}
-
-impl Serialize for Gravity {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        let value = match self {
-            Gravity::Ms2(ms2) => ms2,
-            Gravity::G(_) => &self.as_ms2(),
-        };
-
-        value.serialize(serializer)
+        self.0
     }
 }
 
