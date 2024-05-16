@@ -24,6 +24,7 @@ pub use modules::shipyard;
 pub use modules::market;
 pub use modules::nav_route;
 pub use modules::modules_info;
+pub use modules::backpack;
 
 #[cfg(test)]
 mod tests {
