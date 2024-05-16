@@ -372,7 +372,7 @@ pub enum Material {
     #[serde(alias = "scanarchives")]
     UnidentifiedScanArchives,
 
-    #[serde(alias = "scandatabanks")]
+    #[serde(alias = "scandatabanks", alias = "ScanDatabanks")]
     ClassifiedScanDatabanks,
 
     #[serde(alias = "EncodedScanData", alias = "encodedscandata")]

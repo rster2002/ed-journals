@@ -28,7 +28,7 @@ pub enum SuitError {
 }
 
 lazy_static! {
-    static ref SUIT_REGEX: Regex = Regex::new(r#"^(\w+?)(_class(\d))?$"#).unwrap();
+    static ref SUIT_REGEX: Regex = Regex::new(r#"^(\w+?)(_[cC]lass(\d))?$"#).unwrap();
 }
 
 impl FromStr for Suit {

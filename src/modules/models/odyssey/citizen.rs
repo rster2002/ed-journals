@@ -21,7 +21,11 @@ pub enum Citizen {
     )]
     Scout,
 
-    #[serde(rename = "closesuitai_class1", alias = "closesuitai_class3")]
+    #[serde(
+        rename = "closesuitai_class1",
+        alias = "closesuitai_class2",
+        alias = "closesuitai_class3",
+    )]
     Striker,
 
     // TODO this is a guess

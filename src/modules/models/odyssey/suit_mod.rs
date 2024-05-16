@@ -3,12 +3,34 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum SuitMod {
-    #[serde(alias = "suit_reducedtoolbatteryconsumption")]
+    #[serde(rename = "suit_reducedtoolbatteryconsumption")]
     ReducedToolBatteryConsumption,
 
-    #[serde(alias = "suit_increasedbatterycapacity")]
-    IncreasedBatteryCapacity,
+    #[serde(rename = "suit_increasedbatterycapacity")]
+    ImprovedBatteryCapacity,
 
-    #[serde(alias = "suit_increasedsprintduration")]
+    #[serde(rename = "suit_increasedsprintduration")]
     IncreasedSprintDuration,
+
+    CombatMovementSpeed,
+    ImprovedJumpAssist,
+    IncreasedAirReserves,
+    NightVision,
+
+    #[serde(rename = "suit_improvedradar")]
+    EnhancedTracking,
+
+    #[serde(rename = "suit_backpackcapacity")]
+    ExtraBackpackCapacity,
+    AddedMeleeDamage,
+    DamageResistance,
+
+    #[serde(rename = "suit_increasedammoreserves")]
+    ExtraAmmoCapacity,
+
+    #[serde(rename = "suit_increasedshieldregen")]
+    FasterShieldRegen,
+
+    #[serde(rename = "suit_quieterfootsteps")]
+    QuieterFootsteps,
 }

@@ -253,7 +253,7 @@ impl Item {
             "chemicalpatents" => Item::ChemicalPatents,
             "chemicalweapondata" => Item::ChemicalWeaponData,
             "classicentertainment" => Item::ClassicEntertainment,
-            "clinicaltrialrecords" => Item::ClinicalTrialRecords,
+            "medicaltrialrecords" => Item::ClinicalTrialRecords,
             "cocktailrecipes" => Item::CocktailRecipes,
             "combattrainingmaterial" => Item::CombatTrainingMaterial,
             "combatantperformance" => Item::CombatantPerformance,
@@ -332,7 +332,7 @@ impl Item {
             "spectralanalysisdata" => Item::SpectralAnalysisData,
             "spyware" => Item::Spyware,
             "stellaractivitylogs" => Item::StellarActivityLogs,
-            "surveillancelogs" => Item::SurveillanceLogs,
+            "surveilleancelogs" => Item::SurveillanceLogs,
             "tacticalplans" => Item::TacticalPlans,
             "taxrecords" => Item::TaxRecords,
             "topographicalsurveys" => Item::TopographicalSurveys,
@@ -699,10 +699,16 @@ mod tests {
 
     #[test]
     fn item_test_cases_are_parsed_correctly() {
-        let test_cases = [(
-            "$EnhancedInterrogationRecordings_Name;",
-            Item::EnhancedInterrogationRecordings,
-        )];
+        let test_cases = [
+            (
+                "$EnhancedInterrogationRecordings_Name;",
+                Item::EnhancedInterrogationRecordings,
+            ),
+            (
+                "$WeaponSchematic_Name;",
+                Item::WeaponSchematic,
+            ),
+        ];
 
         for (case, expected) in test_cases {
             let result = Item::from_str(case);

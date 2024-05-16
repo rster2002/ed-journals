@@ -1,7 +1,11 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Serialize, Deserialize};
+use crate::models::ship::ship_module::ship_bobble::ShipBobble;
 use crate::models::ship::ship_module::ship_engine_color::ShipEngineColor;
+use crate::models::ship::ship_module::ship_kit_module::ShipKitModule;
+use crate::models::ship::ship_module::ship_string_lights::ShipStringLights;
+use crate::models::ship::ship_module::ship_weapon_color::ShipWeaponColor;
 
 use crate::modules::models::ship::ship_module::ship_decal::ShipDecal;
 use crate::modules::models::ship::ship_module::ship_nameplate::ShipNameplate;
@@ -20,6 +24,10 @@ pub mod ship_nameplate;
 pub mod ship_paint_job;
 pub mod ship_voicepack;
 pub mod ship_engine_color;
+mod ship_kit_module;
+mod ship_bobble;
+mod ship_weapon_color;
+mod ship_string_lights;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {
@@ -51,6 +59,7 @@ pub enum ShipModule {
     #[serde(untagged)]
     Cockpit(ShipCockpitModule),
 
+    // Cosmetic
     #[serde(untagged)]
     PaintJob(ShipPaintJob),
 
@@ -65,6 +74,18 @@ pub enum ShipModule {
 
     #[serde(untagged)]
     EngineColor(ShipEngineColor),
+
+    #[serde(untagged)]
+    WeaponColor(ShipWeaponColor),
+
+    #[serde(untagged)]
+    ShipKitModule(ShipKitModule),
+
+    #[serde(untagged)]
+    Bobble(ShipBobble),
+
+    #[serde(untagged)]
+    StringLights(ShipStringLights),
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
@@ -86,6 +107,10 @@ impl Display for ShipModule {
             ShipModule::VoicePack(_) => write!(f, "Voicepack"),
             ShipModule::Nameplate(_) => write!(f, "Nameplate"),
             ShipModule::EngineColor(_) => write!(f, "Engine Color"),
+            ShipModule::WeaponColor(_) => write!(f, "Weapon Color"),
+            ShipModule::Bobble(_) => write!(f, "Bobble"),
+            ShipModule::StringLights(_) => write!(f, "String Lights"),
+            ShipModule::ShipKitModule(module) => write!(f, "Skip kit module: {}", module.name),
 
             #[cfg(not(feature = "strict"))]
             ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),

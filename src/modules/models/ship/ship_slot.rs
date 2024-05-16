@@ -32,15 +32,24 @@ pub enum ShipSlotKind {
     OptionalInternal(u8),
     Military,
     CoreInternal(CoreSlot),
+    DataLinkScanner,
+    CodexScanner,
+    DiscoveryScanner,
+
+    // Cosmetic
     PaintJob,
     Decal,
     VesselVoice,
     Nameplate,
     IDPlate,
+    Bobble,
+    StringLights,
     EngineColor,
-    DataLinkScanner,
-    CodexScanner,
-    DiscoveryScanner,
+    WeaponColor,
+    ShipKitSpoiler,
+    ShipKitWings,
+    ShipKitTail,
+    ShipKitBumper,
 }
 
 #[derive(Debug, Error)]
@@ -67,6 +76,7 @@ lazy_static! {
     static ref DECAL_REGEX: Regex = Regex::new(r#"^Decal(\d+)$"#).unwrap();
     static ref NAMEPLATE_REGEX: Regex = Regex::new(r#"^ShipName(\d+)$"#).unwrap();
     static ref ID_PLATE_REGEX: Regex = Regex::new(r#"^ShipID(\d+)$"#).unwrap();
+    static ref BOBBLE_REGEX: Regex = Regex::new(r#"^Bobble(\d+)$"#).unwrap();
 }
 
 impl FromStr for ShipSlot {
@@ -82,6 +92,12 @@ impl FromStr for ShipSlot {
             "CodexScanner" => Some(ShipSlotKind::CodexScanner),
             "DiscoveryScanner" => Some(ShipSlotKind::DiscoveryScanner),
             "EngineColour" => Some(ShipSlotKind::EngineColor),
+            "WeaponColour" => Some(ShipSlotKind::WeaponColor),
+            "StringLights" => Some(ShipSlotKind::StringLights),
+            "ShipKitSpoiler" => Some(ShipSlotKind::ShipKitSpoiler),
+            "ShipKitWings" => Some(ShipSlotKind::ShipKitWings),
+            "ShipKitTail" => Some(ShipSlotKind::ShipKitTail),
+            "ShipKitBumper" => Some(ShipSlotKind::ShipKitBumper),
             _ => None,
         };
 
@@ -203,6 +219,20 @@ impl FromStr for ShipSlot {
             });
         }
 
+        if let Some(captures) = BOBBLE_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::Bobble,
+            });
+        }
+
         if let Ok(core_slot) = s.parse() {
             return Ok(ShipSlot {
                 slot_nr: 1,
@@ -226,15 +256,24 @@ impl Display for ShipSlot {
             ShipSlotKind::OptionalInternal(size) => write!(f, "Size {} Optional Internal", size),
             ShipSlotKind::Military => write!(f, "Military Slot"),
             ShipSlotKind::CoreInternal(core_slot) => write!(f, "{} Core Internal", core_slot),
+            ShipSlotKind::DataLinkScanner => write!(f, "Data Link Scanner"),
+            ShipSlotKind::CodexScanner => write!(f, "Codex Scanner"),
+            ShipSlotKind::DiscoveryScanner => write!(f, "Discovery Scanner"),
+
+            // Cosmetic
             ShipSlotKind::PaintJob => write!(f, "Paint job"),
             ShipSlotKind::Decal => write!(f, "Decal"),
             ShipSlotKind::VesselVoice => write!(f, "COVAS Voice"),
             ShipSlotKind::Nameplate => write!(f, "Nameplate"),
             ShipSlotKind::IDPlate => write!(f, "ID-Plate"),
+            ShipSlotKind::Bobble => write!(f, "Bobble"),
+            ShipSlotKind::StringLights => write!(f, "String Lights"),
             ShipSlotKind::EngineColor => write!(f, "Engine Colour"),
-            ShipSlotKind::DataLinkScanner => write!(f, "Data Link Scanner"),
-            ShipSlotKind::CodexScanner => write!(f, "Codex Scanner"),
-            ShipSlotKind::DiscoveryScanner => write!(f, "Discovery Scanner"),
+            ShipSlotKind::WeaponColor => write!(f, "Weapon Colour"),
+            ShipSlotKind::ShipKitSpoiler => write!(f, "Ship Kit Spoiler"),
+            ShipSlotKind::ShipKitWings => write!(f, "Ship Kit Wing"),
+            ShipSlotKind::ShipKitTail => write!(f, "Ship Kit Tail"),
+            ShipSlotKind::ShipKitBumper => write!(f, "Ship Kit Bumper"),
         }
     }
 }

@@ -65,7 +65,9 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Assassination_MB",
         alias = "Mission_OnFoot_Assassination_MB_name",
         alias = "Mission_Assassinate_Planetary",
-        alias = "Mission_Assassinate_Planetary_name"
+        alias = "Mission_Assassinate_Planetary_name",
+        alias = "Mission_Assassinate_RankFed",
+        alias = "Mission_Assassinate_RankFed_name",
     )]
     OnFootAssassinationMission,
 
@@ -85,6 +87,14 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Sabotage_Production_Covert_001_name"
     )]
     OnFootDisruptionMission,
+
+    #[serde(
+        alias = "Mission_OnFoot_Delivery_Contact_MB",
+        alias = "Mission_OnFoot_Delivery_Contact_MB_name",
+        alias = "Mission_OnFoot_Delivery_Contact_008",
+        alias = "Mission_OnFoot_Delivery_Contact_008_name",
+    )]
+    OnFootDeliveryMission,
 
     #[serde(alias = "Mission_Mining", alias = "Mission_Mining_name")]
     MiningMission,
@@ -116,14 +126,26 @@ pub enum MissionType {
     OnFootSalvageMission,
 
     #[serde(
+        alias = "Mission_OnFoot_SalvageIllegal_MB",
+        alias = "Mission_OnFoot_SalvageIllegal_MB_name",
+    )]
+    OnFootIllegalSalvageMission,
+
+    #[serde(
         alias = "Mission_OnFoot_Collect_002",
-        alias = "Mission_OnFoot_Collect_002_name"
+        alias = "Mission_OnFoot_Collect_002_name",
+        alias = "Mission_OnFoot_Collect_MB",
+        alias = "Mission_OnFoot_Collect_MB_name",
     )]
     OnFootCollectionMission,
 
     #[serde(
         alias = "Mission_OnFoot_Heist_POI_002",
-        alias = "Mission_OnFoot_Heist_POI_002_name"
+        alias = "Mission_OnFoot_Heist_POI_002_name",
+        alias = "Mission_OnFoot_Heist_POI_005",
+        alias = "Mission_OnFoot_Heist_POI_005_name",
+        alias = "Mission_OnFoot_Heist_POI_MB",
+        alias = "Mission_OnFoot_Heist_POI_MB_name",
     )]
     OnFootHeistMission,
 
@@ -134,6 +156,12 @@ pub enum MissionType {
         alias = "Mission_OnFoot_Hack_Download_Covert_007_name"
     )]
     OnFootHackingMission,
+
+    #[serde(
+        alias = "Mission_OnFoot_Collect_Contact",
+        alias = "Mission_OnFoot_Collect_Contact_name",
+    )]
+    OnFootCollectContactMission,
 
     #[serde(untagged)]
     SightseeingMission(SightseeingMission),

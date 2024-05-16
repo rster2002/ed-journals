@@ -72,7 +72,7 @@ pub enum ShipType {
     #[serde(rename = "empire_courier")]
     ImperialCourier,
 
-    #[serde(rename = "cutter")]
+    #[serde(rename = "Cutter", alias = "cutter")]
     ImperialCutter,
 
     #[serde(rename = "empire_eagle")]

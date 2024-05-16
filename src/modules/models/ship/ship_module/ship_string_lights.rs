@@ -6,29 +6,29 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
-pub struct ShipEngineColor {
+pub struct ShipStringLights {
     name: String,
 }
 
 #[derive(Debug, Error)]
-pub enum ShipEngineColorError {
-    #[error("Failed to parse engine color: '{0}'")]
+pub enum ShipStringLightsError {
+    #[error("Failed to parse string lights: '{0}'")]
     FailedToParse(String),
 }
 
 lazy_static! {
-    static ref ENGINE_COLOR_REGEX: Regex = Regex::new(r#"^enginecustomisation_(\w+)$"#).unwrap();
+    static ref STRING_LIGHTS_COLOR_REGEX: Regex = Regex::new(r#"^string_lights_(\w+)$"#).unwrap();
 }
 
-impl FromStr for ShipEngineColor {
-    type Err = ShipEngineColorError;
+impl FromStr for ShipStringLights {
+    type Err = ShipStringLightsError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let Some(captures) = ENGINE_COLOR_REGEX.captures(s) else {
-            return Err(ShipEngineColorError::FailedToParse(s.to_string()));
+        let Some(captures) = STRING_LIGHTS_COLOR_REGEX.captures(s) else {
+            return Err(ShipStringLightsError::FailedToParse(s.to_string()));
         };
 
-        Ok(ShipEngineColor {
+        Ok(ShipStringLights {
             name: captures
                 .get(1)
                 .expect("Should have been captured already")
@@ -38,4 +38,4 @@ impl FromStr for ShipEngineColor {
     }
 }
 
-from_str_deserialize_impl!(ShipEngineColor);
+from_str_deserialize_impl!(ShipStringLights);
