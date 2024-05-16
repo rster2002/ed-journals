@@ -1,7 +1,7 @@
 use strum::IntoEnumIterator;
 
 use crate::logs::content::log_event_content::scan_event::{
-    ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+    Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
 };
 use crate::models::exploration::species::Species;
 use crate::models::galaxy::atmosphere::AtmosphereDensity;
