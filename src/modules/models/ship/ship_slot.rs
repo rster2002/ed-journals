@@ -36,6 +36,8 @@ pub enum ShipSlotKind {
     Decal,
     VesselVoice,
     Nameplate,
+    IDPlate,
+    EngineColor,
     DataLinkScanner,
     CodexScanner,
     DiscoveryScanner,
@@ -64,6 +66,7 @@ lazy_static! {
     static ref MILITARY_REGEX: Regex = Regex::new(r#"^Military(\d+)$"#).unwrap();
     static ref DECAL_REGEX: Regex = Regex::new(r#"^Decal(\d+)$"#).unwrap();
     static ref NAMEPLATE_REGEX: Regex = Regex::new(r#"^ShipName(\d+)$"#).unwrap();
+    static ref ID_PLATE_REGEX: Regex = Regex::new(r#"^ShipID(\d+)$"#).unwrap();
 }
 
 impl FromStr for ShipSlot {
@@ -78,6 +81,7 @@ impl FromStr for ShipSlot {
             "DataLinkScanner" => Some(ShipSlotKind::DataLinkScanner),
             "CodexScanner" => Some(ShipSlotKind::CodexScanner),
             "DiscoveryScanner" => Some(ShipSlotKind::DiscoveryScanner),
+            "EngineColour" => Some(ShipSlotKind::EngineColor),
             _ => None,
         };
 
@@ -185,6 +189,20 @@ impl FromStr for ShipSlot {
             });
         }
 
+        if let Some(captures) = ID_PLATE_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ParseShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::IDPlate,
+            });
+        }
+
         if let Ok(core_slot) = s.parse() {
             return Ok(ShipSlot {
                 slot_nr: 1,
@@ -212,6 +230,8 @@ impl Display for ShipSlot {
             ShipSlotKind::Decal => write!(f, "Decal"),
             ShipSlotKind::VesselVoice => write!(f, "COVAS Voice"),
             ShipSlotKind::Nameplate => write!(f, "Nameplate"),
+            ShipSlotKind::IDPlate => write!(f, "ID-Plate"),
+            ShipSlotKind::EngineColor => write!(f, "Engine Colour"),
             ShipSlotKind::DataLinkScanner => write!(f, "Data Link Scanner"),
             ShipSlotKind::CodexScanner => write!(f, "Codex Scanner"),
             ShipSlotKind::DiscoveryScanner => write!(f, "Discovery Scanner"),

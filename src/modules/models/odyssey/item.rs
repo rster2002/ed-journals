@@ -216,6 +216,7 @@ pub enum Item {
     Medkit,
     ShieldDisruptor,
     ShieldProjector,
+    EBreach,
 
     #[cfg(not(feature = "strict"))]
     Unknown(String),
@@ -435,6 +436,7 @@ impl Item {
             "healthpack" => Item::Medkit,
             "amm_grenade_emp" => Item::ShieldDisruptor,
             "amm_grenade_shield" => Item::ShieldProjector,
+            "bypass" => Item::EBreach,
 
             #[cfg(not(feature = "strict"))]
             _ => Item::Unknown(name.to_string()),
@@ -680,6 +682,7 @@ impl Display for Item {
                 Item::Medkit => "Medkit",
                 Item::ShieldDisruptor => "Shield Disruptor",
                 Item::ShieldProjector => "Shield Projector",
+                Item::EBreach => "E-Breach",
 
                 #[cfg(not(feature = "strict"))]
                 Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),

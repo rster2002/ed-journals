@@ -1,6 +1,14 @@
 use serde::{Serialize, Deserialize};
 
-// TODO I'm not yet sure what this contains
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct SuitMod {}
+pub enum SuitMod {
+    #[serde(alias = "suit_reducedtoolbatteryconsumption")]
+    ReducedToolBatteryConsumption,
+
+    #[serde(alias = "suit_increasedbatterycapacity")]
+    IncreasedBatteryCapacity,
+
+    #[serde(alias = "suit_increasedsprintduration")]
+    IncreasedSprintDuration,
+}

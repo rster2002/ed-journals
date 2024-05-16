@@ -378,7 +378,7 @@ pub enum Material {
     #[serde(alias = "EncodedScanData", alias = "encodedscandata")]
     DivergentScanData,
 
-    #[serde(alias = "classifiedscanfragment")]
+    #[serde(alias = "classifiedscandata")]
     ClassifiedScanFragment,
 
     #[serde(alias = "legacyfirmware")]

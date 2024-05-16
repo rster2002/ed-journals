@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Serialize, Deserialize};
+use crate::models::ship::ship_module::ship_engine_color::ShipEngineColor;
 
 use crate::modules::models::ship::ship_module::ship_decal::ShipDecal;
 use crate::modules::models::ship::ship_module::ship_nameplate::ShipNameplate;
@@ -18,6 +19,7 @@ pub mod ship_internal_module;
 pub mod ship_nameplate;
 pub mod ship_paint_job;
 pub mod ship_voicepack;
+pub mod ship_engine_color;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {
@@ -61,6 +63,9 @@ pub enum ShipModule {
     #[serde(untagged)]
     Nameplate(ShipNameplate),
 
+    #[serde(untagged)]
+    EngineColor(ShipEngineColor),
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -80,6 +85,7 @@ impl Display for ShipModule {
             ShipModule::Decal(_) => write!(f, "Decal"),
             ShipModule::VoicePack(_) => write!(f, "Voicepack"),
             ShipModule::Nameplate(_) => write!(f, "Nameplate"),
+            ShipModule::EngineColor(_) => write!(f, "Engine Color"),
 
             #[cfg(not(feature = "strict"))]
             ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),

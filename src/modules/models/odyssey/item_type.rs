@@ -225,7 +225,8 @@ impl From<Item> for ItemType {
             | Item::FragGranade
             | Item::Medkit
             | Item::ShieldDisruptor
-            | Item::ShieldProjector => ItemType::Consumable,
+            | Item::ShieldProjector
+            | Item::EBreach => ItemType::Consumable,
 
             #[cfg(not(feature = "strict"))]
             Item::Unknown(item) => ItemType::Unknown(format!("Unknown item: {}", item)),
