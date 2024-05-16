@@ -9,6 +9,7 @@ use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
 use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
 use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
@@ -41,6 +42,9 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadNavRouteFileError(#[from] ReadNavRouteFileError),
+
+    #[error(transparent)]
+    ReadModulesInfoFileError(#[from] ReadModulesInfoFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -104,6 +108,15 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_nav_route_file(dir_path.join("NavRoute.json")) {
                                 Ok(nav_route) => Ok(JournalEvent::NavRoute(nav_route)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("ModulesInfo.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_modules_info_file(dir_path.join("ModulesInfo.json")) {
+                                Ok(modules_info) => Ok(JournalEvent::ModulesInfo(modules_info)),
                                 Err(error) => Err(error.into()),
                             });
                     }

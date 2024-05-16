@@ -23,6 +23,7 @@ pub use modules::outfitting;
 pub use modules::shipyard;
 pub use modules::market;
 pub use modules::nav_route;
+pub use modules::modules_info;
 
 #[cfg(test)]
 mod tests {

@@ -36,6 +36,9 @@ pub enum ShipSlotKind {
     Decal,
     VesselVoice,
     Nameplate,
+    DataLinkScanner,
+    CodexScanner,
+    DiscoveryScanner,
 }
 
 #[derive(Debug, Error)]
@@ -67,32 +70,22 @@ impl FromStr for ShipSlot {
     type Err = ParseShipSlotError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "ShipCockpit" {
-            return Ok(ShipSlot {
-                slot_nr: 0,
-                kind: ShipSlotKind::ShipCockpit,
-            });
-        }
+        let specific = match s {
+            "ShipCockpit" => Some(ShipSlotKind::ShipCockpit),
+            "CargoHatch" => Some(ShipSlotKind::CargoHatch),
+            "PaintJob" => Some(ShipSlotKind::PaintJob),
+            "VesselVoice" => Some(ShipSlotKind::VesselVoice),
+            "DataLinkScanner" => Some(ShipSlotKind::DataLinkScanner),
+            "CodexScanner" => Some(ShipSlotKind::CodexScanner),
+            "DiscoveryScanner" => Some(ShipSlotKind::DiscoveryScanner),
+            _ => None,
+        };
 
-        if s == "CargoHatch" {
+        if let Some(kind) = specific {
             return Ok(ShipSlot {
                 slot_nr: 0,
-                kind: ShipSlotKind::CargoHatch,
-            });
-        }
-
-        if s == "PaintJob" {
-            return Ok(ShipSlot {
-                slot_nr: 0,
-                kind: ShipSlotKind::PaintJob,
-            });
-        }
-
-        if s == "VesselVoice" {
-            return Ok(ShipSlot {
-                slot_nr: 0,
-                kind: ShipSlotKind::VesselVoice,
-            });
+                kind,
+            })
         }
 
         if let Some(captures) = UTILITY_HARDPOINT_REGEX.captures(s) {
@@ -219,6 +212,9 @@ impl Display for ShipSlot {
             ShipSlotKind::Decal => write!(f, "Decal"),
             ShipSlotKind::VesselVoice => write!(f, "COVAS Voice"),
             ShipSlotKind::Nameplate => write!(f, "Nameplate"),
+            ShipSlotKind::DataLinkScanner => write!(f, "Data Link Scanner"),
+            ShipSlotKind::CodexScanner => write!(f, "Codex Scanner"),
+            ShipSlotKind::DiscoveryScanner => write!(f, "Discovery Scanner"),
         }
     }
 }
