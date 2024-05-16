@@ -1,4 +1,4 @@
-use crate::modules::shared::odyssey::suit::Suit;
+use crate::modules::models::odyssey::suit::Suit;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

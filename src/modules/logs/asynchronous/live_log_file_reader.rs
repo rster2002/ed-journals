@@ -7,8 +7,8 @@ use thiserror::Error;
 use tokio::fs::File;
 use crate::logs::asynchronous::LogFileReaderError;
 use crate::logs::content::LogEvent;
-use crate::modules::blockers::async_blocker::AsyncBlocker;
 use crate::modules::logs::asynchronous::LogFileReader;
+use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 #[derive(Debug)]
 pub struct LiveLogFileReader {

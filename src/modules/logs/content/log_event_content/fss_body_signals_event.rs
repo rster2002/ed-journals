@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::exploration::planetary_signal_type::PlanetarySignalType;
+use crate::modules::models::exploration::planetary_signal_type::PlanetarySignalType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

@@ -20,7 +20,8 @@ use crate::logs::content::LogEvent;
 ///
 /// let dir_path = current_dir()
 ///     .unwrap()
-///     .join("test-journals");
+///     .join("test-files")
+///     .join("journals");
 ///
 /// let journal_dir = LogDir::new(dir_path);
 ///
@@ -142,55 +143,10 @@ impl Iterator for LogFileReader {
 #[cfg(test)]
 mod tests {
     use std::fs;
-    use std::fs::File;
     use crate::logs::blocking::LogFileReader;
     use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
     use crate::logs::content::log_event_content::LogEventContentKind;
     use crate::logs::content::LogEventContent;
-
-    // #[test]
-    // fn journal_events_are_read_in_the_correct_order() {
-    //     let test_journal_contents =
-    //         include_str!("../../../test-files/Journal.2022-10-22T171117.01.log");
-    //     let cursor = Cursor::new(test_journal_contents);
-    //
-    //     let mut reader = JournalFileReader::from(cursor);
-    //
-    //     let result = reader
-    //         .next()
-    //         .expect("Should be filled")
-    //         .expect("Should not be an error");
-    //
-    //     assert_eq!(
-    //         result,
-    //         JournalEvent {
-    //             timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 10, 41).unwrap(), // 2022-10-22T15:10:41Z
-    //             content: JournalEventContent::FileHeader(FileHeaderEvent {
-    //                 part: 1,
-    //                 language: "English/UK".to_string(),
-    //                 odyssey: true,
-    //                 game_version: "4.0.0.1450".to_string(),
-    //                 build: "r286858/r0 ".to_string(),
-    //             }),
-    //         }
-    //     );
-    //
-    //     let result = reader
-    //         .next()
-    //         .expect("Should be filled")
-    //         .expect("Should not be an error");
-    //
-    //     assert_eq!(
-    //         result,
-    //         JournalEvent {
-    //             timestamp: Utc.with_ymd_and_hms(2022, 10, 22, 15, 12, 05).unwrap(), // 2022-10-22T15:12:05Z
-    //             content: JournalEventContent::Commander(CommanderEvent {
-    //                 fid: "F123456789".to_string(),
-    //                 name: "TEST".to_string(),
-    //             }),
-    //         }
-    //     );
-    // }
 
     #[test]
     fn partial_last_lines_are_read_correctly() {

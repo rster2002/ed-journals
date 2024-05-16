@@ -1,5 +1,5 @@
-use crate::modules::shared::odyssey::item::Item;
-use crate::modules::shared::odyssey::item_type::ItemType;
+use crate::modules::models::odyssey::item::Item;
+use crate::modules::models::odyssey::item_type::ItemType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

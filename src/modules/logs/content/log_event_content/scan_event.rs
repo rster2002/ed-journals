@@ -1,17 +1,17 @@
 use serde::{Serialize, Deserialize, Deserializer};
 use serde_json::Value;
 
-use crate::modules::shared::galaxy::atmosphere::Atmosphere;
-use crate::modules::shared::galaxy::atmosphere_element::AtmosphereElement;
-use crate::modules::shared::galaxy::atmosphere_type::AtmosphereType;
-use crate::modules::shared::galaxy::orbit_info::OrbitInfo;
-use crate::modules::shared::galaxy::planet_class::PlanetClass;
-use crate::modules::shared::galaxy::ring_class::RingClass;
-use crate::modules::shared::galaxy::star_class::StarClass;
-use crate::modules::shared::galaxy::star_luminosity::StarLuminosity;
-use crate::modules::shared::galaxy::terraform_state::TerraformState;
-use crate::modules::shared::galaxy::volcanism::Volcanism;
-use crate::modules::shared::materials::material::Material;
+use crate::modules::models::galaxy::atmosphere::Atmosphere;
+use crate::modules::models::galaxy::atmosphere_element::AtmosphereElement;
+use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
+use crate::modules::models::galaxy::orbit_info::OrbitInfo;
+use crate::modules::models::galaxy::planet_class::PlanetClass;
+use crate::modules::models::galaxy::ring_class::RingClass;
+use crate::modules::models::galaxy::star_class::StarClass;
+use crate::modules::models::galaxy::star_luminosity::StarLuminosity;
+use crate::modules::models::galaxy::terraform_state::TerraformState;
+use crate::modules::models::galaxy::volcanism::Volcanism;
+use crate::modules::models::materials::material::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

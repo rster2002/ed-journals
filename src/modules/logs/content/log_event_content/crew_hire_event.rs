@@ -1,4 +1,4 @@
-use crate::modules::shared::commander::combat_rank::CombatRank;
+use crate::modules::models::commander::combat_rank::CombatRank;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

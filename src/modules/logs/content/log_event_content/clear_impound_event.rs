@@ -1,4 +1,4 @@
-use crate::modules::shared::ship::ship_type::ShipType;
+use crate::modules::models::ship::ship_type::ShipType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

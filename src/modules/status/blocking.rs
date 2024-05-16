@@ -1,7 +1,21 @@
-mod read_status_file;
-mod status_file_watcher;
+use std::fs;
+use std::path::Path;
+use thiserror::Error;
+use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
+use crate::status::Status;
 
-pub use read_status_file::read_status_file;
-pub use read_status_file::ReadStatusFileError;
-pub use status_file_watcher::StatusFileWatcher;
-pub use status_file_watcher::StatusFileWatcherError;
+pub type StatusFileWatcher = LiveJsonFileWatcher<Status>;
+pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as StatusFileWatcherError;
+
+pub fn read_status_file<P: AsRef<Path>>(path: P) -> Result<Status, ReadStatusFileError> {
+    Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
+}
+
+#[derive(Debug, Error)]
+pub enum ReadStatusFileError {
+    #[error(transparent)]
+    IO(#[from] std::io::Error),
+
+    #[error("Failed to parse status file: {0}")]
+    SerdeJson(#[from] serde_json::Error),
+}

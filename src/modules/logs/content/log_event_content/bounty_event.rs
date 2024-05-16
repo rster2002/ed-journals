@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::odyssey::citizen::Citizen;
-use crate::modules::shared::ship::ship_type::ShipType;
+use crate::modules::models::odyssey::citizen::Citizen;
+use crate::modules::models::ship::ship_type::ShipType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]

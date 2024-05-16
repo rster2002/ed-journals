@@ -1,4 +1,4 @@
-use crate::modules::shared::station::station_type::StationType;
+use crate::modules::models::station::station_type::StationType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

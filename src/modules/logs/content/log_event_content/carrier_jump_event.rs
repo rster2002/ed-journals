@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::civilization::system_info::SystemInfo;
+use crate::modules::models::civilization::system_info::SystemInfo;
 
 // TODO check when this is fired during the jump. Is it when it lockdown happens, the actual jump,
 //  after the jump?

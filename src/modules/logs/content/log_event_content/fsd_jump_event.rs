@@ -1,4 +1,4 @@
-use crate::modules::shared::civilization::system_info::SystemInfo;
+use crate::modules::models::civilization::system_info::SystemInfo;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

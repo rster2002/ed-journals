@@ -1,8 +1,8 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::exploration::genus::Genus;
-use crate::modules::shared::exploration::species::Species;
-use crate::modules::shared::exploration::variant::Variant;
+use crate::modules::models::exploration::genus::Genus;
+use crate::modules::models::exploration::species::Species;
+use crate::modules::models::exploration::variant::Variant;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

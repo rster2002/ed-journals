@@ -4,16 +4,10 @@ use std::fs::File;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
-use std::thread;
-use std::thread::Thread;
 use thiserror::Error;
-use crate::logs::{LogDir, LogDirError};
 use crate::logs::blocking::log_dir_reader::{LogDirReader, LogDirReaderError};
-use crate::logs::blocking::LogFileReader;
 use crate::logs::content::LogEvent;
-use crate::logs::blocking::LogFileReaderError;
-use crate::logs::log_file::{LogFile, LogFileError};
-use crate::modules::blockers::sync_blocker::SyncBlocker;
+use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 /// Watches the whole journal dir and reads all files. Once all historic files have been read it
 /// will block the current thread until the newest log file is changed at which it will read the

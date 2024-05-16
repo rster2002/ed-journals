@@ -1,7 +1,7 @@
-use crate::modules::shared::ship::blueprint::Blueprint;
-use crate::modules::shared::ship::ship_module::ShipModule;
-use crate::modules::shared::ship::ship_slot::ShipSlot;
-use crate::modules::shared::ship::ship_type::ShipType;
+use crate::modules::models::ship::blueprint::Blueprint;
+use crate::modules::models::ship::ship_module::ShipModule;
+use crate::modules::models::ship::ship_slot::ShipSlot;
+use crate::modules::models::ship::ship_type::ShipType;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

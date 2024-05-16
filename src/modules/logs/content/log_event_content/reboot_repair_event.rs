@@ -1,4 +1,4 @@
-use crate::modules::shared::ship::ship_slot::ShipSlot;
+use crate::modules::models::ship::ship_slot::ShipSlot;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

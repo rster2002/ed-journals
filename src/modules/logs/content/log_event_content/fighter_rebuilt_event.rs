@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::shared::ship::fighter_loadout::FighterLoadout;
+use crate::modules::models::ship::fighter_loadout::FighterLoadout;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

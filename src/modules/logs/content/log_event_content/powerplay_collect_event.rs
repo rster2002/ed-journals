@@ -1,4 +1,4 @@
-use crate::modules::shared::trading::commodity::Commodity;
+use crate::modules::models::trading::commodity::Commodity;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

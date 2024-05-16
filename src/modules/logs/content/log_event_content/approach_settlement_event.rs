@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::shared::station::station_info::StationInfo;
+use crate::modules::models::station::station_info::StationInfo;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

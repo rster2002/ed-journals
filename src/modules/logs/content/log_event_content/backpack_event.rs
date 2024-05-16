@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::shared::odyssey::item::Item;
+use crate::modules::models::odyssey::item::Item;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

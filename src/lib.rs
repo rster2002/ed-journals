@@ -14,25 +14,31 @@
 mod modules;
 
 pub use modules::logs;
-pub use modules::shared;
-pub use modules::status;
+pub use modules::models;
 pub use modules::journal;
 pub use modules::state;
+
+pub use modules::status;
+pub use modules::outfitting;
+pub use modules::shipyard;
+pub use modules::market;
+pub use modules::nav_route;
+pub use modules::modules_info;
+pub use modules::backpack;
+pub use modules::ship_locker;
 
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
     use crate::logs::LogDir;
     use crate::logs::content::LogEventContent;
-    // use crate::blocking::JournalDir;
-    //
-    // use crate::modules::logs::content::log_event_content::JournalEventContent;
 
     #[test]
     fn test_journals_are_parsed_correctly() {
         let dir_path = current_dir()
             .unwrap()
-            .join("test-journals");
+            .join("test-files")
+            .join("journals");
 
         let log_dir = LogDir::new(dir_path);
 
