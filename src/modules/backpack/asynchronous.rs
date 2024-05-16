@@ -17,6 +17,6 @@ pub enum ReadBackpackFileError {
     #[error(transparent)]
     IO(#[from] std::io::Error),
 
-    #[error("Failed to parse market file: {0}")]
+    #[error("Failed to parse backpack file: {0}")]
     SerdeJson(#[from] serde_json::Error),
 }
