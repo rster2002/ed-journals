@@ -1,7 +1,6 @@
 use std::fs;
 use std::path::Path;
 use thiserror::Error;
-use crate::backpack::models::backpack::Backpack;
 use crate::modules::cargo::models::cargo::Cargo;
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
 
