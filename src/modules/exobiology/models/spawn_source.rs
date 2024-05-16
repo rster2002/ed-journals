@@ -128,14 +128,14 @@ impl SpawnSource {
             }
             SpawnCondition::MinGravity(min_gravity) => {
                 if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity >= *min_gravity
+                    target_planet.gravity / 9.812 >= *min_gravity
                 } else {
                     false
                 }
             }
             SpawnCondition::MaxGravity(max_gravity) => {
                 if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity <= *max_gravity
+                    target_planet.gravity / 9.812 <= *max_gravity
                 } else {
                     false
                 }
