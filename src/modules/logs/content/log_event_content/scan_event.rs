@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::Value;
 
 use crate::modules::models::galaxy::atmosphere::Atmosphere;
@@ -129,7 +129,7 @@ pub struct ScanEventPlanet {
     #[serde(rename = "MassEM")]
     pub mass_em: f32,
     pub radius: f32,
-    pub surface_gravity: f32,
+    pub surface_gravity: Gravity,
     pub surface_temperature: f32,
     pub surface_pressure: f32,
     pub landable: bool,
@@ -142,6 +142,54 @@ pub struct ScanEventPlanet {
     pub orbit_info: OrbitInfo,
     pub rotation_period: f32,
     pub axial_tilt: f32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum Gravity {
+    Ms2(f32),
+    G(f32),
+}
+
+impl Gravity {
+    /// Returns the value in G.
+    pub fn as_g(&self) -> f32 {
+        match self {
+            Gravity::Ms2(ms2) => ms2 / 9.812,
+            Gravity::G(g) => *g,
+        }
+    }
+
+    /// Returns the value in m/s².
+    pub fn as_ms2(&self) -> f32 {
+        match self {
+            Gravity::Ms2(ms2) => *ms2,
+            Gravity::G(g) => g * 9.812,
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for Gravity {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let value = f32::deserialize(deserializer)?;
+        Ok(Gravity::Ms2(value))
+    }
+}
+
+impl Serialize for Gravity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let value = match self {
+            Gravity::Ms2(ms2) => ms2,
+            Gravity::G(_) => &self.as_ms2(),
+        };
+
+        value.serialize(serializer)
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

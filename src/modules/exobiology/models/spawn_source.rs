@@ -63,7 +63,7 @@ impl SpawnSource {
     fn supply_planet_scan_event(&mut self, scan: &ScanEventPlanet) {
         self.target_planet = Some(TargetPlanet {
             atmosphere: scan.atmosphere.clone(),
-            gravity: scan.surface_gravity,
+            gravity: scan.surface_gravity.clone(),
             class: scan.planet_class.clone(),
             surface_temperature: scan.surface_temperature,
             volcanism: scan.volcanism.clone(),
@@ -128,14 +128,14 @@ impl SpawnSource {
             }
             SpawnCondition::MinGravity(min_gravity) => {
                 if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity / 9.812 >= *min_gravity
+                    target_planet.gravity.as_g() >= *min_gravity
                 } else {
                     false
                 }
             }
             SpawnCondition::MaxGravity(max_gravity) => {
                 if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity / 9.812 <= *max_gravity
+                    target_planet.gravity.as_g() <= *max_gravity
                 } else {
                     false
                 }
@@ -228,7 +228,7 @@ impl SpawnSource {
 #[derive(Debug)]
 pub struct TargetPlanet {
     pub atmosphere: Atmosphere,
-    pub gravity: f32,
+    pub gravity: Gravity,
     pub class: PlanetClass,
     pub surface_temperature: f32,
     pub volcanism: Volcanism,
