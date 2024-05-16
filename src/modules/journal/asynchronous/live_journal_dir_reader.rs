@@ -8,10 +8,12 @@ use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
+use crate::modules::cargo::blocking::{read_cargo_file, ReadCargoFileError};
 use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
 use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
+use crate::ship_locker::blocking::{read_ship_locker_file, ReadShipLockerFileError};
 use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
@@ -49,6 +51,12 @@ pub enum JournalDirWatcherError {
 
     #[error(transparent)]
     ReadBackpackFileError(#[from] ReadBackpackFileError),
+
+    #[error(transparent)]
+    ReadCargoFileError(#[from] ReadCargoFileError),
+
+    #[error(transparent)]
+    ReadShipLockerFileError(#[from] ReadShipLockerFileError),
 
     #[error(transparent)]
     NotifyError(#[from] notify::Error),
@@ -130,6 +138,24 @@ impl LiveJournalDirReader {
                             .expect("Failed to get lock")
                             .push_back(match read_backpack_file(dir_path.join("Backpack.json")) {
                                 Ok(backpack) => Ok(JournalEvent::Backpack(backpack)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("Cargo.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_cargo_file(dir_path.join("Cargo.json")) {
+                                Ok(cargo) => Ok(JournalEvent::Cargo(cargo)),
+                                Err(error) => Err(error.into()),
+                            });
+                    }
+
+                    if path.ends_with("ShipLocker.json") {
+                        local_pending_events.lock()
+                            .expect("Failed to get lock")
+                            .push_back(match read_ship_locker_file(dir_path.join("ShipLocker.json")) {
+                                Ok(ship_locker) => Ok(JournalEvent::ShipLocker(ship_locker)),
                                 Err(error) => Err(error.into()),
                             });
                     }
