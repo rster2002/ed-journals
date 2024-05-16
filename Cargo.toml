@@ -30,6 +30,6 @@ strum = { version = "0.26.2", features = ["derive"] }
 tokio-test = "0.4.4"
 
 [features]
-default = []
+default = ["asynchronous", "strict"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 strict = []

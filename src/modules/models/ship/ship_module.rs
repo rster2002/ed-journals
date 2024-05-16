@@ -29,6 +29,15 @@ pub enum ShipModule {
     )]
     CargoBayDoor,
 
+    #[serde(alias = "hpt_shipdatalinkscanner")]
+    DataLinkScanner,
+
+    #[serde(alias = "int_codexscanner")]
+    CodexScanner,
+
+    #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
+    DiscoverScanner,
+
     /// Any internal module, this includes core and optional modules.
     #[serde(untagged)]
     Internal(ShipInternalModule),
@@ -61,6 +70,9 @@ impl Display for ShipModule {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ShipModule::CargoBayDoor => write!(f, "Cargo Hatch"),
+            ShipModule::DataLinkScanner => write!(f, "Data Link Scanner"),
+            ShipModule::CodexScanner => write!(f, "Codex Scanner"),
+            ShipModule::DiscoverScanner => write!(f, "Discovery Scanner"),
             ShipModule::Internal(internal_module) => internal_module.fmt(f),
             ShipModule::Hardpoint(hardpoint_module) => hardpoint_module.fmt(f),
             ShipModule::Cockpit(_) => write!(f, "Cockpit"),
@@ -72,5 +84,33 @@ impl Display for ShipModule {
             #[cfg(not(feature = "strict"))]
             ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::{Error, Value};
+    use crate::models::ship::ship_module::ShipModule;
+
+    #[test]
+    fn modules_are_parsed_correctly() {
+        let mut test_cases = include_str!("zz_ship_module_test_cases.txt")
+            .lines();
+
+        let mut count = 0;
+
+        for line in test_cases {
+            let result = serde_json::from_value::<ShipModule>(Value::String(line.to_string()));
+            count += 1;
+
+            if result.is_err() {
+                dbg!(&line);
+                dbg!(&result);
+            }
+
+            assert!(result.is_ok());
+        }
+
+        assert!(count > 1000);
     }
 }

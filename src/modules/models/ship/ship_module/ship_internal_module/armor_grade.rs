@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use serde::Serialize;
 
 use thiserror::Error;
@@ -13,12 +14,18 @@ pub enum ArmorGrade {
 
     #[cfg(not(feature = "strict"))]
     Unknown(u8),
+
+    #[cfg(not(feature = "strict"))]
+    UnknownString(String),
 }
 
 #[derive(Debug, Error)]
 pub enum ArmorGradeError {
     #[error("Unknown armor grade: {0}")]
     UnknownArmorGrade(u8),
+
+    #[error("Unknown armor grade string: '{0}'")]
+    UnknownArmorGradeString(String),
 }
 
 impl TryFrom<u8> for ArmorGrade {
@@ -41,6 +48,23 @@ impl TryFrom<u8> for ArmorGrade {
     }
 }
 
+impl FromStr for ArmorGrade {
+    type Err = ArmorGradeError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "reactive" => Ok(ArmorGrade::ReactiveSurfaceComposite),
+            "mirrored" => Ok(ArmorGrade::MirroredSurfaceComposite),
+
+            #[cfg(not(feature = "strict"))]
+            _ => Ok(ArmorGrade::UnknownString(s.to_string())),
+
+            #[cfg(feature = "strict")]
+            _ => Err(ArmorGradeError::UnknownArmorGradeString(s.to_string())),
+        }
+    }
+}
+
 impl Display for ArmorGrade {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -55,6 +79,9 @@ impl Display for ArmorGrade {
 
                 #[cfg(not(feature = "strict"))]
                 ArmorGrade::Unknown(_) => "Unknown composite",
+
+                #[cfg(not(feature = "strict"))]
+                ArmorGrade::UnknownString(_) => "Unknown composite",
             }
         )
     }

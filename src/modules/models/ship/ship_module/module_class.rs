@@ -78,6 +78,9 @@ impl From<&ArmorGrade> for ModuleClass {
 
             #[cfg(not(feature = "strict"))]
             ArmorGrade::Unknown(_) => ModuleClass::Unknown,
+
+            #[cfg(not(feature = "strict"))]
+            ArmorGrade::UnknownString(_) => ModuleClass::Unknown,
         }
     }
 }

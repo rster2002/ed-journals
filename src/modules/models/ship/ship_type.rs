@@ -9,12 +9,14 @@ pub enum ShipType {
     #[serde(rename = "adder")]
     Adder,
 
-    AllianceChallenger,
-
     #[serde(rename = "TypeX", alias = "typex")]
     AllianceChieftain,
 
+    #[serde(rename = "typex_2")]
     AllianceCrusader,
+
+    #[serde(rename = "typex_3")]
+    AllianceChallenger,
 
     #[serde(alias = "anaconda")]
     Anaconda,
@@ -25,6 +27,7 @@ pub enum ShipType {
     #[serde(rename = "asp_scout")]
     AspScout,
 
+    #[serde(rename = "belugaliner")]
     BelugaLiner,
 
     #[serde(alias = "cobramkiii")]
@@ -39,6 +42,7 @@ pub enum ShipType {
     #[serde(rename = "diamondback")]
     DiamondBackScout,
 
+    #[serde(rename = "dolphin")]
     Dolphin,
 
     #[serde(rename = "eagle")]
@@ -59,6 +63,7 @@ pub enum ShipType {
     #[serde(rename = "FerDeLance", alias = "ferdelance")]
     FerDeLance,
 
+    #[serde(rename = "hauler")]
     Hauler,
 
     #[serde(rename = "empire_trader")]
@@ -67,12 +72,13 @@ pub enum ShipType {
     #[serde(rename = "empire_courier")]
     ImperialCourier,
 
-    #[serde(rename = "empire_cutter")]
+    #[serde(rename = "cutter")]
     ImperialCutter,
 
     #[serde(rename = "empire_eagle")]
     ImperialEagle,
 
+    #[serde(rename = "independant_trader")]
     Keelback,
 
     #[serde(rename = "Krait_MkII", alias = "krait_mkii")]
@@ -81,7 +87,10 @@ pub enum ShipType {
     #[serde(rename = "Krait_Light", alias = "krait_light")]
     KraitPhantom,
 
+    #[serde(rename = "mamba")]
     Mamba,
+
+    #[serde(rename = "orca")]
     Orca,
 
     #[serde(alias = "python")]

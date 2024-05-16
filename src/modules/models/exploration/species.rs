@@ -4,7 +4,6 @@ use std::str::FromStr;
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
-use crate::modules::models::galaxy::atmosphere::{Atmosphere, AtmosphereDensity};
 use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
 use crate::modules::models::galaxy::planet_class::PlanetClass;
 use crate::modules::models::galaxy::star_class::StarClass;

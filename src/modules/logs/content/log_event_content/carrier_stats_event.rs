@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use crate::models::station::carrier_docking_access::CarrierDockingAccess;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -8,7 +9,7 @@ pub struct CarrierStatsEvent {
     pub callsign: String,
     pub name: String,
 
-    pub docking_access: CarrierStatsEventDockingAccess,
+    pub docking_access: CarrierDockingAccess,
     pub allow_notorious: bool,
 
     // Between 0 and 1000
@@ -21,21 +22,6 @@ pub struct CarrierStatsEvent {
     pub crew: Vec<CarrierStatsEventCrewEntry>,
     pub ship_packs: Vec<CarrierStatsEventPack>,
     pub module_packs: Vec<CarrierStatsEventPack>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-pub enum CarrierStatsEventDockingAccess {
-    #[serde(rename = "all")]
-    All,
-
-    #[serde(rename = "none")]
-    None,
-
-    #[serde(rename = "squadron")]
-    Squadron,
-
-    #[serde(rename = "squadronfriends")]
-    SquadronAndFriends,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

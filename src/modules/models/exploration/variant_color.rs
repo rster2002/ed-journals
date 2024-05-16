@@ -821,6 +821,7 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
 
             #[cfg(feature = "strict")]
             (_, _, _) => {
+                #[cfg(test)]
                 dbg!(value);
                 return Err(VariantColorError::UnknownVariant);
             }
