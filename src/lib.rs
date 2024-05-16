@@ -25,6 +25,7 @@ pub use modules::market;
 pub use modules::nav_route;
 pub use modules::modules_info;
 pub use modules::backpack;
+pub use modules::ship_locker;
 
 #[cfg(test)]
 mod tests {
