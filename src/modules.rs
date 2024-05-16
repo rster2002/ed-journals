@@ -12,6 +12,7 @@ pub mod market;
 pub mod nav_route;
 pub mod modules_info;
 pub mod backpack;
+pub mod cargo;
 
 /// Contains structs and enums which are used in multiple places. Things like commodity and material
 /// names, ship types, exobiology data etc. can be found here.
