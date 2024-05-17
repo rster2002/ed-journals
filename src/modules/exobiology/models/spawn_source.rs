@@ -25,7 +25,7 @@ use super::spawn_condition::SpawnCondition;
 
 #[derive(Debug)]
 pub struct SpawnSource {
-    body_name: String,
+    pub body_name: String,
     pub parent_stars: Vec<Star>,
     pub parent_stars_ids: Vec<u8>,
     pub target_planet: Option<TargetPlanet>,
