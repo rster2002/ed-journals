@@ -266,6 +266,13 @@ impl SpawnSource {
                     false
                 }
             }
+            SpawnCondition::MetalComposition => {
+                if let Some(target_planet) = &self.target_planet {
+                    target_planet.composition.metal > 0.0
+                } else {
+                    false
+                }
+            }
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),
