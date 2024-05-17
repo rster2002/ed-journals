@@ -357,13 +357,13 @@ mod tests {
                     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
                     .collect::<Vec<_>>();
 
-                println!(
-                    //&failing_conditions.is_empty(),
-                    //"The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
-                    "The following conditions failed for '{:?}' on body '{}': {:?}",
+                assert!(
+                    &failing_conditions.is_empty(),
+                    "The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
                     species,
                     body_name,
-                    failing_conditions //, spawn_source
+                    failing_conditions,
+                    spawn_source
                 );
             }
         }
