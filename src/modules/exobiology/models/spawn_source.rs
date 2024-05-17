@@ -6,8 +6,9 @@ use crate::logs::content::log_event_content::fss_body_signals_event::{
     FSSBodySignalEventSignal, FSSBodySignalsEvent,
 };
 use crate::logs::content::log_event_content::scan_event::{
-    DistanceLs, Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+    DistanceLs, Gravity, ScanEvent, ScanEventKind, ScanEventParent, ScanEventPlanet, ScanEventStar,
 };
+use crate::logs::content::LogEvent;
 use crate::models::exploration::planetary_signal_type::PlanetarySignalType;
 use crate::models::exploration::species::Species;
 use crate::models::galaxy::atmosphere::AtmosphereDensity;
@@ -15,6 +16,7 @@ use crate::models::galaxy::atmosphere_type::AtmosphereType;
 use crate::models::galaxy::star_luminosity::StarLuminosity;
 use crate::models::galaxy::volcanism::Volcanism;
 use crate::models::galaxy::volcanism_type::VolcanismType;
+use crate::models::materials::material::Material;
 use crate::modules::models::galaxy::atmosphere::Atmosphere;
 use crate::modules::models::galaxy::planet_class::PlanetClass;
 use crate::modules::models::galaxy::star_class::StarClass;
