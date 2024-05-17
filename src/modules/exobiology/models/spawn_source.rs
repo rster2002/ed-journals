@@ -52,7 +52,7 @@ impl SpawnSource {
             stars_in_system: HashSet::new(),
             geological_signals_present: None,
             distance_from_star: None,
-            distance_from_nebula: None, // FIXME: No idea how to get this data yet.
+            distance_from_nebula: None,
         }
     }
 
