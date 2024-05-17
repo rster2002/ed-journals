@@ -1,6 +1,7 @@
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::Value;
 
+use crate::models::galaxy::planet_composition::PlanetComposition;
 use crate::modules::models::galaxy::atmosphere::Atmosphere;
 use crate::modules::models::galaxy::atmosphere_element::AtmosphereElement;
 use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
@@ -136,7 +137,7 @@ pub struct ScanEventPlanet {
 
     #[serde(default)]
     pub materials: Vec<ScanEventPlanetMaterial>,
-    pub composition: Option<ScanEventPlanetComposition>,
+    pub composition: Option<PlanetComposition>,
 
     #[serde(flatten)]
     pub orbit_info: OrbitInfo,
@@ -217,14 +218,6 @@ pub struct ScanEventPlanetAtmosphereComposition {
 pub struct ScanEventPlanetMaterial {
     pub name: Material,
     pub percent: f32,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
-pub struct ScanEventPlanetComposition {
-    pub ice: f32,
-    pub rock: f32,
-    pub metal: f32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
