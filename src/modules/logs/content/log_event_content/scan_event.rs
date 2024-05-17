@@ -28,7 +28,7 @@ pub struct ScanEvent {
     pub system_address: u64,
 
     #[serde(rename = "DistanceFromArrivalLS")]
-    pub distance_from_arrival_ls: f32,
+    pub distance_from_arrival_ls: Distance,
     pub was_discovered: bool,
     pub was_mapped: bool,
 
@@ -144,8 +144,24 @@ pub struct ScanEventPlanet {
     pub axial_tilt: f32,
 }
 
+/// Distance in light seconds.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub struct Distance(pub f32);
+
+impl Distance {
+    /// Returns the distance in light seconds.
+    pub fn as_ls(&self) -> f32 {
+        self.0
+    }
+
+    /// Returns the distance in astronomical units.
+    pub fn as_au(&self) -> f32 {
+        self.0 * 0.0020039888
+    }
+}
+
 /// Gravity in m/s².
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Gravity(pub f32);
 
 impl Gravity {
