@@ -31,6 +31,7 @@ pub enum StarLuminosity {
     Zero = 0,
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 

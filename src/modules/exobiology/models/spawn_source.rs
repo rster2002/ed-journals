@@ -388,6 +388,7 @@ pub struct Body {
     pub class: PlanetClass,
 }
 
+#[cfg(test)]
 mod tests {
     use crate::logs::content::LogEventContent;
     use crate::logs::LogDir;
