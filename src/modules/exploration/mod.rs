@@ -1,6 +1,10 @@
 use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
 use crate::modules::models::galaxy::terraform_state::TerraformState;
 
+mod nebula;
+
+pub use nebula::Nebula;
+
 pub fn calculate_estimated_worth(scan: &ScanEvent) -> f32 {
     match &scan.kind {
         ScanEventKind::Star(star_scan) => {
