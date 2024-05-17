@@ -354,6 +354,7 @@ mod tests {
     use crate::modules::exobiology::models::spawn_source::SpawnSource;
     use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
+    use std::thread::current;
 
     use super::Body;
     // use crate::blocking::JournalDir;
@@ -372,16 +373,20 @@ mod tests {
         for journal in &logs {
             let reader = journal.create_blocking_reader().unwrap();
 
-            let mut current_body_name = String::new();
+            let mut body_name = String::new();
 
-            for entry in reader {
-                if let LogEventContent::Touchdown(touchdown) = &entry.as_ref().unwrap().content {
-                    current_body_name = touchdown.body.clone();
+            for entry in reader.flatten() {
+                if let LogEventContent::Location(location) = &entry.content {
+                    body_name = location.system_info.body.clone()
                 }
 
-                if let LogEventContent::ScanOrganic(organic) = &entry.as_ref().unwrap().content {
+                if let LogEventContent::Touchdown(touchdown) = &entry.content {
+                    body_name = touchdown.body.clone();
+                }
+
+                if let LogEventContent::ScanOrganic(organic) = &entry.content {
                     expected_species
-                        .entry(current_body_name.clone())
+                        .entry(body_name.clone())
                         .or_insert_with(HashSet::new)
                         .insert(organic.species.clone());
                 }
@@ -398,9 +403,13 @@ mod tests {
         for journal in &logs {
             let reader = journal.create_blocking_reader().unwrap();
 
-            for entry in reader {
-                if let LogEventContent::Scan(scan) = entry.unwrap().content {
+            for entry in reader.flatten() {
+                if let LogEventContent::Scan(scan) = &entry.content {
                     let body_name = scan.body_name.clone();
+
+                    for (_, spawn_source) in &mut spawn_sources {
+                        spawn_source.feed_scan_event(scan);
+                    }
 
                     // Skip scan events that are not relevant to our test data
                     if !spawn_sources.contains_key(&body_name) {
@@ -408,16 +417,26 @@ mod tests {
                     }
 
                     let spawn_source = spawn_sources.get_mut(&body_name).unwrap();
-
-                    spawn_source.feed_scan_event(&scan);
                 }
             }
         }
 
         // Check each spawn source to see if the calculated spawnable species match the expected species.
         for (body_name, expected_species) in expected_species {
+            // Commander did not scan this body before collecting organic data, so we can't use it for testing.
+            if body_name == "Syniechia CB-U d4-8 B 5" {
+                continue;
+            }
+
             let spawn_source = spawn_sources.get(&body_name).unwrap();
             let spawnable_species = spawn_source.get_spawnable_species();
+
+            assert!(
+                spawnable_species.len() > 0,
+                "No spawnable species found for body '{}'\n{:#?}",
+                body_name,
+                spawn_source
+            );
 
             let missing_matches = expected_species
                 .iter()
