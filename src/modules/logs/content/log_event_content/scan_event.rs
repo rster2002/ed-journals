@@ -156,23 +156,29 @@ impl DistanceLs {
 
     /// Returns the distance in astronomical units.
     pub fn as_au(&self) -> f32 {
-        self.0 * 0.0020039888
+        self.0 / 500.0
     }
 
     /// Returns the distance in light years.
     pub fn as_ly(&self) -> f32 {
-        self.0 / 31556926.0
+        self.0 / 31555695.8031
     }
 
     /// Creates a new distance from the given amount of light years.
     pub fn from_ly(ly: f32) -> Self {
-        DistanceLs(ly / 31556926.0)
+        DistanceLs(ly * 31555695.8031)
     }
 }
 
 impl std::fmt::Debug for DistanceLs {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}ls ({} AU)", self.0, self.as_au())
+        write!(
+            f,
+            "{} AU / {} ls / ({} ly)",
+            self.0,
+            self.as_ly(),
+            self.as_au()
+        )
     }
 }
 
@@ -248,7 +254,10 @@ pub struct ScanEventBeltCluster {}
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::logs::content::log_event_content::scan_event::ScanEvent;
+    use crate::{
+        logs::content::log_event_content::scan_event::DistanceLs,
+        modules::logs::content::log_event_content::scan_event::ScanEvent,
+    };
 
     #[test]
     fn scan_event_is_parsed_correctly() {
@@ -278,5 +287,21 @@ mod tests {
         );
 
         assert!(value.is_ok());
+    }
+
+    #[test]
+    fn distance_is_converted_correctly() {
+        fn assert_roughly_eq(a: f32, b: f32) {
+            assert!((a - b).abs() < 0.0001);
+        }
+
+        let distance = DistanceLs(1000.0);
+
+        assert_roughly_eq(distance.as_au(), 2.0);
+        assert_roughly_eq(distance.as_ly(), 0.00003169);
+
+        let distance = DistanceLs::from_ly(0.00003169);
+        assert_roughly_eq(distance.as_au(), 2.0);
+        assert_roughly_eq(distance.as_ls(), 1000.0);
     }
 }
