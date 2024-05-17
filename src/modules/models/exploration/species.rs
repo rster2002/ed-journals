@@ -482,7 +482,7 @@ impl Species {
                 SpawnCondition::Any(vec![
                     SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                 ]),
             ],
             Species::AnemonePrasinumBioluminescent => vec![
@@ -491,7 +491,7 @@ impl Species {
                 SpawnCondition::Any(vec![
                     SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                 ]),
             ],
             Species::AnemonePuniceus => vec![
@@ -521,7 +521,7 @@ impl Species {
                 SpawnCondition::Any(vec![
                     SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                 ]),
             ],
             Species::AnemoneRoseumBioluminescent => vec![
@@ -581,7 +581,7 @@ impl Species {
                     SpawnCondition::ParentStarLuminosity(StarLuminosity::IV),
                     SpawnCondition::ParentStarLuminosity(StarLuminosity::V),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
             ],
             Species::AnemoneLuteolum => vec![
                 SpawnCondition::NoAtmosphere,
@@ -590,7 +590,7 @@ impl Species {
                     SpawnCondition::ParentStarLuminosity(StarLuminosity::IV),
                     SpawnCondition::ParentStarLuminosity(StarLuminosity::V),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
             ],
             Species::AnemoneRubens => vec![
                 SpawnCondition::NoAtmosphere,
@@ -620,12 +620,12 @@ impl Species {
             Species::AnemoneCroceus => vec![
                 SpawnCondition::NoAtmosphere,
                 SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
             ],
             Species::AnemoneCroceum => vec![
                 SpawnCondition::NoAtmosphere,
                 SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
             ],
 
             Species::BarkMound => vec![
@@ -749,7 +749,7 @@ impl Species {
             Species::CactoidaLapis => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
@@ -757,7 +757,7 @@ impl Species {
             Species::CactoidaPullulanta => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::Any(vec![
@@ -770,7 +770,7 @@ impl Species {
             Species::CactoidaCortexum => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::Any(vec![
@@ -783,7 +783,7 @@ impl Species {
             Species::CactoidaVermis => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
@@ -791,7 +791,7 @@ impl Species {
             Species::CactoidaPeperatis => vec![
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
@@ -964,29 +964,29 @@ impl Species {
 
             Species::FrutexaAcus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::FrutexaCollum => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::FrutexaFera => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::FrutexaFlabellum => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::FrutexaFlammasis => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::FrutexaMetallicum => vec![
@@ -1002,7 +1002,7 @@ impl Species {
             ],
             Species::FrutexaSponsae => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
 
@@ -1087,7 +1087,7 @@ impl Species {
             Species::OsseusCornibus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1097,7 +1097,7 @@ impl Species {
             Species::OsseusDiscus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1105,7 +1105,7 @@ impl Species {
             Species::OsseusFractus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1115,7 +1115,7 @@ impl Species {
             Species::OsseusPellebantus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1129,7 +1129,7 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::Nitrogen),
                 ]),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                     SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
                 ]),
@@ -1138,7 +1138,7 @@ impl Species {
             Species::OsseusSpiralis => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1155,7 +1155,7 @@ impl Species {
             Species::ReceptaDeltahedronix => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
                 SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                    SpawnCondition::RockyComposition,
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
@@ -1204,7 +1204,7 @@ impl Species {
 
             Species::StratumAraneamus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(165.0),
             ],
             Species::StratumCucumisis => vec![
@@ -1212,7 +1212,7 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(190.0),
             ],
             Species::StratumExcutitus => vec![
@@ -1220,7 +1220,7 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(165.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
@@ -1229,12 +1229,12 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(190.0),
             ],
             Species::StratumLaminamus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(165.0),
             ],
             Species::StratumLimaxus => vec![
@@ -1242,7 +1242,7 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(165.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
@@ -1252,7 +1252,7 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MinMeanTemperature(165.0),
             ],
             Species::StratumTectonicas => vec![
@@ -1263,28 +1263,28 @@ impl Species {
 
             Species::TubusCavas => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.15),
                 SpawnCondition::MinMeanTemperature(160.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::TubusCompagibus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.15),
                 SpawnCondition::MinMeanTemperature(160.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::TubusConifer => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.15),
                 SpawnCondition::MinMeanTemperature(160.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::TubusRosarium => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.15),
                 SpawnCondition::MinMeanTemperature(160.0),
             ],
@@ -1301,7 +1301,7 @@ impl Species {
 
             Species::TussockAlbata => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(175.0),
                 SpawnCondition::MaxMeanTemperature(180.0),
@@ -1311,86 +1311,86 @@ impl Species {
                     SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
                     SpawnCondition::ThinAtmosphere(AtmosphereType::Methane),
                 ]),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::TussockCaputus => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(180.0),
                 SpawnCondition::MaxMeanTemperature(190.0),
             ],
             Species::TussockCatena => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::TussockCultro => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::TussockDivisa => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Ammonia),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::TussockIgnis => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(160.0),
                 SpawnCondition::MaxMeanTemperature(170.0),
             ],
             Species::TussockPennata => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(145.0),
                 SpawnCondition::MaxMeanTemperature(155.0),
             ],
             Species::TussockPennatis => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::TussockPropagito => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::TussockSerrati => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(170.0),
                 SpawnCondition::MaxMeanTemperature(175.0),
             ],
             Species::TussockStigmasis => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::SulfurDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
             Species::TussockTriticum => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(190.0),
                 SpawnCondition::MaxMeanTemperature(195.0),
             ],
             Species::TussockVentusa => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::CarbonDioxide),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
                 SpawnCondition::MinMeanTemperature(155.0),
                 SpawnCondition::MaxMeanTemperature(160.0),
             ],
             Species::TussockVirgam => vec![
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
-                SpawnCondition::PlanetClass(PlanetClass::RockyBody),
+                SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
             ],
         }
