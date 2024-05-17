@@ -232,7 +232,7 @@ pub enum Nebula {
 impl Nebula {
     pub fn center(&self) -> [f32; 3] {
         match self {
-            ${nebula.map(i => `Nebula::${i.key} => [${i.coords.split(" / ")[0]}, ${i.coords.split(" / ")[1]}, ${i.coords.split(" / ")[2]}]`).join(",\n\t\t\t")}
+            ${nebula.map(i => `Nebula::${i.key} => [${Number(i.coords.split(" / ")[0]).toFixed(1)}, ${Number(i.coords.split(" / ")[1]).toFixed(1)}, ${Number(i.coords.split(" / ")[2]).toFixed(1)}]`).join(",\n\t\t\t")}
         }
     }
 }
