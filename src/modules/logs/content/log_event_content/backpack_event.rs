@@ -17,7 +17,7 @@ pub struct BackpackEventObject {
     pub name: Item,
 
     #[serde(rename = "Name_Localised")]
-    pub name_localized: String,
+    pub name_localized: Option<String>,
 
     #[serde(rename = "OwnerID")]
     pub owner_id: u64,

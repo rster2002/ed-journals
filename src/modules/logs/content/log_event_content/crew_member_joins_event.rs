@@ -5,7 +5,7 @@ use serde::{Serialize, Deserialize};
 #[serde(rename_all = "PascalCase")]
 pub struct CrewMemberJoinsEvent {
     /// The CMDR name of the player that joined the session.
-    pub name: String,
+    pub crew: String,
 
     #[serde(default)]
     pub telepresence: bool,

@@ -142,6 +142,10 @@ pub enum BlueprintModifier {
 
     #[serde(rename = "DSS_RateMult")]
     DSSRateMultiplier,
+
+    #[serde(rename = "DSS_PatchRadius")]
+    DSSPatchRadius,
+
     DamageFalloffRange,
 
     #[cfg(not(feature = "strict"))]

@@ -4,6 +4,10 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Weapon {
+    #[serde(
+        alias = "Wpn_M_AssaultRifle_Kinetic_FAuto",
+        alias = "wpn_m_assaultrifle_kinetic_fauto",
+    )]
     KarmaAR50,
 
     #[serde(
@@ -15,7 +19,7 @@ pub enum Weapon {
     KarmaL6,
 
     #[serde(
-        alias = "Wpn_S_Pistol_Linetic_Sauto",
+        alias = "Wpn_S_Pistol_Kinetic_SAuto",
         alias = "wpn_s_pistol_kinetic_sauto"
     )]
     KarmaP15,

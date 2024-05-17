@@ -8,7 +8,7 @@ pub struct MissionFailedEvent {
     pub name: MissionType,
 
     #[serde(rename = "LocalisedName")]
-    pub localized_name: String,
+    pub localized_name: Option<String>,
 
     #[serde(rename = "MissionID")]
     pub mission_id: u64,

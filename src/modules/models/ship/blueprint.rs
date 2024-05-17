@@ -18,6 +18,12 @@ pub enum Blueprint {
     #[serde(rename = "Sensor_LongRange")]
     LongRangeSensors,
 
+    #[serde(rename = "Sensor_Expanded")]
+    WideAngleSensors,
+
+    #[serde(rename = "Sensor_LightWeight")]
+    LightweightSensors,
+
     #[serde(rename = "PowerDistributor_HighFrequency")]
     PowerDistributorChargeEnhanced,
 

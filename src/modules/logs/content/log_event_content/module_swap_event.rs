@@ -26,5 +26,5 @@ pub struct ModuleSwapEvent {
     pub ship: ShipType,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
 }

@@ -10,7 +10,7 @@ pub struct ShipyardTransferEvent {
     pub ship_type_localized: Option<String>,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
     pub system: String,
 
     #[serde(rename = "ShipMarketID")]

@@ -30,5 +30,5 @@ pub struct ModuleBuyAndStoreEvent {
     /// The current active ship, but the bought module was not equipped to this ship. It was just
     /// the ship that was active at the time of purchase.
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
 }

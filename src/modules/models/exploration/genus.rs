@@ -40,6 +40,7 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
     Fruxeta,
 
+    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
 
     #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]

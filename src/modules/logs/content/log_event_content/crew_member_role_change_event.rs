@@ -5,7 +5,7 @@ use serde::{Serialize, Deserialize};
 #[serde(rename_all = "PascalCase")]
 pub struct CrewMemberRoleChangeEvent {
     /// The CMDR name of the player that changed their role.
-    pub name: String,
+    pub crew: String,
 
     #[serde(default)]
     pub telepresence: bool,
@@ -19,4 +19,6 @@ pub enum CrewMemberRoleChangeEventRole {
     Idle,
     FireCon,
     FighterCon,
+    OnFoot,
+    Helm,
 }

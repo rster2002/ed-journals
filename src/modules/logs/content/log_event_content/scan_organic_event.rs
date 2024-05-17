@@ -15,17 +15,17 @@ pub struct ScanOrganicEvent {
     pub genus: Genus,
 
     #[serde(rename = "Genus_Localised")]
-    pub genus_localized: String,
+    pub genus_localized: Option<String>,
 
     pub species: Species,
 
     #[serde(rename = "Species_Localised")]
-    pub species_localized: String,
+    pub species_localized: Option<String>,
 
-    pub variant: Variant,
+    pub variant: Option<Variant>,
 
     #[serde(rename = "Variant_Localised")]
-    pub variant_localized: String,
+    pub variant_localized: Option<String>,
 
     pub system_address: u64,
     pub body: u8,

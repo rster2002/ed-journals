@@ -18,7 +18,7 @@ pub struct StoredShipsEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventLocalShip {
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipType_Localised")]
@@ -32,7 +32,7 @@ pub struct StoredShipEventLocalShip {
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventRemoteShip {
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipType_Localised")]

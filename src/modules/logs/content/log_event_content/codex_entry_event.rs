@@ -68,6 +68,9 @@ pub enum CodexEntryEventSubcategory {
     #[serde(rename = "$Codex_SubCategory_Gas_Giants;")]
     GasGiants,
 
+    #[serde(rename = "$Codex_SubCategory_Geology_and_Anomalies;")]
+    GeologyAndAnomalies,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

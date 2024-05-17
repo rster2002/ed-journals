@@ -45,6 +45,13 @@ impl FromStr for Variant {
     type Err = VariantError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "$Codex_Ent_Ground_Struct_Ice_Name;" {
+            return Ok(Variant {
+                species: Species::CrystallineShards,
+                color: VariantColor::None,
+            });
+        }
+
         let Some(captures) = VARIANT_REGEX.captures(s) else {
             return Err(VariantError::FailedToParse(s.to_string()));
         };

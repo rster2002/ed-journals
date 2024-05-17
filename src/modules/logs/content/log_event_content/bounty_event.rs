@@ -14,7 +14,7 @@ pub enum BountyEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventNormal {
     pub rewards: Vec<BountyEventNormalReward>,
-    pub pilot_name: String,
+    pub pilot_name: Option<String>,
 
     #[serde(rename = "PilotName_Localised")]
     pub pilot_name_localized: Option<String>,
@@ -27,9 +27,17 @@ pub struct BountyEventNormal {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(untagged)]
 pub enum BountyEventTarget {
+    #[serde(rename = "skimmerdrone")]
+    SentrySkimmer,
+
+    #[serde(rename = "bombskimmerdrone")]
+    Stringer,
+
+    #[serde(untagged)]
     Ship(ShipType),
+
+    #[serde(untagged)]
     Citizen(Citizen),
 }
 

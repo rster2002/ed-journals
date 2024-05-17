@@ -11,7 +11,7 @@ use crate::from_str_deserialize_impl;
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Commodity {
     // Chemicals
-    ArgonomicTreatment,
+    AgronomicTreatment,
     Explosives,
     HydrogenFuel,
     HydrogenPeroxide,
@@ -452,7 +452,7 @@ impl Commodity {
         let lower_case: &str = &name.to_ascii_lowercase();
 
         match lower_case {
-            "argonomictreatment" => Ok(Commodity::ArgonomicTreatment),
+            "agronomictreatment" => Ok(Commodity::AgronomicTreatment),
             "explosives" => Ok(Commodity::Explosives),
             "hydrogenfuel" => Ok(Commodity::HydrogenFuel),
             "hydrogenperoxide" => Ok(Commodity::HydrogenPeroxide),
@@ -586,7 +586,7 @@ impl Commodity {
             "blackbox" => Ok(Commodity::BlackBox),
             "bonefragments" => Ok(Commodity::BoneFragments),
             "caustictissuesample" => Ok(Commodity::CausticTissueSample),
-            "commercialsamples" => Ok(Commodity::CommercialSamples),
+            "comercialsamples" => Ok(Commodity::CommercialSamples),
             "coralsap" => Ok(Commodity::CoralSap),
             "cystspecimen" => Ok(Commodity::CystSpecimen),
             "damagedescapepod" => Ok(Commodity::DamagedEscapePod),
@@ -605,7 +605,7 @@ impl Commodity {
             "ancienttablet" => Ok(Commodity::GuardianTablet),
             "ancienttotem" => Ok(Commodity::GuardianTotem),
             "ancienturn" => Ok(Commodity::GuardianUrn),
-            "hostages" => Ok(Commodity::Hostages),
+            "hostage" => Ok(Commodity::Hostages),
             "impurespiremineral" => Ok(Commodity::ImpureSpireMineral),
             "largesurveydatacache" => Ok(Commodity::LargeSurveyDataCache),
             "militaryintelligence" => Ok(Commodity::MilitaryIntelligence),
@@ -890,7 +890,7 @@ impl Display for Commodity {
             "{}",
             match self {
                 // Chemicals
-                Commodity::ArgonomicTreatment => "Argonomic Treatment",
+                Commodity::AgronomicTreatment => "Argonomic Treatment",
                 Commodity::Explosives => "Explosives",
                 Commodity::HydrogenFuel => "Hydrogen Fuel",
                 Commodity::HydrogenPeroxide => "Hydrogen Peroxide",

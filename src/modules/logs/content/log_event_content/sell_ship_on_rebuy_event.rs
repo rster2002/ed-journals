@@ -8,6 +8,6 @@ pub struct SellShipOnRebuyEvent {
     pub system: String,
 
     #[serde(rename = "SellShipID")]
-    pub sell_ship_id: u8,
+    pub sell_ship_id: u64,
     pub ship_price: u64,
 }

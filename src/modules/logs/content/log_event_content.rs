@@ -13,7 +13,6 @@ use carrier_trade_order_event::CarrierTradeOrderEvent;
 use change_crew_role_event::ChangeCrewRoleEvent;
 use clear_impound_event::ClearImpoundEvent;
 use community_goal_discard_event::CommunityGoalDiscardEvent;
-use community_goal_event::CommunityGoalEventGoal;
 use community_goal_join_event::CommunityGoalJoinEvent;
 use community_goal_reward_event::CommunityGoalRewardEvent;
 use continued_event::ContinuedEvent;
@@ -25,7 +24,7 @@ use crew_member_role_change_event::CrewMemberRoleChangeEvent;
 use datalink_voucher_event::DatalinkVoucherEvent;
 use delete_suit_loadout_event::DeleteSuitLoadoutEvent;
 use disbanded_squadron_event::DisbandedSquadronEvent;
-use drop_ship_deploy_event::DropShipDeployEvent;
+use drop_ship_deploy_event::DropshipDeployEvent;
 use end_crew_session_event::EndCrewSessionEvent;
 use invited_to_squadron_event::InvitedToSquadronEvent;
 use jet_cone_damage_event::JetConeDamageEvent;
@@ -244,6 +243,7 @@ use wing_join_event::WingJoinEvent;
 
 #[cfg(not(feature = "strict"))]
 use serde_json::Value;
+use crate::logs::content::log_event_content::community_goal_event::CommunityGoalEvent;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
 use crate::models::small::small_system_info::SmallSystemInfo;
 
@@ -591,7 +591,7 @@ pub enum LogEventContent {
     BuyAmmo(BuyAmmoEvent),
     BuyDrones(BuyDronesEvent),
     CargoDepot(CargoDepotEvent),
-    CommunityGoal(CommunityGoalEventGoal),
+    CommunityGoal(CommunityGoalEvent),
     CommunityGoalDiscard(CommunityGoalDiscardEvent),
     CommunityGoalJoin(CommunityGoalJoinEvent),
     CommunityGoalReward(CommunityGoalRewardEvent),
@@ -699,7 +699,7 @@ pub enum LogEventContent {
     DeleteSuitLoadout(DeleteSuitLoadoutEvent),
     Disembark(DisembarkEvent),
     DropItems(DropItemsEvent),
-    DropShipDeploy(DropShipDeployEvent),
+    DropshipDeploy(DropshipDeployEvent),
     Embark(EmbarkEvent),
     FCMaterials(FCMaterialsEvent),
     LoadoutEquipModule(LoadoutEquipModuleEvent),
@@ -798,7 +798,7 @@ impl LogEventContent {
             LogEventContent::DiscoveryScan(event) => event.system_address,
             LogEventContent::Disembark(event) => event.system_address,
             LogEventContent::Docked(event) => event.system_address,
-            LogEventContent::DropShipDeploy(event) => event.system_address,
+            LogEventContent::DropshipDeploy(event) => event.system_address,
             LogEventContent::Embark(event) => event.system_address,
             LogEventContent::FSSAllBodiesFound(event) => event.system_address,
             LogEventContent::FSSBodySignals(event) => event.system_address,
@@ -830,7 +830,7 @@ impl LogEventContent {
             LogEventContent::CodexEntry(event) => &event.system,
             LogEventContent::Disembark(event) => &event.star_system,
             LogEventContent::Docked(event) => &event.star_system,
-            LogEventContent::DropShipDeploy(event) => &event.star_system,
+            LogEventContent::DropshipDeploy(event) => &event.star_system,
             LogEventContent::Embark(event) => &event.star_system,
             LogEventContent::FSSAllBodiesFound(event) => &event.system_name,
             LogEventContent::FSSDiscoveryScan(event) => &event.system_name,
@@ -864,7 +864,7 @@ impl LogEventContent {
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
             LogEventContent::CodexEntry(event) => event.body_id,
-            LogEventContent::DropShipDeploy(event) => event.body_id,
+            LogEventContent::DropshipDeploy(event) => event.body_id,
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,
             LogEventContent::SAAScanComplete(event) => event.body_id,
@@ -884,7 +884,7 @@ impl LogEventContent {
                 Some(name) => name,
                 None => return None,
             },
-            LogEventContent::DropShipDeploy(event) => &event.body,
+            LogEventContent::DropshipDeploy(event) => &event.body,
             LogEventContent::FSSBodySignals(event) => &event.body_name,
             LogEventContent::LeaveBody(event) => &event.body,
             LogEventContent::SAAScanComplete(event) => &event.body_name,

@@ -23,8 +23,14 @@ pub enum RedeemVoucherEventType {
 
     #[serde(rename = "bounty")]
     Bounty,
+
+    #[serde(rename = "trade")]
     Trade,
+
+    #[serde(rename = "settlement")]
     Settlement,
+
+    #[serde(rename = "scannable")]
     Scannable,
 
     #[serde(rename = "codex")]
