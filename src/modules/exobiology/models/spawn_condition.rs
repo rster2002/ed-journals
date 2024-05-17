@@ -26,6 +26,7 @@ pub enum SpawnCondition {
     MinDistanceFromParentSun(f32),
     AnyVolcanism,
 
+    /// The maximum distance the planet needs to be from the center of a nebula in Ly
     WithinNebulaRange(f32),
 
     /// The target planet must have at least one geological signal present.
