@@ -45,25 +45,48 @@ impl SpawnSource {
         }
     }
 
-    pub fn supply_scan_event(&mut self, scan: &ScanEvent) {
-        // TODO: Check if the scan event is actually relevant for this spawn source.
-        //  Perhaps check the star system name, or the body name, etc.
+    pub fn feed_scan_event(&mut self, scan: &ScanEvent) {
+        // Only interested in events that are in the same star system as the spawn source.
         if !self.body_name.starts_with(&scan.star_system) {
             return;
         }
 
+        let targets_tracked_body = self.body_name == scan.body_name;
+
+        if targets_tracked_body {
+            self.distance_from_star = Some(scan.distance_from_arrival_ls.clone());
+        }
+
         match &scan.kind {
-            ScanEventKind::Star(scan) => {
-                self.supply_star_scan_event(&scan);
+            ScanEventKind::Star(star_scan) => {
+                self.feed_star_scan_event(&star_scan);
             }
-            ScanEventKind::Planet(scan) => {
-                self.supply_planet_scan_event(&scan);
+            ScanEventKind::Planet(planet_scan) => {
+                if targets_tracked_body {
+                    self.feed_planet_scan_event(&planet_scan);
+                } else {
+                    self.planet_classes_in_system
+                        .insert(planet_scan.planet_class.clone());
+                }
             }
             _ => {} // Ignore belt clusters, etc.
         }
     }
 
-    fn supply_star_scan_event(&mut self, scan: &ScanEventStar) {
+    pub fn feed_fss_body_signals_event(&mut self, signals: &FSSBodySignalsEvent) {
+        if self.body_name != signals.body_name {
+            return;
+        }
+
+        let geological_signals_present = signals
+            .signals
+            .iter()
+            .any(|signal| signal.kind == PlanetarySignalType::Geological);
+
+        self.geological_signals_present = Some(geological_signals_present);
+    }
+
+    fn feed_star_scan_event(&mut self, scan: &ScanEventStar) {
         self.star = Some(Star {
             class: scan.star_type.clone(),
             luminosity: scan.luminosity.clone(),
@@ -310,7 +333,7 @@ mod tests {
 
                     let spawn_source = spawn_sources.get_mut(&body_name).unwrap();
 
-                    spawn_source.supply_scan_event(&scan);
+                    spawn_source.feed_scan_event(&scan);
                 }
             }
         }
