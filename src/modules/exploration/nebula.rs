@@ -1,6 +1,8 @@
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug)]
+use strum::EnumIter;
+
+#[derive(Debug, EnumIter)]
 pub enum Nebula {
     AquilaDarkRegion,
     B133,
@@ -188,7 +190,7 @@ pub enum Nebula {
     VelaDarkRegion,
     VulpeculaDarkRegion,
     WhiteEyedPea,
-    WitchHeadNebula
+    WitchHeadNebula,
 }
 
 impl Nebula {
@@ -380,7 +382,7 @@ impl Nebula {
             Nebula::VelaDarkRegion => [991.1, -123.5, -49.0],
             Nebula::VulpeculaDarkRegion => [-543.0, 42.8, 352.0],
             Nebula::WhiteEyedPea => [-3882.1, 7841.0, 8212.6],
-            Nebula::WitchHeadNebula => [365.1, -413.8, -711.2]
+            Nebula::WitchHeadNebula => [365.1, -413.8, -711.2],
         }
     }
 }
@@ -577,7 +579,7 @@ impl Display for Nebula {
                 Nebula::VelaDarkRegion => "Vela Dark Region",
                 Nebula::VulpeculaDarkRegion => "Vulpecula Dark Region",
                 Nebula::WhiteEyedPea => "White Eyed Pea",
-                Nebula::WitchHeadNebula => "Witch Head Nebula"
+                Nebula::WitchHeadNebula => "Witch Head Nebula",
             }
         )
     }
