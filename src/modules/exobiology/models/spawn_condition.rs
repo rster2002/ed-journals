@@ -35,6 +35,7 @@ pub enum SpawnCondition {
 
     RockyComposition,
     IcyComposition,
+    MetalComposition,
 
     Any(Vec<SpawnCondition>),
     All(Vec<SpawnCondition>),
