@@ -54,7 +54,7 @@ impl SpawnSource {
         let targets_tracked_body = self.body_name == scan.body_name;
 
         if targets_tracked_body {
-            self.distance_from_star = Some(scan.distance_from_arrival_ls.clone());
+            self.distance_from_star = Some(scan.distance_from_arrival.clone());
         }
 
         match &scan.kind {
