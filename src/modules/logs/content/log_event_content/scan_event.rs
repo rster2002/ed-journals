@@ -158,6 +158,16 @@ impl DistanceLs {
     pub fn as_au(&self) -> f32 {
         self.0 * 0.0020039888
     }
+
+    /// Returns the distance in light years.
+    pub fn as_ly(&self) -> f32 {
+        self.0 / 31556926.0
+    }
+
+    /// Creates a new distance from the given amount of light years.
+    pub fn from_ly(ly: f32) -> Self {
+        DistanceLs(ly / 31556926.0)
+    }
 }
 
 impl std::fmt::Debug for DistanceLs {
