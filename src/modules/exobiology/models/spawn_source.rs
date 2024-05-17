@@ -484,6 +484,7 @@ mod tests {
             "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
         ];
 
+        let mut failed = 0;
 
         // Check each spawn source to see if the calculated spawnable species match the expected species.
         for (body_name, expected_species) in expected_species
@@ -500,15 +501,17 @@ mod tests {
                     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
                     .collect::<Vec<_>>();
 
-                assert!(
-                    &failing_conditions.is_empty(),
-                    "The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
-                    species,
-                    body_name,
-                    failing_conditions,
-                    spawn_source
-                );
+                if !failing_conditions.is_empty() {
+                    failed += 1;
+                    println!(
+                        "The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
+                        species, body_name, failing_conditions, spawn_source
+                    );
+                }
             }
         }
+
+        // In case of test failure, see the logs printed above.
+        assert!(failed == 0);
     }
 }
