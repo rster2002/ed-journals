@@ -6,7 +6,7 @@ use crate::logs::content::log_event_content::fss_body_signals_event::{
     FSSBodySignalEventSignal, FSSBodySignalsEvent,
 };
 use crate::logs::content::log_event_content::scan_event::{
-    Distance, Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+    DistanceLs, Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
 };
 use crate::models::exploration::planetary_signal_type::PlanetarySignalType;
 use crate::models::exploration::species::Species;
@@ -27,8 +27,8 @@ pub struct SpawnSource {
     pub star: Option<Star>,
     pub target_planet: Option<TargetPlanet>,
     pub geological_signals_present: Option<bool>,
-    pub distance_from_star: Option<Distance>,
-    pub distance_from_nebula: Option<Distance>,
+    pub distance_from_star: Option<DistanceLs>,
+    pub distance_from_nebula: Option<DistanceLs>,
     pub planet_classes_in_system: HashSet<PlanetClass>,
 }
 

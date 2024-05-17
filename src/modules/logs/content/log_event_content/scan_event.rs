@@ -28,7 +28,7 @@ pub struct ScanEvent {
     pub system_address: u64,
 
     #[serde(rename = "DistanceFromArrivalLS")]
-    pub distance_from_arrival_ls: Distance,
+    pub distance_from_arrival: DistanceLs,
     pub was_discovered: bool,
     pub was_mapped: bool,
 
@@ -146,9 +146,9 @@ pub struct ScanEventPlanet {
 
 /// Distance in light seconds.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-pub struct Distance(pub f32);
+pub struct DistanceLs(pub f32);
 
-impl Distance {
+impl DistanceLs {
     /// Returns the distance in light seconds.
     pub fn as_ls(&self) -> f32 {
         self.0
