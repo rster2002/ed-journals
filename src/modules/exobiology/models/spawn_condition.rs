@@ -32,6 +32,9 @@ pub enum SpawnCondition {
     GeologicalSignalsPresent,
 
     MaterialPresence(Material),
+
+    RockyComposition,
+
     Any(Vec<SpawnCondition>),
     All(Vec<SpawnCondition>),
 }
