@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::modules::models::materials::material_category::MaterialCategory;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum Material {
     // Raw
     #[serde(alias = "carbon")]
