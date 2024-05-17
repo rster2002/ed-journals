@@ -15,6 +15,7 @@ use crate::models::exploration::planetary_signal_type::PlanetarySignalType;
 use crate::models::exploration::species::Species;
 use crate::models::galaxy::atmosphere::AtmosphereDensity;
 use crate::models::galaxy::atmosphere_type::AtmosphereType;
+use crate::models::galaxy::planet_composition::PlanetComposition;
 use crate::models::galaxy::star_luminosity::StarLuminosity;
 use crate::models::galaxy::volcanism::Volcanism;
 use crate::models::galaxy::volcanism_type::VolcanismType;
@@ -367,13 +368,6 @@ pub struct TargetPlanet {
     pub volcanism: Volcanism,
     pub materials: HashSet<Material>,
     pub composition: PlanetComposition,
-}
-
-#[derive(Debug)]
-pub struct PlanetComposition {
-    pub ice: f32,
-    pub rock: f32,
-    pub metal: f32,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
