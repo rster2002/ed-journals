@@ -4,23 +4,28 @@ use serde::{Serialize, Deserialize};
 #[serde(rename_all = "PascalCase")]
 pub enum WeaponMod {
     #[serde(rename = "weapon_handling")]
-    ImprovedHandling,
-
-    #[serde(rename = "weapon_suppression_unpressurised")]
-    UnpressurisedSuppression,
+    FasterHandling,
+    HigherAccuracy,
 
     #[serde(rename = "weapon_suppression_pressurised")]
-    PressurizedSuppression,
+    PressurizedNoiceSuppressor,
 
-    #[serde(rename = "weapon_scope")]
-    ImprovedScope,
+    #[serde(rename = "weapon_suppression_unpressurised")]
+    UnpressurizedNoiceSuppressor,
+    GreaterRange,
 
     #[serde(rename = "weapon_clipsize")]
-    IncreasedClipSize,
+    MagazineSize,
 
     #[serde(rename = "weapon_reloadspeed")]
-    ImprovedReloadSpeed,
+    ReloadSpeed,
 
     #[serde(rename = "weapon_backpackreloading")]
-    BackpackReloading,
+    StowedReloading,
+
+    #[serde(rename = "weapon_scope")]
+    Scope,
+
+    #[serde(rename = "weapon_stability")]
+    Stability,
 }

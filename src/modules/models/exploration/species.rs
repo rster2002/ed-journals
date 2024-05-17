@@ -142,6 +142,7 @@ pub enum Species {
     ConchaBiconcavis,
 
     // Crystalline shards
+    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
     CrystallineShards,
 
     // Electricae

@@ -1,454 +1,167 @@
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 use serde::{Serialize, Deserialize};
+use thiserror::Error;
+use crate::from_str_deserialize_impl;
 
 use crate::modules::models::materials::material_category::MaterialCategory;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Material {
     // Raw
-    #[serde(alias = "carbon")]
-    Carbon,
-
-    #[serde(alias = "vanadium")]
-    Vanadium,
-
-    #[serde(alias = "niobium")]
-    Niobium,
-
-    #[serde(alias = "yttrium")]
-    Yttrium,
-
-    #[serde(alias = "phosphorus")]
-    Phosphorus,
-
-    #[serde(alias = "chromium")]
-    Chromium,
-
-    #[serde(alias = "molybdenum")]
-    Molybdenum,
-
-    #[serde(alias = "technetium")]
-    Technetium,
-
-    #[serde(alias = "sulphur")]
-    Sulphur,
-
-    #[serde(alias = "manganese")]
-    Manganese,
-
-    #[serde(alias = "cadmium")]
-    Cadmium,
-
-    #[serde(alias = "ruthenium")]
-    Ruthenium,
-
-    #[serde(alias = "iron")]
-    Iron,
-
-    #[serde(alias = "zinc")]
-    Zinc,
-
-    #[serde(alias = "tin")]
-    Tin,
-
-    #[serde(alias = "selenium")]
-    Selenium,
-
-    #[serde(rename = "nickel")]
-    Nickel,
-
-    #[serde(rename = "germanium")]
-    Germanium,
-
-    #[serde(rename = "tungsten")]
-    Tungsten,
-
-    #[serde(rename = "tellurium")]
-    Tellurium,
-
-    #[serde(alias = "rhenium")]
-    Rhenium,
-
-    #[serde(alias = "arsenic")]
+    Antimony,
     Arsenic,
-
-    #[serde(alias = "mercury")]
-    Mercury,
-
-    #[serde(alias = "polonium")]
-    Polonium,
-
-    #[serde(alias = "lead")]
+    Boron,
+    Cadmium,
+    Carbon,
+    Chromium,
+    Germanium,
+    Iron,
     Lead,
-
-    #[serde(alias = "zirconium")]
+    Manganese,
+    Mercury,
+    Molybdenum,
+    Nickel,
+    Niobium,
+    Phosphorus,
+    Polonium,
+    Rhenium,
+    Ruthenium,
+    Selenium,
+    Sulphur,
+    Technetium,
+    Tellurium,
+    Tin,
+    Tungsten,
+    Vanadium,
+    Yttrium,
+    Zinc,
     Zirconium,
 
-    #[serde(alias = "boron")]
-    Boron,
-
-    #[serde(alias = "antimony")]
-    Antimony,
-
     // Manufactured
-    #[serde(alias = "chemicalstorageunits")]
-    ChemicalStorageUnits,
-
-    #[serde(alias = "chemicalprocessors")]
-    ChemicalProcessors,
-
-    #[serde(alias = "chemicaldistillery")]
-    ChemicalDistillery,
-
-    #[serde(alias = "chemicalmanipulators")]
-    ChemicalManipulators,
-
-    #[serde(alias = "pharmaceuticalisolators")]
-    PharmaceuticalIsolators,
-
-    #[serde(alias = "temperedalloys")]
-    TemperedAlloys,
-
-    #[serde(alias = "heatresistantceramics")]
-    HeatResistantCeramics,
-
-    #[serde(alias = "precipitatedalloys")]
-    PrecipitatedAlloys,
-
-    #[serde(alias = "thermicalloys")]
-    ThermicAlloys,
-
-    #[serde(alias = "militarygradealloys")]
-    MilitaryGradeAlloys,
-
-    #[serde(alias = "heatconductionwiring")]
-    HeatConductionWiring,
-
-    #[serde(alias = "heatdispersionplate")]
-    HeatDispersionPlate,
-
-    #[serde(alias = "heatexchangers")]
-    HeatExchangers,
-
-    #[serde(alias = "heatvanes")]
-    HeatVanes,
-
-    #[serde(alias = "protoheatradiators")]
-    ProtoHeatRadiators,
-
-    #[serde(alias = "basicconductors")]
     BasicConductors,
-
-    #[serde(alias = "conductivecomponents")]
-    ConductiveComponents,
-
-    #[serde(alias = "conductiveceramics")]
-    ConductiveCeramics,
-
-    #[serde(alias = "conductivepolymers")]
-    ConductivePolymers,
-
-    #[serde(alias = "biotechconductors")]
-    BiotechConductors,
-
-    #[serde(alias = "mechanicalscrap")]
-    MechanicalScrap,
-
-    #[serde(alias = "mechanicalequipment")]
-    MechanicalEquipment,
-
-    #[serde(alias = "mechanicalcomponents")]
-    MechanicalComponents,
-
-    #[serde(alias = "configurablecomponents")]
-    ConfigurableComponents,
-
-    #[serde(alias = "improvisedcomponents")]
-    ImprovisedComponents,
-
-    #[serde(alias = "gridresistors")]
-    GridResistors,
-
-    #[serde(alias = "hybridcapacitors")]
-    HybridCapacitors,
-
-    #[serde(alias = "electrochemicalarrays")]
-    ElectrochemicalArrays,
-
-    #[serde(alias = "polymercapacitors")]
-    PolymerCapacitors,
-
-    #[serde(alias = "militarysupercapacitors")]
-    MilitarySupercapacitors,
-
-    #[serde(alias = "wornshieldemitters")]
-    WornShieldEmitters,
-
-    #[serde(alias = "shieldemitters")]
-    ShieldEmitters,
-
-    #[serde(alias = "shieldingsensors")]
-    ShieldingSensors,
-
-    #[serde(alias = "compoundshielding")]
-    CompoundShielding,
-
-    #[serde(alias = "imperialshielding")]
-    ImperialShielding,
-
-    #[serde(alias = "compactcomposites")]
-    CompactComposites,
-
-    #[serde(alias = "filamentcomposites")]
-    FilamentComposites,
-
-    #[serde(alias = "highdensitycomposites")]
-    HighDensityComposites,
-
-    #[serde(alias = "fedproprietarycomposites")]
-    ProprietaryComposites,
-
-    #[serde(alias = "fedcorecomposites")]
-    CoreDynamicsComposites,
-
-    #[serde(alias = "crystalshards")]
-    CrystalShards,
-
-    #[serde(alias = "uncutfocuscrystals")]
-    FlawedFocusCrystals,
-
-    #[serde(alias = "focuscrystals")]
-    FocusCrystals,
-
-    #[serde(alias = "refinedfocuscrystals")]
-    RefinedFocusCrystals,
-
-    #[serde(alias = "exquisitefocuscrystals")]
-    ExquisiteFocusCrystals,
-
-    #[serde(alias = "salvagedalloys")]
-    SalvagedAlloys,
-
-    #[serde(alias = "galvanisingalloys")]
-    GalvanisingAlloys,
-
-    #[serde(alias = "phasealloys")]
-    PhaseAlloys,
-
-    #[serde(alias = "protolightalloys")]
-    ProtoLightAlloys,
-
-    #[serde(alias = "protoradiolicalloys")]
-    ProtoRadiolicAlloys,
-
-    #[serde(alias = "hardenedsurfacefragments")]
-    HardenedSurfaceFragments,
-
-    #[serde(alias = "tg_causticshard")]
-    CausticShard,
-
-    #[serde(alias = "tacticalcorechip")]
-    TacticalCoreChip,
-
-    #[serde(alias = "thargoidcarapace")]
-    ThargoidCarapace,
-
-    #[serde(alias = "biomechanicalconduits")]
     BioMechanicalConduits,
-
-    #[serde(alias = "tg_causticgeneratorparts")]
+    BiotechConductors,
+    CausticCrystal,
+    CausticShard,
+    ChemicalDistillery,
+    ChemicalManipulators,
+    ChemicalProcessors,
+    ChemicalStorageUnits,
+    CompactComposites,
+    CompoundShielding,
+    ConductiveCeramics,
+    ConductiveComponents,
+    ConductivePolymers,
+    ConfigurableComponents,
+    CoreDynamicsComposites,
     CorrosiveMechanisms,
-
-    #[serde(alias = "phasingmembraneresidue")]
+    CrystalShards,
+    ElectrochemicalArrays,
+    ExquisiteFocusCrystals,
+    FilamentComposites,
+    FlawedFocusCrystals,
+    FocusCrystals,
+    GalvanisingAlloys,
+    GridResistors,
+    GuardianPowerCell,
+    GuardianPowerConduit,
+    GuardianSentinelWeaponParts,
+    GuardianTechnologyComponent,
+    GuardianWreckageComponents,
+    HardenedSurfaceFragments,
+    HeatConductionWiring,
+    HeatDispersionPlate,
+    HeatExchangers,
+    HeatExposureSpecimen,
+    HeatResistantCeramics,
+    HeatVanes,
+    HighDensityComposites,
+    HybridCapacitors,
+    ImperialShielding,
+    ImprovisedComponents,
+    MechanicalComponents,
+    MechanicalEquipment,
+    MechanicalScrap,
+    MilitaryGradeAlloys,
+    MilitarySupercapacitors,
+    PharmaceuticalIsolators,
+    PhaseAlloys,
     PhasingMembraneResidue,
-
-    #[serde(alias = "thargoidenergycell")]
+    PolymerCapacitors,
+    PrecipitatedAlloys,
+    ProprietaryComposites,
+    PropulsionElements,
+    ProtoHeatRadiators,
+    ProtoLightAlloys,
+    ProtoRadiolicAlloys,
+    RefinedFocusCrystals,
+    SalvagedAlloys,
+    SensorFragment,
+    ShieldEmitters,
+    ShieldingSensors,
+    TacticalCoreChip,
+    TemperedAlloys,
+    ThargoidCarapace,
     ThargoidEnergyCell,
-
-    #[serde(alias = "tg_wreckagecomponents")]
+    ThargoidOrganicCircuitry,
+    ThargoidTechnologicalComponents,
+    ThermicAlloys,
+    WeaponParts,
+    WornShieldEmitters,
     WreckageComponents,
 
-    #[serde(alias = "tg_causticcrystal")]
-    CausticCrystal,
-
-    #[serde(alias = "thargoidtechnologicalcomponents")]
-    ThargoidTechnologicalComponents,
-
-    #[serde(alias = "weaponparts")]
-    WeaponParts,
-
-    #[serde(alias = "heatexposurespecimen")]
-    HeatExposureSpecimen,
-
-    #[serde(alias = "tg_propulsionelement")]
-    PropulsionElements,
-
-    #[serde(alias = "unknownenergysource")]
-    SensorFragment,
-
-    #[serde(alias = "thargoidorganiccircuitry")]
-    ThargoidOrganicCircuitry,
-
-    #[serde(alias = "guardian_powercell")]
-    GuardianPowerCell,
-
-    #[serde(alias = "guardian_sentinel_wreckagecomponents")]
-    GuardianWreckageComponents,
-
-    #[serde(alias = "guardian_powerconduit")]
-    GuardianPowerConduit,
-
-    #[serde(alias = "guardian_sentinel_weaponparts")]
-    GuardianSentinelWeaponParts,
-
-    #[serde(alias = "guardian_techcomponent")]
-    GuardianTechnologyComponent,
-
     // Encoded
-    #[serde(alias = "scrambledemissiondata")]
-    ExceptionScrambledEmissionData,
-
-    #[serde(alias = "archivedemissiondata")]
-    IrregularEmissionData,
-
-    #[serde(alias = "emissiondata")]
-    UnexpectedEmissionData,
-
-    #[serde(alias = "decodedemissiondata")]
-    DecodedEmissionData,
-
-    #[serde(alias = "compactemissionsdata")]
-    AbnormalCompactEmissionData,
-
-    #[serde(alias = "disruptedwakeechoes")]
-    AtypicalDisruptedWakeEchoes,
-
-    #[serde(alias = "fsdtelemetry")]
-    AnomalousFSDTelemetry,
-
-    #[serde(alias = "wakesolutions")]
-    StrangeWakeSolutions,
-
-    #[serde(alias = "hyperspacetrajectories")]
-    EccentricHyperspaceTrajectories,
-
-    #[serde(alias = "dataminedwake")]
-    DataminedWakeExceptions,
-
-    #[serde(alias = "shieldcyclerecordings")]
-    DistortedShieldCycleRecordings,
-
-    #[serde(alias = "shieldsoakanalysis")]
-    InconsistentShieldSoakAnalysis,
-
-    #[serde(alias = "shielddensityreports")]
-    UntypicalShieldScans,
-
-    #[serde(alias = "shieldpatternanalysis")]
     AberrantShieldPatternAnalysis,
-
-    #[serde(alias = "shieldfrequencydata")]
+    AbnormalCompactEmissionData,
+    AdaptiveEncryptorsCapture,
+    AnomalousBulkScanData,
+    AnomalousFSDTelemetry,
+    AtypicalDisruptedWakeEchoes,
+    AtypicalEncryptionArchives,
+    ClassifiedScanDatabanks,
+    ClassifiedScanFragment,
+    CrackedIndustrialFirmware,
+    DataminedWakeExceptions,
+    DecodedEmissionData,
+    DistortedShieldCycleRecordings,
+    DivergentScanData,
+    EccentricHyperspaceTrajectories,
+    ExceptionScrambledEmissionData,
+    GuardianModuleBlueprintFragment,
+    GuardianVesselBlueprintFragment,
+    GuardianWeaponBlueprintFragment,
+    InconsistentShieldSoakAnalysis,
+    IrregularEmissionData,
+    MassiveEnergySurgeAnalytics,
+    ModifiedConsumerFirmware,
+    ModifiedEmbeddedFirmware,
+    OpenSymmetricKeys,
+    PatternAlphaObeliskData,
+    PatternBetaObeliskData,
+    PatternDeltaObeliskData,
+    PatternEpsilonObeliskData,
+    PatternGammaObeliskData,
     PeculiarShieldFrequencyData,
-
-    #[serde(alias = "encryptedfiles")]
+    SecurityFirmwarePatch,
+    ShipFlightData,
+    ShipSystemsData,
+    SpecializedLegacyFirmware,
+    StrangeWakeSolutions,
+    TaggedEncryptionCodes,
+    ThargoidInterdictionTelemetry,
+    ThargoidMaterialCompositionData,
+    ThargoidResidueData,
+    ThargoidShipSignature,
+    ThargoidStructuralData,
+    ThargoidWakeData,
+    UnexpectedEmissionData,
+    UnidentifiedScanArchives,
+    UntypicalShieldScans,
     UnusualEncryptedFiles,
 
-    #[serde(alias = "encryptioncodes")]
-    TaggedEncryptionCodes,
-
-    #[serde(alias = "symmetrickeys")]
-    OpenSymmetricKeys,
-
-    #[serde(alias = "encryptionarchives")]
-    AtypicalEncryptionArchives,
-
-    #[serde(alias = "adaptiveencryptors")]
-    AdaptiveEncryptorsCapture,
-
-    #[serde(alias = "bulkscandata")]
-    AnomalousBulkScanData,
-
-    #[serde(alias = "scanarchives")]
-    UnidentifiedScanArchives,
-
-    #[serde(alias = "scandatabanks", alias = "ScanDatabanks")]
-    ClassifiedScanDatabanks,
-
-    #[serde(alias = "EncodedScanData", alias = "encodedscandata")]
-    DivergentScanData,
-
-    #[serde(alias = "classifiedscandata")]
-    ClassifiedScanFragment,
-
-    #[serde(alias = "legacyfirmware")]
-    SpecializedLegacyFirmware,
-
-    #[serde(alias = "consumerfirmware")]
-    ModifiedConsumerFirmware,
-
-    #[serde(alias = "industrialfirmware")]
-    CrackedIndustrialFirmware,
-
-    #[serde(alias = "securityfirmware")]
-    SecurityFirmwarePatch,
-
-    #[serde(alias = "EmbeddedFirmware", alias = "embeddedfirmware")]
-    ModifiedEmbeddedFirmware,
-
-    #[serde(alias = "tg_structuraldata")]
-    ThargoidStructuralData,
-
-    #[serde(alias = "tg_shutdowndata")]
-    MassiveEnergySurgeAnalytics,
-
-    #[serde(alias = "tg_shipflightdata")]
-    ShipFlightData,
-
-    #[serde(alias = "tg_shipsystemsdata")]
-    ShipSystemsData,
-
-    #[serde(alias = "tg_interdictiondata")]
-    ThargoidInterdictionTelemetry,
-
-    #[serde(alias = "tg_compositiondata")]
-    ThargoidMaterialCompositionData,
-
-    #[serde(alias = "unknownshipsignature")]
-    ThargoidShipSignature,
-
-    #[serde(alias = "thargoidresiduedata")]
-    ThargoidResidueData,
-
-    #[serde(alias = "thargoidwakedata")]
-    ThargoidWakeData,
-
-    #[serde(alias = "ancienthistoricaldata")]
-    PatternGammaObeliskData,
-
-    #[serde(alias = "ancientculturaldata")]
-    PatternBetaObeliskData,
-
-    #[serde(alias = "ancientbiologicaldata")]
-    PatternAlphaObeliskData,
-
-    #[serde(alias = "ancientlanguagedata")]
-    PatternDeltaObeliskData,
-
-    #[serde(alias = "ancienttechnologicaldata")]
-    PatternEpsilonObeliskData,
-
-    #[serde(alias = "guardian_moduleblueprint")]
-    GuardianModuleBlueprintFragment,
-
-    #[serde(alias = "guardian_vesselblueprint")]
-    GuardianVesselBlueprintFragment,
-
-    #[serde(alias = "guardian_weaponblueprint")]
-    GuardianWeaponBlueprintFragment,
-
     #[cfg(not(feature = "strict"))]
-    #[serde(untagged)]
     Unknown(String),
 }
 
@@ -465,6 +178,177 @@ impl Material {
         matches!(self.into(), MaterialCategory::Encoded)
     }
 }
+
+#[derive(Debug, Error)]
+pub enum MaterialError {
+    #[error("Unknown material: '{0}'")]
+    UnknownMaterial(String),
+}
+
+impl FromStr for Material {
+    type Err = MaterialError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let string: &str = &s.to_ascii_lowercase();
+
+        Ok(match string {
+            "carbon" => Material::Carbon,
+            "vanadium" => Material::Vanadium,
+            "niobium" => Material::Niobium,
+            "yttrium" => Material::Yttrium,
+            "phosphorus" => Material::Phosphorus,
+            "chromium" => Material::Chromium,
+            "molybdenum" => Material::Molybdenum,
+            "technetium" => Material::Technetium,
+            "sulphur" => Material::Sulphur,
+            "manganese" => Material::Manganese,
+            "cadmium" => Material::Cadmium,
+            "ruthenium" => Material::Ruthenium,
+            "iron" => Material::Iron,
+            "zinc" => Material::Zinc,
+            "tin" => Material::Tin,
+            "selenium" => Material::Selenium,
+            "nickel" => Material::Nickel,
+            "germanium" => Material::Germanium,
+            "tungsten" => Material::Tungsten,
+            "tellurium" => Material::Tellurium,
+            "rhenium" => Material::Rhenium,
+            "arsenic" => Material::Arsenic,
+            "mercury" => Material::Mercury,
+            "polonium" => Material::Polonium,
+            "lead" => Material::Lead,
+            "zirconium" => Material::Zirconium,
+            "boron" => Material::Boron,
+            "antimony" => Material::Antimony,
+            "chemicalstorageunits" => Material::ChemicalStorageUnits,
+            "chemicalprocessors" => Material::ChemicalProcessors,
+            "chemicaldistillery" => Material::ChemicalDistillery,
+            "chemicalmanipulators" => Material::ChemicalManipulators,
+            "pharmaceuticalisolators" => Material::PharmaceuticalIsolators,
+            "temperedalloys" => Material::TemperedAlloys,
+            "heatresistantceramics" => Material::HeatResistantCeramics,
+            "precipitatedalloys" => Material::PrecipitatedAlloys,
+            "thermicalloys" => Material::ThermicAlloys,
+            "militarygradealloys" => Material::MilitaryGradeAlloys,
+            "heatconductionwiring" => Material::HeatConductionWiring,
+            "heatdispersionplate" => Material::HeatDispersionPlate,
+            "heatexchangers" => Material::HeatExchangers,
+            "heatvanes" => Material::HeatVanes,
+            "protoheatradiators" => Material::ProtoHeatRadiators,
+            "basicconductors" => Material::BasicConductors,
+            "conductivecomponents" => Material::ConductiveComponents,
+            "conductiveceramics" => Material::ConductiveCeramics,
+            "conductivepolymers" => Material::ConductivePolymers,
+            "biotechconductors" => Material::BiotechConductors,
+            "mechanicalscrap" => Material::MechanicalScrap,
+            "mechanicalequipment" => Material::MechanicalEquipment,
+            "mechanicalcomponents" => Material::MechanicalComponents,
+            "configurablecomponents" => Material::ConfigurableComponents,
+            "improvisedcomponents" => Material::ImprovisedComponents,
+            "gridresistors" => Material::GridResistors,
+            "hybridcapacitors" => Material::HybridCapacitors,
+            "electrochemicalarrays" => Material::ElectrochemicalArrays,
+            "polymercapacitors" => Material::PolymerCapacitors,
+            "militarysupercapacitors" => Material::MilitarySupercapacitors,
+            "wornshieldemitters" => Material::WornShieldEmitters,
+            "shieldemitters" => Material::ShieldEmitters,
+            "shieldingsensors" => Material::ShieldingSensors,
+            "compoundshielding" => Material::CompoundShielding,
+            "imperialshielding" => Material::ImperialShielding,
+            "compactcomposites" => Material::CompactComposites,
+            "filamentcomposites" => Material::FilamentComposites,
+            "highdensitycomposites" => Material::HighDensityComposites,
+            "fedproprietarycomposites" => Material::ProprietaryComposites,
+            "fedcorecomposites" => Material::CoreDynamicsComposites,
+            "crystalshards" => Material::CrystalShards,
+            "uncutfocuscrystals" => Material::FlawedFocusCrystals,
+            "focuscrystals" => Material::FocusCrystals,
+            "refinedfocuscrystals" => Material::RefinedFocusCrystals,
+            "exquisitefocuscrystals" => Material::ExquisiteFocusCrystals,
+            "salvagedalloys" => Material::SalvagedAlloys,
+            "galvanisingalloys" => Material::GalvanisingAlloys,
+            "phasealloys" => Material::PhaseAlloys,
+            "protolightalloys" => Material::ProtoLightAlloys,
+            "protoradiolicalloys" => Material::ProtoRadiolicAlloys,
+            "hardenedsurfacefragments" => Material::HardenedSurfaceFragments,
+            "tg_causticshard" => Material::CausticShard,
+            "tacticalcorechip" => Material::TacticalCoreChip,
+            "thargoidcarapace" => Material::ThargoidCarapace,
+            "biomechanicalconduits" => Material::BioMechanicalConduits,
+            "tg_causticgeneratorparts" => Material::CorrosiveMechanisms,
+            "phasingmembraneresidue" => Material::PhasingMembraneResidue,
+            "thargoidenergycell" => Material::ThargoidEnergyCell,
+            "tg_wreckagecomponents" => Material::WreckageComponents,
+            "tg_causticcrystal" => Material::CausticCrystal,
+            "thargoidtechnologicalcomponents" => Material::ThargoidTechnologicalComponents,
+            "weaponparts" => Material::WeaponParts,
+            "heatexposurespecimen" => Material::HeatExposureSpecimen,
+            "tg_propulsionelement" => Material::PropulsionElements,
+            "unknownenergysource" => Material::SensorFragment,
+            "thargoidorganiccircuitry" => Material::ThargoidOrganicCircuitry,
+            "guardian_powercell" => Material::GuardianPowerCell,
+            "guardian_sentinel_wreckagecomponents" => Material::GuardianWreckageComponents,
+            "guardian_powerconduit" => Material::GuardianPowerConduit,
+            "guardian_sentinel_weaponparts" => Material::GuardianSentinelWeaponParts,
+            "guardian_techcomponent" => Material::GuardianTechnologyComponent,
+            "scrambledemissiondata" => Material::ExceptionScrambledEmissionData,
+            "archivedemissiondata" => Material::IrregularEmissionData,
+            "emissiondata" => Material::UnexpectedEmissionData,
+            "decodedemissiondata" => Material::DecodedEmissionData,
+            "compactemissionsdata" => Material::AbnormalCompactEmissionData,
+            "disruptedwakeechoes" => Material::AtypicalDisruptedWakeEchoes,
+            "fsdtelemetry" => Material::AnomalousFSDTelemetry,
+            "wakesolutions" => Material::StrangeWakeSolutions,
+            "hyperspacetrajectories" => Material::EccentricHyperspaceTrajectories,
+            "dataminedwake" => Material::DataminedWakeExceptions,
+            "shieldcyclerecordings" => Material::DistortedShieldCycleRecordings,
+            "shieldsoakanalysis" => Material::InconsistentShieldSoakAnalysis,
+            "shielddensityreports" => Material::UntypicalShieldScans,
+            "shieldpatternanalysis" => Material::AberrantShieldPatternAnalysis,
+            "shieldfrequencydata" => Material::PeculiarShieldFrequencyData,
+            "encryptedfiles" => Material::UnusualEncryptedFiles,
+            "encryptioncodes" => Material::TaggedEncryptionCodes,
+            "symmetrickeys" => Material::OpenSymmetricKeys,
+            "encryptionarchives" => Material::AtypicalEncryptionArchives,
+            "adaptiveencryptors" => Material::AdaptiveEncryptorsCapture,
+            "bulkscandata" => Material::AnomalousBulkScanData,
+            "scanarchives" => Material::UnidentifiedScanArchives,
+            "scandatabanks" => Material::ClassifiedScanDatabanks,
+            "encodedscandata" => Material::DivergentScanData,
+            "classifiedscandata" => Material::ClassifiedScanFragment,
+            "legacyfirmware" => Material::SpecializedLegacyFirmware,
+            "consumerfirmware" => Material::ModifiedConsumerFirmware,
+            "industrialfirmware" => Material::CrackedIndustrialFirmware,
+            "securityfirmware" => Material::SecurityFirmwarePatch,
+            "embeddedfirmware" => Material::ModifiedEmbeddedFirmware,
+            "tg_structuraldata" => Material::ThargoidStructuralData,
+            "tg_shutdowndata" => Material::MassiveEnergySurgeAnalytics,
+            "tg_shipflightdata" => Material::ShipFlightData,
+            "tg_shipsystemsdata" => Material::ShipSystemsData,
+            "tg_interdictiondata" => Material::ThargoidInterdictionTelemetry,
+            "tg_compositiondata" => Material::ThargoidMaterialCompositionData,
+            "unknownshipsignature" => Material::ThargoidShipSignature,
+            "thargoidresiduedata" => Material::ThargoidResidueData,
+            "thargoidwakedata" => Material::ThargoidWakeData,
+            "ancienthistoricaldata" => Material::PatternGammaObeliskData,
+            "ancientculturaldata" => Material::PatternBetaObeliskData,
+            "ancientbiologicaldata" => Material::PatternAlphaObeliskData,
+            "ancientlanguagedata" => Material::PatternDeltaObeliskData,
+            "ancienttechnologicaldata" => Material::PatternEpsilonObeliskData,
+            "guardian_moduleblueprint" => Material::GuardianModuleBlueprintFragment,
+            "guardian_vesselblueprint" => Material::GuardianVesselBlueprintFragment,
+            "guardian_weaponblueprint" => Material::GuardianWeaponBlueprintFragment,
+
+            #[cfg(not(feature = "strict"))]
+            _ => Material::Unknown(s.to_string()),
+
+            #[cfg(feature = "strict")]
+            _ => return Err(MaterialError::UnknownMaterial(s.to_string())),
+        })
+    }
+}
+
+from_str_deserialize_impl!(Material);
 
 impl Display for Material {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

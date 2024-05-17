@@ -14,4 +14,6 @@ pub enum ChangeCrewRoleEventRole {
     Idle,
     FireCon,
     FighterCon,
+    OnFoot,
+    Helm,
 }

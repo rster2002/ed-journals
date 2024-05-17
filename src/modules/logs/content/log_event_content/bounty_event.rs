@@ -27,9 +27,17 @@ pub struct BountyEventNormal {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(untagged)]
 pub enum BountyEventTarget {
+    #[serde(rename = "skimmerdrone")]
+    SentrySkimmer,
+
+    #[serde(rename = "bombskimmerdrone")]
+    Stringer,
+
+    #[serde(untagged)]
     Ship(ShipType),
+
+    #[serde(untagged)]
     Citizen(Citizen),
 }
 

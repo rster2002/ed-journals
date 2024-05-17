@@ -11,11 +11,11 @@ pub struct ShipyardSwapEvent {
     pub ship_type_localized: Option<String>,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
     pub store_old_ship: ShipType,
 
     #[serde(rename = "StoreShipID")]
-    pub store_ship_id: u8,
+    pub store_ship_id: u64,
 
     #[serde(rename = "MarketID")]
     pub market_id: u64,

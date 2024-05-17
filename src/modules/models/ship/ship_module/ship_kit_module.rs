@@ -5,7 +5,7 @@ use regex::Regex;
 use serde::Serialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-use crate::models::ship::ship_type::ShipType;
+use crate::models::ship::ship_type::{ShipType, ShipTypeError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipKitModule {
@@ -19,8 +19,8 @@ pub enum ShipKitModuleError {
     #[error("Failed to parse ship kit number: {0}")]
     FailedToParseShipKitNr(#[from] ParseIntError),
 
-    #[error("Failed to parse skip type for ship kit: {0}")]
-    FailedToParseShipType(#[from] serde_json::Error),
+    #[error(transparent)]
+    ShipTypeError(#[from] ShipTypeError),
 
     #[error("Failed to parse ship kit module: '{0}'")]
     FailedToParse(String),

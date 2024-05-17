@@ -63,7 +63,7 @@ pub enum CommodityCategory {
 impl From<Commodity> for CommodityCategory {
     fn from(value: Commodity) -> Self {
         match value {
-            Commodity::ArgonomicTreatment
+            Commodity::AgronomicTreatment
             | Commodity::Explosives
             | Commodity::HydrogenFuel
             | Commodity::HydrogenPeroxide

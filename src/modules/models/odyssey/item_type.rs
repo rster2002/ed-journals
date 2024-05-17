@@ -214,9 +214,11 @@ impl From<Item> for ItemType {
             Item::CarbonFibrePlating
             | Item::EncryptedMemoryChip
             | Item::MemoryChip
+            | Item::MicroHydraulics
             | Item::MicroThrusters
             | Item::OpticalLens
             | Item::Scrambler
+            | Item::TitaniumPlating
             | Item::Transmitter
             | Item::TungstenCarbide
             | Item::WeaponComponent => ItemType::Tech,

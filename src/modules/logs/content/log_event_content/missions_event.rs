@@ -44,7 +44,7 @@ mod tests {
         let expected = MissionsEvent {
             active: vec![MissionEventEntry {
                 mission_id: 65380900,
-                name: MissionType::DataCourier,
+                name: MissionType("Mission_Courier_name".to_string()),
                 passenger_mission: false,
                 expires: 82751,
             }],

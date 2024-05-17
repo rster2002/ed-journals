@@ -7,7 +7,7 @@ pub struct SetUserShipNameEvent {
     pub ship: String,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
 
     pub user_ship_name: String,
     pub user_ship_id: String,

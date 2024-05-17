@@ -30,7 +30,7 @@ impl FromStr for SuitType {
         Ok(match string {
             "flightsuit" => SuitType::FlightSuit,
             "explorationsuit" => SuitType::ArtemisSuit,
-            "combatsuit" => SuitType::DominatorSuit,
+            "tacticalsuit" => SuitType::DominatorSuit,
             "utilitysuit" => SuitType::MaverickSuit,
 
             #[cfg(not(feature = "strict"))]

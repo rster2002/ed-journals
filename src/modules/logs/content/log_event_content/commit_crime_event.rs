@@ -60,4 +60,19 @@ pub enum CommitCrimeEventType {
 
     #[serde(rename = "onFoot_trespass")]
     OnFootTrespassing,
+
+    #[serde(rename = "onFoot_detectionOfWeapon")]
+    OnFootDetectionOfWeapon,
+
+    #[serde(rename = "onFoot_failureToSubmitToPolice")]
+    OnFootFailureToSubmitToPolice,
+
+    #[serde(rename = "onFoot_carryingIllegalGoods")]
+    OnFootCarryingIllegalGoods,
+
+    #[serde(rename = "onFoot_arcCutterUse")]
+    OnFootArcCutterUse,
+
+    #[serde(rename = "onFoot_propertyTheft")]
+    OnFootPropertyTheft,
 }
