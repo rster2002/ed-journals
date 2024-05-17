@@ -429,7 +429,7 @@ mod tests {
             let spawn_source = spawn_sources.get(body_name).unwrap();
 
             for species in expected_species {
-                let conditions: Vec<spawn_condition::SpawnCondition> = species.spawn_conditions();
+                let conditions = species.spawn_conditions();
 
                 let failing_conditions = conditions
                     .iter()
