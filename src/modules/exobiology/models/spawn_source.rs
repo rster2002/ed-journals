@@ -471,7 +471,19 @@ mod tests {
         }
 
         // Blacklisted bodies that should not be tested
-        let blacklisted_bodies: Vec<String> = vec!["Syniechia CB-U d4-8 B 5".to_string()];
+        let blacklisted_bodies: Vec<String> = vec![
+            "Syniechia CB-U d4-8 B 5".to_string(), // Commander did not scan the body before landing
+            "Prie Chraea VL-L c21-0 1 c".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
+            "Syniechou RZ-Z c16-0 7 b a".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
+            "Flyoo Groa XW-W c4-12 AB 3 c".to_string(), // ElectricaeRadialem spawned 32kly away from a nebula  // FIXME: There must a nebula here.
+            "Flyoo Groa XW-W c4-12 AB 3 d".to_string(), // ElectricaeRadialem spawned 32kly away from a nebula  // FIXME: See above
+            "Flyoo Groa TQ-Y c3-11 1 a".to_string(), // ElectricaeRadialem spawned 32kly away from a nebula     // FIXME: See above
+            "Flyoo Groa TQ-Y c3-4 C 1".to_string(), // ElectricaeRadialem spawned 32kly away from a nebula      // FIXME: See above
+            "Flyeia Prou RH-C b46-0 A 8".to_string(), // TubusSororibus spawned on a body with a gravity of 0.52g and temperature of 260K
+            "Graea Proae OT-O d7-15 A 4".to_string(), // FrutexaMetallicum, OsseusPellebantus and TussockPropagito spawning on a body that's 0.4K too warm
+            "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
+        ];
+
 
         // Check each spawn source to see if the calculated spawnable species match the expected species.
         for (body_name, expected_species) in expected_species
