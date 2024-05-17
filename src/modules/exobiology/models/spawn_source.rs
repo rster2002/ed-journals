@@ -1,8 +1,14 @@
+use std::collections::HashSet;
+
 use strum::IntoEnumIterator;
 
-use crate::logs::content::log_event_content::scan_event::{
-    Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+use crate::logs::content::log_event_content::fss_body_signals_event::{
+    FSSBodySignalEventSignal, FSSBodySignalsEvent,
 };
+use crate::logs::content::log_event_content::scan_event::{
+    Distance, Gravity, ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+};
+use crate::models::exploration::planetary_signal_type::PlanetarySignalType;
 use crate::models::exploration::species::Species;
 use crate::models::galaxy::atmosphere::AtmosphereDensity;
 use crate::models::galaxy::atmosphere_type::AtmosphereType;
@@ -20,8 +26,10 @@ pub struct SpawnSource {
     body_name: String,
     pub star: Option<Star>,
     pub target_planet: Option<TargetPlanet>,
-    pub bodies: Vec<Body>,
-    pub nebula_distance: Option<f32>,
+    pub geological_signals_present: Option<bool>,
+    pub distance_from_star: Option<Distance>,
+    pub distance_from_nebula: Option<Distance>,
+    pub planet_classes_in_system: HashSet<PlanetClass>,
 }
 
 impl SpawnSource {
@@ -30,8 +38,10 @@ impl SpawnSource {
             body_name: body_name.into(),
             star: None,
             target_planet: None,
-            bodies: Vec::new(),
-            nebula_distance: None,
+            planet_classes_in_system: HashSet::new(),
+            geological_signals_present: None,
+            distance_from_star: None,
+            distance_from_nebula: None, // FIXME: No idea how to get this data yet.
         }
     }
 
@@ -60,20 +70,18 @@ impl SpawnSource {
         });
     }
 
-    fn supply_planet_scan_event(&mut self, scan: &ScanEventPlanet) {
+    fn feed_planet_scan_event(&mut self, scan: &ScanEventPlanet) {
         self.target_planet = Some(TargetPlanet {
             atmosphere: scan.atmosphere.clone(),
             gravity: scan.surface_gravity.clone(),
             class: scan.planet_class.clone(),
             surface_temperature: scan.surface_temperature,
             volcanism: scan.volcanism.clone(),
-            distance_from_star: 0.0, // FIXME: Find a way to get this value from the scan event.
-            geological_signals_present: GeologicalSignalsPresent::Unknown, // FIXME: Find a way to get this value from the scan event.
         });
     }
 
     /// Returns a list of species that could spawn on this spawn source.
-    pub fn get_spawnable_species(&self) -> Vec<Species> {
+    pub fn get_spawnable_species(&self) -> HashSet<Species> {
         Species::iter()
             .filter(|species| self.can_spawn_species(species))
             .collect()
@@ -171,7 +179,7 @@ impl SpawnSource {
                 }
             }
             SpawnCondition::SystemContainsPlanetClass(planet_class) => {
-                self.bodies.iter().any(|b: &Body| b.class == *planet_class)
+                self.planet_classes_in_system.contains(planet_class)
             }
             SpawnCondition::VolcanismType(volcanism_type) => {
                 if let Some(target_planet) = &self.target_planet {
@@ -181,8 +189,8 @@ impl SpawnSource {
                 }
             }
             SpawnCondition::MinDistanceFromParentSun(min_distance) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.distance_from_star >= *min_distance
+                if let Some(distance_from_star) = &self.distance_from_star {
+                    distance_from_star.as_au() >= *min_distance
                 } else {
                     false
                 }
@@ -195,22 +203,15 @@ impl SpawnSource {
                 }
             }
             SpawnCondition::WithinNebulaRange(nebula_range) => {
-                if let Some(nebula_distance) = self.nebula_distance {
-                    nebula_distance <= *nebula_range
+                if let Some(nebula_distance) = &self.distance_from_nebula {
+                    nebula_distance.as_au() <= *nebula_range
                 } else {
                     false
                 }
             }
             SpawnCondition::GeologicalSignalsPresent => {
-                if let Some(target_planet) = &self.target_planet {
-                    // TODO: Quickly draw the NotPresent conclusion if geological signals could not even
-                    //  possibly exist on the target planet (atmosphere?), instead of waiting for the
-                    //  result of planetary mapping to confirm signals are not present.
-
-                    // NOTE: Do we want to consider the Unknown state (not yet mapped) as a valid datapoint?
-                    //  If so, we should not return a simple boolean, but an enum with a 'Maybe' value to
-                    //  indicate uncertainty about this spawn condition.
-                    target_planet.geological_signals_present == GeologicalSignalsPresent::Present
+                if let Some(geological_signals_present) = &self.geological_signals_present {
+                    *geological_signals_present
                 } else {
                     false
                 }
@@ -232,19 +233,6 @@ pub struct TargetPlanet {
     pub class: PlanetClass,
     pub surface_temperature: f32,
     pub volcanism: Volcanism,
-    /// The distance from the parent star in AU
-    pub distance_from_star: f32,
-    pub geological_signals_present: GeologicalSignalsPresent,
-}
-
-#[derive(Debug, PartialEq)]
-pub enum GeologicalSignalsPresent {
-    /// Mapping of the planet has concluded that geological signals are present.
-    Present,
-    /// The planet has not been mapped yet, so it is unknown if geological signals are present.
-    Unknown,
-    /// Mapping of the planet has concluded that geological signals are not present.
-    NotPresent,
 }
 
 #[derive(Debug)]
