@@ -780,9 +780,14 @@ lazy_static! {
                 SpawnCondition::AnyThinAtmosphere,
                 SpawnCondition::GeologicalSignalsPresent,
                 SpawnCondition::Any(vec![
+                    SpawnCondition::MaterialPresence(Material::Iron),
                     SpawnCondition::VolcanismType(VolcanismType::CarbonDioxideGeysers),
                     SpawnCondition::VolcanismType(VolcanismType::MethaneMagma),
                     SpawnCondition::VolcanismType(VolcanismType::MethaneGeysers),
+                ]),
+                SpawnCondition::Any(vec![
+                    SpawnCondition::RockyComposition,
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
                 SpawnCondition::MaxGravity(0.27),
             ]
