@@ -290,6 +290,7 @@ pub struct TargetPlanet {
     pub class: PlanetClass,
     pub surface_temperature: f32,
     pub volcanism: Volcanism,
+    pub materials: HashSet<Material>,
     pub composition: PlanetComposition,
 }
 
