@@ -6,9 +6,11 @@ pub fn auto_detect_journal_path() -> Option<PathBuf> {
     {
         let expected_path = UserDirs::new()?
             .home_dir()
-            .join(r#"\Saved Game\Frontier Developments\Elite Dangerous"#);
+            .join("Saved Games")
+            .join("Frontier Developments")
+            .join("Elite Dangerous");
 
-        if expected_path.exists() {
+        if !expected_path.exists() {
             return None;
         }
 
