@@ -145,7 +145,7 @@ pub struct ScanEventPlanet {
 }
 
 /// Distance in light seconds.
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq)]
 pub struct DistanceLs(pub f32);
 
 impl DistanceLs {
@@ -157,6 +157,12 @@ impl DistanceLs {
     /// Returns the distance in astronomical units.
     pub fn as_au(&self) -> f32 {
         self.0 * 0.0020039888
+    }
+}
+
+impl std::fmt::Debug for DistanceLs {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}ls ({} AU)", self.0, self.as_au())
     }
 }
 
