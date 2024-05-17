@@ -290,9 +290,16 @@ pub struct TargetPlanet {
     pub class: PlanetClass,
     pub surface_temperature: f32,
     pub volcanism: Volcanism,
+    pub composition: PlanetComposition,
 }
 
 #[derive(Debug)]
+pub struct PlanetComposition {
+    pub ice: f32,
+    pub rock: f32,
+    pub metal: f32,
+}
+#[derive(Debug, Clone)]
 pub struct Star {
     pub class: StarClass,
     pub luminosity: StarLuminosity,
