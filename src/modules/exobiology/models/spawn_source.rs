@@ -405,47 +405,31 @@ mod tests {
 
             for entry in reader.flatten() {
                 if let LogEventContent::Scan(scan) = &entry.content {
-                    let body_name = scan.body_name.clone();
-
                     for (_, spawn_source) in &mut spawn_sources {
                         spawn_source.feed_scan_event(scan);
                     }
+                }
 
-                    // Skip scan events that are not relevant to our test data
-                    if !spawn_sources.contains_key(&body_name) {
-                        continue;
+                if let LogEventContent::FSSBodySignals(fss_body_signals) = &entry.content {
+                    for (_, spawn_source) in &mut spawn_sources {
+                        spawn_source.feed_fss_body_signals_event(fss_body_signals);
                     }
-
-                    let spawn_source = spawn_sources.get_mut(&body_name).unwrap();
                 }
             }
         }
 
+        // Blacklisted bodies that should not be tested
+        let blacklisted_bodies: Vec<String> = vec!["Syniechia CB-U d4-8 B 5".to_string()];
+
         // Check each spawn source to see if the calculated spawnable species match the expected species.
-        for (body_name, expected_species) in expected_species {
-            // Commander did not scan this body before collecting organic data, so we can't use it for testing.
-            if body_name == "Syniechia CB-U d4-8 B 5" {
-                continue;
-            }
+        for (body_name, expected_species) in expected_species
+            .iter()
+            .filter(|(body, _)| !blacklisted_bodies.contains(body))
+        {
+            let spawn_source = spawn_sources.get(body_name).unwrap();
 
-            let spawn_source = spawn_sources.get(&body_name).unwrap();
-            let spawnable_species = spawn_source.get_spawnable_species();
-
-            assert!(
-                spawnable_species.len() > 0,
-                "No spawnable species found for body '{}'\n{:#?}",
-                body_name,
-                spawn_source
-            );
-
-            let missing_matches = expected_species
-                .iter()
-                .filter(|species| !spawnable_species.contains(species))
-                .collect::<Vec<&Species>>();
-
-            // If it's not a match, figure out which conditions failed for debugging purposes.
-            for species in &missing_matches {
-                let conditions = species.spawn_conditions();
+            for species in expected_species {
+                let conditions: Vec<spawn_condition::SpawnCondition> = species.spawn_conditions();
 
                 let failing_conditions = conditions
                     .iter()
