@@ -383,11 +383,6 @@ pub struct SpawnSourceStar {
     pub luminosity: StarLuminosity,
 }
 
-#[derive(Debug, PartialEq)]
-pub struct Body {
-    pub class: PlanetClass,
-}
-
 #[cfg(test)]
 mod tests {
     use crate::logs::content::LogEventContent;
@@ -399,8 +394,6 @@ mod tests {
     use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
     use std::thread::current;
-
-    use super::Body;
 
     #[test]
     fn spawnable_species_no_false_negatives() {
