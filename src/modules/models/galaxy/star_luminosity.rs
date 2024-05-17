@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, Hash, PartialOrd, Eq)]
 pub enum StarLuminosity {
     O = 25,
     I = 24,
