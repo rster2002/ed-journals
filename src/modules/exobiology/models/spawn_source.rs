@@ -27,7 +27,7 @@ use super::spawn_condition::SpawnCondition;
 pub struct SpawnSource {
     pub body_name: String,
     pub parent_stars: Vec<Star>,
-    pub parent_stars_ids: Vec<u8>,
+    pub parent_stars_ids: HashSet<u8>,
     pub target_planet: Option<TargetPlanet>,
     pub geological_signals_present: Option<bool>,
     pub distance_from_star: Option<DistanceLs>,
@@ -41,7 +41,7 @@ impl SpawnSource {
         SpawnSource {
             body_name: body_name.into(),
             parent_stars: Vec::new(),
-            parent_stars_ids: Vec::new(),
+            parent_stars_ids: HashSet::new(),
             target_planet: None,
             planet_classes_in_system: HashSet::new(),
             stars_in_system: Vec::new(),
@@ -129,7 +129,7 @@ impl SpawnSource {
         for parent in &scan.parents {
             match parent {
                 ScanEventParent::Star(parent_star_id) => {
-                    self.parent_stars_ids.push(*parent_star_id);
+                    self.parent_stars_ids.insert(*parent_star_id);
                 }
                 // Ignore non-star parents
                 _ => {}
