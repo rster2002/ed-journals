@@ -19,6 +19,7 @@ use crate::models::galaxy::star_luminosity::StarLuminosity;
 use crate::models::galaxy::volcanism::Volcanism;
 use crate::models::galaxy::volcanism_type::VolcanismType;
 use crate::models::materials::material::Material;
+use crate::modules::exploration::Nebula;
 use crate::modules::models::galaxy::atmosphere::Atmosphere;
 use crate::modules::models::galaxy::planet_class::PlanetClass;
 use crate::modules::models::galaxy::star_class::StarClass;
@@ -106,6 +107,7 @@ impl SpawnSource {
         }
 
         self.star_system_position = Some(location.system_info.star_pos);
+        self.recalculate_distance_from_nebula();
     }
 
     pub fn feed_fsd_jump_event(&mut self, jump: &FSDJumpEvent) {
@@ -114,6 +116,7 @@ impl SpawnSource {
         }
 
         self.star_system_position = Some(jump.system_info.star_pos);
+        self.recalculate_distance_from_nebula();
     }
 
     fn feed_star_scan_event(&mut self, scan: &ScanEvent, star: &ScanEventStar) {
@@ -174,6 +177,22 @@ impl SpawnSource {
                     .cloned()
             })
             .collect();
+    }
+
+    fn recalculate_distance_from_nebula(&mut self) {
+        fn calculate_distance(a: [f32; 3], b: [f32; 3]) -> f32 {
+            let x = a[0] - b[0];
+            let y = a[1] - b[1];
+            let z = a[2] - b[2];
+            (x * x + y * y + z * z).sqrt()
+        }
+
+        if let Some(star_pos) = self.star_system_position {
+            self.distance_from_nebula = Nebula::iter()
+                .map(|nebula| calculate_distance(star_pos, nebula.center()))
+                .min_by(|a, b| a.total_cmp(b))
+                .map(|ly| DistanceLs::from_ly(ly));
+        }
     }
 
     /// Returns a list of species that could spawn on this spawn source.
@@ -289,7 +308,7 @@ impl SpawnSource {
             }
             SpawnCondition::WithinNebulaRange(nebula_range) => {
                 if let Some(nebula_distance) = &self.distance_from_nebula {
-                    nebula_distance.as_au() <= *nebula_range
+                    nebula_distance.as_ly() <= *nebula_range
                 } else {
                     false
                 }
@@ -357,7 +376,7 @@ pub struct PlanetComposition {
     pub metal: f32,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct Star {
     pub body_id: u8,
     pub class: StarClass,
@@ -381,9 +400,6 @@ mod tests {
     use std::thread::current;
 
     use super::Body;
-    // use crate::blocking::JournalDir;
-    //
-    // use crate::modules::logs::content::log_event_content::JournalEventContent;
 
     #[test]
     fn spawnable_species_no_false_negatives() {
