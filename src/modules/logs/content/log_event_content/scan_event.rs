@@ -174,10 +174,10 @@ impl std::fmt::Debug for DistanceLs {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{} AU / {} ls / ({} ly)",
+            "{} ls ({} au / {} ly)",
             self.0,
-            self.as_ly(),
-            self.as_au()
+            self.as_au(),
+            self.as_ly()
         )
     }
 }
