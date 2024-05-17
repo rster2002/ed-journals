@@ -274,7 +274,7 @@ lazy_static! {
             ]
         ),
         (
-            Species::BacteriumNebulum,
+            Species::BacteriumNebulus,
             vec![SpawnCondition::ThinAtmosphere(AtmosphereType::Helium)]
         ),
         (
