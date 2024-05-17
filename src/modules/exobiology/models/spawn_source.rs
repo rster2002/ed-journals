@@ -65,11 +65,11 @@ impl SpawnSource {
 
         match &scan.kind {
             ScanEventKind::Star(star_scan) => {
-                self.feed_star_scan_event(&star_scan);
+                self.feed_star_scan_event(&scan, &star_scan);
             }
             ScanEventKind::Planet(planet_scan) => {
                 if targets_tracked_body {
-                    self.feed_planet_scan_event(&planet_scan);
+                    self.feed_planet_scan_event(&scan, &planet_scan);
                 } else {
                     self.planet_classes_in_system
                         .insert(planet_scan.planet_class.clone());
@@ -92,21 +92,64 @@ impl SpawnSource {
         self.geological_signals_present = Some(geological_signals_present);
     }
 
-    fn feed_star_scan_event(&mut self, scan: &ScanEventStar) {
-        self.star = Some(Star {
-            class: scan.star_type.clone(),
-            luminosity: scan.luminosity.clone(),
+    fn feed_star_scan_event(&mut self, scan: &ScanEvent, star: &ScanEventStar) {
+        self.stars_in_system.push(Star {
+            body_id: scan.body_id.clone(),
+            class: star.star_type.clone(),
+            luminosity: star.luminosity.clone(),
         });
+        self.recalculate_parent_stars();
     }
 
-    fn feed_planet_scan_event(&mut self, scan: &ScanEventPlanet) {
+    fn feed_planet_scan_event(&mut self, scan: &ScanEvent, planet: &ScanEventPlanet) {
+        let composition = if let Some(composition) = &planet.composition {
+            PlanetComposition {
+                ice: composition.ice,
+                rock: composition.rock,
+                metal: composition.metal,
+            }
+        } else {
+            PlanetComposition {
+                ice: 0.0,
+                rock: 0.0,
+                metal: 0.0,
+            }
+        };
+
         self.target_planet = Some(TargetPlanet {
-            atmosphere: scan.atmosphere.clone(),
-            gravity: scan.surface_gravity.clone(),
-            class: scan.planet_class.clone(),
-            surface_temperature: scan.surface_temperature,
-            volcanism: scan.volcanism.clone(),
+            atmosphere: planet.atmosphere.clone(),
+            gravity: planet.surface_gravity.clone(),
+            class: planet.planet_class.clone(),
+            surface_temperature: planet.surface_temperature,
+            volcanism: planet.volcanism.clone(),
+            materials: HashSet::from_iter(planet.materials.iter().map(|m| m.name.clone())),
+            composition,
         });
+
+        for parent in &scan.parents {
+            match parent {
+                ScanEventParent::Star(parent_star_id) => {
+                    self.parent_stars_ids.push(*parent_star_id);
+                }
+                // Ignore non-star parents
+                _ => {}
+            }
+        }
+
+        self.recalculate_parent_stars();
+    }
+
+    fn recalculate_parent_stars(&mut self) {
+        self.parent_stars = self
+            .parent_stars_ids
+            .iter()
+            .filter_map(|star_id| {
+                self.stars_in_system
+                    .iter()
+                    .find(|star| star.body_id == *star_id)
+                    .cloned()
+            })
+            .collect();
     }
 
     /// Returns a list of species that could spawn on this spawn source.
@@ -184,29 +227,18 @@ impl SpawnSource {
                     false
                 }
             }
-            SpawnCondition::ParentStarClass(star_class) => {
-                if let Some(star) = &self.star {
-                    star.class == *star_class
-                } else {
-                    false
-                }
-            }
-            SpawnCondition::ParentStarLuminosity(star_luminosity) => {
-                if let Some(star) = &self.star {
-                    star.luminosity == *star_luminosity
-                } else {
-                    false
-                }
-            }
-            SpawnCondition::MinOrEqualParentStarLuminosity(star_luminosity) => {
-                if let Some(star) = &self.star {
-                    // FIXME: This requires the luminosity enum to be ordered from weak to strong luminosity.
-                    //  This could be a potential bug if that enum is ever refactored.
-                    star.luminosity >= *star_luminosity
-                } else {
-                    false
-                }
-            }
+            SpawnCondition::ParentStarClass(star_class) => self
+                .parent_stars
+                .iter()
+                .any(|star| star.class == *star_class),
+            SpawnCondition::ParentStarLuminosity(star_luminosity) => self
+                .parent_stars
+                .iter()
+                .any(|star| star.luminosity == *star_luminosity),
+            SpawnCondition::MinOrEqualParentStarLuminosity(star_luminosity) => self
+                .parent_stars
+                .iter()
+                .any(|star| star.luminosity >= *star_luminosity),
             SpawnCondition::SystemContainsPlanetClass(planet_class) => {
                 self.planet_classes_in_system.contains(planet_class)
             }
@@ -300,6 +332,7 @@ pub struct PlanetComposition {
     pub rock: f32,
     pub metal: f32,
 }
+
 #[derive(Debug, Clone)]
 pub struct Star {
     pub body_id: u8,
