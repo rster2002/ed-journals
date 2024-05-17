@@ -514,3 +514,16 @@ impl Species {
             .1
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use strum::IntoEnumIterator;
+    use crate::models::exploration::species::Species;
+
+    #[test]
+    fn all_species_have_matching_spawn_conditions() {
+        for species in Species::iter() {
+            assert!(!species.spawn_conditions().is_empty());
+        }
+    }
+}
