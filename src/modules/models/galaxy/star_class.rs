@@ -1,11 +1,11 @@
-use std::str::FromStr;
 use serde::Serialize;
+use std::str::FromStr;
 
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Hash, Eq)]
 pub enum StarClass {
     // Main sequence
     O,
