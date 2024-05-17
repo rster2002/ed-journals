@@ -7,12 +7,23 @@ pub enum Citizen {
     #[serde(rename = "citizensuitai_scientific")]
     Researcher,
 
+    #[serde(rename = "citizensuitai_industrial")]
+    Technician,
+
     #[serde(
         rename = "assaultsuitai_class1",
         alias = "assaultsuitai_class2",
         alias = "assaultsuitai_class3"
     )]
     Commando,
+
+    // TODO this is a guess
+    #[serde(
+        rename = "heavysuitai_class1",
+        alias = "heavysuitai_class2",
+        alias = "heavysuitai_class3",
+    )]
+    Enforcer,
 
     #[serde(
         rename = "lightassaultsuitai_class1",
@@ -21,7 +32,11 @@ pub enum Citizen {
     )]
     Scout,
 
-    #[serde(rename = "closesuitai_class1", alias = "closesuitai_class3")]
+    #[serde(
+        rename = "closesuitai_class1",
+        alias = "closesuitai_class2",
+        alias = "closesuitai_class3",
+    )]
     Striker,
 
     // TODO this is a guess
@@ -40,7 +55,9 @@ impl Display for Citizen {
             "{}",
             match self {
                 Citizen::Researcher => "Researcher",
+                Citizen::Technician => "Technician",
                 Citizen::Commando => "Commando",
+                Citizen::Enforcer => "Enforcer",
                 Citizen::Scout => "Scout",
                 Citizen::Striker => "Striker",
                 Citizen::Sniper => "Sniper",

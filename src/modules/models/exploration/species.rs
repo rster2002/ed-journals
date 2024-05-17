@@ -13,17 +13,20 @@ use crate::modules::models::galaxy::volcanism_type::VolcanismType;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Species {
     // Aleoids
-    AleoidaLaminiae,
-    AleoidaGravis,
-
-    #[serde(rename = "$Codex_Ent_Aleoids_03_Name;")]
-    AleoidaSpica,
+    #[serde(rename = "$Codex_Ent_Aleoids_01_Name;")]
+    AleoidaArcus,
 
     #[serde(rename = "$Codex_Ent_Aleoids_02_Name;")]
     AleoidaCoronamus,
 
-    #[serde(rename = "$Codex_Ent_Aleoids_01_Name;")]
-    AleoidaArcus,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_Name;")]
+    AleoidaSpica,
+
+    #[serde(rename = "$Codex_Ent_Aleoids_04_Name;")]
+    AleoidaLaminiae,
+
+    #[serde(rename = "$Codex_Ent_Aleoids_05_Name;")]
+    AleoidaGravis,
 
     // Amphora plant
     AmphoraPlant,
@@ -50,24 +53,26 @@ pub enum Species {
     BarkMound,
 
     // Bacterium
-    BacteriumNebulus,
-    BacteriumAcies,
-    BacteriumOmentum,
-    BacteriumScopulum,
-    BacteriumVerrata,
-    BacteriumBullaris,
+    #[serde(rename = "$Codex_Ent_Bacterial_01_Name;")]
+    BacteriumAurasus,
 
-    #[serde(rename = "$Codex_Ent_Bacterial_06_Name;")]
-    BacteriumAlcyoneum,
+    #[serde(rename = "$Codex_Ent_Bacterial_02_Name;")]
+    BacteriumNebulus,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_03_Name;")]
+    BacteriumScopulum,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_04_Name;")]
+    BacteriumAcies,
 
     #[serde(rename = "$Codex_Ent_Bacterial_05_Name;")]
     BacteriumVesicula,
 
-    #[serde(rename = "$Codex_Ent_Bacterial_12_Name;")]
-    BacteriumCerbrus,
+    #[serde(rename = "$Codex_Ent_Bacterial_06_Name;")]
+    BacteriumAlcyoneum,
 
-    #[serde(rename = "$Codex_Ent_Bacterial_01_Name;")]
-    BacteriumAurasus,
+    #[serde(rename = "$Codex_Ent_Bacterial_07_Name;")]
+    BacteriumTela,
 
     #[serde(rename = "$Codex_Ent_Bacterial_08_Name;")]
     BacteriumInformem,
@@ -75,8 +80,17 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Bacterial_09_Name;")]
     BacteriumVolu,
 
-    #[serde(rename = "$Codex_Ent_Bacterial_07_Name;")]
-    BacteriumTela,
+    #[serde(rename = "$Codex_Ent_Bacterial_10_Name;")]
+    BacteriumBullaris,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_11_Name;")]
+    BacteriumOmentum,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_12_Name;")]
+    BacteriumCerbrus,
+
+    #[serde(rename = "$Codex_Ent_Bacterial_13_Name;")]
+    BacteriumVerrata,
 
     // Brain tree
     BrainTreeAureum,
@@ -89,22 +103,30 @@ pub enum Species {
     BrainTreeRoseum,
 
     // Cactoida
+    #[serde(rename = "$Codex_Ent_Cactoid_01_Name;")]
+    CactoidaCortexum,
+
     #[serde(rename = "$Codex_Ent_Cactoid_02_Name;")]
     CactoidaLapis,
+
+    #[serde(rename = "$Codex_Ent_Cactoid_03_Name;")]
+    CactoidaVermis,
 
     #[serde(rename = "$Codex_Ent_Cactoid_04_Name;")]
     CactoidaPullulanta,
 
-    CactoidaCortexum,
-    CactoidaVermis,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_Name;")]
     CactoidaPeperatis,
 
     // Clypeus
+    #[serde(rename = "$Codex_Ent_Clypeus_01_Name;")]
+    ClypeusLacrimam,
+
+    #[serde(rename = "$Codex_Ent_Clypeus_02_Name;")]
+    ClypeusMargaritus,
+
     #[serde(rename = "$Codex_Ent_Clypeus_03_Name;")]
     ClypeusSpeculumi,
-
-    ClypeusLacrimam,
-    ClypeusMargaritus,
 
     // Conchas
     #[serde(rename = "$Codex_Ent_Conchas_01_Name;")]
@@ -119,43 +141,70 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Conchas_04_Name;")]
     ConchaBiconcavis,
 
+    // Crystalline shards
+    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
     CrystallineShards,
 
     // Electricae
     #[serde(rename = "$Codex_Ent_Electricae_01_Name;")]
     ElectricaePluma,
+
+    #[serde(rename = "$Codex_Ent_Electricae_02_Name;")]
     ElectricaeRadialem,
 
     // Fonticulus
+    #[serde(rename = "$Codex_Ent_Fonticulus_01_Name;")]
+    FonticuluaSegmentatus,
+
     #[serde(rename = "$Codex_Ent_Fonticulus_02_Name;")]
     FonticuluaCampestris,
 
-    FonticuluaSegmentatus,
-    FonticuluaDigitos,
-
     #[serde(rename = "$Codex_Ent_Fonticulus_03_Name;")]
     FonticuluaUpupam,
+
+    #[serde(rename = "$Codex_Ent_Fonticulus_04_Name;")]
     FonticuluaLapida,
+
+    #[serde(rename = "$Codex_Ent_Fonticulus_05_Name;")]
     FonticuluaFluctus,
+
+    #[serde(rename = "$Codex_Ent_Fonticulus_06_Name;")]
+    FonticuluaDigitos,
 
     // Frutexa
     #[serde(rename = "$Codex_Ent_Shrubs_01_Name;")]
     FrutexaFlabellum,
 
-    FrutexaFlammasis,
+    #[serde(rename = "$Codex_Ent_Shrubs_02_Name;")]
+    FrutexaAcus,
 
     #[serde(rename = "$Codex_Ent_Shrubs_03_Name;")]
     FrutexaMetallicum,
-    FrutexaAcus,
+
+    #[serde(rename = "$Codex_Ent_Shrubs_04_Name;")]
+    FrutexaFlammasis,
+
+    #[serde(rename = "$Codex_Ent_Shrubs_05_Name;")]
     FrutexaFera,
+
+    #[serde(rename = "$Codex_Ent_Shrubs_06_Name;")]
     FrutexaSponsae,
+
+    #[serde(rename = "$Codex_Ent_Shrubs_07_Name;")]
     FrutexaCollum,
 
     // Fumerola
-    FumerolaAquatis,
+    #[serde(rename = "$Codex_Ent_Fumerolas_01_Name;")]
     FumerolaCarbosis,
+
+    #[serde(rename = "$Codex_Ent_Fumerolas_02_Name;")]
     FumerolaExtremus,
+
+    #[serde(rename = "$Codex_Ent_Fumerolas_03_Name;")]
     FumerolaNitris,
+
+    #[serde(rename = "$Codex_Ent_Fumerolas_04_Name;")]
+    FumerolaAquatis,
 
     // Fungoida
     #[serde(rename = "$Codex_Ent_Fungoids_01_Name;")]
@@ -174,6 +223,9 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Osseus_01_Name;")]
     OsseusFractus,
 
+    #[serde(rename = "$Codex_Ent_Osseus_02_Name;")]
+    OsseusDiscus,
+
     #[serde(rename = "$Codex_Ent_Osseus_03_Name;")]
     OsseusSpiralis,
 
@@ -183,8 +235,8 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Osseus_05_Name;")]
     OsseusCornibus,
 
+    #[serde(rename = "$Codex_Ent_Osseus_06_Name;")]
     OsseusPellebantus,
-    OsseusDiscus,
 
     // Recepta
     #[serde(rename = "$Codex_Ent_Recepta_01_Name;")]
@@ -207,28 +259,44 @@ pub enum Species {
     SinuousTubersViride,
 
     // Stratum
-    #[serde(rename = "$Codex_Ent_Stratum_07_Name;")]
-    StratumTectonicas,
+    #[serde(rename = "$Codex_Ent_Stratum_01_Name;")]
+    StratumExcutitus,
 
     #[serde(rename = "$Codex_Ent_Stratum_02_Name;")]
     StratumPaleas,
 
+    #[serde(rename = "$Codex_Ent_Stratum_03_Name;")]
+    StratumLaminamus,
+
+    #[serde(rename = "$Codex_Ent_Stratum_04_Name;")]
+    StratumAraneamus,
+
+    #[serde(rename = "$Codex_Ent_Stratum_05_Name;")]
+    StratumLimaxus,
+
+    #[serde(rename = "$Codex_Ent_Stratum_06_Name;")]
+    StratumCucumisis,
+
+    #[serde(rename = "$Codex_Ent_Stratum_07_Name;")]
+    StratumTectonicas,
+
     #[serde(rename = "$Codex_Ent_Stratum_08_Name;")]
     StratumFrigus,
-
-    StratumLaminamus,
-    StratumExcutitus,
-    StratumLimaxus,
-    StratumCucumisis,
-    StratumAraneamus,
 
     // Tubus
     #[serde(rename = "$Codex_Ent_Tubus_01_Name;")]
     TubusConifer,
 
+    #[serde(rename = "$Codex_Ent_Tubus_02_Name;")]
     TubusSororibus,
-    TubusRosarium,
+
+    #[serde(rename = "$Codex_Ent_Tubus_03_Name;")]
     TubusCavas,
+
+    #[serde(rename = "$Codex_Ent_Tubus_04_Name;")]
+    TubusRosarium,
+
+    #[serde(rename = "$Codex_Ent_Tubus_05_Name;")]
     TubusCompagibus,
 
     // Tussock
@@ -244,11 +312,20 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Tussocks_04_Name;")]
     TussockCultro,
 
+    #[serde(rename = "$Codex_Ent_Tussocks_05_Name;")]
+    TussockCatena,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_06_Name;")]
+    TussockPennatis,
+
     #[serde(rename = "$Codex_Ent_Tussocks_07_Name;")]
     TussockSerrati,
 
     #[serde(rename = "$Codex_Ent_Tussocks_08_Name;")]
     TussockAlbata,
+
+    #[serde(rename = "$Codex_Ent_Tussocks_09_Name;")]
+    TussockPropagito,
 
     #[serde(rename = "$Codex_Ent_Tussocks_10_Name;")]
     TussockDivisa,
@@ -262,12 +339,11 @@ pub enum Species {
     #[serde(rename = "$Codex_Ent_Tussocks_13_Name;")]
     TussockStigmasis,
 
+    #[serde(rename = "$Codex_Ent_Tussocks_14_Name;")]
+    TussockVirgam,
+
     #[serde(rename = "$Codex_Ent_Tussocks_15_Name;")]
     TussockCapillum,
-    TussockCatena,
-    TussockPropagito,
-    TussockPennatis,
-    TussockVirgam,
 }
 
 impl FromStr for Species {

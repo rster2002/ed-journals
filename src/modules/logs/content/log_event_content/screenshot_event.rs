@@ -6,7 +6,7 @@ pub struct ScreenshotEvent {
     pub filename: String,
     pub width: u16,
     pub height: u16,
-    pub system: String,
+    pub system: Option<String>,
     pub body: Option<String>,
     pub latitude: Option<f32>,
     pub longitude: Option<f32>,

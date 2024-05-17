@@ -8,6 +8,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::models::ship::ship_type::ShipTypeError;
 use crate::modules::models::ship::ship_module::module_class::ModuleClass;
 use crate::modules::models::ship::ship_module::module_class::ModuleClassError;
 use crate::modules::models::ship::ship_module::ship_internal_module::armor_grade::{ArmorGrade, ArmorGradeError};
@@ -21,9 +22,6 @@ pub struct ArmorModule {
 
 #[derive(Debug, Error)]
 pub enum ArmorModuleError {
-    #[error("Failed to parse ship type: {0}")]
-    FailedToParseShipType(#[source] serde_json::Error),
-
     #[error("Failed to parse armor module: {0}")]
     FailedToParseArmorModule(#[source] serde_json::Error),
 
@@ -35,6 +33,9 @@ pub enum ArmorModuleError {
 
     #[error(transparent)]
     ModuleClassError(#[from] ModuleClassError),
+
+    #[error(transparent)]
+    ShipTypeError(#[from] ShipTypeError),
 
     #[error("Failed to parse armor module: '{0}'")]
     FailedToParse(String),
@@ -57,8 +58,7 @@ impl FromStr for ArmorModule {
             .get(1)
             .expect("Should have already been matched")
             .as_str()
-            .parse()
-            .map_err(ArmorModuleError::FailedToParseShipType)?;
+            .parse()?;
 
         if let Some(capture) = captures.get(3) {
             return Ok(ArmorModule {

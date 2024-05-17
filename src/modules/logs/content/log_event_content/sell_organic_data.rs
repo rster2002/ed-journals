@@ -25,7 +25,7 @@ pub struct SellOrganicDataEventBioData {
     #[serde(rename = "Species_Localised")]
     pub species_localized: Option<String>,
 
-    pub variant: Variant,
+    pub variant: Option<Variant>,
 
     #[serde(rename = "Variant_Localised")]
     pub variant_localized: Option<String>,

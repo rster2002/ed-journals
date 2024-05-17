@@ -6,3 +6,5 @@ pub mod suit_mod;
 pub mod suit_slot;
 pub mod weapon;
 pub mod weapon_mod;
+pub mod suit_type;
+pub mod suit_module;

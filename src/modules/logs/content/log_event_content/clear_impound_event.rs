@@ -7,7 +7,7 @@ pub struct ClearImpoundEvent {
     pub ship_type: ShipType,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
 
     #[serde(rename = "ShipMarketID")]
     pub ship_market_id: u64,

@@ -12,5 +12,5 @@ pub struct PayBountiesEvent {
     pub faction_localized: Option<String>,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
 }

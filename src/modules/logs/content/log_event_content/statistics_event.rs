@@ -53,7 +53,7 @@ pub struct StatisticsCombat {
     pub bounties_claimed: u32,
 
     #[serde(rename = "Bounty_Hunting_Profit")]
-    pub bounty_hunting_profit: i64,
+    pub bounty_hunting_profit: f32,
 
     #[serde(rename = "Combat_Bonds")]
     pub combat_bonds: u32,

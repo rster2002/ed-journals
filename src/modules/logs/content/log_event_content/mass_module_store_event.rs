@@ -12,7 +12,7 @@ pub struct MassModuleStoreEvent {
     pub ship: ShipType,
 
     #[serde(rename = "ShipID")]
-    pub ship_id: u8,
+    pub ship_id: u64,
     pub items: Vec<MassModuleStoreEventItem>,
 }
 

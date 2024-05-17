@@ -28,7 +28,7 @@ pub struct ShipyardBuyEventStoreCurrentShip {
     pub store_old_ship: ShipType,
 
     #[serde(rename = "StoreShipID")]
-    pub store_ship_id: u8,
+    pub store_ship_id: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -37,6 +37,6 @@ pub struct ShipyardBuyEventSellCurrentShip {
     pub sell_old_ship: ShipType,
 
     #[serde(rename = "SellShipID")]
-    pub sell_ship_id: u8,
+    pub sell_ship_id: u64,
     pub sell_price: u64,
 }

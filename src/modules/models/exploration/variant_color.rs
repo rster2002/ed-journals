@@ -790,6 +790,7 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::F)) => VariantColor::Emerald,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::K)) => VariantColor::Lime,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::M)) => VariantColor::Green,
+            (Genus::Stratum, _, VariantSource::StarClass(StarClass::L)) => VariantColor::Turquoise,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Grey,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Amethyst,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Mauve,

@@ -1,36 +1,34 @@
 use std::str::FromStr;
-
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
 use thiserror::Error;
-
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
-pub struct ShipNameplate {
-    pub name: String,
+pub struct ShipWeaponColor {
+    name: String,
 }
 
 #[derive(Debug, Error)]
-pub enum ShipNameplateError {
-    #[error("Failed to parse nameplate: '{0}'")]
+pub enum ShipWeaponColorError {
+    #[error("Failed to parse weapon color: '{0}'")]
     FailedToParse(String),
 }
 
 lazy_static! {
-    static ref NAMEPLATE_REGEX: Regex = Regex::new(r#"^nameplate_(\w+)$"#).unwrap();
+    static ref WEAPON_COLOR_REGEX: Regex = Regex::new(r#"^weaponcustomisation_(\w+)$"#).unwrap();
 }
 
-impl FromStr for ShipNameplate {
-    type Err = ShipNameplateError;
+impl FromStr for ShipWeaponColor {
+    type Err = ShipWeaponColorError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let Some(captures) = NAMEPLATE_REGEX.captures(s) else {
-            return Err(ShipNameplateError::FailedToParse(s.to_string()));
+        let Some(captures) = WEAPON_COLOR_REGEX.captures(s) else {
+            return Err(ShipWeaponColorError::FailedToParse(s.to_string()));
         };
 
-        Ok(ShipNameplate {
+        Ok(ShipWeaponColor {
             name: captures
                 .get(1)
                 .expect("Should have been captured already")
@@ -40,4 +38,4 @@ impl FromStr for ShipNameplate {
     }
 }
 
-from_str_deserialize_impl!(ShipNameplate);
+from_str_deserialize_impl!(ShipWeaponColor);
