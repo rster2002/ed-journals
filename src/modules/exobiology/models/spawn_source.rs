@@ -30,14 +30,14 @@ use super::spawn_condition::SpawnCondition;
 pub struct SpawnSource {
     pub body_name: String,
     pub star_system_position: Option<[f32; 3]>,
-    pub parent_stars: Vec<Star>,
+    pub parent_stars: Vec<SpawnSourceStar>,
     pub parent_stars_ids: HashSet<u8>,
     pub target_planet: Option<TargetPlanet>,
     pub geological_signals_present: Option<bool>,
     pub distance_from_star: Option<DistanceLs>,
     pub distance_from_nebula: Option<DistanceLs>,
     pub planet_classes_in_system: HashSet<PlanetClass>,
-    pub stars_in_system: HashSet<Star>,
+    pub stars_in_system: HashSet<SpawnSourceStar>,
 }
 
 impl SpawnSource {
@@ -120,7 +120,7 @@ impl SpawnSource {
     }
 
     fn feed_star_scan_event(&mut self, scan: &ScanEvent, star: &ScanEventStar) {
-        self.stars_in_system.insert(Star {
+        self.stars_in_system.insert(SpawnSourceStar {
             body_id: scan.body_id.clone(),
             class: star.star_type.clone(),
             luminosity: star.luminosity.clone(),
@@ -377,7 +377,7 @@ pub struct PlanetComposition {
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
-pub struct Star {
+pub struct SpawnSourceStar {
     pub body_id: u8,
     pub class: StarClass,
     pub luminosity: StarLuminosity,
