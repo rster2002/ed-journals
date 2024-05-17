@@ -252,6 +252,13 @@ impl SpawnSource {
                     false
                 }
             }
+            SpawnCondition::RockyComposition => {
+                if let Some(target_planet) = &self.target_planet {
+                    target_planet.composition.rock > 0.0
+                } else {
+                    false
+                }
+            }
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),
