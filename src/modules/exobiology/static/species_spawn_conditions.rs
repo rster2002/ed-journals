@@ -958,7 +958,8 @@ lazy_static! {
         (
             Species::SinuousTubersAlbidum,
             vec![SpawnCondition::RockyComposition]
-        )(
+        ),
+        (
             Species::SinuousTubersBlatteum,
             vec![SpawnCondition::Any(vec![
                 SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
@@ -983,7 +984,8 @@ lazy_static! {
         (
             Species::SinuousTubersRoseum,
             vec![SpawnCondition::VolcanismType(VolcanismType::SilicateMagma)]
-        )(
+        ),
+        (
             Species::SinuousTubersViolaceum,
             vec![SpawnCondition::Any(vec![
                 SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
