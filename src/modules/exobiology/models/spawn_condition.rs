@@ -1,3 +1,4 @@
+use crate::models::materials::material::Material;
 use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
 use crate::modules::models::galaxy::planet_class::PlanetClass;
 use crate::modules::models::galaxy::star_class::StarClass;
@@ -11,7 +12,9 @@ pub enum SpawnCondition {
     NoAtmosphere,
     AnyThinAtmosphere,
     ThinAtmosphere(AtmosphereType),
+    /// The minimum gravity the planet must have, in G
     MinGravity(f32),
+    /// The maximum gravity the planet must have, in G
     MaxGravity(f32),
     PlanetClass(PlanetClass),
     ParentStarClass(StarClass),
@@ -28,6 +31,7 @@ pub enum SpawnCondition {
     /// The target planet must have at least one geological signal present.
     GeologicalSignalsPresent,
 
+    MaterialPresence(Material),
     Any(Vec<SpawnCondition>),
     All(Vec<SpawnCondition>),
 }
