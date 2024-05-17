@@ -26,21 +26,25 @@ use super::spawn_condition::SpawnCondition;
 #[derive(Debug)]
 pub struct SpawnSource {
     body_name: String,
-    pub star: Option<Star>,
+    pub parent_stars: Vec<Star>,
+    pub parent_stars_ids: Vec<u8>,
     pub target_planet: Option<TargetPlanet>,
     pub geological_signals_present: Option<bool>,
     pub distance_from_star: Option<DistanceLs>,
     pub distance_from_nebula: Option<DistanceLs>,
     pub planet_classes_in_system: HashSet<PlanetClass>,
+    pub stars_in_system: Vec<Star>,
 }
 
 impl SpawnSource {
     pub fn new(body_name: impl Into<String>) -> SpawnSource {
         SpawnSource {
             body_name: body_name.into(),
-            star: None,
+            parent_stars: Vec::new(),
+            parent_stars_ids: Vec::new(),
             target_planet: None,
             planet_classes_in_system: HashSet::new(),
+            stars_in_system: Vec::new(),
             geological_signals_present: None,
             distance_from_star: None,
             distance_from_nebula: None, // FIXME: No idea how to get this data yet.
