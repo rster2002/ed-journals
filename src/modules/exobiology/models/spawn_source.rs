@@ -362,7 +362,7 @@ mod tests {
     // use crate::modules::logs::content::log_event_content::JournalEventContent;
 
     #[test]
-    fn spawnable_species_are_generated_correctly() {
+    fn spawnable_species_no_false_negatives() {
         let dir_path = current_dir().unwrap().join("test-files").join("journals");
         let log_dir = LogDir::new(dir_path);
         let logs = log_dir.journal_logs().unwrap();
