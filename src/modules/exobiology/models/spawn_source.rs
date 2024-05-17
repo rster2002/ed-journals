@@ -259,6 +259,13 @@ impl SpawnSource {
                     false
                 }
             }
+            SpawnCondition::IcyComposition => {
+                if let Some(target_planet) = &self.target_planet {
+                    target_planet.composition.ice > 0.0
+                } else {
+                    false
+                }
+            }
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),
