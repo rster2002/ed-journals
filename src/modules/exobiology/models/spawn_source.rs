@@ -2,9 +2,11 @@ use std::collections::HashSet;
 
 use strum::IntoEnumIterator;
 
+use crate::logs::content::log_event_content::fsd_jump_event::FSDJumpEvent;
 use crate::logs::content::log_event_content::fss_body_signals_event::{
     FSSBodySignalEventSignal, FSSBodySignalsEvent,
 };
+use crate::logs::content::log_event_content::location_event::LocationEvent;
 use crate::logs::content::log_event_content::scan_event::{
     DistanceLs, Gravity, ScanEvent, ScanEventKind, ScanEventParent, ScanEventPlanet, ScanEventStar,
 };
@@ -26,6 +28,7 @@ use super::spawn_condition::SpawnCondition;
 #[derive(Debug)]
 pub struct SpawnSource {
     pub body_name: String,
+    pub star_system_position: Option<[f32; 3]>,
     pub parent_stars: Vec<Star>,
     pub parent_stars_ids: HashSet<u8>,
     pub target_planet: Option<TargetPlanet>,
@@ -40,6 +43,7 @@ impl SpawnSource {
     pub fn new(body_name: impl Into<String>) -> SpawnSource {
         SpawnSource {
             body_name: body_name.into(),
+            star_system_position: None,
             parent_stars: Vec::new(),
             parent_stars_ids: HashSet::new(),
             target_planet: None,
@@ -90,6 +94,26 @@ impl SpawnSource {
             .any(|signal| signal.kind == PlanetarySignalType::Geological);
 
         self.geological_signals_present = Some(geological_signals_present);
+    }
+
+    pub fn feed_location_event(&mut self, location: &LocationEvent) {
+        // Only interested in events that are in the same star system as the spawn source.
+        if !self
+            .body_name
+            .starts_with(&location.system_info.star_system)
+        {
+            return;
+        }
+
+        self.star_system_position = Some(location.system_info.star_pos);
+    }
+
+    pub fn feed_fsd_jump_event(&mut self, jump: &FSDJumpEvent) {
+        if !self.body_name.starts_with(&jump.system_info.star_system) {
+            return;
+        }
+
+        self.star_system_position = Some(jump.system_info.star_pos);
     }
 
     fn feed_star_scan_event(&mut self, scan: &ScanEvent, star: &ScanEventStar) {
@@ -413,6 +437,18 @@ mod tests {
                 if let LogEventContent::FSSBodySignals(fss_body_signals) = &entry.content {
                     for (_, spawn_source) in &mut spawn_sources {
                         spawn_source.feed_fss_body_signals_event(fss_body_signals);
+                    }
+                }
+
+                if let LogEventContent::Location(location) = &entry.content {
+                    for (_, spawn_source) in &mut spawn_sources {
+                        spawn_source.feed_location_event(location);
+                    }
+                }
+
+                if let LogEventContent::FSDJump(fsd_jump) = &entry.content {
+                    for (_, spawn_source) in &mut spawn_sources {
+                        spawn_source.feed_fsd_jump_event(fsd_jump);
                     }
                 }
             }
