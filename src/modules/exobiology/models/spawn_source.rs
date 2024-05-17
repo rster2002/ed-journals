@@ -245,6 +245,13 @@ impl SpawnSource {
                     false
                 }
             }
+            SpawnCondition::MaterialPresence(material) => {
+                if let Some(target_planet) = &self.target_planet {
+                    target_planet.materials.contains(material)
+                } else {
+                    false
+                }
+            }
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),
