@@ -36,7 +36,7 @@ pub struct SpawnSource {
     pub distance_from_star: Option<DistanceLs>,
     pub distance_from_nebula: Option<DistanceLs>,
     pub planet_classes_in_system: HashSet<PlanetClass>,
-    pub stars_in_system: Vec<Star>,
+    pub stars_in_system: HashSet<Star>,
 }
 
 impl SpawnSource {
@@ -48,7 +48,7 @@ impl SpawnSource {
             parent_stars_ids: HashSet::new(),
             target_planet: None,
             planet_classes_in_system: HashSet::new(),
-            stars_in_system: Vec::new(),
+            stars_in_system: HashSet::new(),
             geological_signals_present: None,
             distance_from_star: None,
             distance_from_nebula: None, // FIXME: No idea how to get this data yet.
@@ -117,7 +117,7 @@ impl SpawnSource {
     }
 
     fn feed_star_scan_event(&mut self, scan: &ScanEvent, star: &ScanEventStar) {
-        self.stars_in_system.push(Star {
+        self.stars_in_system.insert(Star {
             body_id: scan.body_id.clone(),
             class: star.star_type.clone(),
             luminosity: star.luminosity.clone(),
