@@ -301,6 +301,7 @@ pub struct PlanetComposition {
 }
 #[derive(Debug, Clone)]
 pub struct Star {
+    pub body_id: u8,
     pub class: StarClass,
     pub luminosity: StarLuminosity,
 }
