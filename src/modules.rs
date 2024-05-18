@@ -14,6 +14,9 @@ pub mod status;
 /// Used to construct a state by feeding it events from the journal logs which can then be used
 /// to create relations between events and create a history.
 pub mod state;
+
+/// Contains models for genuses, species and variants and utilities for predicting possible
+/// biological scans for planets
 pub mod exobiology;
 
 /// Contains functions for exploration related things, like calculating estimated exploration value
@@ -66,16 +69,43 @@ mod shared;
 
 /// Provides models for bodies like stars and planets.
 pub mod galaxy;
-/// For models related to populated systems and the different factions and powers in the galaxy.
+
+/// This module contains models for things that have to do with civilisation and populated systems.
+/// Things like the different superpowers or economies.
 pub mod civilization;
+
 /// Contains models for models for commander ranks.
 pub mod commander;
 
+/// Models and data for materials that are used for ship engineering. For materials that are used
+/// for suit engineering, check the [odyssey] module.
 pub mod materials;
+
+/// Includes the commodity enum, which is used in various places in the library and contains all
+/// the different commodities that can be bought/acquired.
 pub mod trading;
+
+/// Contains models and utilities for things that have been added in the Odyssey expansion of the
+/// game. Note that [exobiology] is its own separate module.
 pub mod odyssey;
+
+/// Contains everything that has to do with ships, including the different types of ships, but also
+/// the different modules that can be equipped.
 pub mod ship;
+
+/// Models related to stations and markets. Also contains some models that are used for fleet
+/// carriers.
 pub mod station;
+
+/// Includes models related to Thargoids. Most importantly: the different types of Thargoids that
+/// player can encounter.
 pub mod thargoid;
+
+/// This module contains 'small' models that are used to create representations for certain things
+/// without needing to include all the information as it can differ quite a bit between the
+/// different events of the game.
 pub mod small;
+
+/// Sometimes the game reuses certain events and instead of 'ship' data it sets Odyssey related
+/// data. These mixed data types handle these differences.
 pub mod mixed;

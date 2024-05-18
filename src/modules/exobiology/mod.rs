@@ -1,5 +1,5 @@
 mod models;
-pub(crate) mod r#static;
+mod r#static;
 
 pub use models::genus::Genus;
 pub use models::spawn_condition::SpawnCondition;

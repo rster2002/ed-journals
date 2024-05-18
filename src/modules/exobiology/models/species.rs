@@ -33,7 +33,6 @@ pub enum Species {
     AnemonePrasinumBioluminescent,
     AnemonePuniceus,
     AnemonePuniceum,
-
     AnemoneRoseus,
     AnemoneRoseumBioluminescent,
     AnemoneRoseum,
