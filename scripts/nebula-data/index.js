@@ -186,6 +186,8 @@ const nebula  = [
     { "key": "VulpeculaDarkRegion", "name": "Vulpecula Dark Region", "centralStar": false, "referenceSystem": "Vulpecula Dark Region EL-Y d131", "coords": "0 / 0 / 0" },
     { "key": "WhiteEyedPea", "name": "White Eyed Pea", "centralStar": true, "referenceSystem": "BD+12 2966", "coords": "0 / 0 / 0" },
     { "key": "WitchHeadNebula", "name": "Witch Head Nebula", "centralStar": false, "referenceSystem": "Witch Head Sector RY-R b4-0", "coords": "0 / 0 / 0" },
+    { "key": "FlyooGroaSOZE0", "name": "Flyoo Groa SO-Z E0", "centralStar": true, "referenceSystem": "Flyoo Groa SO-Z e0", "coords": "-26482.4375 / -78.78125 / 50335.125" },
+    { "key": "EollsGraaeAAAH31", "name": "Eolls Graae AA-A H31", "centralStar": true, "referenceSystem": "Eolls Graae PG-E b15-3", "coords": "-18874.875 / -607.78125 / 29979.5" },
 ];
 
 const leftOverItems = [...nebula];
@@ -226,13 +228,13 @@ for (const i of nebula) {
 
 const content = `
 pub enum Nebula {
-    ${nebula.map(i => i.key).join(",\n\t")}
+    ${nebula.map(i => i.key).join(",\n\t")},
 }
 
 impl Nebula {
     pub fn center(&self) -> [f32; 3] {
         match self {
-            ${nebula.map(i => `Nebula::${i.key} => [${Number(i.coords.split(" / ")[0]).toFixed(1)}, ${Number(i.coords.split(" / ")[1]).toFixed(1)}, ${Number(i.coords.split(" / ")[2]).toFixed(1)}]`).join(",\n\t\t\t")}
+            ${nebula.map(i => `Nebula::${i.key} => [${Number(i.coords.split(" / ")[0]).toFixed(1)}, ${Number(i.coords.split(" / ")[1]).toFixed(1)}, ${Number(i.coords.split(" / ")[2]).toFixed(1)}]`).join(",\n\t\t\t")},
         }
     }
 }
@@ -243,9 +245,9 @@ impl Display for Nebula {
             f,
             "{}",
             match self {
-                ${nebula.map(i => `Nebula::${i.key} => "${i.name}"`).join(",\n\t\t\t\t")}
+                ${nebula.map(i => `Nebula::${i.key} => "${i.name}"`).join(",\n\t\t\t\t")},
             }
-        );
+        )
     }
 }
 `;
