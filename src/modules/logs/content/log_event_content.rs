@@ -245,7 +245,7 @@ use wing_join_event::WingJoinEvent;
 use serde_json::Value;
 use crate::logs::content::log_event_content::community_goal_event::CommunityGoalEvent;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
-use crate::models::small::small_system_info::SmallSystemInfo;
+use crate::modules::small::models::small_system_info::SmallSystemInfo;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;

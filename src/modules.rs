@@ -58,12 +58,24 @@ pub mod cargo;
 /// the player has stored on their ship. Is updated when there are changes.
 pub mod ship_locker;
 
-/// Contains structs and enums which are used in multiple places. Things like commodity and material
-/// names, ship types, exobiology data etc. can be found here.
-pub mod models;
-
 /// Provides some utility functions and macros that are used internally.
 mod utils;
 
 /// Module for shared internal code.
 mod shared;
+
+/// Provides models for bodies like stars and planets.
+pub mod galaxy;
+/// For models related to populated systems and the different factions and powers in the galaxy.
+pub mod civilization;
+/// Contains models for models for commander ranks.
+pub mod commander;
+
+pub mod materials;
+pub mod trading;
+pub mod odyssey;
+pub mod ship;
+pub mod station;
+pub mod thargoid;
+pub mod small;
+pub mod mixed;

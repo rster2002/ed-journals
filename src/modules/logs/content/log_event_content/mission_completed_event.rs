@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::models::shared_material::SharedMaterial;
-use crate::modules::models::shared_material_category::SharedMaterialCategory;
+use crate::modules::mixed::models::mixed_material::MixedMaterial;
+use crate::modules::mixed::models::mixed_material_category::MixedMaterialCategory;
 use crate::modules::models::station::mission_type::MissionType;
 use crate::modules::models::trading::commodity::Commodity;
 
@@ -112,7 +112,7 @@ pub struct MissionCompletedEventCommodityReward {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventMaterialsReward {
-    pub name: SharedMaterial,
-    pub category: SharedMaterialCategory,
+    pub name: MixedMaterial,
+    pub category: MixedMaterialCategory,
     pub count: u8,
 }
