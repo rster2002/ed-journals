@@ -1,19 +1,12 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Serialize, Deserialize};
-use crate::models::ship::ship_module::ship_bobble::ShipBobble;
-use crate::models::ship::ship_module::ship_cockpit_module::ShipCockpitModule;
-use crate::models::ship::ship_module::ship_decal::ShipDecal;
-use crate::models::ship::ship_module::ship_engine_color::ShipEngineColor;
-use crate::models::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
-use crate::models::ship::ship_module::ship_internal_module::ShipInternalModule;
-use crate::models::ship::ship_module::ship_kit_module::ShipKitModule;
-use crate::models::ship::ship_module::ship_nameplate::ShipNameplate;
-use crate::models::ship::ship_module::ship_paint_job::ShipPaintJob;
-use crate::models::ship::ship_module::ship_string_lights::ShipStringLights;
-use crate::models::ship::ship_module::ship_voicepack::ShipVoicepack;
-use crate::models::ship::ship_module::ship_weapon_color::ShipWeaponColor;
-use crate::models::ship::ship_module::ship_hardpoint_module::hardpoint_size::HardpointSize;
+use crate::modules::ship::{ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate, ShipPaintJob, ShipVoicepack};
+use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
+use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
+use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
+use crate::modules::ship::models::ship_module::ship_string_lights::ShipStringLights;
+use crate::modules::ship::models::ship_module::ship_weapon_color::ShipWeaponColor;
 
 pub mod module_class;
 pub mod ship_cockpit_module;
@@ -202,7 +195,7 @@ impl Display for ShipModule {
 #[cfg(test)]
 mod tests {
     use serde_json::{Error, Value};
-    use crate::models::ship::ship_module::ShipModule;
+    use crate::modules::ship::ShipModule;
 
     #[test]
     fn modules_are_parsed_correctly() {

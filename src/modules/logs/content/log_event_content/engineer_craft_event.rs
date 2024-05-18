@@ -1,10 +1,6 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::materials::material::Material;
-use crate::modules::models::ship::blueprint::Blueprint;
-use crate::modules::models::ship::blueprint_modifier::BlueprintModifier;
-use crate::modules::models::ship::ship_module::ShipModule;
-use crate::modules::models::ship::ship_slot::ShipSlot;
+use crate::modules::materials::Material;
+use crate::modules::ship::{Blueprint, BlueprintModifier, ShipModule, ShipSlot};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

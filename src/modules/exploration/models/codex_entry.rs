@@ -1,9 +1,6 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::exploration::genus::Genus;
-use crate::modules::models::exploration::species::Species;
-use crate::modules::models::exploration::star_class_codex_entry::StarClassCodexEntry;
-use crate::modules::models::exploration::variant::Variant;
+use crate::modules::exobiology::{Genus, Species, Variant};
+use crate::modules::exploration::StarClassCodexEntry;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CodexEntry {

@@ -2,9 +2,7 @@ use std::fmt::{Display, Formatter};
 use serde::Serialize;
 
 use thiserror::Error;
-
-use crate::modules::models::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
-use crate::modules::models::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
+use crate::modules::ship::{ArmorGrade, ArmorModule};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ModuleClass {

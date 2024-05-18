@@ -1,6 +1,4 @@
-use crate::modules::models::galaxy::atmosphere::Atmosphere;
-use crate::modules::models::galaxy::planet_class::PlanetClass;
-use crate::modules::models::galaxy::star_class::StarClass;
+use crate::modules::galaxy::{Atmosphere, PlanetClass, StarClass};
 
 #[derive(Debug)]
 pub struct SpawnSource {

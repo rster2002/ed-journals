@@ -700,8 +700,7 @@ impl Display for Item {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use crate::modules::models::odyssey::item::Item;
+    use crate::modules::odyssey::Item;
 
     #[test]
     fn item_test_cases_are_parsed_correctly() {

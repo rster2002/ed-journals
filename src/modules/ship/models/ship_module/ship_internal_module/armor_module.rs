@@ -8,11 +8,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::models::ship::ship_type::ShipTypeError;
-use crate::modules::models::ship::ship_module::module_class::ModuleClass;
-use crate::modules::models::ship::ship_module::module_class::ModuleClassError;
-use crate::modules::models::ship::ship_module::ship_internal_module::armor_grade::{ArmorGrade, ArmorGradeError};
-use crate::modules::models::ship::ship_type::ShipType;
+use crate::modules::ship::{ArmorGrade, ArmorGradeError, ModuleClass, ModuleClassError, ShipType, ShipTypeError};
 
 /// Armor module for a specific ship.
 #[derive(Debug, Serialize, Clone, PartialEq)]
@@ -94,10 +90,7 @@ impl Display for ArmorModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use crate::modules::models::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
-    use crate::modules::models::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
-    use crate::modules::models::ship::ship_type::ShipType;
+    use crate::modules::ship::{ArmorGrade, ArmorModule, ShipType};
 
     #[test]
     fn ship_armor_module_test_cases_are_parsed_correctly() {

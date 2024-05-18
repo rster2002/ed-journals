@@ -8,11 +8,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::models::ship::ship_module::ship_hardpoint_module::hardpoint_size::{HardpointSize, HardpointSizeError};
-use crate::modules::models::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
-use crate::modules::models::ship::ship_module::ship_hardpoint_module::hardpoint_module::HardpointModule;
-use crate::modules::models::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
-use crate::modules::models::ship::ship_module::ship_hardpoint_module::hardpoint_type::HardpointType;
+use crate::modules::ship::{HardpointModule, HardpointMounting, HardpointSize, HardpointSizeError, HardpointType, ModuleClass, ModuleClassError};
 
 pub mod hardpoint_module;
 pub mod hardpoint_mounting;
@@ -194,12 +190,7 @@ impl Display for ShipHardpointModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use crate::modules::models::ship::ship_module::module_class::ModuleClass;
-    use crate::modules::models::ship::ship_module::ship_hardpoint_module::hardpoint_module::HardpointModule;
-    use crate::modules::models::ship::ship_module::ship_hardpoint_module::hardpoint_mounting::HardpointMounting;
-    use crate::modules::models::ship::ship_module::ship_hardpoint_module::ShipHardpointModule;
-    use crate::modules::models::ship::ship_slot::hardpoint_size::HardpointSize;
+    use crate::modules::ship::{HardpointModule, HardpointMounting, HardpointSize, ModuleClass, ShipHardpointModule};
 
     #[test]
     fn ship_hardpoint_module_test_cases_all_pass() {

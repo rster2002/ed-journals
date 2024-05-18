@@ -10,7 +10,7 @@ pub use models::faction_happiness::FactionHappiness;
 pub use models::faction_state::FactionState;
 pub use models::government::Government;
 pub use models::superpower::Superpower;
-pub use models::system_info::SystemInfo;
+pub use models::location_info::LocationInfo;
 pub use models::system_security::SystemSecurity;
 pub use models::thargoid_war::ThargoidWar;
 pub use models::thargoid_war::ThargoidWarState;

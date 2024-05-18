@@ -6,7 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::ship::ship_type::ShipType;
+use crate::modules::ship::ShipType;
 
 /// Represents the cockpit module, which is different per ship type.
 #[derive(Debug, Serialize, Clone, PartialEq)]
@@ -30,7 +30,7 @@ impl FromStr for ShipCockpitModule {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let Some(captures) = COCKPIT_MODULE_REGEX.captures(s) else {
-            return Err(CockpitModuleError::FailedRegex);
+            return Err(ShipCockpitModuleError::FailedRegex);
         };
 
         let ship_type = captures
@@ -38,7 +38,7 @@ impl FromStr for ShipCockpitModule {
             .expect("Should have already been matched")
             .as_str()
             .parse()
-            .map_err(|_| CockpitModuleError::UnknownShipType)?;
+            .map_err(|_| ShipCockpitModuleError::UnknownShipType)?;
 
         Ok(ShipCockpitModule(ship_type))
     }

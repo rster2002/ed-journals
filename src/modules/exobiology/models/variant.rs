@@ -7,13 +7,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::exploration::species::Species;
-use crate::modules::models::exploration::variant_color::{
-    VariantColor, VariantColorError,
-};
-use crate::modules::models::exploration::variant_source::{
-    VariantSource, VariantSourceError,
-};
+use crate::modules::exobiology::{Species, VariantColor, VariantColorError, VariantSource, VariantSourceError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Variant {
@@ -92,10 +86,7 @@ impl Display for Variant {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use crate::modules::models::exploration::species::Species;
-    use crate::modules::models::exploration::variant::Variant;
-    use crate::modules::models::exploration::variant_color::VariantColor;
+    use crate::modules::exobiology::{Species, Variant, VariantColor};
 
     #[test]
     fn variant_test_cases_are_processed_correctly() {

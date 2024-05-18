@@ -3,9 +3,7 @@ use std::str::FromStr;
 
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
-
-use crate::modules::models::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
-use crate::modules::models::ship::ship_module::ship_internal_module::internal_type::InternalType;
+use crate::modules::ship::{ArmorModule, InternalType};
 
 /// The kind of internal module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

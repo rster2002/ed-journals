@@ -6,7 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::galaxy::volcanism_type::VolcanismType;
+use crate::modules::galaxy::VolcanismType;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Volcanism {
@@ -81,11 +81,7 @@ from_str_deserialize_impl!(Volcanism);
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use crate::modules::models::galaxy::volcanism::{
-        Volcanism, VolcanismClassification,
-    };
-    use crate::modules::models::galaxy::volcanism_type::VolcanismType;
+    use crate::modules::galaxy::{Volcanism, VolcanismClassification, VolcanismType};
 
     #[test]
     fn volcanism_test_cases_are_parsed_correctly() {

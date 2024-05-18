@@ -1,10 +1,10 @@
 use serde::{Serialize, Deserialize};
+use crate::modules::ship::ShipType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct SetUserShipNameEvent {
-    // TODO replace with enum
-    pub ship: String,
+    pub ship: ShipType,
 
     #[serde(rename = "ShipID")]
     pub ship_id: u64,

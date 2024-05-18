@@ -6,7 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
+use crate::modules::galaxy::AtmosphereType;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Atmosphere {

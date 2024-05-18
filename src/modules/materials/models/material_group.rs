@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 use serde::Serialize;
-
-use crate::modules::models::materials::material::Material;
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize)]
 pub enum MaterialGroup {
@@ -35,6 +34,7 @@ pub enum MaterialGroup {
     EncodedFirmware,
 }
 
+// TODO just like species this should be a lazy static
 impl MaterialGroup {
     pub fn materials(&self) -> Vec<Material> {
         match self {

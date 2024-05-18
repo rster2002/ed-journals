@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::models::station::carrier_docking_access::CarrierDockingAccess;
+use crate::modules::station::CarrierDockingAccess;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

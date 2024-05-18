@@ -1,6 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::civilization::system_info::SystemInfo;
+use crate::modules::civilization::LocationInfo;
 
 // TODO check when this is fired during the jump. Is it when it lockdown happens, the actual jump,
 //  after the jump?
@@ -19,5 +18,5 @@ pub struct CarrierJumpEvent {
 
     /// Information about the system the carrier is jumping to.
     #[serde(flatten)]
-    pub system_info: SystemInfo,
+    pub system_info: LocationInfo,
 }

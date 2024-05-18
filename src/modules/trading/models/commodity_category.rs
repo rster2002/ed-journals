@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
-
-use crate::modules::models::trading::commodity::Commodity;
+use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum CommodityCategory {

@@ -6,7 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::galaxy::star_class::{StarClass, StarClassError};
+use crate::modules::galaxy::{StarClass, StarClassError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct StarClassCodexEntry(pub StarClass);

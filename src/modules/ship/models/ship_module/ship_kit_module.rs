@@ -5,7 +5,7 @@ use regex::Regex;
 use serde::Serialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-use crate::models::ship::ship_type::{ShipType, ShipTypeError};
+use crate::modules::ship::{ShipType, ShipTypeError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipKitModule {

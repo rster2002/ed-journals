@@ -1,7 +1,5 @@
 use serde::{Serialize, Deserialize};
 
-use crate::modules::models::station::mission_type::sightseeing_mission::SightseeingMission;
-
 mod sightseeing_mission;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

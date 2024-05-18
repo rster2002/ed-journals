@@ -3,6 +3,8 @@ use std::str::FromStr;
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
 use thiserror::Error;
+use crate::modules::galaxy::StarClass;
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]

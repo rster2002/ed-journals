@@ -4,8 +4,7 @@ use std::str::FromStr;
 use serde::{Serialize, Deserialize};
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-
-use crate::modules::models::materials::material_category::MaterialCategory;
+use crate::modules::materials::MaterialCategory;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Material {

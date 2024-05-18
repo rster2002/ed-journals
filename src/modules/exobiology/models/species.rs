@@ -518,7 +518,7 @@ impl Species {
 #[cfg(test)]
 mod tests {
     use strum::IntoEnumIterator;
-    use crate::models::exploration::species::Species;
+    use crate::modules::exobiology::Species;
 
     #[test]
     fn all_species_have_matching_spawn_conditions() {

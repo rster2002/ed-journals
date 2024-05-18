@@ -1,5 +1,5 @@
-use crate::modules::models::materials::material::Material;
 use serde::{Serialize, Deserialize};
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct MaterialsEvent {

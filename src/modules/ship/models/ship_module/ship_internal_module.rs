@@ -8,10 +8,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::models::ship::ship_module::module_class::{ModuleClass, ModuleClassError};
-use crate::modules::models::ship::ship_module::ship_internal_module::armor_module::{ArmorModule, ArmorModuleError};
-use crate::modules::models::ship::ship_module::ship_internal_module::internal_module::InternalModule;
-use crate::modules::models::ship::ship_module::ship_internal_module::internal_type::InternalType;
+use crate::modules::ship::{ArmorModule, ArmorModuleError, InternalModule, InternalType, ModuleClass, ModuleClassError};
 
 pub mod armor_grade;
 pub mod armor_module;
@@ -155,12 +152,7 @@ impl Display for ShipInternalModule {
 mod tests {
     use std::str::FromStr;
 
-    use crate::modules::models::ship::ship_module::module_class::ModuleClass;
-    use crate::modules::models::ship::ship_module::ship_internal_module::armor_grade::ArmorGrade;
-    use crate::modules::models::ship::ship_module::ship_internal_module::armor_module::ArmorModule;
-    use crate::modules::models::ship::ship_module::ship_internal_module::internal_module::InternalModule;
-    use crate::modules::models::ship::ship_module::ship_internal_module::ShipInternalModule;
-    use crate::modules::models::ship::ship_type::ShipType;
+    use crate::modules::ship::{ArmorGrade, ArmorModule, InternalModule, ModuleClass, ShipInternalModule, ShipType};
 
     #[test]
     fn ship_internal_module_test_cases_are_parsed_correctly() {

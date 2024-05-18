@@ -14,7 +14,6 @@
 mod modules;
 
 pub use modules::logs;
-pub use modules::models;
 pub use modules::journal;
 pub use modules::state;
 

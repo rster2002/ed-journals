@@ -1,5 +1,5 @@
-use crate::modules::models::ship::srv_type::SRVType;
 use serde::{Serialize, Deserialize};
+use crate::modules::ship::SRVType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

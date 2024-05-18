@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::modules::models::materials::material::Material;
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize)]
 pub enum MaterialGrade {

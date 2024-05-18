@@ -1,6 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::galaxy::body_type::BodyType;
+use crate::modules::galaxy::BodyType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

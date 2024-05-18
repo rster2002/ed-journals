@@ -1,6 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::odyssey::item::Item;
+use crate::modules::odyssey::Item;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ItemType {

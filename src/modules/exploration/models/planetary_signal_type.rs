@@ -1,8 +1,7 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::trading::commodity::Commodity;
+use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum PlanetarySignalType {

@@ -1,8 +1,7 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::exploration::species::Species;
+use crate::modules::exobiology::Species;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Genus {

@@ -1,17 +1,10 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::civilization::conflict::Conflict;
-use crate::modules::models::civilization::economy::Economy;
-use crate::modules::models::civilization::faction::Faction;
-use crate::modules::models::civilization::government::Government;
-use crate::modules::models::civilization::superpower::Superpower;
-use crate::modules::models::civilization::system_security::SystemSecurity;
-use crate::modules::models::civilization::thargoid_war::ThargoidWar;
-use crate::modules::models::galaxy::body_type::BodyType;
+use crate::modules::civilization::{Conflict, Economy, Faction, Government, Superpower, SystemSecurity, ThargoidWar};
+use crate::modules::galaxy::BodyType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct SystemInfo {
+pub struct LocationInfo {
     /// The name of the star system that is displayed to the player.
     pub star_system: String,
 

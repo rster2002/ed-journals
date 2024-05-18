@@ -1,9 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::odyssey::suit::Suit;
-use crate::modules::models::odyssey::suit_slot::SuitSlot;
-use crate::modules::models::odyssey::weapon::Weapon;
-use crate::modules::models::odyssey::weapon_mod::WeaponMod;
+use crate::modules::odyssey::{Suit, SuitSlot, Weapon, WeaponMod};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

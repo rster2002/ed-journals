@@ -7,7 +7,7 @@ use regex::{Match, Regex};
 use serde::{Serialize, Deserialize};
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
-use crate::models::odyssey::suit_type::{SuitType, SuitTypeError};
+use crate::modules::odyssey::{SuitType, SuitTypeError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Suit {

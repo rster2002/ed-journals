@@ -1,9 +1,6 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::civilization::economy::Economy;
-use crate::modules::models::civilization::faction_state::FactionState;
-use crate::modules::models::civilization::government::Government;
-use crate::modules::models::station::station_service::StationService;
+use crate::modules::civilization::{Economy, FactionState, Government};
+use crate::modules::station::StationService;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

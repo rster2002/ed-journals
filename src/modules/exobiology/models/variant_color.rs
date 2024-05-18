@@ -2,12 +2,9 @@ use std::fmt::{Display, Formatter};
 use serde::Serialize;
 
 use thiserror::Error;
-
-use crate::modules::models::exploration::genus::Genus;
-use crate::modules::models::exploration::species::Species;
-use crate::modules::models::exploration::variant_source::VariantSource;
-use crate::modules::models::galaxy::star_class::StarClass;
-use crate::modules::models::materials::material::Material;
+use crate::modules::exobiology::{Genus, Species, VariantSource};
+use crate::modules::galaxy::StarClass;
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum VariantColor {
