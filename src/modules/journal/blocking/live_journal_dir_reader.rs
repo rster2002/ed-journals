@@ -26,10 +26,10 @@ use crate::status::blocking::{read_status_file, ReadStatusFileError};
 ///
 /// ```rust
 /// # use std::env::current_dir;
-/// use ed_journals::journal::auto_detect_journal_path;
+/// use std::path::PathBuf;
 /// use ed_journals::journal::blocking::LiveJournalDirReader;
 ///
-/// let path = auto_detect_journal_path().unwrap();
+/// let path = PathBuf::from("somePath");
 /// # let path = current_dir()
 /// #    .unwrap()
 /// #    .join("test-files")

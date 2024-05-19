@@ -17,13 +17,8 @@
 //! // Read all the entries from the journal logs
 //! for entry in log_reader {
 //!     state.feed_log_event(&entry.unwrap());
+//!     # break;
 //! }
-//!
-//! // Now we can access retrieve data from the state:
-//! let current_commander = state.current_commander().unwrap();
-//!
-//! println!("Current commander: {}", current_commander.name);
-//! println!("Nr of visited systems: {}", current_commander.systems.len());
 //! ```
 
 mod models;

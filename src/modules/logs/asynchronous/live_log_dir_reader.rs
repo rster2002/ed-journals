@@ -20,12 +20,16 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 /// the newest log file is changed at which it will read the active log file and return the entry.
 ///
 /// ```rust
+/// # use std::env::current_dir;
 /// use std::path::PathBuf;
 /// use ed_journals::logs::asynchronous::LiveLogDirReader;
 ///
 /// # tokio_test::block_on(async {
 /// let path = PathBuf::from("somePath");
-///
+/// # let path = current_dir()
+/// #    .unwrap()
+/// #    .join("test-files")
+/// #    .join("journals");
 /// let mut live_dir_reader = LiveLogDirReader::open(path)
 ///     .unwrap();
 ///
