@@ -27,7 +27,7 @@ use crate::modules::models::galaxy::star_class::StarClass;
 
 use super::spawn_condition::SpawnCondition;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct SpawnSource {
     pub body_name: String,
     pub star_system_position: Option<[f32; 3]>,
@@ -359,7 +359,7 @@ impl SpawnSource {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct TargetPlanet {
     pub atmosphere: Atmosphere,
     pub gravity: Gravity,
@@ -370,7 +370,7 @@ pub struct TargetPlanet {
     pub composition: PlanetComposition,
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Serialize)]
 pub struct SpawnSourceStar {
     pub body_id: u8,
     pub class: StarClass,
