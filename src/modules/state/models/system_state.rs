@@ -1,12 +1,13 @@
-use std::collections::{HashMap, VecDeque};
-use std::fmt::{Debug, Formatter};
-use chrono::{DateTime, NaiveDateTime, Utc};
-use serde::Serialize;
-use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+use crate::logs::content::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::body_state::BodyState;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::ExobiologyState;
+use chrono::{DateTime, NaiveDateTime, Utc};
+use serde::Serialize;
+use std::collections::{HashMap, VecDeque};
+use std::fmt::{Debug, Formatter};
 
 #[derive(Serialize)]
 pub struct SystemState {
@@ -18,6 +19,7 @@ pub struct SystemState {
     pub progress: f32,
     pub all_found: bool,
     pub station_signals: Vec<FSSSignalDiscoveredEvent>,
+    pub exobiology: ExobiologyState,
 }
 
 impl SystemState {
@@ -30,25 +32,28 @@ impl SystemState {
             return FeedResult::Skipped;
         }
 
+        self.exobiology.feed_event(&log_event);
+
         match &log_event.content {
             LogEventContent::FSSDiscoveryScan(event) => {
                 self.number_of_bodies = Some(event.body_count);
                 self.progress = event.progress;
-            },
+            }
             LogEventContent::FSSAllBodiesFound(event) => {
                 self.number_of_bodies = Some(event.count);
                 self.all_found = true;
-            },
+            }
             LogEventContent::FSSSignalDiscovered(event) => {
                 if event.is_station {
                     self.station_signals.push(event.clone());
                 }
-            },
+            }
             LogEventContent::Scan(event) => {
                 if !self.bodies.contains_key(&event.body_id) {
-                    self.bodies.insert(event.body_id, BodyState::new(event.clone()));
+                    self.bodies
+                        .insert(event.body_id, BodyState::new(event.clone()));
                 }
-            },
+            }
 
             _ => {
                 if let Some(body_id) = log_event.content.body_id() {
@@ -89,7 +94,8 @@ impl From<&LocationInfo> for SystemState {
             number_of_bodies: None,
             progress: 0.0,
             all_found: false,
-            station_signals: Vec::new()
+            station_signals: Vec::new(),
+            exobiology: ExobiologyState::new(),
         }
     }
 }

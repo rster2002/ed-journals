@@ -1,12 +1,13 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::{Serialize, Deserialize};
-use thiserror::Error;
 use crate::from_str_deserialize_impl;
+use serde::Serialize;
+use thiserror::Error;
+
 use crate::modules::materials::MaterialCategory;
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum Material {
     // Raw
     Antimony,
