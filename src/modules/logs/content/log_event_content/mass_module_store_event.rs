@@ -20,6 +20,6 @@ pub struct MassModuleStoreEventItem {
     pub name: ShipModule,
     pub hot: bool,
     pub engineer_modifications: Option<Blueprint>,
-    pub level: u8,
-    pub quality: u8,
+    // pub level: u8,
+    // pub quality: u8,
 }

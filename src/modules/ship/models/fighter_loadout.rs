@@ -17,6 +17,9 @@ pub enum FighterLoadout {
     #[serde(rename = "four")]
     Four,
 
+    #[serde(rename = "default")]
+    Default,
+
     #[serde(rename = "starter")]
     Starter,
 }

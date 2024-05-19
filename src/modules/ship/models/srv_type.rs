@@ -6,6 +6,9 @@ use serde::{Serialize, Deserialize};
 pub enum SRVType {
     #[serde(rename = "testbuggy")]
     Scarab,
+
+    #[serde(rename = "combat_multicrew_srv_01")]
+    Scorpion,
 }
 
 impl Display for SRVType {
@@ -15,6 +18,7 @@ impl Display for SRVType {
             "{}",
             match self {
                 SRVType::Scarab => "Scarab",
+                SRVType::Scorpion => "Scorpion",
             }
         )
     }
