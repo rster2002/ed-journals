@@ -389,6 +389,30 @@ impl Nebula {
 			Nebula::EollsGraaeAAAH31 => [-18874.9, -607.8, 29979.5],
         }
     }
+
+    /// Calculates the distance to the given coordinates from the center of the nebula.
+    pub fn distance_to(&self, other: [f32; 3]) -> DistanceLs {
+        DistanceLs::from_ly(Self::distance_between(self.center(), other))
+    }
+
+    /// Calculates the closest nebula to the given coordinates.
+    pub fn closest_to(pos: [f32; 3]) -> (Nebula, DistanceLs) {
+        let mut closest = (Nebula::AquilaDarkRegion, DistanceLs::from_ly(f32::MAX));
+        for nebula in Nebula::iter() {
+            let distance = nebula.distance_to(pos);
+            if distance.as_ly() < closest.1.as_ly() {
+                closest = (nebula, distance);
+            }
+        }
+        closest
+    }
+
+    fn distance_between(a: [f32; 3], b: [f32; 3]) -> f32 {
+        let x = a[0] - b[0];
+        let y = a[1] - b[1];
+        let z = a[2] - b[2];
+        (x * x + y * y + z * z).sqrt()
+    }
 }
 
 impl Display for Nebula {

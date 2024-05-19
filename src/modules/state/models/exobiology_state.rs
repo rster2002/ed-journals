@@ -168,8 +168,8 @@ impl ExobiologyState {
             distance_from_star: target_body.map(|body| body.0.distance_from_arrival.clone()),
             distance_from_nebula: star_pos_from_location
                 .or(star_pos_from_jump)
-                .map(|pos| ExobiologyState::calculate_distance_to_nebula(pos))
-                .flatten(),
+                .map(|pos| Nebula::closest_to(pos).1),
+
             planet_classes_in_system: HashSet::from_iter(
                 planet_scan_events
                     .iter()
@@ -183,20 +183,6 @@ impl ExobiologyState {
                 }
             })),
         }
-    }
-
-    fn calculate_distance_to_nebula(position: [f32; 3]) -> Option<DistanceLs> {
-        fn calculate_distance(a: [f32; 3], b: [f32; 3]) -> f32 {
-            let x: f32 = a[0] - b[0];
-            let y = a[1] - b[1];
-            let z = a[2] - b[2];
-            (x * x + y * y + z * z).sqrt()
-        }
-
-        Nebula::iter()
-            .map(|nebula| calculate_distance(position, nebula.center()))
-            .min_by(|a, b| a.total_cmp(b))
-            .map(|ly| DistanceLs::from_ly(ly))
     }
 }
 
