@@ -19,3 +19,4 @@ pub use models::volcanism::VolcanismClassification;
 pub use models::volcanism::VolcanismError;
 pub use models::volcanism_type::VolcanismType;
 pub use models::nebula::Nebula;
+pub use models::planet_composition::PlanetComposition;

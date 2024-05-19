@@ -1,13 +1,14 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::{Serialize, Deserialize};
-use serde_json::Value;
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
-use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use strum::EnumIter;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, EnumIter)]
+use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
+
+#[derive(Debug, Serialize, Deserialize, Clone, Hash, Eq, PartialEq, EnumIter)]
 pub enum Species {
     // Aleoids
     #[serde(rename = "$Codex_Ent_Aleoids_01_Name;")]

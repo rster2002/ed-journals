@@ -1,5 +1,6 @@
-use serde::{Serialize, Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::Value;
+use crate::galaxy::PlanetComposition;
 use crate::modules::galaxy::{Atmosphere, AtmosphereElement, AtmosphereType, OrbitInfo, PlanetClass, RingClass, StarClass, StarLuminosity, TerraformState, Volcanism};
 use crate::modules::materials::Material;
 
@@ -18,7 +19,7 @@ pub struct ScanEvent {
     pub system_address: u64,
 
     #[serde(rename = "DistanceFromArrivalLS")]
-    pub distance_from_arrival_ls: f32,
+    pub distance_from_arrival: DistanceLs,
     pub was_discovered: bool,
     pub was_mapped: bool,
 
@@ -119,19 +120,80 @@ pub struct ScanEventPlanet {
     #[serde(rename = "MassEM")]
     pub mass_em: f32,
     pub radius: f32,
-    pub surface_gravity: f32,
+    pub surface_gravity: Gravity,
     pub surface_temperature: f32,
     pub surface_pressure: f32,
     pub landable: bool,
 
     #[serde(default)]
     pub materials: Vec<ScanEventPlanetMaterial>,
-    pub composition: Option<ScanEventPlanetComposition>,
+    pub composition: Option<PlanetComposition>,
 
     #[serde(flatten)]
     pub orbit_info: OrbitInfo,
     pub rotation_period: f32,
     pub axial_tilt: f32,
+}
+
+/// Distance in light seconds.
+#[derive(Serialize, Deserialize, Clone, PartialEq)]
+pub struct DistanceLs(pub f32);
+
+impl DistanceLs {
+    /// Returns the distance in light seconds.
+    pub fn as_ls(&self) -> f32 {
+        self.0
+    }
+
+    /// Returns the distance in astronomical units.
+    pub fn as_au(&self) -> f32 {
+        self.0 / 500.0
+    }
+
+    /// Returns the distance in light years.
+    pub fn as_ly(&self) -> f32 {
+        self.0 / 31555695.8031
+    }
+
+    /// Creates a new distance from the given amount of light years.
+    pub fn from_ly(ly: f32) -> Self {
+        DistanceLs(ly * 31555695.8031)
+    }
+}
+
+impl std::fmt::Debug for DistanceLs {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{} ls ({} au / {} ly)",
+            self.0,
+            self.as_au(),
+            self.as_ly()
+        )
+    }
+}
+
+/// Gravity in m/s².
+#[derive(Serialize, Deserialize, Clone, PartialEq)]
+pub struct Gravity(pub f32);
+
+impl Gravity {
+    /// Returns the value of gravity in G.
+    pub fn as_g(&self) -> f32 {
+        // Round on two decimal points
+        (self.0 / 9.812 * 100.0).round() / 100.0
+    }
+
+    /// Returns the value of gravity in m/s².
+    pub fn as_ms2(&self) -> f32 {
+        self.0
+    }
+}
+
+impl std::fmt::Debug for Gravity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}m/s² ({}g)", self.0, self.as_g())
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -146,14 +208,6 @@ pub struct ScanEventPlanetAtmosphereComposition {
 pub struct ScanEventPlanetMaterial {
     pub name: Material,
     pub percent: f32,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
-pub struct ScanEventPlanetComposition {
-    pub ice: f32,
-    pub rock: f32,
-    pub metal: f32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -183,7 +237,10 @@ pub struct ScanEventBeltCluster {}
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::logs::content::log_event_content::scan_event::ScanEvent;
+    use crate::{
+        logs::content::log_event_content::scan_event::DistanceLs,
+        modules::logs::content::log_event_content::scan_event::ScanEvent,
+    };
 
     #[test]
     fn scan_event_is_parsed_correctly() {
@@ -213,5 +270,21 @@ mod tests {
         );
 
         assert!(value.is_ok());
+    }
+
+    #[test]
+    fn distance_is_converted_correctly() {
+        fn assert_roughly_eq(a: f32, b: f32) {
+            assert!((a - b).abs() < 0.0001);
+        }
+
+        let distance = DistanceLs(1000.0);
+
+        assert_roughly_eq(distance.as_au(), 2.0);
+        assert_roughly_eq(distance.as_ly(), 0.00003169);
+
+        let distance = DistanceLs::from_ly(0.00003169);
+        assert_roughly_eq(distance.as_au(), 2.0);
+        assert_roughly_eq(distance.as_ls(), 1000.0);
     }
 }
