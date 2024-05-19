@@ -1,6 +1,6 @@
-use crate::modules::models::exploration::genus::Genus;
-use crate::modules::models::exploration::planetary_signal_type::PlanetarySignalType;
 use serde::{Serialize, Deserialize};
+use crate::modules::exobiology::Genus;
+use crate::modules::exploration::PlanetarySignalType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

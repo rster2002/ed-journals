@@ -1,5 +1,5 @@
-use crate::modules::models::civilization::system_info::SystemInfo;
 use serde::{Serialize, Deserialize};
+use crate::modules::civilization::LocationInfo;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -16,7 +16,7 @@ pub struct LocationEvent {
     pub multicrew: bool,
 
     #[serde(flatten)]
-    pub system_info: SystemInfo,
+    pub location_info: LocationInfo,
 }
 
 // #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

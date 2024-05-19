@@ -1,7 +1,6 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::shared_commodity::SharedCommodity;
-use crate::modules::models::station::mission_type::MissionType;
+use crate::modules::mixed::MixedCommodity;
+use crate::modules::station::MissionType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -24,7 +23,7 @@ pub struct MissionAcceptedEvent {
     pub wing: bool,
 
     // TODO test when that properties are present
-    pub commodity: Option<SharedCommodity>,
+    pub commodity: Option<MixedCommodity>,
     pub count: Option<u16>,
     pub donation: Option<String>,
     pub donated: Option<u64>,

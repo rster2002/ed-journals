@@ -1,7 +1,6 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::exploration::codex_entry::CodexEntry;
-use crate::modules::models::galaxy::region::Region;
+use crate::modules::exploration::CodexEntry;
+use crate::modules::galaxy::Region;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

@@ -1,11 +1,7 @@
 use lazy_static::lazy_static;
-use crate::models::exploration::species::Species;
-use crate::models::galaxy::atmosphere_type::AtmosphereType;
-use crate::models::galaxy::planet_class::PlanetClass;
-use crate::models::galaxy::star_class::StarClass;
-use crate::models::galaxy::star_luminosity::StarLuminosity;
-use crate::models::galaxy::volcanism_type::VolcanismType;
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
+use crate::modules::exobiology::Species;
+use crate::modules::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
 
 lazy_static! {
     pub static ref SPECIES_SPAWN_CONDITIONS: [(Species, Vec<SpawnCondition>); 124] = [

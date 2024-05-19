@@ -1,7 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::ship::ship_module::ShipModule;
-use crate::modules::models::ship::ship_type::ShipType;
+use crate::modules::ship::{ShipModule, ShipType};
 
 /// When buying a module but storing at the current location instead of equipping it to the current
 /// ship.

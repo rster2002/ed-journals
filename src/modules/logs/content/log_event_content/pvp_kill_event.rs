@@ -1,5 +1,5 @@
-use crate::modules::models::commander::combat_rank::CombatRank;
 use serde::{Serialize, Deserialize};
+use crate::modules::commander::CombatRank;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

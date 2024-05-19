@@ -1,8 +1,4 @@
-use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
-use crate::modules::models::galaxy::planet_class::PlanetClass;
-use crate::modules::models::galaxy::star_class::StarClass;
-use crate::modules::models::galaxy::star_luminosity::StarLuminosity;
-use crate::modules::models::galaxy::volcanism_type::VolcanismType;
+use crate::modules::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
 
 pub enum SpawnCondition {
     MinMeanTemperature(f32),

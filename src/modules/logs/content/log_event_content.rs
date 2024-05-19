@@ -245,7 +245,7 @@ use wing_join_event::WingJoinEvent;
 use serde_json::Value;
 use crate::logs::content::log_event_content::community_goal_event::CommunityGoalEvent;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
-use crate::models::small::small_system_info::SmallSystemInfo;
+use crate::modules::small::SmallSystemInfo;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -329,7 +329,6 @@ pub mod drop_ship_deploy_event;
 pub mod eject_cargo_event;
 pub mod embark_event;
 pub mod end_crew_session_event;
-pub mod engineer_apply_event;
 pub mod engineer_contribution_event;
 pub mod engineer_craft_event;
 pub mod engineer_progress_event;
@@ -791,6 +790,10 @@ pub enum LogEventContent {
 impl LogEventContent {
     pub fn system_address(&self) -> Option<u64> {
         Some(match self {
+            LogEventContent::Location(event) => event.location_info.system_address,
+            LogEventContent::FSDJump(event) => event.system_info.system_address,
+            LogEventContent::CarrierJump(event) => event.system_info.system_address,
+            LogEventContent::CarrierJump(event) => event.system_info.system_address,
             LogEventContent::ApproachSettlement(event) => event.system_address,
             LogEventContent::CarrierBuy(event) => event.system_address,
             LogEventContent::CarrierJumpRequest(event) => event.system_address,
@@ -825,6 +828,10 @@ impl LogEventContent {
 
     pub fn star_name(&self) -> Option<&str> {
         Some(match self {
+            LogEventContent::Location(event) => &event.location_info.star_system,
+            LogEventContent::FSDJump(event) => &event.system_info.star_system,
+            LogEventContent::CarrierJump(event) => &event.system_info.star_system,
+            LogEventContent::CarrierJump(event) => &event.system_info.star_system,
             LogEventContent::CarrierBuy(event) => &event.location,
             LogEventContent::CarrierJumpRequest(event) => &event.system_name,
             LogEventContent::CodexEntry(event) => &event.system,
@@ -861,6 +868,10 @@ impl LogEventContent {
 
     pub fn body_id(&self) -> Option<u8> {
         Some(match self {
+            LogEventContent::Location(event) => event.location_info.body_id,
+            LogEventContent::FSDJump(event) => event.system_info.body_id,
+            LogEventContent::CarrierJump(event) => event.system_info.body_id,
+            LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
             LogEventContent::CodexEntry(event) => event.body_id,
@@ -879,6 +890,10 @@ impl LogEventContent {
 
     pub fn body_name(&self) -> Option<&str> {
         Some(match self {
+            LogEventContent::Location(event) => &event.location_info.body,
+            LogEventContent::FSDJump(event) => &event.system_info.body,
+            LogEventContent::CarrierJump(event) => &event.system_info.body,
+            LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::ApproachSettlement(event) => &event.body_name,
             LogEventContent::CarrierJumpRequest(event) => match &event.body {
                 Some(name) => name,

@@ -4,13 +4,13 @@ use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Serialize;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::modules::models::civilization::system_info::SystemInfo;
+use crate::modules::civilization::LocationInfo;
 use crate::state::models::body_state::BodyState;
 use crate::state::models::feed_result::FeedResult;
 
 #[derive(Serialize)]
 pub struct SystemState {
-    pub system_info: SystemInfo,
+    pub location_info: LocationInfo,
     pub bodies: HashMap<u8, BodyState>,
     pub visits: Vec<DateTime<Utc>>,
     pub carrier_visits: Vec<DateTime<Utc>>,
@@ -26,7 +26,7 @@ impl SystemState {
             return FeedResult::Skipped;
         };
 
-        if system_address != self.system_info.system_address {
+        if system_address != self.location_info.system_address {
             return FeedResult::Skipped;
         }
 
@@ -79,10 +79,10 @@ impl SystemState {
     }
 }
 
-impl From<&SystemInfo> for SystemState {
-    fn from(value: &SystemInfo) -> Self {
+impl From<&LocationInfo> for SystemState {
+    fn from(value: &LocationInfo) -> Self {
         SystemState {
-            system_info: value.clone(),
+            location_info: value.clone(),
             bodies: HashMap::new(),
             visits: Vec::new(),
             carrier_visits: Vec::new(),

@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::models::trading::commodity::Commodity;
+use crate::modules::trading::Commodity;
 
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]

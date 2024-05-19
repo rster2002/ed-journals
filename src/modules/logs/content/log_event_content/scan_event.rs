@@ -1,17 +1,7 @@
 use serde::{Serialize, Deserialize, Deserializer};
 use serde_json::Value;
-
-use crate::modules::models::galaxy::atmosphere::Atmosphere;
-use crate::modules::models::galaxy::atmosphere_element::AtmosphereElement;
-use crate::modules::models::galaxy::atmosphere_type::AtmosphereType;
-use crate::modules::models::galaxy::orbit_info::OrbitInfo;
-use crate::modules::models::galaxy::planet_class::PlanetClass;
-use crate::modules::models::galaxy::ring_class::RingClass;
-use crate::modules::models::galaxy::star_class::StarClass;
-use crate::modules::models::galaxy::star_luminosity::StarLuminosity;
-use crate::modules::models::galaxy::terraform_state::TerraformState;
-use crate::modules::models::galaxy::volcanism::Volcanism;
-use crate::modules::models::materials::material::Material;
+use crate::modules::galaxy::{Atmosphere, AtmosphereElement, AtmosphereType, OrbitInfo, PlanetClass, RingClass, StarClass, StarLuminosity, TerraformState, Volcanism};
+use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

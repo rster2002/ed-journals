@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::models::galaxy::star_class::StarClass;
+use crate::modules::galaxy::StarClass;
 
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]

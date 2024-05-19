@@ -5,27 +5,45 @@
 //! > **Warning** this project is currently in beta, which means that it is very much work in progress. Breaking
 //! > changes are likely to happen.
 //!
-//! ## Getting started
+//! ## Where to start
 //!
-//! Currently, the only files that are parsed are the log files. Models for working `Market.json`
-//! and `Status.json` etc will be added in the future. Best place to get started is the [JournalDir]
-//! model.
+//! This library contains quite a large number of modules that each cover a different part of the
+//! game, but there are a couple of modules that are important to point out:
+//!
+//! * The [logs] module contains readers and models for reading the `Journal.log` files that are
+//!   stored in the games journal directory.
+//! * [State](state) can be used to turn the logs from the `Journal.log` files into a single state that can
+//!   then be queried and used to figure out the current or previous state of the game.
+//! * The [journal] module can be used to interact with the whole journal directory and can watch
+//!   the directory as a whole for changes.
 
 mod modules;
 
 pub use modules::logs;
-pub use modules::models;
 pub use modules::journal;
-pub use modules::state;
-
 pub use modules::status;
+pub use modules::state;
+pub use modules::exobiology;
+pub use modules::exploration;
 pub use modules::outfitting;
 pub use modules::shipyard;
 pub use modules::market;
 pub use modules::nav_route;
 pub use modules::modules_info;
 pub use modules::backpack;
+pub use modules::cargo;
 pub use modules::ship_locker;
+pub use modules::galaxy;
+pub use modules::civilization;
+pub use modules::commander;
+pub use modules::materials;
+pub use modules::trading;
+pub use modules::odyssey;
+pub use modules::ship;
+pub use modules::station;
+pub use modules::thargoid;
+pub use modules::small;
+pub use modules::mixed;
 
 #[cfg(test)]
 mod tests {

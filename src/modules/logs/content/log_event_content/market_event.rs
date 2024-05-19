@@ -1,6 +1,5 @@
 use serde::{Serialize, Deserialize};
-
-use crate::modules::models::station::station_type::StationType;
+use crate::modules::station::StationType;
 
 /// Market data is written to a separate file called `market.json`.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

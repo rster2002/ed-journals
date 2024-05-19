@@ -1,20 +1,22 @@
-use std::collections::{HashMap, HashSet};
-use std::fmt::{Debug, Formatter};
+use std::collections::{HashMap};
+use std::fmt::{Debug};
 use std::mem;
 use serde::Serialize;
-use crate::journal::JournalEvent;
 use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
+/// The complete state of the whole game. This includes potentially the different commanders that
+/// use the same game installation. By feeding the state entries from the journal log files it
+/// creates a state which makes it easier to read information about the game.
 #[derive(Serialize)]
 pub struct GameState {
     commanders: HashMap<String, CommanderState>,
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
     header_count: u64,
-    pub queued: Vec<LogEvent>,
+    queued: Vec<LogEvent>,
 }
 
 impl GameState {

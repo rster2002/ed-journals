@@ -1,5 +1,5 @@
-use crate::modules::models::ship::ship_slot::ShipSlot;
 use serde::{Serialize, Deserialize};
+use crate::modules::ship::ShipSlot;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

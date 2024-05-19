@@ -6,8 +6,7 @@ use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySign
 use crate::logs::content::log_event_content::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::logs::content::log_event_content::saa_signals_found_event::{SAASignalsFoundEventGenus, SAASignalsFoundEventSignal};
 use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
-use crate::modules::models::exploration::genus::Genus;
-use crate::modules::models::exploration::species::Species;
+use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::organic_state::OrganicState;
 
