@@ -83,11 +83,6 @@ impl SystemState {
             body.clear_organic_process();
         }
     }
-
-    /// Constructs a spawn source for the given body.
-    pub fn exobiology_for_body(&self, body_name: impl Into<String>) -> SpawnSource {
-        self.exobiology.construct_spawn_source_for_body(body_name)
-    }
 }
 
 impl From<&SystemInfo> for SystemState {

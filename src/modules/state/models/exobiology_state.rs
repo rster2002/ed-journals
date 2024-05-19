@@ -76,7 +76,7 @@ impl ExobiologyState {
     }
 
     /// Constructs a SpawnSource from the ExobiologyState's pool of information.
-    pub fn construct_spawn_source_for_body(&self, body_name: impl Into<String>) -> SpawnSource {
+    pub fn for_body(&self, body_name: impl Into<String>) -> SpawnSource {
         let body_name = body_name.into();
 
         let event_is_applicable = |star_system: &String| body_name.starts_with(star_system);
@@ -268,7 +268,7 @@ mod tests {
             .iter()
             .filter(|(body, _)| !blacklisted_bodies.contains(body))
         {
-            let spawn_source = state.construct_spawn_source_for_body(body_name);
+            let spawn_source = state.for_body(body_name);
 
             for species in expected_species {
                 let conditions = species.spawn_conditions();
