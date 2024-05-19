@@ -5,6 +5,7 @@ use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
+use crate::journal::blocking::LiveJournalDirReader as BlockingLiveJournalDirReader;
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
@@ -18,6 +19,29 @@ use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
 // TODO this is in need of some abstracting
+/// Asynchronous variant of the blocking [LiveJournalDirReader](BlockingLiveJournalDirReader).
+/// Largely works the same way, but instead of completely blocking the current thread, it instead
+/// will resolve a future when new events are fired.
+///
+/// ```rust
+/// # use std::env::current_dir;
+/// use ed_journals::journal::asynchronous::LiveJournalDirReader;
+/// use ed_journals::journal::auto_detect_journal_path;
+///
+/// # tokio_test::block_on(async {
+/// let path = auto_detect_journal_path().unwrap();
+/// # let path = current_dir()
+/// #    .unwrap()
+/// #    .join("test-files")
+/// #    .join("journals");
+/// let mut journal_reader = LiveJournalDirReader::open(&path).unwrap();
+///
+/// while let Some(entry) = journal_reader.next().await {
+///     // Do something with the entry
+///     # break;
+/// }
+/// # });
+/// ```
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     blocker: AsyncBlocker,

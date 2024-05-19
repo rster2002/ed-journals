@@ -19,7 +19,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 /// reads all files. Once all historic files have been read the current read will only resolve once
 /// the newest log file is changed at which it will read the active log file and return the entry.
 ///
-/// ```no_run
+/// ```rust
 /// use std::path::PathBuf;
 /// use ed_journals::logs::asynchronous::LiveLogDirReader;
 ///
@@ -33,6 +33,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 /// // until it detects new entries in the latest log file.
 /// while let Some(entry) = live_dir_reader.next().await {
 ///     // Do something with the entry
+///     # break;
 /// }
 /// # });
 /// ```

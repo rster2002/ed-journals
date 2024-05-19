@@ -18,6 +18,29 @@ use crate::ship_locker::blocking::{read_ship_locker_file, ReadShipLockerFileErro
 use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
 use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
+/// Watches the entire journal directory for changes and emits then as events. The reader will
+/// initially read all the history logs until it reaches the end of the latest log file, at
+/// which it will block the current thread until there are any updates. At any point during
+/// this if there are changes to any of the `.json` files in the log directory, these events
+/// will be fired first before continuing reading the log files.
+///
+/// ```rust
+/// # use std::env::current_dir;
+/// use ed_journals::journal::auto_detect_journal_path;
+/// use ed_journals::journal::blocking::LiveJournalDirReader;
+///
+/// let path = auto_detect_journal_path().unwrap();
+/// # let path = current_dir()
+/// #    .unwrap()
+/// #    .join("test-files")
+/// #    .join("journals");
+/// let mut journal_reader = LiveJournalDirReader::open(&path).unwrap();
+///
+/// for entry in journal_reader {
+///     // Do something with the entry
+///     # break;
+/// }
+/// ```
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     blocker: SyncBlocker,
@@ -63,6 +86,8 @@ pub enum JournalDirWatcherError {
 }
 
 impl LiveJournalDirReader {
+    /// Attempts to open the given path and tries to start watching the contents. Note that this
+    /// does not check if the path actually points to a correct journal directory.
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, JournalDirWatcherError> {
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();

@@ -1,15 +1,16 @@
 use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
 use crate::modules::galaxy::TerraformState;
 
-pub fn calculate_estimated_worth(scan: &ScanEvent) -> f32 {
+/// Takes a scan event and calculates the estimated worth of the scanned body.
+pub fn calculate_estimated_worth(scan: &ScanEvent) -> u64 {
     match &scan.kind {
         ScanEventKind::Star(star_scan) => {
-            calculate_estimated_star_worth(&star_scan, !scan.was_discovered)
+            calculate_estimated_star_worth(&star_scan, !scan.was_discovered) as u64
         }
         ScanEventKind::Planet(planet_scan) => {
-            calculate_estimated_planet_worth(&planet_scan, !scan.was_discovered, !scan.was_mapped)
+            calculate_estimated_planet_worth(&planet_scan, !scan.was_discovered, !scan.was_mapped) as u64
         }
-        _ => 0.0,
+        _ => 0,
     }
 }
 
