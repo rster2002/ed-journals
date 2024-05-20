@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{DataChange, ModifyKind};
+use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::journal::journal_event::JournalEvent;
@@ -99,9 +99,15 @@ impl LiveJournalDirReader {
 
         let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| {
             if let Ok(event) = res {
-                let EventKind::Modify(ModifyKind::Data(DataChange::Content)) = event.kind else {
-                    return;
+                let matched = match event.kind {
+                    EventKind::Create(CreateKind::File)
+                    | EventKind::Modify(ModifyKind::Data(DataChange::Content)) => true,
+                    _ => false,
                 };
+
+                if !matched {
+                    return;
+                }
 
                 for path in event.paths {
                     if path.ends_with("Status.json") {
@@ -229,3 +235,56 @@ impl Iterator for LiveJournalDirReader {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use std::env::current_dir;
+    use std::{fs, thread};
+    use std::thread::spawn;
+    use std::time::Duration;
+    use crate::journal::blocking::LiveJournalDirReader;
+    use crate::journal::JournalEvent;
+
+    #[test]
+    fn live_journal_reader_fires_events_correctly() {
+        let base = current_dir()
+            .unwrap()
+            .join("test-files");
+
+        let dir = base
+            .join("temp-dir");
+
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+
+        let local_dir = dir.clone();
+        let handle = spawn(move || {
+            let mut reader = LiveJournalDirReader::open(&local_dir).unwrap();
+
+            let mut count = 0;
+            for entry in reader {
+                count += 1;
+
+                if count == 1 {
+                    dbg!(&entry);
+                    assert!(entry.is_ok());
+                    break;
+                }
+            }
+
+            count
+        });
+
+        let local_thread = handle.thread().clone();
+        let i = spawn(move || {
+            thread::sleep(Duration::from_secs(10));
+            local_thread.unpark();
+            std::process::exit(42);
+        });
+
+        fs::copy(base.join("json").join("Shipyard.json"), dir.join("Shipyard.json")).unwrap();
+
+        let entries = handle.join().unwrap();
+
+        assert_eq!(entries, 1);
+    }
+}
