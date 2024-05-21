@@ -98,9 +98,8 @@ impl GameState {
                     return FeedResult::Later;
                 };
 
-                match current.feed_log_event(event) {
-                    FeedResult::Later => return FeedResult::Later,
-                    _ => {}
+                if let FeedResult::Later = current.feed_log_event(event) {
+                    return FeedResult::Later;
                 }
             }
         }

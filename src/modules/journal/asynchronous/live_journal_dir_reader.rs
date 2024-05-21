@@ -44,7 +44,7 @@ use crate::status::blocking::{read_status_file, ReadStatusFileError};
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     blocker: AsyncBlocker,
-    watcher: RecommendedWatcher,
+    _watcher: RecommendedWatcher,
     log_dir_reader: LogDirReader,
     pending_events: Arc<Mutex<VecDeque<Result<JournalEvent, JournalDirWatcherError>>>>,
 }
@@ -194,7 +194,7 @@ impl LiveJournalDirReader {
 
         Ok(LiveJournalDirReader {
             blocker,
-            watcher,
+            _watcher: watcher,
             log_dir_reader,
             pending_events,
         })

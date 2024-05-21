@@ -30,7 +30,7 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 pub struct LiveLogFileReader {
     blocker: SyncBlocker,
     log_file_reader: LogFileReader,
-    watcher: RecommendedWatcher,
+    _watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
 }
 
@@ -63,7 +63,7 @@ impl LiveLogFileReader {
         Ok(LiveLogFileReader {
             blocker,
             log_file_reader: journal_file_reader,
-            watcher,
+            _watcher: watcher,
             active: Arc::new(AtomicBool::new(true)),
         })
     }

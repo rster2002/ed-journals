@@ -37,7 +37,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 pub struct LiveLogDirReader {
     blocker: AsyncBlocker,
     log_dir_reader: LogDirReader,
-    watcher: RecommendedWatcher,
+    _watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
 }
 
@@ -66,7 +66,7 @@ impl LiveLogDirReader {
         Ok(LiveLogDirReader {
             blocker,
             active: Arc::new(AtomicBool::new(true)),
-            watcher,
+            _watcher: watcher,
             log_dir_reader,
         })
     }

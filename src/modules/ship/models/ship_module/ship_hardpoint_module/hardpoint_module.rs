@@ -224,8 +224,7 @@ impl HardpointModule {
     }
 
     pub fn is_powerplay_module(&self) -> bool {
-        match self {
-            HardpointModule::RetributorBeamLaser
+        matches!(self, HardpointModule::RetributorBeamLaser
             | HardpointModule::CytoscramblerBurstLaser
             | HardpointModule::PacifierFragCannon
             | HardpointModule::MiningLanceBeamLaser
@@ -234,19 +233,13 @@ impl HardpointModule {
             | HardpointModule::EnforcerCannon
             | HardpointModule::AdvancedPlasmaAccelerator
             | HardpointModule::PulseDisruptorLaser
-            | HardpointModule::ImperialHammerRailGun => true,
-
-            _ => false,
-        }
+            | HardpointModule::ImperialHammerRailGun)
     }
 
     pub fn is_guardian_module(&self) -> bool {
-        match self {
-            HardpointModule::GuardianGaussCannon
+        matches!(self, HardpointModule::GuardianGaussCannon
             | HardpointModule::GuardianPlasmaCharger
-            | HardpointModule::GuardianShardCannon => true,
-            _ => false,
-        }
+            | HardpointModule::GuardianShardCannon)
     }
 }
 

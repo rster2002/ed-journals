@@ -151,8 +151,7 @@ impl ShipModule {
     }
 
     pub fn is_cosmetic(&self) -> bool {
-        match self {
-            ShipModule::PaintJob(_)
+        matches!(self, ShipModule::PaintJob(_)
             | ShipModule::Decal(_)
             | ShipModule::VoicePack(_)
             | ShipModule::Nameplate(_)
@@ -160,9 +159,7 @@ impl ShipModule {
             | ShipModule::WeaponColor(_)
             | ShipModule::ShipKitModule(_)
             | ShipModule::Bobble(_)
-            | ShipModule::StringLights(_) => true,
-            _ => false,
-        }
+            | ShipModule::StringLights(_))
     }
 }
 

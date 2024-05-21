@@ -194,22 +194,16 @@ impl InternalModule {
     }
 
     pub fn is_powerplay_module(&self) -> bool {
-        match self {
-            InternalModule::PrismaticShieldGenerator => true,
-            _ => false,
-        }
+        matches!(self, InternalModule::PrismaticShieldGenerator)
     }
 
     pub fn is_guardian_module(&self) -> bool {
-        match self {
-            InternalModule::GuardianHybridPowerDistributor
+        matches!(self, InternalModule::GuardianHybridPowerDistributor
             | InternalModule::GuardianHybridPowerPlant
             | InternalModule::GuardianModuleReinforcement
             | InternalModule::GuardianFSDBooster
             | InternalModule::GuardianHullReinforcement
-            | InternalModule::GuardianShieldReinforcement => true,
-            _ => false,
-        }
+            | InternalModule::GuardianShieldReinforcement)
     }
 }
 

@@ -70,9 +70,9 @@ impl BodyState {
                     self.touchdowns.push(touchdown.clone());
                 }
             },
-            LogEventContent::ScanOrganic(scanned_organic) => {
-
-            },
+            // LogEventContent::ScanOrganic(scanned_organic) => {
+            //
+            // },
 
             _ => {},
         }
