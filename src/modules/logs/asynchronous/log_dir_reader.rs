@@ -74,7 +74,7 @@ impl LogDirReader {
     pub async fn next(&mut self) -> Option<Result<LogEvent, LogDirReaderError>> {
         loop {
             if self.current_reader.is_none() {
-                match self.set_next_file() {
+                match self.set_next_file().await {
                     Ok(true) => {},
                     Ok(false) => return None,
                     Err(error) => {
@@ -88,8 +88,8 @@ impl LogDirReader {
                 return None;
             };
 
-            let Some(entry) = reader.next() else {
-                match self.set_next_file() {
+            let Some(entry) = reader.next().await else {
+                match self.set_next_file().await {
                     Ok(true) => continue,
                     Ok(false) => return None,
                     Err(error) => {
