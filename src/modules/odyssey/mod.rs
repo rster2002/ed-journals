@@ -13,4 +13,3 @@ pub use models::weapon::Weapon;
 pub use models::weapon_mod::WeaponMod;
 
 mod models;
-

@@ -8,4 +8,3 @@ pub mod asynchronous;
 
 mod functions;
 mod journal_event;
-

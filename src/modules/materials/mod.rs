@@ -5,4 +5,3 @@ pub use models::material_grade::MaterialGrade;
 pub use models::material_group::MaterialGroup;
 
 mod models;
-

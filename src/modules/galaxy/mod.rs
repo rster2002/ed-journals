@@ -20,4 +20,3 @@ pub use models::volcanism::VolcanismError;
 pub use models::volcanism_type::VolcanismType;
 
 mod models;
-

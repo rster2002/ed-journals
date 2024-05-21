@@ -2,8 +2,8 @@ use std::collections::VecDeque;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
 
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{DataChange, ModifyKind};
+use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};

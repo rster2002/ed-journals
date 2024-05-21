@@ -6,4 +6,3 @@ pub use models::star_class_codex_entry::StarClassCodexEntryError;
 
 mod functions;
 mod models;
-

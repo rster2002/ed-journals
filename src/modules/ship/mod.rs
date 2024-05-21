@@ -37,4 +37,3 @@ pub use models::ship_type::ShipTypeError;
 pub use models::srv_type::SRVType;
 
 mod models;
-

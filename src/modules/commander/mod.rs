@@ -14,4 +14,3 @@ pub use models::trade_rank::TradeRank;
 pub use models::trade_rank::TradeRankError;
 
 mod models;
-

@@ -1,6 +1,6 @@
-use std::{fs, io};
 use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
+use std::{fs, io};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use serde::Deserialize;
