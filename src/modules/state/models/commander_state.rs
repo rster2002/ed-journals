@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use serde::Serialize;
 
-use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::commander_event::CommanderEvent;
 use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
+use crate::logs::content::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;
@@ -39,7 +39,13 @@ impl CommanderState {
                 system.visit(&log_event.timestamp);
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
-                ScanOrganicEventScanType::Sample => {}
+                ScanOrganicEventScanType::Sample => {
+                    self.current_organic = Some(CurrentOrganic {
+                        system_address: scan_organic.system_address,
+                        body_id: scan_organic.body,
+                        species: scan_organic.species.clone(),
+                    });
+                }
                 ScanOrganicEventScanType::Analyse => {}
                 ScanOrganicEventScanType::Log => {
                     self.current_organic = None;

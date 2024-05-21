@@ -3,8 +3,8 @@ use std::mem;
 
 use serde::Serialize;
 
-use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;
+use crate::logs::content::{LogEvent, LogEventContent};
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
@@ -13,7 +13,7 @@ use crate::state::models::feed_result::FeedResult;
 /// creates a state which makes it easier to read information about the game.
 #[derive(Serialize)]
 pub struct GameState {
-    commanders: HashMap<String, CommanderState>,
+    pub commanders: HashMap<String, CommanderState>,
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
     header_count: u64,
@@ -114,5 +114,27 @@ impl GameState {
 impl Default for GameState {
     fn default() -> Self {
         GameState::new()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::logs::blocking::LogDirReader;
+    use crate::state::GameState;
+    use std::env::current_dir;
+
+    #[test]
+    fn state_is_correct() {
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+
+        let log_dir = LogDirReader::open(dir_path);
+
+        // let mut vec = vec![];
+        let mut state = GameState::new();
+
+        for entry in log_dir {
+            state.feed_log_event(&entry.unwrap());
+            // vec.push(entry.unwrap());
+        }
     }
 }
