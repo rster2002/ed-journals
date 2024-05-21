@@ -1,5 +1,7 @@
 use std::path::Path;
+
 use thiserror::Error;
+
 use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 use crate::logs::blocking::{LogFileReader, LogFileReaderError};
 use crate::logs::content::LogEvent;
@@ -34,10 +36,7 @@ impl LogDirReader {
         }
     }
 
-    fn set_current_file(
-        &mut self,
-        journal_file: LogFile,
-    ) -> Result<(), LogDirReaderError> {
+    fn set_current_file(&mut self, journal_file: LogFile) -> Result<(), LogDirReaderError> {
         self.current_reader = Some(journal_file.create_blocking_reader()?);
         self.current_file = Some(journal_file);
 
@@ -75,12 +74,12 @@ impl Iterator for LogDirReader {
         loop {
             if self.current_reader.is_none() {
                 match self.set_next_file() {
-                    Ok(true) => {},
+                    Ok(true) => {}
                     Ok(false) => return None,
                     Err(error) => {
                         self.failing = true;
                         return Some(Err(error));
-                    },
+                    }
                 }
             }
 
@@ -95,7 +94,7 @@ impl Iterator for LogDirReader {
                     Err(error) => {
                         self.failing = true;
                         return Some(Err(error));
-                    },
+                    }
                 }
             };
 
@@ -107,14 +106,12 @@ impl Iterator for LogDirReader {
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
+
     use crate::logs::blocking::LogDirReader;
 
     #[test]
     fn all_entries_are_read_correctly() {
-        let dir_path = current_dir()
-            .unwrap()
-            .join("test-files")
-            .join("journals");
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
         let mut reader = LogDirReader::open(dir_path);
 

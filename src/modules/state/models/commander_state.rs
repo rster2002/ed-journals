@@ -1,7 +1,9 @@
 use std::collections::HashMap;
+
 use serde::Serialize;
-use crate::logs::content::log_event_content::commander_event::CommanderEvent;
+
 use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::commander_event::CommanderEvent;
 use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::current_organic::CurrentOrganic;
@@ -25,28 +27,26 @@ impl CommanderState {
 
                 let system = self.upset_system(&location.location_info);
                 system.visit(&log_event.timestamp);
-            },
+            }
             LogEventContent::CarrierJump(carrier_jump) => {
                 let system = self.upset_system(&carrier_jump.system_info);
                 system.carrier_visit(&log_event.timestamp);
-            },
+            }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);
 
                 let system = self.upset_system(&fsd_jump.system_info);
                 system.visit(&log_event.timestamp);
-            },
-            LogEventContent::ScanOrganic(scan_organic) => {
-                match &scan_organic.scan_type {
-                    ScanOrganicEventScanType::Sample => {}
-                    ScanOrganicEventScanType::Analyse => {}
-                    ScanOrganicEventScanType::Log => {
-                        self.current_organic = None;
-                    }
+            }
+            LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
+                ScanOrganicEventScanType::Sample => {}
+                ScanOrganicEventScanType::Analyse => {}
+                ScanOrganicEventScanType::Log => {
+                    self.current_organic = None;
                 }
             },
 
-            _ => {},
+            _ => {}
         }
 
         if let Some(address) = log_event.content.system_address() {
@@ -61,9 +61,12 @@ impl CommanderState {
     }
 
     pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
-        self.systems.entry(location_info.system_address).or_insert_with(|| location_info.into());
+        self.systems
+            .entry(location_info.system_address)
+            .or_insert_with(|| location_info.into());
 
-        self.systems.get_mut(&location_info.system_address)
+        self.systems
+            .get_mut(&location_info.system_address)
             .expect("Should have been added")
     }
 

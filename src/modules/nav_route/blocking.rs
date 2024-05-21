@@ -1,11 +1,13 @@
 use std::fs;
 use std::path::Path;
+
 use thiserror::Error;
+
 use crate::modules::nav_route::models::nav_route::NavRoute;
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as NavRouteFileWatcherError;
 
 pub type NavRouteFileWatcher = LiveJsonFileWatcher<NavRoute>;
-pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as NavRouteFileWatcherError;
 
 pub fn read_nav_route_file<P: AsRef<Path>>(path: P) -> Result<NavRoute, ReadNavRouteFileError> {
     Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
@@ -23,6 +25,7 @@ pub enum ReadNavRouteFileError {
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
+
     use crate::modules::nav_route::blocking::read_nav_route_file;
 
     #[test]

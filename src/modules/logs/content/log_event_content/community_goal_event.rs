@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -31,11 +31,14 @@ pub struct CommunityGoalEventGoal {
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::content::log_event_content::community_goal_event::{CommunityGoalEvent, CommunityGoalEventGoal};
+    use crate::logs::content::log_event_content::community_goal_event::{
+        CommunityGoalEvent, CommunityGoalEventGoal,
+    };
 
     #[test]
     fn community_goal_event_is_parsed_correctly() {
-        let goal: CommunityGoalEvent = serde_json::from_str(r#"
+        let goal: CommunityGoalEvent = serde_json::from_str(
+            r#"
             {
               "timestamp": "2024-04-02T16:09:59Z",
               "event": "CommunityGoal",
@@ -62,13 +65,15 @@ mod tests {
                 }
               ]
             }
-        "#)
-            .unwrap();
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]
     fn community_goal_is_parsed_correctly() {
-        let goal: CommunityGoalEventGoal = serde_json::from_str(r#"
+        let goal: CommunityGoalEventGoal = serde_json::from_str(
+            r#"
             {
               "CGID": 804,
               "Title": "Aid Achilles Aerospace in Researching Titan Travel Technology",
@@ -89,7 +94,8 @@ mod tests {
               "PlayerPercentileBand": 100,
               "Bonus": 500000
             }
-        "#)
-            .unwrap();
+        "#,
+        )
+        .unwrap();
     }
 }

@@ -15,9 +15,7 @@ impl SyncBlocker {
     }
 
     pub fn unblock(&self) {
-        let mut guard = self.waiting_thread
-            .lock()
-            .expect("Should have been locked");
+        let mut guard = self.waiting_thread.lock().expect("Should have been locked");
 
         if let Some(thread) = guard.0.as_ref() {
             thread.unpark();

@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::Serialize;
 
+use serde::Serialize;
 use thiserror::Error;
 
 /// The sizes that hardpoints can have. [HardpointSize::Tiny] is used for utility mounts and the

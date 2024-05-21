@@ -1,5 +1,7 @@
 use std::path::Path;
+
 use thiserror::Error;
+
 use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 use crate::logs::asynchronous::{LogFileReader, LogFileReaderError};
 use crate::logs::content::LogEvent;
@@ -34,10 +36,7 @@ impl LogDirReader {
         }
     }
 
-    async fn set_current_file(
-        &mut self,
-        journal_file: LogFile,
-    ) -> Result<(), LogDirReaderError> {
+    async fn set_current_file(&mut self, journal_file: LogFile) -> Result<(), LogDirReaderError> {
         self.current_reader = Some(journal_file.create_async_reader().await?);
         self.current_file = Some(journal_file);
 
@@ -49,15 +48,13 @@ impl LogDirReader {
 
         for file in files {
             let Some(current) = &self.current_file else {
-                self.set_current_file(file)
-                    .await?;
+                self.set_current_file(file).await?;
 
                 return Ok(true);
             };
 
             if &file > current {
-                self.set_current_file(file)
-                    .await?;
+                self.set_current_file(file).await?;
 
                 return Ok(true);
             }
@@ -74,12 +71,12 @@ impl LogDirReader {
         loop {
             if self.current_reader.is_none() {
                 match self.set_next_file().await {
-                    Ok(true) => {},
+                    Ok(true) => {}
                     Ok(false) => return None,
                     Err(error) => {
                         self.failing = true;
                         return Some(Err(error));
-                    },
+                    }
                 }
             }
 
@@ -94,7 +91,7 @@ impl LogDirReader {
                     Err(error) => {
                         self.failing = true;
                         return Some(Err(error));
-                    },
+                    }
                 }
             };
 
@@ -102,4 +99,3 @@ impl LogDirReader {
         }
     }
 }
-

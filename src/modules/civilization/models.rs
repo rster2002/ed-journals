@@ -1,10 +1,10 @@
 pub mod conflict;
 pub mod economy;
 pub mod faction;
-pub mod faction_state;
 pub mod faction_happiness;
+pub mod faction_state;
 pub mod government;
-pub mod superpower;
 pub mod location_info;
+pub mod superpower;
 pub mod system_security;
 pub mod thargoid_war;

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+
 use crate::modules::trading::{Commodity, CommodityCategory};
 
 #[derive(Debug, Deserialize, PartialEq)]

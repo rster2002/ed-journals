@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
-use serde::{Deserialize};
+use serde::Deserialize;
+
 use crate::modules::status::models::destination_status::DestinationStatus;
 use crate::modules::status::models::flags2::Flags2;
 use crate::modules::status::models::flags::Flags;
@@ -70,4 +71,3 @@ impl ShipStatus {
         self.pips[2]
     }
 }
-

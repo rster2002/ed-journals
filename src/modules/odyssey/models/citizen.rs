@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// This is used for bounty targets and other events to specify on foot NPCs.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -22,7 +22,7 @@ pub enum Citizen {
     #[serde(
         rename = "heavysuitai_class1",
         alias = "heavysuitai_class2",
-        alias = "heavysuitai_class3",
+        alias = "heavysuitai_class3"
     )]
     Enforcer,
 
@@ -36,7 +36,7 @@ pub enum Citizen {
     #[serde(
         rename = "closesuitai_class1",
         alias = "closesuitai_class2",
-        alias = "closesuitai_class3",
+        alias = "closesuitai_class3"
     )]
     Striker,
 

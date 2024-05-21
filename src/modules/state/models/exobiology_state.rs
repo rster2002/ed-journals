@@ -2,14 +2,17 @@ use std::collections::{HashMap, HashSet};
 
 use serde::Serialize;
 use strum::IntoEnumIterator;
+
 use crate::exobiology::{SpawnSource, SpawnSourceStar, TargetPlanet};
 use crate::exploration::PlanetarySignalType;
 use crate::galaxy::Nebula;
+use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fsd_jump_event::FSDJumpEvent;
 use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalsEvent;
 use crate::logs::content::log_event_content::location_event::LocationEvent;
-use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventParent, ScanEventPlanet, ScanEventStar};
-use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::scan_event::{
+    ScanEvent, ScanEventKind, ScanEventParent, ScanEventPlanet, ScanEventStar,
+};
 
 use super::feed_result::FeedResult;
 
@@ -83,12 +86,14 @@ impl ExobiologyState {
             .collect::<Vec<&(ScanEvent, ScanEventPlanet)>>();
 
         let target_body = planet_scan_events
-            .iter().find(|(scan, _)| scan.body_name == body_name)
+            .iter()
+            .find(|(scan, _)| scan.body_name == body_name)
             .map(|(scan, planet)| (scan, planet));
 
         let fss_body_signal = self
             .fss_body_signals_events
-            .iter().find(|fss_body_signals| fss_body_signals.body_name == body_name);
+            .iter()
+            .find(|fss_body_signals| fss_body_signals.body_name == body_name);
 
         let star_pos_from_location = self
             .location_events
@@ -137,9 +142,7 @@ impl ExobiologyState {
                 surface_temperature: planet.surface_temperature,
                 volcanism: planet.volcanism.clone(),
                 materials: HashSet::from_iter(planet.materials.iter().map(|m| m.name.clone())),
-                composition: planet
-                    .composition.clone()
-                    .unwrap_or_default(),
+                composition: planet.composition.clone().unwrap_or_default(),
             }),
             geological_signals_present: fss_body_signal.map(|fss_body_signal| {
                 fss_body_signal
@@ -176,12 +179,13 @@ impl Default for ExobiologyState {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::{HashMap, HashSet};
+    use std::env::current_dir;
+
+    use crate::exobiology::Species;
     use crate::logs::content::LogEventContent;
     use crate::logs::LogDir;
     use crate::state::ExobiologyState;
-    use std::collections::{HashMap, HashSet};
-    use std::env::current_dir;
-    use crate::exobiology::Species;
 
     #[test]
     fn spawnable_species_no_false_negatives() {

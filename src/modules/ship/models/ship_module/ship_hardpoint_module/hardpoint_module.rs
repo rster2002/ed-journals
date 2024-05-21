@@ -1,8 +1,9 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
+
 use crate::modules::ship::HardpointType;
 
 /// The hardpoint module type. This does not contain information about the size or mounting of the
@@ -224,22 +225,28 @@ impl HardpointModule {
     }
 
     pub fn is_powerplay_module(&self) -> bool {
-        matches!(self, HardpointModule::RetributorBeamLaser
-            | HardpointModule::CytoscramblerBurstLaser
-            | HardpointModule::PacifierFragCannon
-            | HardpointModule::MiningLanceBeamLaser
-            | HardpointModule::PackHoundMissileRack
-            | HardpointModule::RocketPropelledFSDDisruptor
-            | HardpointModule::EnforcerCannon
-            | HardpointModule::AdvancedPlasmaAccelerator
-            | HardpointModule::PulseDisruptorLaser
-            | HardpointModule::ImperialHammerRailGun)
+        matches!(
+            self,
+            HardpointModule::RetributorBeamLaser
+                | HardpointModule::CytoscramblerBurstLaser
+                | HardpointModule::PacifierFragCannon
+                | HardpointModule::MiningLanceBeamLaser
+                | HardpointModule::PackHoundMissileRack
+                | HardpointModule::RocketPropelledFSDDisruptor
+                | HardpointModule::EnforcerCannon
+                | HardpointModule::AdvancedPlasmaAccelerator
+                | HardpointModule::PulseDisruptorLaser
+                | HardpointModule::ImperialHammerRailGun
+        )
     }
 
     pub fn is_guardian_module(&self) -> bool {
-        matches!(self, HardpointModule::GuardianGaussCannon
-            | HardpointModule::GuardianPlasmaCharger
-            | HardpointModule::GuardianShardCannon)
+        matches!(
+            self,
+            HardpointModule::GuardianGaussCannon
+                | HardpointModule::GuardianPlasmaCharger
+                | HardpointModule::GuardianShardCannon
+        )
     }
 }
 
@@ -299,7 +306,8 @@ impl Display for HardpointModule {
                 HardpointModule::PlasmaAccelerator => "Plasma Accelerator",
                 HardpointModule::AdvancedPlasmaAccelerator => "Advanced Plasma Accelerator",
                 HardpointModule::EnhancedAXMultiCannon => "Enhanced AX Multi-Cannon",
-                HardpointModule::RemoteReleaseFlechetteLauncher => "Remote Release Flechette Launcher",
+                HardpointModule::RemoteReleaseFlechetteLauncher =>
+                    "Remote Release Flechette Launcher",
                 HardpointModule::EnzymeMissileRack => "Enzyme Missile Rack",
                 HardpointModule::MiningLanceBeamLaser => "Mining Lance Beam Laser",
                 HardpointModule::SubSurfaceExtractionMissile => "Sub-Surface Extraction Missile",

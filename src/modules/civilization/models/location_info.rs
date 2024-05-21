@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
-use crate::modules::civilization::{Conflict, Economy, Faction, Government, Superpower, SystemSecurity, ThargoidWar};
+use crate::modules::civilization::{
+    Conflict, Economy, Faction, Government, Superpower, SystemSecurity, ThargoidWar,
+};
 use crate::modules::galaxy::BodyType;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

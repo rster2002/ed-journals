@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when in a multi-crew session and the current player changes their role.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

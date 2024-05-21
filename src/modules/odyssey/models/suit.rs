@@ -1,10 +1,11 @@
 use std::num::ParseIntError;
 use std::str::FromStr;
-use lazy_static::lazy_static;
-use regex::{Regex};
 
-use serde::{Serialize, Deserialize};
+use lazy_static::lazy_static;
+use regex::Regex;
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 use crate::modules::odyssey::{SuitType, SuitTypeError};
 
@@ -40,12 +41,11 @@ impl FromStr for Suit {
 
         Ok(Suit {
             class: match captures.get(3) {
-                Some(class) => class
-                    .as_str()
-                    .parse()?,
+                Some(class) => class.as_str().parse()?,
                 None => 0,
             },
-            kind: captures.get(1)
+            kind: captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .parse()?,
@@ -54,7 +54,6 @@ impl FromStr for Suit {
 }
 
 from_str_deserialize_impl!(Suit);
-
 
 // pub enum Suit {
 //     #[serde(alias = "flightsuit")]

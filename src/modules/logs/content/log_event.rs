@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::logs::content::LogEventContent;
 
 /// An entry from a [LogFile](super::super::LogFile). Most of the content can be found in the

@@ -1,6 +1,8 @@
 use std::str::FromStr;
+
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]

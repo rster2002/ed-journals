@@ -1,8 +1,10 @@
-use std::collections::{HashMap};
+use std::collections::HashMap;
 use std::mem;
+
 use serde::Serialize;
-use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;
+
 use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
@@ -85,14 +87,15 @@ impl GameState {
             LogEventContent::FileHeader(header) => {
                 self.file_header = Some(header.clone());
                 self.header_count += 1;
-            },
+            }
             LogEventContent::Commander(commander) => {
                 self.current_commander = Some(commander.fid.to_string());
 
                 if !self.commanders.contains_key(&commander.fid) {
-                    self.commanders.insert(commander.fid.to_string(), commander.into());
+                    self.commanders
+                        .insert(commander.fid.to_string(), commander.into());
                 }
-            },
+            }
             _ => {
                 let Some(current) = self.current_commander_mut() else {
                     return FeedResult::Later;

@@ -1,6 +1,6 @@
-use serde::Serialize;
 use std::str::FromStr;
 
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;

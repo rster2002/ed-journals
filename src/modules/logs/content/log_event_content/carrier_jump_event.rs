@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::civilization::LocationInfo;
 
 // TODO check when this is fired during the jump. Is it when it lockdown happens, the actual jump,

@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::materials::Material;
 use crate::modules::ship::{Blueprint, BlueprintModifier, ShipModule, ShipSlot};
 

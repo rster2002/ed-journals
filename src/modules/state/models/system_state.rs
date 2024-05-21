@@ -1,12 +1,14 @@
-use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::modules::civilization::LocationInfo;
-use crate::state::models::body_state::BodyState;
-use crate::state::models::feed_result::FeedResult;
-use crate::state::ExobiologyState;
+use std::collections::HashMap;
+
 use chrono::{DateTime, Utc};
 use serde::Serialize;
-use std::collections::{HashMap};
+
+use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+use crate::modules::civilization::LocationInfo;
+use crate::state::ExobiologyState;
+use crate::state::models::body_state::BodyState;
+use crate::state::models::feed_result::FeedResult;
 
 #[derive(Serialize)]
 pub struct SystemState {
@@ -48,7 +50,9 @@ impl SystemState {
                 }
             }
             LogEventContent::Scan(event) => {
-                self.bodies.entry(event.body_id).or_insert_with(|| BodyState::new(event.clone()));
+                self.bodies
+                    .entry(event.body_id)
+                    .or_insert_with(|| BodyState::new(event.clone()));
             }
 
             _ => {

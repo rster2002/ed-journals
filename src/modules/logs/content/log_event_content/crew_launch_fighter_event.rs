@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when another player in a multi-crew session launches a fighter.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

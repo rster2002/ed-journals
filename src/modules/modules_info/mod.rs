@@ -1,5 +1,5 @@
-mod models;
 pub mod blocking;
+mod models;
 
 #[cfg(feature = "asynchronous")]
 pub mod asynchronous;

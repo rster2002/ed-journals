@@ -1,9 +1,10 @@
+use std::path::Path;
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
-use std::path::{Path};
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{Arc};
 use thiserror::Error;
+
 use crate::logs::blocking::log_dir_reader::{LogDirReader, LogDirReaderError};
 use crate::logs::content::LogEvent;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;

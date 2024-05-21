@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::Serialize;
 
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;

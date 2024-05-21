@@ -81,6 +81,7 @@ from_str_deserialize_impl!(Volcanism);
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::modules::galaxy::{Volcanism, VolcanismClassification, VolcanismType};
 
     #[test]

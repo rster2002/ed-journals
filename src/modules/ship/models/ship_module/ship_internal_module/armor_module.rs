@@ -8,7 +8,9 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::ship::{ArmorGrade, ArmorGradeError, ModuleClass, ModuleClassError, ShipType, ShipTypeError};
+use crate::modules::ship::{
+    ArmorGrade, ArmorGradeError, ModuleClass, ModuleClassError, ShipType, ShipTypeError,
+};
 
 /// Armor module for a specific ship.
 #[derive(Debug, Serialize, Clone, PartialEq)]
@@ -60,17 +62,14 @@ impl FromStr for ArmorModule {
         if let Some(capture) = captures.get(3) {
             return Ok(ArmorModule {
                 ship,
-                grade: capture.as_str()
-                    .parse::<u8>()?
-                    .try_into()?,
+                grade: capture.as_str().parse::<u8>()?.try_into()?,
             });
         }
 
         if let Some(capture) = captures.get(4) {
             return Ok(ArmorModule {
                 ship,
-                grade: capture.as_str()
-                    .parse()?,
+                grade: capture.as_str().parse()?,
             });
         }
 
@@ -90,6 +89,7 @@ impl Display for ArmorModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::modules::ship::{ArmorGrade, ArmorModule, ShipType};
 
     #[test]

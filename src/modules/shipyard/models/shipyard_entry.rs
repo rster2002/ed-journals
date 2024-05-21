@@ -1,4 +1,5 @@
 use serde::Deserialize;
+
 use crate::modules::ship::ShipType;
 
 #[derive(Debug, Deserialize, PartialEq)]

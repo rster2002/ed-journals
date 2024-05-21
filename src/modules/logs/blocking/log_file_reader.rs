@@ -2,10 +2,11 @@ use std::collections::VecDeque;
 use std::fs::File;
 use std::io;
 use std::io::{Read, Seek, SeekFrom};
-use std::path::{Path};
+use std::path::Path;
 use std::string::FromUtf8Error;
 
 use thiserror::Error;
+
 use crate::logs::content::LogEvent;
 
 /// Used for reading entries from a single journal log file. The reader takes care of things like
@@ -144,6 +145,7 @@ impl Iterator for LogFileReader {
 #[cfg(test)]
 mod tests {
     use std::fs;
+
     use crate::logs::blocking::LogFileReader;
     use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
     use crate::logs::content::log_event_content::LogEventContentKind;
@@ -152,8 +154,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly() {
         fs::write("a.tmp", "").unwrap();
-        let mut reader = LogFileReader::open("a.tmp")
-            .unwrap();
+        let mut reader = LogFileReader::open("a.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -186,8 +187,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly_2() {
         fs::write("d.tmp", "").unwrap();
-        let mut reader = LogFileReader::open("d.tmp")
-            .unwrap();
+        let mut reader = LogFileReader::open("d.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -220,8 +220,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly_3() {
         fs::write("e.tmp", "").unwrap();
-        let mut reader = LogFileReader::open("e.tmp")
-            .unwrap();
+        let mut reader = LogFileReader::open("e.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -262,8 +261,7 @@ mod tests {
     #[test]
     fn incorrect_lines_return_an_err_only_when_it_is_expected() {
         fs::write("b.tmp", "").unwrap();
-        let mut reader = LogFileReader::open("b.tmp")
-            .unwrap();
+        let mut reader = LogFileReader::open("b.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -327,8 +325,7 @@ mod tests {
     #[test]
     fn last_lines_are_read_correctly() {
         fs::write("c.tmp", "").unwrap();
-        let mut reader = LogFileReader::open("c.tmp")
-            .unwrap();
+        let mut reader = LogFileReader::open("c.tmp").unwrap();
 
         assert!(reader.next().is_none());
 

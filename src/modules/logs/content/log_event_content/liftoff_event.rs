@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -28,7 +28,9 @@ pub struct LiftoffEventPosition {
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::content::log_event_content::liftoff_event::{LiftoffEvent, LiftoffEventPosition};
+    use crate::logs::content::log_event_content::liftoff_event::{
+        LiftoffEvent, LiftoffEventPosition,
+    };
 
     #[test]
     fn liftoff_event_is_parted_correctly() {

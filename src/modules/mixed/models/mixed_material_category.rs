@@ -1,6 +1,6 @@
-use serde::{Serialize, Deserialize};
-use crate::modules::materials::MaterialCategory;
+use serde::{Deserialize, Serialize};
 
+use crate::modules::materials::MaterialCategory;
 use crate::modules::mixed::models::mixed_material::MixedMaterial;
 use crate::modules::odyssey::ItemType;
 

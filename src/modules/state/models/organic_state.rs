@@ -1,5 +1,8 @@
 use serde::Serialize;
-use crate::logs::content::log_event_content::scan_organic_event::{ScanOrganicEvent, ScanOrganicEventScanType};
+
+use crate::logs::content::log_event_content::scan_organic_event::{
+    ScanOrganicEvent, ScanOrganicEventScanType,
+};
 
 #[derive(Debug, Serialize)]
 pub struct OrganicState {
@@ -14,9 +17,7 @@ impl Default for OrganicState {
 
 impl OrganicState {
     pub fn new() -> Self {
-        OrganicState {
-            events: Vec::new(),
-        }
+        OrganicState { events: Vec::new() }
     }
 
     pub fn push_event(&mut self, event: &ScanOrganicEvent) {

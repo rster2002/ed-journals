@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::exploration::PlanetarySignalType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

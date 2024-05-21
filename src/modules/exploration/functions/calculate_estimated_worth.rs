@@ -1,4 +1,6 @@
-use crate::logs::content::log_event_content::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
+use crate::logs::content::log_event_content::scan_event::{
+    ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
+};
 use crate::modules::galaxy::TerraformState;
 
 /// Takes a scan event and calculates the estimated worth of the scanned body.
@@ -8,7 +10,8 @@ pub fn calculate_estimated_worth(scan: &ScanEvent) -> u64 {
             calculate_estimated_star_worth(star_scan, !scan.was_discovered) as u64
         }
         ScanEventKind::Planet(planet_scan) => {
-            calculate_estimated_planet_worth(planet_scan, !scan.was_discovered, !scan.was_mapped) as u64
+            calculate_estimated_planet_worth(planet_scan, !scan.was_discovered, !scan.was_mapped)
+                as u64
         }
         _ => 0,
     }
@@ -40,7 +43,10 @@ fn calculate_estimated_planet_worth(
 
     let scan_value = (base_value + terraformable_bonus) as f32;
     let mass_factor = f32::max(scan.mass_em, 1.0);
-    let body_value = f32::max(scan_value + scan_value * f32::powf(mass_factor, 0.2) * 0.56591828, 500.0);
+    let body_value = f32::max(
+        scan_value + scan_value * f32::powf(mass_factor, 0.2) * 0.56591828,
+        500.0,
+    );
 
     match (is_first_discovery, is_first_map) {
         (true, true) => body_value * 9.619_019,

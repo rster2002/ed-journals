@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys a new fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

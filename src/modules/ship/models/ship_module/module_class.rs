@@ -1,7 +1,8 @@
 use std::fmt::{Display, Formatter};
-use serde::Serialize;
 
+use serde::Serialize;
 use thiserror::Error;
+
 use crate::modules::ship::{ArmorGrade, ArmorModule};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]

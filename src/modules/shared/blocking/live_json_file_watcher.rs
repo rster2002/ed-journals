@@ -1,14 +1,17 @@
 use std::{fs, io};
 use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
+
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use serde::Deserialize;
 use thiserror::Error;
+
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug)]
 pub struct LiveJsonFileWatcher<T>
-    where T : for<'de> Deserialize<'de>
+where
+    T: for<'de> Deserialize<'de>,
 {
     blocker: SyncBlocker,
     path: PathBuf,
@@ -32,7 +35,8 @@ pub enum LiveJsonFileWatcherError {
 }
 
 impl<T> LiveJsonFileWatcher<T>
-    where T : for<'de> Deserialize<'de>
+where
+    T: for<'de> Deserialize<'de>,
 {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveJsonFileWatcherError> {
         let blocker = SyncBlocker::new();
@@ -55,7 +59,8 @@ impl<T> LiveJsonFileWatcher<T>
 }
 
 impl<T> Iterator for LiveJsonFileWatcher<T>
-    where T : for<'de> Deserialize<'de>
+where
+    T: for<'de> Deserialize<'de>,
 {
     type Item = Result<T, LiveJsonFileWatcherError>;
 

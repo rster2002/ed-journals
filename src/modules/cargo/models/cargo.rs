@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+
 use crate::logs::content::log_event_content::cargo_event::CargoEventVessel;
 use crate::modules::cargo::models::cargo_entry::CargoEntry;
 

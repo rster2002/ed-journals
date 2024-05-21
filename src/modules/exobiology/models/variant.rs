@@ -7,7 +7,9 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::exobiology::{Species, VariantColor, VariantColorError, VariantSource, VariantSourceError};
+use crate::modules::exobiology::{
+    Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
+};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Variant {
@@ -86,6 +88,7 @@ impl Display for Variant {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::modules::exobiology::{Species, Variant, VariantColor};
 
     #[test]

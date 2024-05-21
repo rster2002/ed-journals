@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
+
 use serde::{Deserialize, Serialize};
+
 use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

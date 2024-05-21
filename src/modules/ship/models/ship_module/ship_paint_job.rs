@@ -1,8 +1,8 @@
 use std::str::FromStr;
+
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
-
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
@@ -31,7 +31,8 @@ impl FromStr for ShipPaintJob {
         };
 
         Ok(ShipPaintJob {
-            name: captures.get(1)
+            name: captures
+                .get(1)
                 .expect("Should have been captured already")
                 .as_str()
                 .to_string(),

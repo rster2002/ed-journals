@@ -1,11 +1,13 @@
 use std::fs;
 use std::path::Path;
+
 use thiserror::Error;
+
 use crate::modules::cargo::models::cargo::Cargo;
 use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as CargoFileWatcherError;
 
 pub type CargoFileWatcher = LiveJsonFileWatcher<Cargo>;
-pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as CargoFileWatcherError;
 
 pub fn read_cargo_file<P: AsRef<Path>>(path: P) -> Result<Cargo, ReadCargoFileError> {
     Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
@@ -23,6 +25,7 @@ pub enum ReadCargoFileError {
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
+
     use crate::modules::cargo::blocking::read_cargo_file;
 
     #[test]

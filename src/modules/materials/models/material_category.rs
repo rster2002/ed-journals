@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::materials::Material;
 
 /// The type of material, either Raw, Manufactured, or Encoded.

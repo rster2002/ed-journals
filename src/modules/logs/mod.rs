@@ -1,5 +1,10 @@
-mod log_file;
+pub use log_dir::LogDir;
+pub use log_dir::LogDirError;
+pub use log_file::LogFile;
+pub use log_file::LogFileError;
+
 mod log_dir;
+mod log_file;
 
 /// Contains models for all the different events that are written in the log files.
 pub mod content;
@@ -11,7 +16,3 @@ pub mod blocking;
 #[cfg(feature = "asynchronous")]
 pub mod asynchronous;
 
-pub use log_file::LogFile;
-pub use log_file::LogFileError;
-pub use log_dir::LogDir;
-pub use log_dir::LogDirError;

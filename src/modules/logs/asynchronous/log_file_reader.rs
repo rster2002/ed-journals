@@ -2,10 +2,12 @@ use std::collections::VecDeque;
 use std::io;
 use std::io::SeekFrom;
 use std::path::Path;
+
 use thiserror::Error;
 use tokio::fs::File;
-use tokio::io::{AsyncSeekExt};
 use tokio::io::AsyncReadExt;
+use tokio::io::AsyncSeekExt;
+
 use crate::logs::content::LogEvent;
 
 #[derive(Debug)]
@@ -38,8 +40,13 @@ impl LogFileReader {
     }
 
     async fn read_next(&mut self) -> Result<(), LogFileReaderError> {
-        self.source.seek(SeekFrom::Start(self.position as u64)).await?;
-        self.position += self.source.read_to_string(&mut self.file_read_buffer).await?;
+        self.source
+            .seek(SeekFrom::Start(self.position as u64))
+            .await?;
+        self.position += self
+            .source
+            .read_to_string(&mut self.file_read_buffer)
+            .await?;
 
         // Set position back one space to ensure the reader doesn't skip a character during the
         // next read.

@@ -1,8 +1,13 @@
 use std::collections::HashSet;
+
 use serde::Serialize;
 use strum::IntoEnumIterator;
+
 use crate::exobiology::{SpawnCondition, Species};
-use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, PlanetClass, PlanetComposition, StarClass, StarLuminosity, Volcanism, VolcanismType};
+use crate::galaxy::{
+    Atmosphere, AtmosphereDensity, AtmosphereType, PlanetClass, PlanetComposition, StarClass,
+    StarLuminosity, Volcanism, VolcanismType,
+};
 use crate::logs::content::log_event_content::scan_event::{DistanceLs, Gravity};
 use crate::materials::Material;
 

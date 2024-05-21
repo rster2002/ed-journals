@@ -1,8 +1,9 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
+
 use crate::modules::ship::{ArmorModule, InternalType};
 
 /// The kind of internal module.
@@ -198,12 +199,15 @@ impl InternalModule {
     }
 
     pub fn is_guardian_module(&self) -> bool {
-        matches!(self, InternalModule::GuardianHybridPowerDistributor
-            | InternalModule::GuardianHybridPowerPlant
-            | InternalModule::GuardianModuleReinforcement
-            | InternalModule::GuardianFSDBooster
-            | InternalModule::GuardianHullReinforcement
-            | InternalModule::GuardianShieldReinforcement)
+        matches!(
+            self,
+            InternalModule::GuardianHybridPowerDistributor
+                | InternalModule::GuardianHybridPowerPlant
+                | InternalModule::GuardianModuleReinforcement
+                | InternalModule::GuardianFSDBooster
+                | InternalModule::GuardianHullReinforcement
+                | InternalModule::GuardianShieldReinforcement
+        )
     }
 }
 
@@ -250,19 +254,24 @@ impl Display for InternalModule {
                 InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
                 InternalModule::FrameShiftDriveOvercharged => "Frame Shift Drive (SCO)",
                 InternalModule::GuardianHullReinforcement => "Guardian Hull Reinforcement Package",
-                InternalModule::MetaAlloyHullReinforcement => "Meta Alloy Hull Reinforcement Package",
+                InternalModule::MetaAlloyHullReinforcement =>
+                    "Meta Alloy Hull Reinforcement Package",
                 InternalModule::StandardDockingComputer => "Standard Docking Computer",
-                InternalModule::DecontaminationLimpetController => "Decontamination Limpet Controller",
+                InternalModule::DecontaminationLimpetController =>
+                    "Decontamination Limpet Controller",
                 InternalModule::FuelTransferLimpetController => "Fuel Transfer Limpet Controller",
                 InternalModule::ReconLimpetController => "Recon Limpet Controller",
                 InternalModule::HatchBreakerLimpetController => "Hatch Breaker Limpet Controller",
-                InternalModule::OperationsMultiLimpetController => "Operations Multi Limpet Controller",
+                InternalModule::OperationsMultiLimpetController =>
+                    "Operations Multi Limpet Controller",
                 InternalModule::ExperimentalWeaponStabilizer => "Experimental Weapon Stabilizer",
                 InternalModule::PrismaticShieldGenerator => "Prismatic Shield Generator",
                 InternalModule::GuardianHybridPowerPlant => "Guardian Hybrid Power Plant",
-                InternalModule::GuardianHybridPowerDistributor => "Guardian Hybrid Power Distributor",
+                InternalModule::GuardianHybridPowerDistributor =>
+                    "Guardian Hybrid Power Distributor",
                 InternalModule::ResearchLimpetController => "Research Limpet Controller",
-                InternalModule::UniversalMultiLimpetController => "Universal Multi Limpet Controller",
+                InternalModule::UniversalMultiLimpetController =>
+                    "Universal Multi Limpet Controller",
             }
         )
     }

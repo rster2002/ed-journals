@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -40,7 +41,9 @@ impl CarrierTradeOrderEventOrder {
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::content::log_event_content::carrier_trade_order_event::{CarrierTradeOrderEvent, CarrierTradeOrderEventOrder};
+    use crate::logs::content::log_event_content::carrier_trade_order_event::{
+        CarrierTradeOrderEvent, CarrierTradeOrderEventOrder,
+    };
     use crate::modules::trading::Commodity;
 
     #[test]

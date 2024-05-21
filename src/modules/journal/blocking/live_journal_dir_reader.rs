@@ -1,9 +1,11 @@
 use std::collections::VecDeque;
-use std::path::{Path};
+use std::path::Path;
 use std::sync::{Arc, Mutex};
+
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
+
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::blocking::{LogDirReader, LogDirReaderError};
@@ -106,7 +108,8 @@ impl LiveJournalDirReader {
 
                 for path in event.paths {
                     if path.ends_with("Status.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_status_file(dir_path.join("Status.json")) {
                                 Ok(status) => Ok(JournalEvent::StatusEvent(status)),
@@ -115,16 +118,20 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("Outfitting.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
-                            .push_back(match read_outfitting_file(dir_path.join("Outfitting.json")) {
-                                Ok(status) => Ok(JournalEvent::OutfittingEvent(status)),
-                                Err(error) => Err(error.into()),
-                            });
+                            .push_back(
+                                match read_outfitting_file(dir_path.join("Outfitting.json")) {
+                                    Ok(status) => Ok(JournalEvent::OutfittingEvent(status)),
+                                    Err(error) => Err(error.into()),
+                                },
+                            );
                     }
 
                     if path.ends_with("Shipyard.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_shipyard_file(dir_path.join("Shipyard.json")) {
                                 Ok(shipyard) => Ok(JournalEvent::ShipyardEvent(shipyard)),
@@ -133,7 +140,8 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("Market.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_market_file(dir_path.join("Market.json")) {
                                 Ok(market) => Ok(JournalEvent::MarketEvent(market)),
@@ -142,7 +150,8 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("NavRoute.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_nav_route_file(dir_path.join("NavRoute.json")) {
                                 Ok(nav_route) => Ok(JournalEvent::NavRoute(nav_route)),
@@ -151,16 +160,20 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("ModulesInfo.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
-                            .push_back(match read_modules_info_file(dir_path.join("ModulesInfo.json")) {
-                                Ok(modules_info) => Ok(JournalEvent::ModulesInfo(modules_info)),
-                                Err(error) => Err(error.into()),
-                            });
+                            .push_back(
+                                match read_modules_info_file(dir_path.join("ModulesInfo.json")) {
+                                    Ok(modules_info) => Ok(JournalEvent::ModulesInfo(modules_info)),
+                                    Err(error) => Err(error.into()),
+                                },
+                            );
                     }
 
                     if path.ends_with("Backpack.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_backpack_file(dir_path.join("Backpack.json")) {
                                 Ok(backpack) => Ok(JournalEvent::Backpack(backpack)),
@@ -169,7 +182,8 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("Cargo.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
                             .push_back(match read_cargo_file(dir_path.join("Cargo.json")) {
                                 Ok(cargo) => Ok(JournalEvent::Cargo(cargo)),
@@ -178,12 +192,15 @@ impl LiveJournalDirReader {
                     }
 
                     if path.ends_with("ShipLocker.json") {
-                        local_pending_events.lock()
+                        local_pending_events
+                            .lock()
                             .expect("Failed to get lock")
-                            .push_back(match read_ship_locker_file(dir_path.join("ShipLocker.json")) {
-                                Ok(ship_locker) => Ok(JournalEvent::ShipLocker(ship_locker)),
-                                Err(error) => Err(error.into()),
-                            });
+                            .push_back(
+                                match read_ship_locker_file(dir_path.join("ShipLocker.json")) {
+                                    Ok(ship_locker) => Ok(JournalEvent::ShipLocker(ship_locker)),
+                                    Err(error) => Err(error.into()),
+                                },
+                            );
                     }
                 }
 
@@ -213,10 +230,12 @@ impl Iterator for LiveJournalDirReader {
                 return Some(match log_event {
                     Ok(event) => Ok(JournalEvent::LogEvent(event)),
                     Err(error) => Err(error.into()),
-                })
+                });
             }
 
-            let result = self.pending_events.lock()
+            let result = self
+                .pending_events
+                .lock()
                 .expect("Failed to get lock")
                 .pop_front();
 

@@ -8,12 +8,15 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::ship::{HardpointModule, HardpointMounting, HardpointSize, HardpointSizeError, HardpointType, ModuleClass, ModuleClassError};
+use crate::modules::ship::{
+    HardpointModule, HardpointMounting, HardpointSize, HardpointSizeError, HardpointType,
+    ModuleClass, ModuleClassError,
+};
 
 pub mod hardpoint_module;
 pub mod hardpoint_mounting;
-pub mod hardpoint_type;
 pub mod hardpoint_size;
+pub mod hardpoint_type;
 
 /// Contains all the data related to hardpoints. This model is used for both full-sized hardpoint
 /// modules and utility modules. Utility modules use [HardpointSize::Tiny] and full-sized modules
@@ -190,7 +193,10 @@ impl Display for ShipHardpointModule {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-    use crate::modules::ship::{HardpointModule, HardpointMounting, HardpointSize, ModuleClass, ShipHardpointModule};
+
+    use crate::modules::ship::{
+        HardpointModule, HardpointMounting, HardpointSize, ModuleClass, ShipHardpointModule,
+    };
 
     #[test]
     fn ship_hardpoint_module_test_cases_all_pass() {

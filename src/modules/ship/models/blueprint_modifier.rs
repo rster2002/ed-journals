@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// When applying blueprint to modules, modifiers are applied to the modules which are the things
 /// that actually change the stats of the module.

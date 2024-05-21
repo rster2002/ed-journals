@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Emitted when opening the outfitting menu. The contents of the outfitting menu are written to a
 /// separate file called `Outfitting.json` in the journal directory.

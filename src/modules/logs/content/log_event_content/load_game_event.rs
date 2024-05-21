@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::ship::ShipType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -42,7 +43,9 @@ pub enum LoadGameEventGameMode {
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::content::log_event_content::load_game_event::{LoadGameEvent, LoadGameEventGameMode, LoadGameEventShipInfo};
+    use crate::logs::content::log_event_content::load_game_event::{
+        LoadGameEvent, LoadGameEventGameMode, LoadGameEventShipInfo,
+    };
     use crate::modules::ship::ShipType;
 
     fn load_game_event_is_parsed_correctly() {

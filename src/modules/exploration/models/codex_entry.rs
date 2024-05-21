@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::StarClassCodexEntry;
 

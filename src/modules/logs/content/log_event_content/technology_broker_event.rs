@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::materials::{Material, MaterialCategory};
 use crate::modules::ship::ShipModule;
 use crate::modules::trading::Commodity;

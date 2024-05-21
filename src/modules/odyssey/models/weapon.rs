@@ -1,12 +1,12 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Weapon {
     #[serde(
         alias = "Wpn_M_AssaultRifle_Kinetic_FAuto",
-        alias = "wpn_m_assaultrifle_kinetic_fauto",
+        alias = "wpn_m_assaultrifle_kinetic_fauto"
     )]
     KarmaAR50,
 

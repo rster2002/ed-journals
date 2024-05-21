@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::civilization::{Economy, FactionState, Government};
 use crate::modules::station::StationService;
 

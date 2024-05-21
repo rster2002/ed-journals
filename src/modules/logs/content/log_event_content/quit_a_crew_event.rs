@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when the current player leaves a multi-crew session.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

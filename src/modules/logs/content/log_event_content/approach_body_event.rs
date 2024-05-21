@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -9,8 +9,8 @@ pub struct ApproachBodyEvent {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::json;
     use crate::logs::content::log_event_content::approach_body_event::ApproachBodyEvent;
+    use serde_json::json;
 
     #[test]
     fn approach_body_is_parsed_correctly() {

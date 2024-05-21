@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+
 use directories::UserDirs;
 
 /// Attempts to automatically detect where the journal directory is located on your device depending

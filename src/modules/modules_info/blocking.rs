@@ -1,13 +1,15 @@
+use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
+use crate::modules_info::models::modules_info::ModulesInfo;
 use std::fs;
 use std::path::Path;
 use thiserror::Error;
-use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
-use crate::modules_info::models::modules_info::ModulesInfo;
 
 pub type NavRouteFileWatcher = LiveJsonFileWatcher<ModulesInfo>;
 pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as ModulesInfoFileWatcherError;
 
-pub fn read_modules_info_file<P: AsRef<Path>>(path: P) -> Result<ModulesInfo, ReadModulesInfoFileError> {
+pub fn read_modules_info_file<P: AsRef<Path>>(
+    path: P,
+) -> Result<ModulesInfo, ReadModulesInfoFileError> {
     Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
 }
 
@@ -22,8 +24,8 @@ pub enum ReadModulesInfoFileError {
 
 #[cfg(test)]
 mod tests {
-    use std::env::current_dir;
     use crate::modules_info::blocking::read_modules_info_file;
+    use std::env::current_dir;
 
     #[test]
     fn modules_info_file_is_parsed_correctly() {

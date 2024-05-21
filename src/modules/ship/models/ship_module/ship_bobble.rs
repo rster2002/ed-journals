@@ -1,8 +1,10 @@
 use std::str::FromStr;
+
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
 use thiserror::Error;
+
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]

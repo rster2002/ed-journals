@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::odyssey::{Suit, SuitMod};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

@@ -99,10 +99,7 @@ impl FromStr for ShipSlot {
         };
 
         if let Some(kind) = specific {
-            return Ok(ShipSlot {
-                slot_nr: 0,
-                kind,
-            })
+            return Ok(ShipSlot { slot_nr: 0, kind });
         }
 
         if let Some(captures) = UTILITY_HARDPOINT_REGEX.captures(s) {

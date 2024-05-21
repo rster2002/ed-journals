@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::logs::content::log_event_content::commit_crime_event::CommitCrimeEventType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

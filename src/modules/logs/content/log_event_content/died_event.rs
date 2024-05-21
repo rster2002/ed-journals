@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::commander::CombatRank;
 use crate::modules::odyssey::Citizen;
 use crate::modules::ship::ShipType;

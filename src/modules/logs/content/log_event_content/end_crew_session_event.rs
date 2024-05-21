@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when the whole multi-crew session has ended.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

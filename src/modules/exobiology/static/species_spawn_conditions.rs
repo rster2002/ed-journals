@@ -1,4 +1,5 @@
 use lazy_static::lazy_static;
+
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
 use crate::materials::Material;

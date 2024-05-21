@@ -1,7 +1,11 @@
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::Value;
+
 use crate::galaxy::PlanetComposition;
-use crate::modules::galaxy::{Atmosphere, AtmosphereElement, AtmosphereType, OrbitInfo, PlanetClass, RingClass, StarClass, StarLuminosity, TerraformState, Volcanism};
+use crate::modules::galaxy::{
+    Atmosphere, AtmosphereElement, AtmosphereType, OrbitInfo, PlanetClass, RingClass, StarClass,
+    StarLuminosity, TerraformState, Volcanism,
+};
 use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

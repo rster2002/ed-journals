@@ -1,4 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::modules::mixed::{MixedMaterial, MixedMaterialCategory};
 use crate::modules::station::MissionType;
 use crate::modules::trading::Commodity;

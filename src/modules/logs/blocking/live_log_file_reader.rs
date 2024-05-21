@@ -1,10 +1,11 @@
-use std::path::{Path};
+use std::io;
+use std::path::Path;
+use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{Arc};
-use std::{io};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
+
 use crate::logs::content::LogEvent;
 use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;

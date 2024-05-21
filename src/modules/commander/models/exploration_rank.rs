@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
-use serde::Serialize;
 
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::try_from_deserialize_impl;

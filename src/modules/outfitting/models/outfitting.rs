@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+
 use crate::modules::outfitting::models::outfitting_entry::OutfittingEntry;
 
 #[derive(Debug, Deserialize, PartialEq)]

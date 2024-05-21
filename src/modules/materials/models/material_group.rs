@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
+
 use serde::Serialize;
+
 use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize)]

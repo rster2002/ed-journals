@@ -1,5 +1,9 @@
-use serde::{Serialize, Deserialize};
-use crate::modules::commander::{CombatRank, EmpireRank, ExobiologyRank, ExplorationRank, FederationRank, MercenaryRank, TradeRank};
+use serde::{Deserialize, Serialize};
+
+use crate::modules::commander::{
+    CombatRank, EmpireRank, ExobiologyRank, ExplorationRank, FederationRank, MercenaryRank,
+    TradeRank,
+};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

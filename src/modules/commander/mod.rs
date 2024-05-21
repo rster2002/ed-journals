@@ -1,5 +1,3 @@
-mod models;
-
 pub use models::combat_rank::CombatRank;
 pub use models::combat_rank::CombatRankError;
 pub use models::empire_rank::EmpireRank;
@@ -14,3 +12,6 @@ pub use models::mercenary_rank::MercenaryRank;
 pub use models::mercenary_rank::MercenaryRankError;
 pub use models::trade_rank::TradeRank;
 pub use models::trade_rank::TradeRankError;
+
+mod models;
+

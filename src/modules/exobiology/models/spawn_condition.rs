@@ -1,5 +1,7 @@
 use crate::materials::Material;
-use crate::modules::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
+use crate::modules::galaxy::{
+    AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType,
+};
 
 #[derive(Debug)]
 pub enum SpawnCondition {

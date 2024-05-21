@@ -8,7 +8,9 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::ship::{ArmorModule, ArmorModuleError, InternalModule, InternalType, ModuleClass, ModuleClassError};
+use crate::modules::ship::{
+    ArmorModule, ArmorModuleError, InternalModule, InternalType, ModuleClass, ModuleClassError,
+};
 
 pub mod armor_grade;
 pub mod armor_module;
@@ -152,7 +154,9 @@ impl Display for ShipInternalModule {
 mod tests {
     use std::str::FromStr;
 
-    use crate::modules::ship::{ArmorGrade, ArmorModule, InternalModule, ModuleClass, ShipInternalModule, ShipType};
+    use crate::modules::ship::{
+        ArmorGrade, ArmorModule, InternalModule, ModuleClass, ShipInternalModule, ShipType,
+    };
 
     #[test]
     fn ship_internal_module_test_cases_are_parsed_correctly() {

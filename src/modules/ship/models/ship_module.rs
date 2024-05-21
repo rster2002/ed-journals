@@ -1,7 +1,11 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Serialize, Deserialize};
-use crate::modules::ship::{ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate, ShipPaintJob, ShipVoicepack};
+use serde::{Deserialize, Serialize};
+
+use crate::modules::ship::{
+    ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
+    ShipPaintJob, ShipVoicepack,
+};
 use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
 use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
 use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
@@ -9,18 +13,18 @@ use crate::modules::ship::models::ship_module::ship_string_lights::ShipStringLig
 use crate::modules::ship::models::ship_module::ship_weapon_color::ShipWeaponColor;
 
 pub mod module_class;
+pub mod ship_bobble;
 pub mod ship_cockpit_module;
 pub mod ship_decal;
+pub mod ship_engine_color;
 pub mod ship_hardpoint_module;
 pub mod ship_internal_module;
+pub mod ship_kit_module;
 pub mod ship_nameplate;
 pub mod ship_paint_job;
-pub mod ship_voicepack;
-pub mod ship_engine_color;
-pub mod ship_kit_module;
-pub mod ship_bobble;
-pub mod ship_weapon_color;
 pub mod ship_string_lights;
+pub mod ship_voicepack;
+pub mod ship_weapon_color;
 
 /// Any ship module, covering all the different kinds of modules: hardpoints, utility modules,
 /// core internals and optional internals. This also covers cosmetic items like paint job, decals,
@@ -151,15 +155,18 @@ impl ShipModule {
     }
 
     pub fn is_cosmetic(&self) -> bool {
-        matches!(self, ShipModule::PaintJob(_)
-            | ShipModule::Decal(_)
-            | ShipModule::VoicePack(_)
-            | ShipModule::Nameplate(_)
-            | ShipModule::EngineColor(_)
-            | ShipModule::WeaponColor(_)
-            | ShipModule::ShipKitModule(_)
-            | ShipModule::Bobble(_)
-            | ShipModule::StringLights(_))
+        matches!(
+            self,
+            ShipModule::PaintJob(_)
+                | ShipModule::Decal(_)
+                | ShipModule::VoicePack(_)
+                | ShipModule::Nameplate(_)
+                | ShipModule::EngineColor(_)
+                | ShipModule::WeaponColor(_)
+                | ShipModule::ShipKitModule(_)
+                | ShipModule::Bobble(_)
+                | ShipModule::StringLights(_)
+        )
     }
 }
 
@@ -191,13 +198,13 @@ impl Display for ShipModule {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::{Value};
+    use serde_json::Value;
+
     use crate::modules::ship::ShipModule;
 
     #[test]
     fn modules_are_parsed_correctly() {
-        let test_cases = include_str!("zz_ship_module_test_cases.txt")
-            .lines();
+        let test_cases = include_str!("zz_ship_module_test_cases.txt").lines();
 
         let mut count = 0;
 

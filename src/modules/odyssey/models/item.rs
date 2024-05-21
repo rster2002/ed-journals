@@ -700,6 +700,7 @@ impl Display for Item {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::modules::odyssey::Item;
 
     #[test]
@@ -709,10 +710,7 @@ mod tests {
                 "$EnhancedInterrogationRecordings_Name;",
                 Item::EnhancedInterrogationRecordings,
             ),
-            (
-                "$WeaponSchematic_Name;",
-                Item::WeaponSchematic,
-            ),
+            ("$WeaponSchematic_Name;", Item::WeaponSchematic),
         ];
 
         for (case, expected) in test_cases {

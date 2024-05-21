@@ -1,8 +1,9 @@
 use std::str::FromStr;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use thiserror::Error;
+
 use crate::modules::galaxy::StarClass;
 use crate::modules::materials::Material;
 

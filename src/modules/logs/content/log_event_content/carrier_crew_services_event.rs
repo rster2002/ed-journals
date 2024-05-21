@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Fired when changes were made to the crew of a service.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

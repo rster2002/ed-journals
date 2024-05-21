@@ -17,46 +17,44 @@
 //! * The [journal] module can be used to interact with the whole journal directory and can watch
 //!   the directory as a whole for changes.
 
-mod modules;
-
-pub use modules::logs;
-pub use modules::journal;
-pub use modules::status;
-pub use modules::state;
-pub use modules::exobiology;
-pub use modules::exploration;
-pub use modules::outfitting;
-pub use modules::shipyard;
-pub use modules::market;
-pub use modules::nav_route;
-pub use modules::modules_info;
 pub use modules::backpack;
 pub use modules::cargo;
-pub use modules::ship_locker;
-pub use modules::galaxy;
 pub use modules::civilization;
 pub use modules::commander;
+pub use modules::exobiology;
+pub use modules::exploration;
+pub use modules::galaxy;
+pub use modules::journal;
+pub use modules::logs;
+pub use modules::market;
 pub use modules::materials;
-pub use modules::trading;
-pub use modules::odyssey;
-pub use modules::ship;
-pub use modules::station;
-pub use modules::thargoid;
-pub use modules::small;
 pub use modules::mixed;
+pub use modules::modules_info;
+pub use modules::nav_route;
+pub use modules::odyssey;
+pub use modules::outfitting;
+pub use modules::ship;
+pub use modules::ship_locker;
+pub use modules::shipyard;
+pub use modules::small;
+pub use modules::state;
+pub use modules::station;
+pub use modules::status;
+pub use modules::thargoid;
+pub use modules::trading;
+
+mod modules;
 
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
-    use crate::logs::LogDir;
+
     use crate::logs::content::LogEventContent;
+    use crate::logs::LogDir;
 
     #[test]
     fn test_journals_are_parsed_correctly() {
-        let dir_path = current_dir()
-            .unwrap()
-            .join("test-files")
-            .join("journals");
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
         let log_dir = LogDir::new(dir_path);
 

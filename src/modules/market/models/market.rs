@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+
 use crate::modules::market::models::market_entry::MarketEntry;
 use crate::modules::station::{CarrierDockingAccess, StationType};
 
