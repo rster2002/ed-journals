@@ -4,10 +4,9 @@ use crate::modules::civilization::LocationInfo;
 use crate::state::models::body_state::BodyState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::ExobiologyState;
-use chrono::{DateTime, NaiveDateTime, Utc};
+use chrono::{DateTime, Utc};
 use serde::Serialize;
-use std::collections::{HashMap, VecDeque};
-use std::fmt::{Debug, Formatter};
+use std::collections::{HashMap};
 
 #[derive(Serialize)]
 pub struct SystemState {
@@ -32,7 +31,7 @@ impl SystemState {
             return FeedResult::Skipped;
         }
 
-        self.exobiology.feed_event(&log_event);
+        self.exobiology.feed_event(log_event);
 
         match &log_event.content {
             LogEventContent::FSSDiscoveryScan(event) => {
@@ -49,10 +48,7 @@ impl SystemState {
                 }
             }
             LogEventContent::Scan(event) => {
-                if !self.bodies.contains_key(&event.body_id) {
-                    self.bodies
-                        .insert(event.body_id, BodyState::new(event.clone()));
-                }
+                self.bodies.entry(event.body_id).or_insert_with(|| BodyState::new(event.clone()));
             }
 
             _ => {
@@ -70,11 +66,11 @@ impl SystemState {
     }
 
     pub fn visit(&mut self, date_time: &DateTime<Utc>) {
-        self.visits.push(date_time.clone());
+        self.visits.push(*date_time);
     }
 
     pub fn carrier_visit(&mut self, date_time: &DateTime<Utc>) {
-        self.carrier_visits.push(date_time.clone());
+        self.carrier_visits.push(*date_time);
     }
 
     pub fn clear_organic_progress(&mut self) {

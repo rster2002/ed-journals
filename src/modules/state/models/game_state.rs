@@ -1,5 +1,4 @@
 use std::collections::{HashMap};
-use std::fmt::{Debug};
 use std::mem;
 use serde::Serialize;
 use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;

@@ -1,10 +1,9 @@
 use std::io;
-use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
+use std::path::{Path};
+use std::sync::{Arc};
 use std::sync::atomic::{AtomicBool, Ordering};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
-use tokio::fs::File;
 use crate::logs::asynchronous::LogFileReaderError;
 use crate::logs::content::LogEvent;
 use crate::modules::logs::asynchronous::LogFileReader;

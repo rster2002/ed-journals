@@ -1,8 +1,7 @@
 use std::path::Path;
-use std::sync::atomic::Ordering;
 use thiserror::Error;
 use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
-use crate::logs::asynchronous::{LiveLogDirReaderError, LogFileReader, LogFileReaderError};
+use crate::logs::asynchronous::{LogFileReader, LogFileReaderError};
 use crate::logs::content::LogEvent;
 
 #[derive(Debug)]

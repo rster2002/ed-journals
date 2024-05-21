@@ -4,7 +4,7 @@ use std::io::SeekFrom;
 use std::path::Path;
 use thiserror::Error;
 use tokio::fs::File;
-use tokio::io::{AsyncSeek, AsyncSeekExt};
+use tokio::io::{AsyncSeekExt};
 use tokio::io::AsyncReadExt;
 use crate::logs::content::LogEvent;
 

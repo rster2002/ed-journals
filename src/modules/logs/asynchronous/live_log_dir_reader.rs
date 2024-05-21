@@ -1,18 +1,10 @@
-use std::io;
-use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
+use std::path::{Path};
+use std::sync::{Arc};
 use std::sync::atomic::{AtomicBool, Ordering};
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{DataChange, ModifyKind};
+use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
-use tokio::fs::File;
-use tokio::sync::mpsc::{channel, Sender};
-use crate::logs::{LogDir, LogDirError, LogFile};
 use crate::logs::asynchronous::log_dir_reader::{LogDirReader, LogDirReaderError};
 use crate::logs::content::LogEvent;
-use crate::logs::asynchronous::LogFileReader;
-use crate::modules::logs::asynchronous::LogFileReaderError;
-use crate::modules::logs::LogFileError;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 /// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and

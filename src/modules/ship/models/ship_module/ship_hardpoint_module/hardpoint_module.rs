@@ -4,7 +4,6 @@ use std::str::FromStr;
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
 use crate::modules::ship::HardpointType;
-use super::ShipHardpointModule;
 
 /// The hardpoint module type. This does not contain information about the size or mounting of the
 /// module. For that, check out [ShipHardpointModule].

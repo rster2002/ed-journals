@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("NavRoute.json");
 
-        let result = read_nav_route_file(&path);
+        let result = read_nav_route_file(path);
 
         dbg!(&result);
 

@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("ShipLocker.json");
 
-        let result = read_ship_locker_file(&path);
+        let result = read_ship_locker_file(path);
 
         dbg!(&result);
 

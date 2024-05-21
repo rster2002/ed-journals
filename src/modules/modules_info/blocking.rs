@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("ModulesInfo.json");
 
-        let result = read_modules_info_file(&path);
+        let result = read_modules_info_file(path);
 
         dbg!(&result);
 

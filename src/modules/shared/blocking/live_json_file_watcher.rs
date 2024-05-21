@@ -76,6 +76,6 @@ impl<T> Iterator for LiveJsonFileWatcher<T>
             Err(error) => return Some(Err(error.into())),
         };
 
-        return Some(Ok(value));
+        Some(Ok(value))
     }
 }

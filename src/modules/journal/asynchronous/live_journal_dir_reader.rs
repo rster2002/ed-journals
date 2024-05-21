@@ -1,11 +1,10 @@
 use std::collections::VecDeque;
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{DataChange, ModifyKind};
 use thiserror::Error;
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
-use crate::journal::blocking::LiveJournalDirReader as BlockingLiveJournalDirReader;
 use crate::journal::journal_event::JournalEvent;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};

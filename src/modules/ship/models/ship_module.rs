@@ -194,12 +194,12 @@ impl Display for ShipModule {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::{Error, Value};
+    use serde_json::{Value};
     use crate::modules::ship::ShipModule;
 
     #[test]
     fn modules_are_parsed_correctly() {
-        let mut test_cases = include_str!("zz_ship_module_test_cases.txt")
+        let test_cases = include_str!("zz_ship_module_test_cases.txt")
             .lines();
 
         let mut count = 0;

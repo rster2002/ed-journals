@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fmt::{Debug};
 use serde::Serialize;
 use crate::logs::content::log_event_content::commander_event::CommanderEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
@@ -62,9 +61,7 @@ impl CommanderState {
     }
 
     pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
-        if !self.systems.contains_key(&location_info.system_address) {
-            self.systems.insert(location_info.system_address, location_info.into());
-        }
+        self.systems.entry(location_info.system_address).or_insert_with(|| location_info.into());
 
         self.systems.get_mut(&location_info.system_address)
             .expect("Should have been added")

@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("Shipyard.json");
 
-        let result = read_shipyard_file(&path);
+        let result = read_shipyard_file(path);
 
         dbg!(&result);
 

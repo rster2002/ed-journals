@@ -1,8 +1,7 @@
-use std::fmt::{Display, Formatter};
 use std::num::ParseIntError;
 use std::str::FromStr;
 use lazy_static::lazy_static;
-use regex::{Match, Regex};
+use regex::{Regex};
 
 use serde::{Serialize, Deserialize};
 use thiserror::Error;

@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("Market.json");
 
-        let result = read_market_file(&path);
+        let result = read_market_file(path);
 
         dbg!(&result);
 

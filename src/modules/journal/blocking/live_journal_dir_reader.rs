@@ -1,5 +1,5 @@
 use std::collections::VecDeque;
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::{CreateKind, DataChange, ModifyKind};
@@ -10,7 +10,6 @@ use crate::logs::blocking::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules::cargo::blocking::{read_cargo_file, ReadCargoFileError};
 use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
-use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
 use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};

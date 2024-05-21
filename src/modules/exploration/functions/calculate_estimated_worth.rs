@@ -5,10 +5,10 @@ use crate::modules::galaxy::TerraformState;
 pub fn calculate_estimated_worth(scan: &ScanEvent) -> u64 {
     match &scan.kind {
         ScanEventKind::Star(star_scan) => {
-            calculate_estimated_star_worth(&star_scan, !scan.was_discovered) as u64
+            calculate_estimated_star_worth(star_scan, !scan.was_discovered) as u64
         }
         ScanEventKind::Planet(planet_scan) => {
-            calculate_estimated_planet_worth(&planet_scan, !scan.was_discovered, !scan.was_mapped) as u64
+            calculate_estimated_planet_worth(planet_scan, !scan.was_discovered, !scan.was_mapped) as u64
         }
         _ => 0,
     }
@@ -43,8 +43,8 @@ fn calculate_estimated_planet_worth(
     let body_value = f32::max(scan_value + scan_value * f32::powf(mass_factor, 0.2) * 0.56591828, 500.0);
 
     match (is_first_discovery, is_first_map) {
-        (true, true) => body_value * 9.6190186404,
+        (true, true) => body_value * 9.619_019,
         (false, true) => body_value * 8.0956,
-        _ => body_value * 3.3333333333,
+        _ => body_value * 3.333_333_3,
     }
 }

@@ -4,7 +4,7 @@ use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalEventSignal;
 use crate::logs::content::log_event_content::saa_scan_complete_event::SAAScanCompleteEvent;
-use crate::logs::content::log_event_content::saa_signals_found_event::{SAASignalsFoundEventGenus, SAASignalsFoundEventSignal};
+use crate::logs::content::log_event_content::saa_signals_found_event::{SAASignalsFoundEventSignal};
 use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
@@ -57,13 +57,13 @@ impl BodyState {
                 self.saa_scan = Some(scan_complete.clone());
             },
             LogEventContent::SAASignalsFound(signals) => {
-                self.saa_signals = signals.signals.clone();
+                self.saa_signals.clone_from(&signals.signals);
                 self.saa_genuses = signals.genuses.iter()
                     .map(|signal| signal.genus.clone())
                     .collect();
             },
             LogEventContent::FSSBodySignals(body_signals) => {
-                self.fss_signals = body_signals.signals.clone();
+                self.fss_signals.clone_from(&body_signals.signals);
             },
             LogEventContent::Touchdown(touchdown) => {
                 if touchdown.on_planet {

@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("Backpack.json");
 
-        let result = read_backpack_file(&path);
+        let result = read_backpack_file(path);
 
         dbg!(&result);
 

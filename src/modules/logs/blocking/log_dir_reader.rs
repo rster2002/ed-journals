@@ -119,7 +119,7 @@ mod tests {
         let mut reader = LogDirReader::open(dir_path);
 
         let mut count = 0;
-        while let Some(entry) = reader.next() {
+        for entry in reader {
             count += 1;
         }
 

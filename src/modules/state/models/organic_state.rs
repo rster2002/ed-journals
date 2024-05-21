@@ -6,6 +6,12 @@ pub struct OrganicState {
     pub events: Vec<Option<ScanOrganicEvent>>,
 }
 
+impl Default for OrganicState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl OrganicState {
     pub fn new() -> Self {
         OrganicState {

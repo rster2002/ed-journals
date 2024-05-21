@@ -33,7 +33,7 @@ mod tests {
             .join("json")
             .join("Outfitting.json");
 
-        let result = read_outfitting_file(&path);
+        let result = read_outfitting_file(path);
 
         dbg!(&result);
 

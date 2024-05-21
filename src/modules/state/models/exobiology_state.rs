@@ -83,16 +83,12 @@ impl ExobiologyState {
             .collect::<Vec<&(ScanEvent, ScanEventPlanet)>>();
 
         let target_body = planet_scan_events
-            .iter()
-            .filter(|(scan, _)| scan.body_name == body_name)
-            .next()
+            .iter().find(|(scan, _)| scan.body_name == body_name)
             .map(|(scan, planet)| (scan, planet));
 
         let fss_body_signal = self
             .fss_body_signals_events
-            .iter()
-            .filter(|fss_body_signals| fss_body_signals.body_name == body_name)
-            .next();
+            .iter().find(|fss_body_signals| fss_body_signals.body_name == body_name);
 
         let star_pos_from_location = self
             .location_events
@@ -118,7 +114,7 @@ impl ExobiologyState {
                         .parents
                         .iter()
                         .filter_map(|parent| match parent {
-                            ScanEventParent::Star(star) => Some(star.clone()),
+                            ScanEventParent::Star(star) => Some(*star),
                             _ => None,
                         })
                         .collect::<Vec<u8>>();
@@ -128,7 +124,7 @@ impl ExobiologyState {
                         .filter(|(scan, _)| parent_ids.contains(&scan.body_id))
                         .map(|(scan, star)| SpawnSourceStar {
                             class: star.star_type.clone(),
-                            body_id: scan.body_id.clone(),
+                            body_id: scan.body_id,
                             luminosity: star.luminosity.clone(),
                         })
                         .collect::<Vec<SpawnSourceStar>>()
@@ -138,13 +134,11 @@ impl ExobiologyState {
                 atmosphere: planet.atmosphere.clone(),
                 gravity: planet.surface_gravity.clone(),
                 class: planet.planet_class.clone(),
-                surface_temperature: planet.surface_temperature.clone(),
+                surface_temperature: planet.surface_temperature,
                 volcanism: planet.volcanism.clone(),
                 materials: HashSet::from_iter(planet.materials.iter().map(|m| m.name.clone())),
                 composition: planet
-                    .composition
-                    .as_ref()
-                    .map(|composition| composition.clone())
+                    .composition.clone()
                     .unwrap_or_default(),
             }),
             geological_signals_present: fss_body_signal.map(|fss_body_signal| {
@@ -166,7 +160,7 @@ impl ExobiologyState {
             stars_in_system: HashSet::from_iter(star_scan_events.iter().map(|(scan, star)| {
                 SpawnSourceStar {
                     class: star.star_type.clone(),
-                    body_id: scan.body_id.clone(),
+                    body_id: scan.body_id,
                     luminosity: star.luminosity.clone(),
                 }
             })),
@@ -209,17 +203,17 @@ mod tests {
                 state.feed_event(&entry);
 
                 if let LogEventContent::Location(location) = &entry.content {
-                    body_name = location.location_info.body.clone()
+                    body_name.clone_from(&location.location_info.body)
                 }
 
                 if let LogEventContent::Touchdown(touchdown) = &entry.content {
-                    body_name = touchdown.body.clone();
+                    body_name.clone_from(&touchdown.body);
                 }
 
                 if let LogEventContent::ScanOrganic(organic) = &entry.content {
                     expected_species
                         .entry(body_name.clone())
-                        .or_insert_with(HashSet::new)
+                        .or_default()
                         .insert(organic.species.clone());
                 }
             }

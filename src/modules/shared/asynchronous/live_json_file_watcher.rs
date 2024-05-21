@@ -6,7 +6,6 @@ use serde::Deserialize;
 use thiserror::Error;
 use tokio::fs;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
-use crate::status::Status;
 
 #[derive(Debug)]
 pub struct LiveJsonFileWatcher<T>
@@ -70,6 +69,6 @@ impl<T> LiveJsonFileWatcher<T>
             Err(error) => return Some(Err(error.into())),
         };
 
-        return Some(Ok(value));
+        Some(Ok(value))
     }
 }

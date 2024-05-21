@@ -1,5 +1,5 @@
 use std::cmp::Ordering;
-use std::fs::{DirEntry, File};
+use std::fs::{DirEntry};
 use std::io;
 use std::num::ParseIntError;
 use std::path::PathBuf;
@@ -56,23 +56,23 @@ impl LogFile {
 
     /// Creates a new reader using the path of the journal log file.
     pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader, LogFileError> {
-        Ok(blocking::LogFileReader::open(self.path.as_path())
-            .map_err(|_| LogFileError::FailedToOpenReader)?)
+        blocking::LogFileReader::open(self.path.as_path())
+            .map_err(|_| LogFileError::FailedToOpenReader)
     }
 
     /// Creates a new live reader using the path of the journal log file.
     pub fn create_live_blocking_reader(&self) -> Result<blocking::LiveLogFileReader, blocking::LiveLogFileReaderError> {
-        blocking::LiveLogFileReader::open(self.path.to_path_buf())
+        blocking::LiveLogFileReader::open(&self.path)
     }
 
     #[cfg(feature = "asynchronous")]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
-        Ok(asynchronous::LogFileReader::open(self.path.as_path()).await.map_err(|_| LogFileError::FailedToOpenReader)?)
+        asynchronous::LogFileReader::open(self.path.as_path()).await.map_err(|_| LogFileError::FailedToOpenReader)
     }
 
     #[cfg(feature = "asynchronous")]
     pub async fn create_live_async_reader(&self) -> Result<asynchronous::LiveLogFileReader, asynchronous::LiveLogFileReaderError> {
-        Ok(asynchronous::LiveLogFileReader::open(self.path.to_path_buf()).await?)
+        asynchronous::LiveLogFileReader::open(self.path.to_path_buf()).await
     }
 
     /// Returns the date time that is part of the file name of the file.

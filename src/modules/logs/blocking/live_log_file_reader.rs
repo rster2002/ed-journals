@@ -1,10 +1,7 @@
-use std::collections::VecDeque;
-use std::fs::File;
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{Arc, Mutex};
-use std::thread::Thread;
-use std::{io, thread};
+use std::sync::{Arc};
+use std::{io};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
