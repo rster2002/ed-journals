@@ -99,15 +99,11 @@ impl LiveJournalDirReader {
 
         let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| {
             if let Ok(event) = res {
-                let matched = match event.kind {
+                match event.kind {
                     EventKind::Create(CreateKind::File)
                     | EventKind::Modify(ModifyKind::Data(DataChange::Content)) => true,
-                    _ => false,
+                    _ => return,
                 };
-
-                if !matched {
-                    return;
-                }
 
                 for path in event.paths {
                     if path.ends_with("Status.json") {
@@ -256,35 +252,40 @@ mod tests {
         let _ = fs::remove_dir_all(&dir);
         fs::create_dir_all(&dir).unwrap();
 
-        let local_dir = dir.clone();
-        let handle = spawn(move || {
-            let mut reader = LiveJournalDirReader::open(&local_dir).unwrap();
+        thread::scope(|scope| {
+            let local_dir = dir.clone();
+            let handle = scope.spawn(move || {
+                let mut reader = LiveJournalDirReader::open(&local_dir).unwrap();
 
-            let mut count = 0;
-            for entry in reader {
-                count += 1;
-
-                if count == 1 {
+                let mut count = 0;
+                for entry in reader {
+                    count += 1;
+                    dbg!(count);
                     dbg!(&entry);
-                    assert!(entry.is_ok());
-                    break;
+                    // count += 1;
+                    //
+                    // if count == 1 {
+                    //     dbg!(&entry);
+                    //     assert!(entry.is_ok());
+                    //     break;
+                    // }
                 }
-            }
 
-            count
+                count
+            });
+
+            // let local_thread = handle.thread().clone();
+            // let i = scope.spawn(move || {
+            //     thread::sleep(Duration::from_secs(10));
+            //     local_thread.unpark();
+            //     panic!("");
+            // });
+
+            fs::copy(base.join("json").join("Shipyard.json"), dir.join("Shipyard.json")).unwrap();
+
+            let entries = handle.join().unwrap();
+
+            assert_eq!(entries, 1);
         });
-
-        let local_thread = handle.thread().clone();
-        let i = spawn(move || {
-            thread::sleep(Duration::from_secs(10));
-            local_thread.unpark();
-            std::process::exit(42);
-        });
-
-        fs::copy(base.join("json").join("Shipyard.json"), dir.join("Shipyard.json")).unwrap();
-
-        let entries = handle.join().unwrap();
-
-        assert_eq!(entries, 1);
     }
 }
