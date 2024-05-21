@@ -46,6 +46,7 @@ impl LogDirReader {
 
     fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
         let files = self.dir.journal_logs_oldest_first()?;
+        let is_empty = files.is_empty();
 
         for file in files {
             let Some(current) = &self.current_file else {
@@ -59,7 +60,7 @@ impl LogDirReader {
             }
         }
 
-        Ok(false)
+        Ok(is_empty)
     }
 
     pub fn is_failing(&self) -> bool {
@@ -72,19 +73,19 @@ impl Iterator for LogDirReader {
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            if self.failing {
-                return None;
+            if self.current_reader.is_none() {
+                match self.set_next_file() {
+                    Ok(true) => {},
+                    Ok(false) => return None,
+                    Err(error) => {
+                        self.failing = true;
+                        return Some(Err(error));
+                    },
+                }
             }
 
             let Some(reader) = &mut self.current_reader else {
-                let result = self.set_next_file();
-
-                if let Err(error) = result {
-                    self.failing = true;
-                    return Some(Err(error));
-                }
-
-                continue;
+                return None;
             };
 
             let Some(entry) = reader.next() else {
@@ -94,7 +95,7 @@ impl Iterator for LogDirReader {
                     Err(error) => {
                         self.failing = true;
                         return Some(Err(error));
-                    }
+                    },
                 }
             };
 

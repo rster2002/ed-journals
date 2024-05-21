@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{DataChange, ModifyKind};
+use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::journal::journal_event::JournalEvent;
@@ -99,8 +99,10 @@ impl LiveJournalDirReader {
 
         let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| {
             if let Ok(event) = res {
-                let EventKind::Modify(ModifyKind::Data(DataChange::Content)) = event.kind else {
-                    return;
+                match event.kind {
+                    EventKind::Create(CreateKind::File)
+                    | EventKind::Modify(ModifyKind::Data(DataChange::Content)) => true,
+                    _ => return,
                 };
 
                 for path in event.paths {
@@ -228,4 +230,3 @@ impl Iterator for LiveJournalDirReader {
         }
     }
 }
-
