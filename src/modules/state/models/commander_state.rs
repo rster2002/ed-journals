@@ -1,10 +1,12 @@
 use std::collections::HashMap;
 
 use serde::Serialize;
+use crate::exploration::calculate_estimated_worth;
 
 use crate::logs::content::log_event_content::commander_event::CommanderEvent;
 use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
 use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;
@@ -17,11 +19,34 @@ pub struct CommanderState {
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
     pub current_organic: Option<CurrentOrganic>,
+    pub current_exploration_data: Vec<ScanEvent>,
 }
 
 impl CommanderState {
     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
         match &log_event.content {
+            LogEventContent::Scan(event) => {
+                self.current_exploration_data.push(event.clone());
+            },
+            LogEventContent::Died(event) => {
+                self.current_exploration_data.clear();
+            },
+            LogEventContent::MultiSellExplorationData(event) => {
+                for system in &event.discovered {
+                    self.current_exploration_data
+                        .retain(|item| {
+                            item.star_system != system.system_name
+                        });
+                }
+            },
+            LogEventContent::SellExplorationData(event) => {
+                for system in &event.systems {
+                    self.current_exploration_data
+                        .retain(|item| {
+                            &item.star_system != system
+                        });
+                }
+            },
             LogEventContent::Location(location) => {
                 self.current_system = Some(location.location_info.system_address);
 
@@ -79,6 +104,13 @@ impl CommanderState {
     pub fn current_system(&self) -> Option<&SystemState> {
         self.systems.get(&self.current_system?)
     }
+
+    pub fn current_exploration_worth(&self) -> u64 {
+        self.current_exploration_data
+            .iter()
+            .map(|item| calculate_estimated_worth(item))
+            .sum()
+    }
 }
 
 impl From<&CommanderEvent> for CommanderState {
@@ -89,6 +121,7 @@ impl From<&CommanderEvent> for CommanderState {
             systems: HashMap::new(),
             current_system: None,
             current_organic: None,
+            current_exploration_data: Vec::new(),
         }
     }
 }
