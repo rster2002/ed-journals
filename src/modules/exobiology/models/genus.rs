@@ -85,20 +85,13 @@ impl From<&Species> for Genus {
 
             Species::AmphoraPlant => Genus::AmphoraPlant,
 
-            Species::AnemonePrasinus
-            | Species::AnemonePrasinumBioluminescent
-            | Species::AnemonePuniceus
+            Species::AnemonePrasinumBioluminescent
             | Species::AnemonePuniceum
-            | Species::AnemoneRoseus
             | Species::AnemoneRoseumBioluminescent
             | Species::AnemoneRoseum
-            | Species::AnemoneBlattinus
             | Species::AnemoneBlatteumBioluminescent
-            | Species::AnemoneLuteus
             | Species::AnemoneLuteolum
-            | Species::AnemoneRubens
             | Species::AnemoneRubeumBioluminescent
-            | Species::AnemoneCroceus
             | Species::AnemoneCroceum => Genus::Anemone,
 
             Species::BarkMound => Genus::BarkMound,
