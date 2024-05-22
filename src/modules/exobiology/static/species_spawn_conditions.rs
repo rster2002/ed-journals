@@ -5,7 +5,7 @@ use crate::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, Volc
 use crate::materials::Material;
 
 lazy_static! {
-    pub static ref SPECIES_SPAWN_CONDITIONS: [(Species, Vec<SpawnCondition>); 124] = [
+    pub static ref SPECIES_SPAWN_CONDITIONS: [(Species, Vec<SpawnCondition>); 117] = [
         (
             Species::AleoidaArcus,
             vec![
@@ -67,18 +67,6 @@ lazy_static! {
             ]
         ),
         (
-            Species::AnemonePrasinus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::O),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                    SpawnCondition::RockyComposition,
-                ]),
-            ]
-        ),
-        (
             Species::AnemonePrasinumBioluminescent,
             vec![
                 SpawnCondition::NoAtmosphere,
@@ -91,17 +79,6 @@ lazy_static! {
             ]
         ),
         (
-            Species::AnemonePuniceus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::O),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::IcyBody),
-                    SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
-                ]),
-            ]
-        ),
-        (
             Species::AnemonePuniceum,
             vec![
                 SpawnCondition::NoAtmosphere,
@@ -109,23 +86,6 @@ lazy_static! {
                 SpawnCondition::Any(vec![
                     SpawnCondition::PlanetClass(PlanetClass::IcyBody),
                     SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
-                ]),
-            ]
-        ),
-        (
-            Species::AnemoneRoseus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::I),
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::II),
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::III),
-                ]),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                    SpawnCondition::RockyComposition,
                 ]),
             ]
         ),
@@ -162,21 +122,6 @@ lazy_static! {
             ]
         ),
         (
-            Species::AnemoneBlattinus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::IV),
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::V),
-                ]),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                ]),
-            ]
-        ),
-        (
             Species::AnemoneBlatteumBioluminescent,
             vec![
                 SpawnCondition::NoAtmosphere,
@@ -192,18 +137,6 @@ lazy_static! {
             ]
         ),
         (
-            Species::AnemoneLuteus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::IV),
-                    SpawnCondition::ParentStarLuminosity(StarLuminosity::V),
-                ]),
-                SpawnCondition::RockyComposition,
-            ]
-        ),
-        (
             Species::AnemoneLuteolum,
             vec![
                 SpawnCondition::NoAtmosphere,
@@ -216,26 +149,6 @@ lazy_static! {
             ]
         ),
         (
-            Species::AnemoneRubens,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::Any(vec![
-                    SpawnCondition::All(vec![
-                        SpawnCondition::ParentStarClass(StarClass::B),
-                        SpawnCondition::ParentStarLuminosity(StarLuminosity::IV),
-                    ]),
-                    SpawnCondition::All(vec![
-                        SpawnCondition::ParentStarClass(StarClass::A),
-                        SpawnCondition::ParentStarLuminosity(StarLuminosity::III),
-                    ]),
-                ]),
-                SpawnCondition::Any(vec![
-                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-                ]),
-            ]
-        ),
-        (
             Species::AnemoneRubeumBioluminescent,
             vec![
                 SpawnCondition::NoAtmosphere,
@@ -244,14 +157,6 @@ lazy_static! {
                     SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
                     SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
                 ]),
-            ]
-        ),
-        (
-            Species::AnemoneCroceus,
-            vec![
-                SpawnCondition::NoAtmosphere,
-                SpawnCondition::ParentStarClass(StarClass::B),
-                SpawnCondition::RockyComposition,
             ]
         ),
         (
