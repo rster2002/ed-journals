@@ -13,3 +13,6 @@ pub mod star_luminosity;
 pub mod terraform_state;
 pub mod volcanism;
 pub mod volcanism_type;
+pub mod gravity;
+pub mod local_distance;
+pub mod galactic_distance;

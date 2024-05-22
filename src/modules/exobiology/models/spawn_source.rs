@@ -16,7 +16,7 @@ use crate::galaxy::{
     Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
     StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
-use crate::logs::content::log_event_content::scan_event::{DistanceLs, Gravity, ScanEventParent};
+use crate::logs::content::log_event_content::scan_event::{ScanEventParent};
 
 #[derive(Debug)]
 pub struct SpawnSource<'a> {
@@ -91,7 +91,7 @@ impl<'a> SpawnSource<'a> {
             }
             SpawnCondition::WithinNebulaRange(nebula_range) => {
                 &Nebula::closest_to(self.target_system.star_system_position)
-                    .1
+                    .distance_to(self.target_system.star_system_position)
                     .as_ly()
                     <= nebula_range
             }

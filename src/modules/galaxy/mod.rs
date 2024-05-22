@@ -18,5 +18,8 @@ pub use models::volcanism::Volcanism;
 pub use models::volcanism::VolcanismClassification;
 pub use models::volcanism::VolcanismError;
 pub use models::volcanism_type::VolcanismType;
+pub use models::gravity::Gravity;
+pub use models::local_distance::LocalDistance;
+pub use models::galactic_distance::GalacticDistance;
 
 mod models;

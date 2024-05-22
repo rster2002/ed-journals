@@ -105,6 +105,10 @@ impl CommanderState {
         self.systems.get(&self.current_system?)
     }
 
+    pub fn system_by_address(&self, address: u64) -> Option<&SystemState> {
+        self.systems.get(&address)
+    }
+
     pub fn current_exploration_worth(&self) -> u64 {
         self.current_exploration_data
             .iter()
