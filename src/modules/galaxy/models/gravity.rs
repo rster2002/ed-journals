@@ -16,6 +16,14 @@ impl Gravity {
     pub fn as_ms2(&self) -> f32 {
         self.0
     }
+
+    pub fn is_low(&self) -> bool {
+        self.as_g() <= 0.5
+    }
+
+    pub fn is_high(&self) -> bool {
+        self.as_g() >= 2.0
+    }
 }
 
 impl Debug for Gravity {
