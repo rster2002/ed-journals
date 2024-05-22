@@ -17,7 +17,7 @@ pub struct GameState {
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
     header_count: u64,
-    queued: Vec<LogEvent>,
+    later: Vec<LogEvent>,
 }
 
 impl GameState {
@@ -27,7 +27,7 @@ impl GameState {
             current_commander: None,
             file_header: None,
             header_count: 0,
-            queued: Vec::new(),
+            later: Vec::new(),
         }
     }
 
@@ -55,31 +55,28 @@ impl GameState {
         Some(commander_entry)
     }
 
+    /// Takes the log events and processes it in the state. Note that it does not guarantee that the
+    /// event will be processed immediately. In some situations the event will be queued when the
+    /// state things it is better able to process the event, but it doesn't do this automatically.
+    /// For those events to be processed, you need to call [GameState::flush]. This will go through
+    /// the remaining events and tries to process them.
     pub fn feed_log_event(&mut self, event: &LogEvent) {
         let handle_result = self.handle(event);
 
         if let FeedResult::Later = handle_result {
-            self.queued.push(event.clone());
+            self.later.push(event.clone());
         }
+    }
 
-        let queued = mem::take(&mut self.queued);
+    /// Processes any left-over events that were scheduled for later processing. Call this sparingly
+    /// especially not while you're also still reading a lot of events through
+    /// [GameState::feed_log_event] as that will likely cause performance issues.
+    pub fn flush(&mut self) {
+        let queued = mem::take(&mut self.later);
 
         for item in queued {
-            let result = self.handle(&item);
-
-            if !result.is_accepted() {
-                self.queued.push(item.clone());
-            }
+            let _ = self.handle(&item);
         }
-
-        // TODO make this actually decent
-        // self.queued = self.queued
-        //     .iter()
-        //     .filter(|item| {
-        //         !self.handle(item).is_accepted()
-        //     })
-        //     .map(|item| item.clone())
-        //     .collect()
     }
 
     fn handle(&mut self, event: &LogEvent) -> FeedResult {
@@ -122,6 +119,7 @@ mod tests {
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
     use std::env::current_dir;
+    use std::time::Instant;
 
     #[test]
     fn state_is_correct() {
@@ -129,12 +127,15 @@ mod tests {
 
         let log_dir = LogDirReader::open(dir_path);
 
-        // let mut vec = vec![];
         let mut state = GameState::new();
+        let instant = Instant::now();
 
         for entry in log_dir {
             state.feed_log_event(&entry.unwrap());
-            // vec.push(entry.unwrap());
         }
+
+        state.flush();
+
+        dbg!(instant.elapsed().as_nanos());
     }
 }
