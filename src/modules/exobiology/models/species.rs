@@ -31,37 +31,29 @@ pub enum Species {
     AmphoraPlant,
 
     // Anemones
-    AnemonePrasinus,
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
+    AnemoneLuteolum,
+
+    #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
+    AnemoneCroceum,
+
+    #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
+    AnemonePuniceum,
+
+    #[serde(rename = "$Codex_Ent_SphereABCD_03_Name;")]
+    AnemoneRoseum,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
+    AnemoneBlatteumBioluminescent,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
+    AnemoneRubeumBioluminescent,
 
     #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
     AnemonePrasinumBioluminescent,
 
-    #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
-    AnemonePuniceus,
-    AnemonePuniceum,
-    AnemoneRoseus,
-
     #[serde(rename = "$Codex_Ent_SphereEFGH_03_Name;")]
     AnemoneRoseumBioluminescent,
-
-    #[serde(rename = "Codex_Ent_SphereABCD_03_Name;")]
-    AnemoneRoseum,
-    AnemoneBlattinus,
-
-    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
-    AnemoneBlatteumBioluminescent,
-    AnemoneLuteus,
-
-    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
-    AnemoneLuteolum,
-    AnemoneRubens,
-
-    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
-    AnemoneRubeumBioluminescent,
-    AnemoneCroceus,
-
-    #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
-    AnemoneCroceum,
 
     // Bark mounds
     BarkMound,
@@ -382,19 +374,12 @@ impl Display for Species {
                 Species::AmphoraPlant => "Amphora Plant",
 
                 Species::AnemoneBlatteumBioluminescent => "Anemone Blatteum Bioluminescent",
-                Species::AnemoneBlattinus => "Anemone Blattinus Bioluminescent",
                 Species::AnemoneCroceum => "Anemone Croceum",
-                Species::AnemoneCroceus => "Anemone Croceus",
                 Species::AnemoneLuteolum => "Anemone Luteolum",
-                Species::AnemoneLuteus => "Anemone Luteus",
                 Species::AnemonePrasinumBioluminescent => "Anemone Prasinum Bioluminescent",
-                Species::AnemonePrasinus => "Anemone Prasinus Bioluminescent",
                 Species::AnemonePuniceum => "Anemone Puniceum",
-                Species::AnemonePuniceus => "Anemone Puniceus",
                 Species::AnemoneRoseum => "Anemone Roseum",
                 Species::AnemoneRoseumBioluminescent => "Anemone Roseum Bioluminescent",
-                Species::AnemoneRoseus => "Anemone Roseus",
-                Species::AnemoneRubens => "Anemone Rubens Bioluminescent",
                 Species::AnemoneRubeumBioluminescent => "Anemone Rubeum Bioluminescent",
 
                 Species::BarkMound => "Bark Mound",
