@@ -27,23 +27,40 @@ pub enum Species {
     AleoidaGravis,
 
     // Amphora plant
+    #[serde(rename = "$Codex_Ent_Vents_Name;")]
     AmphoraPlant,
 
     // Anemones
     AnemonePrasinus,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
     AnemonePrasinumBioluminescent,
+
+    #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
     AnemonePuniceus,
     AnemonePuniceum,
     AnemoneRoseus,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_03_Name;")]
     AnemoneRoseumBioluminescent,
+
+    #[serde(rename = "Codex_Ent_SphereABCD_03_Name;")]
     AnemoneRoseum,
     AnemoneBlattinus,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
     AnemoneBlatteumBioluminescent,
     AnemoneLuteus,
+
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
     AnemoneLuteolum,
     AnemoneRubens,
+
+    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
     AnemoneRubeumBioluminescent,
     AnemoneCroceus,
+
+    #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
     AnemoneCroceum,
 
     // Bark mounds
