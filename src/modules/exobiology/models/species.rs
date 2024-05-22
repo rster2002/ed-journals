@@ -373,14 +373,14 @@ impl Display for Species {
                 Species::AleoidaSpica => "Aleoida Spica",
                 Species::AmphoraPlant => "Amphora Plant",
 
-                Species::AnemoneBlatteumBioluminescent => "Anemone Blatteum Bioluminescent",
-                Species::AnemoneCroceum => "Anemone Croceum",
-                Species::AnemoneLuteolum => "Anemone Luteolum",
-                Species::AnemonePrasinumBioluminescent => "Anemone Prasinum Bioluminescent",
-                Species::AnemonePuniceum => "Anemone Puniceum",
-                Species::AnemoneRoseum => "Anemone Roseum",
-                Species::AnemoneRoseumBioluminescent => "Anemone Roseum Bioluminescent",
-                Species::AnemoneRubeumBioluminescent => "Anemone Rubeum Bioluminescent",
+                Species::AnemoneLuteolum => "Luteolum Anemone",
+                Species::AnemoneBlatteumBioluminescent => "Blatteum Bioluminescent Anemone",
+                Species::AnemoneCroceum => "Croceum Anemone",
+                Species::AnemonePrasinumBioluminescent => "Prasinum Bioluminescent Anemone",
+                Species::AnemonePuniceum => "Puniceum Anemone",
+                Species::AnemoneRoseum => "Roseum Anemone",
+                Species::AnemoneRoseumBioluminescent => "Roseum Bioluminescent Anemone",
+                Species::AnemoneRubeumBioluminescent => "Rubeum Bioluminescent Anemone",
 
                 Species::BarkMound => "Bark Mound",
 
