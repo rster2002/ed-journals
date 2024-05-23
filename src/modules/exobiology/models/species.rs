@@ -406,6 +406,27 @@ pub enum Species {
 
     #[serde(rename = "$Codex_Ent_Tussocks_15_Name;")]
     TussockCapillum,
+
+    // Thargoid barnacles
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_01_Name;")]
+    ThargoidBarnacleCommon,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_02_Name;")]
+    ThargoidBarnacleLarge,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Spikes_Name;")]
+    ThargoidBarnacleBarbs,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Submerged_Name;")]
+    ThargoidBarnacleMatrixSubmerged,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Name;")]
+    ThargoidBarnacleMatrix,
 }
 
 impl FromStr for Species {
@@ -558,6 +579,12 @@ impl Display for Species {
                 Species::TussockTriticum => "Tussock Triticum",
                 Species::TussockVentusa => "Tussock Ventusa",
                 Species::TussockVirgam => "Tussock Virgam",
+
+                Species::ThargoidBarnacleCommon => "Common Thargoid Barnacle",
+                Species::ThargoidBarnacleLarge => "Large Thargoid Barnacle",
+                Species::ThargoidBarnacleBarbs => "Thargoid Barnacle Barbs",
+                Species::ThargoidBarnacleMatrixSubmerged => "Thargoid Barnacle Matrix Submerged",
+                Species::ThargoidBarnacleMatrix => "Thargoid Barnacle Matrix",
             }
         )
     }

@@ -178,6 +178,8 @@ impl SpawnSource {
                     false
                 }
             }
+            SpawnCondition::Special => false,
+
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),

@@ -5,7 +5,7 @@ use crate::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, Volc
 use crate::materials::Material;
 
 lazy_static! {
-    pub static ref SPECIES_SPAWN_CONDITIONS: [(Species, Vec<SpawnCondition>); 117] = [
+    pub static ref SPECIES_SPAWN_CONDITIONS: [(Species, Vec<SpawnCondition>); 122] = [
         (
             Species::AleoidaArcus,
             vec![
@@ -1176,6 +1176,36 @@ lazy_static! {
                 SpawnCondition::ThinAtmosphere(AtmosphereType::Water),
                 SpawnCondition::RockyComposition,
                 SpawnCondition::MaxGravity(0.27),
+            ]
+        ),
+        (
+            Species::ThargoidBarnacleCommon,
+            vec![
+                SpawnCondition::Special
+            ]
+        ),
+        (
+            Species::ThargoidBarnacleLarge,
+            vec![
+                SpawnCondition::Special
+            ]
+        ),
+        (
+            Species::ThargoidBarnacleBarbs,
+            vec![
+                SpawnCondition::Special
+            ]
+        ),
+        (
+            Species::ThargoidBarnacleMatrixSubmerged,
+            vec![
+                SpawnCondition::Special
+            ]
+        ),
+        (
+            Species::ThargoidBarnacleMatrix,
+            vec![
+                SpawnCondition::Special
             ]
         ),
     ];

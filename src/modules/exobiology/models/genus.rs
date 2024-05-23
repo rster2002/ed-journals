@@ -58,6 +58,8 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
     Recepta,
 
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Tube_Name;")]
     SinuousTubers,
 
     #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
@@ -70,6 +72,10 @@ pub enum Genus {
     Tussock,
 
     Trutexa,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
+    ThargoidBarnacle,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
@@ -215,6 +221,12 @@ impl From<&Species> for Genus {
             | Species::TussockPropagito
             | Species::TussockPennatis
             | Species::TussockVirgam => Genus::Tussock,
+
+            Species::ThargoidBarnacleCommon
+            | Species::ThargoidBarnacleLarge
+            | Species::ThargoidBarnacleBarbs
+            | Species::ThargoidBarnacleMatrixSubmerged
+            | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
         }
     }
 }
@@ -252,6 +264,7 @@ impl Display for Genus {
                 Genus::Stratum => "Stratum",
                 Genus::Tubus => "Tubus",
                 Genus::Tussock => "Tussock",
+                Genus::ThargoidBarnacle => "Thargoid Barnacle",
                 Genus::Trutexa => "Trutexa",
 
                 #[cfg(not(feature = "strict"))]
@@ -286,6 +299,7 @@ impl Genus {
             Genus::Stratum => 0,
             Genus::Tubus => 0,
             Genus::Tussock => 0,
+            Genus::ThargoidBarnacle => 0,
             Genus::Trutexa => 0,
 
             #[cfg(not(feature = "strict"))]
