@@ -18,6 +18,9 @@ pub use models::volcanism::Volcanism;
 pub use models::volcanism::VolcanismClassification;
 pub use models::volcanism::VolcanismError;
 pub use models::volcanism_type::VolcanismType;
+pub use functions::planet_distance::planet_distance;
+pub use functions::bearing_to::bearing_to;
 
 mod models;
+mod functions;
 
