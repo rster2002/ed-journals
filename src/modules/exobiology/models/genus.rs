@@ -11,10 +11,12 @@ pub enum Genus {
 
     AmphoraPlant,
 
-    // Interestingly, the Name_Localized for this in a ScanOrganic event is 'Luteolum Anemone'
+    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Sphere_Name;")]
     Anemone,
 
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
     #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
