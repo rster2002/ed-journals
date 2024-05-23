@@ -64,6 +64,8 @@ pub enum Species {
     AnemoneRoseumBioluminescent,
 
     // Bark mounds
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
     // Bacterium
@@ -286,13 +288,36 @@ pub enum Species {
     ReceptaConditivus,
 
     // Sinuous tubers
-    SinuousTubersAlbidum,
-    SinuousTubersBlatteum,
-    SinuousTubersCaeruleum,
-    SinuousTubersLindigoticum,
-    SinuousTubersPrasinum,
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Tube_Name;")]
     SinuousTubersRoseum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_01_Name;")]
+    SinuousTubersPrasinum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_02_Name;")]
+    SinuousTubersAlbidum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_03_Name;")]
+    SinuousTubersCaeruleum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_Name;")]
+    SinuousTubersBlatteum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_01_Name;")]
+    SinuousTubersLindigoticum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_02_Name;")]
     SinuousTubersViolaceum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_03_Name;")]
     SinuousTubersViride,
 
     // Stratum
@@ -413,8 +438,6 @@ impl Display for Species {
                 Species::AnemoneRoseumBioluminescent => "Roseum Bioluminescent Anemone",
                 Species::AnemoneRubeumBioluminescent => "Rubeum Bioluminescent Anemone",
 
-                // TODO needs to be verified
-                #[serde(rename = "$Codex_Ent_Cone_Name;")]
                 Species::BarkMound => "Bark Mound",
 
                 Species::BacteriumAcies => "Bacterium Acies",
@@ -496,14 +519,14 @@ impl Display for Species {
                 Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
                 Species::ReceptaUmbrux => "Recepta Umbrux",
 
-                Species::SinuousTubersAlbidum => "Sinuous Tubers Albidum",
-                Species::SinuousTubersBlatteum => "Sinuous Tubers Blatteum",
-                Species::SinuousTubersCaeruleum => "Sinuous Tubers Caeruleum",
-                Species::SinuousTubersLindigoticum => "Sinuous Tubers Lindigoticum",
-                Species::SinuousTubersPrasinum => "Sinuous Tubers Prasinum",
-                Species::SinuousTubersRoseum => "Sinuous Tubers Roseum",
-                Species::SinuousTubersViolaceum => "Sinuous Tubers Violaceum",
-                Species::SinuousTubersViride => "Sinuous Tubers Viride",
+                Species::SinuousTubersAlbidum => "Albidum Sinuous Tubers",
+                Species::SinuousTubersBlatteum => "Blatteum Sinuous Tubers",
+                Species::SinuousTubersCaeruleum => "Caeruleum Sinuous Tubers",
+                Species::SinuousTubersLindigoticum => "Lindigoticum Sinuous Tubers",
+                Species::SinuousTubersPrasinum => "Prasinum Sinuous Tubers",
+                Species::SinuousTubersRoseum => "Roseum Sinuous Tubers",
+                Species::SinuousTubersViolaceum => "Violaceum Sinuous Tubers",
+                Species::SinuousTubersViride => "Viride Sinuous Tubers",
 
                 Species::StratumAraneamus => "Stratum Araneamus",
                 Species::StratumCucumisis => "Stratum Cucumisis",
