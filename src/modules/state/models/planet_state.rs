@@ -13,6 +13,7 @@ use crate::logs::content::log_event_content::scan_event::{
 };
 use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
 use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::organic_state::OrganicState;
@@ -21,15 +22,15 @@ use crate::state::models::organic_state::OrganicState;
 pub struct PlanetState {
     pub scan: ScanEvent,
 
-    // pub fss_signals: Vec<FSSBodySignalEventSignal>,
+    pub fss_signals: Vec<FSSBodySignalEventSignal>,
 
-    // pub saa_scan: Option<SAAScanCompleteEvent>,
-    // pub saa_signals: Vec<SAASignalsFoundEventSignal>,
-    // pub saa_genuses: Vec<Genus>,
+    pub saa_scan: Option<SAAScanCompleteEvent>,
+    pub saa_signals: Vec<SAASignalsFoundEventSignal>,
+    pub saa_genuses: Vec<Genus>,
 
     pub touchdowns: Vec<TouchdownEvent>,
-    // pub organics: HashMap<Species, OrganicState>,
     pub exobiology_body: TargetPlanet,
+    pub exobiology_completed: Vec<Species>,
 }
 
 #[derive(Debug, Error)]
@@ -39,30 +40,6 @@ pub enum BodyStateError {
 }
 
 impl PlanetState {
-    // pub fn new(scan_event: ScanEvent) -> Option<Self> {
-    //     BodyState {
-    //         scan: scan_event,
-    //         fss_signals: Vec::new(),
-    //         saa_scan: None,
-    //         saa_signals: Vec::new(),
-    //         saa_genuses: Vec::new(),
-    //         touchdowns: Vec::new(),
-    //         organics: HashMap::new(),
-    //         exobiology_body: TargetPlanet {
-    //             atmosphere: scan_event.,
-    //             gravity: Gravity(),
-    //             class: PlanetClass::MetalRichBody,
-    //             surface_temperature: 0.0,
-    //             volcanism: Volcanism {},
-    //             materials: Default::default(),
-    //             composition: Default::default(),
-    //             parents: vec![],
-    //             semi_major_axis: 0.0,
-    //             geological_signals_present: false,
-    //         }
-    //     }
-    // }
-
     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
         let Some(body_id) = log_event.content.body_id() else {
             return FeedResult::Skipped;
@@ -73,19 +50,19 @@ impl PlanetState {
         }
 
         match &log_event.content {
-            // LogEventContent::SAAScanComplete(scan_complete) => {
-            //     self.saa_scan = Some(scan_complete.clone());
-            // }
-            // LogEventContent::SAASignalsFound(signals) => {
-            //     self.saa_signals.clone_from(&signals.signals);
-            //     self.saa_genuses = signals
-            //         .genuses
-            //         .iter()
-            //         .map(|signal| signal.genus.clone())
-            //         .collect();
-            // }
+            LogEventContent::SAAScanComplete(scan_complete) => {
+                self.saa_scan = Some(scan_complete.clone());
+            }
+            LogEventContent::SAASignalsFound(signals) => {
+                self.saa_signals.clone_from(&signals.signals);
+                self.saa_genuses = signals
+                    .genuses
+                    .iter()
+                    .map(|signal| signal.genus.clone())
+                    .collect();
+            }
             LogEventContent::FSSBodySignals(body_signals) => {
-                // self.fss_signals.clone_from(&body_signals.signals);
+                self.fss_signals.clone_from(&body_signals.signals);
 
                 self.exobiology_body.geological_signals_present = body_signals
                     .signals
@@ -97,21 +74,17 @@ impl PlanetState {
                 if touchdown.on_planet {
                     self.touchdowns.push(touchdown.clone());
                 }
-            }
-            // LogEventContent::ScanOrganic(scanned_organic) => {
-            //
-            // },
+            },
+            LogEventContent::ScanOrganic(scanned_organic) => {
+                if let ScanOrganicEventScanType::Log = scanned_organic.scan_type {
+                    self.exobiology_completed.push(scanned_organic.species.clone());
+                }
+            },
             _ => {}
         }
 
         FeedResult::Accepted
     }
-
-    // pub fn clear_organic_process(&mut self) {
-    //     for organic in self.organics.values_mut() {
-    //         organic.clear_process();
-    //     }
-    // }
 
     pub fn get_spawnable_species(&self, target_system: &TargetSystem) -> Vec<Species> {
         let spawn_source = SpawnSource {
@@ -127,12 +100,8 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
     fn from(value: (&ScanEvent, &ScanEventPlanet)) -> Self {
         PlanetState {
             scan: value.0.clone(),
-            // fss_signals: vec![],
-            // saa_scan: None,
-            // saa_signals: vec![],
-            // saa_genuses: vec![],
-            touchdowns: vec![],
-            // organics: Default::default(),
+            touchdowns: Vec::new(),
+            exobiology_completed: Vec::new(),
             exobiology_body: TargetPlanet {
                 atmosphere: value.1.atmosphere.clone(),
                 gravity: value.1.surface_gravity.clone(),
