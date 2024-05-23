@@ -100,6 +100,10 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
     fn from(value: (&ScanEvent, &ScanEventPlanet)) -> Self {
         PlanetState {
             scan: value.0.clone(),
+            fss_signals: Vec::new(),
+            saa_scan: None,
+            saa_signals: Vec::new(),
+            saa_genuses: Vec::new(),
             touchdowns: Vec::new(),
             exobiology_completed: Vec::new(),
             exobiology_body: TargetPlanet {
