@@ -123,6 +123,8 @@ pub struct ScanEventPlanet {
 
     #[serde(rename = "MassEM")]
     pub mass_em: f32,
+
+    /// Radius of the planet in meters.
     pub radius: f32,
     pub surface_gravity: Gravity,
     pub surface_temperature: f32,

@@ -10,7 +10,13 @@ pub enum Genus {
     Aleoida,
 
     AmphoraPlant,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
     Anemone,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
     #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
@@ -52,6 +58,8 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
     Recepta,
 
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Tube_Name;")]
     SinuousTubers,
 
     #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
@@ -63,7 +71,9 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
     Tussock,
 
-    Trutexa,
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
+    ThargoidBarnacle,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
@@ -81,20 +91,13 @@ impl From<&Species> for Genus {
 
             Species::AmphoraPlant => Genus::AmphoraPlant,
 
-            Species::AnemonePrasinus
-            | Species::AnemonePrasinumBioluminescent
-            | Species::AnemonePuniceus
+            Species::AnemonePrasinumBioluminescent
             | Species::AnemonePuniceum
-            | Species::AnemoneRoseus
             | Species::AnemoneRoseumBioluminescent
             | Species::AnemoneRoseum
-            | Species::AnemoneBlattinus
             | Species::AnemoneBlatteumBioluminescent
-            | Species::AnemoneLuteus
             | Species::AnemoneLuteolum
-            | Species::AnemoneRubens
             | Species::AnemoneRubeumBioluminescent
-            | Species::AnemoneCroceus
             | Species::AnemoneCroceum => Genus::Anemone,
 
             Species::BarkMound => Genus::BarkMound,
@@ -216,6 +219,12 @@ impl From<&Species> for Genus {
             | Species::TussockPropagito
             | Species::TussockPennatis
             | Species::TussockVirgam => Genus::Tussock,
+
+            Species::ThargoidBarnacleCommon
+            | Species::ThargoidBarnacleLarge
+            | Species::ThargoidBarnacleBarbs
+            | Species::ThargoidBarnacleMatrixSubmerged
+            | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
         }
     }
 }
@@ -253,7 +262,7 @@ impl Display for Genus {
                 Genus::Stratum => "Stratum",
                 Genus::Tubus => "Tubus",
                 Genus::Tussock => "Tussock",
-                Genus::Trutexa => "Trutexa",
+                Genus::ThargoidBarnacle => "Thargoid Barnacle",
 
                 #[cfg(not(feature = "strict"))]
                 Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
@@ -268,26 +277,28 @@ impl Genus {
         match self {
             Genus::Aleoida => 150,
             Genus::AmphoraPlant => 100,
-            Genus::Anemone => 0,
-            Genus::BarkMound => 0,
-            Genus::Bacterium => 0,
-            Genus::BrainTree => 0,
-            Genus::Cactoida => 0,
-            Genus::Clypeus => 0,
-            Genus::Concha => 0,
-            Genus::CrystallineShards => 0,
-            Genus::Electricae => 0,
-            Genus::Fonticulua => 0,
-            Genus::Fruxeta => 0,
-            Genus::Fumerola => 0,
-            Genus::Fungoida => 0,
-            Genus::Osseus => 0,
-            Genus::Recepta => 0,
-            Genus::SinuousTubers => 0,
-            Genus::Stratum => 0,
-            Genus::Tubus => 0,
-            Genus::Tussock => 0,
-            Genus::Trutexa => 0,
+            Genus::Anemone => 100,
+            Genus::BarkMound => 100,
+            Genus::Bacterium => 500,
+            Genus::BrainTree => 100,
+            Genus::Cactoida => 300,
+            Genus::Clypeus => 150,
+            Genus::Concha => 150,
+            Genus::CrystallineShards => 100,
+            Genus::Electricae => 1000,
+            Genus::Fonticulua => 500,
+            Genus::Fruxeta => 150,
+            Genus::Fumerola => 100,
+            Genus::Fungoida => 300,
+            Genus::Osseus => 800,
+            Genus::Recepta => 150,
+            Genus::SinuousTubers => 100,
+            Genus::Stratum => 500,
+            Genus::Tubus => 800,
+            Genus::Tussock => 200,
+
+            // TODO check what this should be
+            Genus::ThargoidBarnacle => 0,
 
             #[cfg(not(feature = "strict"))]
             Genus::Unknown(_) => 0,

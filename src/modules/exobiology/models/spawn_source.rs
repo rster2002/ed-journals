@@ -123,6 +123,8 @@ impl<'a> SpawnSource<'a> {
                 composition.metal > 0.0
             }
 
+            SpawnCondition::Special => false,
+
             SpawnCondition::Any(conditions) => conditions
                 .iter()
                 .any(|condition| self.satisfies_spawn_condition(condition)),

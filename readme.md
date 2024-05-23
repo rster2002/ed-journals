@@ -14,10 +14,10 @@ release.
 - [x] Models for journal directory and files.
 - [x] Journal reader to read entries from journal files.
 - [x] Serde models for journal entries.
-- [ ] Parsing dynamic files like `Market.json`, `Status.json` etc.
+- [x] Parsing dynamic files like `Market.json`, `Status.json` etc.
 - [x] Async variants of models, especially the `JournalReader`.
-- [ ] Automatic journal detection based on platform etc.
-- [ ] Exobiology utilities for things like predicting available species based on planet scan etc.
+- [x] Automatic journal detection based on platform etc.
+- [x] Exobiology utilities for things like predicting available species based on planet scan etc.
 - [ ] Exploration utilities for pointing out special or unusual discoveries.
 
 ## Contributing

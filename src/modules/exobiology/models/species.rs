@@ -27,26 +27,45 @@ pub enum Species {
     AleoidaGravis,
 
     // Amphora plant
+    #[serde(rename = "$Codex_Ent_Vents_Name;")]
     AmphoraPlant,
 
     // Anemones
-    AnemonePrasinus,
-    AnemonePrasinumBioluminescent,
-    AnemonePuniceus,
-    AnemonePuniceum,
-    AnemoneRoseus,
-    AnemoneRoseumBioluminescent,
-    AnemoneRoseum,
-    AnemoneBlattinus,
-    AnemoneBlatteumBioluminescent,
-    AnemoneLuteus,
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
     AnemoneLuteolum,
-    AnemoneRubens,
-    AnemoneRubeumBioluminescent,
-    AnemoneCroceus,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
     AnemoneCroceum,
 
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
+    AnemonePuniceum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereABCD_03_Name;")]
+    AnemoneRoseum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
+    AnemoneBlatteumBioluminescent,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
+    AnemoneRubeumBioluminescent,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
+    AnemonePrasinumBioluminescent,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SphereEFGH_03_Name;")]
+    AnemoneRoseumBioluminescent,
+
     // Bark mounds
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
     // Bacterium
@@ -90,14 +109,37 @@ pub enum Species {
     BacteriumVerrata,
 
     // Brain tree
-    BrainTreeAureum,
-    BrainTreeOstrinum,
-    BrainTreePuniceum,
-    BrainTreeLindigoticum,
-    BrainTreeGypseeum,
-    BrainTreeLividum,
-    BrainTreeViride,
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Seed_Name;")]
     BrainTreeRoseum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedABCD_01_Name;")]
+    BrainTreeGypseeum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedABCD_02_Name;")]
+    BrainTreeOstrinum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedABCD_03_Name;")]
+    BrainTreeViride,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedEFGH_Name;")]
+    BrainTreeLividum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedEFGH_01_Name;")]
+    BrainTreeAureum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedEFGH_02_Name;")]
+    BrainTreePuniceum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_SeedEFGH_03_Name;")]
+    BrainTreeLindigoticum,
 
     // Cactoida
     #[serde(rename = "$Codex_Ent_Cactoid_01_Name;")]
@@ -246,13 +288,36 @@ pub enum Species {
     ReceptaConditivus,
 
     // Sinuous tubers
-    SinuousTubersAlbidum,
-    SinuousTubersBlatteum,
-    SinuousTubersCaeruleum,
-    SinuousTubersLindigoticum,
-    SinuousTubersPrasinum,
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Tube_Name;")]
     SinuousTubersRoseum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_01_Name;")]
+    SinuousTubersPrasinum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_02_Name;")]
+    SinuousTubersAlbidum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeABCD_03_Name;")]
+    SinuousTubersCaeruleum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_Name;")]
+    SinuousTubersBlatteum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_01_Name;")]
+    SinuousTubersLindigoticum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_02_Name;")]
     SinuousTubersViolaceum,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_TubeEFGH_03_Name;")]
     SinuousTubersViride,
 
     // Stratum
@@ -341,6 +406,27 @@ pub enum Species {
 
     #[serde(rename = "$Codex_Ent_Tussocks_15_Name;")]
     TussockCapillum,
+
+    // Thargoid barnacles
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_01_Name;")]
+    ThargoidBarnacleCommon,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_02_Name;")]
+    ThargoidBarnacleLarge,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Spikes_Name;")]
+    ThargoidBarnacleBarbs,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Submerged_Name;")]
+    ThargoidBarnacleMatrixSubmerged,
+
+    // TODO needs to be verified
+    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Name;")]
+    ThargoidBarnacleMatrix,
 }
 
 impl FromStr for Species {
@@ -364,21 +450,14 @@ impl Display for Species {
                 Species::AleoidaSpica => "Aleoida Spica",
                 Species::AmphoraPlant => "Amphora Plant",
 
-                Species::AnemoneBlatteumBioluminescent => "Anemone Blatteum Bioluminescent",
-                Species::AnemoneBlattinus => "Anemone Blattinus Bioluminescent",
-                Species::AnemoneCroceum => "Anemone Croceum",
-                Species::AnemoneCroceus => "Anemone Croceus",
-                Species::AnemoneLuteolum => "Anemone Luteolum",
-                Species::AnemoneLuteus => "Anemone Luteus",
-                Species::AnemonePrasinumBioluminescent => "Anemone Prasinum Bioluminescent",
-                Species::AnemonePrasinus => "Anemone Prasinus Bioluminescent",
-                Species::AnemonePuniceum => "Anemone Puniceum",
-                Species::AnemonePuniceus => "Anemone Puniceus",
-                Species::AnemoneRoseum => "Anemone Roseum",
-                Species::AnemoneRoseumBioluminescent => "Anemone Roseum Bioluminescent",
-                Species::AnemoneRoseus => "Anemone Roseus",
-                Species::AnemoneRubens => "Anemone Rubens Bioluminescent",
-                Species::AnemoneRubeumBioluminescent => "Anemone Rubeum Bioluminescent",
+                Species::AnemoneLuteolum => "Luteolum Anemone",
+                Species::AnemoneBlatteumBioluminescent => "Blatteum Bioluminescent Anemone",
+                Species::AnemoneCroceum => "Croceum Anemone",
+                Species::AnemonePrasinumBioluminescent => "Prasinum Bioluminescent Anemone",
+                Species::AnemonePuniceum => "Puniceum Anemone",
+                Species::AnemoneRoseum => "Roseum Anemone",
+                Species::AnemoneRoseumBioluminescent => "Roseum Bioluminescent Anemone",
+                Species::AnemoneRubeumBioluminescent => "Rubeum Bioluminescent Anemone",
 
                 Species::BarkMound => "Bark Mound",
 
@@ -396,14 +475,14 @@ impl Display for Species {
                 Species::BacteriumVesicula => "Bacterium Vesicula",
                 Species::BacteriumVolu => "Bacterium Volu",
 
-                Species::BrainTreeAureum => "Brain Tree Aureum",
-                Species::BrainTreeGypseeum => "Brain Tree Gypseeum",
-                Species::BrainTreeLindigoticum => "Brain Tree Lindigoticum",
-                Species::BrainTreeLividum => "Brain Tree Lividum",
-                Species::BrainTreeOstrinum => "Brain Tree Ostrinum",
-                Species::BrainTreePuniceum => "Brain Tree Puniceum",
-                Species::BrainTreeRoseum => "Brain Tree Roseum",
-                Species::BrainTreeViride => "Brain Tree Viride",
+                Species::BrainTreeAureum => "Aureum Brain Tree ",
+                Species::BrainTreeGypseeum => "Gypseeum Brain Tree ",
+                Species::BrainTreeLindigoticum => "Lindigoticum Brain Tree ",
+                Species::BrainTreeLividum => "Lividum Brain Tree ",
+                Species::BrainTreeOstrinum => "Ostrinum Brain Tree ",
+                Species::BrainTreePuniceum => "Puniceum Brain Tree ",
+                Species::BrainTreeRoseum => "Roseum Brain Tree ",
+                Species::BrainTreeViride => "Viride Brain Tree ",
 
                 Species::CactoidaCortexum => "Cactoida Cortexum",
                 Species::CactoidaLapis => "Cactoida Lapis",
@@ -461,14 +540,14 @@ impl Display for Species {
                 Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
                 Species::ReceptaUmbrux => "Recepta Umbrux",
 
-                Species::SinuousTubersAlbidum => "Sinuous Tubers Albidum",
-                Species::SinuousTubersBlatteum => "Sinuous Tubers Blatteum",
-                Species::SinuousTubersCaeruleum => "Sinuous Tubers Caeruleum",
-                Species::SinuousTubersLindigoticum => "Sinuous Tubers Lindigoticum",
-                Species::SinuousTubersPrasinum => "Sinuous Tubers Prasinum",
-                Species::SinuousTubersRoseum => "Sinuous Tubers Roseum",
-                Species::SinuousTubersViolaceum => "Sinuous Tubers Violaceum",
-                Species::SinuousTubersViride => "Sinuous Tubers Viride",
+                Species::SinuousTubersAlbidum => "Albidum Sinuous Tubers",
+                Species::SinuousTubersBlatteum => "Blatteum Sinuous Tubers",
+                Species::SinuousTubersCaeruleum => "Caeruleum Sinuous Tubers",
+                Species::SinuousTubersLindigoticum => "Lindigoticum Sinuous Tubers",
+                Species::SinuousTubersPrasinum => "Prasinum Sinuous Tubers",
+                Species::SinuousTubersRoseum => "Roseum Sinuous Tubers",
+                Species::SinuousTubersViolaceum => "Violaceum Sinuous Tubers",
+                Species::SinuousTubersViride => "Viride Sinuous Tubers",
 
                 Species::StratumAraneamus => "Stratum Araneamus",
                 Species::StratumCucumisis => "Stratum Cucumisis",
@@ -500,6 +579,12 @@ impl Display for Species {
                 Species::TussockTriticum => "Tussock Triticum",
                 Species::TussockVentusa => "Tussock Ventusa",
                 Species::TussockVirgam => "Tussock Virgam",
+
+                Species::ThargoidBarnacleCommon => "Common Thargoid Barnacle",
+                Species::ThargoidBarnacleLarge => "Large Thargoid Barnacle",
+                Species::ThargoidBarnacleBarbs => "Thargoid Barnacle Barbs",
+                Species::ThargoidBarnacleMatrixSubmerged => "Thargoid Barnacle Matrix Submerged",
+                Species::ThargoidBarnacleMatrix => "Thargoid Barnacle Matrix",
             }
         )
     }
