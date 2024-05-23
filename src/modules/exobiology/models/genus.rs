@@ -71,8 +71,6 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
     Tussock,
 
-    Trutexa,
-
     // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
     ThargoidBarnacle,
@@ -265,7 +263,6 @@ impl Display for Genus {
                 Genus::Tubus => "Tubus",
                 Genus::Tussock => "Tussock",
                 Genus::ThargoidBarnacle => "Thargoid Barnacle",
-                Genus::Trutexa => "Trutexa",
 
                 #[cfg(not(feature = "strict"))]
                 Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
@@ -300,7 +297,6 @@ impl Genus {
             Genus::Tubus => 0,
             Genus::Tussock => 0,
             Genus::ThargoidBarnacle => 0,
-            Genus::Trutexa => 0,
 
             #[cfg(not(feature = "strict"))]
             Genus::Unknown(_) => 0,
