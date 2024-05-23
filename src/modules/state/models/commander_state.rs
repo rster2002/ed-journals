@@ -10,6 +10,7 @@ use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::models::materials_state::MaterialsState;
 use crate::state::SystemState;
 
 #[derive(Serialize)]
@@ -20,6 +21,7 @@ pub struct CommanderState {
     pub current_system: Option<u64>,
     pub current_organic: Option<CurrentOrganic>,
     pub current_exploration_data: Vec<ScanEvent>,
+    pub material_state: MaterialsState,
 }
 
 impl CommanderState {
@@ -77,6 +79,30 @@ impl CommanderState {
                 }
             },
 
+            LogEventContent::Materials(event) => {
+                for material in &event.raw {
+                    self.material_state.set_material_count(material.name.clone(), material.count);
+                }
+
+                for material in &event.encoded {
+                    self.material_state.set_material_count(material.name.clone(), material.count);
+                }
+
+                for material in &event.manufactured {
+                    self.material_state.set_material_count(material.name.clone(), material.count);
+                }
+            }
+            LogEventContent::MaterialCollected(event) => {
+                self.material_state.add_material_count(event.name.clone(), event.count);
+            },
+            LogEventContent::MaterialDiscarded(event) => {
+                self.material_state.remove_material_count(event.name.clone(), event.count);
+            },
+            LogEventContent::MaterialTrade(event) => {
+                self.material_state.remove_material_count(event.paid.material.clone(), event.paid.quantity);
+                self.material_state.add_material_count(event.received.material.clone(), event.received.quantity);
+            },
+
             _ => {}
         }
 
@@ -126,6 +152,7 @@ impl From<&CommanderEvent> for CommanderState {
             current_system: None,
             current_organic: None,
             current_exploration_data: Vec::new(),
+            material_state: MaterialsState::default(),
         }
     }
 }

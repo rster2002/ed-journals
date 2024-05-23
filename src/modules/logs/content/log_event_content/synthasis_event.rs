@@ -14,5 +14,5 @@ pub struct SynthesisEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct SynthesisEventMaterial {
     pub name: Material,
-    pub count: u8,
+    pub count: u16,
 }

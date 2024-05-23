@@ -113,5 +113,5 @@ pub struct MissionCompletedEventCommodityReward {
 pub struct MissionCompletedEventMaterialsReward {
     pub name: MixedMaterial,
     pub category: MixedMaterialCategory,
-    pub count: u8,
+    pub count: u16,
 }

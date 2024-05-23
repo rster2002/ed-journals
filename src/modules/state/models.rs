@@ -6,3 +6,4 @@ pub mod game_state;
 mod organic_state;
 mod planet_state;
 pub mod system_state;
+mod materials_state;

@@ -1,12 +1,10 @@
 use serde::{Deserialize, Serialize};
+use crate::materials::{Material, MaterialCategory};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialCollectedEvent {
-    // TODO look into turning this into an enum
-    pub category: String,
-
-    // TODO look into turning this into an enum
-    pub name: String,
-    pub count: u8,
+    pub name: Material,
+    pub category: MaterialCategory,
+    pub count: u16,
 }

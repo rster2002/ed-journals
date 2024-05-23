@@ -1,10 +1,11 @@
 use std::fmt::{Display, Formatter};
 
 use serde::Serialize;
+use strum::EnumIter;
 
 use crate::modules::materials::Material;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, EnumIter)]
 pub enum MaterialGroup {
     // Raw
     RawMaterials1,
@@ -36,7 +37,6 @@ pub enum MaterialGroup {
     EncodedFirmware,
 }
 
-// TODO just like species this should be a lazy static
 impl MaterialGroup {
     pub fn materials(&self) -> Vec<Material> {
         match self {

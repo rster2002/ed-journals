@@ -7,5 +7,5 @@ use crate::modules::materials::{Material, MaterialCategory};
 pub struct MaterialDiscarded {
     pub category: MaterialCategory,
     pub name: Material,
-    pub count: u8,
+    pub count: u16,
 }

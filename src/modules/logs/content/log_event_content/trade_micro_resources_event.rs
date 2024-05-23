@@ -8,7 +8,7 @@ pub struct TradeMicroResourcesEvent {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub received: Item,
-    pub count: u8,
+    pub count: u16,
     pub offered: Vec<TradeMicroResourcesEventOffer>,
 }
 
@@ -19,5 +19,5 @@ pub struct TradeMicroResourcesEventOffer {
 
     #[serde(rename = "Name_Localised")]
     pub name_localized: Option<String>,
-    pub count: u8,
+    pub count: u16,
 }

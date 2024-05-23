@@ -22,5 +22,5 @@ pub struct UpgradeSuitEventResource {
 
     #[serde(rename = "Name_Localised")]
     pub name_localized: Option<String>,
-    pub count: u8,
+    pub count: u16,
 }
