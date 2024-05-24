@@ -18,7 +18,6 @@ use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::organic_state::OrganicState;
 use crate::state::models::planet_state::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 use crate::trading::Commodity;
 
@@ -184,10 +183,10 @@ impl PlanetState {
                 };
 
                 PlanetSpeciesEntry {
-                    specie: species,
                     will_spawn,
                     scanned: self.scanned_species.contains(&species),
                     logged: self.logged_species.contains(&species),
+                    specie: species,
                 }
             })
             .collect()

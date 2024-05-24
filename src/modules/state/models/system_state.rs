@@ -175,7 +175,7 @@ mod tests {
                     };
 
                     for species in expected_species {
-                        let conditions = species.spawn_conditions();
+                        let conditions = species.specie.spawn_conditions();
 
                         let failing_conditions = conditions
                             .iter()
