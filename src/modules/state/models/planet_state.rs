@@ -156,9 +156,30 @@ impl PlanetState {
             .into_iter()
             .map(|species| {
                 let will_spawn: WillSpawn = match true {
+                    // If the species has been scanned, will_spawn will be set to yes to keep it
+                    // from switching from a maybe to a no.
+                    _ if self.scanned_species.contains(&species) => WillSpawn::Yes,
+
+                    // If the possible number of species is the same as the number of biological
+                    // signals it counts all of them as yes.
                     _ if self.biological_signal_count.is_some_and(|count| count == number_of_species) => WillSpawn::Yes,
+
+                    // If the current species has not been scanned yet (checked by the first if
+                    // statement), but there already is another species of the same genus, then
+                    // this species does not have a chance to spawn.
+                    _ if self.scanned_species.iter().find(|scanned| scanned.genus() == species.genus()).is_none() => WillSpawn::No,
+
+                    // If the planet has not been scanned yet and the genuses are still unknown, it
+                    // will count any species that hasn't already been flagged as a maybe.
                     _ if self.saa_genuses.is_none() => WillSpawn::Maybe,
+
+                    // If the planet has been scanned, but the species' genus does not appear in the
+                    // list of scanned genuses that can spawn, then the current species will not
+                    // spawn.
                     _ if self.saa_genuses.as_ref().is_some_and(|genuses| !genuses.contains(&species.genus())) => WillSpawn::No,
+
+                    // If the species is not handled by any of the special cases above, then the
+                    // species is still under consideration.
                     _ => WillSpawn::Maybe,
                 };
 
