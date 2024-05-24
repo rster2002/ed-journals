@@ -9,6 +9,7 @@ use crate::logs::content::log_event_content::scan_event::ScanEventKind;
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
 use crate::state::models::planet_state::PlanetState;
 
 #[derive(Serialize)]
@@ -94,11 +95,11 @@ impl SystemState {
         self.carrier_visits.push(*date_time);
     }
 
-    pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<Species>> {
+    pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
         Some(
             self.bodies
                 .get(&body_id)?
-                .get_spawnable_species(&self.exobiology_system),
+                .get_planet_species(&self.exobiology_system),
         )
     }
 }

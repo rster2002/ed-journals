@@ -116,6 +116,7 @@ impl Default for GameState {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashSet;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
     use std::env::current_dir;
@@ -137,5 +138,22 @@ mod tests {
         state.flush();
 
         dbg!(instant.elapsed().as_nanos());
+
+        // Confirms that there are only one species of each genus on each planet
+        for commander in state.commanders.values() {
+            for system in commander.systems.values() {
+                for body in system.bodies.values() {
+                    let mut genuses = HashSet::new();
+
+                    for species in &body.scanned_species {
+                        let inserted = genuses.insert(species.genus());
+
+                        if !inserted {
+                            panic!("Not here!");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

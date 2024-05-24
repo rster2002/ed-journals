@@ -4,6 +4,7 @@ use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use strum::EnumIter;
+use crate::exobiology::Genus;
 
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
@@ -597,6 +598,10 @@ impl Species {
             .find(|(species, _)| species == self)
             .expect("Species should always have a matching spawning condition")
             .1
+    }
+
+    pub fn genus(&self) -> Genus {
+        self.into()
     }
 
     pub fn base_value(&self) -> u64 {

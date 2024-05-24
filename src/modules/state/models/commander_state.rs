@@ -8,10 +8,12 @@ use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEven
 use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::modules::civilization::LocationInfo;
-use crate::state::models::current_organic::CurrentOrganic;
+use current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::materials_state::MaterialsState;
 use crate::state::SystemState;
+
+pub mod current_organic;
 
 #[derive(Serialize)]
 pub struct CommanderState {
