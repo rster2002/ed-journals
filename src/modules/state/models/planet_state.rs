@@ -191,6 +191,39 @@ impl PlanetState {
             })
             .collect()
     }
+
+    /// Calculates the lowest exobiology value based on the current information about the planet.
+    pub fn get_lowest_exobiology_value(&self, target_system: &TargetSystem) -> u64 {
+        let mut known_values = Vec::new();
+        let mut maybe_values = Vec::new();
+
+        for entry in self.get_planet_species(target_system) {
+            match entry.will_spawn {
+                WillSpawn::Yes => known_values.push(entry.specie.base_value()),
+                WillSpawn::Maybe => maybe_values.push(entry.specie.base_value()),
+                WillSpawn::No => {}
+            }
+        }
+
+        // Calculates how many of the maybe entries could still be found.
+        let remaining_unknowns = match self.biological_signal_count {
+            Some(max) => max - known_values.len(),
+            None => known_values.len(),
+        };
+
+        maybe_values.sort();
+
+        let known_total: u64 = maybe_values
+            .iter()
+            .sum();
+
+        let maybe_total: u64 = maybe_values
+            .iter()
+            .take(remaining_unknowns)
+            .sum();
+
+        known_total + maybe_total
+    }
 }
 
 impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
