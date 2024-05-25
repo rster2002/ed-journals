@@ -9,9 +9,11 @@ use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::modules::civilization::LocationInfo;
 use current_organic::CurrentOrganic;
+use crate::state::models::carrier_state::CarrierState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::materials_state::MaterialsState;
 use crate::state::SystemState;
+use crate::try_feed;
 
 pub mod current_organic;
 
@@ -22,8 +24,10 @@ pub struct CommanderState {
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
     pub current_organic: Option<CurrentOrganic>,
+    pub current_organic_process: Option<ScanOrganicEventScanType>,
     pub current_exploration_data: Vec<ScanEvent>,
     pub material_state: MaterialsState,
+    pub carrier_state: Option<CarrierState>,
 }
 
 impl CommanderState {
@@ -69,16 +73,19 @@ impl CommanderState {
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
                 ScanOrganicEventScanType::Sample => {
+                    self.current_organic_process = Some(ScanOrganicEventScanType::Sample);
                     self.current_organic = Some(CurrentOrganic {
                         system_address: scan_organic.system_address,
                         body_id: scan_organic.body,
                         species: scan_organic.species.clone(),
                     });
-                }
-                ScanOrganicEventScanType::Analyse => {}
+                },
+                ScanOrganicEventScanType::Analyse => {
+                    self.current_organic_process = Some(ScanOrganicEventScanType::Analyse);
+                },
                 ScanOrganicEventScanType::Log => {
                     self.current_organic = None;
-                }
+                },
             },
 
             LogEventContent::Materials(event) => {
@@ -105,6 +112,36 @@ impl CommanderState {
                 self.material_state.add_material_count(event.received.material.clone(), event.received.quantity);
             },
 
+            LogEventContent::CarrierStats(stats) => {
+                if self.carrier_state.is_none() {
+                    let mut state: CarrierState = stats.clone().into();
+                    state.feed_log_event(&log_event);
+
+                    self.carrier_state = Some(state);
+                }
+            },
+
+            LogEventContent::CarrierJump(_)
+            | LogEventContent::CarrierBuy(_)
+            | LogEventContent::CarrierJumpRequest(_)
+            | LogEventContent::CarrierDecommission(_)
+            | LogEventContent::CarrierCancelDecommission(_)
+            | LogEventContent::CarrierBankTransfer(_)
+            | LogEventContent::CarrierDepositFuel(_)
+            | LogEventContent::CarrierCrewServices(_)
+            | LogEventContent::CarrierFinance(_)
+            | LogEventContent::CarrierShipPack(_)
+            | LogEventContent::CarrierModulePack(_)
+            | LogEventContent::CarrierTradeOrder(_)
+            | LogEventContent::CarrierDockingPermission(_)
+            | LogEventContent::CarrierNameChange(_)
+            | LogEventContent::CarrierJumpCancelled(_) => {
+                match &mut self.carrier_state {
+                    Some(state) => { try_feed!(state.feed_log_event(&log_event)); },
+                    None => return FeedResult::Later,
+                }
+            },
+
             _ => {}
         }
 
@@ -113,7 +150,7 @@ impl CommanderState {
                 return FeedResult::Later;
             };
 
-            return system.feed_log_event(log_event);
+            try_feed!(system.feed_log_event(log_event));
         }
 
         FeedResult::Accepted
@@ -153,8 +190,10 @@ impl From<&CommanderEvent> for CommanderState {
             systems: HashMap::new(),
             current_system: None,
             current_organic: None,
+            current_organic_process: None,
             current_exploration_data: Vec::new(),
             material_state: MaterialsState::default(),
+            carrier_state: None,
         }
     }
 }

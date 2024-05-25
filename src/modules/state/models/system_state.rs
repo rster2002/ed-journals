@@ -35,8 +35,6 @@ impl SystemState {
             return FeedResult::Skipped;
         }
 
-        // self.exobiology.feed_event(log_event);
-
         match &log_event.content {
             LogEventContent::FSSDiscoveryScan(event) => {
                 self.number_of_bodies = Some(event.body_count);

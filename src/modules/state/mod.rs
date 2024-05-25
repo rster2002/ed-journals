@@ -29,3 +29,4 @@ pub use models::planet_state::PlanetState;
 pub use models::planet_state::planet_species_entry::PlanetSpeciesEntry;
 
 mod models;
+mod macros;
