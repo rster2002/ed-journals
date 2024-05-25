@@ -799,7 +799,6 @@ impl LogEventContent {
             LogEventContent::Location(event) => event.location_info.system_address,
             LogEventContent::FSDJump(event) => event.system_info.system_address,
             LogEventContent::CarrierJump(event) => event.system_info.system_address,
-            LogEventContent::CarrierJump(event) => event.system_info.system_address,
             LogEventContent::ApproachSettlement(event) => event.system_address,
             LogEventContent::CarrierBuy(event) => event.system_address,
             LogEventContent::CarrierJumpRequest(event) => event.system_address,
@@ -836,7 +835,6 @@ impl LogEventContent {
         Some(match self {
             LogEventContent::Location(event) => &event.location_info.star_system,
             LogEventContent::FSDJump(event) => &event.system_info.star_system,
-            LogEventContent::CarrierJump(event) => &event.system_info.star_system,
             LogEventContent::CarrierJump(event) => &event.system_info.star_system,
             LogEventContent::CarrierBuy(event) => &event.location,
             LogEventContent::CarrierJumpRequest(event) => &event.system_name,
