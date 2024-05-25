@@ -38,7 +38,7 @@ use carrier_jump_cancelled_event::CarrierJumpCancelled;
 use carrier_jump_event::CarrierJumpEvent;
 use carrier_jump_request_event::CarrierJumpRequestEvent;
 use carrier_module_pack_event::CarrierModulePackEvent;
-use carrier_name_changed_event::CarrierNameChangedEvent;
+use carrier_name_changed_event::CarrierNameChangeEvent;
 use carrier_ship_pack_event::CarrierShipPackEvent;
 use carrier_stats_event::CarrierStatsEvent;
 use carrier_trade_order_event::CarrierTradeOrderEvent;
@@ -244,6 +244,8 @@ use wing_join_event::WingJoinEvent;
 use won_a_trophy_for_squadron_event::WonATrophyForSquadronEvent;
 
 use crate::logs::content::log_event_content::community_goal_event::CommunityGoalEvent;
+use crate::logs::content::log_event_content::ship_redeemed::ShipRedeemed;
+use crate::logs::content::log_event_content::shipyard_redeem::ShipyardRedeem;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
 use crate::modules::small::SmallSystemInfo;
 
@@ -487,6 +489,8 @@ pub mod wing_add_event;
 pub mod wing_invite_event;
 pub mod wing_join_event;
 pub mod won_a_trophy_for_squadron_event;
+pub mod shipyard_redeem;
+pub mod ship_redeemed;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///
@@ -636,6 +640,8 @@ pub enum LogEventContent {
     ShipyardSell(ShipyardSellEvent),
     ShipyardSwap(ShipyardSwapEvent),
     ShipyardTransfer(ShipyardTransferEvent),
+    ShipyardRedeem(ShipyardRedeem),
+    ShipRedeemed(ShipRedeemed),
     StoredModules(StoredModulesEvent),
     StoredShips(StoredShipsEvent),
     TechnologyBroker(TechnologyBrokerEvent),
@@ -680,7 +686,7 @@ pub enum LogEventContent {
     CarrierModulePack(CarrierModulePackEvent),
     CarrierTradeOrder(CarrierTradeOrderEvent),
     CarrierDockingPermission(CarrierDockingPermissionEvent),
-    CarrierNameChanged(CarrierNameChangedEvent),
+    CarrierNameChange(CarrierNameChangeEvent),
     CarrierJumpCancelled(CarrierJumpCancelled),
 
     // Odyssey

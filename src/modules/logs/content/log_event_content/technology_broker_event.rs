@@ -29,6 +29,9 @@ pub enum TechnologyBrokerEventBrokerType {
 
     #[serde(rename = "sirius")]
     Sirius,
+
+    #[serde(rename = "salvation")]
+    Salvation,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

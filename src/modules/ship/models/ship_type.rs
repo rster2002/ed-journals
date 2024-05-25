@@ -96,6 +96,7 @@ impl FromStr for ShipType {
             "mamba" => ShipType::Mamba,
             "orca" => ShipType::Orca,
             "python" => ShipType::Python,
+            "python_nx" => ShipType::PythonMkII,
             "sidewinder" => ShipType::SideWinder,
             "type6" => ShipType::Type6Transporter,
             "type7" => ShipType::Type7Transporter,

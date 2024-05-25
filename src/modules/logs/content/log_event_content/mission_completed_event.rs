@@ -73,6 +73,9 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_SP_up;")]
     SecurityFactionIncrease,
 
+    #[serde(rename = "$MISSIONUTIL_Interaction_Summary_SP_down;")]
+    SecurityFactionDecrease,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),

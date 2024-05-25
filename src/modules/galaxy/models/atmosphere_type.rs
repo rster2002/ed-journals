@@ -63,6 +63,9 @@ pub enum AtmosphereType {
 
     #[serde(alias = "sulfur dioxide", alias = "SulphurDioxide")]
     SulfurDioxide,
+
+    #[serde(alias = "metallic vapour")]
+    MetallicVapour,
 }
 
 impl FromStr for AtmosphereType {

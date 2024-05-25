@@ -9,7 +9,7 @@ pub struct EngineerCraftEvent {
     pub slot: ShipSlot,
     pub module: ShipModule,
     pub ingredients: Vec<EngineerCraftEventIngredient>,
-    pub engineer: String,
+    pub engineer: Option<String>,
 
     #[serde(rename = "EngineerID")]
     pub engineer_id: u64,
@@ -33,7 +33,31 @@ pub struct EngineerCraftEventIngredient {
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventModifier {
     pub label: BlueprintModifier,
+
+    #[serde(flatten)]
+    pub kind: EngineerCraftEventModifierKind,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(untagged)]
+pub enum EngineerCraftEventModifierKind {
+    ValueChange(EngineerCraftEventValueChange),
+    StringChange(EngineerCraftEventStringChange),
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct EngineerCraftEventValueChange {
     pub value: f32,
     pub original_value: f32,
     pub less_is_good: u8,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct EngineerCraftEventStringChange {
+    pub value_str: String,
+
+    #[serde(rename = "ValueStr_Localised")]
+    pub value_str_localized: String,
 }

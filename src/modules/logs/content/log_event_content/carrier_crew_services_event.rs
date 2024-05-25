@@ -20,22 +20,36 @@ pub struct CarrierCrewServicesEvent {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventCrewRole {
+    Captain,
+    CarrierFuel,
     Refuel,
     Repair,
     Rearm,
     Shipyard,
 
+    #[serde(rename = "Commodities")]
+    Market,
+
+    BlackMarket,
+
     #[serde(rename = "Exploration")]
     UniversalCartographers,
     VistaGenomics,
+    PioneerSupplies,
     Bartender,
     Outfitting,
+
+    #[serde(rename = "VoucherRedemption")]
+    RedemptionOffice,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventOperation {
     Active,
     Activate,
+    Deactivate,
+
     #[serde(rename = "Pause")]
     Suspended,
+    Replace,
 }
