@@ -145,6 +145,14 @@ impl CommanderState {
             _ => {}
         }
 
+        let carrier_has_been_scrapped = self.carrier_state
+            .as_ref()
+            .is_some_and(|state| state.has_been_scrapped(&log_event.timestamp));
+
+        if carrier_has_been_scrapped {
+            self.carrier_state = None;
+        }
+
         if let Some(address) = log_event.content.system_address() {
             let Some(system) = self.systems.get_mut(&address) else {
                 return FeedResult::Later;
