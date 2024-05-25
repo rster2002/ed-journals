@@ -32,6 +32,12 @@ pub enum ThargoidWarState {
     #[serde(rename = "Thargoid_Recovery")]
     Recovery,
 
+    #[serde(rename = "Thargoid_Harvest")]
+    Harvest,
+
+    #[serde(rename = "Unknown")]
+    UnknownState,
+
     #[serde(rename = "")]
     Unspecified,
 
@@ -50,6 +56,8 @@ impl Display for ThargoidWarState {
                 ThargoidWarState::Probing => "Probing",
                 ThargoidWarState::Controlled => "Controlled",
                 ThargoidWarState::Recovery => "Recovery",
+                ThargoidWarState::Harvest => "Harvest",
+                ThargoidWarState::UnknownState => "Unknown",
                 ThargoidWarState::Unspecified => "Unspecified",
 
                 #[cfg(not(feature = "strict"))]

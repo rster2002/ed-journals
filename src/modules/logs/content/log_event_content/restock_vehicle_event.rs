@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::FighterLoadout;
-use crate::ship::SRVType;
+use crate::ship::{FighterType, SRVType};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
@@ -21,10 +21,8 @@ pub struct RestockVehicleEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(untagged)]
 pub enum RestockVehicleEventType {
-    #[serde(rename = "independent_fighter")]
-    TaipanFighter,
-
-    #[serde(untagged)]
+    Fighter(FighterType),
     SRV(SRVType),
 }

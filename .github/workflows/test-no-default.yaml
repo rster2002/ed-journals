@@ -1,4 +1,4 @@
-name: Tests default
+name: Tests no-default
 
 on:
   push:

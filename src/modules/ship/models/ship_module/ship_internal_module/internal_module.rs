@@ -96,6 +96,9 @@ pub enum InternalModule {
     #[serde(rename = "engine")]
     Thrusters,
 
+    #[serde(rename = "engine_fast")]
+    EnhancedPerformanceThrusters,
+
     #[serde(rename = "fuelscoop")]
     FuelScoop,
 
@@ -272,6 +275,7 @@ impl Display for InternalModule {
                 InternalModule::ResearchLimpetController => "Research Limpet Controller",
                 InternalModule::UniversalMultiLimpetController =>
                     "Universal Multi Limpet Controller",
+                InternalModule::EnhancedPerformanceThrusters => "Enhanced Performance Thrusters",
             }
         )
     }

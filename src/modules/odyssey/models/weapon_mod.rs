@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 pub enum WeaponMod {
     #[serde(rename = "weapon_handling")]
     FasterHandling,
+
+    #[serde(rename = "weapon_accuracy")]
     HigherAccuracy,
 
     #[serde(rename = "weapon_suppression_pressurised")]

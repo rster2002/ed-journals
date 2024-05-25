@@ -31,6 +31,9 @@ pub enum Blueprint {
     #[serde(rename = "PowerDistributor_HighCapacity")]
     PowerDistributorHighCapacity,
 
+    #[serde(rename = "PowerDistributor_PriorityWeapons")]
+    PowerDistributorPrioritizeWeapons,
+
     #[serde(rename = "FSD_LongRange")]
     FrameShiftDriveLongRange,
 
@@ -62,6 +65,9 @@ pub enum Blueprint {
     #[serde(rename = "ShieldGenerator_Optimised")]
     ShieldGeneratorEnhancedLowPower,
 
+    #[serde(rename = "ShieldCellBank_Rapid")]
+    ShieldCellBankRapidCharge,
+
     #[serde(rename = "Weapon_LightWeight")]
     LightweightWeapon,
 
@@ -71,11 +77,20 @@ pub enum Blueprint {
     #[serde(rename = "Weapon_Overcharged")]
     OverchargedWeapon,
 
+    #[serde(rename = "Weapon_HighCapacity")]
+    HighCapacityWeapon,
+
     #[serde(rename = "PowerPlant_Boosted")]
     PowerPlantOvercharged,
 
     #[serde(rename = "PowerPlant_Armoured")]
     PowerPlantArmored,
+
+    #[serde(rename = "Misc_LightWeight")]
+    Lightweight,
+
+    #[serde(rename = "Misc_HeatSinkCapacity")]
+    HeatSinkCapacity,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

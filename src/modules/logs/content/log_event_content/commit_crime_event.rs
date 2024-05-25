@@ -23,6 +23,7 @@ pub enum CommitCrimeEventType {
     FireInStation,
     DumpingDangerous,
     DumpingNearStation,
+    RecklessWeaponsDischarge,
 
     #[serde(rename = "dockingMinorBlockingAirlock")]
     MinorBlockingAirlock,
@@ -43,7 +44,7 @@ pub enum CommitCrimeEventType {
     MajorTrespass,
     CollidedAtSpeedInNoFireZone,
 
-    #[serde(rename = "CollidedAtSpeedInNoFireZone_HullDamage")]
+    #[serde(rename = "collidedAtSpeedInNoFireZone_hulldamage")]
     CollidedAtSpeedInNoFireZoneHullDamage,
 
     #[serde(rename = "onFoot_profileCloningIntent")]
