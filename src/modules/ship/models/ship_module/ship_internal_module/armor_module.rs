@@ -123,6 +123,13 @@ mod tests {
                     grade: ArmorGrade::ReactiveSurfaceComposite,
                 },
             ),
+            (
+                "empire_courier_armour_grade1",
+                ArmorModule {
+                    ship: ShipType::ImperialCourier,
+                    grade: ArmorGrade::LightweightAlloy,
+                }
+            ),
         ];
 
         for (case, expected) in test_cases {

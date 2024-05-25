@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 pub struct CarrierBankTransferEvent {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
-    pub deposit: u64,
+    pub deposit: Option<u64>,
+    pub withdraw: Option<u64>,
     pub player_balance: u64,
     pub carrier_balance: u64,
 }

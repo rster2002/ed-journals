@@ -14,6 +14,8 @@ pub enum SuitMod {
 
     CombatMovementSpeed,
     ImprovedJumpAssist,
+
+    #[serde(rename = "suit_increasedo2capacity")]
     IncreasedAirReserves,
     NightVision,
 

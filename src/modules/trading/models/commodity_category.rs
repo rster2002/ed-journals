@@ -54,6 +54,8 @@ pub enum CommodityCategory {
     #[serde(rename = "$MARKET_category_rare;")]
     Rare,
 
+    Powerplay,
+
     None,
 
     #[cfg(not(feature = "strict"))]
@@ -475,6 +477,9 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::BuckyballBeerMats
             | Commodity::ClassifiedExperimentalEquipment => CommodityCategory::Rare,
 
+            Commodity::LavignyGarrisonSupplies
+            | Commodity::SiriusIndustrialEquipment => CommodityCategory::Powerplay,
+
             Commodity::Limpet => CommodityCategory::None,
 
             #[cfg(not(feature = "strict"))]
@@ -507,6 +512,7 @@ impl Display for CommodityCategory {
                 CommodityCategory::Waste => "Waste",
                 CommodityCategory::Weapons => "Weapons",
                 CommodityCategory::Rare => "Rare",
+                CommodityCategory::Powerplay => "Powerplay",
                 CommodityCategory::None => "None",
 
                 #[cfg(not(feature = "strict"))]
