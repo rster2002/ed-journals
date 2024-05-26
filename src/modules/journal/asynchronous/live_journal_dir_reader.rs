@@ -99,7 +99,13 @@ impl LiveJournalDirReader {
 
         let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| {
             if let Ok(event) = res {
+                #[cfg(target_family = "unix")]
                 let EventKind::Modify(ModifyKind::Data(DataChange::Content)) = event.kind else {
+                    return;
+                };
+
+                #[cfg(target_family = "windows")]
+                let EventKind::Modify(ModifyKind::Any) = event.kind else {
                     return;
                 };
 
