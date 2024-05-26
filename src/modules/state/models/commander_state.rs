@@ -9,9 +9,13 @@ use crate::logs::content::{LogEvent, LogEventContent};
 use crate::logs::content::log_event_content::scan_event::ScanEvent;
 use crate::modules::civilization::LocationInfo;
 use current_organic::CurrentOrganic;
+use crate::logs::content::log_event_content::rank_event::RankEvent;
+use crate::logs::content::log_event_content::reputation_event::ReputationEvent;
+use crate::logs::content::log_event_content::statistics_event::StatisticsEvent;
 use crate::state::models::carrier_state::CarrierState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::materials_state::MaterialsState;
+use crate::state::models::mission_state::MissionState;
 use crate::state::SystemState;
 use crate::try_feed;
 
@@ -27,7 +31,11 @@ pub struct CommanderState {
     pub current_organic_process: Option<ScanOrganicEventScanType>,
     pub current_exploration_data: Vec<ScanEvent>,
     pub material_state: MaterialsState,
+    pub mission_state: MissionState,
     pub carrier_state: Option<CarrierState>,
+    pub rank: Option<RankEvent>,
+    pub reputation: Option<ReputationEvent>,
+    pub statistics: Option<StatisticsEvent>,
 }
 
 impl CommanderState {
@@ -39,6 +47,15 @@ impl CommanderState {
             LogEventContent::Died(event) => {
                 self.current_exploration_data.clear();
             },
+            LogEventContent::Rank(ranks) => {
+                self.rank = Some(ranks.clone());
+            }
+            LogEventContent::Reputation(reputation) => {
+                self.reputation = Some(reputation.clone());
+            },
+            LogEventContent::Statistics(statistics) => {
+                self.statistics = Some(statistics.clone());
+            }
             LogEventContent::MultiSellExplorationData(event) => {
                 for system in &event.discovered {
                     self.current_exploration_data
@@ -201,7 +218,11 @@ impl From<&CommanderEvent> for CommanderState {
             current_organic_process: None,
             current_exploration_data: Vec::new(),
             material_state: MaterialsState::default(),
+            mission_state: MissionState::default(),
             carrier_state: None,
+            rank: None,
+            reputation: None,
+            statistics: None,
         }
     }
 }
