@@ -6,7 +6,8 @@ use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::cargo::blocking::{read_cargo_file, ReadCargoFileError};
-use crate::journal::JournalEvent;
+use crate::journal::JournalEventKind;
+use crate::journal::models::journal_event::JournalEvent;
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
 use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
@@ -82,7 +83,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_status_file(self.dir_path.join("Status.json")) {
-                        Ok(status) => Ok(JournalEvent::StatusEvent(status)),
+                        Ok(status) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::StatusEvent(status),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -93,7 +97,10 @@ impl LiveJournalBuffer {
                     .expect("Failed to get lock")
                     .push_back(
                         match read_outfitting_file(self.dir_path.join("Outfitting.json")) {
-                            Ok(status) => Ok(JournalEvent::OutfittingEvent(status)),
+                            Ok(status) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::OutfittingEvent(status),
+                            }),
                             Err(error) => Err(error.into()),
                         },
                     );
@@ -104,7 +111,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_shipyard_file(self.dir_path.join("Shipyard.json")) {
-                        Ok(shipyard) => Ok(JournalEvent::ShipyardEvent(shipyard)),
+                        Ok(shipyard) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::ShipyardEvent(shipyard),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -114,7 +124,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_market_file(self.dir_path.join("Market.json")) {
-                        Ok(market) => Ok(JournalEvent::MarketEvent(market)),
+                        Ok(market) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::MarketEvent(market),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -124,7 +137,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_nav_route_file(self.dir_path.join("NavRoute.json")) {
-                        Ok(nav_route) => Ok(JournalEvent::NavRoute(nav_route)),
+                        Ok(nav_route) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::NavRoute(nav_route),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -135,7 +151,10 @@ impl LiveJournalBuffer {
                     .expect("Failed to get lock")
                     .push_back(
                         match read_modules_info_file(self.dir_path.join("ModulesInfo.json")) {
-                            Ok(modules_info) => Ok(JournalEvent::ModulesInfo(modules_info)),
+                            Ok(modules_info) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::ModulesInfo(modules_info),
+                            }),
                             Err(error) => Err(error.into()),
                         },
                     );
@@ -146,7 +165,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_backpack_file(self.dir_path.join("Backpack.json")) {
-                        Ok(backpack) => Ok(JournalEvent::Backpack(backpack)),
+                        Ok(backpack) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::Backpack(backpack),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -156,7 +178,10 @@ impl LiveJournalBuffer {
                     .lock()
                     .expect("Failed to get lock")
                     .push_back(match read_cargo_file(self.dir_path.join("Cargo.json")) {
-                        Ok(cargo) => Ok(JournalEvent::Cargo(cargo)),
+                        Ok(cargo) => Ok(JournalEvent {
+                            is_live: true,
+                            kind: JournalEventKind::Cargo(cargo),
+                        }),
                         Err(error) => Err(error.into()),
                     });
             }
@@ -167,7 +192,10 @@ impl LiveJournalBuffer {
                     .expect("Failed to get lock")
                     .push_back(
                         match read_ship_locker_file(self.dir_path.join("ShipLocker.json")) {
-                            Ok(ship_locker) => Ok(JournalEvent::ShipLocker(ship_locker)),
+                            Ok(ship_locker) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::ShipLocker(ship_locker),
+                            }),
                             Err(error) => Err(error.into()),
                         },
                     );

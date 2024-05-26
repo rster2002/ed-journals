@@ -7,8 +7,9 @@ use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
 
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
-use crate::journal::journal_event::JournalEvent;
+use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::journal::LiveJournalBufferError;
+use crate::journal::models::journal_event::JournalEvent;
 use crate::journal::shared::journal_buffer::LiveJournalBuffer;
 use crate::logs::blocking::{LogDirReader, LogDirReaderError};
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
@@ -103,7 +104,10 @@ impl Iterator for LiveJournalDirReader {
         loop {
             if let Some(log_event) = self.log_dir_reader.next() {
                 return Some(match log_event {
-                    Ok(event) => Ok(JournalEvent::LogEvent(event)),
+                    Ok(event) => Ok(JournalEvent {
+                        is_live: self.log_dir_reader.is_reading_latest().unwrap_or_default(),
+                        kind: JournalEventKind::LogEvent(event),
+                    }),
                     Err(error) => Err(error.into()),
                 });
             }

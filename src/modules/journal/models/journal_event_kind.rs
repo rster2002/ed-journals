@@ -12,7 +12,7 @@ use crate::status::Status;
 /// This event is fired from the [LiveJournalDirReader] when any change happens in the journal
 /// directory and includes all the possible models that could have been updated.
 #[derive(Debug, PartialEq)]
-pub enum JournalEvent {
+pub enum JournalEventKind {
     LogEvent(LogEvent),
     StatusEvent(Status),
     OutfittingEvent(Outfitting),
