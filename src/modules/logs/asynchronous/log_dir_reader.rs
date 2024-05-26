@@ -43,6 +43,16 @@ impl LogDirReader {
         Ok(())
     }
 
+    pub fn is_reading_latest(&self) -> Result<bool, LogDirReaderError> {
+        Ok(self.dir.journal_logs_oldest_first()?
+            .last()
+            .is_some_and(|file| {
+                self.current_file
+                    .as_ref()
+                    .is_some_and(|current| file == current)
+            }))
+    }
+
     async fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
         let files = self.dir.journal_logs_oldest_first()?;
 
