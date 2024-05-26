@@ -34,6 +34,10 @@ impl<'a> SpawnSource<'a> {
 
     /// Checks if the given species can spawn on this spawn source.
     pub fn can_spawn_species(&self, species: &Species) -> bool {
+        if !&self.target_planet.is_landable {
+            return false;
+        }
+
         species
             .spawn_conditions()
             .iter()
