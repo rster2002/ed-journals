@@ -1,7 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
 use serde::Serialize;
-use strum::IntoEnumIterator;
 
 use crate::exobiology::{SpawnSource, SpawnSourceStar, TargetPlanet};
 use crate::exploration::PlanetarySignalType;

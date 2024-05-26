@@ -15,7 +15,7 @@ where
 {
     blocker: SyncBlocker,
     path: PathBuf,
-    watcher: RecommendedWatcher,
+    _watcher: RecommendedWatcher,
     first: bool,
 
     // This is needed so that there's a constraint for the `Iterator` trait.
@@ -51,7 +51,7 @@ where
         Ok(LiveJsonFileWatcher {
             blocker,
             path: path.as_ref().to_path_buf(),
-            watcher,
+            _watcher: watcher,
             first: true,
             phantom_data: PhantomData,
         })
