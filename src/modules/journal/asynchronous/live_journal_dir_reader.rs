@@ -1,8 +1,6 @@
 use std::path::Path;
 
 use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{DataChange, ModifyKind};
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
 use crate::journal::LiveJournalBufferError;

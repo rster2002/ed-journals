@@ -1,8 +1,8 @@
 use chrono::{DateTime, Utc};
 use serde::Serialize;
-use crate::logs::content::log_event_content::carrier_stats_event::CarrierStatsEvent;
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::carrier_jump_request_event::CarrierJumpRequestEvent;
+use crate::logs::carrier_stats_event::CarrierStatsEvent;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::small::SmallSystemInfo;
 use crate::state::models::feed_result::FeedResult;
 

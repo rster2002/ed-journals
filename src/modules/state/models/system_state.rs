@@ -4,9 +4,9 @@ use crate::exobiology::{SpawnSourceStar, Species, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
-use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::logs::content::log_event_content::scan_event::ScanEventKind;
-use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+use crate::logs::scan_event::ScanEventKind;
+use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
@@ -129,10 +129,7 @@ mod tests {
 
     use crate::exobiology::{SpawnSource, Species};
     use crate::logs::blocking::LogDirReader;
-    use crate::logs::content::LogEventContent;
-    use crate::logs::LogDir;
     use crate::state::GameState;
-    // use crate::state::ExobiologyState;
 
     #[test]
     fn spawnable_species_no_false_negatives() {

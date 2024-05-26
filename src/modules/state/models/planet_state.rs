@@ -8,15 +8,14 @@ use crate::exploration::PlanetarySignalType;
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalEventSignal;
-use crate::logs::content::log_event_content::saa_scan_complete_event::SAAScanCompleteEvent;
-use crate::logs::content::log_event_content::saa_signals_found_event::SAASignalsFoundEventSignal;
-use crate::logs::content::log_event_content::scan_event::{
+use crate::logs::saa_scan_complete_event::SAAScanCompleteEvent;
+use crate::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
+use crate::logs::scan_event::{
     ScanEvent, ScanEventKind, ScanEventPlanet,
 };
-use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
+use crate::logs::touchdown_event::TouchdownEvent;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::planet_state::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
