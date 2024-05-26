@@ -1,4 +1,5 @@
 pub mod planet_species_entry;
+mod signal_counts;
 
 use std::collections::{HashMap, HashSet};
 
@@ -19,6 +20,7 @@ use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEven
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::planet_state::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
+use crate::state::models::planet_state::signal_counts::SignalCounts;
 use crate::trading::Commodity;
 
 #[derive(Debug, Serialize)]
@@ -35,12 +37,13 @@ pub struct PlanetState {
     pub touchdowns: Vec<TouchdownEvent>,
     pub exobiology_body: TargetPlanet,
 
-    pub human_signal_count: Option<usize>,
-    pub biological_signal_count: Option<usize>,
-    pub geological_signal_count: Option<usize>,
-    pub thargoid_signal_count: Option<usize>,
-    pub guardian_signal_count: Option<usize>,
-    pub other_signal_count: Option<usize>,
+    pub signal_counts: Option<SignalCounts>,
+    // pub human_signal_count: Option<usize>,
+    // pub biological_signal_count: Option<usize>,
+    // pub geological_signal_count: Option<usize>,
+    // pub thargoid_signal_count: Option<usize>,
+    // pub guardian_signal_count: Option<usize>,
+    // pub other_signal_count: Option<usize>,
     pub commodity_signals: Vec<Commodity>,
 }
 
@@ -74,53 +77,29 @@ impl PlanetState {
                     .collect());
             }
             LogEventContent::FSSBodySignals(body_signals) => {
-                self.human_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Human)
-                    .count());
+                let mut signal_counts = SignalCounts {
+                    human_signal_count: 0,
+                    biological_signal_count: 0,
+                    geological_signal_count: 0,
+                    thargoid_signal_count: 0,
+                    guardian_signal_count: 0,
+                    other_signal_count: 0,
+                };
 
-                self.biological_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Biological)
-                    .count());
+                for signal in &body_signals.signals {
+                    match &signal.kind {
+                        PlanetarySignalType::Human => { signal_counts.human_signal_count += 1; }
+                        PlanetarySignalType::Biological => { signal_counts.biological_signal_count += 1; }
+                        PlanetarySignalType::Geological => { signal_counts.geological_signal_count += 1; }
+                        PlanetarySignalType::Thargoid => { signal_counts.thargoid_signal_count += 1; }
+                        PlanetarySignalType::Guardian => { signal_counts.guardian_signal_count += 1; }
+                        PlanetarySignalType::Other => { signal_counts.other_signal_count += 1; }
+                        PlanetarySignalType::Commodity(commodity) => { self.commodity_signals.push(commodity.clone()); }
+                        _ => {},
+                    }
+                }
 
-                self.geological_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Geological)
-                    .count());
-
-                self.thargoid_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Thargoid)
-                    .count());
-
-                self.guardian_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Guardian)
-                    .count());
-
-                self.other_signal_count = Some(body_signals
-                    .signals
-                    .iter()
-                    .filter(|signal| signal.kind == PlanetarySignalType::Other)
-                    .count());
-
-                self.commodity_signals = body_signals
-                    .signals
-                    .iter()
-                    .filter_map(|entry | {
-                        if let PlanetarySignalType::Commodity(commodity) = &entry.kind {
-                            Some(commodity.clone())
-                        } else {
-                            None
-                        }
-                    })
-                    .collect()
+                self.signal_counts = Some(signal_counts);
             }
             LogEventContent::Touchdown(touchdown) => {
                 if touchdown.on_planet {
@@ -140,6 +119,42 @@ impl PlanetState {
         FeedResult::Accepted
     }
 
+    pub fn has_human_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.human_signal_count != 0)
+    }
+
+    pub fn has_biological_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.biological_signal_count != 0)
+    }
+
+    pub fn has_geological_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.geological_signal_count != 0)
+    }
+
+    pub fn has_thargoid_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.thargoid_signal_count != 0)
+    }
+
+    pub fn has_guardian_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.guardian_signal_count != 0)
+    }
+
+    pub fn has_other_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.other_signal_count != 0)
+    }
+
     /// Returns entries for all species that could theoretically spawn on the planet and indicates
     /// if they can actually spawn or not.
     pub fn get_planet_species(&self, target_system: &TargetSystem) -> Vec<PlanetSpeciesEntry> {
@@ -147,6 +162,10 @@ impl PlanetState {
             target_system,
             target_planet: &self.exobiology_body,
         };
+
+        if !self.has_biological_signals() {
+            return Vec::new();
+        }
 
         let species = spawn_source.get_spawnable_species();
         let number_of_species = species.len();
@@ -161,12 +180,17 @@ impl PlanetState {
 
                     // If the possible number of species is the same as the number of biological
                     // signals it counts all of them as yes.
-                    _ if self.biological_signal_count.is_some_and(|count| count == number_of_species) => WillSpawn::Yes,
+                    _ if self.signal_counts
+                        .as_ref()
+                        .is_some_and(|signals| signals.biological_signal_count == number_of_species) => WillSpawn::Yes,
 
                     // If the current species has not been scanned yet (checked by the first if
                     // statement), but there already is another species of the same genus, then
                     // this species does not have a chance to spawn.
-                    _ if self.scanned_species.iter().find(|scanned| scanned.genus() == species.genus()).is_none() => WillSpawn::No,
+                    _ if self.scanned_species
+                        .iter()
+                        .find(|scanned| scanned.genus() == species.genus())
+                        .is_some() => WillSpawn::No,
 
                     // If the planet has not been scanned yet and the genuses are still unknown, it
                     // will count any species that hasn't already been flagged as a maybe.
@@ -175,7 +199,9 @@ impl PlanetState {
                     // If the planet has been scanned, but the species' genus does not appear in the
                     // list of scanned genuses that can spawn, then the current species will not
                     // spawn.
-                    _ if self.saa_genuses.as_ref().is_some_and(|genuses| !genuses.contains(&species.genus())) => WillSpawn::No,
+                    _ if self.saa_genuses
+                        .as_ref()
+                        .is_some_and(|genuses| !genuses.contains(&species.genus())) => WillSpawn::No,
 
                     // If the species is not handled by any of the special cases above, then the
                     // species is still under consideration.
@@ -206,8 +232,8 @@ impl PlanetState {
         }
 
         // Calculates how many of the maybe entries could still be found.
-        let remaining_unknowns = match self.biological_signal_count {
-            Some(max) => max - known_values.len(),
+        let remaining_unknowns = match &self.signal_counts {
+            Some(signals) => signals.biological_signal_count - known_values.len(),
             None => known_values.len(),
         };
 
@@ -235,13 +261,8 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
             saa_genuses: None,
             scanned_species: HashSet::new(),
             touchdowns: Vec::new(),
+            signal_counts: None,
             logged_species: HashSet::new(),
-            human_signal_count: None,
-            biological_signal_count: None,
-            geological_signal_count: None,
-            thargoid_signal_count: None,
-            guardian_signal_count: None,
-            other_signal_count: None,
             commodity_signals: Vec::new(),
             exobiology_body: TargetPlanet {
                 atmosphere: value.1.atmosphere.clone(),
