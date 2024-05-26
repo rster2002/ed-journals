@@ -75,7 +75,9 @@ impl GameState {
         let queued = mem::take(&mut self.later);
 
         for item in queued {
-            let _ = self.handle(&item);
+            if let FeedResult::Later = self.handle(&item) {
+                self.later.push(item);
+            }
         }
     }
 

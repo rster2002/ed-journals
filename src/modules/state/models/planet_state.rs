@@ -4,7 +4,7 @@ mod signal_counts;
 use std::collections::{HashMap, HashSet};
 
 use crate::exobiology::{SpawnSource, TargetPlanet, TargetSystem};
-use crate::exploration::PlanetarySignalType;
+use crate::exploration::{CodexEntry, PlanetarySignalType};
 use serde::Serialize;
 use thiserror::Error;
 
@@ -110,6 +110,17 @@ impl PlanetState {
 
                 if let ScanOrganicEventScanType::Log = scanned_organic.scan_type {
                     self.logged_species.insert(scanned_organic.species.clone());
+                }
+            },
+            LogEventContent::CodexEntry(codex_entry) => {
+                match &codex_entry.name {
+                    CodexEntry::Species(species) => {
+                        self.scanned_species.insert(species.clone());
+                    },
+                    CodexEntry::Variant(variant) => {
+                        self.scanned_species.insert(variant.species.clone());
+                    },
+                    _ => {},
                 }
             },
             _ => {}

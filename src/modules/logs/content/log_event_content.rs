@@ -883,6 +883,7 @@ impl LogEventContent {
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,
             LogEventContent::SAAScanComplete(event) => event.body_id,
+            LogEventContent::SAASignalsFound(event) => event.body_id,
             LogEventContent::ScanBaryCentre(event) => event.body_id,
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
