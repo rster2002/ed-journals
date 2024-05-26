@@ -275,6 +275,7 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
             logged_species: HashSet::new(),
             commodity_signals: Vec::new(),
             exobiology_body: TargetPlanet {
+                is_landable: value.1.landable,
                 atmosphere: value.1.atmosphere.clone(),
                 gravity: value.1.surface_gravity.clone(),
                 class: value.1.planet_class.clone(),

@@ -6,6 +6,7 @@ use crate::logs::scan_event::ScanEventParent;
 
 #[derive(Debug, Serialize)]
 pub struct TargetPlanet {
+    pub is_landable: bool,
     pub atmosphere: Atmosphere,
     pub gravity: Gravity,
     pub class: PlanetClass,
