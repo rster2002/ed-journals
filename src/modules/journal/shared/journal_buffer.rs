@@ -75,7 +75,7 @@ impl LiveJournalBuffer {
             EventKind::Create(CreateKind::Any)
             | EventKind::Modify(ModifyKind::Any) => true,
             _ => return,
-        }
+        };
 
         for path in event.paths {
             if path.ends_with("Status.json") {
