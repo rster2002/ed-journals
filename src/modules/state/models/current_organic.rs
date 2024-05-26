@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEvent;
+use crate::logs::scan_organic_event::ScanOrganicEvent;
 use crate::modules::exobiology::Species;
 
 #[derive(Debug, Serialize)]

@@ -1,4 +1,4 @@
-use crate::logs::content::log_event_content::scan_event::{
+use crate::logs::scan_event::{
     ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
 };
 use crate::modules::galaxy::TerraformState;

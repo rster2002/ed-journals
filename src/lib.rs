@@ -49,7 +49,7 @@ mod modules;
 mod tests {
     use std::env::current_dir;
 
-    use crate::logs::content::LogEventContent;
+    use crate::logs::LogEventContent;
     use crate::logs::LogDir;
 
     #[test]

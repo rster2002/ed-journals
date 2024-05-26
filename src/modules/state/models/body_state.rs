@@ -2,12 +2,12 @@ use std::collections::HashMap;
 
 use serde::Serialize;
 
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalEventSignal;
-use crate::logs::content::log_event_content::saa_scan_complete_event::SAAScanCompleteEvent;
-use crate::logs::content::log_event_content::saa_signals_found_event::SAASignalsFoundEventSignal;
-use crate::logs::content::log_event_content::scan_event::ScanEvent;
-use crate::logs::content::log_event_content::touchdown_event::TouchdownEvent;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::fss_body_signals_event::FSSBodySignalEventSignal;
+use crate::logs::saa_scan_complete_event::SAAScanCompleteEvent;
+use crate::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
+use crate::logs::scan_event::ScanEvent;
+use crate::logs::touchdown_event::TouchdownEvent;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::organic_state::OrganicState;

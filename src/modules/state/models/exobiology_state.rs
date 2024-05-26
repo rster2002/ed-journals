@@ -6,11 +6,11 @@ use strum::IntoEnumIterator;
 use crate::exobiology::{SpawnSource, SpawnSourceStar, TargetPlanet};
 use crate::exploration::PlanetarySignalType;
 use crate::galaxy::Nebula;
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::fsd_jump_event::FSDJumpEvent;
-use crate::logs::content::log_event_content::fss_body_signals_event::FSSBodySignalsEvent;
-use crate::logs::content::log_event_content::location_event::LocationEvent;
-use crate::logs::content::log_event_content::scan_event::{
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::fsd_jump_event::FSDJumpEvent;
+use crate::logs::fss_body_signals_event::FSSBodySignalsEvent;
+use crate::logs::location_event::LocationEvent;
+use crate::logs::scan_event::{
     ScanEvent, ScanEventKind, ScanEventParent, ScanEventPlanet, ScanEventStar,
 };
 
@@ -183,7 +183,7 @@ mod tests {
     use std::env::current_dir;
 
     use crate::exobiology::Species;
-    use crate::logs::content::LogEventContent;
+    use crate::logs::LogEventContent;
     use crate::logs::LogDir;
     use crate::state::ExobiologyState;
 

@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use crate::modules::civilization::LocationInfo;
 use crate::state::ExobiologyState;
 use crate::state::models::body_state::BodyState;

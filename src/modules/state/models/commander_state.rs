@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use serde::Serialize;
 
-use crate::logs::content::{LogEvent, LogEventContent};
-use crate::logs::content::log_event_content::commander_event::CommanderEvent;
-use crate::logs::content::log_event_content::scan_organic_event::ScanOrganicEventScanType;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::commander_event::CommanderEvent;
+use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::current_organic::CurrentOrganic;
 use crate::state::models::feed_result::FeedResult;

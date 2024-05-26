@@ -1,5 +1,5 @@
 use crate::backpack::Backpack;
-use crate::logs::content::LogEvent;
+use crate::logs::LogEvent;
 use crate::market::Market;
 use crate::modules::cargo::Cargo;
 use crate::modules::outfitting::Outfitting;

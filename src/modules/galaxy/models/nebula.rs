@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use strum::{EnumIter, IntoEnumIterator};
 
-use crate::logs::content::log_event_content::scan_event::DistanceLs;
+use crate::logs::scan_event::DistanceLs;
 
 #[derive(Debug, EnumIter)]
 pub enum Nebula {
