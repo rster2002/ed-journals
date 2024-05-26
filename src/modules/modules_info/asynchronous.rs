@@ -1,11 +1,13 @@
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-use crate::modules_info::models::modules_info::ModulesInfo;
 use std::path::Path;
+
 use thiserror::Error;
 use tokio::fs;
 
-pub type ModulesInfoFileWatcher = LiveJsonFileWatcher<ModulesInfo>;
+use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
 pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as ModulesInfoFileWatcherError;
+use crate::modules_info::models::modules_info::ModulesInfo;
+
+pub type ModulesInfoFileWatcher = LiveJsonFileWatcher<ModulesInfo>;
 
 pub async fn read_modules_info_file<P: AsRef<Path>>(
     path: P,

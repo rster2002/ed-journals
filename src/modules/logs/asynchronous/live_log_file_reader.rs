@@ -38,7 +38,7 @@ impl LiveLogFileReader {
         let blocker = AsyncBlocker::new();
         let local_blocker = blocker.clone();
 
-        let mut watcher = notify::recommended_watcher(move |res| {
+        let mut watcher = notify::recommended_watcher(move |_| {
             local_blocker.unblock_blocking();
         })?;
 

@@ -16,7 +16,7 @@ where
 {
     blocker: AsyncBlocker,
     path: PathBuf,
-    watcher: RecommendedWatcher,
+    _watcher: RecommendedWatcher,
     first: bool,
     phantom_data: PhantomData<T>,
 }
@@ -50,7 +50,7 @@ where
         Ok(LiveJsonFileWatcher {
             blocker,
             path: path.as_ref().to_path_buf(),
-            watcher,
+            _watcher: watcher,
             first: true,
             phantom_data: PhantomData,
         })

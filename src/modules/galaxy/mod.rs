@@ -1,3 +1,5 @@
+pub use functions::bearing_to::bearing_to;
+pub use functions::planet_distance::planet_distance;
 pub use models::atmosphere::Atmosphere;
 pub use models::atmosphere::AtmosphereDensity;
 pub use models::atmosphere::AtmosphereError;
@@ -21,9 +23,6 @@ pub use models::volcanism_type::VolcanismType;
 pub use models::gravity::Gravity;
 pub use models::local_distance::LocalDistance;
 pub use models::galactic_distance::GalacticDistance;
-pub use functions::planet_distance::planet_distance;
-pub use functions::bearing_to::bearing_to;
 
-mod models;
 mod functions;
-
+mod models;

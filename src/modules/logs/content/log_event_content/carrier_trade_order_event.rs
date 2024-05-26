@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+
 use crate::mixed::MixedCommodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

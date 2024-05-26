@@ -1,11 +1,13 @@
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
 use std::path::Path;
+
 use thiserror::Error;
 use tokio::fs;
 
-pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;
+use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
 pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as ShipLockerFileWatcherError;
 use crate::ship_locker::ShipLocker;
+
+pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;
 
 pub async fn read_ship_locker_file<P: AsRef<Path>>(
     path: P,

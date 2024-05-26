@@ -452,10 +452,12 @@ pub mod set_user_ship_name_event;
 pub mod shared_bookmark_to_squadron_event;
 pub mod shield_state_event;
 pub mod ship_locker_event;
+pub mod ship_redeemed;
 pub mod ship_targeted_event;
 pub mod shipyard_buy_event;
 pub mod shipyard_event;
 pub mod shipyard_new_event;
+pub mod shipyard_redeem;
 pub mod shipyard_sell_event;
 pub mod shipyard_swap_event;
 pub mod shipyard_transfer_event;
@@ -489,8 +491,6 @@ pub mod wing_add_event;
 pub mod wing_invite_event;
 pub mod wing_join_event;
 pub mod won_a_trophy_for_squadron_event;
-pub mod shipyard_redeem;
-pub mod ship_redeemed;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///

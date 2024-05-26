@@ -1180,33 +1180,23 @@ lazy_static! {
         ),
         (
             Species::ThargoidBarnacleCommon,
-            vec![
-                SpawnCondition::Special
-            ]
+            vec![SpawnCondition::Special]
         ),
         (
             Species::ThargoidBarnacleLarge,
-            vec![
-                SpawnCondition::Special
-            ]
+            vec![SpawnCondition::Special]
         ),
         (
             Species::ThargoidBarnacleBarbs,
-            vec![
-                SpawnCondition::Special
-            ]
+            vec![SpawnCondition::Special]
         ),
         (
             Species::ThargoidBarnacleMatrixSubmerged,
-            vec![
-                SpawnCondition::Special
-            ]
+            vec![SpawnCondition::Special]
         ),
         (
             Species::ThargoidBarnacleMatrix,
-            vec![
-                SpawnCondition::Special
-            ]
+            vec![SpawnCondition::Special]
         ),
     ];
 }

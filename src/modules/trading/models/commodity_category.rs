@@ -477,8 +477,9 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::BuckyballBeerMats
             | Commodity::ClassifiedExperimentalEquipment => CommodityCategory::Rare,
 
-            Commodity::LavignyGarrisonSupplies
-            | Commodity::SiriusIndustrialEquipment => CommodityCategory::Powerplay,
+            Commodity::LavignyGarrisonSupplies | Commodity::SiriusIndustrialEquipment => {
+                CommodityCategory::Powerplay
+            }
 
             Commodity::Limpet => CommodityCategory::None,
 

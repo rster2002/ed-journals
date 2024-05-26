@@ -1,11 +1,11 @@
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
-use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
+use serde::Serialize;
+use thiserror::Error;
+
+use crate::from_str_deserialize_impl;
 use crate::modules::odyssey::Item;
 use crate::modules::trading::Commodity;
-use crate::odyssey::ItemError;
 
 /// Special model for handling scenarios where the input might either be a 'ship' commodity or an
 /// Odyssey commodity.
@@ -32,7 +32,7 @@ impl FromStr for MixedCommodity {
 
         match ship_commodity {
             #[cfg(not(feature = "strict"))]
-            Ok(Commodity::Unknown(_)) => {},
+            Ok(Commodity::Unknown(_)) => {}
             Ok(commodity) => return Ok(MixedCommodity::ShipCommodity(commodity)),
             Err(_) => {}
         }
@@ -41,7 +41,7 @@ impl FromStr for MixedCommodity {
 
         match odyssey_item {
             #[cfg(not(feature = "strict"))]
-            Ok(Item::Unknown(_)) => {},
+            Ok(Item::Unknown(_)) => {}
             Ok(item) => return Ok(MixedCommodity::OdysseyItem(item)),
             Err(_) => {}
         }

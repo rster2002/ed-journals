@@ -1339,13 +1339,14 @@ impl Display for Commodity {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
+
     use crate::trading::Commodity;
 
     #[ignore]
     #[test]
     fn all_commodity_lines_are_parsed_correctly() {
         let content = include_str!("zz_commodity_items.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             let result = Commodity::from_str(line);

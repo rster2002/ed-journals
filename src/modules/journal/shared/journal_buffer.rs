@@ -1,9 +1,11 @@
 use std::collections::VecDeque;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
+
 use notify::{Event, EventKind};
 use notify::event::{CreateKind, DataChange, ModifyKind};
 use thiserror::Error;
+
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::cargo::blocking::{read_cargo_file, ReadCargoFileError};
 use crate::journal::JournalEventKind;
@@ -72,8 +74,7 @@ impl LiveJournalBuffer {
 
         #[cfg(target_family = "windows")]
         match event.kind {
-            EventKind::Create(CreateKind::Any)
-            | EventKind::Modify(ModifyKind::Any) => true,
+            EventKind::Create(CreateKind::Any) | EventKind::Modify(ModifyKind::Any) => true,
             _ => return,
         };
 
@@ -110,13 +111,15 @@ impl LiveJournalBuffer {
                 self.pending_events
                     .lock()
                     .expect("Failed to get lock")
-                    .push_back(match read_shipyard_file(self.dir_path.join("Shipyard.json")) {
-                        Ok(shipyard) => Ok(JournalEvent {
-                            is_live: true,
-                            kind: JournalEventKind::ShipyardEvent(shipyard),
-                        }),
-                        Err(error) => Err(error.into()),
-                    });
+                    .push_back(
+                        match read_shipyard_file(self.dir_path.join("Shipyard.json")) {
+                            Ok(shipyard) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::ShipyardEvent(shipyard),
+                            }),
+                            Err(error) => Err(error.into()),
+                        },
+                    );
             }
 
             if path.ends_with("Market.json") {
@@ -136,13 +139,15 @@ impl LiveJournalBuffer {
                 self.pending_events
                     .lock()
                     .expect("Failed to get lock")
-                    .push_back(match read_nav_route_file(self.dir_path.join("NavRoute.json")) {
-                        Ok(nav_route) => Ok(JournalEvent {
-                            is_live: true,
-                            kind: JournalEventKind::NavRoute(nav_route),
-                        }),
-                        Err(error) => Err(error.into()),
-                    });
+                    .push_back(
+                        match read_nav_route_file(self.dir_path.join("NavRoute.json")) {
+                            Ok(nav_route) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::NavRoute(nav_route),
+                            }),
+                            Err(error) => Err(error.into()),
+                        },
+                    );
             }
 
             if path.ends_with("ModulesInfo.json") {
@@ -164,13 +169,15 @@ impl LiveJournalBuffer {
                 self.pending_events
                     .lock()
                     .expect("Failed to get lock")
-                    .push_back(match read_backpack_file(self.dir_path.join("Backpack.json")) {
-                        Ok(backpack) => Ok(JournalEvent {
-                            is_live: true,
-                            kind: JournalEventKind::Backpack(backpack),
-                        }),
-                        Err(error) => Err(error.into()),
-                    });
+                    .push_back(
+                        match read_backpack_file(self.dir_path.join("Backpack.json")) {
+                            Ok(backpack) => Ok(JournalEvent {
+                                is_live: true,
+                                kind: JournalEventKind::Backpack(backpack),
+                            }),
+                            Err(error) => Err(error.into()),
+                        },
+                    );
             }
 
             if path.ends_with("Cargo.json") {

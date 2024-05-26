@@ -3,8 +3,8 @@ use std::mem;
 
 use serde::Serialize;
 
-use crate::logs::content::log_event_content::file_header_event::FileHeaderEvent;
-use crate::logs::content::{LogEvent, LogEventContent};
+use crate::logs::{LogEvent, LogEventContent};
+use crate::logs::file_header_event::FileHeaderEvent;
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 

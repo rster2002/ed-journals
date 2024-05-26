@@ -49,8 +49,8 @@ mod modules;
 mod tests {
     use std::env::current_dir;
 
-    use crate::logs::content::LogEventContent;
     use crate::logs::LogDir;
+    use crate::logs::LogEventContent;
 
     #[test]
     fn test_journals_are_parsed_correctly() {
