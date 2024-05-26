@@ -123,7 +123,7 @@ mod tests {
     fn all_entries_are_read_correctly() {
         let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
-        let mut reader = LogDirReader::open(dir_path);
+        let reader = LogDirReader::open(dir_path);
 
         let mut count = 0;
         for entry in reader {

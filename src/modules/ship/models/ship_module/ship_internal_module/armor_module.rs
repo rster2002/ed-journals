@@ -128,7 +128,7 @@ mod tests {
                 ArmorModule {
                     ship: ShipType::ImperialCourier,
                     grade: ArmorGrade::LightweightAlloy,
-                }
+                },
             ),
         ];
 

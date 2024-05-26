@@ -1,11 +1,13 @@
-use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
 use std::fs;
 use std::path::Path;
+
 use thiserror::Error;
 
-pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;
+use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcher;
 pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWatcherError as ShipLockerFileWatcherError;
 use crate::ship_locker::ShipLocker;
+
+pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;
 
 pub fn read_ship_locker_file<P: AsRef<Path>>(
     path: P,
@@ -24,8 +26,9 @@ pub enum ReadShipLockerFileError {
 
 #[cfg(test)]
 mod tests {
-    use crate::ship_locker::blocking::read_ship_locker_file;
     use std::env::current_dir;
+
+    use crate::ship_locker::blocking::read_ship_locker_file;
 
     #[test]
     fn backpack_file_is_parsed_correctly() {

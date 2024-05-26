@@ -1,8 +1,6 @@
 use serde::Serialize;
 
-use crate::logs::scan_organic_event::{
-    ScanOrganicEvent, ScanOrganicEventScanType,
-};
+use crate::logs::scan_organic_event::{ScanOrganicEvent, ScanOrganicEventScanType};
 
 #[derive(Debug, Serialize)]
 pub struct OrganicState {

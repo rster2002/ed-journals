@@ -1,5 +1,6 @@
-use crate::modules::materials::{Material, MaterialCategory};
 use serde::{Deserialize, Serialize};
+
+use crate::modules::materials::{Material, MaterialCategory};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

@@ -1,6 +1,4 @@
-use crate::logs::scan_event::{
-    ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar,
-};
+use crate::logs::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventStar};
 use crate::modules::galaxy::TerraformState;
 
 /// Takes a scan event and calculates the estimated worth of the scanned body.

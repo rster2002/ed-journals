@@ -9,6 +9,5 @@ pub mod blocking;
 pub mod asynchronous;
 
 mod functions;
-mod shared;
 mod models;
-
+mod shared;

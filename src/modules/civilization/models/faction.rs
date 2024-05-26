@@ -1,5 +1,6 @@
-use crate::modules::civilization::{FactionHappiness, FactionState, Government, Superpower};
 use serde::{Deserialize, Serialize};
+
+use crate::modules::civilization::{FactionHappiness, FactionState, Government, Superpower};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

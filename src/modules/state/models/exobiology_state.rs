@@ -183,8 +183,8 @@ mod tests {
     use std::env::current_dir;
 
     use crate::exobiology::Species;
-    use crate::logs::LogEventContent;
     use crate::logs::LogDir;
+    use crate::logs::LogEventContent;
     use crate::state::ExobiologyState;
 
     #[test]

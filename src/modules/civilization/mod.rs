@@ -1,5 +1,3 @@
-mod models;
-
 pub use models::conflict::Conflict;
 pub use models::conflict::ConflictFaction;
 pub use models::conflict::ConflictWarType;
@@ -14,3 +12,6 @@ pub use models::superpower::Superpower;
 pub use models::system_security::SystemSecurity;
 pub use models::thargoid_war::ThargoidWar;
 pub use models::thargoid_war::ThargoidWarState;
+
+mod models;
+

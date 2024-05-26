@@ -1,5 +1,6 @@
-use crate::modules::odyssey::{Suit, SuitMod, SuitModule};
 use serde::{Deserialize, Serialize};
+
+use crate::modules::odyssey::{Suit, SuitMod, SuitModule};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

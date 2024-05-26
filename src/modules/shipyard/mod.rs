@@ -6,4 +6,3 @@ mod models;
 
 #[cfg(feature = "asynchronous")]
 pub mod asynchronous;
-

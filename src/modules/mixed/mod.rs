@@ -3,4 +3,3 @@ pub use models::mixed_material::MixedMaterial;
 pub use models::mixed_material_category::MixedMaterialCategory;
 
 mod models;
-

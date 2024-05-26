@@ -1,6 +1,7 @@
-use crate::modules_info::models::modules_info_entry::ModulesInfoEntry;
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+
+use crate::modules_info::models::modules_info_entry::ModulesInfoEntry;
 
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]

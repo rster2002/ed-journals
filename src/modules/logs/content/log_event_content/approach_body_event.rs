@@ -9,8 +9,9 @@ pub struct ApproachBodyEvent {
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::content::log_event_content::approach_body_event::ApproachBodyEvent;
     use serde_json::json;
+
+    use crate::logs::content::log_event_content::approach_body_event::ApproachBodyEvent;
 
     #[test]
     fn approach_body_is_parsed_correctly() {

@@ -1,26 +1,14 @@
-use std::collections::VecDeque;
 use std::path::Path;
-use std::sync::{Arc, Mutex};
 
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{CreateKind, DataChange, ModifyKind};
+use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
-use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::journal::LiveJournalBufferError;
 use crate::journal::models::journal_event::JournalEvent;
 use crate::journal::shared::journal_buffer::LiveJournalBuffer;
 use crate::logs::blocking::{LogDirReader, LogDirReaderError};
-use crate::market::blocking::{read_market_file, ReadMarketFileError};
-use crate::modules::cargo::blocking::{read_cargo_file, ReadCargoFileError};
-use crate::modules::outfitting::blocking::{read_outfitting_file, ReadOutfittingFileError};
+use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
-use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
-use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
-use crate::ship_locker::blocking::{read_ship_locker_file, ReadShipLockerFileError};
-use crate::shipyard::blocking::{read_shipyard_file, ReadShipyardFileError};
-use crate::status::blocking::{read_status_file, ReadStatusFileError};
 
 /// Watches the entire journal directory for changes and emits then as events. The reader will
 /// initially read all the history logs until it reaches the end of the latest log file, at
