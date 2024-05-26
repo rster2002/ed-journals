@@ -11,6 +11,7 @@ pub struct LogDirReader {
     dir: LogDir,
     current_file: Option<LogFile>,
     current_reader: Option<LogFileReader>,
+    is_live: bool,
     failing: bool,
 }
 
@@ -32,6 +33,7 @@ impl LogDirReader {
             dir: LogDir::new(path.as_ref().to_path_buf()),
             current_file: None,
             current_reader: None,
+            is_live: false,
             failing: false,
         }
     }
@@ -43,21 +45,17 @@ impl LogDirReader {
         Ok(())
     }
 
-    pub fn is_reading_latest(&self) -> Result<bool, LogDirReaderError> {
-        Ok(self.dir.journal_logs_oldest_first()?
-            .last()
-            .is_some_and(|file| {
-                self.current_file
-                    .as_ref()
-                    .is_some_and(|current| file == current)
-            }))
+    pub fn is_reading_latest(&self) -> bool {
+        self.is_live
     }
 
     fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
         let files = self.dir.journal_logs_oldest_first()?;
         let is_empty = files.is_empty();
 
-        for file in files {
+        let length = files.len();
+
+        for (index, file) in files.into_iter().enumerate() {
             let Some(current) = &self.current_file else {
                 self.set_current_file(file)?;
                 return Ok(true);
@@ -67,6 +65,8 @@ impl LogDirReader {
                 self.set_current_file(file)?;
                 return Ok(true);
             }
+
+            self.is_live = length == index + 1;
         }
 
         Ok(is_empty)

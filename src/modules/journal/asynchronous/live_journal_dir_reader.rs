@@ -100,7 +100,7 @@ impl LiveJournalDirReader {
             if let Some(log_event) = self.log_dir_reader.next().await {
                 return Some(match log_event {
                     Ok(event) => Ok(JournalEvent {
-                        is_live: self.log_dir_reader.is_reading_latest().unwrap_or_default(),
+                        is_live: self.log_dir_reader.is_reading_latest(),
                         kind: JournalEventKind::LogEvent(event),
                     }),
                     Err(error) => Err(error.into()),
