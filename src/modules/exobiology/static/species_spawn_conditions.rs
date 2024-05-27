@@ -1,3 +1,5 @@
+use std::any;
+
 use lazy_static::lazy_static;
 
 use crate::exobiology::{SpawnCondition, Species};
@@ -72,8 +74,17 @@ lazy_static! {
                 MinMeanTemperature(152.0),
                 MaxMeanTemperature(177.0),
                 MaxPressure(0.0135),
-                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)]
-                // TODO: 'regions': ['outer', 'perseus', 'scutum-centaurus']
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
+                any![
+                    Region(Region::OuterArm),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::OuterOrionPerseusConflux),
+                    Region(Region::PerseusArm),
+                    Region(Region::InnerOrionPerseusConflux),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm)
+                ]
             ]
         ),
         (
@@ -81,12 +92,21 @@ lazy_static! {
             all![
                 ThinAtmosphere(Ammonia),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(170.0),
                 MaxMeanTemperature(177.0),
                 MaxPressure(0.0135),
                 any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)]
-                // TODO: 'regions': ['outer', 'perseus', 'scutum-centaurus']
+                any![
+                    Region(Region::OuterArm),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::OuterOrionPerseusConflux),
+                    Region(Region::PerseusArm),
+                    Region(Region::InnerOrionPerseusConflux),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm)
+                ]
             ]
         ),
         (
@@ -108,11 +128,21 @@ lazy_static! {
             AnemonePrasinumBioluminescent,
             all![
                 NoAtmosphere,
-                ParentStarClass(StarClass::O),
+                MinGravity(0.036),
+                MinMeanTemperature(110.0),
+                MaxMeanTemperature(3050.0),
+                any![
+                    VolcanismType(VolcanismType::CarbonDioxideGeysers),
+                    VolcanismType(VolcanismType::None)
+                ],
                 any![
                     PlanetClass(MetalRichBody),
-                    PlanetClass(HighMetalContentBody),
-                    RockyComposition
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody)
+                ],
+                any![
+                    MainStarClass(StarClass::O),
+                    MainStarClass(StarClass::AeBe)
                 ]
             ]
         ),
@@ -120,23 +150,34 @@ lazy_static! {
             AnemonePuniceum,
             all![
                 NoAtmosphere,
+                MinGravity(0.17),
+                MaxGravity(2.52),
+                MinMeanTemperature(65.0),
+                MaxMeanTemperature(800.0),
+                any![VolcanismType(VolcanismType::None), VolcanismType(VolcanismType::CarbonDioxideGeysers)],
+                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody)],
                 ParentStarClass(StarClass::O),
-                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody)]
+                Region(Region::ArcadianStream)
+                // TODO: 'regions': ['anemone-a'] ?? Which region is this?
             ]
         ),
         (
             AnemoneRoseumBioluminescent,
             all![
                 NoAtmosphere,
+                MinGravity(0.036),
+                MaxGravity(4.61),
+                MinMeanTemperature(400.0),
+                AnyVolcanism,
+                any![
+                    PlanetClass(MetalRichBody),
+                    PlanetClass(HighMetalContentBody)
+                ],
                 ParentStarClass(StarClass::B),
                 any![
                     ParentStarLuminosity(StarLuminosity::I),
                     ParentStarLuminosity(StarLuminosity::II),
                     ParentStarLuminosity(StarLuminosity::III)
-                ],
-                any![
-                    PlanetClass(MetalRichBody),
-                    PlanetClass(HighMetalContentBody)
                 ]
             ]
         ),
@@ -144,53 +185,98 @@ lazy_static! {
             AnemoneRoseum,
             all![
                 NoAtmosphere,
-                ParentStarClass(StarClass::B),
+                MinGravity(0.045),
+                MaxGravity(0.37),
+                MinMeanTemperature(200.0),
+                MaxMeanTemperature(440.0),
                 any![
-                    ParentStarLuminosity(StarLuminosity::I),
-                    ParentStarLuminosity(StarLuminosity::II),
-                    ParentStarLuminosity(StarLuminosity::III)
+                    VolcanismType(VolcanismType::SilicateMagma),
+                    VolcanismType(VolcanismType::RockyMagma),
+                    VolcanismType(VolcanismType::MetallicMagma)
                 ],
-                any![
-                    PlanetClass(MetalRichBody),
-                    PlanetClass(HighMetalContentBody)
+                PlanetClass(RockyBody),
+                all![
+                    ParentStarClass(StarClass::B),
+                    any![
+                        ParentStarLuminosity(StarLuminosity::I),
+                        ParentStarLuminosity(StarLuminosity::II),
+                        ParentStarLuminosity(StarLuminosity::III),
+                        ParentStarLuminosity(StarLuminosity::IV)
+                    ]
                 ]
+                // TODO: 'regions': ['anemone-a'] ?? Which region is this?
             ]
         ),
         (
             AnemoneBlatteumBioluminescent,
             all![
                 NoAtmosphere,
-                ParentStarClass(StarClass::B),
-                any![
-                    ParentStarLuminosity(StarLuminosity::IV),
-                    ParentStarLuminosity(StarLuminosity::V)
-                ],
+                MinMeanTemperature(220.0),
+                AnyVolcanism,
                 any![
                     PlanetClass(MetalRichBody),
                     PlanetClass(HighMetalContentBody)
+                ],
+                all![
+                    ParentStarClass(StarClass::B),
+                    any![
+                        ParentStarLuminosity(StarLuminosity::IV),
+                        ParentStarLuminosity(StarLuminosity::V)
+                    ]
                 ]
+                // TODO: 'regions': ['anemone-a'] ?? Which region is this?
             ]
         ),
         (
             AnemoneLuteolum,
             all![
                 NoAtmosphere,
+                MinGravity(0.044),
+                MaxGravity(1.28),
+                MinMeanTemperature(200.0),
+                MaxMeanTemperature(400.0),
+                any![
+                    VolcanismType(VolcanismType::MetallicMagma),
+                    VolcanismType(VolcanismType::SilicateMagma),
+                    VolcanismType(VolcanismType::RockyMagma),
+                    VolcanismType(VolcanismType::WaterMagma)
+                ],
+                PlanetClass(RockyBody),
                 ParentStarClass(StarClass::B),
                 any![
                     ParentStarLuminosity(StarLuminosity::IV),
                     ParentStarLuminosity(StarLuminosity::V)
-                ],
-                RockyComposition
+                ]
+                // TODO: 'regions': ['anemone-a'] ?? Which region is this?
             ]
         ),
         (
             AnemoneRubeumBioluminescent,
             all![
                 NoAtmosphere,
-                ParentStarClass(StarClass::B),
+                MinGravity(0.036),
+                MaxGravity(4.61),
+                MinMeanTemperature(160.0),
+                MaxMeanTemperature(1800.0),
+                AnyVolcanism,
                 any![
                     PlanetClass(MetalRichBody),
                     PlanetClass(HighMetalContentBody)
+                ],
+                any![
+                    all![
+                        ParentStarClass(StarClass::B),
+                        ParentStarLuminosity(StarLuminosity::VI)
+                    ],
+                    all![
+                        ParentStarClass(StarClass::A),
+                        any![
+                            ParentStarLuminosity(StarLuminosity::I),
+                            ParentStarLuminosity(StarLuminosity::II),
+                            ParentStarLuminosity(StarLuminosity::III)
+                        ]
+                    ],
+                    ParentStarClass(StarClass::N)
                 ]
             ]
         ),
@@ -198,8 +284,30 @@ lazy_static! {
             AnemoneCroceum,
             all![
                 NoAtmosphere,
-                ParentStarClass(StarClass::B),
-                RockyComposition
+                MinGravity(0.047),
+                MaxGravity(0.37),
+                MinMeanTemperature(200.0),
+                MaxMeanTemperature(440.0),
+                any![
+                    VolcanismType(VolcanismType::SilicateMagma),
+                    VolcanismType(VolcanismType::RockyMagma),
+                    VolcanismType(VolcanismType::MetallicMagma)
+                ],
+                PlanetClass(RockyBody),
+                any![
+                    all![
+                        ParentStarClass(StarClass::B),
+                        any![
+                            ParentStarLuminosity(StarLuminosity::V),
+                            ParentStarLuminosity(StarLuminosity::IV)
+                        ]
+                    ],
+                    all![
+                        ParentStarClass(StarClass::A),
+                        ParentStarLuminosity(StarLuminosity::III)
+                    ]
+                ]
+                // TODO: regions': ['anemone-a'] ?? Which region is this?
             ]
         ),
         (BarkMound, all![NoAtmosphere, WithinNebulaRange(150.0)]),
