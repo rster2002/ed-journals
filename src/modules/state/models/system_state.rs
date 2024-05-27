@@ -130,7 +130,6 @@ mod tests {
 
     use crate::exobiology::{SpawnCondition, SpawnSource, Species};
     use crate::logs::blocking::LogDirReader;
-    use crate::state::models::planet_state::planet_species_entry::WillSpawn;
     use crate::state::GameState;
 
     #[test]
@@ -145,13 +144,13 @@ mod tests {
             state.feed_log_event(&entry.unwrap());
         }
 
-        let mut processed_species_count = 0;
+        let mut processed_result = HashMap::<Species, usize>::new();
 
         // A false positive is when a species is calculated to spawn on a body, but it was not observed to spawn
-        let mut false_positives_count = 0;
+        let mut false_positives_result = HashMap::<Species, usize>::new();
 
         // A false negative is when a species is observed to spawn on a body, but it was not calculated to spawn
-        let mut false_negatives_count = 0;
+        let mut false_negatives_result = HashMap::<Species, usize>::new();
 
         // Blacklisted bodies that should not be counted towards false positives/negatives
         let blacklisted_bodies: Vec<String> = vec![
@@ -167,7 +166,7 @@ mod tests {
 
         // Blacklisted species that should not be counted towards false positives/negatives
         let blacklisted_species: Vec<Species> = vec![
-            Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
+            //Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
         ];
 
         for commander in state.commanders.values() {
@@ -209,15 +208,20 @@ mod tests {
                         .filter(|species| !blacklisted_species.contains(species))
                         .collect();
 
+                    let correct_species: Vec<&Species> = calculated_species
+                        .iter()
+                        .filter(|species| observed_species.contains(species))
+                        .collect();
+
                     let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
                         .iter()
-                        .flat_map(|species| species.spawn_conditions())
+                        .map(|species| species.spawn_conditions())
                         .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
                         .collect();
 
                     let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
                         .iter()
-                        .flat_map(|species| species.spawn_conditions())
+                        .map(|species| species.spawn_conditions())
                         .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
                         .collect();
 
@@ -233,31 +237,59 @@ mod tests {
                         );
                     }
 
-                    processed_species_count += observed_species.len();
-                    false_positives_count += false_positives.len();
-                    false_negatives_count += false_negatives.len();
+                    for species in correct_species {
+                        *processed_result.entry(species.clone()).or_insert(0) += 1;
+                    }
+
+                    for species in false_negatives {
+                        *processed_result.entry(species.clone()).or_insert(0) += 1;
+                        *false_negatives_result.entry(species.clone()).or_insert(0) += 1;
+                    }
+
+                    for species in false_positives {
+                        *processed_result.entry(species.clone()).or_insert(0) += 1;
+                        *false_positives_result.entry(species.clone()).or_insert(0) += 1;
+                    }
                 }
             }
         }
 
-        let false_positives_percentage =
-            (false_positives_count as f32 / processed_species_count as f32 * 100.0 * 100.0).round()
-                / 100.0;
-        let false_negatives_percentage =
-            (false_negatives_count as f32 / processed_species_count as f32 * 100.0 * 100.0).round()
-                / 100.0;
-
         // Correctness check: 1% or more is considered a failure.
+        println!("| Species | Test cases | False negatives | False positives |");
+        println!("| --- | --- | --- | --- |");
 
-        println!("False negatives: {}%; {} species were observed to spawn on a body, but were not calculated to spawn.",
-            false_negatives_percentage, false_negatives_count
-        );
+        for species in Species::iter() {
+            let count = processed_result.get(&species).copied().unwrap_or(0);
 
-        println!("False positives: {}%; {} species were calculated to spawn on a body, but were not observed to spawn.",
-            false_positives_percentage, false_positives_count
-        );
+            let false_negatives_count = false_negatives_result.get(&species).copied().unwrap_or(0);
+            let false_positives_count = false_positives_result.get(&species).copied().unwrap_or(0);
 
-        assert!(false_negatives_percentage <= 1.0);
-        assert!(false_positives_percentage <= 1.0);
+            let false_negatives_percentage =
+                f32::round((false_negatives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
+            let false_positives_percentage =
+                f32::round((false_positives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
+
+            // Checkmark or percentage
+            let false_negatives = if false_negatives_percentage == 0.0 {
+                "✅".to_string()
+            } else {
+                format!("🚨 {}%", false_negatives_percentage)
+            };
+
+            let false_positives = if false_positives_percentage == 0.0 {
+                "✅".to_string()
+            } else {
+                format!("🚨 {}%", false_positives_percentage)
+            };
+
+            if false_negatives_percentage >= 1.0 || false_positives_percentage >= 1.0 {
+                println!(
+                    "| *{}* | {} | {} | {} |",
+                    species, count, false_negatives, false_positives
+                );
+            }
+        }
+
+        assert_eq!(false_negatives_result.len(), 0);
     }
 }
