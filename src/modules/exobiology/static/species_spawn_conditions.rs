@@ -96,7 +96,7 @@ lazy_static! {
                 MinMeanTemperature(170.0),
                 MaxMeanTemperature(177.0),
                 MaxPressure(0.0135),
-                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)]
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
                 any![
                     Region(Region::OuterArm),
                     Region(Region::OuterOrionSpur),
