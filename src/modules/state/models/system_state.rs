@@ -187,7 +187,6 @@ mod tests {
                         .get_spawnable_species(*body_id)
                         .unwrap()
                         .iter()
-                        .filter(|specie| specie.will_spawn == WillSpawn::Yes)
                         .map(|entry| entry.specie.clone())
                         .collect::<HashSet<_>>();
 
