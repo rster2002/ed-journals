@@ -130,6 +130,9 @@ impl<'a> SpawnSource<'a> {
 
                 composition.metal > 0.0
             }
+            SpawnCondition::MinPressure(min_pressure) => {
+                &self.target_planet.pressure >= min_pressure
+            }
 
             SpawnCondition::Special => false,
 
