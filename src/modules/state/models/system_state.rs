@@ -161,6 +161,8 @@ mod tests {
             "Flyeia Prou RH-C b46-0 A 8".to_string(), // TubusSororibus spawned on a body with a gravity of 0.52g and temperature of 260K
             "Graea Proae OT-O d7-15 A 4".to_string(), // FrutexaMetallicum, OsseusPellebantus and TussockPropagito spawning on a body that's 0.4K too warm
             "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
+            "Phoi Aed OH-C d2 3 c".to_string(), // ClypeusSpeculum spawning on a body 0.01au away from the star
+            "Prie Chraea UP-G d10-9 C 11 a".to_string(), // CrystallineShards spawning on a body 0.002au away from the star
         ];
 
         for commander in state.commanders.values() {
