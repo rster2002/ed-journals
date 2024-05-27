@@ -84,7 +84,7 @@ impl<'a> SpawnSource<'a> {
             }
             SpawnCondition::MinDistanceFromParentSun(min_distance) => {
                 // TODO not sure, but Eccentricity might need to be taken into account as well
-                &(self.target_planet.semi_major_axis / 149597870700.0) >= min_distance
+                &(self.target_planet.semi_major_axis.as_au()) >= min_distance
             }
             SpawnCondition::AnyVolcanism => {
                 self.target_planet.volcanism.kind != VolcanismType::None
