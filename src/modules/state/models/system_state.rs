@@ -153,7 +153,7 @@ mod tests {
         // A false negative is when a species is observed to spawn on a body, but it was not calculated to spawn
         let mut false_negatives_count = 0;
 
-        // Blacklisted bodies that should not be tested
+        // Blacklisted bodies that should not be counted towards false positives/negatives
         let blacklisted_bodies: Vec<String> = vec![
             "Syniechia CB-U d4-8 B 5".to_string(), // Commander did not scan the body before landing
             "Prie Chraea VL-L c21-0 1 c".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
@@ -163,6 +163,11 @@ mod tests {
             "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
             "Phoi Aed OH-C d2 3 c".to_string(), // ClypeusSpeculum spawning on a body 0.01au away from the star
             "Prie Chraea UP-G d10-9 C 11 a".to_string(), // CrystallineShards spawning on a body 0.002au away from the star
+        ];
+
+        // Blacklisted species that should not be counted towards false positives/negatives
+        let blacklisted_species: Vec<Species> = vec![
+            Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
         ];
 
         for commander in state.commanders.values() {
@@ -194,12 +199,14 @@ mod tests {
                     let false_negatives: Vec<&Species> = observed_species
                         .iter()
                         .filter(|species| !calculated_species.contains(species))
+                        .filter(|species| !blacklisted_species.contains(species))
                         .collect();
 
                     // All the calculated species that were not observed to spawn on the body.
                     let false_positives: Vec<&Species> = calculated_species
                         .iter()
                         .filter(|species| !observed_species.contains(species))
+                        .filter(|species| !blacklisted_species.contains(species))
                         .collect();
 
                     let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
@@ -241,17 +248,14 @@ mod tests {
                 / 100.0;
 
         // Correctness check: 1% or more is considered a failure.
-        if false_negatives_percentage > 1.0 {
-            println!("False negatives: {}%; {} species were observed to spawn on a body, but were not calculated to spawn.",
-                false_negatives_percentage, false_negatives_count
-            );
-        }
 
-        if false_positives_percentage > 1.0 {
-            println!("False positives: {}%; {} species were calculated to spawn on a body, but were not observed to spawn.",
-                false_positives_percentage, false_positives_count
-            );
-        }
+        println!("False negatives: {}%; {} species were observed to spawn on a body, but were not calculated to spawn.",
+            false_negatives_percentage, false_negatives_count
+        );
+
+        println!("False positives: {}%; {} species were calculated to spawn on a body, but were not observed to spawn.",
+            false_positives_percentage, false_positives_count
+        );
 
         assert!(false_negatives_percentage <= 1.0);
         assert!(false_positives_percentage <= 1.0);
