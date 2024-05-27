@@ -16,7 +16,7 @@ use crate::galaxy::{
     Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
     StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
-use crate::logs::scan_event::ScanEventParent;
+use crate::logs::scan_event::{ScanEventParent};
 
 #[derive(Debug)]
 pub struct SpawnSource<'a> {
@@ -34,10 +34,6 @@ impl<'a> SpawnSource<'a> {
 
     /// Checks if the given species can spawn on this spawn source.
     pub fn can_spawn_species(&self, species: &Species) -> bool {
-        if !self.target_planet.is_landable {
-            // return false;
-        }
-
         species
             .spawn_conditions()
             .iter()
@@ -46,10 +42,6 @@ impl<'a> SpawnSource<'a> {
 
     /// Checks if the spawn source satisfies the given condition.
     pub fn satisfies_spawn_condition(&self, condition: &SpawnCondition) -> bool {
-        if !self.target_planet.is_landable {
-            // return false;
-        }
-
         match condition {
             SpawnCondition::MinMeanTemperature(min_temp) => {
                 &self.target_planet.surface_temperature >= min_temp
