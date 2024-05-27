@@ -71,6 +71,9 @@ impl<'a> SpawnSource<'a> {
                 &self.target_planet.gravity.as_g() <= max_gravity
             }
             SpawnCondition::PlanetClass(planet_class) => &self.target_planet.class == planet_class,
+            SpawnCondition::MainStarClass(star_class) => {
+                &self.target_system.stars_in_system[&0].class == star_class
+            }
             SpawnCondition::ParentStarClass(star_class) => {
                 self.parent_stars().any(|star| &star.class == star_class)
             }

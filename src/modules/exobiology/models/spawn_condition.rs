@@ -15,6 +15,7 @@ pub enum SpawnCondition {
     /// The maximum gravity the planet must have, in G
     MaxGravity(f32),
     PlanetClass(PlanetClass),
+    MainStarClass(StarClass),
     ParentStarClass(StarClass),
     ParentStarLuminosity(StarLuminosity),
     MinOrEqualParentStarLuminosity(StarLuminosity),
