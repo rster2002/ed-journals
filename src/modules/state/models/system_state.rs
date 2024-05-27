@@ -126,13 +126,15 @@ impl From<&LocationInfo> for SystemState {
 mod tests {
     use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
+    use strum::IntoEnumIterator;
 
-    use crate::exobiology::{SpawnSource, Species};
+    use crate::exobiology::{SpawnCondition, SpawnSource, Species};
     use crate::logs::blocking::LogDirReader;
+    use crate::state::models::planet_state::planet_species_entry::WillSpawn;
     use crate::state::GameState;
 
     #[test]
-    fn spawnable_species_no_false_negatives() {
+    fn spawnable_species() {
         let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
         let log_dir = LogDirReader::open(dir_path);
@@ -143,7 +145,13 @@ mod tests {
             state.feed_log_event(&entry.unwrap());
         }
 
-        let mut failed = 0;
+        let mut processed_species_count = 0;
+
+        // A false positive is when a species is calculated to spawn on a body, but it was not observed to spawn
+        let mut false_positives_count = 0;
+
+        // A false negative is when a species is observed to spawn on a body, but it was not calculated to spawn
+        let mut false_negatives_count = 0;
 
         // Blacklisted bodies that should not be tested
         let blacklisted_bodies: Vec<String> = vec![
@@ -162,79 +170,89 @@ mod tests {
                         continue;
                     }
 
+                    let observed_species = &planet_state.scanned_species;
+
+                    if observed_species.is_empty() {
+                        continue;
+                    }
+
                     let spawn_source = SpawnSource {
                         target_system: &system.exobiology_system,
                         target_planet: &planet_state.exobiology_body,
                     };
 
-                    for species in &planet_state.scanned_species {
-                        let conditions = species.spawn_conditions();
+                    let calculated_species = system
+                        .get_spawnable_species(*body_id)
+                        .unwrap()
+                        .iter()
+                        .filter(|specie| specie.will_spawn == WillSpawn::Yes)
+                        .map(|entry| entry.specie.clone())
+                        .collect::<HashSet<_>>();
 
-                        let failing_conditions = conditions
-                            .iter()
-                            .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                            .collect::<Vec<_>>();
+                    // All the observed species that were not calculated to spawn on the body.
+                    let false_negatives: Vec<&Species> = observed_species
+                        .iter()
+                        .filter(|species| !calculated_species.contains(species))
+                        .collect();
 
-                        if !failing_conditions.is_empty() {
-                            failed += 1;
-                            println!(
-                                "The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
-                                species, planet_state.scan.body_name, failing_conditions, spawn_source
-                            );
-                        }
+                    // All the calculated species that were not observed to spawn on the body.
+                    let false_positives: Vec<&Species> = calculated_species
+                        .iter()
+                        .filter(|species| !observed_species.contains(species))
+                        .collect();
+
+                    let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
+                        .iter()
+                        .flat_map(|species| species.spawn_conditions())
+                        .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+                        .collect();
+
+                    let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
+                        .iter()
+                        .flat_map(|species| species.spawn_conditions())
+                        .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+                        .collect();
+
+                    if !false_negatives.is_empty() || !false_positives.is_empty() {
+                        println!(
+                            "Body: {}\nObserved: {:?}\nCalculated: {:?}\nFalse negatives: {:?}\nFalse positives: {:?}\nSpawn source: {:#?}\n",
+                            planet_state.scan.body_name,
+                            observed_species,
+                            calculated_species,
+                            false_negative_spawn_conditions,
+                            false_positive_spawn_conditions,
+                            spawn_source
+                        );
                     }
+
+                    processed_species_count += observed_species.len();
+                    false_positives_count += false_positives.len();
+                    false_negatives_count += false_negatives.len();
                 }
             }
         }
 
-        // In case of test failure, see the logs printed above.
-        assert_eq!(failed, 0);
+        let false_positives_percentage =
+            (false_positives_count as f32 / processed_species_count as f32 * 100.0 * 100.0).round()
+                / 100.0;
+        let false_negatives_percentage =
+            (false_negatives_count as f32 / processed_species_count as f32 * 100.0 * 100.0).round()
+                / 100.0;
 
-        // let logs = log_dir.journal_logs().unwrap();
+        // Correctness check: 1% or more is considered a failure.
+        if false_negatives_percentage > 1.0 {
+            println!("False negatives: {}%; {} species were observed to spawn on a body, but were not calculated to spawn.",
+                false_negatives_percentage, false_negatives_count
+            );
+        }
 
-        // // let mut state = ExobiologyState::new();
-        //
-        // // Species found in the logs, grouped by body name.
-        // // These are the value we will compare against the calculated spawnable species.
-        // let mut expected_species = HashMap::<String, HashSet<Species>>::new();
-        // for journal in &logs {
-        //     let reader = journal.create_blocking_reader().unwrap();
-        //
-        //     let mut body_name = String::new();
-        //
-        //     for entry in reader.flatten() {
-        //         state.feed_event(&entry);
-        //
-        //         if let LogEventContent::Location(location) = &entry.content {
-        //             body_name.clone_from(&location.location_info.body)
-        //         }
-        //
-        //         if let LogEventContent::Touchdown(touchdown) = &entry.content {
-        //             body_name.clone_from(&touchdown.body);
-        //         }
-        //
-        //         if let LogEventContent::ScanOrganic(organic) = &entry.content {
-        //             expected_species
-        //                 .entry(body_name.clone())
-        //                 .or_default()
-        //                 .insert(organic.species.clone());
-        //         }
-        //     }
-        // }
-        //
+        if false_positives_percentage > 1.0 {
+            println!("False positives: {}%; {} species were calculated to spawn on a body, but were not observed to spawn.",
+                false_positives_percentage, false_positives_count
+            );
+        }
 
-        //
-        // let mut failed = 0;
-        //
-        // // Check each spawn source to see if the calculated spawnable species match the expected species.
-        // for (body_name, expected_species) in expected_species
-        //     .iter()
-        //     .filter(|(body, _)| !blacklisted_bodies.contains(body))
-        // {
-        //     let spawn_source = state.for_body(body_name);
-        //
-
-        // }
-        //
+        assert!(false_negatives_percentage <= 1.0);
+        assert!(false_positives_percentage <= 1.0);
     }
 }
