@@ -19,4 +19,5 @@ pub struct TargetPlanet {
     pub parents: Vec<ScanEventParent>,
     pub semi_major_axis: LocalDistance,
     pub geological_signals_present: bool,
+    pub pressure: f32,
 }

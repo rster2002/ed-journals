@@ -308,6 +308,7 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
                 parents: value.0.parents.clone(),
                 semi_major_axis: LocalDistance::from_m(value.1.orbit_info.semi_major_axis),
                 geological_signals_present: false, // FIXME: Implement this
+                pressure: value.1.surface_pressure,
             },
         }
     }
