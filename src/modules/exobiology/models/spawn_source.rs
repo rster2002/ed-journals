@@ -38,10 +38,7 @@ impl<'a> SpawnSource<'a> {
             return false;
         }
 
-        species
-            .spawn_conditions()
-            .iter()
-            .all(|condition| self.satisfies_spawn_condition(condition))
+        self.satisfies_spawn_condition(species.spawn_conditions())
     }
 
     /// Checks if the spawn source satisfies the given condition.

@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
+use crate::exobiology::Genus;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use strum::EnumIter;
-use crate::exobiology::Genus;
 
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
@@ -592,7 +592,7 @@ impl Display for Species {
 }
 
 impl Species {
-    pub fn spawn_conditions(&self) -> &Vec<SpawnCondition> {
+    pub fn spawn_conditions(&self) -> &SpawnCondition {
         &SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
@@ -763,12 +763,18 @@ impl Species {
 mod tests {
     use strum::IntoEnumIterator;
 
-    use crate::modules::exobiology::Species;
+    use crate::{
+        exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS,
+        modules::exobiology::Species,
+    };
 
     #[test]
     fn all_species_have_matching_spawn_conditions() {
         for species in Species::iter() {
-            assert!(!species.spawn_conditions().is_empty());
+            assert!(SPECIES_SPAWN_CONDITIONS
+                .iter()
+                .find(|(s, _)| *s == species)
+                .is_some());
         }
     }
 }
