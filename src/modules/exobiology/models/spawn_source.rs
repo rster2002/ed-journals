@@ -133,6 +133,9 @@ impl<'a> SpawnSource<'a> {
             SpawnCondition::MinPressure(min_pressure) => {
                 &self.target_planet.pressure >= min_pressure
             }
+            SpawnCondition::MaxPressure(max_pressure) => {
+                &self.target_planet.pressure <= max_pressure
+            }
 
             SpawnCondition::Special => false,
 

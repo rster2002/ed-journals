@@ -25,6 +25,7 @@ pub enum SpawnCondition {
     AnyVolcanism,
 
     MinPressure(f32),
+    MaxPressure(f32),
 
     /// The maximum distance the planet needs to be from the center of a nebula in Ly
     WithinNebulaRange(f32),
