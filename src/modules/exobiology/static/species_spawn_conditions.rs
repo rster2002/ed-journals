@@ -1,7 +1,9 @@
 use lazy_static::lazy_static;
 
 use crate::exobiology::{SpawnCondition, Species};
-use crate::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
+use crate::galaxy::{
+    AtmosphereType, BodyType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType,
+};
 use crate::materials::Material;
 use AtmosphereType::*;
 use PlanetClass::*;
@@ -26,36 +28,66 @@ lazy_static! {
             AleoidaArcus,
             all![
                 ThinAtmosphere(CarbonDioxide),
+                MinGravity(0.04),
                 MaxGravity(0.27),
                 MinMeanTemperature(175.0),
-                MaxMeanTemperature(180.0)
+                MaxMeanTemperature(180.0),
+                MinPressure(0.0164),
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
+                VolcanismType(VolcanismType::None)
             ]
         ),
         (
             AleoidaCoronamus,
             all![
                 ThinAtmosphere(CarbonDioxide),
+                MinGravity(0.04),
                 MaxGravity(0.27),
                 MinMeanTemperature(180.0),
-                MaxMeanTemperature(190.0)
+                MaxMeanTemperature(190.0),
+                MinPressure(0.025),
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
+                VolcanismType(VolcanismType::None)
             ]
         ),
         (
             AleoidaGravis,
             all![
                 ThinAtmosphere(CarbonDioxide),
+                MinGravity(0.04),
                 MaxGravity(0.27),
                 MinMeanTemperature(190.0),
-                MaxMeanTemperature(195.0)
+                MaxMeanTemperature(196.0),
+                MinPressure(0.054),
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
+                VolcanismType(VolcanismType::None)
             ]
         ),
         (
             AleoidaLaminiae,
-            all![ThinAtmosphere(Ammonia), MaxGravity(0.27)]
+            all![
+                ThinAtmosphere(Ammonia),
+                MinGravity(0.04),
+                MaxGravity(0.27),
+                MinMeanTemperature(152.0),
+                MaxMeanTemperature(177.0),
+                MaxPressure(0.0135),
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)]
+                // TODO: 'regions': ['outer', 'perseus', 'scutum-centaurus']
+            ]
         ),
         (
             AleoidaSpica,
-            all![ThinAtmosphere(Ammonia), MaxGravity(0.27)]
+            all![
+                ThinAtmosphere(Ammonia),
+                MinGravity(0.04),
+                MaxGravity(0.27),
+                MinMeanTemperature(170.0),
+                MaxMeanTemperature(177.0),
+                MaxPressure(0.0135),
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)]
+                // TODO: 'regions': ['outer', 'perseus', 'scutum-centaurus']
+            ]
         ),
         (
             AmphoraPlant,
