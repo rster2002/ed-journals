@@ -293,6 +293,7 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
                 parents: value.0.parents.clone(),
                 geological_signals_present: false,
                 semi_major_axis: galaxy::LocalDistance::from_m(value.1.orbit_info.semi_major_axis),
+                geological_signals_present: false, // FIXME: Implement this
             },
         }
     }
