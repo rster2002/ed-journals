@@ -162,15 +162,13 @@ mod tests {
                         continue;
                     }
 
-                    let expected_species = system.get_spawnable_species(*body_id).unwrap();
-
                     let spawn_source = SpawnSource {
                         target_system: &system.exobiology_system,
                         target_planet: &planet_state.exobiology_body,
                     };
 
-                    for species in expected_species {
-                        let conditions = species.specie.spawn_conditions();
+                    for species in &planet_state.scanned_species {
+                        let conditions = species.spawn_conditions();
 
                         let failing_conditions = conditions
                             .iter()
