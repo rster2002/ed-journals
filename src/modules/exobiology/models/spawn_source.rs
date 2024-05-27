@@ -13,7 +13,7 @@ use crate::exobiology::models::spawn_source::target_planet::TargetPlanet;
 use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{
-    Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
+    Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition, Region,
     StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
 use crate::logs::scan_event::ScanEventParent;
@@ -135,6 +135,15 @@ impl<'a> SpawnSource<'a> {
             }
             SpawnCondition::MaxPressure(max_pressure) => {
                 &self.target_planet.pressure <= max_pressure
+            }
+            SpawnCondition::Region(region) => {
+                if let Some(actual_region) =
+                    Region::from_pos(self.target_system.star_system_position)
+                {
+                    actual_region == region
+                } else {
+                    false
+                }
             }
 
             SpawnCondition::Special => false,

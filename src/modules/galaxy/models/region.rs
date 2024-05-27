@@ -1,7 +1,11 @@
 use serde::{Deserialize, Serialize};
 
+use crate::exploration::r#static::{region::REGION_MAP, region_map::REGIONS};
+
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Region {
+    Unknown,
+
     #[serde(rename = "$Codex_RegionName_1;")]
     GalacticCenter,
 
@@ -127,4 +131,37 @@ pub enum Region {
 
     #[serde(rename = "$Codex_RegionName_42;")]
     TheVoid,
+}
+
+impl Region {
+    pub fn from_pos(pos: [f32; 3]) -> Option<&'static Region> {
+        const X0: f32 = -49985.0;
+        const Y0: f32 = -40985.0;
+        const Z0: f32 = -24105.0;
+
+        let px = ((pos[0] - X0) * 83.0 / 4096.0).floor();
+        let pz = ((pos[2] - Z0) * 83.0 / 4096.0).floor();
+
+        if px >= 0.0 && pz >= 0.0 {
+            if let Some(row) = REGION_MAP.get(pz as usize) {
+                let mut acc = 0;
+                let mut pv = 0;
+
+                for &(a, b) in row.iter() {
+                    acc += a;
+                    if acc as f32 > px {
+                        pv = b;
+                        break;
+                    }
+                }
+
+                return match pv {
+                    0 => None,
+                    _ => Some(&REGIONS[pv as usize]),
+                };
+            }
+        }
+
+        None
+    }
 }

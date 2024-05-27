@@ -1,3 +1,4 @@
+use crate::galaxy::Region;
 use crate::materials::Material;
 use crate::modules::galaxy::{
     AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType,
@@ -39,6 +40,8 @@ pub enum SpawnCondition {
     RockyComposition,
     IcyComposition,
     MetalComposition,
+
+    Region(Region),
 
     Special,
 
