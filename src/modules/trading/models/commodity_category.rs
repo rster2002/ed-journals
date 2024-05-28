@@ -135,7 +135,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::PowerTransferBus
             | Commodity::RadiationBaffle
             | Commodity::ReinforcedMountingPlate
-            | Commodity::SkimmerComponents
+            | Commodity::SkimerComponents
             | Commodity::ThermalCoolingUnits
             | Commodity::WaterPurifiers => CommodityCategory::Machinery,
 
@@ -256,7 +256,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::ProtectiveMembraneScrap
             | Commodity::PrototypeTech
             | Commodity::RareArtwork
-            | Commodity::RebelTransmission
+            | Commodity::RebelTransmissions
             | Commodity::SAP8CoreContainer
             | Commodity::ScientificResearch
             | Commodity::ScientificSamples
@@ -477,9 +477,15 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::BuckyballBeerMats
             | Commodity::ClassifiedExperimentalEquipment => CommodityCategory::Rare,
 
-            Commodity::LavignyGarrisonSupplies | Commodity::SiriusIndustrialEquipment => {
-                CommodityCategory::Powerplay
-            }
+            Commodity::SiriusIndustrialEquipment
+            | Commodity::SiriusCommercialContracts
+            | Commodity::AislingMediaMaterials
+            | Commodity::AislingPromotionalMaterials
+            | Commodity::AislingMediaResources
+            | Commodity::RepublicanFieldSupplies
+            | Commodity::PatreusGarrisonSupplies
+            | Commodity::LavignyGarrisonSupplies
+            | Commodity::LavignyFieldSupplies => CommodityCategory::Powerplay,
 
             Commodity::Limpet => CommodityCategory::None,
 
