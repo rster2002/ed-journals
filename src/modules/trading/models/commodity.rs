@@ -1363,7 +1363,6 @@ mod tests {
 
     use crate::trading::Commodity;
 
-    #[ignore]
     #[test]
     fn all_commodity_lines_are_parsed_correctly() {
         let content = include_str!("zz_commodity_items.txt");
