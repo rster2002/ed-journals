@@ -1,3 +1,5 @@
+# Based on manual datadump
+#
 ThargoidTitanDriveComponent
 ThargoidCystSpecimen
 ThargoidTissueSampleType9c
@@ -28,23 +30,23 @@ MilitaryGradeFabrics
 Robotics
 TacticalData
 LargeExplorationDataCash
-InsectoidEggs
+# InsectoidEggs
 AnimalEffigies
-RestrictedIntel
+# RestrictedIntel
 Drones
 EncriptedDataStorage
-FaradayHats
-LoanedArms
+# FaradayHats
+# LoanedArms
 MotronaExperienceJelly
 Copper
 Coltan
 Coffee
 Cobalt
 CetiRabbits
-Ravatite
+# Ravatite
 TrinketsOfFortune
 Aluminium
-Spodumene
+# Spodumene
 S6_TissueSample_Cells
 BuildingFabricators
 LyraeWeed
@@ -54,29 +56,29 @@ AdvancedCatalysers
 GeneBank
 NeritusBerries
 WheemeteWheatCakes
-RadioactiveMaterials
+# RadioactiveMaterials
 Tobacco
 SiriusIndustrialEquipment
-PrefabricatedBuildings
+# PrefabricatedBuildings
 Pesticides
 WreckageComponents
 USSCargoExperimentalChemicals
-Chalcopyrite
+# Chalcopyrite
 ExhaustManifold
 S_TissueSample_Core
 MulachiGiantFungus
 KorroKungPellets
-Triphenylene
+# Triphenylene
 BasicMedicines
 SaxonWine
-BotanicalDrugs
+# BotanicalDrugs
 AncientTotem
 AncientRelic
 Palladium
 DiplomaticBag
 CombatStabilisers
 MarineSupplies
-Calaveras
+# Calaveras
 AgriculturalMedicines
 NaturalFabrics
 MedbStarlube
@@ -84,7 +86,7 @@ Gallium
 Gallite
 HonestyPills
 PantaaPrayerSticks
-BioSpecimen
+# BioSpecimen
 HavasupaiDreamCatcher
 ChameleonCloth
 HNShockMount
@@ -92,7 +94,7 @@ Grandidierite
 GeologicalEquipment
 HIPOrganophosphates
 SyntheticFabrics
-OcularComputers
+# OcularComputers
 VegaSlimWeed
 SanumaMEAT
 RusaniOldSmokey
@@ -101,7 +103,7 @@ ComputerComponents
 USSCargoBlackBox
 TanmarkTranquilTea
 Thorium
-GromCounterIntelligence
+# GromCounterIntelligence
 NerveAgents
 GiantVerrix
 CherbonesBloodCrystals
@@ -113,14 +115,14 @@ UnstableDataCore
 AnyNaCoffee
 PowerGenerators
 NjangariSaddles
-Fertiliser
-Electrosmelters
+# Fertiliser
+# Electrosmelters
 GomanYauponCoffee
 MethanolMonohydrateCrystals
 Goslarite
 PersonalWeapons
 BasicNarcotics
-Pyrimidine
+# Pyrimidine
 GeologicalSamples
 LithiumHydroxide
 TauriChimes
@@ -129,18 +131,18 @@ Nanobreakers
 GerasianGueuzeBeer
 Benitoite
 KinagoInstruments
-EnergyDrinks
+# EnergyDrinks
 EncryptedCorrespondence
 ToxicWaste
 Samarium
 SurvivalEquipment
 Jadeite
 MagneticEmitterCoil
-IllicitConsignment
+# IllicitConsignment
 Bromellite
 FujinTea
 OrrerianViciousBrew
-UtopianFieldSupplies
+# UtopianFieldSupplies
 MokojingBeastFeast
 M_TissueSample_Soft
 UszaianTreeGrub
@@ -148,7 +150,7 @@ Lanthanum
 InsulatingMembrane
 M3_TissueSample_Membrane
 AganippeRush
-MethanolMonohydrate
+# MethanolMonohydrate
 AZCancriFormula42
 S_TissueSample_Surface
 AlacarakmoSkinArt
@@ -156,7 +158,7 @@ JotunMookah
 SyntheticMeat
 Lepidolite
 HIP41181Squid
-CrystalBustOfArissa
+# CrystalBustOfArissa
 ConsumerTechnology
 Tantalum
 LiquidOxygen
@@ -165,9 +167,9 @@ ChateauDeAegaeon
 LavignyFieldSupplies
 Thallium
 AislingMediaMaterials
-FloralGarlands
+# FloralGarlands
 WatersOfShintara
-GromWarTrophies
+# GromWarTrophies
 USSCargoTradeData
 AislingPromotionalMaterials
 DamnaCarapaces
@@ -188,21 +190,21 @@ M_TissueSample_Fluid
 AdvancedMedicines
 KamitraCigars
 USSCargoTechnicalBlueprints
-FestivePoultry
+# FestivePoultry
 ChemicalWaste
 RepublicanFieldSupplies
-LiquidHelium
+# LiquidHelium
 ReactiveArmour
 MineralOil
 SkimerComponents
 NonLethalWeapons
 AiRelics
 RapaBaoSnakeSkins
-OnionheadSamples
+# OnionheadSamples
 ConductiveFabrics
 EraninPearlWhisky
 PatreusGarisonSupplies
-CrisisGasGrenades
+# CrisisGasGrenades
 Landmines
 KaretiiCouture
 MomusBogSpaniel
@@ -212,9 +214,9 @@ CeremonialHeikeTea
 HolvaDuellingBlades
 TiegfriesSynthSilk
 USSCargoMilitaryPlans
-OrbofLight
+# OrbofLight
 Painite
-VoidWorms
+# VoidWorms
 SpacePioneerRelics
 Uraninite
 M_TissueSample_Nerves
@@ -226,10 +228,10 @@ AtmosphericExtractors
 StructuralRegulators
 SmallExplorationDataCash
 WuthieloKuFroth
-PrecisionBoreLasers
+# PrecisionBoreLasers
 TheHuttonMug
 BuckyBallBeerMats
-MarkedSlaves
+# MarkedSlaves
 JaquesQuinentianStill
 ZeesszeAntGlue
 USSCargoRebelTransmissions
@@ -241,36 +243,36 @@ Biowaste
 Praseodymium
 WulpaHyperboreSystems
 GilyaSignatureWeapons
-WaterTreatment
+# WaterTreatment
 ScientificResearch
 ResonatingSeparators
-MuTomImager
-RestrictedPackage
+# MuTomImager
+# RestrictedPackage
 Serendibite
-UnrefinedGas
+# UnrefinedGas
 UnknownArtifact2
-SpinningTops
+# SpinningTops
 AnduligaFireWorks
 Rhodplumsite
 HeatsinkInterlink
 BelalansRayLeather
-FederalAid
+# FederalAid
 TimeCapsule
-OnionheadDerivatives
-LiquidNitrogen
+# OnionheadDerivatives
+# LiquidNitrogen
 BlueMilk
-GrowthPromoters
+# GrowthPromoters
 ThermalCoolingUnits
-UtopianPublicity
-Wool
-Wood
+# UtopianPublicity
+# Wool
+# Wood
 Opal
-Mica
+# Mica
 MechucosHighTea
 Gold
 Fish
 Monazite
-OutOfDateGoods
+# OutOfDateGoods
 AislingMediaResources
 BakedGreebles
 Lithium
@@ -292,7 +294,7 @@ AquaponicSystems
 BurnhamBileDistillate
 VHerculisBodyRub
 HazardousEnvironmentSuits
-AquaStaticPens
+# AquaStaticPens
 VolkhabBeeDrones
 RadiationBaffle
 HarmaSilverSeaRum
@@ -301,21 +303,21 @@ ShansCharisOrchid
 Bauxite
 EmergencyPowerCells
 SyntheticReagents
-AllianceTradeAgreements
+# AllianceTradeAgreements
 OphiuchiExinoArtefacts
-Diopside
+# Diopside
 AnimalMeat
-AnimalFeed
+# AnimalFeed
 HeliostaticFurnaces
 MilitaryIntelligence
-CryoCompressors
+# CryoCompressors
 Taaffeite
 FossilRemnants
 ReinforcedMountingPlate
 Clothing
-MicroFabricators
+# MicroFabricators
 LiberalCampaignMaterials
-NanostructuredHematite
+# NanostructuredHematite
 S9_TissueSample_Shell
 ThargoidPod
 Duradrives
@@ -329,21 +331,21 @@ RepublicanGarisonSupplies
 WitchhaulKobeBeef
 EarthRelics
 Hostage
-OnionHeadE
-OnionHeadD
+# OnionHeadE
+# OnionHeadD
 OnionHeadC
-OnionHeadB
-OnionHeadA
+# OnionHeadB
+# OnionHeadA
 USSCargoRareArtwork
-MushroomSpores
+# MushroomSpores
 BorasetaniPathogenetics
 SiriusFranchisePackage
 HaidneBlackBrew
 AllianceLegaslativeContracts
-CounterCultureSupport
+# CounterCultureSupport
 EsusekuCaviar
 VidavantianLace
-ImperialPrisoner
+# ImperialPrisoner
 NonEuclidianExotanks
 UnknownSack
 EvacuationShelter
@@ -353,15 +355,15 @@ SurfaceStabilisers
 YasoKondiLeaf
 SothisCrystallineGold
 Explosives
-Ceramics
+# Ceramics
 CentauriMegaGin
 USSCargoPrototypeTech
 AlienEggs
-UndergroundSupport
+# UndergroundSupport
 GalacticTravelGuide
 IndiBourbon
 Semiconductors
-PrimedCellsBovine
+# PrimedCellsBovine
 Uranium
 Cryolite
 AntiqueJewellery
@@ -369,10 +371,10 @@ AntimatterContainmentUnit
 FoodCartridges
 NeofabricInsulation
 Polymers
-LiquidCarbonDioxide
+# LiquidCarbonDioxide
 AroucaConventualSweets
 Platinum
-JackOLantern
+# JackOLantern
 PowerConverter
 FederalTradeContracts
 AllianceLegaslativeRecords
@@ -383,9 +385,9 @@ PatreusFieldSupplies
 IonDistributor
 Titanium
 Hafnium178
-DisasterReliefKits
+# DisasterReliefKits
 DeuringasTruffles
-Anthracene
+# Anthracene
 VanayequiRhinoFur
 HIP10175BushMeat
 PreciousGems
@@ -393,8 +395,8 @@ AncientRelicTG
 Beryllium
 UzumokuLowGWings
 ProgenitorCells
-VacuumKrill
-PeaceBranches
+# VacuumKrill
+# PeaceBranches
 HIP118311Swarm
 BaltahSineVacuumKrill
 AerialEdenApple
@@ -407,19 +409,19 @@ P_ParticulateSample
 JaradharrePuzzlebox
 ComercialSamples
 MineralExtractors
-UtopianDissident
+# UtopianDissident
 NgunaModernAntiques
 TorvalCommercialContracts
-Advert3
-Advert2
+# Advert3
+# Advert2
 Advert1
 EshuUmbrellas
-USSCargoCorpse
-Tholin
+# USSCargoCorpse
+# Tholin
 KonggaAle
 PoliticalPrisoner
 CD75CatCoffee
-Spinel
+# Spinel
 Slaves
 Silver
 DeltaPhoenicisPalms
@@ -431,19 +433,19 @@ DisoMaCorn
 BankiAmphibiousLeather
 S6_TissueSample_Coenosarc
 HydrogenFuel
-Mushrooms
+# Mushrooms
 KachiriginLeaches
-WardianGrowPods
-UnmarkedWeapons
+# WardianGrowPods
+# UnmarkedWeapons
 Osmium
 DiagnosticSensor
 Water
 CeramicComposites
-Sugar
+# Sugar
 Scrap
-Masks
+# Masks
 Grain
-Glass
+# Glass
 Algae
 CoquimSpongiformVictuals
 Alexandrite
@@ -458,15 +460,15 @@ PowerTransferConduits
 Wolf1301Fesh
 ProhibitedResearchMaterials
 AncientCasket
-HighPerformanceFuels
+# HighPerformanceFuels
 PowerGridAssembly
 Liquor
 UnocuppiedEscapePod
 ToxandjiVirocide
 MukusubiiChitinOs
 M3_TissueSample_Spores
-Cosmetics
-LeisureEquipment
+# Cosmetics
+# LeisureEquipment
 EleuThermals
 UtgaroarMillenialEggs
 BootlegLiquor
@@ -474,7 +476,7 @@ PavonisEarGrubs
 LFTVoidExtractCoffee
 LeestianEvilJuice
 LTTHyperSweet
-NvidiaTitanBlack
+# NvidiaTitanBlack
 KamorinHistoricWeapons
 CetiAepyornisEgg
 MetaAlloys
@@ -485,8 +487,8 @@ Indium
 Indite
 TiolceWaste2PasteUnits
 SAP8CoreContainer
-Glycine
-CoreSecuritySuplies
+# Glycine
+# CoreSecuritySuplies
 Tritium
 ApaVietii
 Wine
@@ -497,9 +499,9 @@ AgronomicTreatment
 Tea
 UnknownRefinedMineral
 ThargoidTissueSampleType7
-ThargoidTissueSampleType11c
-ThargoidTissueSampleType11b
-ThargoidTissueSampleType11a
+# ThargoidTissueSampleType11c
+# ThargoidTissueSampleType11b
+# ThargoidTissueSampleType11a
 UnknownMineral
-BacteriostaticAgents
-InsectoidMeat
+# BacteriostaticAgents
+# InsectoidMeat
