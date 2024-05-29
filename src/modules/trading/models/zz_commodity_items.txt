@@ -31,7 +31,7 @@ Robotics
 TacticalData
 LargeExplorationDataCash
 # InsectoidEggs
-# AnimalEffigies
+AnimalEffigies
 # RestrictedIntel
 Drones
 EncriptedDataStorage
@@ -305,19 +305,19 @@ EmergencyPowerCells
 SyntheticReagents
 # AllianceTradeAgreements
 OphiuchiExinoArtefacts
-Diopside
+# Diopside
 AnimalMeat
-AnimalFeed
+# AnimalFeed
 HeliostaticFurnaces
 MilitaryIntelligence
-CryoCompressors
+# CryoCompressors
 Taaffeite
 FossilRemnants
 ReinforcedMountingPlate
 Clothing
-MicroFabricators
+# MicroFabricators
 LiberalCampaignMaterials
-NanostructuredHematite
+# NanostructuredHematite
 S9_TissueSample_Shell
 ThargoidPod
 Duradrives
@@ -331,21 +331,21 @@ RepublicanGarisonSupplies
 WitchhaulKobeBeef
 EarthRelics
 Hostage
-OnionHeadE
-OnionHeadD
+# OnionHeadE
+# OnionHeadD
 OnionHeadC
-OnionHeadB
-OnionHeadA
+# OnionHeadB
+# OnionHeadA
 USSCargoRareArtwork
-MushroomSpores
+# MushroomSpores
 BorasetaniPathogenetics
 SiriusFranchisePackage
 HaidneBlackBrew
 AllianceLegaslativeContracts
-CounterCultureSupport
+# CounterCultureSupport
 EsusekuCaviar
 VidavantianLace
-ImperialPrisoner
+# ImperialPrisoner
 NonEuclidianExotanks
 UnknownSack
 EvacuationShelter
@@ -355,15 +355,15 @@ SurfaceStabilisers
 YasoKondiLeaf
 SothisCrystallineGold
 Explosives
-Ceramics
+# Ceramics
 CentauriMegaGin
 USSCargoPrototypeTech
 AlienEggs
-UndergroundSupport
+# UndergroundSupport
 GalacticTravelGuide
 IndiBourbon
 Semiconductors
-PrimedCellsBovine
+# PrimedCellsBovine
 Uranium
 Cryolite
 AntiqueJewellery
@@ -371,10 +371,10 @@ AntimatterContainmentUnit
 FoodCartridges
 NeofabricInsulation
 Polymers
-LiquidCarbonDioxide
+# LiquidCarbonDioxide
 AroucaConventualSweets
 Platinum
-JackOLantern
+# JackOLantern
 PowerConverter
 FederalTradeContracts
 AllianceLegaslativeRecords
@@ -385,9 +385,9 @@ PatreusFieldSupplies
 IonDistributor
 Titanium
 Hafnium178
-DisasterReliefKits
+# DisasterReliefKits
 DeuringasTruffles
-Anthracene
+# Anthracene
 VanayequiRhinoFur
 HIP10175BushMeat
 PreciousGems
@@ -395,8 +395,8 @@ AncientRelicTG
 Beryllium
 UzumokuLowGWings
 ProgenitorCells
-VacuumKrill
-PeaceBranches
+# VacuumKrill
+# PeaceBranches
 HIP118311Swarm
 BaltahSineVacuumKrill
 AerialEdenApple
@@ -409,19 +409,19 @@ P_ParticulateSample
 JaradharrePuzzlebox
 ComercialSamples
 MineralExtractors
-UtopianDissident
+# UtopianDissident
 NgunaModernAntiques
 TorvalCommercialContracts
-Advert3
-Advert2
+# Advert3
+# Advert2
 Advert1
 EshuUmbrellas
-USSCargoCorpse
-Tholin
+# USSCargoCorpse
+# Tholin
 KonggaAle
 PoliticalPrisoner
 CD75CatCoffee
-Spinel
+# Spinel
 Slaves
 Silver
 DeltaPhoenicisPalms
@@ -433,19 +433,19 @@ DisoMaCorn
 BankiAmphibiousLeather
 S6_TissueSample_Coenosarc
 HydrogenFuel
-Mushrooms
+# Mushrooms
 KachiriginLeaches
-WardianGrowPods
-UnmarkedWeapons
+# WardianGrowPods
+# UnmarkedWeapons
 Osmium
 DiagnosticSensor
 Water
 CeramicComposites
-Sugar
+# Sugar
 Scrap
-Masks
+# Masks
 Grain
-Glass
+# Glass
 Algae
 CoquimSpongiformVictuals
 Alexandrite
@@ -460,15 +460,15 @@ PowerTransferConduits
 Wolf1301Fesh
 ProhibitedResearchMaterials
 AncientCasket
-HighPerformanceFuels
+# HighPerformanceFuels
 PowerGridAssembly
 Liquor
 UnocuppiedEscapePod
 ToxandjiVirocide
 MukusubiiChitinOs
 M3_TissueSample_Spores
-Cosmetics
-LeisureEquipment
+# Cosmetics
+# LeisureEquipment
 EleuThermals
 UtgaroarMillenialEggs
 BootlegLiquor
@@ -476,7 +476,7 @@ PavonisEarGrubs
 LFTVoidExtractCoffee
 LeestianEvilJuice
 LTTHyperSweet
-NvidiaTitanBlack
+# NvidiaTitanBlack
 KamorinHistoricWeapons
 CetiAepyornisEgg
 MetaAlloys
@@ -487,8 +487,8 @@ Indium
 Indite
 TiolceWaste2PasteUnits
 SAP8CoreContainer
-Glycine
-CoreSecuritySuplies
+# Glycine
+# CoreSecuritySuplies
 Tritium
 ApaVietii
 Wine
@@ -499,9 +499,9 @@ AgronomicTreatment
 Tea
 UnknownRefinedMineral
 ThargoidTissueSampleType7
-ThargoidTissueSampleType11c
-ThargoidTissueSampleType11b
-ThargoidTissueSampleType11a
+# ThargoidTissueSampleType11c
+# ThargoidTissueSampleType11b
+# ThargoidTissueSampleType11a
 UnknownMineral
-BacteriostaticAgents
-InsectoidMeat
+# BacteriostaticAgents
+# InsectoidMeat

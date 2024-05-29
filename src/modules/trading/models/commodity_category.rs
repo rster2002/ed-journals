@@ -203,7 +203,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::AncientKey
             | Commodity::AnomalyParticles
             | Commodity::AntimatterContainmentUnit
-            | Commodity::AniqueJewellery
+            | Commodity::AntiqueJewellery
             | Commodity::Antiquities
             | Commodity::AssaultPlans
             | Commodity::BlackBox
@@ -308,7 +308,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::HESuits
             | Commodity::HardwareDiagnosticSensor
             | Commodity::LandEnrichmentSystems
-            | Commodity::MedialDiagnosticEquipment
+            | Commodity::MedicalDiagnosticEquipment
             | Commodity::MicroControllers
             | Commodity::MuonImager
             | Commodity::Nanobreakers
@@ -479,12 +479,22 @@ impl From<Commodity> for CommodityCategory {
 
             Commodity::SiriusIndustrialEquipment
             | Commodity::SiriusCommercialContracts
+            | Commodity::SiriusFranchisePackage
             | Commodity::AislingMediaMaterials
             | Commodity::AislingPromotionalMaterials
             | Commodity::AislingMediaResources
+            | Commodity::TorvalCommercialContracts
+            | Commodity::TorvalDeeds
+            | Commodity::PatreusFieldSupplies
             | Commodity::RepublicanFieldSupplies
+            | Commodity::RepublicanGarisonSupplies
+            | Commodity::LiberalCampaignMaterials
+            | Commodity::AllianceLegaslativeContracts
+            | Commodity::AllianceLegaslativeRecords
+            | Commodity::FederalTradeContracts
             | Commodity::PatreusGarrisonSupplies
             | Commodity::LavignyGarrisonSupplies
+            | Commodity::LavignyCorruptionDossiers
             | Commodity::LavignyFieldSupplies => CommodityCategory::Powerplay,
 
             Commodity::Limpet => CommodityCategory::None,

@@ -157,7 +157,7 @@ pub enum Commodity {
     AncientKey,
     AnomalyParticles,
     AntimatterContainmentUnit,
-    AniqueJewellery,
+    AntiqueJewellery,
     Antiquities,
     AssaultPlans,
     BlackBox,
@@ -265,7 +265,7 @@ pub enum Commodity {
     HESuits,
     HardwareDiagnosticSensor,
     LandEnrichmentSystems,
-    MedialDiagnosticEquipment,
+    MedicalDiagnosticEquipment,
     MicroControllers,
     MuonImager,
     Nanobreakers,
@@ -436,13 +436,23 @@ pub enum Commodity {
 
     // Powerplay
     LavignyGarrisonSupplies,
-    SiriusIndustrialEquipment,
     LavignyFieldSupplies,
+    LavignyCorruptionDossiers,
+    SiriusIndustrialEquipment,
+    SiriusCommercialContracts,
+    SiriusFranchisePackage,
     AislingMediaMaterials,
     AislingPromotionalMaterials,
     AislingMediaResources,
-    SiriusCommercialContracts,
+    TorvalCommercialContracts,
+    TorvalDeeds,
+    PatreusFieldSupplies,
     RepublicanFieldSupplies,
+    RepublicanGarisonSupplies,
+    LiberalCampaignMaterials,
+    AllianceLegaslativeContracts,
+    AllianceLegaslativeRecords,
+    FederalTradeContracts,
     PatreusGarrisonSupplies,
 
     // None
@@ -511,7 +521,7 @@ impl Commodity {
             "buildingfabricators" => Commodity::BuildingFabricators,
             "cropharvesters" => Commodity::CropHarvesters,
             "emergencypowercells" => Commodity::EmergencyPowerCells,
-            "energygridassembly" => Commodity::EnergyGridAssembly,
+            "powergridassembly" => Commodity::EnergyGridAssembly,
             "exhaustmanifold" => Commodity::ExhaustManifold,
             "geologicalequipment" => Commodity::GeologicalEquipment,
             "heatsinkinterlink" => Commodity::HeatsinkInterlink,
@@ -519,7 +529,7 @@ impl Commodity {
             "iondistributor" => Commodity::IonDistributor,
             "magneticemittercoil" => Commodity::MagneticEmitterCoil,
             "marinesupplies" => Commodity::MarineEquipment,
-            "microbialfurnaces" => Commodity::MicrobialFurnaces,
+            "heliostaticfurnaces" => Commodity::MicrobialFurnaces,
             "mineralextractors" => Commodity::MineralExtractors,
             "modularterminals" => Commodity::ModularTerminals,
             "powerconverter" => Commodity::PowerConverter,
@@ -591,7 +601,7 @@ impl Commodity {
             "ancientkey" => Commodity::AncientKey,
             "p_particulatesample" => Commodity::AnomalyParticles,
             "antimattercontainmentunit" => Commodity::AntimatterContainmentUnit,
-            "aniquejewellery" => Commodity::AniqueJewellery,
+            "antiquejewellery" => Commodity::AntiqueJewellery,
             "antiquities" => Commodity::Antiquities,
             "assaultplans" => Commodity::AssaultPlans,
             "blackbox" => Commodity::BlackBox,
@@ -617,7 +627,7 @@ impl Commodity {
             "ancienttotem" => Commodity::GuardianTotem,
             "ancienturn" => Commodity::GuardianUrn,
             "hostage" => Commodity::Hostages,
-            "impurespiremineral" => Commodity::ImpureSpireMineral,
+            "unknownmineral" => Commodity::ImpureSpireMineral,
             "largeexplorationdatacash" => Commodity::LargeSurveyDataCache,
             "militaryintelligence" => Commodity::MilitaryIntelligence,
             "militaryplans" => Commodity::MilitaryPlans,
@@ -638,17 +648,17 @@ impl Commodity {
             "s6_tissuesample_coenosarc" => Commodity::PodShellTissue,
             "s_tissuesample_core" => Commodity::PodSurfaceTissue,
             "s9_tissuesample_shell" => Commodity::PodTissue,
-            "politicalprisoners" => Commodity::PoliticalPrisoners,
+            "politicalprisoner" => Commodity::PoliticalPrisoners,
             "preciousgems" => Commodity::PreciousGems,
             "prohibitedresearchmaterials" => Commodity::ProhibitedResearchMaterials,
-            "protectivemembranescrap" => Commodity::ProtectiveMembraneScrap,
+            "unknownsack" => Commodity::ProtectiveMembraneScrap,
             "prototypetech" => Commodity::PrototypeTech,
             "rareartwork" => Commodity::RareArtwork,
             "rebeltransmissions" => Commodity::RebelTransmissions,
             "sap8corecontainer" => Commodity::SAP8CoreContainer,
             "scientificresearch" => Commodity::ScientificResearch,
             "scientificsamples" => Commodity::ScientificSamples,
-            "semirefinesspiremineral" => Commodity::SemiRefinesSpireMineral,
+            "unknownrefinedmineral" => Commodity::SemiRefinesSpireMineral,
             "smallexplorationdatacash" => Commodity::SmallSurveyDataCache,
             "spacepioneerrelics" => Commodity::SpacePioneerRelics,
             "tacticaldata" => Commodity::TacticalData,
@@ -666,7 +676,7 @@ impl Commodity {
             "unknownartifact2" => Commodity::ThargoidProbe,
             "unknownresin" => Commodity::ThargoidResin,
             "thargoidscouttissuesample" => Commodity::ThargoidScoutTissueSample,
-            "thargoidscythetissuesample" => Commodity::ThargoidScytheTissueSample,
+            "thargoidtissuesampletype7" => Commodity::ThargoidScytheTissueSample,
             "thargoidgeneratortissuesample" => Commodity::ThargoidGeneratorTissueSample,
             "unknownartifact" => Commodity::ThargoidSensor,
             "unknowntechnologysamples" => Commodity::ThargoidTechnologySamples,
@@ -680,8 +690,8 @@ impl Commodity {
             "thargoidtissuesampletype10c" => Commodity::TitanMawPartialTissueSample,
             "tradedata" => Commodity::TradeData,
             "trinketsoffortune" => Commodity::TrinketsOfHiddenFortune,
-            "unclassifiedrelic" => Commodity::UnclassifiedRelic,
-            "unoccupiedescapepod" => Commodity::UnoccupiedEscapePod,
+            "ancientrelictg" => Commodity::UnclassifiedRelic,
+            "unocuppiedescapepod" => Commodity::UnoccupiedEscapePod,
             "unstabledatacore" => Commodity::UnstableDataCore,
             "wreckagecomponents" => Commodity::WreckageComponents,
             "imperialslaves" => Commodity::ImperialSlaves,
@@ -695,9 +705,9 @@ impl Commodity {
             "hazardousenvironmentsuits" => Commodity::HESuits,
             "diagnosticsensor" => Commodity::HardwareDiagnosticSensor,
             "terrainenrichmentsystems" => Commodity::LandEnrichmentSystems,
-            "medialdiagnosticequipment" => Commodity::MedialDiagnosticEquipment,
+            "medicaldiagnosticequipment" => Commodity::MedicalDiagnosticEquipment,
             "microcontrollers" => Commodity::MicroControllers,
-            "muonimager" => Commodity::MuonImager,
+            "mutomimager" => Commodity::MuonImager,
             "nanobreakers" => Commodity::Nanobreakers,
             "resonatingseparators" => Commodity::ResonatingSeparators,
             "robotics" => Commodity::Robotics,
@@ -721,15 +731,15 @@ impl Commodity {
             "kinagoinstruments" => Commodity::KinagoViolins,
             "apavietii" => Commodity::ApaVietii,
             "geawendancedust" => Commodity::GeawenDanceDust,
-            "vanayequiceratomorphafur" => Commodity::VanayequiCeratomorphaFur,
+            "vanayequirhinofur" => Commodity::VanayequiCeratomorphaFur,
             "karetiicouture" => Commodity::KaretiiCouture,
             "mukusubiichitinos" => Commodity::MukusubiiChitinos,
-            "ultracompactprocessorprototypes" => Commodity::UltraCompactProcessorPrototypes,
+            "advert1" => Commodity::UltraCompactProcessorPrototypes,
             "eleuthermals" => Commodity::EleuThermals,
             "kamorinhistoricweapons" => Commodity::KamorinHistoricWeapons,
             "ceremonialheiketea" => Commodity::CeremonialHeikeTea,
             "vidavantianlace" => Commodity::VidavantianLace,
-            "kachiriginfilterleeches" => Commodity::KachiriginFilterLeeches,
+            "kachiriginleaches" => Commodity::KachiriginFilterLeeches,
             "lyraeweed" => Commodity::LyraeWeed,
             "galactictravelguide" => Commodity::GalacticTravelGuide,
             "harmasilversearum" => Commodity::HarmaSilverSeaRum,
@@ -737,7 +747,7 @@ impl Commodity {
             "alyabodilysoap" => Commodity::AlyaBodySoap,
             "helvetitjpearls" => Commodity::HelvetitjPearls,
             "ochoengchillies" => Commodity::OchoengChillies,
-            "onionheadbetastrain" => Commodity::OnionheadBetaStrain,
+            "onionheadb" => Commodity::OnionheadBetaStrain,
             "kamitracigars" => Commodity::KamitraCigars,
             "njangarisaddles" => Commodity::NjangariSaddles,
             "hiporganophosphates" => Commodity::HipOrganophosphates,
@@ -752,9 +762,9 @@ impl Commodity {
             "esusekucaviar" => Commodity::EsusekuCaviar,
             "orrerianviciousbrew" => Commodity::OrrerianViciousBrew,
             "vherculisbodyrub" => Commodity::VHerculisBodyRub,
-            "voidextractcoffee" => Commodity::VoidExtractCoffee,
+            "lftvoidextractcoffee" => Commodity::VoidExtractCoffee,
             "uszaiantreegrub" => Commodity::UszaianTreeGrub,
-            "haidenblackbrew" => Commodity::HaidenBlackBrew,
+            "haidneblackbrew" => Commodity::HaidenBlackBrew,
             "motronaexperiencejelly" => Commodity::MotronaExperienceJelly,
             "jaradharrepuzzlebox" => Commodity::JaradharrePuzzleBox,
             "personalgifts" => Commodity::PersonalGifts,
@@ -768,19 +778,19 @@ impl Commodity {
             "bluemilk" => Commodity::AzureMilk,
             "leestianeviljuice" => Commodity::LeestianEvilJuice,
             "coquimspongiformvictuals" => Commodity::CoquimSpongiformVictuals,
-            "leatheryeggs" => Commodity::LeatheryEggs,
+            "alieneggs" => Commodity::LeatheryEggs,
             "shanscharisorchid" => Commodity::ShansCharisOrchid,
             "konggaale" => Commodity::KonggaAle,
             "vegaslimweed" => Commodity::VegaSlimweed,
             "tiolcewaste2pasteunits" => Commodity::TiolceWaste2PasteUnits,
-            "ophiuchexinoartefacts" => Commodity::OphiuchExinoArtefacts,
+            "ophiuchiexinoartefacts" => Commodity::OphiuchExinoArtefacts,
             "altairianskin" => Commodity::AltairianSkin,
             "aganipperush" => Commodity::AganippeRush,
-            "cd75kittenbrandcoffee" => Commodity::CD75KittenBrandCoffee,
+            "cd75catcoffee" => Commodity::CD75KittenBrandCoffee,
             "havasupaidreamcatcher" => Commodity::HavasupaiDreamCatcher,
             "eraninpearlwhisky" => Commodity::EraninPearlWhisky,
             "pavoniseargrubs" => Commodity::PavonisEarGrubs,
-            "onionheadalphastrain" => Commodity::OnionheadAlphaStrain,
+            "onionheada" => Commodity::OnionheadAlphaStrain,
             "indibourbon" => Commodity::IndiBourbon,
             "bakedgreebles" => Commodity::BakedGreebles,
             "karsukilocusts" => Commodity::KarsukiLocusts,
@@ -789,7 +799,7 @@ impl Commodity {
             "burnhambiledistillate" => Commodity::BurnhamBileDistillate,
             "thehuttonmug" => Commodity::TheHuttonMug,
             "centaurimegagin" => Commodity::CentauriMegaGin,
-            "utgaroarmillennialeggs" => Commodity::UtgaroarMillennialEggs,
+            "utgaroarmillenialeggs" => Commodity::UtgaroarMillennialEggs,
             "soontillrelics" => Commodity::SoontillRelics,
             "zeesszeantglue" => Commodity::ZeesszeAntGrubGlue,
             "watersofshintara" => Commodity::TheWatersOfShintara,
@@ -810,10 +820,10 @@ impl Commodity {
             "terramaterbloodbores" => Commodity::TerraMaterBloodBores,
             "wuthielokufroth" => Commodity::WuthieloKuFroth,
             "honestypills" => Commodity::HonestyPills,
-            "cromsilverfesh" => Commodity::CromSilverFesh,
+            "animaleffigies" => Commodity::CromSilverFesh,
             "borasetanipathogenetics" => Commodity::BorasetaniPathogenetics,
             "cetirabbits" => Commodity::CetiRabbits,
-            "aepyornisegg" => Commodity::AepyornisEgg,
+            "cetiaepyornisegg" => Commodity::AepyornisEgg,
             "uzumokulowgwings" => Commodity::UzumokuLowGWings,
             "cherbonesbloodcrystals" => Commodity::CherbonesBloodCrystals,
             "toxandjivirocide" => Commodity::ToxandjiVirocide,
@@ -824,7 +834,7 @@ impl Commodity {
             "alacarakmoskinart" => Commodity::AlacarakmoSkinArt,
             "platinumaloy" => Commodity::PlatinumAlloy,
             "mokojingbeastfeast" => Commodity::MokojingBeastFeast,
-            "edenapplesofaerial" => Commodity::EdenApplesOfAerial,
+            "aerialedenapple" => Commodity::EdenApplesOfAerial,
             "chameleoncloth" => Commodity::ChameleonCloth,
             "taurichimes" => Commodity::TauriChimes,
             "rusanioldsmokey" => Commodity::RusaniOldSmokey,
@@ -843,7 +853,7 @@ impl Commodity {
             "duradrives" => Commodity::Duradrives,
             "holvaduellingblades" => Commodity::HolvaDuellingBlades,
             "rapabaosnakeskins" => Commodity::RapaBaoSnakeSkins,
-            "wolffesh" => Commodity::WolfFesh,
+            "wolf1301fesh" => Commodity::WolfFesh,
             "eshuumbrellas" => Commodity::EshuUmbrellas,
             "neritusberries" => Commodity::NeritusBerries,
             "jotunmookah" => Commodity::JotunMookah,
@@ -863,12 +873,22 @@ impl Commodity {
 
             "lavignygarisonsupplies" => Commodity::LavignyGarrisonSupplies,
             "lavignyfieldsupplies" => Commodity::LavignyFieldSupplies,
+            "lavignycorruptiondossiers" => Commodity::LavignyCorruptionDossiers,
             "siriusindustrialequipment" => Commodity::SiriusIndustrialEquipment,
             "siriuscommercialcontracts" => Commodity::SiriusIndustrialEquipment,
+            "siriusfranchisepackage" => Commodity::SiriusFranchisePackage,
             "aislingmediamaterials" => Commodity::AislingMediaMaterials,
             "aislingpromotionalmaterials" => Commodity::AislingPromotionalMaterials,
             "aislingmediaresources" => Commodity::AislingMediaResources,
+            "torvalcommercialcontracts" => Commodity::TorvalCommercialContracts,
+            "torvaldeeds" => Commodity::TorvalDeeds,
+            "patreusfieldsupplies" => Commodity::PatreusFieldSupplies,
             "republicanfieldsupplies" => Commodity::RepublicanFieldSupplies,
+            "republicangarisonsupplies" => Commodity::RepublicanGarisonSupplies,
+            "liberalcampaignmaterials" => Commodity::LiberalCampaignMaterials,
+            "alliancelegaslativecontracts" => Commodity::AllianceLegaslativeContracts,
+            "alliancelegaslativerecords" => Commodity::AllianceLegaslativeRecords,
+            "federaltradecontracts" => Commodity::FederalTradeContracts,
             "patreusgarisonsupplies" => Commodity::PatreusGarrisonSupplies,
 
             #[cfg(not(feature = "strict"))]
@@ -1057,7 +1077,7 @@ impl Display for Commodity {
                 Commodity::AncientKey => "Ancient Key",
                 Commodity::AnomalyParticles => "Anomaly Particles",
                 Commodity::AntimatterContainmentUnit => "Antimatter Containment Unit",
-                Commodity::AniqueJewellery => "Anique Jewellery",
+                Commodity::AntiqueJewellery => "Antique Jewellery",
                 Commodity::Antiquities => "Antiquities",
                 Commodity::AssaultPlans => "Assault Plans",
                 Commodity::BlackBox => "Black Box",
@@ -1165,7 +1185,7 @@ impl Display for Commodity {
                 Commodity::HESuits => "H.E. Suits",
                 Commodity::HardwareDiagnosticSensor => "Hardware Diagnostic Sensor",
                 Commodity::LandEnrichmentSystems => "Land Enrichment Systems",
-                Commodity::MedialDiagnosticEquipment => "Medial Diagnostic Equipment",
+                Commodity::MedicalDiagnosticEquipment => "Medical Diagnostic Equipment",
                 Commodity::MicroControllers => "Micro Controllers",
                 Commodity::MuonImager => "Muon Imager",
                 Commodity::Nanobreakers => "Nanobreakers",
@@ -1342,12 +1362,22 @@ impl Display for Commodity {
                 // Powerplay
                 Commodity::LavignyGarrisonSupplies => "Lavigny Garrison Supplies",
                 Commodity::LavignyFieldSupplies => "Lavigny Field Supplies",
+                Commodity::LavignyCorruptionDossiers => "Lavigny Corruption Dossiers",
                 Commodity::SiriusIndustrialEquipment => "Sirius Industrial Equipment",
                 Commodity::SiriusCommercialContracts => "Sirius Commercial Contracts",
+                Commodity::SiriusFranchisePackage => "Sirius Franchise Package",
                 Commodity::AislingMediaMaterials => "Aisling Media Materials",
                 Commodity::AislingPromotionalMaterials => "Aisling Promotional Materials",
                 Commodity::AislingMediaResources => "Aisling Media Resources",
+                Commodity::TorvalCommercialContracts => "Torval Commercial Contracts",
+                Commodity::TorvalDeeds => "Torval Deeds",
+                Commodity::PatreusFieldSupplies => "Patreus Field Supplies",
                 Commodity::RepublicanFieldSupplies => "Republican Field Supplies",
+                Commodity::RepublicanGarisonSupplies => "Republican Garison Supplies",
+                Commodity::LiberalCampaignMaterials => "Liberal Campaign Materials",
+                Commodity::AllianceLegaslativeContracts => "Alliance Legaslative Contracts",
+                Commodity::AllianceLegaslativeRecords => "Alliance Legaslative Records",
+                Commodity::FederalTradeContracts => "Federal Trade Contracts",
                 Commodity::PatreusGarrisonSupplies => "Patreus Garrison Supplies",
 
                 #[cfg(not(feature = "strict"))]
@@ -1366,6 +1396,38 @@ mod tests {
     #[test]
     fn all_commodity_lines_are_parsed_correctly() {
         let content = include_str!("zz_commodity_items.txt");
+        let lines = content.lines();
+
+        for line in lines {
+            if line.starts_with('#') {
+                continue;
+            }
+
+            let result = Commodity::from_str(line);
+
+            assert!(dbg!(result).is_ok());
+        }
+    }
+
+    #[test]
+    fn all_commodity_lines_are_parsed_correctly_eddn() {
+        let content = include_str!("zz_commodity_items_eddn.txt");
+        let lines = content.lines();
+
+        for line in lines {
+            if line.starts_with('#') {
+                continue;
+            }
+
+            let result = Commodity::from_str(line);
+
+            assert!(dbg!(result).is_ok());
+        }
+    }
+
+    #[test]
+    fn all_rare_commodity_lines_are_parsed_correctly_eddn() {
+        let content = include_str!("zz_commodity_rare_items_eddn.txt");
         let lines = content.lines();
 
         for line in lines {
