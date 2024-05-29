@@ -9,7 +9,7 @@ pub enum FactionHappiness {
     Happy,
 
     #[serde(rename = "$Faction_HappinessBand3;")]
-    Content,
+    Discontent,
 
     #[serde(rename = "$Faction_HappinessBand4;")]
     Unhappy,

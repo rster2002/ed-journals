@@ -16,6 +16,9 @@ pub enum SystemSecurity {
     #[serde(rename = "$GAlAXY_MAP_INFO_state_anarchy;")]
     Anarchy,
 
+    #[serde(rename = "$GALAXY_MAP_INFO_state_lawless;")]
+    Lawless,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -31,6 +34,7 @@ impl Display for SystemSecurity {
                 SystemSecurity::Medium => "Medium",
                 SystemSecurity::Low => "Low",
                 SystemSecurity::Anarchy => "Anarchy",
+                SystemSecurity::Lawless => "Lawless",
 
                 #[cfg(not(feature = "strict"))]
                 SystemSecurity::Unknown(unknown) =>
