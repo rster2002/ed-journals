@@ -201,6 +201,7 @@ mod tests {
     use serde_json::Value;
 
     use crate::modules::ship::ShipModule;
+    use crate::ship::{ModuleClass, ShipInternalModule};
 
     #[test]
     fn modules_are_parsed_correctly() {
@@ -221,5 +222,69 @@ mod tests {
         }
 
         assert!(count > 1000);
+    }
+
+    #[test]
+    fn all_eddn_test_cases_are_parsed_correctly() {
+        let content = include_str!("zz_ship_modules.txt");
+        let mut lines = content.lines();
+
+        for line in lines  {
+            if line.starts_with('#') {
+                continue;
+            }
+
+            let mut parts = line.split(',');
+            parts.next().unwrap();
+
+            let input = parts.next().unwrap();
+            parts.next().unwrap();
+            parts.next().unwrap();
+            parts.next().unwrap();
+            parts.next().unwrap();
+            parts.next().unwrap();
+
+            let size = parts.next()
+                .unwrap()
+                .parse::<u8>()
+                .unwrap();
+
+            let class = parts.next()
+                .unwrap()
+                .parse::<ModuleClass>()
+                .unwrap();
+
+            let parsed = serde_json::from_value::<ShipModule>(Value::String(input.to_string()));
+
+            dbg!(&input);
+            dbg!(&parsed);
+            assert!(parsed.is_ok());
+
+            match parsed.unwrap() {
+                // ShipModule::CargoBayDoor => {}
+                // ShipModule::DataLinkScanner => {}
+                // ShipModule::CodexScanner => {}
+                // ShipModule::DiscoverScanner => {}
+                ShipModule::Internal(internal) => {
+                    dbg!(&internal);
+
+                    assert_eq!(internal.size, size);
+                    assert_eq!(internal.class, class);
+                }
+                ShipModule::Hardpoint(_) => {}
+                _ => {},
+                // ShipModule::Cockpit(_) => {}
+                // ShipModule::PaintJob(_) => {}
+                // ShipModule::Decal(_) => {}
+                // ShipModule::VoicePack(_) => {}
+                // ShipModule::Nameplate(_) => {}
+                // ShipModule::EngineColor(_) => {}
+                // ShipModule::WeaponColor(_) => {}
+                // ShipModule::ShipKitModule(_) => {}
+                // ShipModule::Bobble(_) => {}
+                // ShipModule::StringLights(_) => {}
+                // ShipModule::Unknown(_) => {}
+            }
+        }
     }
 }
