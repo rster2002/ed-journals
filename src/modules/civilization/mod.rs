@@ -13,6 +13,8 @@ pub use models::system_security::SystemSecurity;
 pub use models::thargoid_war::ThargoidWar;
 pub use models::thargoid_war::ThargoidWarState;
 pub use models::crime::Crime;
+pub use models::engineer::Engineer;
+pub use models::engineer::EngineerError;
 
 mod models;
 

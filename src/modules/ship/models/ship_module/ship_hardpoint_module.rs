@@ -423,7 +423,7 @@ mod tests {
                     module: HardpointModule::BeamLaser,
                     mounting: HardpointMounting::Gimballed,
                     size: HardpointSize::Medium,
-                    class: ModuleClass::E,
+                    class: ModuleClass::D,
                 },
             ),
             (
@@ -468,9 +468,7 @@ mod tests {
                     module: HardpointModule::GuardianGaussCannon,
                     mounting: HardpointMounting::Fixed,
                     size: HardpointSize::Medium,
-
-                    // TODO this should be B
-                    class: ModuleClass::E,
+                    class: ModuleClass::B,
                 },
             ),
             (

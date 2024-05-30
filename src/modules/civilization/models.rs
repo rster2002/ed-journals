@@ -9,3 +9,4 @@ pub mod superpower;
 pub mod system_security;
 pub mod thargoid_war;
 pub mod crime;
+pub mod engineer;
