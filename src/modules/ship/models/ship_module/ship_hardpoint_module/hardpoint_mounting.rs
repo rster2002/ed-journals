@@ -9,10 +9,10 @@ pub enum HardpointMounting {
     #[serde(rename = "Fixed", alias = "fixed")]
     Fixed,
 
-    #[serde(rename = "Gimbal", alias = "gimbal")]
+    #[serde(rename = "Gimbal", alias = "gimbal", alias = "Gimballed")]
     Gimballed,
 
-    #[serde(rename = "Turret", alias = "turret")]
+    #[serde(rename = "Turret", alias = "turret", alias = "Turreted")]
     Turreted,
 }
 

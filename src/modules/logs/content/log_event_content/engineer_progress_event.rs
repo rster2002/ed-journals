@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::civilization::{Engineer, EngineerError};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase", untagged)]
@@ -20,7 +21,7 @@ pub struct EngineerProgressStartupEntry {
     pub engineer: Option<String>,
 
     #[serde(rename = "EngineerID")]
-    pub engineer_id: Option<u32>,
+    pub engineer_id: Option<Engineer>,
 
     // TODO somehow this is optional even when the [rank] field is present? Why Frontier?!
     pub progress: Option<EngineerProgressStartupProgress>,
@@ -41,7 +42,7 @@ pub struct EngineerProgressUpdate {
     pub engineer: String,
 
     #[serde(rename = "EngineerID")]
-    pub engineer_id: u32,
+    pub engineer_id: Engineer,
 
     // TODO somehow this is optional even when the [rank] field is present? Why Frontier?!
     pub progress: Option<EngineerProgressStartupProgress>,

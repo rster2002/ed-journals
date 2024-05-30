@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::civilization::Engineer;
 
 use crate::modules::materials::Material;
 use crate::modules::ship::{Blueprint, BlueprintModifier, ShipModule, ShipSlot};
@@ -12,7 +13,7 @@ pub struct EngineerCraftEvent {
     pub engineer: Option<String>,
 
     #[serde(rename = "EngineerID")]
-    pub engineer_id: u64,
+    pub engineer_id: Engineer,
 
     #[serde(rename = "BlueprintID")]
     pub blueprint_id: u64,

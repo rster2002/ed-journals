@@ -4,10 +4,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Superpower {
-    Independent,
-    Federation,
-    Empire,
     Alliance,
+    Empire,
+    Federation,
+    Guardian,
+    Independent,
+    PilotsFederation,
+    PlayerPilots,
+    Thargoid,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
@@ -20,10 +24,14 @@ impl Display for Superpower {
             f,
             "{}",
             match self {
-                Superpower::Independent => "Independent",
-                Superpower::Federation => "Federation",
-                Superpower::Empire => "Empire",
                 Superpower::Alliance => "Alliance",
+                Superpower::Empire => "Empire",
+                Superpower::Federation => "Federation",
+                Superpower::Guardian => "Guardian",
+                Superpower::Independent => "Independent",
+                Superpower::PilotsFederation => "Pilots Federation",
+                Superpower::PlayerPilots => "Player Pilots",
+                Superpower::Thargoid => "Thargoid",
 
                 #[cfg(not(feature = "strict"))]
                 Superpower::Unknown(unknown) =>

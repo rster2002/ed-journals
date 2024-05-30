@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::modules::ship::{ArmorModule, InternalType};
+use crate::ship::ModuleClass;
 
 /// The kind of internal module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -159,6 +160,15 @@ pub enum InternalModule {
     #[serde(rename = "guardianpowerdistributor")]
     GuardianHybridPowerDistributor,
 
+    #[serde(rename = "stellarbodydiscoveryscanner_standard")]
+    BasicDiscoveryScanner,
+
+    #[serde(rename = "stellarbodydiscoveryscanner_intermediate")]
+    IntermediateDiscoveryScanner,
+
+    #[serde(rename = "stellarbodydiscoveryscanner_advanced")]
+    AdvancedDiscoveryScanner,
+
     #[serde(untagged)]
     Armor(ArmorModule),
 }
@@ -211,6 +221,23 @@ impl InternalModule {
                 | InternalModule::GuardianHullReinforcement
                 | InternalModule::GuardianShieldReinforcement
         )
+    }
+
+    pub fn special_grades(&self, size: u8, grade: Option<&ModuleClass>) -> Option<ModuleClass> {
+        Some(match (self, size, grade) {
+            (InternalModule::IntermediateDiscoveryScanner, _, _) => ModuleClass::D,
+            (InternalModule::AdvancedDiscoveryScanner, _, _) => ModuleClass::C,
+            (InternalModule::PlanetaryVehicleHangar, _, Some(ModuleClass::E)) => ModuleClass::H,
+            (InternalModule::PlanetaryVehicleHangar, _, Some(ModuleClass::D)) => ModuleClass::G,
+            (InternalModule::PlanetApproachSuite, _, _) => ModuleClass::I,
+            (InternalModule::AntiCorrosionCargoRack, _, Some(ModuleClass::D)) => ModuleClass::F,
+            (InternalModule::FighterHangar, _, _) => ModuleClass::D,
+            (InternalModule::GuardianFSDBooster, _, _) => ModuleClass::H,
+            (InternalModule::GuardianHybridPowerDistributor, _, _) => ModuleClass::A,
+            (InternalModule::GuardianHybridPowerPlant, _, _) => ModuleClass::A,
+            (InternalModule::ExperimentalWeaponStabilizer, _, _) => ModuleClass::F,
+            (_, _, _) => return None,
+        })
     }
 }
 
@@ -276,6 +303,9 @@ impl Display for InternalModule {
                 InternalModule::UniversalMultiLimpetController =>
                     "Universal Multi Limpet Controller",
                 InternalModule::EnhancedPerformanceThrusters => "Enhanced Performance Thrusters",
+                InternalModule::BasicDiscoveryScanner => "Basic Discovery Scanner",
+                InternalModule::IntermediateDiscoveryScanner => "Intermediate Discovery Scanner",
+                InternalModule::AdvancedDiscoveryScanner => "Advanced Discovery Scanner",
             }
         )
     }
