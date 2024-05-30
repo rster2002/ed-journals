@@ -137,6 +137,10 @@ mod tests {
                     grade: ArmorGrade::LightweightAlloy,
                 },
             ),
+            ("SideWinder_Armour_Mirrored", ArmorModule {
+                ship: ShipType::SideWinder,
+                grade: ArmorGrade::MirroredSurfaceComposite,
+            })
         ];
 
         for (case, expected) in test_cases {

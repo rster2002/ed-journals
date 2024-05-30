@@ -1,110 +1,110 @@
 # From EDDN
 # id,symbol,category,name,mount,guidance,ship,class,rating,entitlement
-128049250,SideWinder_Armour_Grade1,standard,Lightweight Alloy,,,Sidewinder,1,I,
-128049251,SideWinder_Armour_Grade2,standard,Reinforced Alloy,,,Sidewinder,1,I,
-128049252,SideWinder_Armour_Grade3,standard,Military Grade Composite,,,Sidewinder,1,I,
-128049253,SideWinder_Armour_Mirrored,standard,Mirrored Surface Composite,,,Sidewinder,1,I,
-128049254,SideWinder_Armour_Reactive,standard,Reactive Surface Composite,,,Sidewinder,1,I,
-128049256,Eagle_Armour_Grade1,standard,Lightweight Alloy,,,Eagle,1,I,
-128049257,Eagle_Armour_Grade2,standard,Reinforced Alloy,,,Eagle,1,I,
-128049258,Eagle_Armour_Grade3,standard,Military Grade Composite,,,Eagle,1,I,
-128049259,Eagle_Armour_Mirrored,standard,Mirrored Surface Composite,,,Eagle,1,I,
-128049260,Eagle_Armour_Reactive,standard,Reactive Surface Composite,,,Eagle,1,I,
-128049262,Hauler_Armour_Grade1,standard,Lightweight Alloy,,,Hauler,1,I,
-128049263,Hauler_Armour_Grade2,standard,Reinforced Alloy,,,Hauler,1,I,
-128049264,Hauler_Armour_Grade3,standard,Military Grade Composite,,,Hauler,1,I,
-128049265,Hauler_Armour_Mirrored,standard,Mirrored Surface Composite,,,Hauler,1,I,
-128049266,Hauler_Armour_Reactive,standard,Reactive Surface Composite,,,Hauler,1,I,
-128049268,Adder_Armour_Grade1,standard,Lightweight Alloy,,,Adder,1,I,
-128049269,Adder_Armour_Grade2,standard,Reinforced Alloy,,,Adder,1,I,
-128049270,Adder_Armour_Grade3,standard,Military Grade Composite,,,Adder,1,I,
-128049271,Adder_Armour_Mirrored,standard,Mirrored Surface Composite,,,Adder,1,I,
-128049272,Adder_Armour_Reactive,standard,Reactive Surface Composite,,,Adder,1,I,
-128049274,Viper_Armour_Grade1,standard,Lightweight Alloy,,,Viper MkIII,1,I,
-128049275,Viper_Armour_Grade2,standard,Reinforced Alloy,,,Viper MkIII,1,I,
-128049276,Viper_Armour_Grade3,standard,Military Grade Composite,,,Viper MkIII,1,I,
-128049277,Viper_Armour_Mirrored,standard,Mirrored Surface Composite,,,Viper MkIII,1,I,
-128049278,Viper_Armour_Reactive,standard,Reactive Surface Composite,,,Viper MkIII,1,I,
-128049280,CobraMkIII_Armour_Grade1,standard,Lightweight Alloy,,,Cobra MkIII,1,I,
-128049281,CobraMkIII_Armour_Grade2,standard,Reinforced Alloy,,,Cobra MkIII,1,I,
-128049282,CobraMkIII_Armour_Grade3,standard,Military Grade Composite,,,Cobra MkIII,1,I,
-128049283,CobraMkIII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Cobra MkIII,1,I,
-128049284,CobraMkIII_Armour_Reactive,standard,Reactive Surface Composite,,,Cobra MkIII,1,I,
-128049286,Type6_Armour_Grade1,standard,Lightweight Alloy,,,Type-6 Transporter,1,I,
-128049287,Type6_Armour_Grade2,standard,Reinforced Alloy,,,Type-6 Transporter,1,I,
-128049288,Type6_Armour_Grade3,standard,Military Grade Composite,,,Type-6 Transporter,1,I,
-128049289,Type6_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-6 Transporter,1,I,
-128049290,Type6_Armour_Reactive,standard,Reactive Surface Composite,,,Type-6 Transporter,1,I,
-128049292,Dolphin_Armour_Grade1,standard,Lightweight Alloy,,,Dolphin,1,I,
-128049293,Dolphin_Armour_Grade2,standard,Reinforced Alloy,,,Dolphin,1,I,
-128049294,Dolphin_Armour_Grade3,standard,Military Grade Composite,,,Dolphin,1,I,
-128049295,Dolphin_Armour_Mirrored,standard,Mirrored Surface Composite,,,Dolphin,1,I,
-128049296,Dolphin_Armour_Reactive,standard,Reactive Surface Composite,,,Dolphin,1,I,
-128049298,Type7_Armour_Grade1,standard,Lightweight Alloy,,,Type-7 Transporter,1,I,
-128049299,Type7_Armour_Grade2,standard,Reinforced Alloy,,,Type-7 Transporter,1,I,
-128049300,Type7_Armour_Grade3,standard,Military Grade Composite,,,Type-7 Transporter,1,I,
-128049301,Type7_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-7 Transporter,1,I,
-128049302,Type7_Armour_Reactive,standard,Reactive Surface Composite,,,Type-7 Transporter,1,I,
-128049304,Asp_Armour_Grade1,standard,Lightweight Alloy,,,Asp Explorer,1,I,
-128049305,Asp_Armour_Grade2,standard,Reinforced Alloy,,,Asp Explorer,1,I,
-128049306,Asp_Armour_Grade3,standard,Military Grade Composite,,,Asp Explorer,1,I,
-128049307,Asp_Armour_Mirrored,standard,Mirrored Surface Composite,,,Asp Explorer,1,I,
-128049308,Asp_Armour_Reactive,standard,Reactive Surface Composite,,,Asp Explorer,1,I,
-128049310,Vulture_Armour_Grade1,standard,Lightweight Alloy,,,Vulture,1,I,
-128049311,Vulture_Armour_Grade2,standard,Reinforced Alloy,,,Vulture,1,I,
-128049312,Vulture_Armour_Grade3,standard,Military Grade Composite,,,Vulture,1,I,
-128049313,Vulture_Armour_Mirrored,standard,Mirrored Surface Composite,,,Vulture,1,I,
-128049314,Vulture_Armour_Reactive,standard,Reactive Surface Composite,,,Vulture,1,I,
-128049316,Empire_Trader_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Clipper,1,I,
-128049317,Empire_Trader_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Clipper,1,I,
-128049318,Empire_Trader_Armour_Grade3,standard,Military Grade Composite,,,Imperial Clipper,1,I,
-128049319,Empire_Trader_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Clipper,1,I,
-128049320,Empire_Trader_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Clipper,1,I,
-128049322,Federation_Dropship_Armour_Grade1,standard,Lightweight Alloy,,,Federal Dropship,1,I,
-128049323,Federation_Dropship_Armour_Grade2,standard,Reinforced Alloy,,,Federal Dropship,1,I,
-128049324,Federation_Dropship_Armour_Grade3,standard,Military Grade Composite,,,Federal Dropship,1,I,
-128049325,Federation_Dropship_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Dropship,1,I,
-128049326,Federation_Dropship_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Dropship,1,I,
-128049328,Orca_Armour_Grade1,standard,Lightweight Alloy,,,Orca,1,I,
-128049329,Orca_Armour_Grade2,standard,Reinforced Alloy,,,Orca,1,I,
-128049330,Orca_Armour_Grade3,standard,Military Grade Composite,,,Orca,1,I,
-128049331,Orca_Armour_Mirrored,standard,Mirrored Surface Composite,,,Orca,1,I,
-128049332,Orca_Armour_Reactive,standard,Reactive Surface Composite,,,Orca,1,I,
-128049334,Type9_Armour_Grade1,standard,Lightweight Alloy,,,Type-9 Heavy,1,I,
-128049335,Type9_Armour_Grade2,standard,Reinforced Alloy,,,Type-9 Heavy,1,I,
-128049336,Type9_Armour_Grade3,standard,Military Grade Composite,,,Type-9 Heavy,1,I,
-128049337,Type9_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-9 Heavy,1,I,
-128049338,Type9_Armour_Reactive,standard,Reactive Surface Composite,,,Type-9 Heavy,1,I,
-128049340,Python_Armour_Grade1,standard,Lightweight Alloy,,,Python,1,I,
-128049341,Python_Armour_Grade2,standard,Reinforced Alloy,,,Python,1,I,
-128049342,Python_Armour_Grade3,standard,Military Grade Composite,,,Python,1,I,
-128049343,Python_Armour_Mirrored,standard,Mirrored Surface Composite,,,Python,1,I,
-128049344,Python_Armour_Reactive,standard,Reactive Surface Composite,,,Python,1,I,
-128049346,BelugaLiner_Armour_Grade1,standard,Lightweight Alloy,,,Beluga Liner,1,I,
-128049347,BelugaLiner_Armour_Grade2,standard,Reinforced Alloy,,,Beluga Liner,1,I,
-128049348,BelugaLiner_Armour_Grade3,standard,Military Grade Composite,,,Beluga Liner,1,I,
-128049349,BelugaLiner_Armour_Mirrored,standard,Mirrored Surface Composite,,,Beluga Liner,1,I,
-128049350,BelugaLiner_Armour_Reactive,standard,Reactive Surface Composite,,,Beluga Liner,1,I,
-128049352,FerDeLance_Armour_Grade1,standard,Lightweight Alloy,,,Fer-de-Lance,1,I,
-128049353,FerDeLance_Armour_Grade2,standard,Reinforced Alloy,,,Fer-de-Lance,1,I,
-128049354,FerDeLance_Armour_Grade3,standard,Military Grade Composite,,,Fer-de-Lance,1,I,
-128049355,FerDeLance_Armour_Mirrored,standard,Mirrored Surface Composite,,,Fer-de-Lance,1,I,
-128049356,FerDeLance_Armour_Reactive,standard,Reactive Surface Composite,,,Fer-de-Lance,1,I,
-128049364,Anaconda_Armour_Grade1,standard,Lightweight Alloy,,,Anaconda,1,I,
-128049365,Anaconda_Armour_Grade2,standard,Reinforced Alloy,,,Anaconda,1,I,
-128049366,Anaconda_Armour_Grade3,standard,Military Grade Composite,,,Anaconda,1,I,
-128049367,Anaconda_Armour_Mirrored,standard,Mirrored Surface Composite,,,Anaconda,1,I,
-128049368,Anaconda_Armour_Reactive,standard,Reactive Surface Composite,,,Anaconda,1,I,
-128049370,Federation_Corvette_Armour_Grade1,standard,Lightweight Alloy,,,Federal Corvette,1,I,
-128049371,Federation_Corvette_Armour_Grade2,standard,Reinforced Alloy,,,Federal Corvette,1,I,
-128049372,Federation_Corvette_Armour_Grade3,standard,Military Grade Composite,,,Federal Corvette,1,I,
-128049373,Federation_Corvette_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Corvette,1,I,
-128049374,Federation_Corvette_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Corvette,1,I,
-128049376,Cutter_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Cutter,1,I,
-128049377,Cutter_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Cutter,1,I,
-128049378,Cutter_Armour_Grade3,standard,Military Grade Composite,,,Imperial Cutter,1,I,
-128049379,Cutter_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Cutter,1,I,
-128049380,Cutter_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Cutter,1,I,
+128049250,SideWinder_Armour_Grade1,standard,Lightweight Alloy,,,Sidewinder,1,C,
+128049251,SideWinder_Armour_Grade2,standard,Reinforced Alloy,,,Sidewinder,1,B,
+128049252,SideWinder_Armour_Grade3,standard,Military Grade Composite,,,Sidewinder,1,A,
+128049253,SideWinder_Armour_Mirrored,standard,Mirrored Surface Composite,,,Sidewinder,1,A,
+128049254,SideWinder_Armour_Reactive,standard,Reactive Surface Composite,,,Sidewinder,1,A,
+128049256,Eagle_Armour_Grade1,standard,Lightweight Alloy,,,Eagle,1,C,
+128049257,Eagle_Armour_Grade2,standard,Reinforced Alloy,,,Eagle,1,B,
+128049258,Eagle_Armour_Grade3,standard,Military Grade Composite,,,Eagle,1,A,
+128049259,Eagle_Armour_Mirrored,standard,Mirrored Surface Composite,,,Eagle,1,A,
+128049260,Eagle_Armour_Reactive,standard,Reactive Surface Composite,,,Eagle,1,A,
+128049262,Hauler_Armour_Grade1,standard,Lightweight Alloy,,,Hauler,1,C,
+128049263,Hauler_Armour_Grade2,standard,Reinforced Alloy,,,Hauler,1,B,
+128049264,Hauler_Armour_Grade3,standard,Military Grade Composite,,,Hauler,1,A,
+128049265,Hauler_Armour_Mirrored,standard,Mirrored Surface Composite,,,Hauler,1,A,
+128049266,Hauler_Armour_Reactive,standard,Reactive Surface Composite,,,Hauler,1,A,
+128049268,Adder_Armour_Grade1,standard,Lightweight Alloy,,,Adder,1,C,
+128049269,Adder_Armour_Grade2,standard,Reinforced Alloy,,,Adder,1,B,
+128049270,Adder_Armour_Grade3,standard,Military Grade Composite,,,Adder,1,A,
+128049271,Adder_Armour_Mirrored,standard,Mirrored Surface Composite,,,Adder,1,A,
+128049272,Adder_Armour_Reactive,standard,Reactive Surface Composite,,,Adder,1,A,
+128049274,Viper_Armour_Grade1,standard,Lightweight Alloy,,,Viper MkIII,1,C,
+128049275,Viper_Armour_Grade2,standard,Reinforced Alloy,,,Viper MkIII,1,B,
+128049276,Viper_Armour_Grade3,standard,Military Grade Composite,,,Viper MkIII,1,A,
+128049277,Viper_Armour_Mirrored,standard,Mirrored Surface Composite,,,Viper MkIII,1,A,
+128049278,Viper_Armour_Reactive,standard,Reactive Surface Composite,,,Viper MkIII,1,A,
+128049280,CobraMkIII_Armour_Grade1,standard,Lightweight Alloy,,,Cobra MkIII,1,C,
+128049281,CobraMkIII_Armour_Grade2,standard,Reinforced Alloy,,,Cobra MkIII,1,B,
+128049282,CobraMkIII_Armour_Grade3,standard,Military Grade Composite,,,Cobra MkIII,1,A,
+128049283,CobraMkIII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Cobra MkIII,1,A,
+128049284,CobraMkIII_Armour_Reactive,standard,Reactive Surface Composite,,,Cobra MkIII,1,A,
+128049286,Type6_Armour_Grade1,standard,Lightweight Alloy,,,Type-6 Transporter,1,C,
+128049287,Type6_Armour_Grade2,standard,Reinforced Alloy,,,Type-6 Transporter,1,B,
+128049288,Type6_Armour_Grade3,standard,Military Grade Composite,,,Type-6 Transporter,1,A,
+128049289,Type6_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-6 Transporter,1,A,
+128049290,Type6_Armour_Reactive,standard,Reactive Surface Composite,,,Type-6 Transporter,1,A,
+128049292,Dolphin_Armour_Grade1,standard,Lightweight Alloy,,,Dolphin,1,C,
+128049293,Dolphin_Armour_Grade2,standard,Reinforced Alloy,,,Dolphin,1,B,
+128049294,Dolphin_Armour_Grade3,standard,Military Grade Composite,,,Dolphin,1,A,
+128049295,Dolphin_Armour_Mirrored,standard,Mirrored Surface Composite,,,Dolphin,1,A,
+128049296,Dolphin_Armour_Reactive,standard,Reactive Surface Composite,,,Dolphin,1,A,
+128049298,Type7_Armour_Grade1,standard,Lightweight Alloy,,,Type-7 Transporter,1,C,
+128049299,Type7_Armour_Grade2,standard,Reinforced Alloy,,,Type-7 Transporter,1,B,
+128049300,Type7_Armour_Grade3,standard,Military Grade Composite,,,Type-7 Transporter,1,A,
+128049301,Type7_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-7 Transporter,1,A,
+128049302,Type7_Armour_Reactive,standard,Reactive Surface Composite,,,Type-7 Transporter,1,A,
+128049304,Asp_Armour_Grade1,standard,Lightweight Alloy,,,Asp Explorer,1,C,
+128049305,Asp_Armour_Grade2,standard,Reinforced Alloy,,,Asp Explorer,1,B,
+128049306,Asp_Armour_Grade3,standard,Military Grade Composite,,,Asp Explorer,1,A,
+128049307,Asp_Armour_Mirrored,standard,Mirrored Surface Composite,,,Asp Explorer,1,A,
+128049308,Asp_Armour_Reactive,standard,Reactive Surface Composite,,,Asp Explorer,1,A,
+128049310,Vulture_Armour_Grade1,standard,Lightweight Alloy,,,Vulture,1,C,
+128049311,Vulture_Armour_Grade2,standard,Reinforced Alloy,,,Vulture,1,B,
+128049312,Vulture_Armour_Grade3,standard,Military Grade Composite,,,Vulture,1,A,
+128049313,Vulture_Armour_Mirrored,standard,Mirrored Surface Composite,,,Vulture,1,A,
+128049314,Vulture_Armour_Reactive,standard,Reactive Surface Composite,,,Vulture,1,A,
+128049316,Empire_Trader_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Clipper,1,C,
+128049317,Empire_Trader_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Clipper,1,B,
+128049318,Empire_Trader_Armour_Grade3,standard,Military Grade Composite,,,Imperial Clipper,1,A,
+128049319,Empire_Trader_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Clipper,1,A,
+128049320,Empire_Trader_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Clipper,1,A,
+128049322,Federation_Dropship_Armour_Grade1,standard,Lightweight Alloy,,,Federal Dropship,1,C,
+128049323,Federation_Dropship_Armour_Grade2,standard,Reinforced Alloy,,,Federal Dropship,1,B,
+128049324,Federation_Dropship_Armour_Grade3,standard,Military Grade Composite,,,Federal Dropship,1,A,
+128049325,Federation_Dropship_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Dropship,1,A,
+128049326,Federation_Dropship_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Dropship,1,A,
+128049328,Orca_Armour_Grade1,standard,Lightweight Alloy,,,Orca,1,C,
+128049329,Orca_Armour_Grade2,standard,Reinforced Alloy,,,Orca,1,B,
+128049330,Orca_Armour_Grade3,standard,Military Grade Composite,,,Orca,1,A,
+128049331,Orca_Armour_Mirrored,standard,Mirrored Surface Composite,,,Orca,1,A,
+128049332,Orca_Armour_Reactive,standard,Reactive Surface Composite,,,Orca,1,A,
+128049334,Type9_Armour_Grade1,standard,Lightweight Alloy,,,Type-9 Heavy,1,C,
+128049335,Type9_Armour_Grade2,standard,Reinforced Alloy,,,Type-9 Heavy,1,B,
+128049336,Type9_Armour_Grade3,standard,Military Grade Composite,,,Type-9 Heavy,1,A,
+128049337,Type9_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-9 Heavy,1,A,
+128049338,Type9_Armour_Reactive,standard,Reactive Surface Composite,,,Type-9 Heavy,1,A,
+128049340,Python_Armour_Grade1,standard,Lightweight Alloy,,,Python,1,C,
+128049341,Python_Armour_Grade2,standard,Reinforced Alloy,,,Python,1,B,
+128049342,Python_Armour_Grade3,standard,Military Grade Composite,,,Python,1,A,
+128049343,Python_Armour_Mirrored,standard,Mirrored Surface Composite,,,Python,1,A,
+128049344,Python_Armour_Reactive,standard,Reactive Surface Composite,,,Python,1,A,
+128049346,BelugaLiner_Armour_Grade1,standard,Lightweight Alloy,,,Beluga Liner,1,C,
+128049347,BelugaLiner_Armour_Grade2,standard,Reinforced Alloy,,,Beluga Liner,1,B,
+128049348,BelugaLiner_Armour_Grade3,standard,Military Grade Composite,,,Beluga Liner,1,A,
+128049349,BelugaLiner_Armour_Mirrored,standard,Mirrored Surface Composite,,,Beluga Liner,1,A,
+128049350,BelugaLiner_Armour_Reactive,standard,Reactive Surface Composite,,,Beluga Liner,1,A,
+128049352,FerDeLance_Armour_Grade1,standard,Lightweight Alloy,,,Fer-de-Lance,1,C,
+128049353,FerDeLance_Armour_Grade2,standard,Reinforced Alloy,,,Fer-de-Lance,1,B,
+128049354,FerDeLance_Armour_Grade3,standard,Military Grade Composite,,,Fer-de-Lance,1,A,
+128049355,FerDeLance_Armour_Mirrored,standard,Mirrored Surface Composite,,,Fer-de-Lance,1,A,
+128049356,FerDeLance_Armour_Reactive,standard,Reactive Surface Composite,,,Fer-de-Lance,1,A,
+128049364,Anaconda_Armour_Grade1,standard,Lightweight Alloy,,,Anaconda,1,C,
+128049365,Anaconda_Armour_Grade2,standard,Reinforced Alloy,,,Anaconda,1,B,
+128049366,Anaconda_Armour_Grade3,standard,Military Grade Composite,,,Anaconda,1,A,
+128049367,Anaconda_Armour_Mirrored,standard,Mirrored Surface Composite,,,Anaconda,1,A,
+128049368,Anaconda_Armour_Reactive,standard,Reactive Surface Composite,,,Anaconda,1,A,
+128049370,Federation_Corvette_Armour_Grade1,standard,Lightweight Alloy,,,Federal Corvette,1,C,
+128049371,Federation_Corvette_Armour_Grade2,standard,Reinforced Alloy,,,Federal Corvette,1,B,
+128049372,Federation_Corvette_Armour_Grade3,standard,Military Grade Composite,,,Federal Corvette,1,A,
+128049373,Federation_Corvette_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Corvette,1,A,
+128049374,Federation_Corvette_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Corvette,1,A,
+128049376,Cutter_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Cutter,1,C,
+128049377,Cutter_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Cutter,1,B,
+128049378,Cutter_Armour_Grade3,standard,Military Grade Composite,,,Imperial Cutter,1,A,
+128049379,Cutter_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Cutter,1,A,
+128049380,Cutter_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Cutter,1,A,
 128049381,Hpt_PulseLaser_Fixed_Small,hardpoint,Pulse Laser,Fixed,,,1,F,
 128049382,Hpt_PulseLaser_Fixed_Medium,hardpoint,Pulse Laser,Fixed,,,2,E,
 128049383,Hpt_PulseLaser_Fixed_Large,hardpoint,Pulse Laser,Fixed,,,3,D,
@@ -502,7 +502,7 @@
 128064351,Int_FuelTank_Size6_Class3,standard,Fuel Tank,,,,6,C,
 128064352,Int_FuelTank_Size7_Class3,standard,Fuel Tank,,,,7,C,
 128064353,Int_FuelTank_Size8_Class3,standard,Fuel Tank,,,,8,C,
-128066402,Int_DroneControl_ResourceSiphon,internal,Hatch Breaker Limpet Controller,,,,1,I,
+128066402,Int_DroneControl_ResourceSiphon,internal,Hatch Breaker Limpet Controller,,,,1,E,
 128066532,Int_DroneControl_ResourceSiphon_Size1_Class1,internal,Hatch Breaker Limpet Controller,,,,1,E,
 128066533,Int_DroneControl_ResourceSiphon_Size1_Class2,internal,Hatch Breaker Limpet Controller,,,,1,D,
 128066534,Int_DroneControl_ResourceSiphon_Size1_Class3,internal,Hatch Breaker Limpet Controller,,,,1,C,
@@ -690,16 +690,16 @@
 128668545,Int_HullReinforcement_Size5_Class1,internal,Hull Reinforcement Package,,,,5,E,
 128668546,Int_HullReinforcement_Size5_Class2,internal,Hull Reinforcement Package,,,,5,D,
 128671120,Hpt_Cannon_Gimbal_Large,hardpoint,Cannon,Gimballed,,,3,C,
-128671218,DiamondBack_Armour_Grade1,standard,Lightweight Alloy,,,Diamondback Scout,1,I,
-128671219,DiamondBack_Armour_Grade2,standard,Reinforced Alloy,,,Diamondback Scout,1,I,
-128671220,DiamondBack_Armour_Grade3,standard,Military Grade Composite,,,Diamondback Scout,1,I,
-128671221,DiamondBack_Armour_Mirrored,standard,Mirrored Surface Composite,,,Diamondback Scout,1,I,
-128671222,DiamondBack_Armour_Reactive,standard,Reactive Surface Composite,,,Diamondback Scout,1,I,
-128671224,Empire_Courier_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Courier,1,I,
-128671225,Empire_Courier_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Courier,1,I,
-128671226,Empire_Courier_Armour_Grade3,standard,Military Grade Composite,,,Imperial Courier,1,I,
-128671227,Empire_Courier_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Courier,1,I,
-128671228,Empire_Courier_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Courier,1,I,
+128671218,DiamondBack_Armour_Grade1,standard,Lightweight Alloy,,,Diamondback Scout,1,C,
+128671219,DiamondBack_Armour_Grade2,standard,Reinforced Alloy,,,Diamondback Scout,1,B,
+128671220,DiamondBack_Armour_Grade3,standard,Military Grade Composite,,,Diamondback Scout,1,A,
+128671221,DiamondBack_Armour_Mirrored,standard,Mirrored Surface Composite,,,Diamondback Scout,1,A,
+128671222,DiamondBack_Armour_Reactive,standard,Reactive Surface Composite,,,Diamondback Scout,1,A,
+128671224,Empire_Courier_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Courier,1,C,
+128671225,Empire_Courier_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Courier,1,B,
+128671226,Empire_Courier_Armour_Grade3,standard,Military Grade Composite,,,Imperial Courier,1,A,
+128671227,Empire_Courier_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Courier,1,A,
+128671228,Empire_Courier_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Courier,1,A,
 128671229,Int_DroneControl_Collection_Size1_Class1,internal,Collector Limpet Controller,,,,1,E,
 128671230,Int_DroneControl_Collection_Size1_Class2,internal,Collector Limpet Controller,,,,1,D,
 128671231,Int_DroneControl_Collection_Size1_Class3,internal,Collector Limpet Controller,,,,1,C,
@@ -788,46 +788,46 @@
 128671346,Hpt_BeamLaser_Fixed_Small_Heat,hardpoint,Retributor Beam Laser,Fixed,,,1,E,ELITE_SPECIFIC_V_POWER_100010
 128671448,Hpt_MineLauncher_Fixed_Small_Impulse,hardpoint,Shock Mine Launcher,Fixed,,,1,I,
 128671449,Hpt_PulseLaserBurst_Fixed_Small_Scatter,hardpoint,Cytoscrambler Burst Laser,Fixed,,,1,F,ELITE_SPECIFIC_V_POWER_100100
-128671832,DiamondBackXL_Armour_Grade1,standard,Lightweight Alloy,,,Diamondback Explorer,1,I,
-128671833,DiamondBackXL_Armour_Grade2,standard,Reinforced Alloy,,,Diamondback Explorer,1,I,
-128671834,DiamondBackXL_Armour_Grade3,standard,Military Grade Composite,,,Diamondback Explorer,1,I,
-128671835,DiamondBackXL_Armour_Mirrored,standard,Mirrored Surface Composite,,,Diamondback Explorer,1,I,
-128671836,DiamondBackXL_Armour_Reactive,standard,Reactive Surface Composite,,,Diamondback Explorer,1,I,
-128672140,Empire_Eagle_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Eagle,1,I,
-128672141,Empire_Eagle_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Eagle,1,I,
-128672142,Empire_Eagle_Armour_Grade3,standard,Military Grade Composite,,,Imperial Eagle,1,I,
-128672143,Empire_Eagle_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Eagle,1,I,
-128672144,Empire_Eagle_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Eagle,1,I,
-128672147,Federation_Dropship_MkII_Armour_Grade1,standard,Lightweight Alloy,,,Federal Assault Ship,1,I,
-128672148,Federation_Dropship_MkII_Armour_Grade2,standard,Reinforced Alloy,,,Federal Assault Ship,1,I,
-128672149,Federation_Dropship_MkII_Armour_Grade3,standard,Military Grade Composite,,,Federal Assault Ship,1,I,
-128672150,Federation_Dropship_MkII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Assault Ship,1,I,
-128672151,Federation_Dropship_MkII_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Assault Ship,1,I,
-128672154,Federation_Gunship_Armour_Grade1,standard,Lightweight Alloy,,,Federal Gunship,1,I,
-128672155,Federation_Gunship_Armour_Grade2,standard,Reinforced Alloy,,,Federal Gunship,1,I,
-128672156,Federation_Gunship_Armour_Grade3,standard,Military Grade Composite,,,Federal Gunship,1,I,
-128672157,Federation_Gunship_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Gunship,1,I,
-128672158,Federation_Gunship_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Gunship,1,I,
-128672257,Viper_MkIV_Armour_Grade1,standard,Lightweight Alloy,,,Viper MkIV,1,I,
-128672258,Viper_MkIV_Armour_Grade2,standard,Reinforced Alloy,,,Viper MkIV,1,I,
-128672259,Viper_MkIV_Armour_Grade3,standard,Military Grade Composite,,,Viper MkIV,1,I,
-128672260,Viper_MkIV_Armour_Mirrored,standard,Mirrored Surface Composite,,,Viper MkIV,1,I,
-128672261,Viper_MkIV_Armour_Reactive,standard,Reactive Surface Composite,,,Viper MkIV,1,I,
-128672264,CobraMkIV_Armour_Grade1,standard,Lightweight Alloy,,,Cobra MkIV,1,I,
-128672265,CobraMkIV_Armour_Grade2,standard,Reinforced Alloy,,,Cobra MkIV,1,I,
-128672266,CobraMkIV_Armour_Grade3,standard,Military Grade Composite,,,Cobra MkIV,1,I,
-128672267,CobraMkIV_Armour_Mirrored,standard,Mirrored Surface Composite,,,Cobra MkIV,1,I,
-128672268,CobraMkIV_Armour_Reactive,standard,Reactive Surface Composite,,,Cobra MkIV,1,I,
-128672271,Independant_Trader_Armour_Grade1,standard,Lightweight Alloy,,,Keelback,1,I,
-128672272,Independant_Trader_Armour_Grade2,standard,Reinforced Alloy,,,Keelback,1,I,
-128672273,Independant_Trader_Armour_Grade3,standard,Military Grade Composite,,,Keelback,1,I,
-128672274,Independant_Trader_Armour_Mirrored,standard,Mirrored Surface Composite,,,Keelback,1,I,
-128672275,Independant_Trader_Armour_Reactive,standard,Reactive Surface Composite,,,Keelback,1,I,
-128672278,Asp_Scout_Armour_Grade1,standard,Lightweight Alloy,,,Asp Scout,1,I,
-128672279,Asp_Scout_Armour_Grade2,standard,Reinforced Alloy,,,Asp Scout,1,I,
-128672280,Asp_Scout_Armour_Grade3,standard,Military Grade Composite,,,Asp Scout,1,I,
-128672281,Asp_Scout_Armour_Mirrored,standard,Mirrored Surface Composite,,,Asp Scout,1,I,
-128672282,Asp_Scout_Armour_Reactive,standard,Reactive Surface Composite,,,Asp Scout,1,I,
+128671832,DiamondBackXL_Armour_Grade1,standard,Lightweight Alloy,,,Diamondback Explorer,1,C,
+128671833,DiamondBackXL_Armour_Grade2,standard,Reinforced Alloy,,,Diamondback Explorer,1,B,
+128671834,DiamondBackXL_Armour_Grade3,standard,Military Grade Composite,,,Diamondback Explorer,1,A,
+128671835,DiamondBackXL_Armour_Mirrored,standard,Mirrored Surface Composite,,,Diamondback Explorer,1,A,
+128671836,DiamondBackXL_Armour_Reactive,standard,Reactive Surface Composite,,,Diamondback Explorer,1,A,
+128672140,Empire_Eagle_Armour_Grade1,standard,Lightweight Alloy,,,Imperial Eagle,1,C,
+128672141,Empire_Eagle_Armour_Grade2,standard,Reinforced Alloy,,,Imperial Eagle,1,B,
+128672142,Empire_Eagle_Armour_Grade3,standard,Military Grade Composite,,,Imperial Eagle,1,A,
+128672143,Empire_Eagle_Armour_Mirrored,standard,Mirrored Surface Composite,,,Imperial Eagle,1,A,
+128672144,Empire_Eagle_Armour_Reactive,standard,Reactive Surface Composite,,,Imperial Eagle,1,A,
+128672147,Federation_Dropship_MkII_Armour_Grade1,standard,Lightweight Alloy,,,Federal Assault Ship,1,C,
+128672148,Federation_Dropship_MkII_Armour_Grade2,standard,Reinforced Alloy,,,Federal Assault Ship,1,B,
+128672149,Federation_Dropship_MkII_Armour_Grade3,standard,Military Grade Composite,,,Federal Assault Ship,1,A,
+128672150,Federation_Dropship_MkII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Assault Ship,1,A,
+128672151,Federation_Dropship_MkII_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Assault Ship,1,A,
+128672154,Federation_Gunship_Armour_Grade1,standard,Lightweight Alloy,,,Federal Gunship,1,C,
+128672155,Federation_Gunship_Armour_Grade2,standard,Reinforced Alloy,,,Federal Gunship,1,B,
+128672156,Federation_Gunship_Armour_Grade3,standard,Military Grade Composite,,,Federal Gunship,1,A,
+128672157,Federation_Gunship_Armour_Mirrored,standard,Mirrored Surface Composite,,,Federal Gunship,1,A,
+128672158,Federation_Gunship_Armour_Reactive,standard,Reactive Surface Composite,,,Federal Gunship,1,A,
+128672257,Viper_MkIV_Armour_Grade1,standard,Lightweight Alloy,,,Viper MkIV,1,C,
+128672258,Viper_MkIV_Armour_Grade2,standard,Reinforced Alloy,,,Viper MkIV,1,B,
+128672259,Viper_MkIV_Armour_Grade3,standard,Military Grade Composite,,,Viper MkIV,1,A,
+128672260,Viper_MkIV_Armour_Mirrored,standard,Mirrored Surface Composite,,,Viper MkIV,1,A,
+128672261,Viper_MkIV_Armour_Reactive,standard,Reactive Surface Composite,,,Viper MkIV,1,A,
+128672264,CobraMkIV_Armour_Grade1,standard,Lightweight Alloy,,,Cobra MkIV,1,C,
+128672265,CobraMkIV_Armour_Grade2,standard,Reinforced Alloy,,,Cobra MkIV,1,B,
+128672266,CobraMkIV_Armour_Grade3,standard,Military Grade Composite,,,Cobra MkIV,1,A,
+128672267,CobraMkIV_Armour_Mirrored,standard,Mirrored Surface Composite,,,Cobra MkIV,1,A,
+128672268,CobraMkIV_Armour_Reactive,standard,Reactive Surface Composite,,,Cobra MkIV,1,A,
+128672271,Independant_Trader_Armour_Grade1,standard,Lightweight Alloy,,,Keelback,1,C,
+128672272,Independant_Trader_Armour_Grade2,standard,Reinforced Alloy,,,Keelback,1,B,
+128672273,Independant_Trader_Armour_Grade3,standard,Military Grade Composite,,,Keelback,1,A,
+128672274,Independant_Trader_Armour_Mirrored,standard,Mirrored Surface Composite,,,Keelback,1,A,
+128672275,Independant_Trader_Armour_Reactive,standard,Reactive Surface Composite,,,Keelback,1,A,
+128672278,Asp_Scout_Armour_Grade1,standard,Lightweight Alloy,,,Asp Scout,1,C,
+128672279,Asp_Scout_Armour_Grade2,standard,Reinforced Alloy,,,Asp Scout,1,B,
+128672280,Asp_Scout_Armour_Grade3,standard,Military Grade Composite,,,Asp Scout,1,A,
+128672281,Asp_Scout_Armour_Mirrored,standard,Mirrored Surface Composite,,,Asp Scout,1,A,
+128672282,Asp_Scout_Armour_Reactive,standard,Reactive Surface Composite,,,Asp Scout,1,A,
 128672288,Int_BuggyBay_Size2_Class1,internal,Planetary Vehicle Hangar,,,,2,H,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128672289,Int_BuggyBay_Size2_Class2,internal,Planetary Vehicle Hangar,,,,2,G,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128672290,Int_BuggyBay_Size4_Class1,internal,Planetary Vehicle Hangar,,,,4,H,ELITE_HORIZONS_V_PLANETARY_LANDINGS
@@ -894,11 +894,11 @@
 128777344,Int_DroneControl_Repair_Size7_Class3,internal,Repair Limpet Controller,,,,7,C,
 128777345,Int_DroneControl_Repair_Size7_Class4,internal,Repair Limpet Controller,,,,7,B,
 128777346,Int_DroneControl_Repair_Size7_Class5,internal,Repair Limpet Controller,,,,7,A,
-128785621,Type9_Military_Armour_Grade1,standard,Lightweight Alloy,,,Type-10 Defender,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128785622,Type9_Military_Armour_Grade2,standard,Reinforced Alloy,,,Type-10 Defender,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128785623,Type9_Military_Armour_Grade3,standard,Military Grade Composite,,,Type-10 Defender,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128785624,Type9_Military_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-10 Defender,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128785625,Type9_Military_Armour_Reactive,standard,Reactive Surface Composite,,,Type-10 Defender,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128785621,Type9_Military_Armour_Grade1,standard,Lightweight Alloy,,,Type-10 Defender,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128785622,Type9_Military_Armour_Grade2,standard,Reinforced Alloy,,,Type-10 Defender,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128785623,Type9_Military_Armour_Grade3,standard,Military Grade Composite,,,Type-10 Defender,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128785624,Type9_Military_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-10 Defender,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128785625,Type9_Military_Armour_Reactive,standard,Reactive Surface Composite,,,Type-10 Defender,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128785626,Hpt_FlakMortar_Fixed_Medium,hardpoint,Remote Release Flak Launcher,Fixed,,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128788699,Hpt_ATDumbfireMissile_Fixed_Medium,hardpoint,AX Missile Rack,Fixed,Dumbfire,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128788700,Hpt_ATDumbfireMissile_Fixed_Large,hardpoint,AX Missile Rack,Fixed,Dumbfire,,3,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
@@ -926,26 +926,26 @@
 128793943,Int_DroneControl_Decontamination_Size5_Class1,internal,Decontamination Limpet Controller,,,,5,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128793944,Int_DroneControl_Decontamination_Size7_Class1,internal,Decontamination Limpet Controller,,,,7,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128808878,Hpt_XenoScannerMk2_Basic_Tiny,utility,Enhanced Xeno Scanner,,,,0,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816569,Krait_MkII_Armour_Grade1,standard,Lightweight Alloy,,,Krait MkII,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816570,Krait_MkII_Armour_Grade2,standard,Reinforced Alloy,,,Krait MkII,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816571,Krait_MkII_Armour_Grade3,standard,Military Grade Composite,,,Krait MkII,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816572,Krait_MkII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Krait MkII,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816573,Krait_MkII_Armour_Reactive,standard,Reactive Surface Composite,,,Krait MkII,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816576,TypeX_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Chieftain,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816577,TypeX_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Chieftain,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816578,TypeX_Armour_Grade3,standard,Military Grade Composite,,,Alliance Chieftain,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816579,TypeX_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Chieftain,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816580,TypeX_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Chieftain,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816583,TypeX_2_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Crusader,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816584,TypeX_2_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Crusader,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816585,TypeX_2_Armour_Grade3,standard,Military Grade Composite,,,Alliance Crusader,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816586,TypeX_2_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Crusader,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816587,TypeX_2_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Crusader,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816590,TypeX_3_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Challenger,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816591,TypeX_3_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Challenger,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816592,TypeX_3_Armour_Grade3,standard,Military Grade Composite,,,Alliance Challenger,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816593,TypeX_3_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Challenger,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128816594,TypeX_3_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Challenger,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816569,Krait_MkII_Armour_Grade1,standard,Lightweight Alloy,,,Krait MkII,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816570,Krait_MkII_Armour_Grade2,standard,Reinforced Alloy,,,Krait MkII,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816571,Krait_MkII_Armour_Grade3,standard,Military Grade Composite,,,Krait MkII,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816572,Krait_MkII_Armour_Mirrored,standard,Mirrored Surface Composite,,,Krait MkII,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816573,Krait_MkII_Armour_Reactive,standard,Reactive Surface Composite,,,Krait MkII,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816576,TypeX_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Chieftain,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816577,TypeX_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Chieftain,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816578,TypeX_Armour_Grade3,standard,Military Grade Composite,,,Alliance Chieftain,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816579,TypeX_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Chieftain,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816580,TypeX_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Chieftain,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816583,TypeX_2_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Crusader,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816584,TypeX_2_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Crusader,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816585,TypeX_2_Armour_Grade3,standard,Military Grade Composite,,,Alliance Crusader,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816586,TypeX_2_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Crusader,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816587,TypeX_2_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Crusader,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816590,TypeX_3_Armour_Grade1,standard,Lightweight Alloy,,,Alliance Challenger,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816591,TypeX_3_Armour_Grade2,standard,Reinforced Alloy,,,Alliance Challenger,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816592,TypeX_3_Armour_Grade3,standard,Military Grade Composite,,,Alliance Challenger,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816593,TypeX_3_Armour_Mirrored,standard,Mirrored Surface Composite,,,Alliance Challenger,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128816594,TypeX_3_Armour_Reactive,standard,Reactive Surface Composite,,,Alliance Challenger,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128833687,Hpt_Guardian_GaussCannon_Fixed_Medium,hardpoint,Guardian Gauss Cannon,Fixed,,,2,B,ELITE_HORIZONS_V_GUARDIAN_GAUSS_FIXED_MEDIUM
 128833944,Int_CorrosionProofCargoRack_Size4_Class1,internal,Corrosion Resistant Cargo Rack,,,,4,E,ELITE_HORIZONS_V_CORROSIONCARGO_SIZE4
 128833945,Int_GuardianHullReinforcement_Size1_Class1,internal,Guardian Hull Reinforcement,,,,1,E,ELITE_HORIZONS_V_GUARDIAN_HULLREINFORCEMENT
@@ -1016,11 +1016,11 @@
 128834783,Hpt_Guardian_PlasmaLauncher_Fixed_Large,hardpoint,Guardian Plasma Charger,Fixed,,,3,C,ELITE_HORIZONS_V_GUARDIAN_PLASMA_FIXED_LARGE
 128834784,Hpt_Guardian_PlasmaLauncher_Turret_Large,hardpoint,Guardian Plasma Charger,Turreted,,,3,D,ELITE_HORIZONS_V_GUARDIAN_PLASMA_TURRET_LARGE
 128837858,Int_DroneControl_Recon_Size1_Class1,internal,Recon Limpet Controller,,,,1,E,
-128839283,Krait_Light_Armour_Grade1,standard,Lightweight Alloy,,,Krait Phantom,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128839284,Krait_Light_Armour_Grade2,standard,Reinforced Alloy,,,Krait Phantom,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128839285,Krait_Light_Armour_Grade3,standard,Military Grade Composite,,,Krait Phantom,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128839286,Krait_Light_Armour_Mirrored,standard,Mirrored Surface Composite,,,Krait Phantom,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128839287,Krait_Light_Armour_Reactive,standard,Reactive Surface Composite,,,Krait Phantom,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128839283,Krait_Light_Armour_Grade1,standard,Lightweight Alloy,,,Krait Phantom,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128839284,Krait_Light_Armour_Grade2,standard,Reinforced Alloy,,,Krait Phantom,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128839285,Krait_Light_Armour_Grade3,standard,Military Grade Composite,,,Krait Phantom,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128839286,Krait_Light_Armour_Mirrored,standard,Mirrored Surface Composite,,,Krait Phantom,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128839287,Krait_Light_Armour_Reactive,standard,Reactive Surface Composite,,,Krait Phantom,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128841592,Int_DroneControl_Recon_Size3_Class1,internal,Recon Limpet Controller,,,,3,E,
 128841593,Int_DroneControl_Recon_Size5_Class1,internal,Recon Limpet Controller,,,,5,E,
 128841594,Int_DroneControl_Recon_Size7_Class1,internal,Recon Limpet Controller,,,,7,E,
@@ -1046,11 +1046,11 @@
 128915720,Hpt_MRAScanner_Size0_Class3,utility,Pulse Wave Analyser,,,,0,C,
 128915721,Hpt_MRAScanner_Size0_Class4,utility,Pulse Wave Analyser,,,,0,B,
 128915722,Hpt_MRAScanner_Size0_Class5,utility,Pulse Wave Analyser,,,,0,A,
-128915981,Mamba_Armour_Grade1,standard,Lightweight Alloy,,,Mamba,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128915982,Mamba_Armour_Grade2,standard,Reinforced Alloy,,,Mamba,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128915983,Mamba_Armour_Grade3,standard,Military Grade Composite,,,Mamba,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128915984,Mamba_Armour_Mirrored,standard,Mirrored Surface Composite,,,Mamba,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128915985,Mamba_Armour_Reactive,standard,Reactive Surface Composite,,,Mamba,1,I,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128915981,Mamba_Armour_Grade1,standard,Lightweight Alloy,,,Mamba,1,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128915982,Mamba_Armour_Grade2,standard,Reinforced Alloy,,,Mamba,1,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128915983,Mamba_Armour_Grade3,standard,Military Grade Composite,,,Mamba,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128915984,Mamba_Armour_Mirrored,standard,Mirrored Surface Composite,,,Mamba,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128915985,Mamba_Armour_Reactive,standard,Reactive Surface Composite,,,Mamba,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128932273,Int_SupercruiseAssist,internal,Supercruise Assist,,,,1,E,
 128935155,Int_DockingComputer_Advanced,internal,Advanced Docking Computer,,,,1,E,
 128935980,Hpt_MultiCannon_Fixed_Medium_Advanced,hardpoint,Advanced Multi-Cannon,Fixed,,,2,E,

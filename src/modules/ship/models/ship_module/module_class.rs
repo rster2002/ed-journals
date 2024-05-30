@@ -14,6 +14,8 @@ pub enum ModuleClass {
     D,
     E,
     F,
+    G,
+    H,
     I,
 
     #[cfg(not(feature = "strict"))]
@@ -60,6 +62,8 @@ impl FromStr for ModuleClass {
             "D" | "d" => Ok(ModuleClass::D),
             "E" | "e" => Ok(ModuleClass::E),
             "F" | "f" => Ok(ModuleClass::F),
+            "G" | "g" => Ok(ModuleClass::G),
+            "H" | "h" => Ok(ModuleClass::H),
             "I" | "i" => Ok(ModuleClass::I),
 
             #[cfg(not(feature = "strict"))]
@@ -83,6 +87,8 @@ impl Display for ModuleClass {
                 ModuleClass::D => "D",
                 ModuleClass::E => "E",
                 ModuleClass::F => "F",
+                ModuleClass::G => "G",
+                ModuleClass::H => "H",
                 ModuleClass::I => "I",
 
                 #[cfg(not(feature = "strict"))]

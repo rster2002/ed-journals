@@ -8,6 +8,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::galaxy::StarClass::Y;
 use crate::modules::ship::{
     ArmorModule, ArmorModuleError, InternalModule, InternalType, ModuleClass, ModuleClassError,
 };
@@ -23,6 +24,7 @@ pub struct ShipInternalModule {
     pub module: InternalModule,
     pub size: u8,
     pub class: ModuleClass,
+    pub free: bool,
 }
 
 #[derive(Debug, Error)]
@@ -85,6 +87,7 @@ impl FromStr for ShipInternalModule {
                     size: 1,
                     class: (&armor_module).into(),
                     module: InternalModule::Armor(armor_module),
+                    free: false,
                 })
             }
             Err(ArmorModuleError::FailedToParse(_)) => {}
@@ -105,7 +108,15 @@ impl FromStr for ShipInternalModule {
             .map(|capture| capture.as_str())
             .unwrap_or_default();
 
-        let module = format!("{}{}", module_string, module_suffix)
+        let mut free = false;
+        let mut module_string = format!("{}{}", module_string, module_suffix);
+
+        if module_string.ends_with("_free") {
+            module_string = module_string.replace("_free", "");
+            free = true;
+        }
+
+        let module = module_string
             .parse()
             .map_err(ShipInternalModuleError::FailedToParseModule)?;
 
@@ -114,6 +125,7 @@ impl FromStr for ShipInternalModule {
                 module,
                 size: 1,
                 class: ModuleClass::I,
+                free,
             });
         }
 
@@ -122,22 +134,30 @@ impl FromStr for ShipInternalModule {
             None => 1,
         };
 
-        let class = match module {
-            InternalModule::PlanetApproachSuite => ModuleClass::I,
-            _ => match captures.get(5) {
-                Some(capture) => capture
-                    .as_str()
-                    .parse::<u8>()
-                    .map_err(ShipInternalModuleError::FailedToParseClassNumber)?
-                    .try_into()?,
-                None => ModuleClass::E,
-            },
-        };
+        // Phew... Okay. So. This part checks if there is a capture for the '_grade' part. If there
+        // is one it will first check `special_grades` if it should be another grade instead. Else
+        // if there is no match, then it will still check `special_grades` but without providing
+        // a ModuleGrade input. If none of these things return a Some value, then the class will
+        // default to `ModuleClass::E`.
+        let class = captures.get(5)
+            .map(|capture| capture.as_str()
+                .parse::<u8>()
+                .map_err(ShipInternalModuleError::FailedToParseClassNumber))
+            .transpose()?
+            .map(|grade_nr| grade_nr.try_into())
+            .transpose()?
+            .and_then(|class| match module.special_grades(size, Some(&class)) {
+                Some(replacement) => Some(replacement),
+                None => Some(class),
+            })
+            .or_else(|| module.special_grades(size, None))
+            .unwrap_or(ModuleClass::E);
 
         Ok(ShipInternalModule {
             module,
             size,
             class,
+            free,
         })
     }
 }
@@ -167,6 +187,7 @@ mod tests {
                     module: InternalModule::CollectorLimpetController,
                     size: 3,
                     class: ModuleClass::A,
+                    free: false,
                 },
             ),
             (
@@ -175,6 +196,7 @@ mod tests {
                     module: InternalModule::Thrusters,
                     size: 5,
                     class: ModuleClass::A,
+                    free: false,
                 },
             ),
             (
@@ -183,6 +205,7 @@ mod tests {
                     module: InternalModule::Thrusters,
                     size: 5,
                     class: ModuleClass::A,
+                    free: false,
                 },
             ),
             (
@@ -191,6 +214,7 @@ mod tests {
                     module: InternalModule::SupercruiseAssist,
                     size: 1,
                     class: ModuleClass::E,
+                    free: false,
                 },
             ),
             (
@@ -199,6 +223,7 @@ mod tests {
                     module: InternalModule::DetailedSurfaceScanner,
                     size: 1,
                     class: ModuleClass::I,
+                    free: false,
                 },
             ),
             (
@@ -207,6 +232,7 @@ mod tests {
                     module: InternalModule::LifeSupport,
                     size: 4,
                     class: ModuleClass::E,
+                    free: false,
                 },
             ),
             (
@@ -215,6 +241,7 @@ mod tests {
                     module: InternalModule::FrameShiftDrive,
                     size: 5,
                     class: ModuleClass::A,
+                    free: false,
                 },
             ),
             (
@@ -223,6 +250,7 @@ mod tests {
                     module: InternalModule::CargoRack,
                     size: 7,
                     class: ModuleClass::E,
+                    free: false,
                 },
             ),
             (
@@ -231,6 +259,7 @@ mod tests {
                     module: InternalModule::BiWeaveShieldGenerator,
                     size: 8,
                     class: ModuleClass::C,
+                    free: false,
                 },
             ),
             (
@@ -242,6 +271,7 @@ mod tests {
                     }),
                     size: 1,
                     class: ModuleClass::C,
+                    free: false,
                 },
             ),
             (
@@ -253,6 +283,7 @@ mod tests {
                     }),
                     size: 1,
                     class: ModuleClass::A,
+                    free: false,
                 },
             ),
             (
@@ -261,6 +292,7 @@ mod tests {
                     module: InternalModule::PlanetApproachSuite,
                     size: 1,
                     class: ModuleClass::I,
+                    free: false,
                 },
             ),
         ];

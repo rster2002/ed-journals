@@ -54,8 +54,8 @@ pub enum ShipHardpointModuleError {
 }
 
 lazy_static! {
-    static ref GRADED_HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)_size(\d+)_class(\d+)(_name;)?$"#).unwrap();
-    static ref HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fF]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mM]edium|[lL]arge|[hH]uge)(_[a-zA-Z0-9_]+?)?(_name;)?$"#).unwrap();
+    static ref GRADED_HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)_[sS]ize(\d+)_[cC]lass(\d+)(_[nN]ame;)?$"#).unwrap();
+    static ref HARDPOINT_MODULE_REGEX: Regex = Regex::new(r#"^\$?[hH]pt_(\w+?)(_([gG]imbal|[fF]ixed|[tT]urret))?_([tT]iny|[sS]mall|[mM]edium|[lL]arge|[hH]uge)(_[a-zA-Z0-9_]+?)?(_[nN]ame;)?$"#).unwrap();
 }
 
 impl FromStr for ShipHardpointModule {
@@ -255,6 +255,24 @@ mod tests {
 
                     // TODO this should be B
                     class: ModuleClass::E,
+                },
+            ),
+            (
+                "Hpt_CargoScanner_Size0_Class1",
+                ShipHardpointModule {
+                    module: HardpointModule::ManifestScanner,
+                    mounting: HardpointMounting::Turreted,
+                    size: HardpointSize::Tiny,
+                    class: ModuleClass::E,
+                },
+            ),
+            (
+                "Hpt_PlasmaAccelerator_Fixed_Large_Advanced",
+                ShipHardpointModule {
+                    module: HardpointModule::AdvancedPlasmaAccelerator,
+                    mounting: HardpointMounting::Fixed,
+                    size: HardpointSize::Large,
+                    class: ModuleClass::B,
                 },
             ),
         ];

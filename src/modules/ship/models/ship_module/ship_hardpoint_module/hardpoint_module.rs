@@ -112,7 +112,7 @@ pub enum HardpointModule {
     #[serde(rename = "plasmaaccelerator")]
     PlasmaAccelerator,
 
-    #[serde(rename = "plasmaaccelerator")]
+    #[serde(rename = "plasmaaccelerator_advanced")]
     AdvancedPlasmaAccelerator,
 
     #[serde(rename = "shieldbooster")]
