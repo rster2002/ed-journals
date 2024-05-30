@@ -201,7 +201,7 @@ mod tests {
     use serde_json::Value;
 
     use crate::modules::ship::ShipModule;
-    use crate::ship::{ModuleClass, ShipInternalModule};
+    use crate::ship::{HardpointMounting, HardpointSize, ModuleClass, ShipInternalModule};
 
     #[test]
     fn modules_are_parsed_correctly() {
@@ -240,7 +240,17 @@ mod tests {
             let input = parts.next().unwrap();
             parts.next().unwrap();
             parts.next().unwrap();
-            parts.next().unwrap();
+
+            let mounting: Option<HardpointMounting> = parts.next()
+                .and_then(|string| if string.is_empty() {
+                    None
+                } else {
+                    Some(string)
+                })
+                .map(|mounting| mounting.parse())
+                .transpose()
+                .unwrap();
+
             parts.next().unwrap();
             parts.next().unwrap();
 
@@ -271,7 +281,16 @@ mod tests {
                     assert_eq!(internal.size, size);
                     assert_eq!(internal.class, class);
                 }
-                ShipModule::Hardpoint(_) => {}
+                ShipModule::Hardpoint(hardpoint) => {
+                    dbg!(&hardpoint);
+
+                    let mounting = mounting.unwrap_or(HardpointMounting::Turreted);
+                    let hardpoint_size = HardpointSize::try_from(size).unwrap();
+
+                    assert_eq!(hardpoint.mounting, mounting);
+                    assert_eq!(hardpoint.class, class);
+                    assert_eq!(hardpoint.size, hardpoint_size);
+                }
                 _ => {},
                 // ShipModule::Cockpit(_) => {}
                 // ShipModule::PaintJob(_) => {}

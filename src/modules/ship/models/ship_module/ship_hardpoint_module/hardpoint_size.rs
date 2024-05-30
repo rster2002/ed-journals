@@ -52,6 +52,9 @@ impl HardpointSize {
 
 #[derive(Debug, Error)]
 pub enum HardpointSizeError {
+    #[error("Unknown hardpoint size number: {0}")]
+    UnknownHardpointSizeNumber(u8),
+
     #[error("Unknown hardpoint size: {0}")]
     UnknownHardpointSize(String),
 }
@@ -60,19 +63,34 @@ impl FromStr for HardpointSize {
     type Err = HardpointSizeError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "Tiny" => Ok(HardpointSize::Tiny),
-            "tiny" => Ok(HardpointSize::Tiny),
-            "Small" => Ok(HardpointSize::Small),
-            "small" => Ok(HardpointSize::Small),
-            "Medium" => Ok(HardpointSize::Medium),
-            "medium" => Ok(HardpointSize::Medium),
-            "Large" => Ok(HardpointSize::Large),
-            "large" => Ok(HardpointSize::Large),
-            "Huge" => Ok(HardpointSize::Huge),
-            "huge" => Ok(HardpointSize::Huge),
-            _ => Err(HardpointSizeError::UnknownHardpointSize(s.to_string())),
-        }
+        Ok(match s {
+            "Tiny" => HardpointSize::Tiny,
+            "tiny" => HardpointSize::Tiny,
+            "Small" => HardpointSize::Small,
+            "small" => HardpointSize::Small,
+            "Medium" => HardpointSize::Medium,
+            "medium" => HardpointSize::Medium,
+            "Large" => HardpointSize::Large,
+            "large" => HardpointSize::Large,
+            "Huge" => HardpointSize::Huge,
+            "huge" => HardpointSize::Huge,
+            _ => return Err(HardpointSizeError::UnknownHardpointSize(s.to_string())),
+        })
+    }
+}
+
+impl TryFrom<u8> for HardpointSize {
+    type Error = HardpointSizeError;
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        Ok(match value {
+            0 => HardpointSize::Tiny,
+            1 => HardpointSize::Small,
+            2 => HardpointSize::Medium,
+            3 => HardpointSize::Large,
+            4 => HardpointSize::Huge,
+            _  => return Err(HardpointSizeError::UnknownHardpointSizeNumber(value)),
+        })
     }
 }
 

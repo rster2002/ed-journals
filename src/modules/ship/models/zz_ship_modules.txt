@@ -900,12 +900,12 @@
 128785624,Type9_Military_Armour_Mirrored,standard,Mirrored Surface Composite,,,Type-10 Defender,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128785625,Type9_Military_Armour_Reactive,standard,Reactive Surface Composite,,,Type-10 Defender,1,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128785626,Hpt_FlakMortar_Fixed_Medium,hardpoint,Remote Release Flak Launcher,Fixed,,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128788699,Hpt_ATDumbfireMissile_Fixed_Medium,hardpoint,AX Missile Rack,Fixed,Dumbfire,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128788700,Hpt_ATDumbfireMissile_Fixed_Large,hardpoint,AX Missile Rack,Fixed,Dumbfire,,3,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128788699,Hpt_ATDumbfireMissile_Fixed_Medium,hardpoint,AX Missile Rack,Fixed,Dumbfire,,2,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128788700,Hpt_ATDumbfireMissile_Fixed_Large,hardpoint,AX Missile Rack,Fixed,Dumbfire,,3,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128788701,Hpt_ATMultiCannon_Fixed_Medium,hardpoint,AX Multi-Cannon,Fixed,,,2,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128788702,Hpt_ATMultiCannon_Fixed_Large,hardpoint,AX Multi-Cannon,Fixed,,,3,C,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128788704,Hpt_ATDumbfireMissile_Turret_Medium,hardpoint,AX Missile Rack,Turreted,Dumbfire,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
-128788705,Hpt_ATDumbfireMissile_Turret_Large,hardpoint,AX Missile Rack,Turreted,Dumbfire,,3,A,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128788704,Hpt_ATDumbfireMissile_Turret_Medium,hardpoint,AX Missile Rack,Turreted,Dumbfire,,2,F,ELITE_HORIZONS_V_PLANETARY_LANDINGS
+128788705,Hpt_ATDumbfireMissile_Turret_Large,hardpoint,AX Missile Rack,Turreted,Dumbfire,,3,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128793058,Hpt_FlakMortar_Turret_Medium,hardpoint,Remote Release Flak Launcher,Turreted,,,2,B,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128793059,Hpt_ATMultiCannon_Turret_Medium,hardpoint,AX Multi-Cannon,Turreted,,,2,F,ELITE_HORIZONS_V_PLANETARY_LANDINGS
 128793060,Hpt_ATMultiCannon_Turret_Large,hardpoint,AX Multi-Cannon,Turreted,,,3,E,ELITE_HORIZONS_V_PLANETARY_LANDINGS
@@ -1004,7 +1004,7 @@
 128833998,Hpt_Guardian_PlasmaLauncher_Fixed_Medium,hardpoint,Guardian Plasma Charger,Fixed,,,2,B,ELITE_HORIZONS_V_GUARDIAN_PLASMA_FIXED_MEDIUM
 128833999,Hpt_Guardian_PlasmaLauncher_Turret_Medium,hardpoint,Guardian Plasma Charger,Turreted,,,2,E,ELITE_HORIZONS_V_GUARDIAN_PLASMA_TURRET_MEDIUM
 128834000,Hpt_Guardian_ShardCannon_Fixed_Medium,hardpoint,Guardian Shard Cannon,Fixed,,,2,A,ELITE_HORIZONS_V_GUARDIAN_SHARD_FIXED_MEDIUM
-128834001,Hpt_Guardian_ShardCannon_Turret_Medium,hardpoint,Guardian Shard Cannon,Turreted,,,2,D,ELITE_HORIZONS_V_GUARDIAN_SHARD_TURRET_MEDIUM
+128834001,Hpt_Guardian_ShardCannon_Turret_Medium,hardpoint,Guardian Shard Cannon,Turreted,,,2,A,ELITE_HORIZONS_V_GUARDIAN_SHARD_TURRET_MEDIUM
 128834002,Hpt_PlasmaShockCannon_Fixed_Medium,hardpoint,Shock Cannon,Fixed,,,2,D,ELITE_HORIZONS_V_PLASMASHOCK_FIXED_MEDIUM
 128834003,Hpt_PlasmaShockCannon_Gimbal_Medium,hardpoint,Shock Cannon,Gimballed,,,2,D,ELITE_HORIZONS_V_PLASMASHOCK_GIMBAL_MEDIUM
 128834004,Hpt_PlasmaShockCannon_Turret_Medium,hardpoint,Shock Cannon,Turreted,,,2,E,ELITE_HORIZONS_V_PLASMASHOCK_TURRET_MEDIUM
