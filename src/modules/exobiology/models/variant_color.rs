@@ -160,6 +160,16 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 Species::BacteriumAlcyoneum | Species::BacteriumAurasus | Species::BacteriumCerbrus,
                 VariantSource::StarClass(StarClass::N),
             ) => VariantColor::Indigo,
+            (
+                _,
+                Species::BacteriumAlcyoneum | Species::BacteriumAurasus | Species::BacteriumCerbrus,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Mauve,
+            (
+                _,
+                Species::BacteriumAlcyoneum | Species::BacteriumAurasus | Species::BacteriumCerbrus,
+                VariantSource::StarClass(StarClass::Ae),
+            ) => VariantColor::Orange,
 
             (_, Species::BacteriumBullaris, VariantSource::Material(Material::Antimony)) => {
                 VariantColor::Cobalt
@@ -213,6 +223,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             }
             (_, Species::BacteriumNebulus, VariantSource::Material(Material::Yttrium)) => {
                 VariantColor::Cobalt
+            }
+            (_, Species::BacteriumNebulus, VariantSource::Material(Material::Technetium)) => {
+                VariantColor::Cyan
             }
 
             (_, Species::BacteriumOmentum, VariantSource::Material(Material::Cadmium)) => {
@@ -325,6 +338,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (_, Species::BacteriumVolu, VariantSource::Material(Material::Yttrium)) => {
                 VariantColor::Gold
             }
+            (_, Species::BacteriumVolu, VariantSource::Material(Material::Technetium)) => {
+                VariantColor::Lime
+            }
 
             (Genus::BrainTree, _, _) => VariantColor::None,
 
@@ -336,6 +352,10 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Cactoida, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Orange,
             (Genus::Cactoida, _, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Red,
             (Genus::Cactoida, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Sage,
+            (Genus::Cactoida, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Ocher,
+            (Genus::Cactoida, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Turquoise,
+            (Genus::Cactoida, _, VariantSource::StarClass(StarClass::O)) => VariantColor::Grey,
+            (Genus::Cactoida, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Indigo,
 
             (Genus::Clypeus, _, VariantSource::StarClass(StarClass::A)) => VariantColor::Orange,
             (Genus::Clypeus, _, VariantSource::StarClass(StarClass::F)) => VariantColor::Mauve,
@@ -344,6 +364,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Clypeus, _, VariantSource::StarClass(StarClass::M)) => VariantColor::Turquoise,
             (Genus::Clypeus, _, VariantSource::StarClass(StarClass::L)) => VariantColor::Teal,
             (Genus::Clypeus, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Yellow,
+            (Genus::Clypeus, _, VariantSource::StarClass(StarClass::B)) => VariantColor::Maroon,
+            (Genus::Clypeus, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Lime,
+            (Genus::Clypeus, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Green,
 
             (
                 _,
@@ -375,12 +398,44 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 Species::ConchaAureolas | Species::ConchaLabiata,
                 VariantSource::StarClass(StarClass::N),
             ) => VariantColor::Emerald,
+            (
+                _,
+                Species::ConchaAureolas | Species::ConchaLabiata,
+                VariantSource::StarClass(StarClass::B),
+            ) => VariantColor::Indigo,
+            (
+                _,
+                Species::ConchaAureolas | Species::ConchaLabiata,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Yellow,
+            (
+                _,
+                Species::ConchaAureolas | Species::ConchaLabiata,
+                VariantSource::StarClass(StarClass::D),
+            ) => VariantColor::Green,
+            (
+                _,
+                Species::ConchaAureolas | Species::ConchaLabiata,
+                VariantSource::StarClass(StarClass::W),
+            ) => VariantColor::Lime,
 
             (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Antimony)) => {
                 VariantColor::Peach
             }
             (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Ruthenium)) => {
                 VariantColor::Orange
+            }
+            (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Tellurium)) => {
+                VariantColor::Yellow
+            }
+            (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Polonium)) => {
+                VariantColor::Red
+            }
+            (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Yttrium)) => {
+                VariantColor::Gold
+            }
+            (_, Species::ConchaBiconcavis, VariantSource::Material(Material::Technetium)) => {
+                VariantColor::White
             }
 
             (_, Species::ConchaRenibus, VariantSource::Material(Material::Cadmium)) => {
@@ -458,9 +513,15 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 VariantColor::Turquoise
             }
             (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Sage,
-            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::AeBe)) => {
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::Ae)) => {
                 VariantColor::Maroon
-            }
+            },
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::O)) => {
+                VariantColor::Grey
+            },
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::W)) => {
+                VariantColor::Indigo
+            },
 
             (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::B)) => VariantColor::Lime,
             (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::F)) => VariantColor::Green,
@@ -470,6 +531,8 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Mauve,
             (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Indigo,
             (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Red,
+            (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow,
+            (Genus::Fruxeta, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Orange,
 
             (_, Species::FumerolaAquatis, VariantSource::Material(Material::Cadmium)) => {
                 VariantColor::Green
@@ -523,7 +586,10 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             }
             (_, Species::FumerolaExtremus, VariantSource::Material(Material::Tin)) => {
                 VariantColor::Peach
-            }
+            },
+            (_, Species::FumerolaExtremus, VariantSource::Material(Material::Cadmium)) => {
+                VariantColor::Aquamarine
+            },
 
             (_, Species::FumerolaNitris, VariantSource::Material(Material::Cadmium)) => {
                 VariantColor::White
@@ -668,6 +734,31 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 | Species::OsseusSpiralis,
                 VariantSource::StarClass(StarClass::TTS),
             ) => VariantColor::Green,
+            (
+                _,
+                Species::OsseusFractus,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Maroon,
+            (
+                _,
+                Species::OsseusSpiralis,
+                VariantSource::StarClass(StarClass::O),
+            ) => VariantColor::Yellow,
+            (
+                _,
+                Species::OsseusSpiralis,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Maroon,
+            (
+                _,
+                Species::OsseusCornibus,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Maroon,
+            (
+                _,
+                Species::OsseusPellebantus,
+                VariantSource::StarClass(StarClass::Y),
+            ) => VariantColor::Maroon,
 
             (_, Species::OsseusDiscus, VariantSource::Material(Material::Cadmium)) => {
                 VariantColor::White
@@ -792,6 +883,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Grey,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Amethyst,
             (Genus::Stratum, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Mauve,
+            (Genus::Stratum, _, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Teal,
+            (Genus::Stratum, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Indigo,
+            (Genus::Stratum, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Red,
 
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::B)) => VariantColor::Emerald,
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::A)) => VariantColor::Indigo,
@@ -803,6 +897,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Mauve,
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Ocher,
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Amethyst,
+            (Genus::Tubus, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Yellow,
+            (Genus::Tubus, _, VariantSource::StarClass(StarClass::O)) => VariantColor::Green,
+            (Genus::Tubus, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Lime,
 
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::F)) => VariantColor::Yellow,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::G)) => VariantColor::Lime,
@@ -811,7 +908,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::L)) => VariantColor::Sage,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Teal,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Maroon,
-            (Genus::Tussock, _, VariantSource::StarClass(StarClass::H)) => VariantColor::Red,
+            // (Genus::Tussock, _, VariantSource::StarClass(StarClass::H)) => VariantColor::Red,
+            (Genus::Tussock, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Orange,
+            (Genus::Tussock, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Red,
 
             (Genus::SinuousTubers, _, _) => VariantColor::None,
 
