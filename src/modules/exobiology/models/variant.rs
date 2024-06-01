@@ -156,4 +156,22 @@ mod tests {
             assert!(result.is_ok());
         }
     }
+
+    #[test]
+    fn variants_datadump_test_file_entries_all_parse() {
+        let content = include_str!("zz_datamined_variants.txt");
+        let mut lines = content.lines();
+
+        for line in lines {
+            if line.starts_with('#') {
+                continue;
+            }
+
+            dbg!(&line);
+            let result = Variant::from_str(line);
+
+            dbg!(&result);
+            assert!(result.is_ok());
+        }
+    }
 }

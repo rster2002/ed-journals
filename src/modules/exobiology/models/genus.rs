@@ -44,7 +44,7 @@ pub enum Genus {
     Fonticulua,
 
     #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
-    Fruxeta,
+    Frutexa,
 
     #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
@@ -157,7 +157,7 @@ impl From<&Species> for Genus {
             | Species::FrutexaAcus
             | Species::FrutexaFera
             | Species::FrutexaSponsae
-            | Species::FrutexaCollum => Genus::Fruxeta,
+            | Species::FrutexaCollum => Genus::Frutexa,
 
             Species::FumerolaAquatis
             | Species::FumerolaCarbosis
@@ -253,7 +253,7 @@ impl Display for Genus {
                 Genus::CrystallineShards => "Crystalline Shards",
                 Genus::Electricae => "Electricae",
                 Genus::Fonticulua => "Fonticulua",
-                Genus::Fruxeta => "Fruxeta",
+                Genus::Frutexa => "Frutexa",
                 Genus::Fumerola => "Fumerola",
                 Genus::Fungoida => "Fungoida",
                 Genus::Osseus => "Osseus",
@@ -287,7 +287,7 @@ impl Genus {
             Genus::CrystallineShards => 100,
             Genus::Electricae => 1000,
             Genus::Fonticulua => 500,
-            Genus::Fruxeta => 150,
+            Genus::Frutexa => 150,
             Genus::Fumerola => 100,
             Genus::Fungoida => 300,
             Genus::Osseus => 800,
