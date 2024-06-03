@@ -730,60 +730,49 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             }
 
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::O)) => VariantColor::Emerald, // This is a guess
             (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
 
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow, // This is a guess
             (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
 
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow, // This is a guess
             (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
 
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange,
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
             (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow,
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
 
 
-            (
-                _,
-                Species::OsseusFractus,
-                VariantSource::StarClass(StarClass::Y),
-            ) => VariantColor::Maroon,
-            (
-                _,
-                Species::OsseusSpiralis,
-                VariantSource::StarClass(StarClass::O),
-            ) => VariantColor::Yellow,
-            (
-                _,
-                Species::OsseusSpiralis,
-                VariantSource::StarClass(StarClass::Y),
-            ) => VariantColor::Maroon,
-            (
-                _,
-                Species::OsseusCornibus,
-                VariantSource::StarClass(StarClass::Y),
-            ) => VariantColor::Maroon,
-            (
-                _,
-                Species::OsseusPellebantus,
-                VariantSource::StarClass(StarClass::Y),
-            ) => VariantColor::Maroon,
-
+            (_, Species::OsseusDiscus, VariantSource::Material(Material::Boron)) => {
+                VariantColor::White
+            }
             (_, Species::OsseusDiscus, VariantSource::Material(Material::Cadmium)) => {
                 VariantColor::White
             }
@@ -796,11 +785,11 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (_, Species::OsseusDiscus, VariantSource::Material(Material::Niobium)) => {
                 VariantColor::Aquamarine
             }
-            (_, Species::OsseusDiscus, VariantSource::Material(Material::Tungsten)) => {
-                VariantColor::Red
-            }
             (_, Species::OsseusDiscus, VariantSource::Material(Material::Tin)) => {
                 VariantColor::Blue
+            }
+            (_, Species::OsseusDiscus, VariantSource::Material(Material::Tungsten)) => {
+                VariantColor::Red
             }
 
             (_, Species::OsseusPumice, VariantSource::Material(Material::Antimony)) => {
@@ -841,25 +830,31 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 VariantColor::Aquamarine
             }
 
-            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Niobium)) => {
-                VariantColor::Mulberry
-            }
-            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Molybdenum)) => {
-                VariantColor::Gold
+            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Boron)) => {
+                VariantColor::Lime
             }
             (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Cadmium)) => {
                 VariantColor::Lime
             }
-            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Tin)) => {
-                VariantColor::Orange
-            }
             (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Mercury)) => {
                 VariantColor::Cyan
+            }
+            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Molybdenum)) => {
+                VariantColor::Gold
+            }
+            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Niobium)) => {
+                VariantColor::Mulberry
+            }
+            (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Tin)) => {
+                VariantColor::Orange
             }
             (_, Species::ReceptaDeltahedronix, VariantSource::Material(Material::Tungsten)) => {
                 VariantColor::Red
             }
 
+            // TODO figure out O and W. Possible remaining colors: Green and Indigo
+            // O
+            // W
             (_, Species::ReceptaUmbrux, VariantSource::StarClass(StarClass::L)) => {
                 VariantColor::Ocher
             }
@@ -925,14 +920,16 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::O)) => VariantColor::Green,
             (Genus::Tubus, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Lime,
 
+            // TODO add Ae and TTS. Possible colors: Amethyst and Turquoise
+            // Ae
+            (Genus::Tussock, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Maroon,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::F)) => VariantColor::Yellow,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::G)) => VariantColor::Lime,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::K)) => VariantColor::Green,
-            (Genus::Tussock, _, VariantSource::StarClass(StarClass::M)) => VariantColor::Emerald,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::L)) => VariantColor::Sage,
+            (Genus::Tussock, _, VariantSource::StarClass(StarClass::M)) => VariantColor::Emerald,
+            // TTS
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::T)) => VariantColor::Teal,
-            (Genus::Tussock, _, VariantSource::StarClass(StarClass::D)) => VariantColor::Maroon,
-            // (Genus::Tussock, _, VariantSource::StarClass(StarClass::H)) => VariantColor::Red,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Orange,
             (Genus::Tussock, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Red,
 
