@@ -5,6 +5,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::materials::MaterialGrade;
 use crate::modules::materials::MaterialCategory;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
@@ -176,6 +177,10 @@ impl Material {
 
     pub fn is_encoded(&self) -> bool {
         matches!(self.into(), MaterialCategory::Encoded)
+    }
+
+    pub fn grade(&self) -> MaterialGrade {
+        self.into()
     }
 }
 

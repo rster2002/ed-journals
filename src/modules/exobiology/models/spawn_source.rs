@@ -1,32 +1,32 @@
+pub mod spawn_source_star;
+pub mod target_planet;
+pub mod target_system;
+
+use std::cmp::min;
 use std::collections::HashSet;
 
 use serde::Serialize;
 use strum::IntoEnumIterator;
 
+use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
+use crate::exobiology::models::spawn_source::target_planet::TargetPlanet;
+use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{
-    Atmosphere, AtmosphereDensity, AtmosphereType, PlanetClass, PlanetComposition, StarClass,
-    StarLuminosity, Volcanism, VolcanismType,
+    Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
+    StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
-use crate::logs::scan_event::{DistanceLs, Gravity};
-use crate::materials::Material;
+use crate::logs::scan_event::{ScanEventParent};
 
-#[derive(Debug, Serialize)]
-pub struct SpawnSource {
-    pub body_name: String,
-    pub star_system_position: Option<[f32; 3]>,
-    pub parent_stars: Vec<SpawnSourceStar>,
-    pub target_planet: Option<TargetPlanet>,
-    pub geological_signals_present: Option<bool>,
-    pub distance_from_star: Option<DistanceLs>,
-    pub distance_from_nebula: Option<DistanceLs>,
-    pub planet_classes_in_system: HashSet<PlanetClass>,
-    pub stars_in_system: HashSet<SpawnSourceStar>,
+#[derive(Debug)]
+pub struct SpawnSource<'a> {
+    pub target_system: &'a TargetSystem,
+    pub target_planet: &'a TargetPlanet,
 }
 
-impl SpawnSource {
+impl<'a> SpawnSource<'a> {
     /// Returns a list of species that could spawn on this spawn source.
-    pub fn get_spawnable_species(&self) -> HashSet<Species> {
+    pub fn get_spawnable_species(&self) -> Vec<Species> {
         Species::iter()
             .filter(|species| self.can_spawn_species(species))
             .collect()
@@ -44,140 +44,85 @@ impl SpawnSource {
     pub fn satisfies_spawn_condition(&self, condition: &SpawnCondition) -> bool {
         match condition {
             SpawnCondition::MinMeanTemperature(min_temp) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.surface_temperature >= *min_temp
-                } else {
-                    false
-                }
+                &self.target_planet.surface_temperature >= min_temp
             }
             SpawnCondition::MaxMeanTemperature(max_temp) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.surface_temperature <= *max_temp
-                } else {
-                    false
-                }
+                &self.target_planet.surface_temperature <= &max_temp
             }
             SpawnCondition::NoAtmosphere => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.atmosphere.kind == AtmosphereType::None
-                } else {
-                    false
-                }
+                self.target_planet.atmosphere.kind == AtmosphereType::None
             }
             SpawnCondition::AnyThinAtmosphere => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.atmosphere.density == AtmosphereDensity::Thin
-                } else {
-                    false
-                }
+                self.target_planet.atmosphere.density == AtmosphereDensity::Thin
             }
             SpawnCondition::ThinAtmosphere(atmosphere_type) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.atmosphere.density == AtmosphereDensity::Thin
-                        && target_planet.atmosphere.kind == *atmosphere_type
-                } else {
-                    false
-                }
+                self.target_planet.atmosphere.density == AtmosphereDensity::Thin
+                    && &self.target_planet.atmosphere.kind == atmosphere_type
             }
             SpawnCondition::MinGravity(min_gravity) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity.as_g() >= *min_gravity
-                } else {
-                    false
-                }
+                &self.target_planet.gravity.as_g() >= min_gravity
             }
             SpawnCondition::MaxGravity(max_gravity) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.gravity.as_g() <= *max_gravity
-                } else {
-                    false
-                }
+                &self.target_planet.gravity.as_g() <= max_gravity
             }
-            SpawnCondition::PlanetClass(planet_class) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.class == *planet_class
-                } else {
-                    false
-                }
+            SpawnCondition::PlanetClass(planet_class) => &self.target_planet.class == planet_class,
+            SpawnCondition::ParentStarClass(star_class) => {
+                self.parent_stars().any(|star| &star.class == star_class)
             }
-            SpawnCondition::ParentStarClass(star_class) => self
-                .parent_stars
-                .iter()
-                .any(|star| star.class == *star_class),
             SpawnCondition::ParentStarLuminosity(star_luminosity) => self
-                .parent_stars
-                .iter()
-                .any(|star| star.luminosity == *star_luminosity),
+                .parent_stars()
+                .any(|star| &star.luminosity == star_luminosity),
             SpawnCondition::MinOrEqualParentStarLuminosity(star_luminosity) => self
-                .parent_stars
-                .iter()
-                .any(|star| star.luminosity >= *star_luminosity),
-            SpawnCondition::SystemContainsPlanetClass(planet_class) => {
-                self.planet_classes_in_system.contains(planet_class)
-            }
+                .parent_stars()
+                .any(|star| &star.luminosity >= star_luminosity),
+            SpawnCondition::SystemContainsPlanetClass(planet_class) => self
+                .target_system
+                .planet_classes_in_system
+                .contains(planet_class),
             SpawnCondition::VolcanismType(volcanism_type) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.volcanism.kind == *volcanism_type
-                } else {
-                    false
-                }
+                &self.target_planet.volcanism.kind == volcanism_type
             }
             SpawnCondition::MinDistanceFromParentSun(min_distance) => {
-                if let Some(distance_from_star) = &self.distance_from_star {
-                    distance_from_star.as_au() >= *min_distance
-                } else {
-                    false
-                }
+                // TODO not sure, but Eccentricity might need to be taken into account as well
+                &(self.target_planet.semi_major_axis / 149597870700.0) >= min_distance
             }
             SpawnCondition::AnyVolcanism => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.volcanism.kind != VolcanismType::None
-                } else {
-                    false
-                }
+                self.target_planet.volcanism.kind != VolcanismType::None
             }
             SpawnCondition::WithinNebulaRange(nebula_range) => {
-                if let Some(nebula_distance) = &self.distance_from_nebula {
-                    nebula_distance.as_ly() <= *nebula_range
-                } else {
-                    false
-                }
+                &Nebula::closest_to(self.target_system.star_system_position)
+                    .distance_to(self.target_system.star_system_position)
+                    .as_ly()
+                    <= nebula_range
             }
             SpawnCondition::GeologicalSignalsPresent => {
-                if let Some(geological_signals_present) = &self.geological_signals_present {
-                    *geological_signals_present
-                } else {
-                    false
-                }
+                self.target_planet.geological_signals_present
             }
             SpawnCondition::MaterialPresence(material) => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.materials.contains(material)
-                } else {
-                    false
-                }
+                self.target_planet.materials.contains(material)
             }
             SpawnCondition::RockyComposition => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.composition.rock > 0.0
-                } else {
-                    false
-                }
+                let Some(composition) = &self.target_planet.composition else {
+                    return false;
+                };
+
+                composition.rock > 0.0
             }
             SpawnCondition::IcyComposition => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.composition.ice > 0.0
-                } else {
-                    false
-                }
+                let Some(composition) = &self.target_planet.composition else {
+                    return false;
+                };
+
+                composition.ice > 0.0
             }
             SpawnCondition::MetalComposition => {
-                if let Some(target_planet) = &self.target_planet {
-                    target_planet.composition.metal > 0.0
-                } else {
-                    false
-                }
+                let Some(composition) = &self.target_planet.composition else {
+                    return false;
+                };
+
+                composition.metal > 0.0
             }
+
             SpawnCondition::Special => false,
 
             SpawnCondition::Any(conditions) => conditions
@@ -188,22 +133,14 @@ impl SpawnSource {
                 .all(|condition| self.satisfies_spawn_condition(condition)),
         }
     }
-}
 
-#[derive(Debug, Serialize)]
-pub struct TargetPlanet {
-    pub atmosphere: Atmosphere,
-    pub gravity: Gravity,
-    pub class: PlanetClass,
-    pub surface_temperature: f32,
-    pub volcanism: Volcanism,
-    pub materials: HashSet<Material>,
-    pub composition: PlanetComposition,
-}
+    pub fn parent_stars(&self) -> impl Iterator<Item = &SpawnSourceStar> {
+        self.target_planet.parents.iter().filter_map(|parent| {
+            if let ScanEventParent::Star(id) = parent {
+                return self.target_system.stars_in_system.get(id);
+            }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Serialize)]
-pub struct SpawnSourceStar {
-    pub body_id: u8,
-    pub class: StarClass,
-    pub luminosity: StarLuminosity,
+            None
+        })
+    }
 }

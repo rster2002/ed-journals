@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::exobiology::Species;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum Genus {
     #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
     Aleoida,

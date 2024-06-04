@@ -3,7 +3,7 @@ use serde::Serialize;
 use crate::logs::scan_organic_event::ScanOrganicEvent;
 use crate::modules::exobiology::Species;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, PartialEq, Eq)]
 pub struct CurrentOrganic {
     pub system_address: u64,
     pub body_id: u8,

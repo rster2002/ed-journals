@@ -13,11 +13,11 @@ use crate::state::models::feed_result::FeedResult;
 /// creates a state which makes it easier to read information about the game.
 #[derive(Serialize)]
 pub struct GameState {
-    commanders: HashMap<String, CommanderState>,
+    pub commanders: HashMap<String, CommanderState>,
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
     header_count: u64,
-    queued: Vec<LogEvent>,
+    later: Vec<LogEvent>,
 }
 
 impl GameState {
@@ -27,7 +27,7 @@ impl GameState {
             current_commander: None,
             file_header: None,
             header_count: 0,
-            queued: Vec::new(),
+            later: Vec::new(),
         }
     }
 
@@ -55,31 +55,30 @@ impl GameState {
         Some(commander_entry)
     }
 
+    /// Takes the log events and processes it in the state. Note that it does not guarantee that the
+    /// event will be processed immediately. In some situations the event will be queued when the
+    /// state things it is better able to process the event, but it doesn't do this automatically.
+    /// For those events to be processed, you need to call [GameState::flush]. This will go through
+    /// the remaining events and tries to process them.
     pub fn feed_log_event(&mut self, event: &LogEvent) {
         let handle_result = self.handle(event);
 
         if let FeedResult::Later = handle_result {
-            self.queued.push(event.clone());
+            self.later.push(event.clone());
         }
+    }
 
-        let queued = mem::take(&mut self.queued);
+    /// Processes any left-over events that were scheduled for later processing. Call this sparingly
+    /// especially not while you're also still reading a lot of events through
+    /// [GameState::feed_log_event] as that will likely cause performance issues.
+    pub fn flush(&mut self) {
+        let queued = mem::take(&mut self.later);
 
         for item in queued {
-            let result = self.handle(&item);
-
-            if !result.is_accepted() {
-                self.queued.push(item.clone());
+            if let FeedResult::Later = self.handle(&item) {
+                self.later.push(item);
             }
         }
-
-        // TODO make this actually decent
-        // self.queued = self.queued
-        //     .iter()
-        //     .filter(|item| {
-        //         !self.handle(item).is_accepted()
-        //     })
-        //     .map(|item| item.clone())
-        //     .collect()
     }
 
     fn handle(&mut self, event: &LogEvent) -> FeedResult {
@@ -114,5 +113,49 @@ impl GameState {
 impl Default for GameState {
     fn default() -> Self {
         GameState::new()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashSet;
+    use crate::logs::blocking::LogDirReader;
+    use crate::state::GameState;
+    use std::env::current_dir;
+    use std::time::Instant;
+
+    #[test]
+    fn state_is_correct() {
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+
+        let log_dir = LogDirReader::open(dir_path);
+
+        let mut state = GameState::new();
+        let instant = Instant::now();
+
+        for entry in log_dir {
+            state.feed_log_event(&entry.unwrap());
+        }
+
+        state.flush();
+
+        dbg!(instant.elapsed().as_nanos());
+
+        // Confirms that there are only one species of each genus on each planet
+        for commander in state.commanders.values() {
+            for system in commander.systems.values() {
+                for body in system.bodies.values() {
+                    let mut genuses = HashSet::new();
+
+                    for species in &body.scanned_species {
+                        let inserted = genuses.insert(species.genus());
+
+                        if !inserted {
+                            panic!("Not here!");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

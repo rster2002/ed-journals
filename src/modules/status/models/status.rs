@@ -2,8 +2,8 @@ use chrono::{DateTime, Utc};
 use serde::Deserialize;
 
 use crate::modules::status::models::destination_status::DestinationStatus;
-use crate::modules::status::models::flags2::Flags2;
 use crate::modules::status::models::flags::Flags;
+use crate::modules::status::models::flags2::Flags2;
 use crate::modules::status::models::fuel_status::FuelStatus;
 use crate::modules::status::models::gui_focus::GuiFocus;
 use crate::modules::status::models::legal_status::LegalStatus;

@@ -8,8 +8,8 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::modules::ship::{HardpointSize, HardpointSizeError};
 use crate::modules::ship::models::ship_slot::core_slot::CoreSlot;
+use crate::modules::ship::{HardpointSize, HardpointSizeError};
 
 mod core_slot;
 

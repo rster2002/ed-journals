@@ -9,5 +9,5 @@ pub struct ScientificResearchEvent {
     pub market_id: u64,
     pub name: Material,
     pub category: MaterialCategory,
-    pub count: u8,
+    pub count: u16,
 }

@@ -49,6 +49,8 @@ pub enum VolcanismType {
     #[serde(alias = "silicate vapour geysers")]
     SilicateVapourGeysers,
 
+    Iron,
+
     #[serde(alias = "rocky magma")]
     RockyMagma,
 }

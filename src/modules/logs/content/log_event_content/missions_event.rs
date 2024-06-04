@@ -14,10 +14,10 @@ pub struct MissionsEvent {
 #[serde(rename_all = "PascalCase")]
 pub struct MissionEventEntry {
     #[serde(rename = "MissionID")]
-    pub mission_id: u32,
+    pub mission_id: u64,
     pub name: MissionType,
     pub passenger_mission: bool,
-    pub expires: u32,
+    pub expires: u64,
 }
 
 #[cfg(test)]
