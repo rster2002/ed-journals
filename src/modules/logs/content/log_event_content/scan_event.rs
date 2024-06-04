@@ -1,7 +1,7 @@
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::Value;
 
-use crate::galaxy::PlanetComposition;
+use crate::galaxy::{Gravity, LocalDistance, PlanetComposition};
 use crate::modules::galaxy::{
     Atmosphere, AtmosphereElement, AtmosphereType, OrbitInfo, PlanetClass, RingClass, StarClass,
     StarLuminosity, TerraformState, Volcanism,
@@ -23,7 +23,7 @@ pub struct ScanEvent {
     pub system_address: u64,
 
     #[serde(rename = "DistanceFromArrivalLS")]
-    pub distance_from_arrival: DistanceLs,
+    pub distance_from_arrival: LocalDistance,
 
     #[serde(default)]
     pub was_discovered: bool,
@@ -147,67 +147,6 @@ pub struct ScanEventPlanet {
     pub axial_tilt: f32,
 }
 
-/// Distance in light seconds.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-pub struct DistanceLs(pub f32);
-
-impl DistanceLs {
-    /// Returns the distance in light seconds.
-    pub fn as_ls(&self) -> f32 {
-        self.0
-    }
-
-    /// Returns the distance in astronomical units.
-    pub fn as_au(&self) -> f32 {
-        self.0 / 500.0
-    }
-
-    /// Returns the distance in light years.
-    pub fn as_ly(&self) -> f32 {
-        self.0 / 31555695.8031
-    }
-
-    /// Creates a new distance from the given amount of light years.
-    pub fn from_ly(ly: f32) -> Self {
-        DistanceLs(ly * 31555695.8031)
-    }
-}
-
-impl std::fmt::Debug for DistanceLs {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{} ls ({} au / {} ly)",
-            self.0,
-            self.as_au(),
-            self.as_ly()
-        )
-    }
-}
-
-/// Gravity in m/s².
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-pub struct Gravity(pub f32);
-
-impl Gravity {
-    /// Returns the value of gravity in G.
-    pub fn as_g(&self) -> f32 {
-        // Round on two decimal points
-        (self.0 / 9.812 * 100.0).round() / 100.0
-    }
-
-    /// Returns the value of gravity in m/s².
-    pub fn as_ms2(&self) -> f32 {
-        self.0
-    }
-}
-
-impl std::fmt::Debug for Gravity {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}m/s² ({}g)", self.0, self.as_g())
-    }
-}
-
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetAtmosphereComposition {
@@ -250,9 +189,9 @@ pub struct ScanEventBeltCluster {}
 #[cfg(test)]
 mod tests {
     use crate::{
-        logs::content::log_event_content::scan_event::DistanceLs,
         modules::logs::content::log_event_content::scan_event::ScanEvent,
     };
+    use crate::galaxy::LocalDistance;
 
     #[test]
     fn scan_event_is_parsed_correctly() {
@@ -290,12 +229,12 @@ mod tests {
             assert!((a - b).abs() < 0.0001);
         }
 
-        let distance = DistanceLs(1000.0);
+        let distance = LocalDistance(1000.0);
 
         assert_roughly_eq(distance.as_au(), 2.0);
         assert_roughly_eq(distance.as_ly(), 0.00003169);
 
-        let distance = DistanceLs::from_ly(0.00003169);
+        let distance = LocalDistance::from_ly(0.00003169);
         assert_roughly_eq(distance.as_au(), 2.0);
         assert_roughly_eq(distance.as_ls(), 1000.0);
     }

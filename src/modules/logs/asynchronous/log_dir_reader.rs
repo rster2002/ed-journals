@@ -2,9 +2,9 @@ use std::path::Path;
 
 use thiserror::Error;
 
-use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 use crate::logs::asynchronous::{LogFileReader, LogFileReaderError};
 use crate::logs::content::LogEvent;
+use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 
 #[derive(Debug)]
 pub struct LogDirReader {

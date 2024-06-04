@@ -799,7 +799,6 @@ impl LogEventContent {
             LogEventContent::Location(event) => event.location_info.system_address,
             LogEventContent::FSDJump(event) => event.system_info.system_address,
             LogEventContent::CarrierJump(event) => event.system_info.system_address,
-            LogEventContent::CarrierJump(event) => event.system_info.system_address,
             LogEventContent::ApproachSettlement(event) => event.system_address,
             LogEventContent::CarrierBuy(event) => event.system_address,
             LogEventContent::CarrierJumpRequest(event) => event.system_address,
@@ -836,7 +835,6 @@ impl LogEventContent {
         Some(match self {
             LogEventContent::Location(event) => &event.location_info.star_system,
             LogEventContent::FSDJump(event) => &event.system_info.star_system,
-            LogEventContent::CarrierJump(event) => &event.system_info.star_system,
             LogEventContent::CarrierJump(event) => &event.system_info.star_system,
             LogEventContent::CarrierBuy(event) => &event.location,
             LogEventContent::CarrierJumpRequest(event) => &event.system_name,
@@ -885,6 +883,7 @@ impl LogEventContent {
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,
             LogEventContent::SAAScanComplete(event) => event.body_id,
+            LogEventContent::SAASignalsFound(event) => event.body_id,
             LogEventContent::ScanBaryCentre(event) => event.body_id,
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,

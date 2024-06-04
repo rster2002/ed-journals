@@ -8,6 +8,8 @@ pub struct MaterialTradeEvent {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub trader_type: MaterialCategory,
+    pub paid: MaterialTradeEventExchange,
+    pub received: MaterialTradeEventExchange,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

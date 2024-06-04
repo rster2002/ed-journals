@@ -16,7 +16,7 @@ pub struct TransferMicroResourcesEventTransfer {
     #[serde(rename = "Name_Localised")]
     pub name_localized: Option<String>,
     pub category: ItemType,
-    pub count: u8,
+    pub count: u16,
     pub direction: TransferMicroResourcesEventTransferDirection,
 }
 

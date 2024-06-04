@@ -5,6 +5,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::materials::MaterialGrade;
 use crate::modules::materials::MaterialCategory;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
@@ -332,6 +333,10 @@ impl Material {
             #[cfg(not(feature = "strict"))]
             Material::Unknown(_) => 0,
         }
+    }
+
+    pub fn grade(&self) -> MaterialGrade {
+        self.into()
     }
 }
 

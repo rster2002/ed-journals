@@ -31,10 +31,24 @@ impl MaterialGrade {
             MaterialGrade::Unknown => 0,
         }
     }
+
+    pub fn grade_storage_limit(&self) -> u16 {
+        match self {
+            MaterialGrade::Grade1 => 300,
+            MaterialGrade::Grade2 => 250,
+            MaterialGrade::Grade3 => 200,
+            MaterialGrade::Grade4 => 150,
+            MaterialGrade::Grade5 => 100,
+            MaterialGrade::None => 0,
+
+            #[cfg(not(feature = "strict"))]
+            MaterialGrade::Unknown => 250,
+        }
+    }
 }
 
-impl From<Material> for MaterialGrade {
-    fn from(value: Material) -> Self {
+impl From<&Material> for MaterialGrade {
+    fn from(value: &Material) -> Self {
         match value {
             // Raw
             Material::Carbon => MaterialGrade::Grade1,

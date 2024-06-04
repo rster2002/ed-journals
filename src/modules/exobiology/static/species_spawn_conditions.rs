@@ -269,12 +269,15 @@ lazy_static! {
         ),
         (
             Species::BacteriumTela,
-            vec![SpawnCondition::Any(vec![
-                SpawnCondition::MaterialPresence(Material::Iron),
-                SpawnCondition::VolcanismType(VolcanismType::HeliumGeysers),
-                SpawnCondition::VolcanismType(VolcanismType::SilicateMagma),
-                SpawnCondition::VolcanismType(VolcanismType::SilicateVapourGeysers),
-            ])]
+            vec![
+                SpawnCondition::AnyThinAtmosphere,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::VolcanismType(VolcanismType::HeliumGeysers),
+                    SpawnCondition::VolcanismType(VolcanismType::Iron),
+                    SpawnCondition::VolcanismType(VolcanismType::SilicateMagma),
+                    SpawnCondition::VolcanismType(VolcanismType::SilicateVapourGeysers),
+                ]),
+            ]
         ),
         (
             Species::BrainTreeAureum,
@@ -553,10 +556,7 @@ lazy_static! {
         (
             Species::FonticuluaUpupam,
             vec![
-                SpawnCondition::Any(vec![
-                    SpawnCondition::ThinAtmosphere(AtmosphereType::Argon),
-                    SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
-                ]),
+                SpawnCondition::ThinAtmosphere(AtmosphereType::ArgonRich),
                 SpawnCondition::Any(vec![
                     SpawnCondition::PlanetClass(PlanetClass::IcyBody),
                     SpawnCondition::PlanetClass(PlanetClass::RockyIceBody),
@@ -863,47 +863,71 @@ lazy_static! {
         ),
         (
             Species::SinuousTubersAlbidum,
-            vec![SpawnCondition::RockyComposition]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::RockyComposition
+            ]
         ),
         (
             Species::SinuousTubersBlatteum,
-            vec![SpawnCondition::Any(vec![
-                SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-            ])]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ]
         ),
         (
             Species::SinuousTubersCaeruleum,
-            vec![SpawnCondition::RockyComposition]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::RockyComposition,
+            ]
         ),
         (
             Species::SinuousTubersLindigoticum,
-            vec![SpawnCondition::RockyComposition]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::RockyComposition,
+            ]
         ),
         (
             Species::SinuousTubersPrasinum,
-            vec![SpawnCondition::Any(vec![
-                SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-            ])]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ]
         ),
         (
             Species::SinuousTubersRoseum,
-            vec![SpawnCondition::VolcanismType(VolcanismType::SilicateMagma)]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::VolcanismType(VolcanismType::SilicateMagma),
+            ]
         ),
         (
             Species::SinuousTubersViolaceum,
-            vec![SpawnCondition::Any(vec![
-                SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-            ])]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ]
         ),
         (
             Species::SinuousTubersViride,
-            vec![SpawnCondition::Any(vec![
-                SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
-                SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
-            ])]
+            vec![
+                SpawnCondition::NoAtmosphere,
+                SpawnCondition::Any(vec![
+                    SpawnCondition::PlanetClass(PlanetClass::MetalRichBody),
+                    SpawnCondition::PlanetClass(PlanetClass::HighMetalContentBody),
+                ]),
+            ]
         ),
         (
             Species::StratumAraneamus,

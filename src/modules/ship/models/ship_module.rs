@@ -2,15 +2,15 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-use crate::modules::ship::{
-    ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
-    ShipPaintJob, ShipVoicepack,
-};
 use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
 use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
 use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
 use crate::modules::ship::models::ship_module::ship_string_lights::ShipStringLights;
 use crate::modules::ship::models::ship_module::ship_weapon_color::ShipWeaponColor;
+use crate::modules::ship::{
+    ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
+    ShipPaintJob, ShipVoicepack,
+};
 
 pub mod module_class;
 pub mod ship_bobble;
