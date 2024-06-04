@@ -667,7 +667,7 @@ impl Species {
             Species::ConchaLabiata => 2_352_400,
             Species::ConchaBiconcavis => 19_010_800,
 
-            Species::CrystallineShards => 0,
+            Species::CrystallineShards => 1_628_800,
 
             Species::ElectricaePluma => 6_284_600,
             Species::ElectricaeRadialem => 6_284_600,
