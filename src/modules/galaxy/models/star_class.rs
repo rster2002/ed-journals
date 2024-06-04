@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Serialize;
@@ -186,5 +187,66 @@ impl StarClass {
             StarClass::SupermassiveBlackHole => 33.5678,
             _ => 1_200.0,
         }
+    }
+}
+
+impl Display for StarClass {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            StarClass::O => "O",
+            StarClass::B => "B",
+            StarClass::A => "A",
+            StarClass::F => "F",
+            StarClass::G => "G",
+            StarClass::K => "K",
+            StarClass::M => "M",
+            StarClass::L => "L",
+            StarClass::T => "T",
+            StarClass::Y => "Y",
+            StarClass::TTS => "TTS",
+            StarClass::Ae => "Ae",
+            StarClass::Be => "Be",
+            StarClass::AeBe => "AeBe",
+            StarClass::W => "W",
+            StarClass::WN => "WN",
+            StarClass::WNC => "WNC",
+            StarClass::WC => "WC",
+            StarClass::WO => "WO",
+            StarClass::CS => "CS",
+            StarClass::C => "C",
+            StarClass::CN => "CN",
+            StarClass::CJ => "CJ",
+            StarClass::CH => "CH",
+            StarClass::CHd => "CHd",
+            StarClass::D => "D",
+            StarClass::DA => "DA",
+            StarClass::DAB => "DAB",
+            StarClass::DAO => "DAO",
+            StarClass::DAZ => "DAZ",
+            StarClass::DAV => "DAV",
+            StarClass::DB => "DB",
+            StarClass::DBZ => "DBZ",
+            StarClass::DBV => "DBV",
+            StarClass::DO => "DO",
+            StarClass::DOV => "DOV",
+            StarClass::DQ => "DQ",
+            StarClass::DC => "DC",
+            StarClass::DCV => "DCV",
+            StarClass::DX => "DX",
+            StarClass::N => "N",
+            StarClass::H => "H",
+            StarClass::X => "X",
+            StarClass::SupermassiveBlackHole => "SupermassiveBlackHole",
+            StarClass::ABlueWhiteSuperGiant => "ABlueWhiteSuperGiant",
+            StarClass::FWhiteSuperGiant => "FWhiteSuperGiant",
+            StarClass::MRedSuperGiant => "MRedSuperGiant",
+            StarClass::MRedGiant => "MRedGiant",
+            StarClass::KOrangeGiant => "KOrangeGiant",
+            StarClass::RoguePlanet => "RoguePlanet",
+            StarClass::Nebula => "Nebula",
+            StarClass::StellarRemnantNebula => "StellarRemnantNebula",
+            StarClass::MS => "MS",
+            StarClass::S => "S",
+        })
     }
 }

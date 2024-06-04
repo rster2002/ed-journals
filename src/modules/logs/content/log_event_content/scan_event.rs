@@ -24,7 +24,11 @@ pub struct ScanEvent {
 
     #[serde(rename = "DistanceFromArrivalLS")]
     pub distance_from_arrival: DistanceLs,
+
+    #[serde(default)]
     pub was_discovered: bool,
+
+    #[serde(default)]
     pub was_mapped: bool,
 
     /// [None] value should be considered a belt cluster
@@ -89,6 +93,8 @@ impl<'de> Deserialize<'de> for ScanEventKind {
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventStar {
     pub star_type: StarClass,
+
+    #[serde(default)]
     pub subclass: u8,
     pub stellar_mass: f32,
     pub radius: f32,

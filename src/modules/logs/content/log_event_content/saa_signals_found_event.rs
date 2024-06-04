@@ -11,7 +11,11 @@ pub struct SAASignalsFoundEvent {
 
     #[serde(rename = "BodyID")]
     pub body_id: u8,
+
+    #[serde(default)]
     pub signals: Vec<SAASignalsFoundEventSignal>,
+
+    #[serde(default)]
     pub genuses: Vec<SAASignalsFoundEventGenus>,
 }
 

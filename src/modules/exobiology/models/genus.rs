@@ -304,4 +304,34 @@ impl Genus {
             Genus::Unknown(_) => 0,
         }
     }
+
+    pub fn id(&self) -> u64 {
+        match self {
+            Genus::Aleoida => 23100,
+            Genus::AmphoraPlant => 2101400,
+            Genus::Anemone => 2100400,
+            Genus::BarkMound => 2100300,
+            Genus::Bacterium => 23200,
+            Genus::BrainTree => 2100200,
+            Genus::Cactoida => 23300,
+            Genus::Clypeus => 23400,
+            Genus::Concha => 23500,
+            Genus::CrystallineShards => 2101500,
+            Genus::Electricae => 23600,
+            Genus::Fonticulua => 23700,
+            Genus::Fruxeta => 24400,
+            Genus::Fumerola => 23800,
+            Genus::Fungoida => 23900,
+            Genus::Osseus => 24000,
+            Genus::Recepta => 24100,
+            Genus::SinuousTubers => 2100500,
+            Genus::Stratum => 24200,
+            Genus::Tubus => 24300,
+            Genus::Tussock => 24500,
+            Genus::ThargoidBarnacle => 21000,
+
+            #[cfg(not(feature = "strict"))]
+            Genus::Unknown(_) => 0,
+        }
+    }
 }
