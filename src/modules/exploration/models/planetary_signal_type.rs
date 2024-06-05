@@ -21,7 +21,7 @@ pub enum PlanetarySignalType {
     #[serde(rename = "$SAA_SignalType_Guardian;")]
     Guardian,
 
-    #[serde(rename = "SAA_SignalType_PlanetAnomaly")]
+    #[serde(rename = "$SAA_SignalType_PlanetAnomaly;")]
     PlanetAnomaly,
 
     #[serde(rename = "$SAA_SignalType_Other;")]
