@@ -143,9 +143,11 @@ impl FromStr for StarClass {
             "ABlueWhiteSuperGiant" | "abluewhitesupergiant" | "A_BlueWhiteSuperGiant" => {
                 StarClass::ABlueWhiteSuperGiant
             }
+            "B_BlueWhiteSuperGiant" | "b_bluewhitesupergiant" => StarClass::BBlueWhiteSuperGiant,
             "FWhiteSuperGiant" | "fwhitesupergiant" | "F_WhiteSuperGiant" => {
                 StarClass::FWhiteSuperGiant
             }
+            "G_WhiteSuperGiant" | "g_whitesupergiant" => StarClass::GWhiteSuperGiant,
             "MRedSuperGiant" | "mredsupergiant" | "M_RedSuperGiant" => StarClass::MRedSuperGiant,
             "MRedGiant" | "mredgiant" | "M_RedGiant" => StarClass::KOrangeGiant,
             "KOrangeGiant" | "korangegiant" | "K_OrangeGiant" => StarClass::KOrangeGiant,
