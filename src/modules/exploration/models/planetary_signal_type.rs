@@ -21,6 +21,9 @@ pub enum PlanetarySignalType {
     #[serde(rename = "$SAA_SignalType_Guardian;")]
     Guardian,
 
+    #[serde(rename = "SAA_SignalType_PlanetAnomaly")]
+    PlanetAnomaly,
+
     #[serde(rename = "$SAA_SignalType_Other;")]
     Other,
 
@@ -43,6 +46,7 @@ impl Display for PlanetarySignalType {
                 PlanetarySignalType::Geological => "Geological",
                 PlanetarySignalType::Thargoid => "Thargoid",
                 PlanetarySignalType::Guardian => "Guardian",
+                PlanetarySignalType::PlanetAnomaly => "Planet Anomaly",
                 PlanetarySignalType::Other => "Other",
                 PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
 

@@ -64,7 +64,9 @@ pub enum StarClass {
     SupermassiveBlackHole,
 
     ABlueWhiteSuperGiant, // A_BlueWhiteSuperGiant
+    BBlueWhiteSuperGiant, // B_BlueWhiteSuperGiant
     FWhiteSuperGiant,     // F_WhiteSuperGiant
+    GWhiteSuperGiant,     // G_WhiteSuperGiant
     MRedSuperGiant,       // M_RedSuperGiant
     MRedGiant,            // M_RedGiant
     KOrangeGiant,         // K_OrangeGiant
