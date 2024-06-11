@@ -180,6 +180,46 @@ pub struct ScanEventRing {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct ScanEventBeltCluster {}
 
+impl ScanEvent {
+    pub fn estimated_worth(&self) -> u64 {
+        match &self.kind {
+            ScanEventKind::Star(scan) => {
+                let base_value = scan.star_type.base_value();
+                let mass_factor = f32::max(scan.stellar_mass, 1.0);
+                let body_value = base_value + mass_factor * base_value / 66.25;
+
+                if !self.was_discovered {
+                    body_value * 2.6
+                } else {
+                    body_value
+                }
+            }
+            ScanEventKind::Planet(scan) => {
+                let base_value = scan.planet_class.base_value();
+                let terraformable_bonus = if scan.terraform_state == TerraformState::Terraformable {
+                    scan.planet_class.terraformable_bonus()
+                } else {
+                    0
+                };
+
+                let scan_value = (base_value + terraformable_bonus) as f32;
+                let mass_factor = f32::max(scan.mass_em, 1.0);
+                let body_value = f32::max(
+                    scan_value + scan_value * f32::powf(mass_factor, 0.2) * 0.56591828,
+                    500.0,
+                );
+
+                match (!self.was_discovered, !self.was_mapped) {
+                    (true, true) => body_value * 9.619_019,
+                    (false, true) => body_value * 8.0956,
+                    _ => body_value * 3.333_333_3,
+                }
+            }
+            _ => 0,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{

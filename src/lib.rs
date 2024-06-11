@@ -17,35 +17,58 @@
 //! * The [journal] module can be used to interact with the whole journal directory and can watch
 //!   the directory as a whole for changes.
 
+#[cfg(feature = "json-models")]
 pub use modules::backpack;
+
+#[cfg(feature = "json-models")]
 pub use modules::cargo;
 pub use modules::civilization;
 pub use modules::commander;
 pub use modules::exobiology;
 pub use modules::exploration;
 pub use modules::galaxy;
+
+#[cfg(feature = "journal")]
 pub use modules::journal;
+
+#[cfg(feature = "logs")]
 pub use modules::logs;
+
+#[cfg(feature = "json-models")]
 pub use modules::market;
 pub use modules::materials;
 pub use modules::mixed;
+
+#[cfg(feature = "json-models")]
 pub use modules::modules_info;
+
+#[cfg(feature = "json-models")]
 pub use modules::nav_route;
 pub use modules::odyssey;
+
+#[cfg(feature = "json-models")]
 pub use modules::outfitting;
 pub use modules::ship;
+
+#[cfg(feature = "json-models")]
 pub use modules::ship_locker;
+
+#[cfg(feature = "json-models")]
 pub use modules::shipyard;
 pub use modules::small;
+
+#[cfg(feature = "state")]
 pub use modules::state;
 pub use modules::station;
+
+#[cfg(feature = "json-models")]
 pub use modules::status;
 pub use modules::thargoid;
 pub use modules::trading;
 
 mod modules;
 
-#[cfg(test)]
+#[cfg(all(test, feature = "logs"))]
 mod tests {
     use std::env::current_dir;
 

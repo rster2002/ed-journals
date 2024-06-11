@@ -9,14 +9,13 @@ use serde::Serialize;
 use strum::IntoEnumIterator;
 
 use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
-use crate::exobiology::models::spawn_source::target_planet::TargetPlanet;
+use crate::exobiology::models::spawn_source::target_planet::{TargetPlanet, TargetPlanetParent};
 use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{
     Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
     StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
-use crate::logs::scan_event::{ScanEventParent};
 
 #[derive(Debug)]
 pub struct SpawnSource<'a> {
@@ -136,7 +135,7 @@ impl<'a> SpawnSource<'a> {
 
     pub fn parent_stars(&self) -> impl Iterator<Item = &SpawnSourceStar> {
         self.target_planet.parents.iter().filter_map(|parent| {
-            if let ScanEventParent::Star(id) = parent {
+            if let TargetPlanetParent::Star(id) = parent {
                 return self.target_system.stars_in_system.get(id);
             }
 

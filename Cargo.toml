@@ -35,3 +35,8 @@ tokio-test = "0.4.4"
 default = ["asynchronous", "strict"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 strict = []
+
+logs = []
+json-models = []
+journal = ["json-models", "logs"]
+state = ["logs"]
