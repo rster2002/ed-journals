@@ -182,7 +182,7 @@ pub struct ScanEventBeltCluster {}
 
 impl ScanEvent {
     pub fn estimated_worth(&self) -> u64 {
-        match &self.kind {
+        (match &self.kind {
             ScanEventKind::Star(scan) => {
                 let base_value = scan.star_type.base_value();
                 let mass_factor = f32::max(scan.stellar_mass, 1.0);
@@ -215,8 +215,8 @@ impl ScanEvent {
                     _ => body_value * 3.333_333_3,
                 }
             }
-            _ => 0,
-        }
+            _ => 0.0,
+        }) as u64
     }
 }
 

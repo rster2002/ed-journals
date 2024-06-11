@@ -9,7 +9,7 @@ use serde::Serialize;
 use strum::IntoEnumIterator;
 
 use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
-use crate::exobiology::models::spawn_source::target_planet::{TargetPlanet, TargetPlanetParent};
+use crate::exobiology::models::spawn_source::target_planet::{TargetPlanet};
 use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{
@@ -134,12 +134,9 @@ impl<'a> SpawnSource<'a> {
     }
 
     pub fn parent_stars(&self) -> impl Iterator<Item = &SpawnSourceStar> {
-        self.target_planet.parents.iter().filter_map(|parent| {
-            if let TargetPlanetParent::Star(id) = parent {
-                return self.target_system.stars_in_system.get(id);
-            }
-
-            None
-        })
+        self.target_planet
+            .parent_stars
+            .iter()
+            .filter_map(|body_id| self.target_system.stars_in_system.get(body_id))
     }
 }
