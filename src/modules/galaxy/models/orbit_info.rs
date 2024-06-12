@@ -9,6 +9,6 @@ pub struct OrbitInfo {
     pub orbital_inclination: f32,
     pub periapsis: f32,
     pub orbital_period: f32,
-    pub ascending_node: f32,
-    pub mean_anomaly: f32,
+    pub ascending_node: Option<f32>,
+    pub mean_anomaly: Option<f32>,
 }
