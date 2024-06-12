@@ -21,10 +21,12 @@ pub mod state;
 
 /// Contains models for genuses, species and variants and utilities for predicting possible
 /// biological scans for planets
+#[cfg(feature = "models-exobiology")]
 pub mod exobiology;
 
 /// Contains functions for exploration related things, like calculating estimated exploration value
 /// for stars and planets and for analysing scans for unusual data.
+#[cfg(feature = "models-exploration")]
 pub mod exploration;
 
 /// Utilities for working with the `Outfitting.json` file. Is updated when opening the outfitting
@@ -80,37 +82,46 @@ mod utils;
 mod shared;
 
 /// Provides models for bodies like stars and planets.
+#[cfg(feature = "models-galaxy")]
 pub mod galaxy;
 
 /// This module contains models for things that have to do with civilisation and populated systems.
 /// Things like the different superpowers or economies.
+#[cfg(feature = "models-civilization")]
 pub mod civilization;
 
 /// Contains models for models for commander ranks.
+#[cfg(feature = "models-commander")]
 pub mod commander;
 
 /// Models and data for materials that are used for ship engineering. For materials that are used
 /// for suit engineering, check the [odyssey] module.
+#[cfg(feature = "models-materials")]
 pub mod materials;
 
 /// Includes the commodity enum, which is used in various places in the library and contains all
 /// the different commodities that can be bought/acquired.
+#[cfg(feature = "models-trading")]
 pub mod trading;
 
 /// Contains models and utilities for things that have been added in the Odyssey expansion of the
 /// game. Note that [exobiology] is its own separate module.
+#[cfg(feature = "models-odyssey")]
 pub mod odyssey;
 
 /// Contains everything that has to do with ships, including the different types of ships, but also
 /// the different modules that can be equipped.
+#[cfg(feature = "models-ship")]
 pub mod ship;
 
 /// Models related to stations and markets. Also contains some models that are used for fleet
 /// carriers.
+#[cfg(feature = "models-station")]
 pub mod station;
 
 /// Includes models related to Thargoids. Most importantly: the different types of Thargoids that
 /// player can encounter.
+#[cfg(feature = "models-thargoid")]
 pub mod thargoid;
 
 /// This module contains 'small' models that are used to create representations for certain things

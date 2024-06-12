@@ -8,7 +8,7 @@ use crate::modules::galaxy::BodyType;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LocationInfo {
-    /// The name of the star system that is displayed to the player.
+/// The name of the star system that is displayed to the player.
     pub star_system: String,
 
     /// The unique 'id' of the system.s

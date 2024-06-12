@@ -32,7 +32,7 @@ directories = "5.0.1"
 tokio-test = "0.4.4"
 
 [features]
-default = ["asynchronous", "strict"]
+default = ["strict"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 strict = []
 
@@ -40,3 +40,15 @@ logs = []
 json-models = []
 journal = ["json-models", "logs"]
 state = ["logs"]
+
+models-civilization = []
+models-exobiology = []
+models-exploration = []
+models-galaxy = []
+models-materials = []
+models-odyssey = []
+models-ship = []
+models-station = []
+models-thargoid = []
+models-trading = []
+
