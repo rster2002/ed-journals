@@ -319,7 +319,7 @@ impl Genus {
             Genus::CrystallineShards => 2101500,
             Genus::Electricae => 23600,
             Genus::Fonticulua => 23700,
-            Genus::Fruxeta => 24400,
+            Genus::Frutexa => 24400,
             Genus::Fumerola => 23800,
             Genus::Fungoida => 23900,
             Genus::Osseus => 24000,
