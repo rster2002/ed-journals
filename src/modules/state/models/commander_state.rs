@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use serde::Serialize;
-use crate::exploration::calculate_estimated_worth;
 
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::commander_event::CommanderEvent;
@@ -202,7 +201,7 @@ impl CommanderState {
     pub fn current_exploration_worth(&self) -> u64 {
         self.current_exploration_data
             .iter()
-            .map(|item| calculate_estimated_worth(item))
+            .map(|item| item.estimated_worth())
             .sum()
     }
 }

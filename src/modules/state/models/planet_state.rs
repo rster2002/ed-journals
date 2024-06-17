@@ -11,7 +11,7 @@ use thiserror::Error;
 use crate::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
 use crate::logs::scan_event::{
-    ScanEvent, ScanEventKind, ScanEventPlanet,
+    ScanEvent, ScanEventKind, ScanEventPlanet, ScanEventParent
 };
 use crate::logs::touchdown_event::TouchdownEvent;
 use crate::logs::{LogEvent, LogEventContent};
@@ -289,7 +289,14 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
                         .map(|entry| entry.name),
                 ),
                 composition: value.1.composition.clone(),
-                parents: value.0.parents.clone(),
+                parent_stars: value.0
+                    .parents
+                    .iter()
+                    .filter_map(|parent| match parent {
+                        ScanEventParent::Star(body_id) => Some(*body_id),
+                        _ => None,
+                    })
+                    .collect(),
                 semi_major_axis: value.1.orbit_info.semi_major_axis,
                 geological_signals_present: false,
             },

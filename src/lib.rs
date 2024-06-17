@@ -17,35 +17,80 @@
 //! * The [journal] module can be used to interact with the whole journal directory and can watch
 //!   the directory as a whole for changes.
 
+#[cfg(feature = "json-models")]
 pub use modules::backpack;
+
+#[cfg(feature = "json-models")]
 pub use modules::cargo;
+
+#[cfg(feature = "models-civilization")]
 pub use modules::civilization;
+
+#[cfg(feature = "models-commander")]
 pub use modules::commander;
+
+#[cfg(feature = "models-exobiology")]
 pub use modules::exobiology;
+
+#[cfg(feature = "models-exploration")]
 pub use modules::exploration;
+
+#[cfg(feature = "models-galaxy")]
 pub use modules::galaxy;
+
+#[cfg(feature = "journal")]
 pub use modules::journal;
+
+#[cfg(feature = "logs")]
 pub use modules::logs;
+
+#[cfg(feature = "json-models")]
 pub use modules::market;
+
+#[cfg(feature = "models-materials")]
 pub use modules::materials;
 pub use modules::mixed;
+
+#[cfg(feature = "json-models")]
 pub use modules::modules_info;
+
+#[cfg(feature = "json-models")]
 pub use modules::nav_route;
+
+#[cfg(feature = "models-odyssey")]
 pub use modules::odyssey;
+
+#[cfg(feature = "json-models")]
 pub use modules::outfitting;
+
+#[cfg(feature = "models-ship")]
 pub use modules::ship;
+
+#[cfg(feature = "json-models")]
 pub use modules::ship_locker;
+
+#[cfg(feature = "json-models")]
 pub use modules::shipyard;
 pub use modules::small;
+
+#[cfg(feature = "state")]
 pub use modules::state;
+
+#[cfg(feature = "models-station")]
 pub use modules::station;
+
+#[cfg(feature = "json-models")]
 pub use modules::status;
+
+#[cfg(feature = "models-thargoid")]
 pub use modules::thargoid;
+
+#[cfg(feature = "models-trading")]
 pub use modules::trading;
 
 mod modules;
 
-#[cfg(test)]
+#[cfg(all(test, feature = "logs"))]
 mod tests {
     use std::env::current_dir;
 
