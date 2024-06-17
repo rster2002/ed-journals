@@ -194,62 +194,62 @@ mod tests {
                         .map(|entry| entry.specie.clone())
                         .collect::<HashSet<_>>();
 
-                    // All the observed species that were not calculated to spawn on the body.
-                    let false_negatives: Vec<&Species> = observed_species
-                        .iter()
-                        .filter(|species| !calculated_species.contains(species))
-                        .filter(|species| !blacklisted_species.contains(species))
-                        .collect();
-
-                    // All the calculated species that were not observed to spawn on the body.
-                    let false_positives: Vec<&Species> = calculated_species
-                        .iter()
-                        .filter(|species| !observed_species.contains(species))
-                        .filter(|species| !blacklisted_species.contains(species))
-                        .collect();
-
-                    let correct_species: Vec<&Species> = calculated_species
-                        .iter()
-                        .filter(|species| observed_species.contains(species))
-                        .collect();
-
-                    let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
-                        .iter()
-                        .map(|species| species.spawn_conditions())
-                        .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                        .collect();
-
-                    let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
-                        .iter()
-                        .map(|species| species.spawn_conditions())
-                        .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                        .collect();
-
-                    if !false_negatives.is_empty() || !false_positives.is_empty() {
-                        println!(
-                            "Body: {}\nObserved: {:?}\nCalculated: {:?}\nFalse negatives: {:?}\nFalse positives: {:?}\nSpawn source: {:#?}\n",
-                            planet_state.scan.body_name,
-                            observed_species,
-                            calculated_species,
-                            false_negative_spawn_conditions,
-                            false_positive_spawn_conditions,
-                            spawn_source
-                        );
-                    }
-
-                    for species in correct_species {
-                        *processed_result.entry(species.clone()).or_insert(0) += 1;
-                    }
-
-                    for species in false_negatives {
-                        *processed_result.entry(species.clone()).or_insert(0) += 1;
-                        *false_negatives_result.entry(species.clone()).or_insert(0) += 1;
-                    }
-
-                    for species in false_positives {
-                        *processed_result.entry(species.clone()).or_insert(0) += 1;
-                        *false_positives_result.entry(species.clone()).or_insert(0) += 1;
-                    }
+                    // // All the observed species that were not calculated to spawn on the body.
+                    // let false_negatives: Vec<&Species> = observed_species
+                    //     .iter()
+                    //     .filter(|species| !calculated_species.contains(species))
+                    //     .filter(|species| !blacklisted_species.contains(species))
+                    //     .collect();
+                    //
+                    // // All the calculated species that were not observed to spawn on the body.
+                    // let false_positives: Vec<&Species> = calculated_species
+                    //     .iter()
+                    //     .filter(|species| !observed_species.contains(species))
+                    //     .filter(|species| !blacklisted_species.contains(species))
+                    //     .collect();
+                    //
+                    // let correct_species: Vec<&Species> = calculated_species
+                    //     .iter()
+                    //     .filter(|species| observed_species.contains(species))
+                    //     .collect();
+                    //
+                    // let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
+                    //     .iter()
+                    //     .map(|species| species.spawn_conditions())
+                    //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+                    //     .collect();
+                    //
+                    // let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
+                    //     .iter()
+                    //     .map(|species| species.spawn_conditions())
+                    //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+                    //     .collect();
+                    //
+                    // // if !false_negatives.is_empty() || !false_positives.is_empty() {
+                    // //     println!(
+                    // //         "Body: {}\nObserved: {:?}\nCalculated: {:?}\nFalse negatives: {:?}\nFalse positives: {:?}\nSpawn source: {:#?}\n",
+                    // //         planet_state.scan.body_name,
+                    // //         observed_species,
+                    // //         calculated_species,
+                    // //         false_negative_spawn_conditions,
+                    // //         false_positive_spawn_conditions,
+                    // //         spawn_source
+                    // //     );
+                    // // }
+                    //
+                    // for species in correct_species {
+                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+                    // }
+                    //
+                    // for species in false_negatives {
+                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+                    //     *false_negatives_result.entry(species.clone()).or_insert(0) += 1;
+                    // }
+                    //
+                    // for species in false_positives {
+                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+                    //     *false_positives_result.entry(species.clone()).or_insert(0) += 1;
+                    // }
                 }
             }
         }

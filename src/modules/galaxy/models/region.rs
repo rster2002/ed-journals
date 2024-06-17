@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
-
-use crate::exploration::r#static::{region::REGION_MAP, region_map::REGIONS};
+use crate::exploration::r#static::region::REGION_MAP;
+use crate::exploration::r#static::region_map::REGIONS;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Region {
@@ -134,9 +134,8 @@ pub enum Region {
 }
 
 impl Region {
-    pub fn from_pos(pos: [f32; 3]) -> Option<&'static Region> {
+    pub fn from_pos(pos: [f32; 3]) -> Option<Region> {
         const X0: f32 = -49985.0;
-        const Y0: f32 = -40985.0;
         const Z0: f32 = -24105.0;
 
         let px = ((pos[0] - X0) * 83.0 / 4096.0).floor();
@@ -157,7 +156,7 @@ impl Region {
 
                 return match pv {
                     0 => None,
-                    _ => Some(&REGIONS[pv as usize]),
+                    _ => Some(REGIONS[pv as usize].clone()),
                 };
             }
         }

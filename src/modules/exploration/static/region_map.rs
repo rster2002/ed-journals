@@ -1,5 +1,6 @@
 use crate::galaxy::Region;
 
+// Values from https://github.com/klightspeed/EliteDangerousRegionMap
 pub const REGIONS: &[Region] = &[
     Region::Unknown,
     Region::GalacticCenter,

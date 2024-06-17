@@ -1,4 +1,4 @@
-
+// Values from https://github.com/klightspeed/EliteDangerousRegionMap
 pub const REGION_MAP: &[&[(u32, u32)]] = &[
     &[(2048, 0)],
     &[(2048, 0)],
