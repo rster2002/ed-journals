@@ -353,7 +353,10 @@ lazy_static! {
         (
             BacteriumOmentum,
             all![
-                any![ThinAtmosphere(Neon), ThinAtmosphere(NeonRich)],
+                any![
+                    ThinAtmosphere(Neon),
+                    ThinAtmosphere(NeonRich),
+                ],
                 any![
                     VolcanismType(VolcanismType::NitrogenMagma),
                     VolcanismType(VolcanismType::NitrogenGeysers),
@@ -510,7 +513,10 @@ lazy_static! {
                 ],
                 all![
                     ThinAtmosphere(Neon),
-                    any![PlanetClass(IcyBody), PlanetClass(RockyIceBody)],
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
                     MinGravity(0.27),
                     MaxGravity(0.61),
                     MinMeanTemperature(20.0),
@@ -520,7 +526,10 @@ lazy_static! {
                 ],
                 all![
                     ThinAtmosphere(NeonRich),
-                    any![PlanetClass(IcyBody), PlanetClass(RockyIceBody)],
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
                     MinGravity(0.27),
                     MaxGravity(0.61),
                     MinMeanTemperature(20.0),

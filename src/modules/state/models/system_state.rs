@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 
-use crate::exobiology::{SpawnSourceStar, Species, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
+use crate::exobiology::{SpawnSourceStar, TargetSystem};
+use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use crate::logs::scan_event::ScanEventKind;
-use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
@@ -124,11 +124,12 @@ impl From<&LocationInfo> for SystemState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
+    use std::collections::HashMap;
     use std::env::current_dir;
+
     use strum::IntoEnumIterator;
 
-    use crate::exobiology::{SpawnCondition, SpawnSource, Species};
+    use crate::exobiology::Species;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
 
@@ -143,6 +144,8 @@ mod tests {
         for entry in log_dir {
             state.feed_log_event(&entry.unwrap());
         }
+
+        state.flush();
 
         let mut processed_result = HashMap::<Species, usize>::new();
 
@@ -169,30 +172,43 @@ mod tests {
             //Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
         ];
 
+        let mut completely_scanned = 0;
+        let mut highest = 0;
+
         for commander in state.commanders.values() {
             for system in commander.systems.values() {
                 for (body_id, planet_state) in &system.bodies {
-                    if blacklisted_bodies.contains(&planet_state.scan.body_name) {
-                        continue;
+                    if planet_state.all_species_scanned()
+                        .is_some_and(|a| a)
+                    {
+                        completely_scanned += 1;
+
+                        if planet_state.scanned_species.len() > highest {
+                            highest = planet_state.scanned_species.len();
+                        }
                     }
 
-                    let observed_species = &planet_state.scanned_species;
-
-                    if observed_species.is_empty() {
-                        continue;
-                    }
-
-                    let spawn_source = SpawnSource {
-                        target_system: &system.exobiology_system,
-                        target_planet: &planet_state.exobiology_body,
-                    };
-
-                    let calculated_species = system
-                        .get_spawnable_species(*body_id)
-                        .unwrap()
-                        .iter()
-                        .map(|entry| entry.specie.clone())
-                        .collect::<HashSet<_>>();
+                    // if blacklisted_bodies.contains(&planet_state.scan.body_name) {
+                    //     continue;
+                    // }
+                    //
+                    // let observed_species = &planet_state.scanned_species;
+                    //
+                    // if observed_species.is_empty() {
+                    //     continue;
+                    // }
+                    //
+                    // let spawn_source = SpawnSource {
+                    //     target_system: &system.exobiology_system,
+                    //     target_planet: &planet_state.exobiology_body,
+                    // };
+                    //
+                    // let calculated_species = system
+                    //     .get_spawnable_species(*body_id)
+                    //     .unwrap()
+                    //     .iter()
+                    //     .map(|entry| entry.specie.clone())
+                    //     .collect::<HashSet<_>>();
 
                     // // All the observed species that were not calculated to spawn on the body.
                     // let false_negatives: Vec<&Species> = observed_species
@@ -253,6 +269,9 @@ mod tests {
                 }
             }
         }
+
+        dbg!(completely_scanned);
+        dbg!(highest);
 
         // Correctness check: 1% or more is considered a failure.
         println!("| Species | Test cases | False negatives | False positives |");

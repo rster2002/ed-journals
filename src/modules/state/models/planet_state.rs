@@ -36,12 +36,6 @@ pub struct PlanetState {
     pub exobiology_body: TargetPlanet,
 
     pub signal_counts: Option<SignalCounts>,
-    // pub human_signal_count: Option<usize>,
-    // pub biological_signal_count: Option<usize>,
-    // pub geological_signal_count: Option<usize>,
-    // pub thargoid_signal_count: Option<usize>,
-    // pub guardian_signal_count: Option<usize>,
-    // pub other_signal_count: Option<usize>,
     pub commodity_signals: Vec<Commodity>,
 }
 
@@ -246,6 +240,20 @@ impl PlanetState {
                 }
             })
             .collect()
+    }
+
+    /// Returns `Some(true)` if the number of scanned species matches the number of biological
+    /// signals for the planet. If the signals are not known or if there are no biological signals
+    /// on the planet, the function returns `None`.
+    pub fn all_species_scanned(&self) -> Option<bool> {
+        let signals = self.signal_counts
+            .as_ref()?;
+
+        if signals.biological_signal_count == 0 {
+            return None;
+        }
+
+        Some(signals.biological_signal_count == self.scanned_species.len())
     }
 
     /// Calculates the lowest exobiology value based on the current information about the planet.
