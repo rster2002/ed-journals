@@ -612,21 +612,18 @@ impl Species {
             Species::AleoidaLaminiae => 3_385_200,
             Species::AleoidaGravis => 12_934_900,
 
-            // TODO this needs a value
-            Species::AmphoraPlant => 0,
+            Species::AmphoraPlant => 1_628_800,
 
-            // TODO these need values
-            Species::AnemoneLuteolum => 0,
-            Species::AnemoneCroceum => 0,
-            Species::AnemonePuniceum => 0,
-            Species::AnemoneRoseum => 0,
-            Species::AnemoneBlatteumBioluminescent => 0,
-            Species::AnemoneRubeumBioluminescent => 0,
-            Species::AnemonePrasinumBioluminescent => 0,
-            Species::AnemoneRoseumBioluminescent => 0,
+            Species::AnemoneLuteolum => 1_499_900,
+            Species::AnemoneCroceum => 1_499_900,
+            Species::AnemonePuniceum => 1_499_900,
+            Species::AnemoneRoseum => 1_499_900,
+            Species::AnemoneBlatteumBioluminescent => 1_499_900,
+            Species::AnemoneRubeumBioluminescent => 1_499_900,
+            Species::AnemonePrasinumBioluminescent => 1_499_900,
+            Species::AnemoneRoseumBioluminescent => 1_499_900,
 
-            // TODO this needs a value
-            Species::BarkMound => 0,
+            Species::BarkMound => 1_471_900,
 
             Species::BacteriumAurasus => 1_000_000,
             Species::BacteriumNebulus => 5_289_900,
@@ -643,14 +640,14 @@ impl Species {
             Species::BacteriumVerrata => 3_897_000,
 
             // TODO these need values
-            Species::BrainTreeRoseum => 0,
-            Species::BrainTreeGypseeum => 0,
-            Species::BrainTreeOstrinum => 0,
-            Species::BrainTreeViride => 0,
-            Species::BrainTreeLividum => 0,
-            Species::BrainTreeAureum => 0,
-            Species::BrainTreePuniceum => 0,
-            Species::BrainTreeLindigoticum => 0,
+            Species::BrainTreeRoseum => 1_593_700,
+            Species::BrainTreeGypseeum => 1_593_700,
+            Species::BrainTreeOstrinum => 1_593_700,
+            Species::BrainTreeViride => 1_593_700,
+            Species::BrainTreeLividum => 1_593_700,
+            Species::BrainTreeAureum => 1_593_700,
+            Species::BrainTreePuniceum => 1_593_700,
+            Species::BrainTreeLindigoticum => 1_593_700,
 
             Species::CactoidaCortexum => 3_667_600,
             Species::CactoidaLapis => 2_483_600,
@@ -667,7 +664,7 @@ impl Species {
             Species::ConchaLabiata => 2_352_400,
             Species::ConchaBiconcavis => 19_010_800,
 
-            Species::CrystallineShards => 0,
+            Species::CrystallineShards => 1_628_800,
 
             Species::ElectricaePluma => 6_284_600,
             Species::ElectricaeRadialem => 6_284_600,
@@ -746,15 +743,14 @@ impl Species {
             Species::ThargoidBarnacleMatrixSubmerged => 0,
             Species::ThargoidBarnacleMatrix => 2_313_500,
 
-            // TODO these need values
-            Species::SinuousTubersRoseum => 0,
-            Species::SinuousTubersPrasinum => 0,
-            Species::SinuousTubersAlbidum => 0,
-            Species::SinuousTubersCaeruleum => 0,
-            Species::SinuousTubersBlatteum => 0,
-            Species::SinuousTubersLindigoticum => 0,
-            Species::SinuousTubersViolaceum => 0,
-            Species::SinuousTubersViride => 0,
+            Species::SinuousTubersRoseum => 1_514_500,
+            Species::SinuousTubersPrasinum => 1_514_500,
+            Species::SinuousTubersAlbidum => 1_514_500,
+            Species::SinuousTubersCaeruleum => 1_514_500,
+            Species::SinuousTubersBlatteum => 1_514_500,
+            Species::SinuousTubersLindigoticum => 1_514_500,
+            Species::SinuousTubersViolaceum => 1_514_500,
+            Species::SinuousTubersViride => 1_514_500,
         }
     }
 }
