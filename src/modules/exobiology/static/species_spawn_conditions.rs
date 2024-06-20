@@ -572,14 +572,20 @@ lazy_static! {
                 ],
                 all![
                     ThinAtmosphere(Water),
-                    any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody)],
+                    any![
+                        PlanetClass(RockyBody),
+                        PlanetClass(HighMetalContentBody),
+                    ],
                     MinGravity(0.04),
                     MaxGravity(0.063),
                     VolcanismType(VolcanismType::None),
                 ],
                 all![
                     ThinAtmosphere(WaterRich),
-                    any![PlanetClass(IcyBody), PlanetClass(RockyIceBody)],
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
                     MinGravity(0.32),
                     MaxGravity(0.44),
                     MinMeanTemperature(240.0),
@@ -1258,6 +1264,9 @@ lazy_static! {
                 ThinAtmosphere(SulfurDioxide),
                 RockyComposition,
                 MinMeanTemperature(165.0),
+                MaxMeanTemperature(375.0),
+                MinGravity(0.26),
+                MinGravity(0.55),
             ],
         ),
         (
@@ -1266,9 +1275,13 @@ lazy_static! {
                 any![
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
+                    ThinAtmosphere(CarbonDioxideRich),
                 ],
                 RockyComposition,
                 MinMeanTemperature(190.0),
+                MaxMeanTemperature(375.0),
+                MinGravity(0.04),
+                MaxGravity(0.6),
             ],
         ),
         (
@@ -1289,9 +1302,12 @@ lazy_static! {
                 any![
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
+                    ThinAtmosphere(CarbonDioxideRich),
                 ],
                 RockyComposition,
                 MinMeanTemperature(190.0),
+                MinGravity(0.04),
+                MaxGravity(0.551),
             ],
         ),
         (
