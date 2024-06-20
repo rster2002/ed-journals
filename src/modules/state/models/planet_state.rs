@@ -172,9 +172,20 @@ impl PlanetState {
             .is_some_and(|signals| signals.other_signal_count != 0)
     }
 
+    /// Returns `Some(Vec)` of possible spawnable entries and returns `None` if there are no 
+    /// biological signals on the planet.
+    pub fn get_planet_species(&self, target_system: &TargetSystem) -> Option<Vec<PlanetSpeciesEntry>> {
+        if !self.has_biological_signals() {
+            return None;
+        }
+
+        Some(self.get_possible_planet_species(target_system))
+    }
+
     /// Returns entries for all species that could theoretically spawn on the planet and indicates
-    /// if they can actually spawn or not.
-    pub fn get_planet_species(&self, target_system: &TargetSystem) -> Vec<PlanetSpeciesEntry> {
+    /// if they can actually spawn or not. This does not check if there even are any biological 
+    /// signals on the planet.
+    pub fn get_possible_planet_species(&self, target_system: &TargetSystem) -> Vec<PlanetSpeciesEntry> {
         let spawn_source = SpawnSource {
             target_system,
             target_planet: &self.exobiology_body,
@@ -261,7 +272,7 @@ impl PlanetState {
         let mut known_values = Vec::new();
         let mut maybe_values = Vec::new();
 
-        for entry in self.get_planet_species(target_system) {
+        for entry in self.get_possible_planet_species(target_system) {
             match entry.will_spawn {
                 WillSpawn::Yes => known_values.push(entry.specie.base_value()),
                 WillSpawn::Maybe => maybe_values.push(entry.specie.base_value()),

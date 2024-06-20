@@ -94,10 +94,16 @@ impl SystemState {
     }
 
     pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
+        self.bodies
+            .get(&body_id)?
+            .get_planet_species(&self.exobiology_system)
+    }
+
+    pub fn get_possible_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
         Some(
             self.bodies
                 .get(&body_id)?
-                .get_planet_species(&self.exobiology_system),
+                .get_possible_planet_species(&self.exobiology_system),
         )
     }
 }
