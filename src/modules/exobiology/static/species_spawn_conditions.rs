@@ -925,7 +925,9 @@ lazy_static! {
                 ThinAtmosphere(CarbonDioxide),
                 RockyComposition,
                 MaxGravity(0.27),
+                MinMeanTemperature(147.0),
                 MaxMeanTemperature(195.0),
+                MinPressure(0.003),
             ],
         ),
         (
@@ -942,7 +944,9 @@ lazy_static! {
                 ThinAtmosphere(CarbonDioxide),
                 RockyComposition,
                 MaxGravity(0.27),
+                MinMeanTemperature(147.0),
                 MaxMeanTemperature(195.0),
+                MinPressure(0.003),
             ],
         ),
         (
@@ -1288,10 +1292,12 @@ lazy_static! {
             StratumExcutitus,
             all![
                 any![
+                    ThinAtmosphere(Oxygen),
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
                 ],
                 RockyComposition,
+                MaxGravity(0.48),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(190.0),
             ],
