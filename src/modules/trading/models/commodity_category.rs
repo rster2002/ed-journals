@@ -135,7 +135,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::PowerTransferBus
             | Commodity::RadiationBaffle
             | Commodity::ReinforcedMountingPlate
-            | Commodity::SkimmerComponents
+            | Commodity::SkimerComponents
             | Commodity::ThermalCoolingUnits
             | Commodity::WaterPurifiers => CommodityCategory::Machinery,
 
@@ -203,7 +203,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::AncientKey
             | Commodity::AnomalyParticles
             | Commodity::AntimatterContainmentUnit
-            | Commodity::AniqueJewellery
+            | Commodity::AntiqueJewellery
             | Commodity::Antiquities
             | Commodity::AssaultPlans
             | Commodity::BlackBox
@@ -256,7 +256,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::ProtectiveMembraneScrap
             | Commodity::PrototypeTech
             | Commodity::RareArtwork
-            | Commodity::RebelTransmission
+            | Commodity::RebelTransmissions
             | Commodity::SAP8CoreContainer
             | Commodity::ScientificResearch
             | Commodity::ScientificSamples
@@ -308,7 +308,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::HESuits
             | Commodity::HardwareDiagnosticSensor
             | Commodity::LandEnrichmentSystems
-            | Commodity::MedialDiagnosticEquipment
+            | Commodity::MedicalDiagnosticEquipment
             | Commodity::MicroControllers
             | Commodity::MuonImager
             | Commodity::Nanobreakers
@@ -477,9 +477,25 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::BuckyballBeerMats
             | Commodity::ClassifiedExperimentalEquipment => CommodityCategory::Rare,
 
-            Commodity::LavignyGarrisonSupplies | Commodity::SiriusIndustrialEquipment => {
-                CommodityCategory::Powerplay
-            }
+            Commodity::SiriusIndustrialEquipment
+            | Commodity::SiriusCommercialContracts
+            | Commodity::SiriusFranchisePackage
+            | Commodity::AislingMediaMaterials
+            | Commodity::AislingPromotionalMaterials
+            | Commodity::AislingMediaResources
+            | Commodity::TorvalCommercialContracts
+            | Commodity::TorvalDeeds
+            | Commodity::PatreusFieldSupplies
+            | Commodity::RepublicanFieldSupplies
+            | Commodity::RepublicanGarisonSupplies
+            | Commodity::LiberalCampaignMaterials
+            | Commodity::AllianceLegaslativeContracts
+            | Commodity::AllianceLegaslativeRecords
+            | Commodity::FederalTradeContracts
+            | Commodity::PatreusGarrisonSupplies
+            | Commodity::LavignyGarrisonSupplies
+            | Commodity::LavignyCorruptionDossiers
+            | Commodity::LavignyFieldSupplies => CommodityCategory::Powerplay,
 
             Commodity::Limpet => CommodityCategory::None,
 

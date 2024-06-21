@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use serde::Serialize;
@@ -63,7 +64,9 @@ pub enum StarClass {
     SupermassiveBlackHole,
 
     ABlueWhiteSuperGiant, // A_BlueWhiteSuperGiant
+    BBlueWhiteSuperGiant, // B_BlueWhiteSuperGiant
     FWhiteSuperGiant,     // F_WhiteSuperGiant
+    GWhiteSuperGiant,     // G_WhiteSuperGiant
     MRedSuperGiant,       // M_RedSuperGiant
     MRedGiant,            // M_RedGiant
     KOrangeGiant,         // K_OrangeGiant
@@ -140,9 +143,11 @@ impl FromStr for StarClass {
             "ABlueWhiteSuperGiant" | "abluewhitesupergiant" | "A_BlueWhiteSuperGiant" => {
                 StarClass::ABlueWhiteSuperGiant
             }
+            "B_BlueWhiteSuperGiant" | "b_bluewhitesupergiant" => StarClass::BBlueWhiteSuperGiant,
             "FWhiteSuperGiant" | "fwhitesupergiant" | "F_WhiteSuperGiant" => {
                 StarClass::FWhiteSuperGiant
             }
+            "G_WhiteSuperGiant" | "g_whitesupergiant" => StarClass::GWhiteSuperGiant,
             "MRedSuperGiant" | "mredsupergiant" | "M_RedSuperGiant" => StarClass::MRedSuperGiant,
             "MRedGiant" | "mredgiant" | "M_RedGiant" => StarClass::KOrangeGiant,
             "KOrangeGiant" | "korangegiant" | "K_OrangeGiant" => StarClass::KOrangeGiant,
@@ -186,5 +191,68 @@ impl StarClass {
             StarClass::SupermassiveBlackHole => 33.5678,
             _ => 1_200.0,
         }
+    }
+}
+
+impl Display for StarClass {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            StarClass::O => "O",
+            StarClass::B => "B",
+            StarClass::A => "A",
+            StarClass::F => "F",
+            StarClass::G => "G",
+            StarClass::K => "K",
+            StarClass::M => "M",
+            StarClass::L => "L",
+            StarClass::T => "T",
+            StarClass::Y => "Y",
+            StarClass::TTS => "TTS",
+            StarClass::Ae => "Ae",
+            StarClass::Be => "Be",
+            StarClass::AeBe => "AeBe",
+            StarClass::W => "W",
+            StarClass::WN => "WN",
+            StarClass::WNC => "WNC",
+            StarClass::WC => "WC",
+            StarClass::WO => "WO",
+            StarClass::CS => "CS",
+            StarClass::C => "C",
+            StarClass::CN => "CN",
+            StarClass::CJ => "CJ",
+            StarClass::CH => "CH",
+            StarClass::CHd => "CHd",
+            StarClass::D => "D",
+            StarClass::DA => "DA",
+            StarClass::DAB => "DAB",
+            StarClass::DAO => "DAO",
+            StarClass::DAZ => "DAZ",
+            StarClass::DAV => "DAV",
+            StarClass::DB => "DB",
+            StarClass::DBZ => "DBZ",
+            StarClass::DBV => "DBV",
+            StarClass::DO => "DO",
+            StarClass::DOV => "DOV",
+            StarClass::DQ => "DQ",
+            StarClass::DC => "DC",
+            StarClass::DCV => "DCV",
+            StarClass::DX => "DX",
+            StarClass::N => "N",
+            StarClass::H => "H",
+            StarClass::X => "X",
+            StarClass::SupermassiveBlackHole => "SupermassiveBlackHole",
+            StarClass::ABlueWhiteSuperGiant => "ABlueWhiteSuperGiant",
+            StarClass::BBlueWhiteSuperGiant => "BBlueWhiteSuperGiant",
+            StarClass::FWhiteSuperGiant => "FWhiteSuperGiant",
+            StarClass::GWhiteSuperGiant => "GWhiteSuperGiant",
+            StarClass::MRedSuperGiant => "MRedSuperGiant",
+            StarClass::MRedGiant => "MRedGiant",
+            StarClass::KOrangeGiant => "KOrangeGiant",
+            StarClass::RoguePlanet => "RoguePlanet",
+            StarClass::Nebula => "Nebula",
+            StarClass::StellarRemnantNebula => "StellarRemnantNebula",
+            StarClass::MS => "MS",
+            StarClass::S => "S",
+        })
     }
 }

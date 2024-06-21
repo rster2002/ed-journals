@@ -42,7 +42,7 @@ pub enum ArmorModuleError {
 
 lazy_static! {
     static ref ARMOR_MODULE_REGEX: Regex =
-        Regex::new(r#"^\$?(\w+?)_armour(_grade(\d+)|_(\w+))(_name;)?$"#).unwrap();
+        Regex::new(r#"^\$?(\w+?)_[aA]rmour(_[gG]rade(\d+)|_(\w+))(_name;)?$"#).unwrap();
 }
 
 impl FromStr for ArmorModule {
@@ -130,11 +130,23 @@ mod tests {
                     grade: ArmorGrade::LightweightAlloy,
                 },
             ),
+            (
+                "SideWinder_Armour_Grade1",
+                ArmorModule {
+                    ship: ShipType::SideWinder,
+                    grade: ArmorGrade::LightweightAlloy,
+                },
+            ),
+            ("SideWinder_Armour_Mirrored", ArmorModule {
+                ship: ShipType::SideWinder,
+                grade: ArmorGrade::MirroredSurfaceComposite,
+            })
         ];
 
         for (case, expected) in test_cases {
             let result = ArmorModule::from_str(case);
 
+            dbg!(&result);
             assert!(result.is_ok());
             assert_eq!(result.unwrap(), expected);
         }

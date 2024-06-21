@@ -112,7 +112,7 @@ pub enum HardpointModule {
     #[serde(rename = "plasmaaccelerator")]
     PlasmaAccelerator,
 
-    #[serde(rename = "plasmaaccelerator")]
+    #[serde(rename = "plasmaaccelerator_advanced")]
     AdvancedPlasmaAccelerator,
 
     #[serde(rename = "shieldbooster")]
@@ -277,7 +277,7 @@ impl Display for HardpointModule {
                 HardpointModule::ShutdownFieldNeutralizer => "Shutdown Field Neutralizer",
                 HardpointModule::AbrasionBlaster => "Abrasion Blaster",
                 HardpointModule::SeismicCharge => "Seismic Charge",
-                HardpointModule::DisplacementMissile => "Displacement Missile",
+                HardpointModule::DisplacementMissile => "Sub-surface Displacement Missile",
                 HardpointModule::MiningLaser => "Mining Laser",
                 HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
                 HardpointModule::WakeScanner => "Wake Scanner",

@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 use serde::Serialize;
 use thiserror::Error;
@@ -13,6 +14,8 @@ pub enum ModuleClass {
     D,
     E,
     F,
+    G,
+    H,
     I,
 
     #[cfg(not(feature = "strict"))]
@@ -23,6 +26,9 @@ pub enum ModuleClass {
 pub enum ModuleClassError {
     #[error("Unknown module class: {0}")]
     UnknownModuleClass(u8),
+
+    #[error("Unknown module class string: '{0}'")]
+    UnknownModuleClassString(String),
 }
 
 impl TryFrom<u8> for ModuleClass {
@@ -45,6 +51,30 @@ impl TryFrom<u8> for ModuleClass {
     }
 }
 
+impl FromStr for ModuleClass {
+    type Err = ModuleClassError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "A" | "a" => Ok(ModuleClass::A),
+            "B" | "b" => Ok(ModuleClass::B),
+            "C" | "c" => Ok(ModuleClass::C),
+            "D" | "d" => Ok(ModuleClass::D),
+            "E" | "e" => Ok(ModuleClass::E),
+            "F" | "f" => Ok(ModuleClass::F),
+            "G" | "g" => Ok(ModuleClass::G),
+            "H" | "h" => Ok(ModuleClass::H),
+            "I" | "i" => Ok(ModuleClass::I),
+
+            #[cfg(not(feature = "strict"))]
+            _ => Ok(ModuleClass::Unknown),
+
+            #[cfg(feature = "strict")]
+            _ => Err(ModuleClassError::UnknownModuleClassString(s.to_string())),
+        }
+    }
+}
+
 impl Display for ModuleClass {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -57,6 +87,8 @@ impl Display for ModuleClass {
                 ModuleClass::D => "D",
                 ModuleClass::E => "E",
                 ModuleClass::F => "F",
+                ModuleClass::G => "G",
+                ModuleClass::H => "H",
                 ModuleClass::I => "I",
 
                 #[cfg(not(feature = "strict"))]

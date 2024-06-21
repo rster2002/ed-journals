@@ -44,7 +44,7 @@ pub enum Genus {
     Fonticulua,
 
     #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
-    Fruxeta,
+    Frutexa,
 
     #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
@@ -157,7 +157,7 @@ impl From<&Species> for Genus {
             | Species::FrutexaAcus
             | Species::FrutexaFera
             | Species::FrutexaSponsae
-            | Species::FrutexaCollum => Genus::Fruxeta,
+            | Species::FrutexaCollum => Genus::Frutexa,
 
             Species::FumerolaAquatis
             | Species::FumerolaCarbosis
@@ -253,7 +253,7 @@ impl Display for Genus {
                 Genus::CrystallineShards => "Crystalline Shards",
                 Genus::Electricae => "Electricae",
                 Genus::Fonticulua => "Fonticulua",
-                Genus::Fruxeta => "Fruxeta",
+                Genus::Frutexa => "Frutexa",
                 Genus::Fumerola => "Fumerola",
                 Genus::Fungoida => "Fungoida",
                 Genus::Osseus => "Osseus",
@@ -287,7 +287,7 @@ impl Genus {
             Genus::CrystallineShards => 100,
             Genus::Electricae => 1000,
             Genus::Fonticulua => 500,
-            Genus::Fruxeta => 150,
+            Genus::Frutexa => 150,
             Genus::Fumerola => 100,
             Genus::Fungoida => 300,
             Genus::Osseus => 800,
@@ -299,6 +299,36 @@ impl Genus {
 
             // TODO check what this should be
             Genus::ThargoidBarnacle => 0,
+
+            #[cfg(not(feature = "strict"))]
+            Genus::Unknown(_) => 0,
+        }
+    }
+
+    pub fn id(&self) -> u64 {
+        match self {
+            Genus::Aleoida => 23100,
+            Genus::AmphoraPlant => 2101400,
+            Genus::Anemone => 2100400,
+            Genus::BarkMound => 2100300,
+            Genus::Bacterium => 23200,
+            Genus::BrainTree => 2100200,
+            Genus::Cactoida => 23300,
+            Genus::Clypeus => 23400,
+            Genus::Concha => 23500,
+            Genus::CrystallineShards => 2101500,
+            Genus::Electricae => 23600,
+            Genus::Fonticulua => 23700,
+            Genus::Frutexa => 24400,
+            Genus::Fumerola => 23800,
+            Genus::Fungoida => 23900,
+            Genus::Osseus => 24000,
+            Genus::Recepta => 24100,
+            Genus::SinuousTubers => 2100500,
+            Genus::Stratum => 24200,
+            Genus::Tubus => 24300,
+            Genus::Tussock => 24500,
+            Genus::ThargoidBarnacle => 21000,
 
             #[cfg(not(feature = "strict"))]
             Genus::Unknown(_) => 0,
