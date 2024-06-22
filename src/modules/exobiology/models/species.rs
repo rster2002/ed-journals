@@ -32,40 +32,31 @@ pub enum Species {
     AmphoraPlant,
 
     // Anemones
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Sphere_Name;")]
     AnemoneLuteolum,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
     AnemoneCroceum,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
     AnemonePuniceum,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereABCD_03_Name;")]
     AnemoneRoseum,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
     AnemoneBlatteumBioluminescent,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
     AnemoneRubeumBioluminescent,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
     AnemonePrasinumBioluminescent,
 
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_SphereEFGH_03_Name;")]
     AnemoneRoseumBioluminescent,
 
     // Bark mounds
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 

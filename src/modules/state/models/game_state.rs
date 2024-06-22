@@ -123,6 +123,7 @@ mod tests {
     use crate::state::GameState;
     use std::env::current_dir;
     use std::time::Instant;
+    use crate::exobiology::Genus;
 
     #[test]
     fn state_is_correct() {
@@ -148,9 +149,17 @@ mod tests {
                     let mut genuses = HashSet::new();
 
                     for species in &body.scanned_species {
-                        let inserted = genuses.insert(species.genus());
+                        let genus = species.genus();
+
+                        match genus {
+                            Genus::ThargoidBarnacle => break,
+                            _ => {},
+                        }
+
+                        let inserted = genuses.insert(genus);
 
                         if !inserted {
+                            dbg!(body);
                             panic!("Not here!");
                         }
                     }

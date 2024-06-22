@@ -49,6 +49,9 @@ pub enum CodexEntryEventCategory {
     #[serde(rename = "$Codex_Category_StellarBodies;")]
     StellarBodies,
 
+    #[serde(rename = "$Codex_Category_Civilisations;")]
+    Civilizations,
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(String),
@@ -70,6 +73,9 @@ pub enum CodexEntryEventSubcategory {
 
     #[serde(rename = "$Codex_SubCategory_Geology_and_Anomalies;")]
     GeologyAndAnomalies,
+
+    #[serde(rename = "$Codex_SubCategory_Thargoid;")]
+    Thargoid,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
