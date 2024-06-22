@@ -130,7 +130,7 @@ impl From<&LocationInfo> for SystemState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashMap;
+    use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
 
     use strum::IntoEnumIterator;
@@ -139,9 +139,68 @@ mod tests {
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
 
+    const KNOWN_SPECIES: &[(u64, u8, &[Species])] = &[
+        (2874004872433, 17, &[
+            Species::BacteriumVesicula,
+            Species::FonticuluaCampestris,
+        ]),
+        (1247495096115, 20, &[
+            Species::BacteriumCerbrus,
+            Species::BacteriumTela,
+            Species::StratumTectonicas,
+        ]),
+        (5071685950649, 10, &[
+            Species::BacteriumCerbrus,
+            Species::BacteriumTela,
+            Species::StratumTectonicas,
+        ]),
+        (1487946155795, 15, &[
+            Species::BacteriumAurasus,
+            Species::ConchaLabiata,
+            Species::StratumPaleas,
+            Species::TubusConifer,
+        ]),
+        (1487946155795, 16, &[
+            Species::BacteriumAurasus,
+            Species::ConchaLabiata,
+            Species::StratumPaleas,
+            Species::TubusConifer,
+            Species::TussockIgnis,
+        ]),
+        (1487946155795, 28, &[
+            Species::BacteriumVesicula,
+            Species::FonticuluaCampestris,
+        ]),
+        (1487811905211, 15, &[
+            Species::BacteriumCerbrus,
+            Species::StratumAraneamus,
+        ]),
+        (1487811905211, 25, &[
+            Species::AleoidaSpica,
+            Species::BacteriumAlcyoneum,
+            Species::ConchaAureolas,
+            Species::FungoidaGelata,
+            Species::FungoidaSetisis,
+            Species::OsseusSpiralis,
+            Species::StratumPaleas,
+            Species::TussockDivisa,
+        ]),
+        (1487811905211, 27, &[
+            Species::BacteriumAlcyoneum,
+            Species::ConchaAureolas,
+            Species::FungoidaGelata,
+            Species::FungoidaSetisis,
+            Species::OsseusSpiralis,
+            Species::TussockDivisa,
+        ]),
+    ];
+
     #[test]
     fn spawnable_species() {
-        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+        let dir_path = current_dir()
+            .unwrap()
+            .join("test-files")
+            .join("journals");
 
         let log_dir = LogDirReader::open(dir_path);
 
@@ -153,168 +212,192 @@ mod tests {
 
         state.flush();
 
-        let mut processed_result = HashMap::<Species, usize>::new();
-
-        // A false positive is when a species is calculated to spawn on a body, but it was not observed to spawn
-        let mut false_positives_result = HashMap::<Species, usize>::new();
-
-        // A false negative is when a species is observed to spawn on a body, but it was not calculated to spawn
-        let mut false_negatives_result = HashMap::<Species, usize>::new();
-
-        // Blacklisted bodies that should not be counted towards false positives/negatives
-        let blacklisted_bodies: Vec<String> = vec![
-            "Syniechia CB-U d4-8 B 5".to_string(), // Commander did not scan the body before landing
-            "Prie Chraea VL-L c21-0 1 c".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
-            "Syniechou RZ-Z c16-0 7 b a".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
-            "Flyeia Prou RH-C b46-0 A 8".to_string(), // TubusSororibus spawned on a body with a gravity of 0.52g and temperature of 260K
-            "Graea Proae OT-O d7-15 A 4".to_string(), // FrutexaMetallicum, OsseusPellebantus and TussockPropagito spawning on a body that's 0.4K too warm
-            "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
-            "Phoi Aed OH-C d2 3 c".to_string(), // ClypeusSpeculum spawning on a body 0.01au away from the star
-            "Prie Chraea UP-G d10-9 C 11 a".to_string(), // CrystallineShards spawning on a body 0.002au away from the star
-        ];
-
-        // Blacklisted species that should not be counted towards false positives/negatives
-        let blacklisted_species: Vec<Species> = vec![
-            //Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
-        ];
-
-        let mut completely_scanned = 0;
-        let mut highest = 0;
-
         for commander in state.commanders.values() {
             for system in commander.systems.values() {
                 for (body_id, planet_state) in &system.bodies {
-                    if planet_state.all_species_scanned()
-                        .is_some_and(|a| a)
+                    if let Some(expected) = KNOWN_SPECIES.iter()
+                        .find(|x| x.0 == system.location_info.system_address && &x.1 == body_id)
                     {
-                        completely_scanned += 1;
+                        let possible_species = system.get_possible_spawnable_species(*body_id)
+                            .unwrap();
 
-                        if planet_state.scanned_species.len() > highest {
-                            highest = planet_state.scanned_species.len();
+                        assert_eq!(possible_species.len(), expected.2.len());
+
+                        for possible in possible_species {
+                            let found = expected.2
+                                .iter()
+                                .find(|species| species == &&possible.specie)
+                                .is_some();
+
+                            assert!(found);
                         }
                     }
-
-                    // if blacklisted_bodies.contains(&planet_state.scan.body_name) {
-                    //     continue;
-                    // }
-                    //
-                    // let observed_species = &planet_state.scanned_species;
-                    //
-                    // if observed_species.is_empty() {
-                    //     continue;
-                    // }
-                    //
-                    // let spawn_source = SpawnSource {
-                    //     target_system: &system.exobiology_system,
-                    //     target_planet: &planet_state.exobiology_body,
-                    // };
-                    //
-                    // let calculated_species = system
-                    //     .get_spawnable_species(*body_id)
-                    //     .unwrap()
-                    //     .iter()
-                    //     .map(|entry| entry.specie.clone())
-                    //     .collect::<HashSet<_>>();
-
-                    // // All the observed species that were not calculated to spawn on the body.
-                    // let false_negatives: Vec<&Species> = observed_species
-                    //     .iter()
-                    //     .filter(|species| !calculated_species.contains(species))
-                    //     .filter(|species| !blacklisted_species.contains(species))
-                    //     .collect();
-                    //
-                    // // All the calculated species that were not observed to spawn on the body.
-                    // let false_positives: Vec<&Species> = calculated_species
-                    //     .iter()
-                    //     .filter(|species| !observed_species.contains(species))
-                    //     .filter(|species| !blacklisted_species.contains(species))
-                    //     .collect();
-                    //
-                    // let correct_species: Vec<&Species> = calculated_species
-                    //     .iter()
-                    //     .filter(|species| observed_species.contains(species))
-                    //     .collect();
-                    //
-                    // let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
-                    //     .iter()
-                    //     .map(|species| species.spawn_conditions())
-                    //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                    //     .collect();
-                    //
-                    // let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
-                    //     .iter()
-                    //     .map(|species| species.spawn_conditions())
-                    //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                    //     .collect();
-                    //
-                    // // if !false_negatives.is_empty() || !false_positives.is_empty() {
-                    // //     println!(
-                    // //         "Body: {}\nObserved: {:?}\nCalculated: {:?}\nFalse negatives: {:?}\nFalse positives: {:?}\nSpawn source: {:#?}\n",
-                    // //         planet_state.scan.body_name,
-                    // //         observed_species,
-                    // //         calculated_species,
-                    // //         false_negative_spawn_conditions,
-                    // //         false_positive_spawn_conditions,
-                    // //         spawn_source
-                    // //     );
-                    // // }
-                    //
-                    // for species in correct_species {
-                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
-                    // }
-                    //
-                    // for species in false_negatives {
-                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
-                    //     *false_negatives_result.entry(species.clone()).or_insert(0) += 1;
-                    // }
-                    //
-                    // for species in false_positives {
-                    //     *processed_result.entry(species.clone()).or_insert(0) += 1;
-                    //     *false_positives_result.entry(species.clone()).or_insert(0) += 1;
-                    // }
                 }
             }
         }
 
-        dbg!(completely_scanned);
-        dbg!(highest);
-
-        // Correctness check: 1% or more is considered a failure.
-        println!("| Species | Test cases | False negatives | False positives |");
-        println!("| --- | --- | --- | --- |");
-
-        for species in Species::iter() {
-            let count = processed_result.get(&species).copied().unwrap_or(0);
-
-            let false_negatives_count = false_negatives_result.get(&species).copied().unwrap_or(0);
-            let false_positives_count = false_positives_result.get(&species).copied().unwrap_or(0);
-
-            let false_negatives_percentage =
-                f32::round((false_negatives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
-            let false_positives_percentage =
-                f32::round((false_positives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
-
-            // Checkmark or percentage
-            let false_negatives = if false_negatives_percentage == 0.0 {
-                "✅".to_string()
-            } else {
-                format!("🚨 {}%", false_negatives_percentage)
-            };
-
-            let false_positives = if false_positives_percentage == 0.0 {
-                "✅".to_string()
-            } else {
-                format!("🚨 {}%", false_positives_percentage)
-            };
-
-            if false_negatives_percentage >= 1.0 || false_positives_percentage >= 1.0 {
-                println!(
-                    "| *{}* | {} | {} | {} |",
-                    species, count, false_negatives, false_positives
-                );
-            }
-        }
-
-        assert_eq!(false_negatives_result.len(), 0);
+        // let mut processed_result = HashMap::<Species, usize>::new();
+        //
+        // // A false positive is when a species is calculated to spawn on a body, but it was not observed to spawn
+        // let mut false_positives_result = HashMap::<Species, usize>::new();
+        //
+        // // A false negative is when a species is observed to spawn on a body, but it was not calculated to spawn
+        // let mut false_negatives_result = HashMap::<Species, usize>::new();
+        //
+        // // Blacklisted bodies that should not be counted towards false positives/negatives
+        // let blacklisted_bodies: Vec<String> = vec![
+        //     "Syniechia CB-U d4-8 B 5".to_string(), // Commander did not scan the body before landing
+        //     "Prie Chraea VL-L c21-0 1 c".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
+        //     "Syniechou RZ-Z c16-0 7 b a".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
+        //     "Flyeia Prou RH-C b46-0 A 8".to_string(), // TubusSororibus spawned on a body with a gravity of 0.52g and temperature of 260K
+        //     "Graea Proae OT-O d7-15 A 4".to_string(), // FrutexaMetallicum, OsseusPellebantus and TussockPropagito spawning on a body that's 0.4K too warm
+        //     "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
+        //     "Phoi Aed OH-C d2 3 c".to_string(), // ClypeusSpeculum spawning on a body 0.01au away from the star
+        //     "Prie Chraea UP-G d10-9 C 11 a".to_string(), // CrystallineShards spawning on a body 0.002au away from the star
+        // ];
+        //
+        // // Blacklisted species that should not be counted towards false positives/negatives
+        // let blacklisted_species: Vec<Species> = vec![
+        //     //Species::BacteriumTela, // This species is bugged; found on water atm. too, doesn't require volcanism there
+        // ];
+        //
+        // let mut completely_scanned = 0;
+        // let mut highest = 0;
+        //
+        // for commander in state.commanders.values() {
+        //     for system in commander.systems.values() {
+        //         for (body_id, planet_state) in &system.bodies {
+        //             if planet_state.all_species_scanned()
+        //                 .is_some_and(|a| a)
+        //             {
+        //                 completely_scanned += 1;
+        //
+        //                 if planet_state.scanned_species.len() > highest {
+        //                     highest = planet_state.scanned_species.len();
+        //                 }
+        //             }
+        //
+        //             // if blacklisted_bodies.contains(&planet_state.scan.body_name) {
+        //             //     continue;
+        //             // }
+        //             //
+        //             // let observed_species = &planet_state.scanned_species;
+        //             //
+        //             // if observed_species.is_empty() {
+        //             //     continue;
+        //             // }
+        //             //
+        //             // let spawn_source = SpawnSource {
+        //             //     target_system: &system.exobiology_system,
+        //             //     target_planet: &planet_state.exobiology_body,
+        //             // };
+        //             //
+        //             // let calculated_species = system
+        //             //     .get_spawnable_species(*body_id)
+        //             //     .unwrap()
+        //             //     .iter()
+        //             //     .map(|entry| entry.specie.clone())
+        //             //     .collect::<HashSet<_>>();
+        //
+        //             // // All the observed species that were not calculated to spawn on the body.
+        //             // let false_negatives: Vec<&Species> = observed_species
+        //             //     .iter()
+        //             //     .filter(|species| !calculated_species.contains(species))
+        //             //     .filter(|species| !blacklisted_species.contains(species))
+        //             //     .collect();
+        //             //
+        //             // // All the calculated species that were not observed to spawn on the body.
+        //             // let false_positives: Vec<&Species> = calculated_species
+        //             //     .iter()
+        //             //     .filter(|species| !observed_species.contains(species))
+        //             //     .filter(|species| !blacklisted_species.contains(species))
+        //             //     .collect();
+        //             //
+        //             // let correct_species: Vec<&Species> = calculated_species
+        //             //     .iter()
+        //             //     .filter(|species| observed_species.contains(species))
+        //             //     .collect();
+        //             //
+        //             // let false_negative_spawn_conditions: Vec<&SpawnCondition> = false_negatives
+        //             //     .iter()
+        //             //     .map(|species| species.spawn_conditions())
+        //             //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+        //             //     .collect();
+        //             //
+        //             // let false_positive_spawn_conditions: Vec<&SpawnCondition> = false_positives
+        //             //     .iter()
+        //             //     .map(|species| species.spawn_conditions())
+        //             //     .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
+        //             //     .collect();
+        //             //
+        //             // // if !false_negatives.is_empty() || !false_positives.is_empty() {
+        //             // //     println!(
+        //             // //         "Body: {}\nObserved: {:?}\nCalculated: {:?}\nFalse negatives: {:?}\nFalse positives: {:?}\nSpawn source: {:#?}\n",
+        //             // //         planet_state.scan.body_name,
+        //             // //         observed_species,
+        //             // //         calculated_species,
+        //             // //         false_negative_spawn_conditions,
+        //             // //         false_positive_spawn_conditions,
+        //             // //         spawn_source
+        //             // //     );
+        //             // // }
+        //             //
+        //             // for species in correct_species {
+        //             //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+        //             // }
+        //             //
+        //             // for species in false_negatives {
+        //             //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+        //             //     *false_negatives_result.entry(species.clone()).or_insert(0) += 1;
+        //             // }
+        //             //
+        //             // for species in false_positives {
+        //             //     *processed_result.entry(species.clone()).or_insert(0) += 1;
+        //             //     *false_positives_result.entry(species.clone()).or_insert(0) += 1;
+        //             // }
+        //         }
+        //     }
+        // }
+        //
+        // dbg!(completely_scanned);
+        // dbg!(highest);
+        //
+        // // Correctness check: 1% or more is considered a failure.
+        // println!("| Species | Test cases | False negatives | False positives |");
+        // println!("| --- | --- | --- | --- |");
+        //
+        // for species in Species::iter() {
+        //     let count = processed_result.get(&species).copied().unwrap_or(0);
+        //
+        //     let false_negatives_count = false_negatives_result.get(&species).copied().unwrap_or(0);
+        //     let false_positives_count = false_positives_result.get(&species).copied().unwrap_or(0);
+        //
+        //     let false_negatives_percentage =
+        //         f32::round((false_negatives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
+        //     let false_positives_percentage =
+        //         f32::round((false_positives_count as f32 / count as f32) * 100.0 * 100.0) / 100.0;
+        //
+        //     // Checkmark or percentage
+        //     let false_negatives = if false_negatives_percentage == 0.0 {
+        //         "✅".to_string()
+        //     } else {
+        //         format!("🚨 {}%", false_negatives_percentage)
+        //     };
+        //
+        //     let false_positives = if false_positives_percentage == 0.0 {
+        //         "✅".to_string()
+        //     } else {
+        //         format!("🚨 {}%", false_positives_percentage)
+        //     };
+        //
+        //     if false_negatives_percentage >= 1.0 || false_positives_percentage >= 1.0 {
+        //         println!(
+        //             "| *{}* | {} | {} | {} |",
+        //             species, count, false_negatives, false_positives
+        //         );
+        //     }
+        // }
+        //
+        // assert_eq!(false_negatives_result.len(), 0);
     }
 }
