@@ -415,6 +415,8 @@ lazy_static! {
             any![
                 ThinAtmosphere(SulfurDioxide),
                 ThinAtmosphere(Water),
+                MinMeanTemperature(132.0),
+                MaxMeanTemperature(500.0),
             ],
         ),
         (
@@ -1571,4 +1573,150 @@ lazy_static! {
             Special,
         )
     ];
+}
+
+#[cfg(test)]
+mod tests {
+    use std::env::current_dir;
+    use std::fs::File;
+    use crate::exobiology::{SpawnCondition, Species};
+    use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
+
+    #[derive(Debug)]
+    struct PlanetDetails {
+        pub gravity: Gravity,
+        pub temperature: f32,
+        pub volcanism: Volcanism,
+        pub pressure: f32,
+        pub atmosphere: Atmosphere,
+        pub planet_class: PlanetClass,
+        pub region: Region,
+    }
+
+    fn test_species_planet_details(species: Species, file_name: &str) {
+        let file_path = current_dir()
+            .unwrap()
+            .join("test-files")
+            .join("species-planets")
+            .join(file_name);
+
+        let file = File::open(file_path)
+            .unwrap();
+
+        let mut csv_reader = csv::Reader::from_reader(file);
+
+        let test_cases = csv_reader.records()
+            .into_iter()
+            .filter_map(|record| {
+                match record {
+                    Ok(record) => Some(PlanetDetails {
+                        temperature: record.get(16)?
+                            .parse()
+                            .ok()?,
+                        gravity: record.get(15)?
+                            .parse::<f32>()
+                            .ok()?
+                            .into(),
+                        volcanism: match record.get(14)? {
+                            "No volcanism" => Volcanism {
+                                kind: VolcanismType::None,
+                                classification: VolcanismClassification::Minor,
+                            },
+                            volcanism => volcanism.parse()
+                                .unwrap()
+                        },
+                        pressure: record.get(13)?
+                            .parse()
+                            .ok()?,
+                        atmosphere: record.get(12)?
+                            .parse()
+                            .unwrap(),
+                        planet_class: record.get(11)?
+                            .parse()
+                            .unwrap(),
+                        region: Region::from_name(record.get(5)?),
+                    }),
+                    Err(_) => None
+                }
+            });
+
+        let spawn_conditions = species.spawn_conditions();
+        for case in test_cases {
+            let result = check_spawn_condition(&spawn_conditions, &case);
+
+            if !result {
+                dbg!(spawn_conditions, case);
+            }
+
+            assert!(result);
+        }
+    }
+
+    fn check_spawn_condition(spawn_condition: &SpawnCondition, planet_details: &PlanetDetails) -> bool {
+        match spawn_condition {
+            SpawnCondition::MinMeanTemperature(min) => {
+                &planet_details.temperature >= min
+            }
+            SpawnCondition::MaxMeanTemperature(max) => {
+                &planet_details.temperature <= max
+            }
+            SpawnCondition::NoAtmosphere => {
+                matches!(planet_details.atmosphere.kind, AtmosphereType::None)
+            }
+            SpawnCondition::AnyThinAtmosphere => {
+                matches!(planet_details.atmosphere.density, AtmosphereDensity::Thin)
+            }
+            SpawnCondition::ThinAtmosphere(atmosphere) => {
+                &planet_details.atmosphere.kind == atmosphere
+            }
+            SpawnCondition::MinGravity(min_gravity) => {
+                &planet_details.gravity.as_g() >= min_gravity
+            }
+            SpawnCondition::MaxGravity(max_gravity) => {
+                &planet_details.gravity.as_g() <= max_gravity
+            }
+            SpawnCondition::PlanetClass(planet_class) => {
+                &planet_details.planet_class == planet_class
+            }
+            // TODO
+            SpawnCondition::MainStarClass(_) => true,
+            // TODO
+            SpawnCondition::ParentStarClass(_) => true,
+            SpawnCondition::VolcanismType(volcanism) => {
+                &planet_details.volcanism.kind == volcanism
+            }
+            SpawnCondition::AnyVolcanism => {
+                &planet_details.volcanism.kind == &VolcanismType::None
+            }
+            SpawnCondition::MinPressure(min_pressure) => {
+                &planet_details.pressure >= min_pressure
+            }
+            SpawnCondition::MaxPressure(max_pressure) => {
+                &planet_details.pressure <= max_pressure
+            }
+            SpawnCondition::Region(region) => {
+                &planet_details.region == region
+            }
+            SpawnCondition::Special => false,
+            SpawnCondition::Any(conditions) => {
+                conditions.iter()
+                    .any(|condition| check_spawn_condition(condition, planet_details))
+            }
+            SpawnCondition::All(conditions) => {
+                conditions.iter()
+                    .all(|condition| check_spawn_condition(condition, planet_details))
+            }
+            _ => true,
+        }
+    }
+
+    #[test]
+    fn bacterium_cerbrus_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumCerbrus, "bacterium-cerbrus.csv");
+    }
+
+    #[test]
+    fn cactoida_lapis_test_cases_all_pass() {
+        test_species_planet_details(Species::CactoidaLapis, "cactoida-lapis.csv");
+    }
 }

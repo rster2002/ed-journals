@@ -2,76 +2,79 @@ use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use thiserror::Error;
+use crate::from_str_deserialize_impl;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum AtmosphereType {
     None,
-
-    #[serde(alias = "ammonia")]
     Ammonia,
-
-    #[serde(alias = "helium")]
     Helium,
-
-    #[serde(alias = "nitrogen")]
     Nitrogen,
-
-    #[serde(alias = "ammonia rich")]
     AmmoniaRich,
-
-    #[serde(alias = "neon")]
     Neon,
-
-    #[serde(alias = "carbon dioxide rich")]
     CarbonDioxideRich,
-
-    #[serde(alias = "methane")]
     Methane,
-
-    #[serde(alias = "water rich")]
     WaterRich,
-
-    #[serde(alias = "carbon dioxide")]
     CarbonDioxide,
-
-    #[serde(alias = "water")]
     Water,
-
-    #[serde(alias = "argon rich")]
     ArgonRich,
-
-    #[serde(alias = "methane rich")]
     MethaneRich,
-
-    #[serde(alias = "silicate vapour")]
     SilicateVapour,
-
-    #[serde(alias = "argon")]
     Argon,
-
-    #[serde(alias = "earth like")]
     EarthLike,
-
-    #[serde(alias = "neon rich")]
     NeonRich,
-
-    #[serde(alias = "oxygen")]
     Oxygen,
-
-    #[serde(alias = "ammonia oxygen")]
     AmmoniaOxygen,
-
-    #[serde(alias = "sulfur dioxide", alias = "SulphurDioxide")]
     SulfurDioxide,
-
-    #[serde(alias = "metallic vapour")]
     MetallicVapour,
+
+    #[cfg(not(feature = "strict"))]
+    Unknown(String),
+}
+
+#[derive(Debug, Error)]
+pub enum AtmosphereTypeError {
+    #[error("Unknown atmosphere type: '{0}'")]
+    UnknownAtmosphereType(String),
 }
 
 impl FromStr for AtmosphereType {
-    type Err = serde_json::Error;
+    type Err = AtmosphereTypeError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        serde_json::from_value(Value::String(s.to_ascii_lowercase()))
+        let lowercase: &str = &s.to_ascii_lowercase();
+
+        Ok(match lowercase {
+            "none" | "" | " atmosphere" => AtmosphereType::None,
+            "ammonia" => AtmosphereType::Ammonia,
+            "helium" => AtmosphereType::Helium,
+            "nitrogen" => AtmosphereType::Nitrogen,
+            "ammonia rich" | "ammoniarich" | "ammonia-rich" => AtmosphereType::AmmoniaRich,
+            "neon" => AtmosphereType::Neon,
+            "carbon dioxide rich" | "carbondioxiderich" | "carbon dioxide-rich" => AtmosphereType::CarbonDioxideRich,
+            "methane" => AtmosphereType::Methane,
+            "water rich" | "waterrich" | "water-rich" => AtmosphereType::WaterRich,
+            "carbon dioxide" | "carbondioxide" => AtmosphereType::CarbonDioxide,
+            "water" => AtmosphereType::Water,
+            "argon rich" | "argonrich" | "argon-rich" => AtmosphereType::ArgonRich,
+            "methane rich" | "methanerich" | "methane-rich" => AtmosphereType::MethaneRich,
+            "silicate vapour" | "silicatevapour" => AtmosphereType::SilicateVapour,
+            "argon" => AtmosphereType::Argon,
+            "earth like" | "earthlike" => AtmosphereType::EarthLike,
+            "neon rich" | "neonrich" | "neon-rich" => AtmosphereType::NeonRich,
+            "oxygen" => AtmosphereType::Oxygen,
+            "ammonia oxygen" | "ammoniaoxygen" => AtmosphereType::AmmoniaOxygen,
+            "sulphur dioxide" | "sulphurdioxide" | "sulfur dioxide" | "sulfurdioxide" => AtmosphereType::SulfurDioxide,
+            "metallic vapour" | "metallicvapour" => AtmosphereType::MetallicVapour,
+
+            #[cfg(feature = "strict")]
+            _ => return Err(AtmosphereTypeError::UnknownAtmosphereType(s.to_string())),
+
+            #[cfg(not(feature = "strict"))]
+            _ => AtmosphereType::Unknown(s.to_string()),
+        })
     }
 }
+
+from_str_deserialize_impl!(AtmosphereType);

@@ -6,6 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
+use crate::galaxy::models::atmosphere_type::AtmosphereTypeError;
 use crate::modules::galaxy::AtmosphereType;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
@@ -24,8 +25,8 @@ pub enum AtmosphereDensity {
 
 #[derive(Debug, Error)]
 pub enum AtmosphereError {
-    #[error("Unknown atmosphere type: {0}")]
-    UnknownAtmosphereType(serde_json::Error),
+    #[error(transparent)]
+    UnknownAtmosphereType(AtmosphereTypeError),
 
     #[error("Failed to parse atmosphere: '{0}'")]
     FailedToParse(String),
@@ -33,7 +34,7 @@ pub enum AtmosphereError {
 
 lazy_static! {
     static ref ATMOSPHERE_REGEX: Regex =
-        Regex::new(r#"^(hot )?((thin|thick) )?([a-zA-Z ]+)? atmosphere$"#).unwrap();
+        Regex::new(r#"^([hH]ot )?(([tT]hin|[tT]hick) )?([a-zA-Z -]+?)?( atmosphere)?$"#).unwrap();
 }
 
 impl FromStr for Atmosphere {
@@ -56,23 +57,15 @@ impl FromStr for Atmosphere {
 
         let density = match captures.get(3) {
             Some(capture) => match capture.as_str() {
-                "thin" => AtmosphereDensity::Thin,
-                "thick" => AtmosphereDensity::Thick,
+                "thin" | "Thin" => AtmosphereDensity::Thin,
+                "thick" | "Thick" => AtmosphereDensity::Thick,
                 _ => AtmosphereDensity::Normal,
             },
             None => AtmosphereDensity::Normal,
         };
 
-        // Sometimes it shit like 'thick  atmosphere' appears as input, so this handles that...
-        let Some(kind_capture) = captures.get(4) else {
-            return Ok(Atmosphere {
-                kind: AtmosphereType::AmmoniaOxygen,
-                hot,
-                density,
-            });
-        };
-
-        let kind = kind_capture
+        let kind = captures.get(4)
+            .expect("Should have been captured already")
             .as_str()
             .parse()
             .map_err(AtmosphereError::UnknownAtmosphereType)?;
@@ -82,3 +75,28 @@ impl FromStr for Atmosphere {
 }
 
 from_str_deserialize_impl!(Atmosphere);
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+    use crate::galaxy::Atmosphere;
+
+    #[test]
+    fn atmosphere_test_cases_are_parsed_correctly() {
+        let test_cases = [
+            "argon rich atmosphere",
+            "nitrogen atmosphere",
+            "Thin Carbon dioxide-rich",
+            "None",
+            "thick  atmosphere", // Because of course this is in there
+            "", // WHY?!
+        ];
+
+        for case in test_cases {
+            let result = Atmosphere::from_str(case);
+
+            dbg!(&result);
+            assert!(result.is_ok());
+        }
+    }
+}

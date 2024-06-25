@@ -212,39 +212,41 @@ mod tests {
 
         state.flush();
 
-        for commander in state.commanders.values() {
-            for system in commander.systems.values() {
-                for (body_id, planet_state) in &system.bodies {
-                    if let Some(expected) = KNOWN_SPECIES.iter()
-                        .find(|x| x.0 == system.location_info.system_address && &x.1 == body_id)
-                    {
-                        let possible_species = system.get_possible_spawnable_species(*body_id)
-                            .unwrap();
+        for expected in KNOWN_SPECIES {
+            for commander in state.commanders.values() {
+                let Some(system) = commander.system_by_address(expected.0) else {
+                    continue;
+                };
 
-                        assert_eq!(possible_species.len(), expected.2.len());
+                let possible_species = system.get_possible_spawnable_species(expected.1)
+                    .unwrap();
 
-                        for possible in &possible_species {
-                            let found = expected.2
-                                .iter()
-                                .find(|species| species == &&possible.specie)
-                                .is_some();
+                dbg!(&possible_species, &expected);
 
-                            // Checks that all the actual species are in the list
-                            assert!(found);
-                        }
+                assert_eq!(possible_species.len(), expected.2.len());
 
-                        for expected in expected.2 {
-                            let found = possible_species
-                                .iter()
-                                .find(|entry| &entry.specie == expected)
-                                .is_some();
+                for possible in &possible_species {
+                    let found = expected.2
+                        .iter()
+                        .find(|species| species == &&possible.specie)
+                        .is_some();
 
-                            // Check that all the expected entries are in the list
-                            assert!(found);
-                        }
-                    }
+                    // Checks that all the actual species are in the list
+                    assert!(found);
+                }
+
+                for expected in expected.2 {
+                    let found = possible_species
+                        .iter()
+                        .find(|entry| &entry.specie == expected)
+                        .is_some();
+
+                    // Check that all the expected entries are in the list
+                    assert!(found);
                 }
             }
         }
+
+
     }
 }

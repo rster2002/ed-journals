@@ -26,6 +26,12 @@ impl Gravity {
     }
 }
 
+impl From<f32> for Gravity {
+    fn from(value: f32) -> Self {
+        Gravity(value)
+    }
+}
+
 impl Debug for Gravity {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}m/s² ({}g)", self.0, self.as_g())

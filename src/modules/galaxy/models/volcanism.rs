@@ -32,7 +32,7 @@ pub enum VolcanismError {
 
 lazy_static! {
     static ref VOLCANISM_REGEX: Regex =
-        Regex::new("(^minor |^major |^)([a-zA-Z ]+) volcanism$").unwrap();
+        Regex::new("(^[mM]inor |^[mM]ajor |^)([a-zA-Z ]+?)( volcanism)?$").unwrap();
 }
 
 impl FromStr for Volcanism {
@@ -64,8 +64,8 @@ impl FromStr for Volcanism {
             .expect("Should have been captured already")
             .as_str()
         {
-            "minor " => VolcanismClassification::Minor,
-            "major " => VolcanismClassification::Major,
+            "minor " | "Minor " => VolcanismClassification::Minor,
+            "major " | "Major " => VolcanismClassification::Major,
             _ => VolcanismClassification::Normal,
         };
 
@@ -113,6 +113,7 @@ mod tests {
         for (case, expected) in test_cases {
             let result = Volcanism::from_str(case);
 
+            dbg!(case);
             assert!(result.is_ok());
             assert_eq!(result.unwrap(), expected);
         }
