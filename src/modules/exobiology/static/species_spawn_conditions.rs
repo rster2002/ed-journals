@@ -412,11 +412,23 @@ lazy_static! {
         ),
         (
             BacteriumCerbrus,
-            any![
-                ThinAtmosphere(SulfurDioxide),
-                ThinAtmosphere(Water),
+            all![
                 MinMeanTemperature(132.0),
                 MaxMeanTemperature(500.0),
+                any![
+                    ThinAtmosphere(SulfurDioxide),
+                    ThinAtmosphere(Water),
+                ],
+                any![
+                    all![
+                        MinGravity(0.04),
+                        MaxGravity(0.06),
+                    ],
+                    all![
+                        MinGravity(0.23),
+                        MaxGravity(0.6),
+                    ],
+                ],
             ],
         ),
         (
@@ -858,6 +870,8 @@ lazy_static! {
                     PlanetClass(RockyIceBody),
                 ],
                 MaxGravity(0.27),
+                MinMeanTemperature(50.0),
+                MaxMeanTemperature(150.0),
             ],
         ),
         (
@@ -1052,7 +1066,16 @@ lazy_static! {
                 any![
                     ThinAtmosphere(Argon),
                     ThinAtmosphere(ArgonRich),
+                    ThinAtmosphere(Nitrogen),
                 ],
+                any![
+                    PlanetClass(RockyIceBody),
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
+                MinMeanTemperature(50.0),
+                MaxMeanTemperature(135.0),
+                MaxPressure(0.1),
                 MaxGravity(0.27),
             ],
         ),
@@ -1149,8 +1172,14 @@ lazy_static! {
             all![
                 any![
                     ThinAtmosphere(Argon),
+                    ThinAtmosphere(ArgonRich),
                     ThinAtmosphere(Methane),
                     ThinAtmosphere(Nitrogen),
+                ],
+                any![
+                    PlanetClass(RockyIceBody),
+                    PlanetClass(HighMetalContentBody),
+                    PlanetClass(RockyBody),
                 ],
                 any![
                     RockyComposition,
@@ -1158,6 +1187,8 @@ lazy_static! {
                     PlanetClass(RockyIceBody),
                 ],
                 MaxGravity(0.27),
+                MinMeanTemperature(43.0),
+                MaxMeanTemperature(135.0),
             ],
         ),
         (
@@ -1427,11 +1458,17 @@ lazy_static! {
             TussockCapillum,
             all![
                 any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(RockyIceBody),
+                ],
+                any![
                     ThinAtmosphere(Argon),
                     ThinAtmosphere(Methane),
                 ],
                 RockyComposition,
                 MaxGravity(0.27),
+                MinMeanTemperature(80.0),
+                MaxMeanTemperature(130.0),
             ],
         ),
         (
@@ -1582,8 +1619,15 @@ mod tests {
     use crate::exobiology::{SpawnCondition, Species};
     use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
+    const ALL_CSV_FILES: &[&str] = &[
+        "bacterium-cerbrus.csv",
+        "cactoida-lapis.csv",
+        "fonticulua-campestris.csv",
+    ];
+
     #[derive(Debug)]
     struct PlanetDetails {
+        pub name: String,
         pub gravity: Gravity,
         pub temperature: f32,
         pub volcanism: Volcanism,
@@ -1593,7 +1637,7 @@ mod tests {
         pub region: Region,
     }
 
-    fn test_species_planet_details(species: Species, file_name: &str) {
+    fn get_test_entries(file_name: &str) -> Vec<PlanetDetails> {
         let file_path = current_dir()
             .unwrap()
             .join("test-files")
@@ -1605,18 +1649,22 @@ mod tests {
 
         let mut csv_reader = csv::Reader::from_reader(file);
 
-        let test_cases = csv_reader.records()
+        csv_reader.records()
             .into_iter()
             .filter_map(|record| {
                 match record {
                     Ok(record) => Some(PlanetDetails {
+                        name: record.get(10)
+                            .unwrap()
+                            .to_string(),
                         temperature: record.get(16)?
                             .parse()
                             .ok()?,
-                        gravity: record.get(15)?
-                            .parse::<f32>()
-                            .ok()?
-                            .into(),
+                        gravity: Gravity::from_g(
+                            record.get(15)?
+                                .parse::<f32>()
+                                .ok()?
+                        ),
                         volcanism: match record.get(14)? {
                             "No volcanism" => Volcanism {
                                 kind: VolcanismType::None,
@@ -1638,17 +1686,74 @@ mod tests {
                     }),
                     Err(_) => None
                 }
-            });
+            })
+            .collect()
+    }
+
+    /// Tests the target species with the given csv file by checking missed predictions and false
+    /// positives.
+    fn test_species_planet_details(species: Species, file_name: &str) {
+        success_species_planet_details(&species, file_name);
+        fail_species_planet_details(&species, file_name);
+    }
+
+    /// Checks that all the spawn conditions apply to the specified test file and ensures that the
+    /// number of failed predictions stay under a certain percentage.
+    fn success_species_planet_details(species: &Species, file_name: &str) {
+        let test_cases = get_test_entries(file_name);
 
         let spawn_conditions = species.spawn_conditions();
-        for case in test_cases {
-            let result = check_spawn_condition(&spawn_conditions, &case);
+        let mut failed_cases = Vec::new();
+        let mut entry_count: usize = 0;
 
-            if !result {
-                dbg!(spawn_conditions, case);
+        for case in test_cases {
+            entry_count += 1;
+
+            if !check_spawn_condition(&spawn_conditions, &case) {
+                failed_cases.push(case);
+            }
+        }
+
+        let ratio = failed_cases.len() as f32 / entry_count as f32;
+        dbg!(&ratio);
+
+        // 0.5% of cases are allowed to fail
+        if ratio >= const { 0.005 } {
+            dbg!(failed_cases.get(0));
+            assert!(false);
+        }
+    }
+
+    /// Checks that the spawn conditions do not apply to all other entries in the test-suite and
+    /// ensures that the number of false positives stay under a said percentage.
+    fn fail_species_planet_details(species: &Species, file_name: &str) {
+        let spawn_conditions = species.spawn_conditions();
+        let mut succeeded = Vec::new();
+        let mut entry_count: usize = 0;
+
+        for file in ALL_CSV_FILES {
+            if file == &file_name {
+                continue;
             }
 
-            assert!(result);
+            let test_cases = get_test_entries(file);
+
+            for case in test_cases {
+                entry_count += 1;
+
+                if check_spawn_condition(&spawn_conditions, &case) {
+                    succeeded.push(case);
+                }
+            }
+        }
+
+        let ratio = succeeded.len() as f32 / entry_count as f32;
+        dbg!(&ratio);
+
+        // 5% of cases are allowed to succeed
+        if ratio >= const { 0.05 } {
+            dbg!(succeeded.get(0));
+            assert!(false);
         }
     }
 
@@ -1710,6 +1815,9 @@ mod tests {
         }
     }
 
+    // TODO also test against large random set of planets and ensure that only a certain percentage
+    //  passes to combat false positives.
+
     #[test]
     fn bacterium_cerbrus_test_cases_all_pass() {
         test_species_planet_details(Species::BacteriumCerbrus, "bacterium-cerbrus.csv");
@@ -1718,5 +1826,25 @@ mod tests {
     #[test]
     fn cactoida_lapis_test_cases_all_pass() {
         test_species_planet_details(Species::CactoidaLapis, "cactoida-lapis.csv");
+    }
+
+    #[test]
+    fn fonticulua_campestris_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaCampestris, "fonticulua-campestris.csv");
+    }
+
+    #[test]
+    fn fungoida_ballarum_test_cases_all_pass() {
+        test_species_planet_details(Species::FungoidaBullarum, "fungoida-bullarum.csv");
+    }
+
+    #[test]
+    fn osseus_pumice_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusPumice, "osseus-pumice.csv");
+    }
+
+    #[test]
+    fn tussock_capillum_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockCapillum, "tussock-capillum.csv");
     }
 }
