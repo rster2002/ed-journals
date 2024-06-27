@@ -670,7 +670,7 @@ lazy_static! {
             all![
                 MaxGravity(0.27),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 ThinAtmosphere(Ammonia),
@@ -681,7 +681,7 @@ lazy_static! {
             all![
                 MaxGravity(0.27),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 any![
@@ -697,7 +697,7 @@ lazy_static! {
             all![
                 MaxGravity(0.27),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 any![
@@ -713,7 +713,7 @@ lazy_static! {
             all![
                 MaxGravity(0.27),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 ThinAtmosphere(Water),
@@ -724,7 +724,7 @@ lazy_static! {
             all![
                 MaxGravity(0.27),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 ThinAtmosphere(Ammonia),
@@ -952,7 +952,7 @@ lazy_static! {
             FrutexaCollum,
             all![
                 ThinAtmosphere(SulfurDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -960,18 +960,31 @@ lazy_static! {
             FrutexaFera,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
-                MaxGravity(0.27),
-                MinMeanTemperature(147.0),
-                MaxMeanTemperature(195.0),
+                PlanetClass(RockyBody),
+                MinGravity(0.04),
+                MaxGravity(0.25),
+                MinMeanTemperature(145.0),
+                MaxMeanTemperature(200.0),
                 MinPressure(0.003),
+                any![
+                    Region(Region::GalacticCenter),
+                    Region(Region::EmpyreonStraits),
+                    Region(Region::OuterArm),
+                    Region(Region::FormidineRift),
+                    Region(Region::ArcadianStream),
+                    Region(Region::TheConduit),
+                    Region(Region::NewtonsVault),
+                    Region(Region::NormaArm),
+                    Region(Region::KeplersCrest),
+                    Region(Region::Xibalba),
+                ],
             ],
         ),
         (
             FrutexaFlabellum,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -979,7 +992,7 @@ lazy_static! {
             FrutexaFlammasis,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1001,7 +1014,7 @@ lazy_static! {
             FrutexaSponsae,
             all![
                 ThinAtmosphere(Water),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1042,7 +1055,7 @@ lazy_static! {
                     VolcanismType(VolcanismType::MethaneGeysers),
                 ],
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1124,7 +1137,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1137,7 +1150,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(Water),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1148,7 +1161,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1161,7 +1174,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1184,7 +1197,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                 ],
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                     PlanetClass(RockyIceBody),
                 ],
@@ -1197,7 +1210,10 @@ lazy_static! {
             OsseusSpiralis,
             all![
                 ThinAtmosphere(Ammonia),
-                any![RockyComposition, PlanetClass(HighMetalContentBody)],
+                any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
                 MaxGravity(0.27)
             ]
         ),
@@ -1217,7 +1233,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(SulfurDioxide),
                 any![
-                    RockyComposition,
+                    PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
                 MaxGravity(0.27),
@@ -1234,7 +1250,7 @@ lazy_static! {
             SinuousTubersAlbidum,
             all![
                 NoAtmosphere,
-                RockyComposition,
+                PlanetClass(RockyBody),
             ]),
         (
             SinuousTubersBlatteum,
@@ -1250,14 +1266,14 @@ lazy_static! {
             SinuousTubersCaeruleum,
             all![
                 NoAtmosphere,
-                RockyComposition,
+                PlanetClass(RockyBody),
             ],
         ),
         (
             SinuousTubersLindigoticum,
             all![
                 NoAtmosphere,
-                RockyComposition,
+                PlanetClass(RockyBody),
             ],
         ),
         (
@@ -1301,7 +1317,7 @@ lazy_static! {
             StratumAraneamus,
             all![
                 ThinAtmosphere(SulfurDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(375.0),
                 MinGravity(0.26),
@@ -1331,7 +1347,18 @@ lazy_static! {
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
                 ],
-                RockyComposition,
+                any![
+                    Region(Region::GalacticCenter),
+                    Region(Region::OdinsHold),
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::OrionCygnusArm),
+                    Region(Region::Izanami),
+                    Region(Region::Temple),
+                    Region(Region::InnerOrionPerseusConflux),
+                ],
+                PlanetClass(RockyBody),
+                MinGravity(0.04),
                 MaxGravity(0.48),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(190.0),
@@ -1355,7 +1382,7 @@ lazy_static! {
             StratumLaminamus,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MinMeanTemperature(165.0),
             ],
         ),
@@ -1366,7 +1393,7 @@ lazy_static! {
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
                 ],
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(190.0),
             ],
@@ -1377,10 +1404,15 @@ lazy_static! {
                 any![
                     ThinAtmosphere(Ammonia),
                     ThinAtmosphere(Water),
+                    ThinAtmosphere(Oxygen),
                     ThinAtmosphere(CarbonDioxide),
+                    ThinAtmosphere(CarbonDioxideRich),
                 ],
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MinMeanTemperature(165.0),
+                MaxMeanTemperature(450.0),
+                MinGravity(0.039),
+                MaxGravity(0.6),
             ],
         ),
         (
@@ -1395,7 +1427,7 @@ lazy_static! {
             TubusCavas,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.15),
                 MinMeanTemperature(160.0),
                 MaxMeanTemperature(190.0),
@@ -1405,7 +1437,7 @@ lazy_static! {
             TubusCompagibus,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.15),
                 MinMeanTemperature(160.0),
                 MaxMeanTemperature(190.0),
@@ -1415,7 +1447,7 @@ lazy_static! {
             TubusConifer,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MinGravity(0.041),
                 MaxGravity(0.15),
                 MinMeanTemperature(160.0),
@@ -1428,7 +1460,7 @@ lazy_static! {
             TubusRosarium,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.15),
                 MinMeanTemperature(160.0),
             ],
@@ -1450,7 +1482,7 @@ lazy_static! {
             TussockAlbata,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(175.0),
                 MaxMeanTemperature(180.0),
@@ -1467,7 +1499,6 @@ lazy_static! {
                     ThinAtmosphere(Argon),
                     ThinAtmosphere(Methane),
                 ],
-                RockyComposition,
                 MaxGravity(0.27),
                 MinMeanTemperature(80.0),
                 MaxMeanTemperature(130.0),
@@ -1477,7 +1508,7 @@ lazy_static! {
             TussockCaputus,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(190.0),
@@ -1487,7 +1518,7 @@ lazy_static! {
             TussockCatena,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1495,7 +1526,7 @@ lazy_static! {
             TussockCultro,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1503,7 +1534,7 @@ lazy_static! {
             TussockDivisa,
             all![
                 ThinAtmosphere(Ammonia),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1511,7 +1542,7 @@ lazy_static! {
             TussockIgnis,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(160.0),
                 MaxMeanTemperature(170.0),
@@ -1521,7 +1552,7 @@ lazy_static! {
             TussockPennata,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(145.0),
                 MaxMeanTemperature(155.0),
@@ -1531,7 +1562,7 @@ lazy_static! {
             TussockPennatis,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MaxMeanTemperature(195.0),
             ],
@@ -1540,7 +1571,7 @@ lazy_static! {
             TussockPropagito,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MaxMeanTemperature(195.0),
             ],
@@ -1549,7 +1580,7 @@ lazy_static! {
             TussockSerrati,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(170.0),
                 MaxMeanTemperature(175.0),
@@ -1559,7 +1590,7 @@ lazy_static! {
             TussockStigmasis,
             all![
                 ThinAtmosphere(SulfurDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1567,7 +1598,7 @@ lazy_static! {
             TussockTriticum,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(190.0),
                 MaxMeanTemperature(195.0),
@@ -1577,7 +1608,7 @@ lazy_static! {
             TussockVentusa,
             all![
                 ThinAtmosphere(CarbonDioxide),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
                 MinMeanTemperature(155.0),
                 MaxMeanTemperature(160.0),
@@ -1587,7 +1618,7 @@ lazy_static! {
             TussockVirgam,
             all![
                 ThinAtmosphere(Water),
-                RockyComposition,
+                PlanetClass(RockyBody),
                 MaxGravity(0.27),
             ],
         ),
@@ -1626,11 +1657,14 @@ mod tests {
         "cactoida-lapis.csv",
         "fonticulua-campestris.csv",
         "frutexa-acus.csv",
-        // "frutexa-fabellum.csv",
+        "frutexa-fabellum.csv",
+        "frutexa-fera.csv",
         "fungoida-bullarum.csv",
         "osseus-pumice.csv",
         "stratum-cucumisis.csv",
+        "stratum-excutitus.csv",
         "stratum-frigus.csv",
+        "stratum-paleas.csv",
         "tussock-capillum.csv",
     ];
 
@@ -1685,9 +1719,15 @@ mod tests {
                         pressure: record.get(13)?
                             .parse()
                             .ok()?,
-                        atmosphere: record.get(12)?
-                            .parse()
-                            .unwrap(),
+                        atmosphere: match record.get(12)? {
+                            "No atmosphere" => Atmosphere {
+                                hot: false,
+                                density: AtmosphereDensity::Normal,
+                                kind: AtmosphereType::None,
+                            },
+                            atmosphere => atmosphere.parse()
+                                .unwrap(),
+                        },
                         planet_class: record.get(11)?
                             .parse()
                             .unwrap(),
@@ -1877,5 +1917,20 @@ mod tests {
     #[test]
     fn frutexa_fabellum_test_cases_all_pass() {
         test_species_planet_details(Species::FrutexaFlabellum, "frutexa-fabellum.csv");
+    }
+
+    #[test]
+    fn frutexa_fera_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaFera, "frutexa-fera.csv");
+    }
+
+    #[test]
+    fn stratum_excutitus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumExcutitus, "stratum-excutitus.csv");
+    }
+
+    #[test]
+    fn stratum_paleas_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumPaleas, "stratum-paleas.csv");
     }
 }
