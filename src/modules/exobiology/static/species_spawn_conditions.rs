@@ -1727,7 +1727,7 @@ mod tests {
         dbg!(&ratio);
 
         // 0.5% of cases are allowed to fail
-        if ratio >= const { 0.005 } {
+        if ratio >= 0.005 {
             dbg!(failed_cases.get(0));
             assert!(false);
         }
@@ -1762,7 +1762,7 @@ mod tests {
         // TODO see how this can be decreased. To do this this probably needs to take into account
         //  which species commonly overlap
         // 20% of cases are allowed to succeed
-        if ratio >= const { 0.20 } {
+        if ratio >= 0.20 {
             dbg!(succeeded.get(0));
             assert!(false);
         }
