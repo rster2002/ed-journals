@@ -221,7 +221,7 @@ mod tests {
                 let possible_species = system.get_possible_spawnable_species(expected.1)
                     .unwrap();
 
-                dbg!(&possible_species, &expected);
+                dbg!(&system.bodies.get(&expected.1).unwrap().scan, &possible_species, &expected);
 
                 assert_eq!(possible_species.len(), expected.2.len());
 
