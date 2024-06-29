@@ -6,3 +6,4 @@ pub mod system_state;
 pub mod materials_state;
 pub mod carrier_state;
 pub mod mission_state;
+mod journal_state;
