@@ -1393,9 +1393,22 @@ lazy_static! {
                     ThinAtmosphere(SulfurDioxide),
                     ThinAtmosphere(CarbonDioxide),
                 ],
+                any![
+                    Region(Region::NormaExpanse),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::FormorianFrontier),
+                    Region(Region::TheVoid),
+                    Region(Region::AquilasHalo),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::TheVeils),
+                    Region(Region::TrojanBelt),
+                ],
                 PlanetClass(RockyBody),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(190.0),
+                MinGravity(0.04),
+                MaxGravity(0.5),
             ],
         ),
         (
@@ -1427,7 +1440,21 @@ lazy_static! {
             TubusCavas,
             all![
                 ThinAtmosphere(CarbonDioxide),
+                any![
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::FormorianFrontier),
+                    Region(Region::GalacticCenter),
+                    Region(Region::NormaExpanse),
+                    Region(Region::OdinsHold),
+                    Region(Region::TheVoid),
+                    Region(Region::AquilasHalo),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::TheVeils),
+                    Region(Region::TrojanBelt),
+                ],
                 PlanetClass(RockyBody),
+                MinGravity(0.04),
                 MaxGravity(0.15),
                 MinMeanTemperature(160.0),
                 MaxMeanTemperature(190.0),
@@ -1851,7 +1878,7 @@ mod tests {
                 &planet_details.pressure <= max_pressure
             }
             SpawnCondition::Region(region) => {
-                &planet_details.region == region
+                &planet_details.region == region || &planet_details.region == &Region::Unknown
             }
             SpawnCondition::Special => false,
             SpawnCondition::Any(conditions) => {
@@ -1932,5 +1959,15 @@ mod tests {
     #[test]
     fn stratum_paleas_test_cases_all_pass() {
         test_species_planet_details(Species::StratumPaleas, "stratum-paleas.csv");
+    }
+
+    #[test]
+    fn stratum_limaxus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumLimaxus, "stratum-limaxus.csv");
+    }
+
+    #[test]
+    fn tubus_cavas_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusCavas, "tubus-cavas.csv");
     }
 }

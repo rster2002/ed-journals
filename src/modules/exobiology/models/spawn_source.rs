@@ -135,7 +135,7 @@ impl<'a> SpawnSource<'a> {
             }
             SpawnCondition::Region(region) => {
                 Region::from_pos(self.target_system.star_system_position)
-                    .is_some_and(|actual_region| &actual_region == region)
+                    .is_some_and(|actual_region| &actual_region == region || actual_region == Region::Unknown)
             }
             SpawnCondition::Special => false,
 
