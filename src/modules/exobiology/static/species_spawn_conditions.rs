@@ -938,6 +938,16 @@ lazy_static! {
         (
             FrutexaAcus,
             all![
+                any![
+                    Region(Region::Temple),
+                    Region(Region::GalacticCenter),
+                    Region(Region::Izanami),
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::OrionCygnusArm),
+                    Region(Region::OdinsHold),
+                    Region(Region::InnerOrionPerseusConflux),
+                ],
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
                 MinGravity(0.04),
@@ -945,7 +955,6 @@ lazy_static! {
                 MinMeanTemperature(147.0),
                 MaxMeanTemperature(195.0),
                 MinPressure(0.003),
-                MaxPressure(0.1),
             ],
         ),
         (
@@ -959,13 +968,6 @@ lazy_static! {
         (
             FrutexaFera,
             all![
-                ThinAtmosphere(CarbonDioxide),
-                PlanetClass(RockyBody),
-                MinGravity(0.04),
-                MaxGravity(0.25),
-                MinMeanTemperature(145.0),
-                MaxMeanTemperature(200.0),
-                MinPressure(0.003),
                 any![
                     Region(Region::GalacticCenter),
                     Region(Region::EmpyreonStraits),
@@ -978,6 +980,13 @@ lazy_static! {
                     Region(Region::KeplersCrest),
                     Region(Region::Xibalba),
                 ],
+                ThinAtmosphere(CarbonDioxide),
+                PlanetClass(RockyBody),
+                MinGravity(0.04),
+                MaxGravity(0.25),
+                MinMeanTemperature(145.0),
+                MaxMeanTemperature(200.0),
+                MinPressure(0.003),
             ],
         ),
         (
@@ -1321,7 +1330,7 @@ lazy_static! {
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(375.0),
                 MinGravity(0.26),
-                MinGravity(0.55),
+                MaxGravity(0.56),
             ],
         ),
         (
@@ -1463,11 +1472,24 @@ lazy_static! {
         (
             TubusCompagibus,
             all![
+                any![
+                    Region(Region::GalacticCenter),
+                    Region(Region::OdinsHold),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::HawkingsGap),
+                    Region(Region::TheAbyss),
+                    Region(Region::Acheron),
+                    Region(Region::MareSomnia),
+                    Region(Region::DrymansPoint),
+                    Region(Region::SagittariusCarinaArm),
+                ],
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.15),
+                MinGravity(0.04),
+                MaxGravity(0.152),
                 MinMeanTemperature(160.0),
-                MaxMeanTemperature(190.0),
+                MaxMeanTemperature(195.0),
             ],
         ),
         (
@@ -1568,11 +1590,17 @@ lazy_static! {
         (
             TussockIgnis,
             all![
+                any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
                 ThinAtmosphere(CarbonDioxide),
-                PlanetClass(RockyBody),
-                MaxGravity(0.27),
-                MinMeanTemperature(160.0),
+                MinGravity(0.04),
+                MaxGravity(0.20),
+                MinMeanTemperature(161.0),
                 MaxMeanTemperature(170.0),
+                MinPressure(0.0028),
+                MaxPressure(0.055),
             ],
         ),
         (
@@ -1588,19 +1616,43 @@ lazy_static! {
         (
             TussockPennatis,
             all![
+                any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
                 ThinAtmosphere(CarbonDioxide),
-                PlanetClass(RockyBody),
+                MaxGravity(0.04),
                 MaxGravity(0.27),
+                MinMeanTemperature(145.0),
                 MaxMeanTemperature(195.0),
             ],
         ),
         (
             TussockPropagito,
             all![
+                any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
+                any![
+                    Region(Region::GalacticCenter),
+                    Region(Region::OdinsHold),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::FormorianFrontier),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::NormaExpanse),
+                    Region(Region::TheVoid),
+                    Region(Region::AquilasHalo),
+                    Region(Region::TrojanBelt),
+                    Region(Region::TheVeils),
+                ],
                 ThinAtmosphere(CarbonDioxide),
-                PlanetClass(RockyBody),
+                MinGravity(0.04),
                 MaxGravity(0.27),
-                MaxMeanTemperature(195.0),
+                MinMeanTemperature(145.0),
+                MaxMeanTemperature(200.0),
+                MinPressure(0.003),
             ],
         ),
         (
@@ -1691,8 +1743,13 @@ mod tests {
         "stratum-cucumisis.csv",
         "stratum-excutitus.csv",
         "stratum-frigus.csv",
+        "stratum-limaxus.csv",
         "stratum-paleas.csv",
+        "tubus-cavas.csv",
+        "tubus-compagibus.csv",
         "tussock-capillum.csv",
+        "tussock-ignis.csv",
+        "tussock-pennatis.csv",
     ];
 
     #[derive(Debug)]
@@ -1927,6 +1984,21 @@ mod tests {
     }
 
     #[test]
+    fn tussock_ignis_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockIgnis, "tussock-ignis.csv");
+    }
+
+    #[test]
+    fn tussock_pennatis_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockPennatis, "tussock-pennatis.csv");
+    }
+
+    #[test]
+    fn tussock_propagito_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockPropagito, "tussock-propagito.csv");
+    }
+
+    #[test]
     fn stratum_cucumisis_test_cases_all_pass() {
         test_species_planet_details(Species::StratumCucumisis, "stratum-cucumisis.csv");
     }
@@ -1967,7 +2039,17 @@ mod tests {
     }
 
     #[test]
+    fn stratum_araneamus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumAraneamus, "stratum-araneamus.csv");
+    }
+
+    #[test]
     fn tubus_cavas_test_cases_all_pass() {
         test_species_planet_details(Species::TubusCavas, "tubus-cavas.csv");
+    }
+
+    #[test]
+    fn tubus_compagibus_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusCompagibus, "tubus-compagibus.csv");
     }
 }
