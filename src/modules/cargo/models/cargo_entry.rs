@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct CargoEntry {
     pub name: Commodity,
