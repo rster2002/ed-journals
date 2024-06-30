@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::exobiology::Species;
+use serde::Serialize;
 
 #[derive(Debug, Serialize)]
 pub struct PlanetSpeciesEntry {
@@ -17,7 +17,7 @@ pub struct PlanetSpeciesEntry {
     pub logged: bool,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, PartialEq, Eq)]
 pub enum WillSpawn {
     Yes,
     Maybe,

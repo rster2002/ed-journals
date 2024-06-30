@@ -1,3 +1,4 @@
+use crate::galaxy::Region;
 use crate::materials::Material;
 use crate::modules::galaxy::{
     AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType,
@@ -15,6 +16,7 @@ pub enum SpawnCondition {
     /// The maximum gravity the planet must have, in G
     MaxGravity(f32),
     PlanetClass(PlanetClass),
+    MainStarClass(StarClass),
     ParentStarClass(StarClass),
     ParentStarLuminosity(StarLuminosity),
     MinOrEqualParentStarLuminosity(StarLuminosity),
@@ -23,6 +25,9 @@ pub enum SpawnCondition {
     /// The minimum distance the planet needs to be from the sun in AU
     MinDistanceFromParentSun(f32),
     AnyVolcanism,
+
+    MinPressure(f32),
+    MaxPressure(f32),
 
     /// The maximum distance the planet needs to be from the center of a nebula in Ly
     WithinNebulaRange(f32),
@@ -35,6 +40,8 @@ pub enum SpawnCondition {
     RockyComposition,
     IcyComposition,
     MetalComposition,
+
+    Region(Region),
 
     Special,
 
