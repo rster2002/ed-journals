@@ -7,7 +7,7 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::commander_event::CommanderEvent;
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::civilization::LocationInfo;
-use current_organic::CurrentOrganic;
+use current_organic_progress::CurrentOrganicProgress;
 use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::statistics_event::StatisticsEvent;
@@ -19,7 +19,7 @@ use crate::state::models::mission_state::MissionState;
 use crate::state::SystemState;
 use crate::try_feed;
 
-pub mod current_organic;
+pub mod current_organic_progress;
 
 #[derive(Serialize)]
 pub struct CommanderState {
@@ -27,8 +27,7 @@ pub struct CommanderState {
     pub name: String,
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
-    pub current_organic: Option<CurrentOrganic>,
-    pub current_organic_process: Option<ScanOrganicEventScanType>,
+    pub current_organic_progress: Option<CurrentOrganicProgress>,
     pub current_exploration_data: Vec<ScanEvent>,
     pub material_state: MaterialsState,
     pub mission_state: MissionState,
@@ -90,19 +89,16 @@ impl CommanderState {
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
                 ScanOrganicEventScanType::Sample => {
-                    self.current_organic_process = Some(ScanOrganicEventScanType::Sample);
-                    self.current_organic = Some(CurrentOrganic {
-                        system_address: scan_organic.system_address,
-                        body_id: scan_organic.body,
-                        species: scan_organic.species.clone(),
-                    });
-                },
+                    self.current_organic_progress = Some(scan_organic.into());
+                }
                 ScanOrganicEventScanType::Analyse => {
-                    self.current_organic_process = Some(ScanOrganicEventScanType::Analyse);
-                },
+                    if let Some(progress) = self.current_organic_progress.as_mut() {
+                        progress.second_scan = Some(scan_organic.clone());
+                    }
+                }
                 ScanOrganicEventScanType::Log => {
-                    self.current_organic = None;
-                },
+                    self.current_organic_progress = None;
+                }
             },
 
             LogEventContent::Materials(event) => {
@@ -214,8 +210,7 @@ impl From<&CommanderEvent> for CommanderState {
             name: value.name.to_string(),
             systems: HashMap::new(),
             current_system: None,
-            current_organic: None,
-            current_organic_process: None,
+            current_organic_progress: None,
             current_exploration_data: Vec::new(),
             material_state: MaterialsState::default(),
             mission_state: MissionState::default(),
