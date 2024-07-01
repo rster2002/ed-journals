@@ -29,6 +29,7 @@ pub use models::planet_state::PlanetState;
 pub use models::materials_state::MaterialsState;
 pub use models::carrier_state::CarrierState;
 pub use models::planet_state::planet_species_entry::PlanetSpeciesEntry;
+pub use models::journal_state::JournalState;
 
 mod models;
 mod macros;
