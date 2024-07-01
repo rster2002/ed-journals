@@ -1,8 +1,9 @@
+use serde::Serialize;
 use thiserror::Error;
 
 use crate::try_from_deserialize_impl;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Serialize, PartialEq, Eq, Clone)]
 pub enum GuiFocus {
     NoFocus,
     InternalPanel,

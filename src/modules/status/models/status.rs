@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::modules::status::models::destination_status::DestinationStatus;
 use crate::modules::status::models::flags::Flags;
@@ -9,7 +9,7 @@ use crate::modules::status::models::gui_focus::GuiFocus;
 use crate::modules::status::models::legal_status::LegalStatus;
 use crate::modules::status::models::planet_status::PlanetStatus;
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct Status {
     #[serde(rename = "timestamp")]
@@ -26,13 +26,13 @@ pub struct Status {
     pub contents: StatusContents,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(untagged)]
 pub enum StatusContents {
     Ship(ShipStatus),
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipStatus {
     pub pips: [u8; 3],
