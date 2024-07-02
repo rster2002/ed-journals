@@ -6,6 +6,9 @@ pub use models::gui_focus::GuiFocus;
 pub use models::legal_status::LegalStatus;
 pub use models::planet_status::PlanetStatus;
 pub use models::status::Status;
+pub use models::status::StatusContents;
+pub use models::status::ShipStatus;
+pub use models::status::OnFootStatus;
 
 mod models;
 

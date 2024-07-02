@@ -30,6 +30,7 @@ pub struct Status {
 #[serde(untagged)]
 pub enum StatusContents {
     Ship(ShipStatus),
+    OnFoot(OnFootStatus),
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
@@ -46,7 +47,7 @@ pub struct ShipStatus {
     pub planet_status: Option<PlanetStatus>,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct OnFootStatus {
     pub oxygen: f32,
