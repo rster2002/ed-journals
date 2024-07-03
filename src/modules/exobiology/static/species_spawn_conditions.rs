@@ -668,11 +668,26 @@ lazy_static! {
         (
             CactoidaLapis,
             all![
-                MaxGravity(0.27),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
+                any![
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::GalacticCenter),
+                    Region(Region::HawkingsGap),
+                    Region(Region::MareSomnia),
+                    Region(Region::DrymansPoint),
+                    Region(Region::SagittariusCarinaArm),
+                    Region(Region::OdinsHold),
+                    Region(Region::TheAbyss),
+                    Region(Region::Acheron),
+                ],
+                MaxGravity(0.28),
+                MinMeanTemperature(160.0),
+                MaxMeanTemperature(180.0),
+                MaxPressure(0.014),
                 ThinAtmosphere(Ammonia),
             ],
         ),
@@ -722,11 +737,26 @@ lazy_static! {
         (
             CactoidaPeperatis,
             all![
-                MaxGravity(0.27),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
+                any![
+                    Region(Region::NormaExpanse),
+                    Region(Region::TheVoid),
+                    Region(Region::GalacticCenter),
+                    Region(Region::TrojanBelt),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::OdinsHold),
+                    Region(Region::TheVeils),
+                    Region(Region::AquilasHalo),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::FormorianFrontier),
+                ],
+                MaxGravity(0.28),
+                MinMeanTemperature(160.0),
+                MaxMeanTemperature(180.0),
                 ThinAtmosphere(Ammonia),
             ],
         ),
@@ -994,15 +1024,36 @@ lazy_static! {
             all![
                 ThinAtmosphere(Ammonia),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxPressure(0.014),
+                MinGravity(0.04),
+                MaxGravity(0.28),
+                MinMeanTemperature(155.0),
+                MaxMeanTemperature(177.0),
             ],
         ),
         (
             FrutexaFlammasis,
             all![
-                ThinAtmosphere(Ammonia),
+                any![
+                    Region(Region::GalacticCenter),
+                    Region(Region::NormaExpanse),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::AquilasHalo),
+                    Region(Region::OdinsHold),
+                    Region(Region::TheVeils),
+                    Region(Region::TheVoid),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::FormorianFrontier),
+                    Region(Region::TrojanBelt),
+                ],
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                ThinAtmosphere(Ammonia),
+                MaxPressure(0.0134),
+                MinGravity(0.04),
+                MaxGravity(0.28),
+                MinMeanTemperature(152.0),
+                MaxMeanTemperature(177.0),
             ],
         ),
         (
@@ -1390,9 +1441,23 @@ lazy_static! {
         (
             StratumLaminamus,
             all![
+                any![
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::Izanami),
+                    Region(Region::GalacticCenter),
+                    Region(Region::OrionCygnusArm),
+                    Region(Region::OdinsHold),
+                    Region(Region::InnerOrionPerseusConflux),
+                    Region(Region::Temple),
+                ],
                 ThinAtmosphere(Ammonia),
                 PlanetClass(RockyBody),
+                MaxPressure(0.0134),
+                MinGravity(0.04),
+                MaxGravity(0.35),
                 MinMeanTemperature(165.0),
+                MaxMeanTemperature(177.0),
             ],
         ),
         (
@@ -1964,6 +2029,11 @@ mod tests {
     }
 
     #[test]
+    fn cactoida_peperatis_test_cases_all_pass() {
+        test_species_planet_details(Species::CactoidaPeperatis, "cactoida-peperatis.csv");
+    }
+
+    #[test]
     fn fonticulua_campestris_test_cases_all_pass() {
         test_species_planet_details(Species::FonticuluaCampestris, "fonticulua-campestris.csv");
     }
@@ -2041,6 +2111,11 @@ mod tests {
     #[test]
     fn stratum_araneamus_test_cases_all_pass() {
         test_species_planet_details(Species::StratumAraneamus, "stratum-araneamus.csv");
+    }
+
+    #[test]
+    fn stratum_laminamus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumLaminamus, "stratum-laminamus.csv");
     }
 
     #[test]
