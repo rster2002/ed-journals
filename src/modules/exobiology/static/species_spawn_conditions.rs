@@ -1158,14 +1158,34 @@ lazy_static! {
             FungoidaGelata,
             all![
                 any![
-                    ThinAtmosphere(Water),
+                    PlanetClass(RockyBody),
+                    PlanetClass(RockyIceBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
+                MinPressure(0.0026),
+                MaxGravity(0.28),
+                any![
+                    all![
+                        ThinAtmosphere(Water),
+                        MinMeanTemperature(392.0),
+                        MaxMeanTemperature(452.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Ammonia),
+                        MinMeanTemperature(160.0),
+                        MaxMeanTemperature(177.0),
+                    ],
                     all![
                         ThinAtmosphere(CarbonDioxide),
                         MinMeanTemperature(180.0),
-                        MaxMeanTemperature(195.0),
+                        MaxMeanTemperature(197.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Methane),
+                        MinMeanTemperature(79.0),
+                        MaxMeanTemperature(107.0),
                     ],
                 ],
-                MaxGravity(0.27),
             ],
         ),
         (
@@ -1631,17 +1651,46 @@ lazy_static! {
         (
             TussockCatena,
             all![
+                any![
+                    Region(Region::NormaExpanse),
+                    Region(Region::InnerScutumCentaurusArm),
+                    Region(Region::OuterScutumCentaurusArm),
+                    Region(Region::TheVoid),
+                    Region(Region::HieronymusDelta),
+                    Region(Region::TheVeils),
+                    Region(Region::AquilasHalo),
+                    Region(Region::FormorianFrontier),
+                    Region(Region::TrojanBelt),
+                ],
                 ThinAtmosphere(Ammonia),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxPressure(0.0134),
+                MinGravity(0.04),
+                MaxGravity(0.28),
+                MinMeanTemperature(152.0),
+                MaxMeanTemperature(177.0),
             ],
         ),
         (
             TussockCultro,
             all![
+                any![
+                    Region(Region::InnerOrionSpur),
+                    Region(Region::OuterOrionSpur),
+                    Region(Region::GalacticCenter),
+                    Region(Region::Izanami),
+                    Region(Region::OrionCygnusArm),
+                    Region(Region::OdinsHold),
+                    Region(Region::Temple),
+                    Region(Region::InnerOrionPerseusConflux),
+                ],
                 ThinAtmosphere(Ammonia),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxPressure(0.0134),
+                MinGravity(0.04),
+                MaxGravity(0.28),
+                MinMeanTemperature(152.0),
+                MaxMeanTemperature(177.0),
             ],
         ),
         (
@@ -2066,6 +2115,16 @@ mod tests {
     #[test]
     fn tussock_propagito_test_cases_all_pass() {
         test_species_planet_details(Species::TussockPropagito, "tussock-propagito.csv");
+    }
+
+    #[test]
+    fn tussock_catena_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockCatena, "tussock-catena.csv");
+    }
+
+    #[test]
+    fn tussock_cultro_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockCultro, "tussock-cultro.csv");
     }
 
     #[test]
