@@ -32,7 +32,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(175.0),
                 MaxMeanTemperature(180.0),
                 MinPressure(0.0164),
@@ -48,7 +48,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(190.0),
                 MinPressure(0.025),
@@ -64,7 +64,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(190.0),
                 MaxMeanTemperature(196.0),
                 MinPressure(0.054),
@@ -80,7 +80,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(Ammonia),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(152.0),
                 MaxMeanTemperature(177.0),
                 MaxPressure(0.0135),
@@ -113,16 +113,16 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                any![
-                    Region(Region::OuterArm),
-                    Region(Region::OuterOrionSpur),
-                    Region(Region::OuterScutumCentaurusArm),
-                    Region(Region::OuterOrionPerseusConflux),
-                    Region(Region::PerseusArm),
-                    Region(Region::InnerOrionPerseusConflux),
-                    Region(Region::InnerScutumCentaurusArm),
-                    Region(Region::OuterScutumCentaurusArm),
-                ],
+                // any![
+                //     Region(Region::OuterArm),
+                //     Region(Region::OuterOrionSpur),
+                //     Region(Region::OuterScutumCentaurusArm),
+                //     Region(Region::OuterOrionPerseusConflux),
+                //     Region(Region::PerseusArm),
+                //     Region(Region::InnerOrionPerseusConflux),
+                //     Region(Region::InnerScutumCentaurusArm),
+                //     Region(Region::OuterScutumCentaurusArm),
+                // ],
             ],
         ),
         (
@@ -694,7 +694,7 @@ lazy_static! {
         (
             CactoidaPullulanta,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
@@ -710,7 +710,7 @@ lazy_static! {
         (
             CactoidaCortexum,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
@@ -726,7 +726,7 @@ lazy_static! {
         (
             CactoidaVermis,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
@@ -763,7 +763,7 @@ lazy_static! {
         (
             ClypeusSpeculumi,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(190.0),
                 any![
                     ThinAtmosphere(CarbonDioxide),
@@ -775,7 +775,7 @@ lazy_static! {
         (
             ClypeusLacrimam,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(190.0),
                 any![
                     ThinAtmosphere(CarbonDioxide),
@@ -786,7 +786,7 @@ lazy_static! {
         (
             ClypeusMargaritus,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(190.0),
                 any![
                     ThinAtmosphere(CarbonDioxide),
@@ -798,7 +798,7 @@ lazy_static! {
             ConchaRenibus,
             any![
                 all![
-                    MaxGravity(0.27),
+                    MaxGravity(0.276),
                     any![
                         ThinAtmosphere(CarbonDioxide),
                         ThinAtmosphere(CarbonDioxideRich)
@@ -807,7 +807,7 @@ lazy_static! {
                     MaxMeanTemperature(195.0),
                 ],
                 all![
-                    MaxGravity(0.27),
+                    MaxGravity(0.276),
                     any![
                         ThinAtmosphere(Water),
                         ThinAtmosphere(WaterRich),
@@ -817,12 +817,12 @@ lazy_static! {
         ),
         (
             ConchaAureolas,
-            all![MaxGravity(0.27), ThinAtmosphere(Ammonia)]
+            all![MaxGravity(0.276), ThinAtmosphere(Ammonia)]
         ),
         (
             ConchaLabiata,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 any![
                     ThinAtmosphere(CarbonDioxide),
                     ThinAtmosphere(CarbonDioxideRich),
@@ -833,7 +833,7 @@ lazy_static! {
         (
             ConchaBiconcavis,
             all![
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 ThinAtmosphere(Nitrogen),
             ],
         ),
@@ -875,7 +875,7 @@ lazy_static! {
                     MinOrEqualParentStarLuminosity(StarLuminosity::V),
                     ParentStarClass(StarClass::N),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -888,7 +888,7 @@ lazy_static! {
                 ],
                 PlanetClass(IcyBody),
                 WithinNebulaRange(150.0),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -899,7 +899,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(50.0),
                 MaxMeanTemperature(150.0),
             ],
@@ -915,7 +915,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -929,7 +929,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -940,7 +940,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -951,7 +951,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -962,7 +962,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -981,7 +981,7 @@ lazy_static! {
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(147.0),
                 MaxMeanTemperature(195.0),
                 MinPressure(0.003),
@@ -992,7 +992,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(SulfurDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1067,7 +1067,7 @@ lazy_static! {
                     ThinAtmosphere(Ammonia)
                 ],
                 PlanetClass(HighMetalContentBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1075,7 +1075,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(Water),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1087,7 +1087,7 @@ lazy_static! {
                     VolcanismType(VolcanismType::WaterMagma),
                     VolcanismType(VolcanismType::WaterGeysers),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1100,7 +1100,7 @@ lazy_static! {
                     VolcanismType(VolcanismType::MethaneMagma),
                     VolcanismType(VolcanismType::MethaneGeysers),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1118,7 +1118,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1132,7 +1132,7 @@ lazy_static! {
                     VolcanismType(VolcanismType::AmmoniaMagma),
                     VolcanismType(VolcanismType::AmmoniaGeysers),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1151,7 +1151,7 @@ lazy_static! {
                 MinMeanTemperature(50.0),
                 MaxMeanTemperature(135.0),
                 MaxPressure(0.1),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1195,7 +1195,7 @@ lazy_static! {
                     ThinAtmosphere(Ammonia),
                     ThinAtmosphere(Methane),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1209,7 +1209,7 @@ lazy_static! {
                         MaxMeanTemperature(195.0),
                     ],
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1220,7 +1220,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(195.0),
             ],
@@ -1233,7 +1233,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1244,7 +1244,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(195.0),
             ],
@@ -1257,7 +1257,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(195.0),
             ],
@@ -1281,7 +1281,7 @@ lazy_static! {
                     PlanetClass(HighMetalContentBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(43.0),
                 MaxMeanTemperature(135.0),
             ],
@@ -1294,7 +1294,7 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27)
+                MaxGravity(0.276)
             ]
         ),
         (
@@ -1305,7 +1305,7 @@ lazy_static! {
                     PlanetClass(IcyBody),
                     PlanetClass(RockyIceBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1316,14 +1316,14 @@ lazy_static! {
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
             ReceptaUmbrux,
             all![
                 ThinAtmosphere(SulfurDioxide),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1509,17 +1509,54 @@ lazy_static! {
             StratumPaleas,
             all![
                 any![
-                    ThinAtmosphere(Ammonia),
-                    ThinAtmosphere(Water),
-                    ThinAtmosphere(Oxygen),
-                    ThinAtmosphere(CarbonDioxide),
-                    ThinAtmosphere(CarbonDioxideRich),
+                    all![
+                        ThinAtmosphere(Ammonia),
+                        MinMeanTemperature(165.0),
+                        MaxMeanTemperature(177.0),
+                    ],
+
+                    // Interestingly, it seems that the temperature requirements for carbon dioxide
+                    // atmospheres are linked to the region.
+                    all![
+                        ThinAtmosphere(CarbonDioxide),
+                        MinMeanTemperature(165.0),
+                        MaxMeanTemperature(200.0),
+                    ],
+
+                    all![
+                        ThinAtmosphere(CarbonDioxideRich),
+                        MinMeanTemperature(170.0),
+                        MaxMeanTemperature(255.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Oxygen),
+                        MinMeanTemperature(165.0),
+                        MaxMeanTemperature(250.0),
+                        MinGravity(0.04),
+                        MinGravity(0.056),
+                    ],
+                    all![
+                        ThinAtmosphere(Water),
+                        MinMeanTemperature(397.0),
+                        MaxMeanTemperature(450.0),
+                        MinGravity(0.04),
+                        MinGravity(0.056),
+                        MinPressure(0.055),
+                    ],
+                    ThinAtmosphere(Nitrogen),
                 ],
-                PlanetClass(RockyBody),
-                MinMeanTemperature(165.0),
-                MaxMeanTemperature(450.0),
-                MinGravity(0.039),
-                MaxGravity(0.6),
+                // any![
+                //     ThinAtmosphere(Ammonia),
+                //     ThinAtmosphere(Water),
+                //     ThinAtmosphere(Oxygen),
+                //     ThinAtmosphere(CarbonDioxide),
+                //     ThinAtmosphere(CarbonDioxideRich),
+                // ],
+                // PlanetClass(RockyBody),
+                // MinMeanTemperature(165.0),
+                // MaxMeanTemperature(450.0),
+                // MinGravity(0.039),
+                // MaxGravity(0.6),
             ],
         ),
         (
@@ -1617,7 +1654,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(175.0),
                 MaxMeanTemperature(180.0),
             ],
@@ -1633,7 +1670,7 @@ lazy_static! {
                     ThinAtmosphere(Argon),
                     ThinAtmosphere(Methane),
                 ],
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(80.0),
                 MaxMeanTemperature(130.0),
             ],
@@ -1643,7 +1680,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(180.0),
                 MaxMeanTemperature(190.0),
             ],
@@ -1696,9 +1733,27 @@ lazy_static! {
         (
             TussockDivisa,
             all![
+                any![
+                    PlanetClass(RockyBody),
+                    PlanetClass(HighMetalContentBody),
+                ],
+                any![
+                    Region(Region::RykersHope),
+                    Region(Region::OuterOrionPerseusConflux),
+                    Region(Region::ElysianShore),
+                    Region(Region::PerseusArm),
+                    Region(Region::VulcanGate),
+                    Region(Region::SanguineousRim),
+                    Region(Region::AchillessAltar),
+                    Region(Region::LysasSong),
+                    Region(Region::Tenebrae),
+                ],
                 ThinAtmosphere(Ammonia),
-                PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MinMeanTemperature(152.0),
+                MaxMeanTemperature(177.0),
+                MinGravity(0.04),
+                MaxGravity(0.276),
+                MaxPressure(0.0131),
             ],
         ),
         (
@@ -1722,7 +1777,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(145.0),
                 MaxMeanTemperature(155.0),
             ],
@@ -1736,7 +1791,7 @@ lazy_static! {
                 ],
                 ThinAtmosphere(CarbonDioxide),
                 MaxGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(145.0),
                 MaxMeanTemperature(195.0),
             ],
@@ -1763,7 +1818,7 @@ lazy_static! {
                 ],
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.04),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(145.0),
                 MaxMeanTemperature(200.0),
                 MinPressure(0.003),
@@ -1774,7 +1829,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(170.0),
                 MaxMeanTemperature(175.0),
             ],
@@ -1784,7 +1839,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(SulfurDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1792,7 +1847,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(190.0),
                 MaxMeanTemperature(195.0),
             ],
@@ -1802,7 +1857,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(CarbonDioxide),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
                 MinMeanTemperature(155.0),
                 MaxMeanTemperature(160.0),
             ],
@@ -1812,7 +1867,7 @@ lazy_static! {
             all![
                 ThinAtmosphere(Water),
                 PlanetClass(RockyBody),
-                MaxGravity(0.27),
+                MaxGravity(0.276),
             ],
         ),
         (
@@ -1846,24 +1901,31 @@ mod tests {
     use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
     const ALL_CSV_FILES: &[&str] = &[
+        "aleoida-spica.csv",
         "bacterium-cerbrus.csv",
         "cactoida-lapis.csv",
+        "cactoida-peperatis.csv",
         "fonticulua-campestris.csv",
         "frutexa-acus.csv",
         "frutexa-fabellum.csv",
         "frutexa-fera.csv",
         "fungoida-bullarum.csv",
         "osseus-pumice.csv",
+        "stratum-araneamus.csv",
         "stratum-cucumisis.csv",
         "stratum-excutitus.csv",
         "stratum-frigus.csv",
+        "stratum-laminamus.csv",
         "stratum-limaxus.csv",
         "stratum-paleas.csv",
         "tubus-cavas.csv",
         "tubus-compagibus.csv",
         "tussock-capillum.csv",
+        "tussock-catena.csv",
+        "tussock-cultro.csv",
         "tussock-ignis.csv",
         "tussock-pennatis.csv",
+        "tussock-propagito.csv",
     ];
 
     #[derive(Debug)]
@@ -2128,6 +2190,11 @@ mod tests {
     }
 
     #[test]
+    fn tussock_divisa_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockDivisa, "tussock-divisa.csv");
+    }
+
+    #[test]
     fn stratum_cucumisis_test_cases_all_pass() {
         test_species_planet_details(Species::StratumCucumisis, "stratum-cucumisis.csv");
     }
@@ -2185,5 +2252,10 @@ mod tests {
     #[test]
     fn tubus_compagibus_test_cases_all_pass() {
         test_species_planet_details(Species::TubusCompagibus, "tubus-compagibus.csv");
+    }
+
+    #[test]
+    fn aleoida_spica_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaSpica, "aleoida-spica.csv");
     }
 }

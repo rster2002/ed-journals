@@ -130,7 +130,6 @@ impl From<&LocationInfo> for SystemState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
 
     use strum::IntoEnumIterator;
@@ -177,7 +176,9 @@ mod tests {
             Species::StratumAraneamus,
         ]),
         (1487811905211, 25, &[
-            Species::AleoidaSpica,
+            // Not sure why this was matched by ED Observatory as the pressure for this planet is
+            // way too high it seems.
+            // Species::AleoidaSpica,
             Species::BacteriumAlcyoneum,
             Species::ConchaAureolas,
             Species::FungoidaGelata,
@@ -193,6 +194,23 @@ mod tests {
             Species::FungoidaSetisis,
             Species::OsseusSpiralis,
             Species::TussockDivisa,
+        ]),
+        (147379439083, 46, &[
+            Species::BacteriumAlcyoneum,
+            Species::ConchaAureolas,
+            Species::FrutexaFlabellum,
+            Species::FungoidaGelata,
+            Species::FungoidaSetisis,
+            Species::OsseusSpiralis,
+            Species::StratumPaleas,
+        ]),
+        (147379439083, 47, &[
+            Species::BacteriumAlcyoneum,
+            Species::ConchaAureolas,
+            Species::FrutexaFlabellum,
+            Species::FungoidaGelata,
+            Species::FungoidaSetisis,
+            Species::OsseusSpiralis,
         ]),
     ];
 
@@ -216,6 +234,7 @@ mod tests {
         for expected in KNOWN_SPECIES {
             for commander in state.commanders.values() {
                 let Some(system) = commander.system_by_address(expected.0) else {
+                    dbg!(expected.0);
                     continue;
                 };
 
