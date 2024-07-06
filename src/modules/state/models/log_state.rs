@@ -21,10 +21,10 @@ use crate::try_feed;
 
 pub mod current_organic_progress;
 
-#[derive(Serialize)]
-pub struct CommanderState {
-    pub fid: String,
-    pub name: String,
+#[derive(Serialize, Default)]
+pub struct LogState {
+    // pub fid: String,
+    // pub name: String,
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
     pub current_organic_progress: Option<CurrentOrganicProgress>,
@@ -37,7 +37,7 @@ pub struct CommanderState {
     pub statistics: Option<StatisticsEvent>,
 }
 
-impl CommanderState {
+impl LogState {
     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
         match &log_event.content {
             LogEventContent::Scan(event) => {
@@ -203,21 +203,21 @@ impl CommanderState {
     }
 }
 
-impl From<&CommanderEvent> for CommanderState {
-    fn from(value: &CommanderEvent) -> Self {
-        CommanderState {
-            fid: value.fid.to_string(),
-            name: value.name.to_string(),
-            systems: HashMap::new(),
-            current_system: None,
-            current_organic_progress: None,
-            current_exploration_data: Vec::new(),
-            material_state: MaterialsState::default(),
-            mission_state: MissionState::default(),
-            carrier_state: None,
-            rank: None,
-            reputation: None,
-            statistics: None,
-        }
-    }
-}
+// impl From<&CommanderEvent> for CommanderState {
+//     fn from(value: &CommanderEvent) -> Self {
+//         CommanderState {
+//             fid: value.fid.to_string(),
+//             name: value.name.to_string(),
+//             systems: HashMap::new(),
+//             current_system: None,
+//             current_organic_progress: None,
+//             current_exploration_data: Vec::new(),
+//             material_state: MaterialsState::default(),
+//             mission_state: MissionState::default(),
+//             carrier_state: None,
+//             rank: None,
+//             reputation: None,
+//             statistics: None,
+//         }
+//     }
+// }

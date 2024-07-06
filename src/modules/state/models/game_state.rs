@@ -5,7 +5,7 @@ use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::file_header_event::FileHeaderEvent;
-use crate::state::models::commander_state::CommanderState;
+use crate::state::models::log_state::LogState;
 use crate::state::models::feed_result::FeedResult;
 
 /// The complete state of the whole game. This includes potentially the different commanders that
@@ -13,7 +13,7 @@ use crate::state::models::feed_result::FeedResult;
 /// creates a state which makes it easier to read information about the game.
 #[derive(Serialize)]
 pub struct GameState {
-    pub commanders: HashMap<String, CommanderState>,
+    pub commanders: HashMap<String, LogState>,
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
     header_count: u64,
@@ -31,7 +31,7 @@ impl GameState {
         }
     }
 
-    pub fn current_commander(&self) -> Option<&CommanderState> {
+    pub fn current_commander(&self) -> Option<&LogState> {
         let Some(commander_id) = &self.current_commander else {
             return None;
         };
@@ -43,7 +43,7 @@ impl GameState {
         Some(commander_entry)
     }
 
-    pub fn current_commander_mut(&mut self) -> Option<&mut CommanderState> {
+    pub fn current_commander_mut(&mut self) -> Option<&mut LogState> {
         let Some(commander_id) = &self.current_commander else {
             return None;
         };

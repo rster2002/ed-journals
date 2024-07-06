@@ -72,37 +72,7 @@ impl JournalState {
                     //     }
                     // },
 
-                    LogEventContent::NavRouteClear => {
-                        if self.nav_route
-                            .as_ref()
-                            .is_some_and(|nav_route| nav_route.timestamp < log_event.timestamp)
-                        {
-                            self.nav_route = None;
-                        }
-                    },
-                    LogEventContent::Liftoff(_) => {
-                        if self.outfitting
-                            .as_ref()
-                            .is_some_and(|outfitting| outfitting.timestamp < log_event.timestamp)
-                        {
-                            self.outfitting = None;
-                        }
 
-                        if self.shipyard
-                            .as_ref()
-                            .is_some_and(|shipyard| shipyard.timestamp < log_event.timestamp)
-                        {
-                            self.shipyard = None;
-                        }
-
-                        if self.market
-                            .as_ref()
-                            .is_some_and(|shipyard| shipyard.timestamp < log_event.timestamp)
-                        {
-                            self.market = None;
-                        }
-                    },
-                    _ => {},
                 }
 
                 self.game_state.feed_log_event(log_event);

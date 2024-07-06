@@ -30,7 +30,7 @@ pub struct Status {
 #[serde(untagged)]
 pub enum StatusContents {
     Ship(ShipStatus),
-    OnFoot(OnFootStatus),
+    // OnFoot(OnFootStatus),
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]

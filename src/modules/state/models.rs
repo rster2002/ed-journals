@@ -1,4 +1,4 @@
-pub mod commander_state;
+pub mod log_state;
 pub mod feed_result;
 pub mod game_state;
 pub mod planet_state;
@@ -7,3 +7,4 @@ pub mod materials_state;
 pub mod carrier_state;
 pub mod mission_state;
 pub mod journal_state;
+mod live_state;
