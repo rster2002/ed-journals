@@ -176,9 +176,7 @@ mod tests {
             Species::StratumAraneamus,
         ]),
         (1487811905211, 25, &[
-            // Not sure why this was matched by ED Observatory as the pressure for this planet is
-            // way too high it seems.
-            // Species::AleoidaSpica,
+            Species::AleoidaSpica,
             Species::BacteriumAlcyoneum,
             Species::ConchaAureolas,
             Species::FungoidaGelata,

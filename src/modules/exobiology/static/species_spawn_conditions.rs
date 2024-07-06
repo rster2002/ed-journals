@@ -108,7 +108,6 @@ lazy_static! {
                 MaxGravity(0.276),
                 MinMeanTemperature(170.0),
                 MaxMeanTemperature(177.0),
-                MaxPressure(0.0135),
                 any![
                     PlanetClass(RockyBody),
                     PlanetClass(HighMetalContentBody),
@@ -1507,56 +1506,65 @@ lazy_static! {
         ),
         (
             StratumPaleas,
-            all![
-                any![
-                    all![
-                        ThinAtmosphere(Ammonia),
-                        MinMeanTemperature(165.0),
-                        MaxMeanTemperature(177.0),
-                    ],
-
-                    // Interestingly, it seems that the temperature requirements for carbon dioxide
-                    // atmospheres are linked to the region.
-                    all![
-                        ThinAtmosphere(CarbonDioxide),
-                        MinMeanTemperature(165.0),
-                        MaxMeanTemperature(200.0),
-                    ],
-
-                    all![
-                        ThinAtmosphere(CarbonDioxideRich),
-                        MinMeanTemperature(170.0),
-                        MaxMeanTemperature(255.0),
-                    ],
-                    all![
-                        ThinAtmosphere(Oxygen),
-                        MinMeanTemperature(165.0),
-                        MaxMeanTemperature(250.0),
-                        MinGravity(0.04),
-                        MinGravity(0.056),
-                    ],
-                    all![
-                        ThinAtmosphere(Water),
-                        MinMeanTemperature(397.0),
-                        MaxMeanTemperature(450.0),
-                        MinGravity(0.04),
-                        MinGravity(0.056),
-                        MinPressure(0.055),
-                    ],
-                    ThinAtmosphere(Nitrogen),
+            any![
+                all![
+                    ThinAtmosphere(Ammonia),
+                    MinMeanTemperature(165.0),
+                    MaxMeanTemperature(177.0),
+                    // any![
+                    //     Region(Region::InnerOrionSpur),
+                    //     Region(Region::ArcadianStream),
+                    //     Region(Region::NormaExpanse),
+                    //     Region(Region::OdinsHold),
+                    //     Region(Region::InnerScutumCentaurusArm),
+                    //     Region(Region::OuterOrionPerseusConflux),
+                    //     Region(Region::TrojanBelt),
+                    //     Region(Region::ElysianShore),
+                    //     Region(Region::AquilasHalo),
+                    //     Region(Region::ErrantMarches),
+                    //     Region(Region::VulcanGate),
+                    //     Region(Region::Xibalba),
+                    //     Region(Region::DrymansPoint),
+                    //     Region(Region::SagittariusCarinaArm),
+                    // ],
                 ],
-                // any![
-                //     ThinAtmosphere(Ammonia),
-                //     ThinAtmosphere(Water),
-                //     ThinAtmosphere(Oxygen),
-                //     ThinAtmosphere(CarbonDioxide),
-                //     ThinAtmosphere(CarbonDioxideRich),
-                // ],
-                // PlanetClass(RockyBody),
-                // MinMeanTemperature(165.0),
-                // MaxMeanTemperature(450.0),
-                // MinGravity(0.039),
-                // MaxGravity(0.6),
+
+                all![
+                    ThinAtmosphere(CarbonDioxide),
+                    MinGravity(0.04),
+                    MaxGravity(0.27),
+                    MinMeanTemperature(165.0),
+                    MaxMeanTemperature(196.0),
+                ],
+
+                all![
+                    ThinAtmosphere(CarbonDioxide),
+                    MinGravity(0.27),
+                    MinMeanTemperature(165.0),
+                    MaxMeanTemperature(400.0),
+                ],
+
+                all![
+                    ThinAtmosphere(CarbonDioxideRich),
+                    MinMeanTemperature(170.0),
+                    MaxMeanTemperature(255.0),
+                ],
+                all![
+                    ThinAtmosphere(Oxygen),
+                    MinMeanTemperature(165.0),
+                    MaxMeanTemperature(250.0),
+                    MinGravity(0.04),
+                    MinGravity(0.056),
+                ],
+                all![
+                    ThinAtmosphere(Water),
+                    MinMeanTemperature(397.0),
+                    MaxMeanTemperature(450.0),
+                    MinGravity(0.04),
+                    MaxGravity(0.056),
+                    MinPressure(0.055),
+                ],
+                ThinAtmosphere(Nitrogen),
             ],
         ),
         (
@@ -1753,7 +1761,6 @@ lazy_static! {
                 MaxMeanTemperature(177.0),
                 MinGravity(0.04),
                 MaxGravity(0.276),
-                MaxPressure(0.0131),
             ],
         ),
         (
@@ -1895,6 +1902,7 @@ lazy_static! {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashSet;
     use std::env::current_dir;
     use std::fs::File;
     use crate::exobiology::{SpawnCondition, Species};
@@ -2002,43 +2010,27 @@ mod tests {
     /// Tests the target species with the given csv file by checking missed predictions and false
     /// positives.
     fn test_species_planet_details(species: Species, file_name: &str) {
-        success_species_planet_details(&species, file_name);
-        fail_species_planet_details(&species, file_name);
-    }
-
-    /// Checks that all the spawn conditions apply to the specified test file and ensures that the
-    /// number of failed predictions stay under a certain percentage.
-    fn success_species_planet_details(species: &Species, file_name: &str) {
         let test_cases = get_test_entries(file_name);
 
         let spawn_conditions = species.spawn_conditions();
         let mut failed_cases = Vec::new();
+        let mut succeeded = Vec::new();
         let mut entry_count: usize = 0;
+        let mut exclude_entry_count: usize = 0;
 
+        let mut expect_success = HashSet::new();
+
+        // Check for failed predictions where they should have succeeded
         for case in test_cases {
             entry_count += 1;
+            expect_success.insert(case.name.to_string());
 
             if !check_spawn_condition(&spawn_conditions, &case) {
                 failed_cases.push(case);
             }
         }
 
-        let ratio = failed_cases.len() as f32 / entry_count as f32;
-        dbg!(&ratio);
-
-        // 0.5% of cases are allowed to fail
-        if ratio >= 0.005 {
-            dbg!(failed_cases.get(0));
-            assert!(false);
-        }
-    }
-
-    /// Checks that the spawn conditions do not apply to all other entries in the test-suite and
-    /// ensures that the number of false positives stay under a said percentage.
-    fn fail_species_planet_details(species: &Species, file_name: &str) {
-        let spawn_conditions = species.spawn_conditions();
-        let mut succeeded = Vec::new();
-        let mut entry_count: usize = 0;
+        let mut skipped_expected: usize = 0;
 
         for file in ALL_CSV_FILES {
             if file == &file_name {
@@ -2048,7 +2040,15 @@ mod tests {
             let test_cases = get_test_entries(file);
 
             for case in test_cases {
-                entry_count += 1;
+                // This takes care of cases where the test case is expected to success as it's part
+                // of multiple test files and takes care of species that have overlapping spawn
+                // conditions.
+                if expect_success.contains(&case.name) {
+                    skipped_expected += 1;
+                    continue;
+                }
+
+                exclude_entry_count += 1;
 
                 if check_spawn_condition(&spawn_conditions, &case) {
                     succeeded.push(case);
@@ -2056,17 +2056,46 @@ mod tests {
             }
         }
 
-        let ratio = succeeded.len() as f32 / entry_count as f32;
-        dbg!(&ratio);
+        let failed_ratio = failed_cases.len() as f32 / entry_count as f32;
+        let false_pos_ratio = succeeded.len() as f32 / exclude_entry_count as f32;
 
-        // TODO see how this can be decreased. To do this this probably needs to take into account
-        //  which species commonly overlap
+        dbg!(&failed_ratio, &false_pos_ratio, expect_success.len(), skipped_expected);
+
+        // 0.5% of cases are allowed to fail
+        if failed_ratio >= 0.005 {
+            dbg!(failed_cases.get(0));
+            assert!(false);
+        }
+
         // 20% of cases are allowed to succeed
-        if ratio >= 0.20 {
+        if false_pos_ratio >= 0.20 {
             dbg!(succeeded.get(0));
             assert!(false);
         }
     }
+
+    // /// Checks that all the spawn conditions apply to the specified test file and ensures that the
+    // /// number of failed predictions stay under a certain percentage.
+    // fn success_species_planet_details(species: &Species, file_name: &str) {
+    //
+    // }
+    //
+    // /// Checks that the spawn conditions do not apply to all other entries in the test-suite and
+    // /// ensures that the number of false positives stay under a said percentage.
+    // fn fail_species_planet_details(species: &Species, file_name: &str) {
+    //     let spawn_conditions = species.spawn_conditions();
+    //
+    //     let mut entry_count: usize = 0;
+    //
+    //
+    //
+    //
+    //     dbg!(&ratio);
+    //
+    //     // TODO see how this can be decreased. To do this this probably needs to take into account
+    //     //  which species commonly overlap
+    //
+    // }
 
     fn check_spawn_condition(spawn_condition: &SpawnCondition, planet_details: &PlanetDetails) -> bool {
         match spawn_condition {
