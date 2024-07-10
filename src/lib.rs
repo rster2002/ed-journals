@@ -48,9 +48,13 @@ mod modules;
 #[cfg(test)]
 mod tests {
     use std::env::current_dir;
-
+    use std::path::PathBuf;
     use crate::logs::LogDir;
     use crate::logs::LogEventContent;
+
+    pub fn test_root() -> PathBuf {
+        PathBuf::from("./test-files")
+    }
 
     #[test]
     fn test_journals_are_parsed_correctly() {

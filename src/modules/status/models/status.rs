@@ -18,19 +18,25 @@ pub struct Status {
     #[serde(rename = "event")]
     pub event: String,
     pub flags: Flags,
-    pub flags2: Flags2,
-    pub legal_state: LegalStatus,
-    pub balance: u64,
 
+    /// In some cases the status file might not contain any data.
     #[serde(flatten)]
-    pub contents: StatusContents,
+    pub contents: Option<StatusContents>,
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-#[serde(untagged)]
-pub enum StatusContents {
-    Ship(ShipStatus),
+#[serde(rename_all = "PascalCase")]
+pub struct StatusContents {
+    pub flags2: Flags2,
+    pub legal_state: LegalStatus,
+    pub balance: u64,
 }
+
+// #[derive(Debug, Deserialize, PartialEq)]
+// #[serde(untagged)]
+// pub enum StatusContents {
+//     Ship(ShipStatus),
+// }
 
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "PascalCase")]
