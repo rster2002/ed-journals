@@ -41,7 +41,7 @@ pub struct LiveState {
 
 impl LiveState {
     pub fn feed_journal_event(&mut self, event: &JournalEvent) {
-        match event {
+        match &event.kind {
             JournalEventKind::LogEvent(log_event) => {
                 self.feed_log_event(log_event);
             }
@@ -89,7 +89,7 @@ impl LiveState {
                 self.touchdown_locations.push(TouchdownLocation {
                     system_address: touchdown.system_address,
                     body_id: touchdown.body_id,
-                    coordinates: ship_status.planet_status.
+                    coordinates: todo!(),
                 })
             },
             LogEventContent::NavRouteClear => {

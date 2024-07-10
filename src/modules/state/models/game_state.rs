@@ -92,7 +92,7 @@ impl GameState {
 
                 if !self.commanders.contains_key(&commander.fid) {
                     self.commanders
-                        .insert(commander.fid.to_string(), commander.into());
+                        .insert(commander.fid.to_string(), LogState::default());
                 }
             }
             _ => {

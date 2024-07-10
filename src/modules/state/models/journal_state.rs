@@ -37,6 +37,7 @@ impl JournalState {
         match &event.kind {
             JournalEventKind::LogEvent(log_event) => {
                 match &log_event.content {
+                    _ => {},
                     // LogEventContent::ScanOrganic(scan_organic) => {
                     //     let location = self.status
                     //         .as_ref()
