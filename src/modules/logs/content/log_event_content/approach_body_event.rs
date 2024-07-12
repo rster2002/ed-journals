@@ -1,9 +1,14 @@
 use serde::{Deserialize, Serialize};
 
+/// Fired whenever the player approaches a body. This is usually when the game also performs a scan
+/// which fires a [ScanEvent](crate::logs::scan_event::ScanEvent).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ApproachBodyEvent {
+    /// The star system the approached body is part of.
     star_system: String,
+
+    /// The name of the body which the player is approaching.
     body: String,
 }
 
