@@ -30,7 +30,7 @@ pub struct Status {
 /// The actual contents of the status file, containing flags for the different states part of the
 /// ship can be in and might also contain information about the planet the player is currently close
 /// to.
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatusContents {
     /// The current flags for the player. These flags are mostly for things that are related to
@@ -78,6 +78,22 @@ impl StatusKind {
     pub fn is_on_foot_status(&self) -> bool {
         matches!(self, StatusKind::OnFoot(_))
     }
+
+    /// Returns the ship status if it is set and returns None otherwise.
+    pub fn ship_status(&self) -> Option<&ShipStatus> {
+        match self {
+            StatusKind::Ship(ship_status) => Some(ship_status),
+            _ => None,
+        }
+    }
+
+    /// Returns the on-foot status if it is set and returns None otherwise.
+    pub fn on_foot_status(&self) -> Option<&OnFootStatus> {
+        match self {
+            StatusKind::OnFoot(on_foot_status) => Some(on_foot_status),
+            _ => None,
+        }
+    }
 }
 
 /// This model contains the fields which are included when the player is piloting a ship.
@@ -121,7 +137,7 @@ impl ShipStatus {
 }
 
 /// This model contains the fields which are included when the player is on-foot.
-#[derive(Debug, Deserialize, PartialEq, Clone)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct OnFootStatus {
     /// The percentage of oxygen the player currently has left.
