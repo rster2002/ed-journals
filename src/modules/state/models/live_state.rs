@@ -1,6 +1,6 @@
 mod touchdown_location;
+mod organic_location;
 
-use std::collections::HashMap;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use crate::backpack::Backpack;
@@ -13,6 +13,7 @@ use crate::nav_route::NavRoute;
 use crate::outfitting::Outfitting;
 use crate::ship_locker::ShipLocker;
 use crate::shipyard::Shipyard;
+use crate::state::models::live_state::organic_location::OrganicLocation;
 use crate::state::models::live_state::touchdown_location::TouchdownLocation;
 use crate::status::{PlanetStatus, ShipStatus, Status, StatusContents};
 
@@ -23,8 +24,11 @@ use crate::status::{PlanetStatus, ShipStatus, Status, StatusContents};
 /// saved to disk and retrieved at a later time when you want to continue with the same state.
 #[derive(Serialize, Deserialize, Default)]
 pub struct LiveState {
+    /// The locations where the player has landed on planets.
     pub touchdown_locations: Vec<TouchdownLocation>,
-    // pub organic_locations: HashMap<(u64, u8), >
+
+    /// The locations of scanned organics on different planets.
+    pub organic_locations: Vec<OrganicLocation>,
 
     pub status: Option<Status>,
     pub modules_info: Option<ModulesInfo>,
@@ -99,7 +103,17 @@ impl LiveState {
                 })
             },
             LogEventContent::ScanOrganic(scan_organic) => {
+                let Some(planet_status) = self.valid_planet_status(&log_event.timestamp) else {
+                    return;
+                };
 
+                self.organic_locations.push(OrganicLocation {
+                    system_address: scan_organic.system_address,
+                    body_id: scan_organic.body,
+                    species: scan_organic.species.clone(),
+                    variant: scan_organic.variant.clone(),
+                    coordinates: (planet_status.latitude, planet_status.longitude),
+                })
             },
             LogEventContent::NavRouteClear => {
                 if self.valid_nav_route(&log_event.timestamp).is_some() {

@@ -11,7 +11,7 @@ pub struct ScanOrganicEvent {
     /// the third and last entry seems to be `Log`.
     pub scan_type: ScanOrganicEventScanType,
     pub genus: Genus,
-
+    
     #[serde(rename = "Genus_Localised")]
     pub genus_localized: Option<String>,
 
