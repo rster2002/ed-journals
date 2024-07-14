@@ -62,7 +62,7 @@ pub struct StatusContents {
 #[serde(untagged)]
 pub enum StatusKind {
     /// Variant containing the fields for when the player is piloting a ship.
-    Ship(ShipStatus)
+    Ship(ShipStatus),
 
     /// Variant containing the fields for when the player is on-foot.
     OnFoot(OnFootStatus),
