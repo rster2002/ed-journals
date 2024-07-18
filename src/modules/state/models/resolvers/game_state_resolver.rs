@@ -5,14 +5,15 @@ use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::file_header_event::FileHeaderEvent;
-use crate::state::models::log_state::LogState;
+use crate::state::LogState;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::traits::state::StateResolver;
 
 /// The complete state of the whole game. This includes potentially the different commanders that
 /// use the same game installation. By feeding the state entries from the journal log files it
 /// creates a state which makes it easier to read information about the game.
-#[derive(Serialize)]
-pub struct GameState {
+#[derive(Serialize, Default)]
+pub struct GameStateResolver {
     pub commanders: HashMap<String, LogState>,
     current_commander: Option<String>,
     file_header: Option<FileHeaderEvent>,
@@ -20,69 +21,9 @@ pub struct GameState {
     later: Vec<LogEvent>,
 }
 
-impl GameState {
-    pub fn new() -> Self {
-        GameState {
-            commanders: HashMap::new(),
-            current_commander: None,
-            file_header: None,
-            header_count: 0,
-            later: Vec::new(),
-        }
-    }
-
-    pub fn current_commander(&self) -> Option<&LogState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get(commander_id) else {
-            return None;
-        };
-
-        Some(commander_entry)
-    }
-
-    pub fn current_commander_mut(&mut self) -> Option<&mut LogState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get_mut(commander_id) else {
-            return None;
-        };
-
-        Some(commander_entry)
-    }
-
-    /// Takes the log events and processes it in the state. Note that it does not guarantee that the
-    /// event will be processed immediately. In some situations the event will be queued when the
-    /// state things it is better able to process the event, but it doesn't do this automatically.
-    /// For those events to be processed, you need to call [GameState::flush]. This will go through
-    /// the remaining events and tries to process them.
-    pub fn feed_log_event(&mut self, event: &LogEvent) {
-        let handle_result = self.handle(event);
-
-        if let FeedResult::Later = handle_result {
-            self.later.push(event.clone());
-        }
-    }
-
-    /// Processes any left-over events that were scheduled for later processing. Call this sparingly
-    /// especially not while you're also still reading a lot of events through
-    /// [GameState::feed_log_event] as that will likely cause performance issues.
-    pub fn flush(&mut self) {
-        let queued = mem::take(&mut self.later);
-
-        for item in queued {
-            if let FeedResult::Later = self.handle(&item) {
-                self.later.push(item);
-            }
-        }
-    }
-
-    fn handle(&mut self, event: &LogEvent) -> FeedResult {
-        match &event.content {
+impl StateResolver<LogEvent> for GameStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        match &input.content {
             LogEventContent::FileHeader(header) => {
                 self.file_header = Some(header.clone());
                 self.header_count += 1;
@@ -110,9 +51,29 @@ impl GameState {
     }
 }
 
-impl Default for GameState {
-    fn default() -> Self {
-        GameState::new()
+impl GameStateResolver {
+    pub fn current_commander(&self) -> Option<&LogState> {
+        let Some(commander_id) = &self.current_commander else {
+            return None;
+        };
+
+        let Some(commander_entry) = self.commanders.get(commander_id) else {
+            return None;
+        };
+
+        Some(commander_entry)
+    }
+
+    pub fn current_commander_mut(&mut self) -> Option<&mut LogState> {
+        let Some(commander_id) = &self.current_commander else {
+            return None;
+        };
+
+        let Some(commander_entry) = self.commanders.get_mut(commander_id) else {
+            return None;
+        };
+
+        Some(commander_entry)
     }
 }
 

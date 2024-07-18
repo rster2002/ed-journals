@@ -18,12 +18,13 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::planet_state::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
-use crate::state::models::planet_state::signal_counts::SignalCounts;
+use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
+use crate::state::models::resolvers::planet_state_resolver::signal_counts::SignalCounts;
+use crate::state::traits::state::StateResolver;
 use crate::trading::Commodity;
 
 #[derive(Debug, Serialize)]
-pub struct PlanetState {
+pub struct PlanetStateResolver {
     pub scan: ScanEvent,
 
     pub saa_scan: Option<SAAScanCompleteEvent>,
@@ -52,9 +53,9 @@ pub enum BodyStateError {
     NotAPlanetScan,
 }
 
-impl PlanetState {
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
-        let Some(body_id) = log_event.content.body_id() else {
+impl StateResolver<LogEvent> for PlanetStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        let Some(body_id) = input.content.body_id() else {
             return FeedResult::Skipped;
         };
 
@@ -62,7 +63,7 @@ impl PlanetState {
             return FeedResult::Skipped;
         }
 
-        match &log_event.content {
+        match &input.content {
             LogEventContent::SAAScanComplete(scan_complete) => {
                 self.saa_scan = Some(scan_complete.clone());
             }
@@ -128,7 +129,9 @@ impl PlanetState {
 
         FeedResult::Accepted
     }
+}
 
+impl PlanetStateResolver {
     pub fn has_human_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
@@ -262,9 +265,9 @@ impl PlanetState {
     }
 }
 
-impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
+impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetStateResolver {
     fn from(value: (&ScanEvent, &ScanEventPlanet)) -> Self {
-        PlanetState {
+        PlanetStateResolver {
             scan: value.0.clone(),
             saa_scan: None,
             saa_signals: Vec::new(),
@@ -297,7 +300,7 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
     }
 }
 
-impl TryFrom<&ScanEvent> for PlanetState {
+impl TryFrom<&ScanEvent> for PlanetStateResolver {
     type Error = BodyStateError;
 
     fn try_from(value: &ScanEvent) -> Result<Self, Self::Error> {
@@ -305,6 +308,6 @@ impl TryFrom<&ScanEvent> for PlanetState {
             return Err(BodyStateError::NotAPlanetScan);
         };
 
-        Ok(PlanetState::from((value, planet)))
+        Ok(PlanetStateResolver::from((value, planet)))
     }
 }

@@ -21,17 +21,22 @@
 //! }
 //! ```
 
-pub use models::log_state::LogState;
-pub use models::log_state::current_organic_progress::CurrentOrganicProgress;
-pub use models::game_state::GameState;
-pub use models::system_state::SystemState;
-pub use models::planet_state::PlanetState;
-pub use models::materials_state::MaterialsState;
-pub use models::carrier_state::CarrierState;
-pub use models::planet_state::planet_species_entry::PlanetSpeciesEntry;
-pub use models::journal_state::JournalState;
-pub use models::journal_state::current_organic_location::CurrentOrganicLocation;
+pub use models::state::log_state::LogState;
+pub use models::state::game_state::GameState;
+pub use models::state::system_state::SystemState;
+
+// pub use models::log_state::LogState;
+// pub use models::log_state::current_organic_progress::CurrentOrganicProgress;
+// pub use models::game_state::GameState;
+// pub use models::system_state::SystemState;
+// pub use models::planet_state::PlanetState;
+// pub use models::materials_state::MaterialsState;
+// pub use models::carrier_state::CarrierState;
+// pub use models::planet_state::planet_species_entry::PlanetSpeciesEntry;
+// pub use models::journal_state::JournalState;
+// pub use models::journal_state::current_organic_location::CurrentOrganicLocation;
 
 mod models;
 mod macros;
+mod traits;
 

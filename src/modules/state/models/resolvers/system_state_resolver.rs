@@ -11,9 +11,10 @@ use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
 use crate::state::models::planet_state::PlanetState;
+use crate::state::traits::state::StateResolver;
 
 #[derive(Serialize)]
-pub struct SystemState {
+pub struct SystemStateResolver {
     pub location_info: LocationInfo,
     pub bodies: HashMap<u8, PlanetState>,
     pub visits: Vec<DateTime<Utc>>,
@@ -25,8 +26,8 @@ pub struct SystemState {
     pub exobiology_system: TargetSystem,
 }
 
-impl SystemState {
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
+impl StateResolver<LogEvent> for SystemStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
         let Some(system_address) = log_event.content.system_address() else {
             return FeedResult::Skipped;
         };
@@ -84,7 +85,9 @@ impl SystemState {
 
         FeedResult::Accepted
     }
+}
 
+impl SystemStateResolver {
     pub fn visit(&mut self, date_time: &DateTime<Utc>) {
         self.visits.push(*date_time);
     }
@@ -102,9 +105,9 @@ impl SystemState {
     }
 }
 
-impl From<&LocationInfo> for SystemState {
+impl From<&LocationInfo> for SystemStateResolver {
     fn from(value: &LocationInfo) -> Self {
-        SystemState {
+        SystemStateResolver {
             location_info: value.clone(),
             bodies: HashMap::new(),
             visits: Vec::new(),

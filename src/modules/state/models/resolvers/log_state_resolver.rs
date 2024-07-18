@@ -12,17 +12,20 @@ use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::statistics_event::StatisticsEvent;
 use crate::logs::scan_event::ScanEvent;
-use crate::state::models::carrier_state::CarrierState;
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::materials_state::MaterialsState;
-use crate::state::models::mission_state::MissionState;
 use crate::state::SystemState;
+// use crate::state::models::carrier_state::CarrierState;
+// use crate::state::models::feed_result::FeedResult;
+// use crate::state::models::materials_state::MaterialsState;
+// use crate::state::models::mission_state::MissionState;
+// use crate::state::SystemState;
+use crate::state::traits::state::StateResolver;
 use crate::try_feed;
 
 pub mod current_organic_progress;
 
 #[derive(Serialize, Default)]
-pub struct LogState {
+pub struct LogStateResolver {
     // pub fid: String,
     // pub name: String,
     pub systems: HashMap<u64, SystemState>,
@@ -37,9 +40,9 @@ pub struct LogState {
     pub statistics: Option<StatisticsEvent>,
 }
 
-impl LogState {
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
-        match &log_event.content {
+impl StateResolver<LogEvent> for LogStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        match &input.content {
             LogEventContent::Scan(event) => {
                 self.current_exploration_data.push(event.clone());
             },
@@ -150,7 +153,7 @@ impl LogState {
             | LogEventContent::CarrierNameChange(_)
             | LogEventContent::CarrierJumpCancelled(_) => {
                 match &mut self.carrier_state {
-                    Some(state) => { try_feed!(state.feed_log_event(&log_event)); },
+                    Some(state) => { try_feed!(state.feed_log_event(&input)); },
                     None => return FeedResult::Later,
                 }
             },
@@ -160,48 +163,54 @@ impl LogState {
 
         let carrier_has_been_scrapped = self.carrier_state
             .as_ref()
-            .is_some_and(|state| state.has_been_scrapped(&log_event.timestamp));
+            .is_some_and(|state| state.has_been_scrapped(&input.timestamp));
 
         if carrier_has_been_scrapped {
             self.carrier_state = None;
         }
 
-        if let Some(address) = log_event.content.system_address() {
+        if let Some(address) = input.content.system_address() {
             let Some(system) = self.systems.get_mut(&address) else {
                 return FeedResult::Later;
             };
 
-            try_feed!(system.feed_log_event(log_event));
+            system.feed(input);
         }
 
         FeedResult::Accepted
     }
-
-    pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
-        self.systems
-            .entry(location_info.system_address)
-            .or_insert_with(|| location_info.into());
-
-        self.systems
-            .get_mut(&location_info.system_address)
-            .expect("Should have been added")
-    }
-
-    pub fn current_system(&self) -> Option<&SystemState> {
-        self.systems.get(&self.current_system?)
-    }
-
-    pub fn system_by_address(&self, address: u64) -> Option<&SystemState> {
-        self.systems.get(&address)
-    }
-
-    pub fn current_exploration_worth(&self) -> u64 {
-        self.current_exploration_data
-            .iter()
-            .map(|item| calculate_estimated_worth(item))
-            .sum()
-    }
 }
+
+// impl LogState {
+//     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
+
+//     }
+//
+//     pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
+//         self.systems
+//             .entry(location_info.system_address)
+//             .or_insert_with(|| location_info.into());
+//
+//         self.systems
+//             .get_mut(&location_info.system_address)
+//             .expect("Should have been added")
+//     }
+//
+//     pub fn current_system(&self) -> Option<&SystemState> {
+//         self.systems.get(&self.current_system?)
+//     }
+//
+//     pub fn system_by_address(&self, address: u64) -> Option<&SystemState> {
+//         self.systems.get(&address)
+//     }
+//
+//     pub fn current_exploration_worth(&self) -> u64 {
+//         self.current_exploration_data
+//             .iter()
+//             .map(|item| calculate_estimated_worth(item))
+//             .sum()
+//     }
+// }
 
 // impl From<&CommanderEvent> for CommanderState {
 //     fn from(value: &CommanderEvent) -> Self {
