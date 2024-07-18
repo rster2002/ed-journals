@@ -6,11 +6,17 @@ use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::game_state_resolver::GameStateResolver;
 use crate::state::traits::state_resolver::StateResolver;
 
+/// This is what is used internally take care of input and manage flushing and handling retries.
 pub struct StateContainer<S, T>
     where S : StateResolver<T>,
           T : Clone,
 {
+    /// The inner resolver which is what actually takes input and does something with it. The state
+    /// container calls the methods on the given [StateResolver].
     inner: S,
+
+    /// Some events might get queued for later processing because not all information might be
+    /// available at the time.
     later: Vec<T>,
 }
 
@@ -118,47 +124,11 @@ impl<S, T> From<S> for StateContainer<S, T>
     }
 }
 
-// impl<S, T, I> From<I> for StateContainer<S, T>
-// where S : StateResolver<T> + From<I>,
-//       T : Clone
-// {
-//     fn from(value: I) -> Self {
-//         StateContainer {
-//             inner: S::from(value),
-//             later: Vec::new(),
-//         }
-//     }
-// }
-
-// impl<S, T, I, E> TryFrom<I> for StateContainer<S, T>
-// where S : StateResolver<T> + TryFrom<I, Error = E>,
-//       T : Clone
-// {
-//     type Error = E;
-//
-//     fn try_from(value: I) -> Result<Self, Self::Error> {
-//         Ok(StateContainer {
-//             inner: S::try_from(value)?,
-//             later: Vec::new(),
-//         })
-//     }
-// }
-
 impl<S, T> Debug for StateContainer<S, T>
 where S : StateResolver<T> + Debug,
       T : Clone
 {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Debug::fmt(&self.inner, f)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::state::LogState;
-
-    #[test]
-    fn test() {
-        let i = LogState::default();
     }
 }
