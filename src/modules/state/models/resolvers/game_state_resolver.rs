@@ -7,11 +7,8 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::file_header_event::FileHeaderEvent;
 use crate::state::LogState;
 use crate::state::models::feed_result::FeedResult;
-use crate::state::traits::state::StateResolver;
+use crate::state::traits::state_resolver::StateResolver;
 
-/// The complete state of the whole game. This includes potentially the different commanders that
-/// use the same game installation. By feeding the state entries from the journal log files it
-/// creates a state which makes it easier to read information about the game.
 #[derive(Serialize, Default)]
 pub struct GameStateResolver {
     pub commanders: HashMap<String, LogState>,
@@ -41,13 +38,17 @@ impl StateResolver<LogEvent> for GameStateResolver {
                     return FeedResult::Later;
                 };
 
-                if let FeedResult::Later = current.feed_log_event(event) {
-                    return FeedResult::Later;
-                }
+                current.feed(input);
             }
         }
 
         FeedResult::Accepted
+    }
+
+    fn flush_inner(&mut self) {
+        for commander in self.commanders.values_mut() {
+            commander.flush_inner();
+        }
     }
 }
 
@@ -84,6 +85,7 @@ mod tests {
     use crate::state::GameState;
     use std::env::current_dir;
     use std::time::Instant;
+    use crate::state::traits::state_resolver::StateResolver;
 
     #[test]
     fn state_is_correct() {
@@ -91,11 +93,11 @@ mod tests {
 
         let log_dir = LogDirReader::open(dir_path);
 
-        let mut state = GameState::new();
+        let mut state = GameState::default();
         let instant = Instant::now();
 
         for entry in log_dir {
-            state.feed_log_event(&entry.unwrap());
+            state.feed(&entry.unwrap());
         }
 
         state.flush();

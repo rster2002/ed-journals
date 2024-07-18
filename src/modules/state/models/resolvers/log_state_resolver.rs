@@ -1,33 +1,26 @@
 use std::collections::HashMap;
 
 use serde::Serialize;
-use crate::exploration::calculate_estimated_worth;
 
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::commander_event::CommanderEvent;
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
-use crate::modules::civilization::LocationInfo;
 use current_organic_progress::CurrentOrganicProgress;
+use crate::civilization::LocationInfo;
+use crate::exploration::calculate_estimated_worth;
 use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::statistics_event::StatisticsEvent;
 use crate::logs::scan_event::ScanEvent;
 use crate::state::models::feed_result::FeedResult;
-use crate::state::SystemState;
-// use crate::state::models::carrier_state::CarrierState;
-// use crate::state::models::feed_result::FeedResult;
-// use crate::state::models::materials_state::MaterialsState;
-// use crate::state::models::mission_state::MissionState;
-// use crate::state::SystemState;
-use crate::state::traits::state::StateResolver;
-use crate::try_feed;
+use crate::state::models::state::carrier_state::CarrierState;
+use crate::state::models::state::materials_state::MaterialsState;
+use crate::state::{MissionState, SystemState};
+use crate::state::traits::state_resolver::StateResolver;
 
 pub mod current_organic_progress;
 
 #[derive(Serialize, Default)]
 pub struct LogStateResolver {
-    // pub fid: String,
-    // pub name: String,
     pub systems: HashMap<u64, SystemState>,
     pub current_system: Option<u64>,
     pub current_organic_progress: Option<CurrentOrganicProgress>,
@@ -78,17 +71,17 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 self.current_system = Some(location.location_info.system_address);
 
                 let system = self.upset_system(&location.location_info);
-                system.visit(&log_event.timestamp);
+                system.visit(&input.timestamp);
             }
             LogEventContent::CarrierJump(carrier_jump) => {
                 let system = self.upset_system(&carrier_jump.system_info);
-                system.carrier_visit(&log_event.timestamp);
+                system.carrier_visit(&input.timestamp);
             }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);
 
                 let system = self.upset_system(&fsd_jump.system_info);
-                system.visit(&log_event.timestamp);
+                system.visit(&input.timestamp);
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
                 ScanOrganicEventScanType::Sample => {
@@ -131,7 +124,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             LogEventContent::CarrierStats(stats) => {
                 if self.carrier_state.is_none() {
                     let mut state: CarrierState = stats.clone().into();
-                    state.feed_log_event(&log_event);
+                    state.feed(&input);
 
                     self.carrier_state = Some(state);
                 }
@@ -153,7 +146,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             | LogEventContent::CarrierNameChange(_)
             | LogEventContent::CarrierJumpCancelled(_) => {
                 match &mut self.carrier_state {
-                    Some(state) => { try_feed!(state.feed_log_event(&input)); },
+                    Some(state) => state.feed(&input),
                     None => return FeedResult::Later,
                 }
             },
@@ -179,54 +172,37 @@ impl StateResolver<LogEvent> for LogStateResolver {
 
         FeedResult::Accepted
     }
+
+    fn flush_inner(&mut self) {
+        if let Some(carrier_state) = &mut self.carrier_state {
+            carrier_state.flush();
+        }
+    }
 }
 
-// impl LogState {
-//     pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
+impl LogStateResolver {
+    pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
+        self.systems
+            .entry(location_info.system_address)
+            .or_insert_with(|| location_info.into());
 
-//     }
-//
-//     pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
-//         self.systems
-//             .entry(location_info.system_address)
-//             .or_insert_with(|| location_info.into());
-//
-//         self.systems
-//             .get_mut(&location_info.system_address)
-//             .expect("Should have been added")
-//     }
-//
-//     pub fn current_system(&self) -> Option<&SystemState> {
-//         self.systems.get(&self.current_system?)
-//     }
-//
-//     pub fn system_by_address(&self, address: u64) -> Option<&SystemState> {
-//         self.systems.get(&address)
-//     }
-//
-//     pub fn current_exploration_worth(&self) -> u64 {
-//         self.current_exploration_data
-//             .iter()
-//             .map(|item| calculate_estimated_worth(item))
-//             .sum()
-//     }
-// }
+        self.systems
+            .get_mut(&location_info.system_address)
+            .expect("Should have been added")
+    }
 
-// impl From<&CommanderEvent> for CommanderState {
-//     fn from(value: &CommanderEvent) -> Self {
-//         CommanderState {
-//             fid: value.fid.to_string(),
-//             name: value.name.to_string(),
-//             systems: HashMap::new(),
-//             current_system: None,
-//             current_organic_progress: None,
-//             current_exploration_data: Vec::new(),
-//             material_state: MaterialsState::default(),
-//             mission_state: MissionState::default(),
-//             carrier_state: None,
-//             rank: None,
-//             reputation: None,
-//             statistics: None,
-//         }
-//     }
-// }
+    pub fn current_system(&self) -> Option<&SystemState> {
+        self.systems.get(&self.current_system?)
+    }
+
+    pub fn system_by_address(&self, address: u64) -> Option<&SystemState> {
+        self.systems.get(&address)
+    }
+
+    pub fn current_exploration_worth(&self) -> u64 {
+        self.current_exploration_data
+            .iter()
+            .map(|item| calculate_estimated_worth(item))
+            .sum()
+    }
+}

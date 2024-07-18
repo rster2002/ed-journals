@@ -12,11 +12,11 @@
 //!
 //! // Create a reader and an empty game state
 //! let mut log_reader = LogDirReader::open(&path);
-//! let mut state = GameState::new();
+//! let mut state = GameState::default();
 //!
 //! // Read all the entries from the journal logs
 //! for entry in log_reader {
-//!     state.feed_log_event(&entry.unwrap());
+//!     state.feed(&entry.unwrap());
 //!     # break;
 //! }
 //! ```
@@ -24,17 +24,10 @@
 pub use models::state::log_state::LogState;
 pub use models::state::game_state::GameState;
 pub use models::state::system_state::SystemState;
-
-// pub use models::log_state::LogState;
-// pub use models::log_state::current_organic_progress::CurrentOrganicProgress;
-// pub use models::game_state::GameState;
-// pub use models::system_state::SystemState;
-// pub use models::planet_state::PlanetState;
-// pub use models::materials_state::MaterialsState;
-// pub use models::carrier_state::CarrierState;
-// pub use models::planet_state::planet_species_entry::PlanetSpeciesEntry;
-// pub use models::journal_state::JournalState;
-// pub use models::journal_state::current_organic_location::CurrentOrganicLocation;
+pub use models::state::planet_state::PlanetState;
+pub use models::state::carrier_state::CarrierState;
+pub use models::state::materials_state::MaterialsState;
+pub use models::state::mission_state::MissionState;
 
 mod models;
 mod macros;

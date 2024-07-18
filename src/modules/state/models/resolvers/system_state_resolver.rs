@@ -9,9 +9,9 @@ use crate::logs::scan_event::ScanEventKind;
 use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
-use crate::state::models::planet_state::PlanetState;
-use crate::state::traits::state::StateResolver;
+use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::PlanetSpeciesEntry;
+use crate::state::PlanetState;
+use crate::state::traits::state_resolver::StateResolver;
 
 #[derive(Serialize)]
 pub struct SystemStateResolver {
@@ -28,7 +28,7 @@ pub struct SystemStateResolver {
 
 impl StateResolver<LogEvent> for SystemStateResolver {
     fn feed(&mut self, input: &LogEvent) -> FeedResult {
-        let Some(system_address) = log_event.content.system_address() else {
+        let Some(system_address) = input.content.system_address() else {
             return FeedResult::Skipped;
         };
 
@@ -36,7 +36,7 @@ impl StateResolver<LogEvent> for SystemStateResolver {
             return FeedResult::Skipped;
         }
 
-        match &log_event.content {
+        match &input.content {
             LogEventContent::FSSDiscoveryScan(event) => {
                 self.number_of_bodies = Some(event.body_count);
                 self.progress = event.progress;
@@ -73,17 +73,23 @@ impl StateResolver<LogEvent> for SystemStateResolver {
             },
 
             _ => {
-                if let Some(body_id) = log_event.content.body_id() {
+                if let Some(body_id) = input.content.body_id() {
                     let Some(body) = self.bodies.get_mut(&body_id) else {
                         return FeedResult::Later;
                     };
 
-                    return body.feed_log_event(log_event);
+                    body.feed(input);
                 }
             }
         }
 
         FeedResult::Accepted
+    }
+
+    fn flush_inner(&mut self) {
+        for body in self.bodies.values_mut() {
+            body.flush_inner();
+        }
     }
 }
 
@@ -105,34 +111,14 @@ impl SystemStateResolver {
     }
 }
 
-impl From<&LocationInfo> for SystemStateResolver {
-    fn from(value: &LocationInfo) -> Self {
-        SystemStateResolver {
-            location_info: value.clone(),
-            bodies: HashMap::new(),
-            visits: Vec::new(),
-            carrier_visits: Vec::new(),
-            number_of_bodies: None,
-            progress: 0.0,
-            all_found: false,
-            station_signals: Vec::new(),
-            exobiology_system: TargetSystem {
-                star_system_position: value.star_pos,
-                planet_classes_in_system: Default::default(),
-                stars_in_system: Default::default(),
-            },
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
     use std::env::current_dir;
 
-    use crate::exobiology::{SpawnSource, Species};
+    use crate::exobiology::SpawnSource;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
+    use crate::state::traits::state_resolver::StateResolver;
 
     #[test]
     fn spawnable_species_no_false_negatives() {
@@ -140,10 +126,10 @@ mod tests {
 
         let log_dir = LogDirReader::open(dir_path);
 
-        let mut state = GameState::new();
+        let mut state = GameState::default();
 
         for entry in log_dir {
-            state.feed_log_event(&entry.unwrap());
+            state.feed(&entry.unwrap());
         }
 
         let mut failed = 0;

@@ -1,10 +1,10 @@
 use std::fmt::{Debug, Formatter};
-use std::marker::PhantomData;
 use std::mem;
-use std::ops::Deref;
+use std::ops::{Deref, DerefMut};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::game_state_resolver::GameStateResolver;
-use crate::state::traits::state::StateResolver;
+use crate::state::traits::state_resolver::StateResolver;
 
 pub struct StateContainer<S, T>
     where S : StateResolver<T>,
@@ -18,13 +18,6 @@ impl<S, T> StateContainer<S, T>
     where S : StateResolver<T>,
           T : Clone,
 {
-    pub fn new(inner: S) -> Self {
-        StateContainer {
-            inner,
-            later: Vec::new(),
-        }
-    }
-
     /// Takes the log events and processes it in the state. Note that it does not guarantee that the
     /// event will be processed immediately. In some situations the event will be queued when the
     /// state things it is better able to process the event, but it doesn't do this automatically.
@@ -65,6 +58,15 @@ impl<S, T> Deref for StateContainer<S, T>
     }
 }
 
+impl<S, T> DerefMut for StateContainer<S, T>
+where S : StateResolver<T>,
+      T : Clone,
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+
 impl<S, T> Default for StateContainer<S, T>
     where S : StateResolver<T> + Default,
           T : Clone
@@ -77,31 +79,70 @@ impl<S, T> Default for StateContainer<S, T>
     }
 }
 
-impl<S, T, I> From<I> for StateContainer<S, T>
-where S : StateResolver<T> + From<I>,
+impl<S, T> Serialize for StateContainer<S, T>
+where S : StateResolver<T> + Serialize,
       T : Clone
 {
-    fn from(value: I) -> Self {
+    fn serialize<Se>(&self, serializer: Se) -> Result<Se::Ok, Se::Error>
+    where
+        Se: Serializer
+    {
+        self.inner.serialize(serializer)
+    }
+}
+
+impl<'de, S, T> Deserialize<'de> for StateContainer<S, T>
+where S : StateResolver<T> + Deserialize<'de>,
+      T : Clone
+{
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>
+    {
+        Ok(StateContainer {
+            inner: S::deserialize(deserializer)?,
+            later: Vec::new(),
+        })
+    }
+}
+
+impl<S, T> From<S> for StateContainer<S, T>
+    where S : StateResolver<T>,
+          T : Clone,
+{
+    fn from(value: S) -> Self {
         StateContainer {
-            inner: S::from(value),
+            inner: value,
             later: Vec::new(),
         }
     }
 }
 
-impl<S, T, I, E> TryFrom<I> for StateContainer<S, T>
-where S : StateResolver<T> + TryFrom<I, Error = E>,
-      T : Clone
-{
-    type Error = E;
+// impl<S, T, I> From<I> for StateContainer<S, T>
+// where S : StateResolver<T> + From<I>,
+//       T : Clone
+// {
+//     fn from(value: I) -> Self {
+//         StateContainer {
+//             inner: S::from(value),
+//             later: Vec::new(),
+//         }
+//     }
+// }
 
-    fn try_from(value: I) -> Result<Self, Self::Error> {
-        Ok(StateContainer {
-            inner: S::try_from(value)?,
-            later: Vec::new(),
-        })
-    }
-}
+// impl<S, T, I, E> TryFrom<I> for StateContainer<S, T>
+// where S : StateResolver<T> + TryFrom<I, Error = E>,
+//       T : Clone
+// {
+//     type Error = E;
+//
+//     fn try_from(value: I) -> Result<Self, Self::Error> {
+//         Ok(StateContainer {
+//             inner: S::try_from(value)?,
+//             later: Vec::new(),
+//         })
+//     }
+// }
 
 impl<S, T> Debug for StateContainer<S, T>
 where S : StateResolver<T> + Debug,

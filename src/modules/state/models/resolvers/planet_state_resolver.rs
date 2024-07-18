@@ -20,7 +20,7 @@ use crate::modules::exobiology::{Genus, Species};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 use crate::state::models::resolvers::planet_state_resolver::signal_counts::SignalCounts;
-use crate::state::traits::state::StateResolver;
+use crate::state::traits::state_resolver::StateResolver;
 use crate::trading::Commodity;
 
 #[derive(Debug, Serialize)]
@@ -48,7 +48,7 @@ pub struct PlanetStateResolver {
 }
 
 #[derive(Debug, Error)]
-pub enum BodyStateError {
+pub enum PlanetStateError {
     #[error("The provided scan event is not that of a planet")]
     NotAPlanetScan,
 }
@@ -262,52 +262,5 @@ impl PlanetStateResolver {
             .sum();
 
         known_total + maybe_total
-    }
-}
-
-impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetStateResolver {
-    fn from(value: (&ScanEvent, &ScanEventPlanet)) -> Self {
-        PlanetStateResolver {
-            scan: value.0.clone(),
-            saa_scan: None,
-            saa_signals: Vec::new(),
-            saa_genuses: None,
-            scanned_species: HashSet::new(),
-            touchdowns: Vec::new(),
-            signal_counts: None,
-            logged_species: HashSet::new(),
-            commodity_signals: Vec::new(),
-            exobiology_body: TargetPlanet {
-                atmosphere: value.1.atmosphere.clone(),
-                gravity: value.1.surface_gravity.clone(),
-                class: value.1.planet_class.clone(),
-                surface_temperature: value.1.surface_temperature,
-                volcanism: value.1.volcanism.clone(),
-                materials: HashSet::from_iter(
-                    value
-                        .1
-                        .materials
-                        .clone()
-                        .into_iter()
-                        .map(|entry| entry.name),
-                ),
-                composition: value.1.composition.clone(),
-                parents: value.0.parents.clone(),
-                semi_major_axis: value.1.orbit_info.semi_major_axis,
-                geological_signals_present: false,
-            },
-        }
-    }
-}
-
-impl TryFrom<&ScanEvent> for PlanetStateResolver {
-    type Error = BodyStateError;
-
-    fn try_from(value: &ScanEvent) -> Result<Self, Self::Error> {
-        let ScanEventKind::Planet(planet) = &value.kind else {
-            return Err(BodyStateError::NotAPlanetScan);
-        };
-
-        Ok(PlanetStateResolver::from((value, planet)))
     }
 }
