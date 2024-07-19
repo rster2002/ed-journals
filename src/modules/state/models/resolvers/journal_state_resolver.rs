@@ -1,0 +1,59 @@
+use std::collections::HashMap;
+
+use serde::Serialize;
+
+use crate::journal::{JournalEvent, JournalEventKind};
+use crate::logs::LogEventContent;
+use crate::state::{LiveState, LogState};
+use crate::state::models::feed_result::FeedResult;
+use crate::state::traits::state_resolver::StateResolver;
+
+/// State which tracks both log events and events that are fired when a json file updates.
+#[derive(Serialize)]
+pub struct JournalState {
+    pub commanders: HashMap<String, (LogState, LiveState)>,
+    current_commander_id: Option<String>,
+}
+
+impl StateResolver<JournalEvent> for JournalState {
+    fn feed(&mut self, input: &JournalEvent) -> FeedResult {
+        if let JournalEventKind::LogEvent(log_event) = &input.kind {
+            if let LogEventContent::Commander(commander) = log_event {
+                self.current_commander_id = Some(commander.fid.to_string());
+
+                if !self.commanders.contains_key(&commander.fid) {
+                    self.commanders
+                        .insert(commander.fid.to_string(), (LogState::default(), LiveState::default()));
+                }
+            }
+
+            let Some(current_commander) = self.current_commander_mut() else {
+                return FeedResult::Later;
+            };
+
+            current_commander.0.feed(log_event);
+        }
+
+        let Some(current_commander) = self.current_commander_mut() else {
+            return FeedResult::Later;
+        };
+
+        current_commander.1.feed(input);
+
+        FeedResult::Accepted
+    }
+}
+
+impl JournalState {
+    pub fn current_commander(&self) -> Option<&(LogState, LiveState)> {
+        self.current_commander_id
+            .as_ref()
+            .and_then(|commander_id| self.commanders.get(commander_id))
+    }
+
+    pub fn current_commander_mut(&mut self) -> Option<&mut (LogState, LiveState)> {
+        self.current_commander_id
+            .as_ref()
+            .and_then(|commander_id| self.commanders.get_mut(commander_id))
+    }
+}

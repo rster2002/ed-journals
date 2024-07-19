@@ -12,21 +12,14 @@ use crate::state::traits::state_resolver::StateResolver;
 #[derive(Serialize, Default)]
 pub struct GameStateResolver {
     pub commanders: HashMap<String, LogState>,
-    current_commander: Option<String>,
-    file_header: Option<FileHeaderEvent>,
-    header_count: u64,
-    later: Vec<LogEvent>,
+    current_commander_id: Option<String>,
 }
 
 impl StateResolver<LogEvent> for GameStateResolver {
     fn feed(&mut self, input: &LogEvent) -> FeedResult {
         match &input.content {
-            LogEventContent::FileHeader(header) => {
-                self.file_header = Some(header.clone());
-                self.header_count += 1;
-            }
             LogEventContent::Commander(commander) => {
-                self.current_commander = Some(commander.fid.to_string());
+                self.current_commander_id = Some(commander.fid.to_string());
 
                 if !self.commanders.contains_key(&commander.fid) {
                     self.commanders
@@ -47,34 +40,24 @@ impl StateResolver<LogEvent> for GameStateResolver {
 
     fn flush_inner(&mut self) {
         for commander in self.commanders.values_mut() {
-            commander.flush_inner();
+            commander.flush();
         }
     }
 }
 
 impl GameStateResolver {
+    /// Returns the current commander which is active in the logs.
     pub fn current_commander(&self) -> Option<&LogState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get(commander_id) else {
-            return None;
-        };
-
-        Some(commander_entry)
+        self.current_commander_id
+            .as_ref()
+            .and_then(|commander_id| self.commanders.get(commander_id))
     }
 
+    /// Returns a mutable reference to the current active commander in the logs.
     pub fn current_commander_mut(&mut self) -> Option<&mut LogState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get_mut(commander_id) else {
-            return None;
-        };
-
-        Some(commander_entry)
+        self.current_commander_id
+            .as_ref()
+            .and_then(|commander_id| self.commanders.get_mut(commander_id))
     }
 }
 

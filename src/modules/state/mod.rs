@@ -28,6 +28,7 @@ pub use models::state::planet_state::PlanetState;
 pub use models::state::carrier_state::CarrierState;
 pub use models::state::materials_state::MaterialsState;
 pub use models::state::mission_state::MissionState;
+pub use models::state::live_state::LiveState;
 
 mod models;
 mod macros;

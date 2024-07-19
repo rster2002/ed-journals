@@ -13,8 +13,10 @@ use crate::nav_route::NavRoute;
 use crate::outfitting::Outfitting;
 use crate::ship_locker::ShipLocker;
 use crate::shipyard::Shipyard;
-use crate::state::models::live_state::organic_location::OrganicLocation;
-use crate::state::models::live_state::touchdown_location::TouchdownLocation;
+use crate::state::models::feed_result::FeedResult;
+use crate::state::models::resolvers::live_state_resolver::organic_location::OrganicLocation;
+use crate::state::models::resolvers::live_state_resolver::touchdown_location::TouchdownLocation;
+use crate::state::traits::state_resolver::StateResolver;
 use crate::status::{PlanetStatus, ShipStatus, Status, StatusContents};
 
 /// Life state tracks state from the logs and combines them with state from live files like for
@@ -23,7 +25,7 @@ use crate::status::{PlanetStatus, ShipStatus, Status, StatusContents};
 /// the only state that can de [Serialize]d and importantly [Deserialize]d. This way state can be
 /// saved to disk and retrieved at a later time when you want to continue with the same state.
 #[derive(Serialize, Deserialize, Default)]
-pub struct LiveState {
+pub struct LiveStateResolver {
     /// The locations where the player has landed on planets.
     pub touchdown_locations: Vec<TouchdownLocation>,
 
@@ -45,9 +47,9 @@ pub struct LiveState {
     pub last_ship_status: Option<ShipStatus>,
 }
 
-impl LiveState {
-    pub fn feed_journal_event(&mut self, event: &JournalEvent) {
-        match &event.kind {
+impl StateResolver<JournalEvent> for LiveStateResolver {
+    fn feed(&mut self, input: &JournalEvent) -> FeedResult {
+        match &input.kind {
             JournalEventKind::LogEvent(log_event) => {
                 self.feed_log_event(log_event);
             }
@@ -55,7 +57,7 @@ impl LiveState {
                 self.status = Some(status.clone());
 
                 let Some(contents) = status.contents.as_ref() else {
-                    return;
+                    return FeedResult::Skipped;
                 };
 
                 if let Some(ship_status) = contents.kind.ship_status() {
@@ -87,13 +89,17 @@ impl LiveState {
                 self.ship_locker = Some(ship_locker.clone());
             }
         }
-    }
 
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) {
-        match &log_event.content {
+        FeedResult::Accepted
+    }
+}
+
+impl LiveStateResolver {
+    fn feed_log_event(&mut self, input: &LogEvent) -> FeedResult {
+        match &input.content {
             LogEventContent::Touchdown(touchdown) => {
-                let Some(planet_status) = self.valid_planet_status(&log_event.timestamp) else {
-                    return;
+                let Some(planet_status) = self.valid_planet_status(&input.timestamp) else {
+                    return FeedResult::Skipped;
                 };
 
                 self.touchdown_locations.push(TouchdownLocation {
@@ -103,8 +109,8 @@ impl LiveState {
                 })
             },
             LogEventContent::ScanOrganic(scan_organic) => {
-                let Some(planet_status) = self.valid_planet_status(&log_event.timestamp) else {
-                    return;
+                let Some(planet_status) = self.valid_planet_status(&input.timestamp) else {
+                    return FeedResult::Skipped;
                 };
 
                 self.organic_locations.push(OrganicLocation {
@@ -116,25 +122,27 @@ impl LiveState {
                 })
             },
             LogEventContent::NavRouteClear => {
-                if self.valid_nav_route(&log_event.timestamp).is_some() {
+                if self.valid_nav_route(&input.timestamp).is_some() {
                     self.nav_route = None;
                 }
             },
             LogEventContent::Liftoff(_) => {
-                if self.valid_outfitting(&log_event.timestamp).is_some() {
+                if self.valid_outfitting(&input.timestamp).is_some() {
                     self.outfitting = None;
                 }
 
-                if self.valid_shipyard(&log_event.timestamp).is_some() {
+                if self.valid_shipyard(&input.timestamp).is_some() {
                     self.shipyard = None;
                 }
 
-                if self.valid_market(&log_event.timestamp).is_some() {
+                if self.valid_market(&input.timestamp).is_some() {
                     self.market = None;
                 }
             },
             _ => {},
         }
+
+        FeedResult::Accepted
     }
 
     /// Returns the valid available status based on the given timestamp.
@@ -276,20 +284,5 @@ impl LiveState {
             .as_ref()
     }
 }
-//
-// impl Default for LiveState {
-//     fn default() -> Self {
-//         LiveState {
-//             started_at: Utc::now(),
-//             status: None,
-//             modules_info: None,
-//             cargo: None,
-//             nav_route: None,
-//             outfitting: None,
-//             shipyard: None,
-//             market: None,
-//             backpack: None,
-//             ship_locker: None,
-//         }
-//     }
-// }
+
+
