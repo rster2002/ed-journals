@@ -1,3 +1,19 @@
+//! Elite Dangerous create journal log files which contain information about various events that
+//! happen in the game. This module provides models and readers for working with these files.
+//!
+//! * [LogDir](logs::LogDir) represents the directory which includes all the journal files for the player. It can
+//!   be used get specific journal log files.
+//! * [LogFile](logs::LogFile) is used to create readers with which can then be used to read the contents of the
+//!   target file.
+//! * The [LogEvent](logs::LogEvent) struct is a single entry in a log file and is what is emitted by the different
+//!   kinds of readers.
+//! * The [LogEventContent](logs::LogEventContent) is the actual content of the entry and is a large enum containing all
+//!   the different types of events that are logged.
+//! * The [blocking](logs::blocking) module provides readers which block the current thread and requires you to
+//!   manually manage threads, especially when using the 'live' readers.
+//! * The [asynchronous](logs::asynchronous) module contains the readers for when you're working in an asynchronous
+//!   environment like for example when using tokio.
+
 pub use content::log_event_content::afmu_repairs_event;
 pub use content::log_event_content::applied_to_squadron_event;
 pub use content::log_event_content::approach_body_event;
