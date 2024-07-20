@@ -1,3 +1,7 @@
+//! High level resolver for resolving all log events. This does not however differentiate between
+//! multiple commanders, whereas [GameStateResolver](super::game_state_resolver::GameStateResolver)
+//! does.
+
 use std::collections::HashMap;
 
 use serde::Serialize;
@@ -19,6 +23,9 @@ use crate::state::traits::state_resolver::StateResolver;
 
 pub mod current_organic_progress;
 
+/// High level resolver for resolving all log events. This does not however differentiate between
+/// multiple commanders, whereas [GameStateResolver](super::game_state_resolver::GameStateResolver)
+/// does.
 #[derive(Serialize, Default)]
 pub struct LogStateResolver {
     pub systems: HashMap<u64, SystemState>,

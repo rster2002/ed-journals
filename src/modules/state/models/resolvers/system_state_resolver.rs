@@ -50,26 +50,36 @@ impl StateResolver<LogEvent> for SystemStateResolver {
                     self.station_signals.push(event.clone());
                 }
             }
-            LogEventContent::Scan(event) => match &event.kind {
-                ScanEventKind::Star(star) => {
-                    self.exobiology_system.stars_in_system.insert(
-                        event.body_id,
-                        SpawnSourceStar {
-                            class: star.star_type.clone(),
-                            luminosity: star.luminosity.clone(),
-                        },
-                    );
-                }
-                ScanEventKind::Planet(planet) => {
-                    self.bodies
-                        .entry(event.body_id)
-                        .or_insert_with(|| PlanetState::from((event, planet)));
+            LogEventContent::Scan(event) => {
+                match &event.kind {
+                    ScanEventKind::Star(star) => {
+                        self.exobiology_system.stars_in_system.insert(
+                            event.body_id,
+                            SpawnSourceStar {
+                                class: star.star_type.clone(),
+                                luminosity: star.luminosity.clone(),
+                            },
+                        );
+                    }
+                    ScanEventKind::Planet(planet) => {
+                        self.bodies
+                            .entry(event.body_id)
+                            .or_insert_with(|| PlanetState::from((event, planet)));
 
-                    self.exobiology_system
-                        .planet_classes_in_system
-                        .insert(planet.planet_class.clone());
+                        self.exobiology_system
+                            .planet_classes_in_system
+                            .insert(planet.planet_class.clone());
+                    }
+                    ScanEventKind::BeltCluster(_) => {}
                 }
-                ScanEventKind::BeltCluster(_) => {}
+
+                if let Some(total_bodies) = self.number_of_bodies {
+                    let new_factor = self.bodies.len() as f32 / total_bodies as f32;
+
+                    if new_factor > self.progress {
+                        self.progress = new_factor;
+                    }
+                }
             },
 
             _ => {

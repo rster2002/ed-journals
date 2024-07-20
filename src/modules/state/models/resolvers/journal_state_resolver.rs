@@ -18,7 +18,7 @@ pub struct JournalState {
 impl StateResolver<JournalEvent> for JournalState {
     fn feed(&mut self, input: &JournalEvent) -> FeedResult {
         if let JournalEventKind::LogEvent(log_event) = &input.kind {
-            if let LogEventContent::Commander(commander) = log_event {
+            if let LogEventContent::Commander(commander) = &log_event.content {
                 self.current_commander_id = Some(commander.fid.to_string());
 
                 if !self.commanders.contains_key(&commander.fid) {

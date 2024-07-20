@@ -6,3 +6,4 @@ pub mod carrier_state;
 pub mod materials_state;
 pub mod mission_state;
 pub mod live_state;
+pub mod shipyard_state;

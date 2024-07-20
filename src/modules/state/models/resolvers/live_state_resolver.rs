@@ -1,5 +1,5 @@
-mod touchdown_location;
-mod organic_location;
+pub mod touchdown_location;
+pub mod organic_location;
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};

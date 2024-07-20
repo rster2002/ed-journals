@@ -1,16 +1,22 @@
+//! High level state resolver which encapsulates [LogState] and in turn
+//! [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
+//! resolver handles all log events, but keep track of which commander the logs belong to.
+
 use std::collections::HashMap;
-use std::mem;
 
 use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::file_header_event::FileHeaderEvent;
 use crate::state::LogState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::traits::state_resolver::StateResolver;
 
+/// High level state resolver which encapsulates [LogState] and in turn
+/// [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
+/// resolver handles all log events, but keep track of which commander the logs belong to.
 #[derive(Serialize, Default)]
 pub struct GameStateResolver {
+    /// A map of commanders that are tracked, where the key is the Frontier ID of the commander.
     pub commanders: HashMap<String, LogState>,
     current_commander_id: Option<String>,
 }

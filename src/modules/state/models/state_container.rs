@@ -39,7 +39,7 @@ impl<S, T> StateContainer<S, T>
 
     /// Processes any left-over events that were scheduled for later processing. Call this sparingly
     /// especially not while you're also still reading a lot of events through
-    /// [GameStateResolver::feed_log_event] as that will likely cause performance issues.
+    /// [StateContainer::feed] as that will likely cause performance issues.
     pub fn flush(&mut self) {
         let queued = mem::take(&mut self.later);
 
