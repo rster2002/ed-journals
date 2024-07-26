@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ApproachBodyEvent {
-    star_system: String,
-    body: String,
+    pub star_system: String,
+    pub body: String,
 }
 
 #[cfg(test)]
