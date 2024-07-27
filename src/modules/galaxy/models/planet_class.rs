@@ -20,6 +20,9 @@ pub enum PlanetClass {
     WaterGiantWithLife,
     GasGiantWithWaterBasedLife,
     GasGiantWithAmmoniaBasedLife,
+
+    ClassIGasGiant,
+
     SudarskyClassIGasGiant,
     SudarskyClassIiGasGiant,
     SudarskyClassIiiGasGiant,
@@ -71,6 +74,9 @@ impl FromStr for PlanetClass {
             "water giant with life" => PlanetClass::WaterGiantWithLife,
             "gas giant with water based life" => PlanetClass::GasGiantWithWaterBasedLife,
             "gas giant with ammonia based life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
+
+            "class i gas giant" => PlanetClass::ClassIGasGiant,
+
             "sudarsky class i gas giant" => PlanetClass::SudarskyClassIGasGiant,
             "sudarsky class ii gas giant" => PlanetClass::SudarskyClassIiGasGiant,
             "sudarsky class iii gas giant" => PlanetClass::SudarskyClassIiiGasGiant,

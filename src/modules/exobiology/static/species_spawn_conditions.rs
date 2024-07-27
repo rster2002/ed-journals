@@ -1909,16 +1909,70 @@ mod tests {
     use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
     const ALL_CSV_FILES: &[&str] = &[
+        "aleoida-arcus.csv",
+        "aleoida-coronamus.csv",
+        "aleoida-gravis.csv",
+        "aleoida-laminiae.csv",
         "aleoida-spica.csv",
+        // "amphora-plant.csv",
+        // "anemone.csv",
+        "bacterium-acies.csv",
+        "bacterium-alcyoneum.csv",
+        "bacterium-aurasus.csv",
+        "bacterium-bullaris.csv",
         "bacterium-cerbrus.csv",
+        "bacterium-informem.csv",
+        "bacterium-nebulus.csv",
+        "bacterium-omentum.csv",
+        "bacterium-scopulum.csv",
+        "bacterium-tela.csv",
+        "bacterium-verrata.csv",
+        "bacterium-vesicula.csv",
+        "bacterium-volu.csv",
+        "cactoida-cortexum.csv",
         "cactoida-lapis.csv",
         "cactoida-peperatis.csv",
+        "cactoida-pullulanta.csv",
+        "cactoida-vermis.csv",
+        "clypeus-lacrimam.csv",
+        "clypeus-margaritus.csv",
+        "clypeus-speculumi.csv",
+        "concha-aureolas.csv",
+        "concha-biconcavis.csv",
+        "concha-labiata.csv",
+        "concha-renibus.csv",
+        "electricae-pluma.csv",
+        "electricae-radialem.csv",
         "fonticulua-campestris.csv",
+        "fonticulua-digitos.csv",
+        "fonticulua-fluctus.csv",
+        "fonticulua-lapida.csv",
+        "fonticulua-segmentatus.csv",
+        "fonticulua-upupam.csv",
         "frutexa-acus.csv",
+        "frutexa-collum.csv",
         "frutexa-fabellum.csv",
         "frutexa-fera.csv",
+        "frutexa-flammasis.csv",
+        "frutexa-metallicum.csv",
+        "frutexa-sponsae.csv",
+        "fumerola-aquatis.csv",
+        "fumerola-carbosis.csv",
+        "fumerola-extremus.csv",
+        "fumerola-nitris.csv",
         "fungoida-bullarum.csv",
+        "fungoida-gelata.csv",
+        "fungoida-setisis.csv",
+        "fungoida-stabitis.csv",
+        "osseus-cornibus.csv",
+        "osseus-discus.csv",
+        "osseus-fractus.csv",
+        "osseus-pellebantus.csv",
         "osseus-pumice.csv",
+        "osseus-spiralis.csv",
+        "recepta-conditivus.csv",
+        "recepta-deltahedronix.csv",
+        "recepta-umbrux.csv",
         "stratum-araneamus.csv",
         "stratum-cucumisis.csv",
         "stratum-excutitus.csv",
@@ -1926,14 +1980,27 @@ mod tests {
         "stratum-laminamus.csv",
         "stratum-limaxus.csv",
         "stratum-paleas.csv",
+        "stratum-tectonicas.csv",
         "tubus-cavas.csv",
         "tubus-compagibus.csv",
+        "tubus-conifer.csv",
+        "tubus-rosarium.csv",
+        "tubus-sororibus.csv",
+        "tussock-albata.csv",
         "tussock-capillum.csv",
+        "tussock-caputus.csv",
         "tussock-catena.csv",
         "tussock-cultro.csv",
+        "tussock-divisa.csv",
         "tussock-ignis.csv",
+        "tussock-pennata.csv",
         "tussock-pennatis.csv",
         "tussock-propagito.csv",
+        "tussock-serrati.csv",
+        "tussock-stigmasis.csv",
+        "tussock-triticum.csv",
+        "tussock-ventusa.csv",
+        "tussock-virgam.csv",
     ];
 
     #[derive(Debug)]
@@ -2158,9 +2225,119 @@ mod tests {
     // TODO also test against large random set of planets and ensure that only a certain percentage
     //  passes to combat false positives.
 
+    // Aleoids
+    #[test]
+    fn aleoida_arcus_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaArcus, "aleoida-arcus.csv");
+    }
+
+    #[test]
+    fn aleoida_coronamus_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaCoronamus, "aleoida-coronamus.csv");
+    }
+
+    #[test]
+    fn aleoida_laminiae_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaLaminiae, "aleoida-laminiae.csv");
+    }
+
+    #[test]
+    fn aleoida_gravis_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaGravis, "aleoida-gravis.csv");
+    }
+
+    #[test]
+    fn aleoida_spica_test_cases_all_pass() {
+        test_species_planet_details(Species::AleoidaSpica, "aleoida-spica.csv");
+    }
+
+    // Amphora plant
+
+    #[test]
+    fn amphora_plant_test_cases_all_pass() {
+        test_species_planet_details(Species::AmphoraPlant, "amphora-plant.csv");
+    }
+
+    // Anemone
+
+    #[test]
+    fn anemone_test_cases_all_pass() {
+        todo!()
+        // test_species_planet_details(Species::Anemone, "amphora-plant.csv");
+    }
+
+    // Bacteria
+
+    #[test]
+    fn bacterium_acies_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumAcies, "bacterium-acies.csv");
+    }
+
+    #[test]
+    fn bacterium_alcyoneum_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumAlcyoneum, "bacterium-alcyoneum.csv");
+    }
+
+    #[test]
+    fn bacterium_aurasus_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumAurasus, "bacterium-aurasus.csv");
+    }
+
+    #[test]
+    fn bacterium_bullaris_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumBullaris, "bacterium-bullaris.csv");
+    }
+
     #[test]
     fn bacterium_cerbrus_test_cases_all_pass() {
         test_species_planet_details(Species::BacteriumCerbrus, "bacterium-cerbrus.csv");
+    }
+
+    #[test]
+    fn bacterium_informem_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumInformem, "bacterium-informem.csv");
+    }
+
+    #[test]
+    fn bacterium_nebulus_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumNebulus, "bacterium-nebulus.csv");
+    }
+
+    #[test]
+    fn bacterium_omentum_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumOmentum, "bacterium-omentum.csv");
+    }
+
+    #[test]
+    fn bacterium_scopulum_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumScopulum, "bacterium-scopulum.csv");
+    }
+
+    #[test]
+    fn bacterium_telam_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumTela, "bacterium-tela.csv");
+    }
+
+    #[test]
+    fn bacterium_verrata_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumVerrata, "bacterium-verrata.csv");
+    }
+
+    #[test]
+    fn bacterium_vesicula_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumVesicula, "bacterium-vesicula.csv");
+    }
+
+    #[test]
+    fn bacterium_volu_test_cases_all_pass() {
+        test_species_planet_details(Species::BacteriumVolu, "bacterium-volu.csv");
+    }
+
+    // Cactoida
+
+    #[test]
+    fn cactoida_cortexum_test_cases_all_pass() {
+        test_species_planet_details(Species::CactoidaCortexum, "cactoida-cortexum.csv");
     }
 
     #[test]
@@ -2174,13 +2351,199 @@ mod tests {
     }
 
     #[test]
+    fn cactoida_pullulanta_test_cases_all_pass() {
+        test_species_planet_details(Species::CactoidaPullulanta, "cactoida-pullulanta.csv");
+    }
+
+    #[test]
+    fn cactoida_vermis_test_cases_all_pass() {
+        test_species_planet_details(Species::CactoidaVermis, "cactoida-vermis.csv");
+    }
+
+    // Cypeus
+
+    #[test]
+    fn clypeus_lacrimam_test_cases_all_pass() {
+        test_species_planet_details(Species::ClypeusLacrimam, "clypeus-lacrimam.csv");
+    }
+
+    #[test]
+    fn clypeus_margaritus_test_cases_all_pass() {
+        test_species_planet_details(Species::ClypeusMargaritus, "clypeus-margaritus.csv");
+    }
+
+    #[test]
+    fn clypeus_speculumi_test_cases_all_pass() {
+        test_species_planet_details(Species::ClypeusSpeculumi, "clypeus-speculumi.csv");
+    }
+
+    // Concha
+
+    #[test]
+    fn concha_aureolas_test_cases_all_pass() {
+        test_species_planet_details(Species::ConchaAureolas, "concha-aureolas.csv");
+    }
+
+    #[test]
+    fn concha_biconcavis_test_cases_all_pass() {
+        test_species_planet_details(Species::ConchaBiconcavis, "concha-biconcavis.csv");
+    }
+
+    #[test]
+    fn concha_labiata_test_cases_all_pass() {
+        test_species_planet_details(Species::ConchaLabiata, "concha-labiata.csv");
+    }
+
+    #[test]
+    fn concha_renibus_test_cases_all_pass() {
+        test_species_planet_details(Species::ConchaRenibus, "concha-renibus.csv");
+    }
+
+    // Electricae
+
+    #[test]
+    fn electricae_pluma_test_cases_all_pass() {
+        test_species_planet_details(Species::ElectricaePluma, "electricae-pluma.csv");
+    }
+
+    #[test]
+    fn electricae_radialem_test_cases_all_pass() {
+        test_species_planet_details(Species::ElectricaeRadialem, "electricae-radialem.csv");
+    }
+
+    // Fonticula
+
+    #[test]
     fn fonticulua_campestris_test_cases_all_pass() {
         test_species_planet_details(Species::FonticuluaCampestris, "fonticulua-campestris.csv");
     }
 
     #[test]
+    fn fonticulua_digitos_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaDigitos, "fonticulua-digitos.csv");
+    }
+
+    #[test]
+    fn fonticulua_fluctus_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaFluctus, "fonticulua-fluctus.csv");
+    }
+
+    #[test]
+    fn fonticulua_lapida_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaLapida, "fonticulua-lapida.csv");
+    }
+
+    #[test]
+    fn fonticulua_segmentatus_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaSegmentatus, "fonticulua-segmentatus.csv");
+    }
+
+    #[test]
+    fn fonticulua_upupam_test_cases_all_pass() {
+        test_species_planet_details(Species::FonticuluaUpupam, "fonticulua-upupam.csv");
+    }
+
+    // Frutexa
+
+    #[test]
+    fn frutexa_acus_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaAcus, "frutexa-acus.csv");
+    }
+
+    #[test]
+    fn frutexa_collum_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaCollum, "frutexa-collum.csv");
+    }
+
+    #[test]
+    fn frutexa_fabellum_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaFlabellum, "frutexa-fabellum.csv");
+    }
+
+    #[test]
+    fn frutexa_fera_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaFera, "frutexa-fera.csv");
+    }
+
+    #[test]
+    fn frutexa_flammasis_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaFlammasis, "frutexa-flammasis.csv");
+    }
+
+    #[test]
+    fn frutexa_metallicum_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaMetallicum, "frutexa-metallicum.csv");
+    }
+
+    #[test]
+    fn frutexa_sponsae_test_cases_all_pass() {
+        test_species_planet_details(Species::FrutexaSponsae, "frutexa-sponsae.csv");
+    }
+
+    // Fumerola
+
+    #[test]
+    fn fumerola_aquatis_test_cases_all_pass() {
+        test_species_planet_details(Species::FumerolaAquatis, "fumerola-aquatis.csv");
+    }
+
+    #[test]
+    fn fumerola_carbosis_test_cases_all_pass() {
+        test_species_planet_details(Species::FumerolaCarbosis, "fumerola-carbosis.csv");
+    }
+
+    #[test]
+    fn fumerola_extremus_test_cases_all_pass() {
+        test_species_planet_details(Species::FumerolaExtremus, "fumerola-extremus.csv");
+    }
+
+    #[test]
+    fn fumerola_nitris_test_cases_all_pass() {
+        test_species_planet_details(Species::FumerolaNitris, "fumerola-nitris.csv");
+    }
+
+    // Fungoida
+
+    #[test]
     fn fungoida_ballarum_test_cases_all_pass() {
         test_species_planet_details(Species::FungoidaBullarum, "fungoida-bullarum.csv");
+    }
+
+    #[test]
+    fn fungoida_gelata_test_cases_all_pass() {
+        test_species_planet_details(Species::FungoidaGelata, "fungoida-gelata.csv");
+    }
+
+    #[test]
+    fn fungoida_setisis_test_cases_all_pass() {
+        test_species_planet_details(Species::FungoidaSetisis, "fungoida-setisis.csv");
+    }
+
+    #[test]
+    fn fungoida_stabitis_test_cases_all_pass() {
+        test_species_planet_details(Species::FungoidaStabitis, "fungoida-stabitis.csv");
+    }
+
+    // Osseus
+
+    #[test]
+    fn osseus_cornibus_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusCornibus, "osseus-cornibus.csv");
+    }
+
+    #[test]
+    fn osseus_discus_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusDiscus, "osseus-discus.csv");
+    }
+
+    #[test]
+    fn osseus_fractus_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusFractus, "osseus-fractus.csv");
+    }
+
+    #[test]
+    fn osseus_pellebantus_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusPellebantus, "osseus-pellebantus.csv");
     }
 
     #[test]
@@ -2189,23 +2552,111 @@ mod tests {
     }
 
     #[test]
+    fn osseus_spiralis_test_cases_all_pass() {
+        test_species_planet_details(Species::OsseusSpiralis, "osseus-spiralis.csv");
+    }
+
+    // Recepta
+
+    #[test]
+    fn recepta_conditivus_test_cases_all_pass() {
+        test_species_planet_details(Species::ReceptaConditivus, "recepta-conditivus.csv");
+    }
+
+    #[test]
+    fn recepta_deltahedronix_test_cases_all_pass() {
+        test_species_planet_details(Species::ReceptaDeltahedronix, "recepta-deltahedronix.csv");
+    }
+
+    #[test]
+    fn recepta_umbrux_test_cases_all_pass() {
+        test_species_planet_details(Species::ReceptaUmbrux, "recepta-umbrux.csv");
+    }
+
+    // Stratum
+
+    #[test]
+    fn stratum_araneamus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumAraneamus, "stratum-araneamus.csv");
+    }
+
+    #[test]
+    fn stratum_cucumisis_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumCucumisis, "stratum-cucumisis.csv");
+    }
+
+    #[test]
+    fn stratum_excutitus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumExcutitus, "stratum-excutitus.csv");
+    }
+
+    #[test]
+    fn stratum_frigus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumFrigus, "stratum-frigus.csv");
+    }
+
+    #[test]
+    fn stratum_laminamus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumLaminamus, "stratum-laminamus.csv");
+    }
+
+    #[test]
+    fn stratum_limaxus_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumLimaxus, "stratum-limaxus.csv");
+    }
+
+    #[test]
+    fn stratum_paleas_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumPaleas, "stratum-paleas.csv");
+    }
+
+    #[test]
+    fn stratum_tectonicas_test_cases_all_pass() {
+        test_species_planet_details(Species::StratumTectonicas, "stratum-tectonicas.csv");
+    }
+
+    // Tubus
+
+    #[test]
+    fn tubus_cavas_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusCavas, "tubus-cavas.csv");
+    }
+
+    #[test]
+    fn tubus_compagibus_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusCompagibus, "tubus-compagibus.csv");
+    }
+
+    #[test]
+    fn tubus_conifer_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusConifer, "tubus-conifer.csv");
+    }
+
+    #[test]
+    fn tubus_rosarium_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusRosarium, "tubus-rosarium.csv");
+    }
+
+    #[test]
+    fn tubus_sororibus_test_cases_all_pass() {
+        test_species_planet_details(Species::TubusSororibus, "tubus-sororibus.csv");
+    }
+
+    // Tussock
+
+    #[test]
+    fn tussock_albata_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockAlbata, "tussock-albata.csv");
+    }
+
+    #[test]
     fn tussock_capillum_test_cases_all_pass() {
         test_species_planet_details(Species::TussockCapillum, "tussock-capillum.csv");
     }
 
     #[test]
-    fn tussock_ignis_test_cases_all_pass() {
-        test_species_planet_details(Species::TussockIgnis, "tussock-ignis.csv");
-    }
-
-    #[test]
-    fn tussock_pennatis_test_cases_all_pass() {
-        test_species_planet_details(Species::TussockPennatis, "tussock-pennatis.csv");
-    }
-
-    #[test]
-    fn tussock_propagito_test_cases_all_pass() {
-        test_species_planet_details(Species::TussockPropagito, "tussock-propagito.csv");
+    fn tussock_caputus_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockCaputus, "tussock-caputus.csv");
     }
 
     #[test]
@@ -2224,67 +2675,47 @@ mod tests {
     }
 
     #[test]
-    fn stratum_cucumisis_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumCucumisis, "stratum-cucumisis.csv");
+    fn tussock_ignis_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockIgnis, "tussock-ignis.csv");
     }
 
     #[test]
-    fn stratum_frigus_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumFrigus, "stratum-frigus.csv");
+    fn tussock_pennata_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockPennata, "tussock-pennata.csv");
     }
 
     #[test]
-    fn frutexa_acus_test_cases_all_pass() {
-        test_species_planet_details(Species::FrutexaAcus, "frutexa-acus.csv");
+    fn tussock_pennatis_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockPennatis, "tussock-pennatis.csv");
     }
 
     #[test]
-    fn frutexa_fabellum_test_cases_all_pass() {
-        test_species_planet_details(Species::FrutexaFlabellum, "frutexa-fabellum.csv");
+    fn tussock_propagito_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockPropagito, "tussock-propagito.csv");
     }
 
     #[test]
-    fn frutexa_fera_test_cases_all_pass() {
-        test_species_planet_details(Species::FrutexaFera, "frutexa-fera.csv");
+    fn tussock_serrati_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockSerrati, "tussock-serrati.csv");
     }
 
     #[test]
-    fn stratum_excutitus_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumExcutitus, "stratum-excutitus.csv");
+    fn tussock_stigmasis_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockStigmasis, "tussock-stigmasis.csv");
     }
 
     #[test]
-    fn stratum_paleas_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumPaleas, "stratum-paleas.csv");
+    fn tussock_triticum_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockTriticum, "tussock-triticum.csv");
     }
 
     #[test]
-    fn stratum_limaxus_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumLimaxus, "stratum-limaxus.csv");
+    fn tussock_ventusa_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockVentusa, "tussock-ventusa.csv");
     }
 
     #[test]
-    fn stratum_araneamus_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumAraneamus, "stratum-araneamus.csv");
-    }
-
-    #[test]
-    fn stratum_laminamus_test_cases_all_pass() {
-        test_species_planet_details(Species::StratumLaminamus, "stratum-laminamus.csv");
-    }
-
-    #[test]
-    fn tubus_cavas_test_cases_all_pass() {
-        test_species_planet_details(Species::TubusCavas, "tubus-cavas.csv");
-    }
-
-    #[test]
-    fn tubus_compagibus_test_cases_all_pass() {
-        test_species_planet_details(Species::TubusCompagibus, "tubus-compagibus.csv");
-    }
-
-    #[test]
-    fn aleoida_spica_test_cases_all_pass() {
-        test_species_planet_details(Species::AleoidaSpica, "aleoida-spica.csv");
+    fn tussock_virgam_test_cases_all_pass() {
+        test_species_planet_details(Species::TussockVirgam, "tussock-virgam.csv");
     }
 }
