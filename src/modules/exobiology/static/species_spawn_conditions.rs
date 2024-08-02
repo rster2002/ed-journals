@@ -468,180 +468,169 @@ lazy_static! {
         ),
         (
             BacteriumTela,
-            all![
-                any![
-                    all![
-                        ThinAtmosphere(SulfurDioxide),
-                        MinGravity(0.18),
-                        MaxGravity(0.61),
-                        MinMeanTemperature(153.0),
-                        MaxMeanTemperature(500.0),
-                    ],
-                    all![
+            any![
+                all![
+                    ThinAtmosphere(SulfurDioxide),
+                    MinGravity(0.18),
+                    MaxGravity(0.61),
+                    MinMeanTemperature(153.0),
+                    MaxMeanTemperature(500.0),
+                ],
+                all![
+                    any![
                         ThinAtmosphere(CarbonDioxide),
-                        MinGravity(0.45),
-                        MaxGravity(0.61),
-                        MinMeanTemperature(300.0),
-                        MaxMeanTemperature(500.0),
-                        MinPressure(0.006),
-                        any![
-                            VolcanismType(VolcanismType::None),
-                            VolcanismType(SilicateVapourGeysers),
-                        ],
+                        ThinAtmosphere(CarbonDioxideRich),
                     ],
-                    all![
-                        ThinAtmosphere(Water),
-                        any![
-                            PlanetClass(RockyBody),
-                            PlanetClass(HighMetalContentBody),
-                        ],
-                        MinGravity(0.04),
-                        MaxGravity(0.063),
-                        MinMeanTemperature(395.0),
-                        MaxMeanTemperature(450.0),
-                        any![
-                            VolcanismType(VolcanismType::None),
-                            VolcanismType(WaterMagma),
-                        ],
-                    ],
-                    all![
-                        ThinAtmosphere(WaterRich),
-                        any![
-                            PlanetClass(IcyBody),
-                            PlanetClass(RockyIceBody),
-                        ],
-                        MinGravity(0.32),
-                        MaxGravity(0.44),
-                        MinMeanTemperature(220.0),
-                        MaxMeanTemperature(330.0),
-                        MinPressure(0.01),
-                        AnyVolcanism,
-                    ],
-                    all![
-                        ThinAtmosphere(Argon),
-                        any![
-                            PlanetClass(IcyBody),
-                            PlanetClass(RockyIceBody),
-                        ],
-                        MinGravity(0.045),
-                        MaxGravity(0.28),
-                        MinMeanTemperature(50.0),
-                        MaxMeanTemperature(170.0),
-                        AnyVolcanism,
-                    ],
-                    all![
-                        ThinAtmosphere(ArgonRich),
-                        MinGravity(0.24),
-                        MaxGravity(0.45),
-                        MinMeanTemperature(50.0),
-                        MaxMeanTemperature(150.0),
-                        MaxPressure(0.05),
-                        AnyVolcanism,
-                    ],
-                    all![
-                        ThinAtmosphere(Ammonia),
-                        MinGravity(0.03),
-                        MaxGravity(0.09),
-                        MinMeanTemperature(160.0),
-                        MaxMeanTemperature(177.0),
-                        MinPressure(0.002),
-                        MaxPressure(0.02),
-                        AnyVolcanism,
+                    MinGravity(0.45),
+                    MaxGravity(0.61),
+                    MinMeanTemperature(300.0),
+                    MaxMeanTemperature(500.0),
+                    MinPressure(0.006),
+                    any![
+                        VolcanismType(VolcanismType::None),
+                        VolcanismType(SilicateVapourGeysers),
                     ],
                 ],
-
-
-
-                // all![
-                //     any![
-                //         ThinAtmosphere(CarbonDioxide),
-                //         ThinAtmosphere(CarbonDioxideRich),
-                //     ],
-                //     MinGravity(0.26),
-                //     MaxGravity(0.57),
-                //     MinMeanTemperature(167.0),
-                //     MaxMeanTemperature(300.0),
-                //     MinPressure(0.006),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(Helium),
-                //     PlanetClass(IcyBody),
-                //     MinGravity(0.025),
-                //     MaxGravity(0.61),
-                //     MinMeanTemperature(20.0),
-                //     MaxMeanTemperature(21.0),
-                //     MinPressure(0.067),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(Methane),
-                //     any![
-                //         PlanetClass(IcyBody),
-                //         PlanetClass(RockyBody),
-                //         PlanetClass(HighMetalContentBody)
-                //     ],
-                //     MinGravity(0.026),
-                //     MaxGravity(0.126),
-                //     MinMeanTemperature(80.0),
-                //     MaxMeanTemperature(109.0),
-                //     MinPressure(0.012),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(Neon),
-                //     any![
-                //         PlanetClass(IcyBody),
-                //         PlanetClass(RockyIceBody),
-                //     ],
-                //     MinGravity(0.27),
-                //     MaxGravity(0.61),
-                //     MinMeanTemperature(20.0),
-                //     MaxMeanTemperature(95.0),
-                //     MaxPressure(0.008),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(NeonRich),
-                //     any![
-                //         PlanetClass(IcyBody),
-                //         PlanetClass(RockyIceBody),
-                //     ],
-                //     MinGravity(0.27),
-                //     MaxGravity(0.61),
-                //     MinMeanTemperature(20.0),
-                //     MaxMeanTemperature(95.0),
-                //     MinPressure(0.003),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(Nitrogen),
-                //     MinGravity(0.21),
-                //     MaxGravity(0.35),
-                //     MinMeanTemperature(55.0),
-                //     MaxMeanTemperature(80.0),
-                //     AnyVolcanism,
-                // ],
-                // all![
-                //     ThinAtmosphere(Oxygen),
-                //     MinGravity(0.23),
-                //     MaxGravity(0.5),
-                //     MinMeanTemperature(150.0),
-                //     MaxMeanTemperature(240.0),
-                //     MinPressure(0.01),
-                //     AnyVolcanism,
-                // ],
-
-                // all![
-                //     ThinAtmosphere(SulfurDioxide),
-                //     MinGravity(0.18),
-                //     MaxGravity(0.61),
-                //     MinMeanTemperature(300.0),
-                //     MaxMeanTemperature(500.0),
-                //     VolcanismType(VolcanismType::None),
-                // ],
-
-            ]
+                all![
+                    ThinAtmosphere(Water),
+                    any![
+                        PlanetClass(RockyBody),
+                        PlanetClass(HighMetalContentBody),
+                    ],
+                    MinGravity(0.04),
+                    MaxGravity(0.063),
+                    MinMeanTemperature(395.0),
+                    MaxMeanTemperature(450.0),
+                    any![
+                        VolcanismType(VolcanismType::None),
+                        VolcanismType(WaterMagma),
+                    ],
+                ],
+                all![
+                    ThinAtmosphere(WaterRich),
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
+                    MinGravity(0.32),
+                    MaxGravity(0.44),
+                    MinMeanTemperature(220.0),
+                    MaxMeanTemperature(330.0),
+                    MinPressure(0.01),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Argon),
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
+                    MinGravity(0.045),
+                    MaxGravity(0.28),
+                    MinMeanTemperature(50.0),
+                    MaxMeanTemperature(170.0),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(ArgonRich),
+                    MinGravity(0.24),
+                    MaxGravity(0.45),
+                    MinMeanTemperature(50.0),
+                    MaxMeanTemperature(150.0),
+                    MaxPressure(0.05),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Ammonia),
+                    MinGravity(0.03),
+                    MaxGravity(0.09),
+                    MinMeanTemperature(160.0),
+                    MaxMeanTemperature(177.0),
+                    MinPressure(0.002),
+                    MaxPressure(0.02),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Helium),
+                    PlanetClass(IcyBody),
+                    MinGravity(0.49),
+                    MaxGravity(0.53),
+                    MinMeanTemperature(20.0),
+                    MaxMeanTemperature(21.0),
+                    MinPressure(0.067),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Methane),
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyBody),
+                        PlanetClass(HighMetalContentBody)
+                    ],
+                    MinGravity(0.026),
+                    MaxGravity(0.126),
+                    MinMeanTemperature(77.0),
+                    MaxMeanTemperature(109.0),
+                    MinPressure(0.012),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Neon),
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
+                    MinGravity(0.27),
+                    MaxGravity(0.61),
+                    MinMeanTemperature(20.0),
+                    MaxMeanTemperature(61.0),
+                    MinPressure(0.001),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(NeonRich),
+                    any![
+                        PlanetClass(IcyBody),
+                        PlanetClass(RockyIceBody),
+                    ],
+                    MinGravity(0.27),
+                    MaxGravity(0.61),
+                    MinMeanTemperature(20.0),
+                    MaxMeanTemperature(95.0),
+                    MinPressure(0.002),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Nitrogen),
+                    MinGravity(0.21),
+                    MaxGravity(0.35),
+                    MinMeanTemperature(55.0),
+                    MaxMeanTemperature(80.0),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(Oxygen),
+                    MinGravity(0.23),
+                    MaxGravity(0.52),
+                    MinMeanTemperature(150.0),
+                    MaxMeanTemperature(240.0),
+                    MinPressure(0.017),
+                    AnyVolcanism,
+                ],
+                all![
+                    ThinAtmosphere(SulfurDioxide),
+                    any![
+                        PlanetClass(RockyBody),
+                        PlanetClass(HighMetalContentBody),
+                    ],
+                    MinGravity(0.18),
+                    MaxGravity(0.61),
+                    MinMeanTemperature(149.0),
+                    MaxMeanTemperature(500.0),
+                    MinPressure(0.001),
+                    VolcanismType(VolcanismType::None),
+                ],
+            ],
         ),
         (
             BrainTreeAureum,
@@ -1941,6 +1930,7 @@ mod tests {
     use std::env::current_dir;
     use std::fs::File;
     use crate::exobiology::{SpawnCondition, Species};
+    use crate::exobiology::Species::BacteriumTela;
     use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
     const ALL_CSV_FILES: &[&str] = &[
@@ -2233,7 +2223,7 @@ mod tests {
                 &planet_details.volcanism.kind == volcanism
             }
             SpawnCondition::AnyVolcanism => {
-                &planet_details.volcanism.kind == &VolcanismType::None
+                &planet_details.volcanism.kind != &VolcanismType::None
             }
             SpawnCondition::MinPressure(min_pressure) => {
                 &planet_details.pressure >= min_pressure
