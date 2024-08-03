@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
@@ -35,17 +36,40 @@ pub enum VariantError {
 lazy_static! {
     static ref VARIANT_REGEX: Regex =
         Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap();
+
+    static ref NONE_VARIANTS: HashSet<Species> = HashSet::from([
+        Species::AnemoneLuteolum,
+        Species::AnemonePuniceum,
+        Species::AnemoneBlatteumBioluminescent,
+        Species::AnemoneRubeumBioluminescent,
+        Species::AnemonePrasinumBioluminescent,
+        Species::AnemoneRoseumBioluminescent,
+        Species::CrystallineShards,
+        Species::BarkMound,
+        Species::BrainTreeRoseum,
+        Species::BrainTreeGypseeum,
+        Species::BrainTreeOstrinum,
+        Species::BrainTreeViride,
+        Species::BrainTreeLividum,
+        Species::BrainTreeAureum,
+        Species::BrainTreePuniceum,
+        Species::BrainTreeLindigoticum,
+    ]);
 }
 
 impl FromStr for Variant {
     type Err = VariantError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "$Codex_Ent_Ground_Struct_Ice_Name;" {
-            return Ok(Variant {
-                species: Species::CrystallineShards,
-                color: VariantColor::None,
-            });
+        if let Ok(species) = Species::from_str(s) {
+            if NONE_VARIANTS.contains(&species) {
+                return Ok(Variant {
+                    species,
+                    color: VariantColor::None,
+                });
+            }
+
+            return Err(VariantError::FailedToParse(s.to_string()));
         }
 
         let Some(captures) = VARIANT_REGEX.captures(s) else {
