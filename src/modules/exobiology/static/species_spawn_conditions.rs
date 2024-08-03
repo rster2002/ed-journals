@@ -4,14 +4,14 @@ use lazy_static::lazy_static;
 
 use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{
-    AtmosphereType, BodyType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType,
+    AtmosphereType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType,
 };
 use crate::materials::Material;
 use AtmosphereType::*;
 use PlanetClass::*;
 use SpawnCondition::*;
 use Species::*;
-use crate::galaxy::VolcanismType::{SilicateVapourGeysers, WaterMagma};
+use VolcanismType::*;
 
 macro_rules! any {
     ($($x:expr),*$(,)?) => {
@@ -393,9 +393,9 @@ lazy_static! {
                     ThinAtmosphere(Oxygen),
                 ],
                 any![
-                    VolcanismType(VolcanismType::CarbonDioxideGeysers),
-                    VolcanismType(VolcanismType::MethaneGeysers),
-                    VolcanismType(VolcanismType::MethaneMagma),
+                    VolcanismType(CarbonDioxideGeysers),
+                    VolcanismType(MethaneGeysers),
+                    VolcanismType(MethaneMagma),
                 ],
             ],
         ),
@@ -403,12 +403,96 @@ lazy_static! {
             BacteriumVerrata,
             all![
                 any![
-                    ThinAtmosphere(Neon),
-                    ThinAtmosphere(NeonRich),
+                    PlanetClass(IcyBody),
+                    PlanetClass(RockyBody),
+                    PlanetClass(RockyIceBody),
                 ],
                 any![
-                    VolcanismType(VolcanismType::WaterMagma),
-                    VolcanismType(VolcanismType::WaterGeysers),
+                    VolcanismType(WaterMagma),
+                    VolcanismType(WaterGeysers),
+                ],
+                any![
+                    all![
+                        any![
+                            ThinAtmosphere(Argon),
+                            ThinAtmosphere(ArgonRich),
+                        ],
+                        MinGravity(0.169),
+                        MaxGravity(0.36),
+                        MinMeanTemperature(59.9),
+                        MaxMeanTemperature(145.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Ammonia),
+                        MinGravity(0.03),
+                        MaxGravity(0.09),
+                        MinMeanTemperature(160.0),
+                        MaxMeanTemperature(176.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Helium),
+                        MinGravity(0.49),
+                        MaxGravity(0.51),
+                        MinMeanTemperature(20.0),
+                        MaxMeanTemperature(21.0),
+                        MinPressure(0.068),
+                    ],
+                    all![
+                        ThinAtmosphere(Neon),
+                        MinGravity(0.28),
+                        MaxGravity(0.61),
+                        MinMeanTemperature(20.0),
+                        MaxMeanTemperature(51.0),
+                        MaxPressure(0.0076),
+                    ],
+                    all![
+                        ThinAtmosphere(NeonRich),
+                        MinGravity(0.42),
+                        MaxGravity(0.61),
+                        MinMeanTemperature(20.0),
+                        MaxMeanTemperature(65.0),
+                        MinPressure(0.006),
+                    ],
+                    all![
+                        any![
+                            ThinAtmosphere(CarbonDioxide),
+                            ThinAtmosphere(CarbonDioxideRich),
+                        ],
+                        MinGravity(0.25),
+                        MaxGravity(0.39),
+                        MinMeanTemperature(167.0),
+                        MaxMeanTemperature(235.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Methane),
+                        MinGravity(0.08),
+                        MaxGravity(0.1),
+                        MinMeanTemperature(95.0),
+                        MaxMeanTemperature(100.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Nitrogen),
+                        MinGravity(0.21),
+                        MaxGravity(0.25),
+                        MinMeanTemperature(59.0),
+                        MaxMeanTemperature(80.0),
+                    ],
+                    all![
+                        ThinAtmosphere(Oxygen),
+                        MinGravity(0.24),
+                        MaxGravity(0.38),
+                        MinMeanTemperature(155.0),
+                        MaxMeanTemperature(220.0),
+                        MinPressure(0.019),
+                    ],
+                    all![
+                        ThinAtmosphere(Water),
+                        MinGravity(0.04),
+                        MaxGravity(0.054),
+                        MinMeanTemperature(405.0),
+                        MaxMeanTemperature(445.0),
+                        MinPressure(0.061),
+                    ],
                 ],
             ],
         ),
@@ -2339,7 +2423,7 @@ mod tests {
     }
 
     #[test]
-    fn bacterium_telam_test_cases_all_pass() {
+    fn bacterium_tela_test_cases_all_pass() {
         test_species_planet_details(Species::BacteriumTela, "bacterium-tela.csv");
     }
 
