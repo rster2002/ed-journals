@@ -51,7 +51,7 @@ impl MaterialsState {
 #[cfg(test)]
 mod tests {
     use crate::materials::Material;
-    use crate::state::models::materials_state::MaterialsState;
+    use crate::state::models::state::materials_state::MaterialsState;
 
     #[test]
     fn material_state_is_modified_correctly() {

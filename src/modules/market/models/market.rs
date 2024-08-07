@@ -1,10 +1,10 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::modules::market::models::market_entry::MarketEntry;
 use crate::modules::station::{CarrierDockingAccess, StationType};
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct Market {
     #[serde(rename = "timestamp")]

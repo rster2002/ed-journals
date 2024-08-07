@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::exobiology::{Genus, Species, Variant};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanOrganicEvent {
     /// Possible values seem to be "Sample", "Analyze", "Log". It seems that the first scan for
@@ -11,7 +11,7 @@ pub struct ScanOrganicEvent {
     /// the third and last entry seems to be `Log`.
     pub scan_type: ScanOrganicEventScanType,
     pub genus: Genus,
-
+    
     #[serde(rename = "Genus_Localised")]
     pub genus_localized: Option<String>,
 
