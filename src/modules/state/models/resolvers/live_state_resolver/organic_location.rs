@@ -10,6 +10,9 @@ pub struct OrganicLocation {
     /// The body id of the body where the organic has been scanned.
     pub body_id: u8,
 
+    /// The name of the body the organic is located at.
+    pub body_name: String,
+
     /// The specific species that has been scanned.
     pub species: Species,
 

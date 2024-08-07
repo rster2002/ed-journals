@@ -116,6 +116,12 @@ impl LiveStateResolver {
                 self.organic_locations.push(OrganicLocation {
                     system_address: scan_organic.system_address,
                     body_id: scan_organic.body,
+
+                    // We track this as the status file does not include the system address and
+                    // body_id, so this is the only way to accurately determine if a player is on
+                    // the same body as the scan.
+                    body_name: planet_status.body_name.to_string(),
+
                     species: scan_organic.species.clone(),
                     variant: scan_organic.variant.clone(),
                     coordinates: (planet_status.latitude, planet_status.longitude),

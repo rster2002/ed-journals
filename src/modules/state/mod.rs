@@ -37,6 +37,8 @@ pub use models::state::shipyard_state::ShipyardState;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::ShipEntry;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::ShipStatus;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::TransferringShipStatus;
+pub use models::state::journal_state::JournalState;
+pub use models::resolvers::journal_state_resolver::journal_commander_entry::JournalCommanderEntry;
 
 pub use models::state_container::StateContainer;
 
