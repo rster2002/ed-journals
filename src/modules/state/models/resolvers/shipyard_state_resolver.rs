@@ -16,6 +16,7 @@ pub struct ShipyardStateResolver {
 
 impl StateResolver<LogEvent> for ShipyardStateResolver {
     fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        // Update any transferring ship statuses when the transfer time has been completed.
         for ship in self.ships.values_mut() {
             if let ShipStatus::Transferring(transfer_status) = &ship.status {
                 if transfer_status.done_transferring(&input.timestamp) {
