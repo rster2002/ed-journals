@@ -42,13 +42,13 @@ pub enum PlanetClass {
     SudarskyClassIGasGiant,
 
     #[serde(rename = "Sudarsky class II gas giant")]
-    SudarskyClassIiGasGiant,
+    SudarskyClassIIGasGiant,
 
     #[serde(rename = "Sudarsky class III gas giant")]
-    SudarskyClassIiiGasGiant,
+    SudarskyClassIIIGasGiant,
 
     #[serde(rename = "Sudarsky class IV gas giant")]
-    SudarskyClassIvGasGiant,
+    SudarskyClassIVGasGiant,
 
     #[serde(rename = "Sudarsky class V gas giant")]
     SudarskyClassVGasGiant,
