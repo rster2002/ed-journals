@@ -3,14 +3,14 @@ use serde::Serialize;
 use crate::logs::carrier_stats_event::CarrierStatsEvent;
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
-use crate::small::SmallSystemInfo;
+use crate::partials::PartialSystemInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::traits::state_resolver::StateResolver;
 
 #[derive(Serialize)]
 pub struct CarrierStateResolver {
     pub stats: CarrierStatsEvent,
-    pub flight_history: Vec<SmallSystemInfo>,
+    pub flight_history: Vec<PartialSystemInfo>,
     pub last_location_update: DateTime<Utc>,
     pub scheduled_jump: Option<CarrierJumpRequestEvent>,
     pub scrap_time: Option<DateTime<Utc>>,

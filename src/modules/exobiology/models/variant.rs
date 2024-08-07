@@ -41,9 +41,9 @@ impl FromStr for Variant {
     type Err = VariantError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "$Codex_Ent_Ground_Struct_Ice_Name;" {
+        if let Ok(species) = Species::from_str(s) {
             return Ok(Variant {
-                species: Species::CrystallineShards,
+                species,
                 color: VariantColor::None,
             });
         }

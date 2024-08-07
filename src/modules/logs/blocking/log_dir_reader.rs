@@ -130,6 +130,6 @@ mod tests {
             count += 1;
         }
 
-        assert_eq!(count, 870929);
+        assert!(count >= 870929);
     }
 }

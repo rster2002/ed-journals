@@ -36,7 +36,7 @@ pub use modules::outfitting;
 pub use modules::ship;
 pub use modules::ship_locker;
 pub use modules::shipyard;
-pub use modules::small;
+pub use modules::partials;
 pub use modules::state;
 pub use modules::station;
 pub use modules::status;
