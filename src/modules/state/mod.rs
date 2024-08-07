@@ -39,7 +39,6 @@ pub use models::resolvers::shipyard_state_resolver::ship_entry::ShipStatus;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::TransferringShipStatus;
 
 pub use models::state_container::StateContainer;
-pub use models::resolvers;
 
 mod models;
 mod macros;

@@ -11,7 +11,9 @@ impl From<&LocationInfo> for SystemState {
     fn from(value: &LocationInfo) -> Self {
         StateContainer::from(SystemStateResolver {
             location_info: value.clone(),
-            bodies: HashMap::new(),
+            planet_state: HashMap::new(),
+            star_scans: HashMap::new(),
+            belt_scans: HashMap::new(),
             visits: Vec::new(),
             carrier_visits: Vec::new(),
             number_of_bodies: None,

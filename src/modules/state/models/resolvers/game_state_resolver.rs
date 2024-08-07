@@ -96,7 +96,7 @@ mod tests {
         // Confirms that there are only one species of each genus on each planet
         for commander in state.commanders.values() {
             for system in commander.systems.values() {
-                for body in system.bodies.values() {
+                for body in system.planet_state.values() {
                     let mut genuses = HashSet::new();
 
                     for species in &body.scanned_species {

@@ -5,7 +5,7 @@ use chrono::{DateTime, Utc};
 use serde::Serialize;
 
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::logs::scan_event::ScanEventKind;
+use crate::logs::scan_event::{ScanEvent, ScanEventKind};
 use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
@@ -15,8 +15,18 @@ use crate::state::traits::state_resolver::StateResolver;
 
 #[derive(Serialize)]
 pub struct SystemStateResolver {
+    /// Information about the system.
     pub location_info: LocationInfo,
-    pub bodies: HashMap<u8, PlanetState>,
+
+    /// Entries for state for planets in the system.
+    pub planet_state: HashMap<u8, PlanetState>,
+
+    /// Scans for each star in the system.
+    pub star_scans: HashMap<u8, ScanEvent>,
+
+    /// Scans for each cluster in the system.
+    pub belt_scans: HashMap<u8, ScanEvent>,
+
     pub visits: Vec<DateTime<Utc>>,
     pub carrier_visits: Vec<DateTime<Utc>>,
     pub number_of_bodies: Option<u8>,
@@ -60,9 +70,11 @@ impl StateResolver<LogEvent> for SystemStateResolver {
                                 luminosity: star.luminosity.clone(),
                             },
                         );
+
+                        self.star_scans.insert(event.body_id, event.clone());
                     }
                     ScanEventKind::Planet(planet) => {
-                        self.bodies
+                        self.planet_state
                             .entry(event.body_id)
                             .or_insert_with(|| PlanetState::from((event, planet)));
 
@@ -70,11 +82,13 @@ impl StateResolver<LogEvent> for SystemStateResolver {
                             .planet_classes_in_system
                             .insert(planet.planet_class.clone());
                     }
-                    ScanEventKind::BeltCluster(_) => {}
+                    ScanEventKind::BeltCluster(_) => {
+                        self.belt_scans.insert(event.body_id, event.clone());
+                    }
                 }
 
                 if let Some(total_bodies) = self.number_of_bodies {
-                    let new_factor = self.bodies.len() as f32 / total_bodies as f32;
+                    let new_factor = self.nr_of_scanned_bodies() as f32 / total_bodies as f32;
 
                     if new_factor > self.progress {
                         self.progress = new_factor;
@@ -84,7 +98,7 @@ impl StateResolver<LogEvent> for SystemStateResolver {
 
             _ => {
                 if let Some(body_id) = input.content.body_id() {
-                    let Some(body) = self.bodies.get_mut(&body_id) else {
+                    let Some(body) = self.planet_state.get_mut(&body_id) else {
                         return FeedResult::Later;
                     };
 
@@ -97,7 +111,7 @@ impl StateResolver<LogEvent> for SystemStateResolver {
     }
 
     fn flush_inner(&mut self) {
-        for body in self.bodies.values_mut() {
+        for body in self.planet_state.values_mut() {
             body.flush_inner();
         }
     }
@@ -108,13 +122,47 @@ impl SystemStateResolver {
         self.visits.push(*date_time);
     }
 
+    /// Returns the total number of scans, which includes planets, stars and belt clusters.
+    pub fn nr_of_scans(&self) -> usize {
+        self.planet_state.len()
+            + self.star_scans.len()
+            + self.belt_scans.len()
+    }
+
+    /// Returns the total number of scanned bodies, which includes planets and stars. Take note
+    /// that this does not include scanned belt clusters as they are not counted towards the total
+    /// number of scanned bodies in game.
+    pub fn nr_of_scanned_bodies(&self) -> usize {
+        self.planet_state.len()
+            + self.star_scans.len()
+    }
+
+    /// Returns all the scan events for this system.
+    pub fn all_scans(&self) -> Vec<&ScanEvent> {
+        let mut result = Vec::with_capacity(self.nr_of_scans());
+
+        for planet in self.planet_state.values() {
+            result.push(&planet.scan);
+        }
+
+        for star_scan in self.star_scans.values() {
+            result.push(&star_scan)
+        }
+
+        for belt_scan in self.belt_scans.values() {
+            result.push(&belt_scan)
+        }
+
+        result
+    }
+
     pub fn carrier_visit(&mut self, date_time: &DateTime<Utc>) {
         self.carrier_visits.push(*date_time);
     }
 
     pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
         Some(
-            self.bodies
+            self.planet_state
                 .get(&body_id)?
                 .get_planet_species(&self.exobiology_system),
         )
@@ -156,7 +204,7 @@ mod tests {
 
         for commander in state.commanders.values() {
             for system in commander.systems.values() {
-                for (body_id, planet_state) in &system.bodies {
+                for (body_id, planet_state) in &system.planet_state {
                     if blacklisted_bodies.contains(&planet_state.scan.body_name) {
                         continue;
                     }
