@@ -65,7 +65,6 @@ pub enum Species {
     AnemoneRoseumBioluminescent,
 
     // Bark mounds
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
