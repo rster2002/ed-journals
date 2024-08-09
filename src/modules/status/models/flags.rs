@@ -171,6 +171,7 @@ impl Flags {
         self.0 & 1073741824 != 0
     }
 
+    /// Whether the SRV has the high beam lights active.
     pub fn srv_high_beam(&self) -> bool {
         self.0 & 2147483648 != 0
     }

@@ -36,4 +36,19 @@ impl JournalCommanderEntry {
             })
             .min_by(|a, b| a.partial_cmp(b).unwrap_or(Ordering::Equal))
     }
+
+    /// Returns true when the player is far enough from previous scans for the current organic.
+    /// Returns None if the player has not scanned a species on the current planet.
+    pub fn current_organic_passed_required_distance(&self) -> Option<bool> {
+        let required_distance = self.log_state
+            .current_organic_progress
+            .as_ref()?
+            .species
+            .genus()
+            .minimum_distance();
+
+        let current_distance = self.current_organic_distance()?;
+
+        Some(current_distance >= required_distance as f32)
+    }
 }
