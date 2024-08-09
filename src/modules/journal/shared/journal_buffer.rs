@@ -79,15 +79,16 @@ impl LiveJournalBuffer {
         };
 
         for path in event.paths {
-            if path.ends_with("../../../../test-files/json/Status.json") {
+            if path.ends_with("Status.json") {
                 self.pending_events
                     .lock()
                     .expect("Failed to get lock")
-                    .push_back(match read_status_file(self.dir_path.join("../../../../test-files/json/Status.json")) {
+                    .push_back(match read_status_file(self.dir_path.join("Status.json")) {
                         Ok(status) => Ok(JournalEvent {
                             is_live: true,
                             kind: JournalEventKind::StatusEvent(status),
                         }),
+                        Err(ReadStatusFileError::Empty) => continue,
                         Err(error) => Err(error.into()),
                     });
             }

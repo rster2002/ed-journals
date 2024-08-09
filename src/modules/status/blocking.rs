@@ -10,13 +10,22 @@ use crate::status::Status;
 pub type StatusFileWatcher = LiveJsonFileWatcher<Status>;
 
 pub fn read_status_file<P: AsRef<Path>>(path: P) -> Result<Status, ReadStatusFileError> {
-    Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
+    let string_content = fs::read_to_string(path)?;
+
+    if string_content.is_empty() {
+        return Err(ReadStatusFileError::Empty);
+    }
+
+    Ok(serde_json::from_str(&string_content)?)
 }
 
 #[derive(Debug, Error)]
 pub enum ReadStatusFileError {
     #[error(transparent)]
     IO(#[from] std::io::Error),
+
+    #[error("The status file was empty")]
+    Empty,
 
     #[error("Failed to parse status file: {0}")]
     SerdeJson(#[from] serde_json::Error),

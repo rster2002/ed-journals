@@ -91,15 +91,17 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 system.visit(&input.timestamp);
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
-                ScanOrganicEventScanType::Sample => {
+                ScanOrganicEventScanType::Log => {
                     self.current_organic_progress = Some(scan_organic.into());
                 }
-                ScanOrganicEventScanType::Analyse => {
+                ScanOrganicEventScanType::Sample => {
                     if let Some(progress) = self.current_organic_progress.as_mut() {
-                        progress.second_scan = Some(scan_organic.clone());
+                        if progress.second_scan.is_none() {
+                            progress.second_scan = Some(scan_organic.clone());
+                        }
                     }
                 }
-                ScanOrganicEventScanType::Log => {
+                ScanOrganicEventScanType::Analyse => {
                     self.current_organic_progress = None;
                 }
             },

@@ -46,11 +46,3 @@ mod models;
 mod macros;
 mod traits;
 
-mod tests {
-    use crate::state::LogState;
-
-    fn test() {
-        let i = LogState::default();
-    }
-}
-
