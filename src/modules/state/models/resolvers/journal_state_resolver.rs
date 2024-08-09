@@ -12,7 +12,7 @@ use crate::state::models::resolvers::journal_state_resolver::journal_commander_e
 use crate::state::traits::state_resolver::StateResolver;
 
 /// State which tracks both log events and events that are fired when a json file updates.
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct JournalStateResolver {
     pub commanders: HashMap<String, JournalCommanderEntry>,
     current_commander_id: Option<String>,
