@@ -3,8 +3,8 @@ use std::mem;
 
 use serde::Serialize;
 
-use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::file_header_event::FileHeaderEvent;
+use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
@@ -32,25 +32,15 @@ impl GameState {
     }
 
     pub fn current_commander(&self) -> Option<&CommanderState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get(commander_id) else {
-            return None;
-        };
+        let commander_id = self.current_commander.as_ref()?;
+        let commander_entry = self.commanders.get(commander_id)?;
 
         Some(commander_entry)
     }
 
     pub fn current_commander_mut(&mut self) -> Option<&mut CommanderState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get_mut(commander_id) else {
-            return None;
-        };
+        let commander_id = self.current_commander.as_ref()?;
+        let commander_entry = self.commanders.get_mut(commander_id)?;
 
         Some(commander_entry)
     }
@@ -118,9 +108,9 @@ impl Default for GameState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
+    use std::collections::HashSet;
     use std::env::current_dir;
     use std::time::Instant;
 

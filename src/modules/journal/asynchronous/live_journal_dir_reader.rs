@@ -3,9 +3,9 @@ use std::path::Path;
 use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::journal::LiveJournalBufferError;
 use crate::journal::models::journal_event::JournalEvent;
 use crate::journal::shared::journal_buffer::LiveJournalBuffer;
+use crate::journal::LiveJournalBufferError;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
@@ -45,13 +45,13 @@ pub struct LiveJournalDirReader {
 #[derive(Debug, Error)]
 pub enum JournalDirWatcherError {
     #[error(transparent)]
-    LogDirReaderError(#[from] LogDirReaderError),
+    LogDirReader(#[from] LogDirReaderError),
 
     #[error(transparent)]
-    LiveJournalBufferError(#[from] LiveJournalBufferError),
+    LiveJournalBuffer(#[from] LiveJournalBufferError),
 
     #[error(transparent)]
-    NotifyError(#[from] notify::Error),
+    Notify(#[from] notify::Error),
 }
 
 impl LiveJournalDirReader {

@@ -875,7 +875,6 @@ impl LogEventContent {
             LogEventContent::Location(event) => event.location_info.body_id,
             LogEventContent::FSDJump(event) => event.system_info.body_id,
             LogEventContent::CarrierJump(event) => event.system_info.body_id,
-            LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
             LogEventContent::CodexEntry(event) => event.body_id,
@@ -888,7 +887,6 @@ impl LogEventContent {
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::ScanOrganic(event) => event.body,
-            LogEventContent::Touchdown(event) => event.body_id,
             _ => return None,
         })
     }
@@ -897,7 +895,6 @@ impl LogEventContent {
         Some(match self {
             LogEventContent::Location(event) => &event.location_info.body,
             LogEventContent::FSDJump(event) => &event.system_info.body,
-            LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::ApproachSettlement(event) => &event.body_name,
             LogEventContent::CarrierJumpRequest(event) => match &event.body {

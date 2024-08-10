@@ -174,112 +174,310 @@ impl ShipHardpointModule {
         })
     }
 
-    fn get_module_class(module: &HardpointModule, mounting: &HardpointMounting, size: &HardpointSize) -> ModuleClass {
+    fn get_module_class(
+        module: &HardpointModule,
+        mounting: &HardpointMounting,
+        size: &HardpointSize,
+    ) -> ModuleClass {
         match (&module, &mounting, &size) {
             // Pulse lasers
-            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::G,
-            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::G,
-            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::F,
+            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::F
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Small) => {
+                ModuleClass::G
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::G
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
             (HardpointModule::PulseDisruptorLaser, _, _) => ModuleClass::E,
-            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::D,
-            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::E,
-            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::F,
+            (HardpointModule::PulseLaser, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::D
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::E
+            }
+            (HardpointModule::PulseLaser, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::F
+            }
             (HardpointModule::PulseLaser, _, HardpointSize::Huge) => ModuleClass::A,
 
             // Burst lasers
-            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::BurstLaser, HardpointMounting::Gimballed | HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::G,
+            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::F
+            }
+            (
+                HardpointModule::BurstLaser,
+                HardpointMounting::Gimballed | HardpointMounting::Turreted,
+                HardpointSize::Small,
+            ) => ModuleClass::G,
             (HardpointModule::CytoscramblerBurstLaser, _, _) => ModuleClass::F,
-            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::BurstLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::BurstLaser, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::D,
-            (HardpointModule::BurstLaser, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::E,
-            (HardpointModule::BurstLaser, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::E,
+            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::BurstLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
+            (HardpointModule::BurstLaser, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
+            (HardpointModule::BurstLaser, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::D
+            }
+            (HardpointModule::BurstLaser, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::E
+            }
+            (HardpointModule::BurstLaser, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::E
+            }
             (HardpointModule::BurstLaser, _, HardpointSize::Huge) => ModuleClass::E,
 
             // Cannons
-            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::E,
-            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::D
+            }
+            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Small) => {
+                ModuleClass::E
+            }
+            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::F
+            }
+            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::Cannon, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::Cannon, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::Cannon, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::D
+            }
             (HardpointModule::Cannon, _, HardpointSize::Huge) => ModuleClass::B,
 
             // Experimental
-            (HardpointModule::RemoteReleaseFlakLauncher, _, HardpointSize::Medium) => ModuleClass::B,
-            (HardpointModule::RemoteReleaseFlechetteLauncher, _, HardpointSize::Medium) => ModuleClass::B,
+            (HardpointModule::RemoteReleaseFlakLauncher, _, HardpointSize::Medium) => {
+                ModuleClass::B
+            }
+            (HardpointModule::RemoteReleaseFlechetteLauncher, _, HardpointSize::Medium) => {
+                ModuleClass::B
+            }
             (HardpointModule::EnzymeMissileRack, _, HardpointSize::Medium) => ModuleClass::B,
 
             // AX missile racks
-            (HardpointModule::AXMissileRack, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::AXMissileRack, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::EnhancedAXMissileRack, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::EnhancedAXMissileRack, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::AXMissileRack, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::AXMissileRack, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::E,
-            (HardpointModule::EnhancedAXMissileRack, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::B,
-            (HardpointModule::EnhancedAXMissileRack, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (HardpointModule::AXMissileRack, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (
+                HardpointModule::AXMissileRack,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::F,
+            (
+                HardpointModule::EnhancedAXMissileRack,
+                HardpointMounting::Fixed,
+                HardpointSize::Medium,
+            ) => ModuleClass::D,
+            (
+                HardpointModule::EnhancedAXMissileRack,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::E,
+            (HardpointModule::AXMissileRack, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::AXMissileRack, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::E
+            }
+            (
+                HardpointModule::EnhancedAXMissileRack,
+                HardpointMounting::Fixed,
+                HardpointSize::Large,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::EnhancedAXMissileRack,
+                HardpointMounting::Turreted,
+                HardpointSize::Large,
+            ) => ModuleClass::D,
 
             // AX multi-cannons
-            (HardpointModule::AXMultiCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::AXMultiCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::AXMultiCannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::AXMultiCannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::E,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::B,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::EnhancedAXMultiCannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (HardpointModule::AXMultiCannon, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (
+                HardpointModule::AXMultiCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::F,
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Fixed,
+                HardpointSize::Medium,
+            ) => ModuleClass::D,
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Gimballed,
+                HardpointSize::Medium,
+            ) => ModuleClass::E,
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::E,
+            (HardpointModule::AXMultiCannon, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::AXMultiCannon, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::E
+            }
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Fixed,
+                HardpointSize::Large,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Gimballed,
+                HardpointSize::Large,
+            ) => ModuleClass::C,
+            (
+                HardpointModule::EnhancedAXMultiCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Large,
+            ) => ModuleClass::D,
 
             // Guardian gauss cannons
             (HardpointModule::GuardianGaussCannon, _, HardpointSize::Small) => ModuleClass::D,
             (HardpointModule::GuardianGaussCannon, _, HardpointSize::Medium) => ModuleClass::B,
 
             // Guardian plasma chargers
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::B,
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::GuardianPlasmaCharger, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Fixed,
+                HardpointSize::Small,
+            ) => ModuleClass::D,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Turreted,
+                HardpointSize::Small,
+            ) => ModuleClass::F,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Fixed,
+                HardpointSize::Medium,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::E,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Fixed,
+                HardpointSize::Large,
+            ) => ModuleClass::C,
+            (
+                HardpointModule::GuardianPlasmaCharger,
+                HardpointMounting::Turreted,
+                HardpointSize::Large,
+            ) => ModuleClass::D,
 
             // Guardian shard cannons
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::A,
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::A,
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::GuardianShardCannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Fixed,
+                HardpointSize::Small,
+            ) => ModuleClass::D,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Small,
+            ) => ModuleClass::F,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Fixed,
+                HardpointSize::Medium,
+            ) => ModuleClass::A,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::A,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Fixed,
+                HardpointSize::Large,
+            ) => ModuleClass::C,
+            (
+                HardpointModule::GuardianShardCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Large,
+            ) => ModuleClass::D,
 
             // Nanite torpedoes
             (HardpointModule::NaniteTorpedoPylon, _, HardpointSize::Medium) => ModuleClass::I,
             (HardpointModule::NaniteTorpedoPylon, _, HardpointSize::Large) => ModuleClass::I,
 
             // Shock cannons
-            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::E,
-            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::D
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Small) => {
+                ModuleClass::E
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::F
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::ShockCannon, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::D
+            }
 
             //  Fragment cannons
             (HardpointModule::FragmentCannon, _, HardpointSize::Small) => ModuleClass::E,
-            (HardpointModule::FragmentCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::A,
-            (HardpointModule::FragmentCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::FragmentCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::D,
+            (HardpointModule::FragmentCannon, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::A
+            }
+            (
+                HardpointModule::FragmentCannon,
+                HardpointMounting::Gimballed,
+                HardpointSize::Medium,
+            ) => ModuleClass::D,
+            (
+                HardpointModule::FragmentCannon,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::D,
             (HardpointModule::FragmentCannon, _, HardpointSize::Large) => ModuleClass::C,
             (HardpointModule::PacifierFragCannon, _, _) => ModuleClass::C,
 
@@ -289,21 +487,57 @@ impl ShipHardpointModule {
             (HardpointModule::MineLauncher, _, HardpointSize::Medium) => ModuleClass::I,
 
             // Mining lasers
-            (HardpointModule::MiningLaser, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::MiningLaser, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::AbrasionBlaster, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::D,
-            (HardpointModule::AbrasionBlaster, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::D,
+            (HardpointModule::MiningLaser, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::D
+            }
+            (HardpointModule::MiningLaser, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::D
+            }
+            (HardpointModule::AbrasionBlaster, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::D
+            }
+            (
+                HardpointModule::AbrasionBlaster,
+                HardpointMounting::Turreted,
+                HardpointSize::Small,
+            ) => ModuleClass::D,
             (HardpointModule::MiningLanceBeamLaser, _, _) => ModuleClass::D,
-            (HardpointModule::MiningLaser, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::MiningLaser, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::D,
+            (HardpointModule::MiningLaser, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::MiningLaser, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
 
             // Mining launchers
-            (HardpointModule::DisplacementMissile, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::B,
-            (HardpointModule::DisplacementMissile, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::B,
-            (HardpointModule::DisplacementMissile, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::B,
-            (HardpointModule::DisplacementMissile, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::B,
-            (HardpointModule::SeismicCharge, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::B,
-            (HardpointModule::SeismicCharge, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::B,
+            (
+                HardpointModule::DisplacementMissile,
+                HardpointMounting::Fixed,
+                HardpointSize::Small,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::DisplacementMissile,
+                HardpointMounting::Turreted,
+                HardpointSize::Small,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::DisplacementMissile,
+                HardpointMounting::Fixed,
+                HardpointSize::Medium,
+            ) => ModuleClass::B,
+            (
+                HardpointModule::DisplacementMissile,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::B,
+            (HardpointModule::SeismicCharge, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::B
+            }
+            (
+                HardpointModule::SeismicCharge,
+                HardpointMounting::Turreted,
+                HardpointSize::Medium,
+            ) => ModuleClass::B,
             (HardpointModule::SubSurfaceExtractionMissile, _, _) => ModuleClass::B,
 
             // Missiles
@@ -319,18 +553,36 @@ impl ShipHardpointModule {
             (HardpointModule::SeekerMissileRack, _, HardpointSize::Large) => ModuleClass::A,
 
             // Multi-cannons
-            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Small) => ModuleClass::F,
-            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::G,
-            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::G,
+            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Small) => {
+                ModuleClass::F
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Small) => {
+                ModuleClass::G
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::G
+            }
             (HardpointModule::AdvancedMultiCannon, _, HardpointSize::Small) => ModuleClass::F,
             (HardpointModule::EnforcerCannon, _, _) => ModuleClass::F,
-            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::F,
-            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::F,
+            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::F
+            }
             (HardpointModule::AdvancedMultiCannon, _, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::E,
+            (HardpointModule::MultiCannon, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::MultiCannon, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::E
+            }
             (HardpointModule::MultiCannon, _, _) => ModuleClass::A,
 
             // Plasma accelerators
@@ -340,15 +592,33 @@ impl ShipHardpointModule {
             (HardpointModule::PlasmaAccelerator, _, HardpointSize::Huge) => ModuleClass::A,
 
             // Beam lasers
-            (HardpointModule::BeamLaser, HardpointMounting::Fixed | HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::E,
-            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Small) => ModuleClass::F,
+            (
+                HardpointModule::BeamLaser,
+                HardpointMounting::Fixed | HardpointMounting::Gimballed,
+                HardpointSize::Small,
+            ) => ModuleClass::E,
+            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Small) => {
+                ModuleClass::F
+            }
             (HardpointModule::RetributorBeamLaser, _, _) => ModuleClass::E,
-            (HardpointModule::BeamLaser, HardpointMounting::Fixed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::BeamLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => ModuleClass::D,
-            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Medium) => ModuleClass::E,
-            (HardpointModule::BeamLaser, HardpointMounting::Fixed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::BeamLaser, HardpointMounting::Gimballed, HardpointSize::Large) => ModuleClass::C,
-            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Large) => ModuleClass::D,
+            (HardpointModule::BeamLaser, HardpointMounting::Fixed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::BeamLaser, HardpointMounting::Gimballed, HardpointSize::Medium) => {
+                ModuleClass::D
+            }
+            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Medium) => {
+                ModuleClass::E
+            }
+            (HardpointModule::BeamLaser, HardpointMounting::Fixed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::BeamLaser, HardpointMounting::Gimballed, HardpointSize::Large) => {
+                ModuleClass::C
+            }
+            (HardpointModule::BeamLaser, HardpointMounting::Turreted, HardpointSize::Large) => {
+                ModuleClass::D
+            }
             (HardpointModule::BeamLaser, _, HardpointSize::Huge) => ModuleClass::A,
 
             // Rail guns
@@ -380,7 +650,6 @@ impl ShipHardpointModule {
 
             // Point defence
             (HardpointModule::PointDefenceTurret, _, _) => ModuleClass::I,
-
 
             _ => ModuleClass::E,
         }

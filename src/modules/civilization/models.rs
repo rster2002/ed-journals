@@ -1,5 +1,7 @@
 pub mod conflict;
+pub mod crime;
 pub mod economy;
+pub mod engineer;
 pub mod faction;
 pub mod faction_happiness;
 pub mod faction_state;
@@ -8,5 +10,3 @@ pub mod location_info;
 pub mod superpower;
 pub mod system_security;
 pub mod thargoid_war;
-pub mod crime;
-pub mod engineer;

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::exobiology::{SpawnSourceStar, Species, TargetSystem};
+use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
@@ -124,10 +124,10 @@ impl From<&LocationInfo> for SystemState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
+
     use std::env::current_dir;
 
-    use crate::exobiology::{SpawnSource, Species};
+    use crate::exobiology::SpawnSource;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
 

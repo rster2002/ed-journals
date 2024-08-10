@@ -1,10 +1,10 @@
-use chrono::{DateTime, Utc};
-use serde::Serialize;
+use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::logs::carrier_stats_event::CarrierStatsEvent;
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::partials::PartialSystemInfo;
 use crate::state::models::feed_result::FeedResult;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct CarrierState {
@@ -20,23 +20,23 @@ impl CarrierState {
         match &log_event.content {
             LogEventContent::CarrierStats(stats) => {
                 self.stats = stats.clone();
-            },
+            }
             LogEventContent::CarrierDecommission(decommission) => {
-                self.scrap_time = Some(decommission.scrap_time.clone());
-            },
+                self.scrap_time = Some(decommission.scrap_time);
+            }
             LogEventContent::CarrierCancelDecommission(_) => {
                 self.scrap_time = None;
-            },
+            }
             LogEventContent::CarrierJumpRequest(request) => {
                 self.scheduled_jump = Some(request.clone());
-            },
+            }
             LogEventContent::CarrierBuy(_) => {
-                self.update_location(&log_event);
-            },
+                self.update_location(log_event);
+            }
             LogEventContent::CarrierJump(_) => {
-                self.update_location(&log_event);
-            },
-            _ => {},
+                self.update_location(log_event);
+            }
+            _ => {}
         }
 
         FeedResult::Accepted
@@ -45,8 +45,11 @@ impl CarrierState {
     /// Returns the scheduled jump. This is a bit more reliable than just checking if
     /// `scheduled_jump` is Some value as this also checks the departure time. There could be
     /// instances where the scheduled jump might not be unset for example when not logged in.
-    pub fn get_scheduled_jump(&self, target_time: &DateTime<Utc>) -> Option<CarrierJumpRequestEvent> {
-        let Some(request) = &self.scheduled_jump else  {
+    pub fn get_scheduled_jump(
+        &self,
+        target_time: &DateTime<Utc>,
+    ) -> Option<CarrierJumpRequestEvent> {
+        let Some(request) = &self.scheduled_jump else {
             return None;
         };
 
