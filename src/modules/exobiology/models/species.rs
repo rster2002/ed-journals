@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
+use crate::exobiology::Genus;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use strum::EnumIter;
-use crate::exobiology::Genus;
 
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;

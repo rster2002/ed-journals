@@ -99,8 +99,8 @@ pub enum Crime {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::Value;
     use crate::civilization::Crime;
+    use serde_json::Value;
 
     #[test]
     fn all_crimes_are_parsed_correctly() {

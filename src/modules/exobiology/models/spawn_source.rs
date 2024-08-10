@@ -16,7 +16,7 @@ use crate::galaxy::{
     Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition,
     StarClass, StarLuminosity, Volcanism, VolcanismType,
 };
-use crate::logs::scan_event::{ScanEventParent};
+use crate::logs::scan_event::ScanEventParent;
 
 #[derive(Debug)]
 pub struct SpawnSource<'a> {

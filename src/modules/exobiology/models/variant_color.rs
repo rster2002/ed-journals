@@ -537,15 +537,9 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 VariantColor::Turquoise
             }
             (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::N)) => VariantColor::Sage,
-            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::Ae)) => {
-                VariantColor::Maroon
-            },
-            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::O)) => {
-                VariantColor::Grey
-            },
-            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::W)) => {
-                VariantColor::Indigo
-            },
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Maroon,
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::O)) => VariantColor::Grey,
+            (Genus::Fonticulua, _, VariantSource::StarClass(StarClass::W)) => VariantColor::Indigo,
 
             (Genus::Frutexa, _, VariantSource::StarClass(StarClass::Y)) => VariantColor::Amethyst,
             (Genus::Frutexa, _, VariantSource::StarClass(StarClass::G)) => VariantColor::Emerald,
@@ -729,46 +723,117 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
                 VariantColor::Peach
             }
 
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::O)) => VariantColor::Emerald, // This is a guess
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
-            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::A)) => {
+                VariantColor::Lime
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Ae)) => {
+                VariantColor::Orange
+            } // This is a guess
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::F)) => {
+                VariantColor::Turquoise
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::G)) => {
+                VariantColor::Grey
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::K)) => {
+                VariantColor::Indigo
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::T)) => {
+                VariantColor::Emerald
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::O)) => {
+                VariantColor::Emerald
+            } // This is a guess
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::TTS)) => {
+                VariantColor::Green
+            }
+            (_, Species::OsseusCornibus, VariantSource::StarClass(StarClass::Y)) => {
+                VariantColor::Maroon
+            }
 
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow, // This is a guess
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
-            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::A)) => {
+                VariantColor::Lime
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Ae)) => {
+                VariantColor::Orange
+            } // This is a guess
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::F)) => {
+                VariantColor::Turquoise
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::G)) => {
+                VariantColor::Grey
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::K)) => {
+                VariantColor::Indigo
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::T)) => {
+                VariantColor::Emerald
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::O)) => {
+                VariantColor::Yellow
+            } // This is a guess
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::TTS)) => {
+                VariantColor::Green
+            }
+            (_, Species::OsseusFractus, VariantSource::StarClass(StarClass::Y)) => {
+                VariantColor::Maroon
+            }
 
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange, // This is a guess
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow, // This is a guess
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
-            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::A)) => {
+                VariantColor::Lime
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Ae)) => {
+                VariantColor::Orange
+            } // This is a guess
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::F)) => {
+                VariantColor::Turquoise
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::G)) => {
+                VariantColor::Grey
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::K)) => {
+                VariantColor::Indigo
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::T)) => {
+                VariantColor::Emerald
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::O)) => {
+                VariantColor::Yellow
+            } // This is a guess
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::TTS)) => {
+                VariantColor::Green
+            }
+            (_, Species::OsseusPellebantus, VariantSource::StarClass(StarClass::Y)) => {
+                VariantColor::Maroon
+            }
 
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::A)) => VariantColor::Lime,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Ae)) => VariantColor::Orange,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::F)) => VariantColor::Turquoise,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::G)) => VariantColor::Grey,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::K)) => VariantColor::Indigo,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::T)) => VariantColor::Emerald,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::TTS)) => VariantColor::Green,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::O)) => VariantColor::Yellow,
-            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Y)) => VariantColor::Maroon,
-
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::A)) => {
+                VariantColor::Lime
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Ae)) => {
+                VariantColor::Orange
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::F)) => {
+                VariantColor::Turquoise
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::G)) => {
+                VariantColor::Grey
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::K)) => {
+                VariantColor::Indigo
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::T)) => {
+                VariantColor::Emerald
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::TTS)) => {
+                VariantColor::Green
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::O)) => {
+                VariantColor::Yellow
+            }
+            (_, Species::OsseusSpiralis, VariantSource::StarClass(StarClass::Y)) => {
+                VariantColor::Maroon
+            }
 
             (_, Species::OsseusDiscus, VariantSource::Material(Material::Boron)) => {
                 VariantColor::White

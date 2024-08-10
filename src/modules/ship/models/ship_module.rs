@@ -229,7 +229,7 @@ mod tests {
         let content = include_str!("zz_ship_modules.txt");
         let mut lines = content.lines();
 
-        for line in lines  {
+        for line in lines {
             if line.starts_with('#') {
                 continue;
             }
@@ -241,11 +241,14 @@ mod tests {
             parts.next().unwrap();
             parts.next().unwrap();
 
-            let mounting: Option<HardpointMounting> = parts.next()
-                .and_then(|string| if string.is_empty() {
-                    None
-                } else {
-                    Some(string)
+            let mounting: Option<HardpointMounting> = parts
+                .next()
+                .and_then(|string| {
+                    if string.is_empty() {
+                        None
+                    } else {
+                        Some(string)
+                    }
                 })
                 .map(|mounting| mounting.parse())
                 .transpose()
@@ -254,15 +257,9 @@ mod tests {
             parts.next().unwrap();
             parts.next().unwrap();
 
-            let size = parts.next()
-                .unwrap()
-                .parse::<u8>()
-                .unwrap();
+            let size = parts.next().unwrap().parse::<u8>().unwrap();
 
-            let class = parts.next()
-                .unwrap()
-                .parse::<ModuleClass>()
-                .unwrap();
+            let class = parts.next().unwrap().parse::<ModuleClass>().unwrap();
 
             let parsed = serde_json::from_value::<ShipModule>(Value::String(input.to_string()));
 
@@ -291,7 +288,7 @@ mod tests {
                     assert_eq!(hardpoint.class, class);
                     assert_eq!(hardpoint.size, hardpoint_size);
                 }
-                _ => {},
+                _ => {}
                 // ShipModule::Cockpit(_) => {}
                 // ShipModule::PaintJob(_) => {}
                 // ShipModule::Decal(_) => {}

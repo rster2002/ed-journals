@@ -3,8 +3,8 @@ use std::mem;
 
 use serde::Serialize;
 
-use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::file_header_event::FileHeaderEvent;
+use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::commander_state::CommanderState;
 use crate::state::models::feed_result::FeedResult;
 
@@ -118,9 +118,9 @@ impl Default for GameState {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
     use crate::logs::blocking::LogDirReader;
     use crate::state::GameState;
+    use std::collections::HashSet;
     use std::env::current_dir;
     use std::time::Instant;
 

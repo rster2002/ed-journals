@@ -1,23 +1,23 @@
 use std::collections::HashMap;
 
-use serde::Serialize;
 use crate::exploration::calculate_estimated_worth;
+use serde::Serialize;
 
-use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::commander_event::CommanderEvent;
-use crate::logs::scan_organic_event::ScanOrganicEventScanType;
-use crate::modules::civilization::LocationInfo;
-use current_organic::CurrentOrganic;
 use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
-use crate::logs::statistics_event::StatisticsEvent;
 use crate::logs::scan_event::ScanEvent;
+use crate::logs::scan_organic_event::ScanOrganicEventScanType;
+use crate::logs::statistics_event::StatisticsEvent;
+use crate::logs::{LogEvent, LogEventContent};
+use crate::modules::civilization::LocationInfo;
 use crate::state::models::carrier_state::CarrierState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::materials_state::MaterialsState;
 use crate::state::models::mission_state::MissionState;
 use crate::state::SystemState;
 use crate::try_feed;
+use current_organic::CurrentOrganic;
 
 pub mod current_organic;
 
@@ -43,35 +43,31 @@ impl CommanderState {
         match &log_event.content {
             LogEventContent::Scan(event) => {
                 self.current_exploration_data.push(event.clone());
-            },
+            }
             LogEventContent::Died(event) => {
                 self.current_exploration_data.clear();
-            },
+            }
             LogEventContent::Rank(ranks) => {
                 self.rank = Some(ranks.clone());
             }
             LogEventContent::Reputation(reputation) => {
                 self.reputation = Some(reputation.clone());
-            },
+            }
             LogEventContent::Statistics(statistics) => {
                 self.statistics = Some(statistics.clone());
             }
             LogEventContent::MultiSellExplorationData(event) => {
                 for system in &event.discovered {
                     self.current_exploration_data
-                        .retain(|item| {
-                            item.star_system != system.system_name
-                        });
+                        .retain(|item| item.star_system != system.system_name);
                 }
-            },
+            }
             LogEventContent::SellExplorationData(event) => {
                 for system in &event.systems {
                     self.current_exploration_data
-                        .retain(|item| {
-                            &item.star_system != system
-                        });
+                        .retain(|item| &item.star_system != system);
                 }
-            },
+            }
             LogEventContent::Location(location) => {
                 self.current_system = Some(location.location_info.system_address);
 
@@ -96,38 +92,45 @@ impl CommanderState {
                         body_id: scan_organic.body,
                         species: scan_organic.species.clone(),
                     });
-                },
+                }
                 ScanOrganicEventScanType::Analyse => {
                     self.current_organic_process = Some(ScanOrganicEventScanType::Analyse);
-                },
+                }
                 ScanOrganicEventScanType::Log => {
                     self.current_organic = None;
-                },
+                }
             },
 
             LogEventContent::Materials(event) => {
                 for material in &event.raw {
-                    self.material_state.set_material_count(material.name.clone(), material.count);
+                    self.material_state
+                        .set_material_count(material.name.clone(), material.count);
                 }
 
                 for material in &event.encoded {
-                    self.material_state.set_material_count(material.name.clone(), material.count);
+                    self.material_state
+                        .set_material_count(material.name.clone(), material.count);
                 }
 
                 for material in &event.manufactured {
-                    self.material_state.set_material_count(material.name.clone(), material.count);
+                    self.material_state
+                        .set_material_count(material.name.clone(), material.count);
                 }
             }
             LogEventContent::MaterialCollected(event) => {
-                self.material_state.add_material_count(event.name.clone(), event.count);
-            },
+                self.material_state
+                    .add_material_count(event.name.clone(), event.count);
+            }
             LogEventContent::MaterialDiscarded(event) => {
-                self.material_state.remove_material_count(event.name.clone(), event.count);
-            },
+                self.material_state
+                    .remove_material_count(event.name.clone(), event.count);
+            }
             LogEventContent::MaterialTrade(event) => {
-                self.material_state.remove_material_count(event.paid.material.clone(), event.paid.quantity);
-                self.material_state.add_material_count(event.received.material.clone(), event.received.quantity);
-            },
+                self.material_state
+                    .remove_material_count(event.paid.material.clone(), event.paid.quantity);
+                self.material_state
+                    .add_material_count(event.received.material.clone(), event.received.quantity);
+            }
 
             LogEventContent::CarrierStats(stats) => {
                 if self.carrier_state.is_none() {
@@ -136,7 +139,7 @@ impl CommanderState {
 
                     self.carrier_state = Some(state);
                 }
-            },
+            }
 
             LogEventContent::CarrierJump(_)
             | LogEventContent::CarrierBuy(_)
@@ -152,17 +155,18 @@ impl CommanderState {
             | LogEventContent::CarrierTradeOrder(_)
             | LogEventContent::CarrierDockingPermission(_)
             | LogEventContent::CarrierNameChange(_)
-            | LogEventContent::CarrierJumpCancelled(_) => {
-                match &mut self.carrier_state {
-                    Some(state) => { try_feed!(state.feed_log_event(&log_event)); },
-                    None => return FeedResult::Later,
+            | LogEventContent::CarrierJumpCancelled(_) => match &mut self.carrier_state {
+                Some(state) => {
+                    try_feed!(state.feed_log_event(&log_event));
                 }
+                None => return FeedResult::Later,
             },
 
             _ => {}
         }
 
-        let carrier_has_been_scrapped = self.carrier_state
+        let carrier_has_been_scrapped = self
+            .carrier_state
             .as_ref()
             .is_some_and(|state| state.has_been_scrapped(&log_event.timestamp));
 

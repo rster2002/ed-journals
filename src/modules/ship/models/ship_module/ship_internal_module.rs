@@ -139,10 +139,14 @@ impl FromStr for ShipInternalModule {
         // if there is no match, then it will still check `special_grades` but without providing
         // a ModuleGrade input. If none of these things return a Some value, then the class will
         // default to `ModuleClass::E`.
-        let class = captures.get(5)
-            .map(|capture| capture.as_str()
-                .parse::<u8>()
-                .map_err(ShipInternalModuleError::FailedToParseClassNumber))
+        let class = captures
+            .get(5)
+            .map(|capture| {
+                capture
+                    .as_str()
+                    .parse::<u8>()
+                    .map_err(ShipInternalModuleError::FailedToParseClassNumber)
+            })
             .transpose()?
             .map(|grade_nr| grade_nr.try_into())
             .transpose()?

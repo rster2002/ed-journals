@@ -1,8 +1,8 @@
 use crate::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
+use crate::logs::scan_event::ScanEventParent;
 use crate::materials::Material;
 use serde::Serialize;
 use std::collections::HashSet;
-use crate::logs::scan_event::ScanEventParent;
 
 #[derive(Debug, Serialize)]
 pub struct TargetPlanet {

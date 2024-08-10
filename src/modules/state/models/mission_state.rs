@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use serde::Serialize;
+use std::collections::HashMap;
 
 #[derive(Serialize)]
 pub struct MissionState {
@@ -7,9 +7,7 @@ pub struct MissionState {
 }
 
 #[derive(Serialize)]
-pub struct Mission {
-
-}
+pub struct Mission {}
 
 impl Default for MissionState {
     fn default() -> Self {

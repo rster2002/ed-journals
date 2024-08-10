@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 /// Engineering blueprint that can be applied to certain ship modules.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -205,78 +205,82 @@ pub enum Blueprint {
 
 impl Display for Blueprint {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Blueprint::ArmorBlastResistant => "Blast Resistant",
-            Blueprint::ArmorHeavyDuty => "Heavy Duty",
-            Blueprint::ArmorKineticResistant => "Kinetic Resistant",
-            Blueprint::ArmorLightweight => "Lightweight",
-            Blueprint::ArmorThermalResistant => "Thermal Resistant",
-            Blueprint::ChaffCapacity => "Ammo capacity",
-            Blueprint::FSDInterdictorExpandedCaptureArc => "Expanded Capture Arc",
-            Blueprint::FSDInterdictorLongRange => "Long Range",
-            Blueprint::FrameShiftDriveFasterBootSequence => "Faster Boot Sequence",
-            Blueprint::FrameShiftDriveLongRange => "Long Range",
-            Blueprint::FrameShiftDriveShielded => "Shielded",
-            Blueprint::HeatSinkCapacity => "Ammo capacity",
-            Blueprint::HullReinforcementBlastResistant => "Blast Resistant",
-            Blueprint::HullReinforcementHeavyDuty => "Heavy Duty",
-            Blueprint::HullReinforcementKineticResistant => "Kinetic Resistant",
-            Blueprint::HullReinforcementLightweight => "Lightweight",
-            Blueprint::HullReinforcementThermalResistant => "Thermal Resistant",
-            Blueprint::MiscLightweight => "Lightweight",
-            Blueprint::MiscReinforced => "Reinforced",
-            Blueprint::MiscShielded => "Shielded",
-            Blueprint::PointDefenceCapacity => "Ammo capacity",
-            Blueprint::PowerDistributorChargeEnhanced => "Charge Enhanced",
-            Blueprint::PowerDistributorEngineFocussed => "Engine Focussed",
-            Blueprint::PowerDistributorHighCapacity => "High Capacity",
-            Blueprint::PowerDistributorPrioritizeEngines => "Prioritize Engines",
-            Blueprint::PowerDistributorPrioritizeSystems => "Prioritize Systems",
-            Blueprint::PowerDistributorPrioritizeWeapons => "Prioritize Weapons",
-            Blueprint::PowerDistributorShielded => "Shielded",
-            Blueprint::PowerPlantArmored => "Armored",
-            Blueprint::PowerPlantLowEmissions => "Low Emissions",
-            Blueprint::PowerPlantOvercharged => "Overcharged",
-            Blueprint::SensorsFastScan => "Fast Scan",
-            Blueprint::SensorsLightweight => "Lightweight",
-            Blueprint::SensorsLongRange => "Long Range",
-            Blueprint::SensorsWideAngle => "Wide Angle",
-            Blueprint::SensorsExpandedRadius => "Wide Angle",
-            Blueprint::ShieldBoosterBlastResistant => "Expanded Radius",
-            Blueprint::ShieldBoosterHeavyDuty => "Heavy Duty",
-            Blueprint::ShieldBoosterKineticResistant => "Kinetic Resistant",
-            Blueprint::ShieldBoosterResistanceAugmented => "Resistance Augmented",
-            Blueprint::ShieldBoosterThermalResistant => "Thermal Resistant",
-            Blueprint::ShieldCellBankRapidCharge => "Rapid Charge",
-            Blueprint::ShieldCellBankSpecialized => "Specialized",
-            Blueprint::ShieldGeneratorEnhancedLowPower => "Enhanced, Low Power",
-            Blueprint::ShieldGeneratorKineticResistant => "Kinetic Resistant",
-            Blueprint::ShieldGeneratorReinforced => "Reinforced",
-            Blueprint::ShieldGeneratorThermalResistant => "Thermal Resistant",
-            Blueprint::ThrustersCleanTuning => "Clean Tuning",
-            Blueprint::ThrustersDirtyTuning => "Dirty Tuning",
-            Blueprint::ThrustersStrengthened => "Strengthened",
-            Blueprint::WeaponDoubleShot => "Double Shot",
-            Blueprint::WeaponEfficient => "Efficient",
-            Blueprint::WeaponFocussed => "Focussed",
-            Blueprint::WeaponHighCapacity => "High Capacity",
-            Blueprint::WeaponLightweight => "Lightweight",
-            Blueprint::WeaponLongRange => "Long Range",
-            Blueprint::WeaponOvercharged => "Overcharge",
-            Blueprint::WeaponRapidFire => "Rapid Fire",
-            Blueprint::WeaponShortRange => "Short Range",
-            Blueprint::WeaponSturdy => "Sturdy",
+        write!(
+            f,
+            "{}",
+            match self {
+                Blueprint::ArmorBlastResistant => "Blast Resistant",
+                Blueprint::ArmorHeavyDuty => "Heavy Duty",
+                Blueprint::ArmorKineticResistant => "Kinetic Resistant",
+                Blueprint::ArmorLightweight => "Lightweight",
+                Blueprint::ArmorThermalResistant => "Thermal Resistant",
+                Blueprint::ChaffCapacity => "Ammo capacity",
+                Blueprint::FSDInterdictorExpandedCaptureArc => "Expanded Capture Arc",
+                Blueprint::FSDInterdictorLongRange => "Long Range",
+                Blueprint::FrameShiftDriveFasterBootSequence => "Faster Boot Sequence",
+                Blueprint::FrameShiftDriveLongRange => "Long Range",
+                Blueprint::FrameShiftDriveShielded => "Shielded",
+                Blueprint::HeatSinkCapacity => "Ammo capacity",
+                Blueprint::HullReinforcementBlastResistant => "Blast Resistant",
+                Blueprint::HullReinforcementHeavyDuty => "Heavy Duty",
+                Blueprint::HullReinforcementKineticResistant => "Kinetic Resistant",
+                Blueprint::HullReinforcementLightweight => "Lightweight",
+                Blueprint::HullReinforcementThermalResistant => "Thermal Resistant",
+                Blueprint::MiscLightweight => "Lightweight",
+                Blueprint::MiscReinforced => "Reinforced",
+                Blueprint::MiscShielded => "Shielded",
+                Blueprint::PointDefenceCapacity => "Ammo capacity",
+                Blueprint::PowerDistributorChargeEnhanced => "Charge Enhanced",
+                Blueprint::PowerDistributorEngineFocussed => "Engine Focussed",
+                Blueprint::PowerDistributorHighCapacity => "High Capacity",
+                Blueprint::PowerDistributorPrioritizeEngines => "Prioritize Engines",
+                Blueprint::PowerDistributorPrioritizeSystems => "Prioritize Systems",
+                Blueprint::PowerDistributorPrioritizeWeapons => "Prioritize Weapons",
+                Blueprint::PowerDistributorShielded => "Shielded",
+                Blueprint::PowerPlantArmored => "Armored",
+                Blueprint::PowerPlantLowEmissions => "Low Emissions",
+                Blueprint::PowerPlantOvercharged => "Overcharged",
+                Blueprint::SensorsFastScan => "Fast Scan",
+                Blueprint::SensorsLightweight => "Lightweight",
+                Blueprint::SensorsLongRange => "Long Range",
+                Blueprint::SensorsWideAngle => "Wide Angle",
+                Blueprint::SensorsExpandedRadius => "Wide Angle",
+                Blueprint::ShieldBoosterBlastResistant => "Expanded Radius",
+                Blueprint::ShieldBoosterHeavyDuty => "Heavy Duty",
+                Blueprint::ShieldBoosterKineticResistant => "Kinetic Resistant",
+                Blueprint::ShieldBoosterResistanceAugmented => "Resistance Augmented",
+                Blueprint::ShieldBoosterThermalResistant => "Thermal Resistant",
+                Blueprint::ShieldCellBankRapidCharge => "Rapid Charge",
+                Blueprint::ShieldCellBankSpecialized => "Specialized",
+                Blueprint::ShieldGeneratorEnhancedLowPower => "Enhanced, Low Power",
+                Blueprint::ShieldGeneratorKineticResistant => "Kinetic Resistant",
+                Blueprint::ShieldGeneratorReinforced => "Reinforced",
+                Blueprint::ShieldGeneratorThermalResistant => "Thermal Resistant",
+                Blueprint::ThrustersCleanTuning => "Clean Tuning",
+                Blueprint::ThrustersDirtyTuning => "Dirty Tuning",
+                Blueprint::ThrustersStrengthened => "Strengthened",
+                Blueprint::WeaponDoubleShot => "Double Shot",
+                Blueprint::WeaponEfficient => "Efficient",
+                Blueprint::WeaponFocussed => "Focussed",
+                Blueprint::WeaponHighCapacity => "High Capacity",
+                Blueprint::WeaponLightweight => "Lightweight",
+                Blueprint::WeaponLongRange => "Long Range",
+                Blueprint::WeaponOvercharged => "Overcharge",
+                Blueprint::WeaponRapidFire => "Rapid Fire",
+                Blueprint::WeaponShortRange => "Short Range",
+                Blueprint::WeaponSturdy => "Sturdy",
 
-            #[cfg(not(feature = "strict"))]
-            Blueprint::Unknown(unknown) => return write!(f, "Unknown blueprint: {}", unknown),
-        })
+                #[cfg(not(feature = "strict"))]
+                Blueprint::Unknown(unknown) => return write!(f, "Unknown blueprint: {}", unknown),
+            }
+        )
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use serde_json::Value;
     use crate::ship::Blueprint;
+    use serde_json::Value;
 
     #[test]
     fn all_blueprint_test_cases_are_parsed_correctly() {
