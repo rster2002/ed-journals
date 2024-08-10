@@ -201,7 +201,7 @@ mod tests {
     use serde_json::Value;
 
     use crate::modules::ship::ShipModule;
-    use crate::ship::{HardpointMounting, HardpointSize, ModuleClass, ShipInternalModule};
+    use crate::ship::{HardpointMounting, HardpointSize, ModuleClass};
 
     #[test]
     fn modules_are_parsed_correctly() {
@@ -227,7 +227,7 @@ mod tests {
     #[test]
     fn all_eddn_test_cases_are_parsed_correctly() {
         let content = include_str!("zz_ship_modules.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {

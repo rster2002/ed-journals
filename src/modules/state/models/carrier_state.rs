@@ -22,7 +22,7 @@ impl CarrierState {
                 self.stats = stats.clone();
             }
             LogEventContent::CarrierDecommission(decommission) => {
-                self.scrap_time = Some(decommission.scrap_time.clone());
+                self.scrap_time = Some(decommission.scrap_time);
             }
             LogEventContent::CarrierCancelDecommission(_) => {
                 self.scrap_time = None;
@@ -31,10 +31,10 @@ impl CarrierState {
                 self.scheduled_jump = Some(request.clone());
             }
             LogEventContent::CarrierBuy(_) => {
-                self.update_location(&log_event);
+                self.update_location(log_event);
             }
             LogEventContent::CarrierJump(_) => {
-                self.update_location(&log_event);
+                self.update_location(log_event);
             }
             _ => {}
         }

@@ -135,7 +135,7 @@ impl CommanderState {
             LogEventContent::CarrierStats(stats) => {
                 if self.carrier_state.is_none() {
                     let mut state: CarrierState = stats.clone().into();
-                    state.feed_log_event(&log_event);
+                    state.feed_log_event(log_event);
 
                     self.carrier_state = Some(state);
                 }
@@ -157,7 +157,7 @@ impl CommanderState {
             | LogEventContent::CarrierNameChange(_)
             | LogEventContent::CarrierJumpCancelled(_) => match &mut self.carrier_state {
                 Some(state) => {
-                    try_feed!(state.feed_log_event(&log_event));
+                    try_feed!(state.feed_log_event(log_event));
                 }
                 None => return FeedResult::Later,
             },
@@ -206,7 +206,7 @@ impl CommanderState {
     pub fn current_exploration_worth(&self) -> u64 {
         self.current_exploration_data
             .iter()
-            .map(|item| calculate_estimated_worth(item))
+            .map(calculate_estimated_worth)
             .sum()
     }
 }

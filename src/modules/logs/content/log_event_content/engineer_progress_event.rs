@@ -1,4 +1,4 @@
-use crate::civilization::{Engineer, EngineerError};
+use crate::civilization::Engineer;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

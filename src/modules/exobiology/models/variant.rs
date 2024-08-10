@@ -142,7 +142,7 @@ mod tests {
     #[test]
     fn variants_test_file_entries_all_parse() {
         let content = include_str!("zz_variants.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {
@@ -160,7 +160,7 @@ mod tests {
     #[test]
     fn variants_datadump_test_file_entries_all_parse() {
         let content = include_str!("zz_datamined_variants.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {

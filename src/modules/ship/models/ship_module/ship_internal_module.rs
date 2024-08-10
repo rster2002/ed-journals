@@ -8,7 +8,6 @@ use serde::Serialize;
 use thiserror::Error;
 
 use crate::from_str_deserialize_impl;
-use crate::galaxy::StarClass::Y;
 use crate::modules::ship::{
     ArmorModule, ArmorModuleError, InternalModule, InternalType, ModuleClass, ModuleClassError,
 };
@@ -150,9 +149,9 @@ impl FromStr for ShipInternalModule {
             .transpose()?
             .map(|grade_nr| grade_nr.try_into())
             .transpose()?
-            .and_then(|class| match module.special_grades(size, Some(&class)) {
-                Some(replacement) => Some(replacement),
-                None => Some(class),
+            .map(|class| match module.special_grades(size, Some(&class)) {
+                Some(replacement) => replacement,
+                None => class,
             })
             .or_else(|| module.special_grades(size, None))
             .unwrap_or(ModuleClass::E);

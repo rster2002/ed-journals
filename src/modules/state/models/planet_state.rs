@@ -1,7 +1,7 @@
 pub mod planet_species_entry;
 mod signal_counts;
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 use crate::exobiology::{SpawnSource, TargetPlanet, TargetSystem};
 use crate::exploration::{CodexEntry, PlanetarySignalType};
@@ -215,8 +215,7 @@ impl PlanetState {
                     _ if self
                         .scanned_species
                         .iter()
-                        .find(|scanned| scanned.genus() == species.genus())
-                        .is_some() =>
+                        .any(|scanned| scanned.genus() == species.genus()) =>
                     {
                         WillSpawn::No
                     }

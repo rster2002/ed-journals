@@ -285,7 +285,7 @@ mod tests {
     #[test]
     fn all_blueprint_test_cases_are_parsed_correctly() {
         let contents = include_str!("zz_blueprint_test_cases.txt");
-        let mut lines = contents.lines();
+        let lines = contents.lines();
 
         for line in lines {
             dbg!(&line);
