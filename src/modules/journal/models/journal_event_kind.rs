@@ -13,7 +13,7 @@ use crate::status::Status;
 /// directory and includes all the possible models that could have been updated.
 #[derive(Debug, PartialEq)]
 pub enum JournalEventKind {
-    LogEvent(LogEvent),
+    LogEvent(Box<LogEvent>),
     StatusEvent(Status),
     OutfittingEvent(Outfitting),
     ShipyardEvent(Shipyard),

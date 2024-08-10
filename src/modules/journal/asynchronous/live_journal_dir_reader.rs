@@ -45,13 +45,13 @@ pub struct LiveJournalDirReader {
 #[derive(Debug, Error)]
 pub enum JournalDirWatcherError {
     #[error(transparent)]
-    LogDirReaderError(#[from] LogDirReaderError),
+    LogDirReader(#[from] LogDirReaderError),
 
     #[error(transparent)]
-    LiveJournalBufferError(#[from] LiveJournalBufferError),
+    LiveJournalBuffer(#[from] LiveJournalBufferError),
 
     #[error(transparent)]
-    NotifyError(#[from] notify::Error),
+    Notify(#[from] notify::Error),
 }
 
 impl LiveJournalDirReader {
@@ -89,7 +89,7 @@ impl LiveJournalDirReader {
                 return Some(match log_event {
                     Ok(event) => Ok(JournalEvent {
                         is_live: self.log_dir_reader.is_reading_latest(),
-                        kind: JournalEventKind::LogEvent(event),
+                        kind: JournalEventKind::LogEvent(Box::new(event)),
                     }),
                     Err(error) => Err(error.into()),
                 });

@@ -44,7 +44,7 @@ impl CommanderState {
             LogEventContent::Scan(event) => {
                 self.current_exploration_data.push(event.clone());
             }
-            LogEventContent::Died(event) => {
+            LogEventContent::Died(_) => {
                 self.current_exploration_data.clear();
             }
             LogEventContent::Rank(ranks) => {
@@ -73,10 +73,6 @@ impl CommanderState {
 
                 let system = self.upset_system(&location.location_info);
                 system.visit(&log_event.timestamp);
-            }
-            LogEventContent::CarrierJump(carrier_jump) => {
-                let system = self.upset_system(&carrier_jump.system_info);
-                system.carrier_visit(&log_event.timestamp);
             }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);
@@ -155,11 +151,18 @@ impl CommanderState {
             | LogEventContent::CarrierTradeOrder(_)
             | LogEventContent::CarrierDockingPermission(_)
             | LogEventContent::CarrierNameChange(_)
-            | LogEventContent::CarrierJumpCancelled(_) => match &mut self.carrier_state {
-                Some(state) => {
-                    try_feed!(state.feed_log_event(log_event));
+            | LogEventContent::CarrierJumpCancelled(_) => {
+                if let LogEventContent::CarrierJump(carrier_jump) = &log_event.content {
+                    let system = self.upset_system(&carrier_jump.system_info);
+                    system.carrier_visit(&log_event.timestamp);
                 }
-                None => return FeedResult::Later,
+
+                match &mut self.carrier_state {
+                    Some(state) => {
+                        try_feed!(state.feed_log_event(log_event));
+                    }
+                    None => return FeedResult::Later,
+                }
             },
 
             _ => {}

@@ -32,25 +32,15 @@ impl GameState {
     }
 
     pub fn current_commander(&self) -> Option<&CommanderState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get(commander_id) else {
-            return None;
-        };
+        let commander_id = self.current_commander.as_ref()?;
+        let commander_entry = self.commanders.get(commander_id)?;
 
         Some(commander_entry)
     }
 
     pub fn current_commander_mut(&mut self) -> Option<&mut CommanderState> {
-        let Some(commander_id) = &self.current_commander else {
-            return None;
-        };
-
-        let Some(commander_entry) = self.commanders.get_mut(commander_id) else {
-            return None;
-        };
+        let commander_id = self.current_commander.as_ref()?;
+        let commander_entry = self.commanders.get_mut(commander_id)?;
 
         Some(commander_entry)
     }
