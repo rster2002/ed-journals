@@ -1,7 +1,6 @@
 use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::logs::carrier_stats_event::CarrierStatsEvent;
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::partials::PartialSystemInfo;
 use crate::state::models::feed_result::FeedResult;
 use chrono::{DateTime, Utc};
