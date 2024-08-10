@@ -156,10 +156,19 @@ impl StateResolver<LogEvent> for LogStateResolver {
             | LogEventContent::CarrierTradeOrder(_)
             | LogEventContent::CarrierDockingPermission(_)
             | LogEventContent::CarrierNameChange(_)
-            | LogEventContent::CarrierJumpCancelled(_) => match &mut self.carrier_state {
-                Some(state) => state.feed(input),
-                None => return FeedResult::Later,
-            },
+            | LogEventContent::CarrierJumpCancelled(_) => {
+                if let LogEventContent::CarrierJump(carrier_jump) = &log_event.content {
+                    let system = self.upset_system(&carrier_jump.system_info);
+                    system.carrier_visit(&log_event.timestamp);
+                }
+
+                match &mut self.carrier_state {
+                    Some(state) => {
+                        try_feed!(state.feed_log_event(log_event));
+                    }
+                    None => return FeedResult::Later,
+                }
+            }
 
             _ => {}
         }

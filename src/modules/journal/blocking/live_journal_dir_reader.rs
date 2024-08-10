@@ -44,13 +44,13 @@ pub struct LiveJournalDirReader {
 #[derive(Debug, Error)]
 pub enum JournalDirWatcherError {
     #[error(transparent)]
-    LogDirReaderError(#[from] LogDirReaderError),
+    LogDirReader(#[from] LogDirReaderError),
 
     #[error(transparent)]
-    LiveJournalBufferError(#[from] LiveJournalBufferError),
+    LiveJournalBuffer(#[from] LiveJournalBufferError),
 
     #[error(transparent)]
-    NotifyError(#[from] notify::Error),
+    Notify(#[from] notify::Error),
 }
 
 impl LiveJournalDirReader {
