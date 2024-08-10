@@ -13,7 +13,7 @@ pub struct MissionStateResolver {
 pub struct Mission {}
 
 impl StateResolver<LogEvent> for MissionStateResolver {
-    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+    fn feed(&mut self, _input: &LogEvent) -> FeedResult {
         FeedResult::Accepted
     }
 }

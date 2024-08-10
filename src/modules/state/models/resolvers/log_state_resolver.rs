@@ -46,7 +46,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             LogEventContent::Scan(event) => {
                 self.current_exploration_data.push(event.clone());
             }
-            LogEventContent::Died(event) => {
+            LogEventContent::Died(_) => {
                 self.current_exploration_data.clear();
             }
             LogEventContent::Rank(ranks) => {
@@ -75,10 +75,6 @@ impl StateResolver<LogEvent> for LogStateResolver {
 
                 let system = self.upset_system(&location.location_info);
                 system.visit(&input.timestamp);
-            }
-            LogEventContent::CarrierJump(carrier_jump) => {
-                let system = self.upset_system(&carrier_jump.system_info);
-                system.carrier_visit(&input.timestamp);
             }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);

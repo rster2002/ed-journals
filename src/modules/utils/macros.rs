@@ -48,13 +48,13 @@ macro_rules! deserialize_in_order_impl {
                 #[serde(untagged)]
                 enum Input {
                     $($i($f),)+
-                };
+                }
 
                 let input = Input::deserialize(deserializer)?;
 
                 match input {
                     $(
-                        Input::$i($f) => $crate::deserialize_in_order_entry!($ty => $i $l $f),
+                        Input::$i(variant_input) => $crate::deserialize_in_order_entry!($ty => $i $l variant_input),
                     )+
                 }
             }
