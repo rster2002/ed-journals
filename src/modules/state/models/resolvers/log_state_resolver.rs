@@ -163,7 +163,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 }
 
                 match &mut self.carrier_state {
-                    Some(state) => state.feed(&input),
+                    Some(state) => state.feed(input),
                     None => return FeedResult::Later,
                 }
             }
