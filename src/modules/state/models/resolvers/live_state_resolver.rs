@@ -32,14 +32,32 @@ pub struct LiveStateResolver {
     /// The locations of scanned organics on different planets.
     pub organic_locations: Vec<OrganicLocation>,
 
+
+    #[serde(skip)]
     pub status: Option<Status>,
+
+    #[serde(skip)]
     pub modules_info: Option<ModulesInfo>,
+
+    #[serde(skip)]
     pub cargo: Option<Cargo>,
+
+    #[serde(skip)]
     pub nav_route: Option<NavRoute>,
+
+    #[serde(skip)]
     pub outfitting: Option<Outfitting>,
+
+    #[serde(skip)]
     pub shipyard: Option<Shipyard>,
+
+    #[serde(skip)]
     pub market: Option<Market>,
+
+    #[serde(skip)]
     pub backpack: Option<Backpack>,
+
+    #[serde(skip)]
     pub ship_locker: Option<ShipLocker>,
 
     /// This field keeps track of the last known ship status. This can be used to access information

@@ -1,7 +1,8 @@
+use std::str::FromStr;
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::try_from_deserialize_impl;
+use crate::{deserialize_in_order_impl, try_from_deserialize_impl};
 
 #[derive(Debug, Serialize, PartialEq, Eq, Clone)]
 pub enum GuiFocus {
@@ -23,6 +24,9 @@ pub enum GuiFocus {
 pub enum GuiFocusError {
     #[error("Unknown value for GUI focus: {0}")]
     UnknownValue(u8),
+
+    #[error("Unknown string value for GUI focus: '{0}'")]
+    UnknownStringValue(String),
 }
 
 impl TryFrom<u8> for GuiFocus {
@@ -47,4 +51,30 @@ impl TryFrom<u8> for GuiFocus {
     }
 }
 
-try_from_deserialize_impl!(u8 => GuiFocus);
+impl FromStr for GuiFocus {
+    type Err = GuiFocusError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "NoFocus" => GuiFocus::NoFocus,
+            "InternalPanel" => GuiFocus::InternalPanel,
+            "ExternalPanel" => GuiFocus::ExternalPanel,
+            "CommsPanel" => GuiFocus::CommsPanel,
+            "RolePanel" => GuiFocus::RolePanel,
+            "StationServices" => GuiFocus::StationServices,
+            "GalaxyMap" => GuiFocus::GalaxyMap,
+            "SystemMap" => GuiFocus::SystemMap,
+            "Orrery" => GuiFocus::Orrery,
+            "FSSMode" => GuiFocus::FSSMode,
+            "SAAMode" => GuiFocus::SAAMode,
+            "Codex" => GuiFocus::Codex,
+            _ => return Err(GuiFocusError::UnknownStringValue(s.to_string())),
+        })
+    }
+}
+
+deserialize_in_order_impl!(
+    GuiFocus =>
+        A ? u8,
+        B # String,
+);

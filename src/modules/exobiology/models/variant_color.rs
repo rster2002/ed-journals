@@ -1,13 +1,13 @@
 use std::fmt::{Display, Formatter};
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 use crate::modules::exobiology::{Genus, Species, VariantSource};
 use crate::modules::galaxy::StarClass;
 use crate::modules::materials::Material;
 
-#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub enum VariantColor {
     Amethyst,
     Aquamarine,

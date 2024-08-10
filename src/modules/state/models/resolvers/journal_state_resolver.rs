@@ -47,6 +47,22 @@ impl StateResolver<JournalEvent> for JournalStateResolver {
     }
 }
 
+impl From<HashMap<String, LiveState>> for JournalStateResolver {
+    fn from(value: HashMap<String, LiveState>) -> Self {
+        Self {
+            commanders: value.into_iter()
+                .map(|(key, state)| {
+                    (key, JournalCommanderEntry {
+                        log_state: LogState::default(),
+                        live_state: state,
+                    })
+                })
+                .collect(),
+            current_commander_id: None,
+        }
+    }
+}
+
 impl JournalStateResolver {
     pub fn current_commander(&self) -> Option<&JournalCommanderEntry> {
         self.current_commander_id
@@ -58,5 +74,12 @@ impl JournalStateResolver {
         self.current_commander_id
             .as_ref()
             .and_then(|commander_id| self.commanders.get_mut(commander_id))
+    }
+
+    pub fn all_live_state(&self) -> HashMap<&String, &LiveState> {
+        self.commanders
+            .iter()
+            .map(|(key, value)| (key, &value.live_state))
+            .collect()
     }
 }
