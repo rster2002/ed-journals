@@ -697,7 +697,7 @@ impl Species {
 
             Species::ReceptaUmbrux => 12_934_900,
             Species::ReceptaDeltahedronix => 16_202_800,
-            Species::ReceptaConditivus => 14_313_370,
+            Species::ReceptaConditivus => 14_313_700,
 
             Species::StratumExcutitus => 2_448_900,
             Species::StratumPaleas => 1_362_000,
