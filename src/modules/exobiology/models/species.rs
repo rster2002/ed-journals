@@ -634,7 +634,7 @@ impl Species {
             Species::BacteriumVesicula => 1_000_000,
             Species::BacteriumAlcyoneum => 1_658_500,
             Species::BacteriumTela => 1_949_000,
-            Species::BacteriumInformem => 841_800,
+            Species::BacteriumInformem => 8_418_000,
             Species::BacteriumVolu => 7_774_700,
             Species::BacteriumBullaris => 1_152_500,
             Species::BacteriumOmentum => 4_689_800,
@@ -700,7 +700,7 @@ impl Species {
             Species::ReceptaConditivus => 143_133_700,
 
             Species::StratumExcutitus => 2_448_900,
-            Species::StratumPaleas => 136_200,
+            Species::StratumPaleas => 1_362_000,
             Species::StratumLaminamus => 2_788_300,
             Species::StratumAraneamus => 2_448_900,
             Species::StratumLimaxus => 1_362_000,
