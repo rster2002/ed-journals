@@ -163,7 +163,7 @@ impl CommanderState {
                     }
                     None => return FeedResult::Later,
                 }
-            },
+            }
 
             _ => {}
         }

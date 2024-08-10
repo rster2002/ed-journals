@@ -124,7 +124,7 @@ impl From<&LocationInfo> for SystemState {
 
 #[cfg(test)]
 mod tests {
-    
+
     use std::env::current_dir;
 
     use crate::exobiology::SpawnSource;

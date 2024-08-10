@@ -2,16 +2,13 @@ pub mod spawn_source_star;
 pub mod target_planet;
 pub mod target_system;
 
-
 use strum::IntoEnumIterator;
 
 use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
 use crate::exobiology::models::spawn_source::target_planet::TargetPlanet;
 use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
-use crate::galaxy::{
-    AtmosphereDensity, AtmosphereType, Nebula, VolcanismType,
-};
+use crate::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, VolcanismType};
 use crate::logs::scan_event::ScanEventParent;
 
 #[derive(Debug)]
