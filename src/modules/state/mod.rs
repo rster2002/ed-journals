@@ -42,6 +42,10 @@ pub use models::resolvers::journal_state_resolver::journal_commander_entry::Jour
 
 pub use models::state_container::StateContainer;
 
+/// Resolvers which are used to build up the state. You shouldn't use these directly, but instead
+/// should use one of the type aliases that use [StateContainer], like [LogState].
+pub use models::resolvers;
+
 mod models;
 mod macros;
 mod traits;

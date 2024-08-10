@@ -18,10 +18,10 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 ///
 /// ```rust
 /// # use std::env::current_dir;
-/// use std::path::PathBuf;
+/// use ed_journals::journal::auto_detect_journal_path;
 /// use ed_journals::journal::blocking::LiveJournalDirReader;
 ///
-/// let path = PathBuf::from("somePath");
+/// let path = auto_detect_journal_path();
 /// # let path = current_dir()
 /// #    .unwrap()
 /// #    .join("test-files")
