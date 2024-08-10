@@ -1,9 +1,9 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::modules_info::models::modules_info_entry::ModulesInfoEntry;
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct ModulesInfo {
     #[serde(rename = "timestamp")]

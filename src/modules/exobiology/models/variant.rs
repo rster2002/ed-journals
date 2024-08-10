@@ -3,15 +3,15 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
-use crate::from_str_deserialize_impl;
+use crate::deserialize_in_order_impl;
 use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
 pub struct Variant {
     pub species: Species,
     pub color: VariantColor,
@@ -73,7 +73,26 @@ impl FromStr for Variant {
     }
 }
 
-from_str_deserialize_impl!(Variant);
+#[derive(Deserialize)]
+struct VariantInput {
+    pub species: Species,
+    pub color: VariantColor,
+}
+
+impl From<VariantInput> for Variant {
+    fn from(value: VariantInput) -> Self {
+        Variant {
+            species: value.species,
+            color: value.color,
+        }
+    }
+}
+
+deserialize_in_order_impl!(
+    Variant =>
+        A # String,
+        B ! VariantInput,
+);
 
 impl Display for Variant {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

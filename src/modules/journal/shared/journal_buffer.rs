@@ -88,6 +88,7 @@ impl LiveJournalBuffer {
                             is_live: true,
                             kind: JournalEventKind::StatusEvent(status),
                         }),
+                        Err(ReadStatusFileError::Empty) => continue,
                         Err(error) => Err(error.into()),
                     });
             }

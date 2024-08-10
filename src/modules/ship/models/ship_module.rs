@@ -288,17 +288,7 @@ mod tests {
                     assert_eq!(hardpoint.class, class);
                     assert_eq!(hardpoint.size, hardpoint_size);
                 }
-                _ => {} // ShipModule::Cockpit(_) => {}
-                        // ShipModule::PaintJob(_) => {}
-                        // ShipModule::Decal(_) => {}
-                        // ShipModule::VoicePack(_) => {}
-                        // ShipModule::Nameplate(_) => {}
-                        // ShipModule::EngineColor(_) => {}
-                        // ShipModule::WeaponColor(_) => {}
-                        // ShipModule::ShipKitModule(_) => {}
-                        // ShipModule::Bobble(_) => {}
-                        // ShipModule::StringLights(_) => {}
-                        // ShipModule::Unknown(_) => {}
+                _ => {}
             }
         }
     }

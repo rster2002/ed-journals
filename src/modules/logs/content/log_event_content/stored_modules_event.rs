@@ -1,5 +1,7 @@
+use crate::ship::ShipModule;
 use serde::{Deserialize, Serialize};
 
+/// Fired when information about the player's stored modules is provided.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEvent {
@@ -13,8 +15,7 @@ pub struct StoredModulesEvent {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEventItem {
-    // TODO look into replacing this with an enum
-    pub name: String,
+    pub name: ShipModule,
 
     #[serde(rename = "Name_Localised")]
     pub name_localized: String,

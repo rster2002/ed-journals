@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 pub enum CommodityCategory {
     #[serde(rename = "$MARKET_category_chemicals;")]
     Chemicals,
