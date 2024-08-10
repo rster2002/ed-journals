@@ -6,10 +6,10 @@ use serde::Serialize;
 
 use crate::journal::{JournalEvent, JournalEventKind};
 use crate::logs::LogEventContent;
-use crate::state::{LiveState, LogState};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::journal_state_resolver::journal_commander_entry::JournalCommanderEntry;
 use crate::state::traits::state_resolver::StateResolver;
+use crate::state::{LiveState, LogState};
 
 /// State which tracks both log events and events that are fired when a json file updates.
 #[derive(Serialize, Default)]
@@ -50,12 +50,16 @@ impl StateResolver<JournalEvent> for JournalStateResolver {
 impl From<HashMap<String, LiveState>> for JournalStateResolver {
     fn from(value: HashMap<String, LiveState>) -> Self {
         Self {
-            commanders: value.into_iter()
+            commanders: value
+                .into_iter()
                 .map(|(key, state)| {
-                    (key, JournalCommanderEntry {
-                        log_state: LogState::default(),
-                        live_state: state,
-                    })
+                    (
+                        key,
+                        JournalCommanderEntry {
+                            log_state: LogState::default(),
+                            live_state: state,
+                        },
+                    )
                 })
                 .collect(),
             current_commander_id: None,

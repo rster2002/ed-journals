@@ -54,7 +54,7 @@ macro_rules! deserialize_in_order_impl {
 
                 match input {
                     $(
-                        Input::$i($f) => crate::deserialize_in_order_entry!($ty => $i $l $f),
+                        Input::$i($f) => $crate::deserialize_in_order_entry!($ty => $i $l $f),
                     )+
                 }
             }
@@ -66,17 +66,11 @@ macro_rules! deserialize_in_order_impl {
 #[doc(hidden)]
 macro_rules! deserialize_in_order_entry {
     ($ty:ident => $i:ident ? $f:ident) => {
-        $ty::try_from($f)
-            .map_err(|_e| {
-                serde::de::Error::custom(format!("Failed to deserialize"))
-            })
+        $ty::try_from($f).map_err(|_e| serde::de::Error::custom(format!("Failed to deserialize")))
     };
 
     ($ty:ident => $i:ident # $f:ident) => {
-        $ty::from_str(&$f)
-            .map_err(|_e| {
-                serde::de::Error::custom(format!("Failed to deserialize"))
-            })
+        $ty::from_str(&$f).map_err(|_e| serde::de::Error::custom(format!("Failed to deserialize")))
     };
 
     ($ty:ident => $i:ident ! $f:ident) => {

@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::exobiology::Species;
+use serde::Serialize;
 
 #[derive(Debug, Serialize)]
 pub struct PlanetSpeciesEntry {

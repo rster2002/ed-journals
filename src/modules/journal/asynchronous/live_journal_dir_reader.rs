@@ -3,9 +3,9 @@ use std::path::Path;
 use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::journal::LiveJournalBufferError;
 use crate::journal::models::journal_event::JournalEvent;
 use crate::journal::shared::journal_buffer::LiveJournalBuffer;
+use crate::journal::LiveJournalBufferError;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;

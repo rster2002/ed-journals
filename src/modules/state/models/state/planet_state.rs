@@ -1,9 +1,11 @@
-use std::collections::HashSet;
 use crate::exobiology::TargetPlanet;
-use crate::logs::LogEvent;
 use crate::logs::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet};
-use crate::state::models::resolvers::planet_state_resolver::{PlanetStateError, PlanetStateResolver};
+use crate::logs::LogEvent;
+use crate::state::models::resolvers::planet_state_resolver::{
+    PlanetStateError, PlanetStateResolver,
+};
 use crate::state::models::state_container::StateContainer;
+use std::collections::HashSet;
 
 pub type PlanetState = StateContainer<PlanetStateResolver, LogEvent>;
 

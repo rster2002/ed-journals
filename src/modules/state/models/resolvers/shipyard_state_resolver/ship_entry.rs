@@ -1,7 +1,7 @@
-use std::ops::Add;
-use chrono::{DateTime, Duration, TimeDelta, Utc};
-use serde::Serialize;
 use crate::ship::ShipType;
+use chrono::{DateTime, TimeDelta, Utc};
+use serde::Serialize;
+use std::ops::Add;
 
 #[derive(Debug, Serialize)]
 pub struct ShipEntry {
@@ -43,7 +43,8 @@ pub struct TransferringShipStatus {
 
 impl TransferringShipStatus {
     pub fn completed_at(&self) -> DateTime<Utc> {
-        self.started_at.add(TimeDelta::new((self.transfer_time as i64).clamp(0, 10000000), 0).unwrap())
+        self.started_at
+            .add(TimeDelta::new((self.transfer_time as i64).clamp(0, 10000000), 0).unwrap())
     }
 
     pub fn done_transferring(&self, timestamp: &DateTime<Utc>) -> bool {

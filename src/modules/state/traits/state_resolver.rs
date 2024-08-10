@@ -1,5 +1,4 @@
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::state_container::StateContainer;
 
 /// Implemented for state which is wrapped in a [StateContainer]. Defines how the state should
 /// handle and flush underlying input. These methods should usually not be called directly. Instead,

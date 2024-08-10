@@ -1,11 +1,11 @@
-use chrono::{DateTime, Utc};
-use serde::Serialize;
+use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::logs::carrier_stats_event::CarrierStatsEvent;
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::partials::PartialSystemInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::traits::state_resolver::StateResolver;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct CarrierStateResolver {
@@ -21,23 +21,23 @@ impl StateResolver<LogEvent> for CarrierStateResolver {
         match &input.content {
             LogEventContent::CarrierStats(stats) => {
                 self.stats = stats.clone();
-            },
+            }
             LogEventContent::CarrierDecommission(decommission) => {
-                self.scrap_time = Some(decommission.scrap_time.clone());
-            },
+                self.scrap_time = Some(decommission.scrap_time);
+            }
             LogEventContent::CarrierCancelDecommission(_) => {
                 self.scrap_time = None;
-            },
+            }
             LogEventContent::CarrierJumpRequest(request) => {
                 self.scheduled_jump = Some(request.clone());
-            },
+            }
             LogEventContent::CarrierBuy(_) => {
-                self.update_location(&input);
-            },
+                self.update_location(input);
+            }
             LogEventContent::CarrierJump(_) => {
-                self.update_location(&input);
-            },
-            _ => {},
+                self.update_location(input);
+            }
+            _ => {}
         }
 
         FeedResult::Accepted
@@ -60,8 +60,11 @@ impl CarrierStateResolver {
     /// Returns the scheduled jump. This is a bit more reliable than just checking if
     /// `scheduled_jump` is Some value as this also checks the departure time. There could be
     /// instances where the scheduled jump might not be unset for example when not logged in.
-    pub fn get_scheduled_jump(&self, target_time: &DateTime<Utc>) -> Option<CarrierJumpRequestEvent> {
-        let Some(request) = &self.scheduled_jump else  {
+    pub fn get_scheduled_jump(
+        &self,
+        target_time: &DateTime<Utc>,
+    ) -> Option<CarrierJumpRequestEvent> {
+        let Some(request) = &self.scheduled_jump else {
             return None;
         };
 

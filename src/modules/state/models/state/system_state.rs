@@ -1,9 +1,9 @@
-use std::collections::HashMap;
 use crate::civilization::LocationInfo;
 use crate::exobiology::TargetSystem;
 use crate::logs::LogEvent;
 use crate::state::models::resolvers::system_state_resolver::SystemStateResolver;
 use crate::state::models::state_container::StateContainer;
+use std::collections::HashMap;
 
 pub type SystemState = StateContainer<SystemStateResolver, LogEvent>;
 

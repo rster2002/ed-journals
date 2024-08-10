@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::exobiology::{SpawnSourceStar, Species, TargetSystem};
+use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
@@ -10,8 +10,8 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::PlanetSpeciesEntry;
-use crate::state::PlanetState;
 use crate::state::traits::state_resolver::StateResolver;
+use crate::state::PlanetState;
 
 #[derive(Serialize)]
 pub struct SystemStateResolver {
@@ -94,7 +94,7 @@ impl StateResolver<LogEvent> for SystemStateResolver {
                         self.progress = new_factor;
                     }
                 }
-            },
+            }
 
             _ => {
                 if let Some(body_id) = input.content.body_id() {
@@ -124,17 +124,14 @@ impl SystemStateResolver {
 
     /// Returns the total number of scans, which includes planets, stars and belt clusters.
     pub fn nr_of_scans(&self) -> usize {
-        self.planet_state.len()
-            + self.star_scans.len()
-            + self.belt_scans.len()
+        self.planet_state.len() + self.star_scans.len() + self.belt_scans.len()
     }
 
     /// Returns the total number of scanned bodies, which includes planets and stars. Take note
     /// that this does not include scanned belt clusters as they are not counted towards the total
     /// number of scanned bodies in game.
     pub fn nr_of_scanned_bodies(&self) -> usize {
-        self.planet_state.len()
-            + self.star_scans.len()
+        self.planet_state.len() + self.star_scans.len()
     }
 
     /// Returns all the scan events for this system.
@@ -146,11 +143,11 @@ impl SystemStateResolver {
         }
 
         for star_scan in self.star_scans.values() {
-            result.push(&star_scan)
+            result.push(star_scan)
         }
 
         for belt_scan in self.belt_scans.values() {
-            result.push(&belt_scan)
+            result.push(belt_scan)
         }
 
         result
@@ -175,8 +172,8 @@ mod tests {
 
     use crate::exobiology::SpawnSource;
     use crate::logs::blocking::LogDirReader;
-    use crate::state::GameState;
     use crate::state::traits::state_resolver::StateResolver;
+    use crate::state::GameState;
 
     #[test]
     fn spawnable_species_no_false_negatives() {

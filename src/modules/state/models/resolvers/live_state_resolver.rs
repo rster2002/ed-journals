@@ -1,8 +1,6 @@
-pub mod touchdown_location;
 pub mod organic_location;
+pub mod touchdown_location;
 
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
 use crate::backpack::Backpack;
 use crate::cargo::Cargo;
 use crate::journal::{JournalEvent, JournalEventKind};
@@ -17,7 +15,9 @@ use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::live_state_resolver::organic_location::OrganicLocation;
 use crate::state::models::resolvers::live_state_resolver::touchdown_location::TouchdownLocation;
 use crate::state::traits::state_resolver::StateResolver;
-use crate::status::{PlanetStatus, ShipStatus, Status, StatusContents};
+use crate::status::{PlanetStatus, ShipStatus, Status};
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 
 /// Life state tracks state from the logs and combines them with state from live files like for
 /// example the status.json file to provide more context in some instances. Something that is
@@ -31,7 +31,6 @@ pub struct LiveStateResolver {
 
     /// The locations of scanned organics on different planets.
     pub organic_locations: Vec<OrganicLocation>,
-
 
     #[serde(skip)]
     pub status: Option<Status>,
@@ -125,7 +124,7 @@ impl LiveStateResolver {
                     body_id: touchdown.body_id,
                     coordinates: (planet_status.latitude, planet_status.latitude),
                 })
-            },
+            }
             LogEventContent::ScanOrganic(scan_organic) => {
                 let Some(planet_status) = self.valid_planet_status(&input.timestamp) else {
                     return FeedResult::Skipped;
@@ -144,12 +143,12 @@ impl LiveStateResolver {
                     variant: scan_organic.variant.clone(),
                     coordinates: (planet_status.latitude, planet_status.longitude),
                 })
-            },
+            }
             LogEventContent::NavRouteClear => {
                 if self.valid_nav_route(&input.timestamp).is_some() {
                     self.nav_route = None;
                 }
-            },
+            }
             LogEventContent::Liftoff(_) => {
                 if self.valid_outfitting(&input.timestamp).is_some() {
                     self.outfitting = None;
@@ -162,8 +161,8 @@ impl LiveStateResolver {
                 if self.valid_market(&input.timestamp).is_some() {
                     self.market = None;
                 }
-            },
-            _ => {},
+            }
+            _ => {}
         }
 
         FeedResult::Accepted
@@ -171,7 +170,7 @@ impl LiveStateResolver {
 
     /// Returns the valid available status based on the given timestamp.
     pub fn valid_status(&self, timestamp: &DateTime<Utc>) -> Option<&Status> {
-        let status= self.status.as_ref()?;
+        let status = self.status.as_ref()?;
 
         if timestamp >= &status.timestamp {
             Some(status)
@@ -270,12 +269,7 @@ impl LiveStateResolver {
 
     /// Returns the current available status about the player's ship.
     pub fn current_ship_status(&self) -> Option<&ShipStatus> {
-        self.status
-            .as_ref()?
-            .contents
-            .as_ref()?
-            .kind
-            .ship_status()
+        self.status.as_ref()?.contents.as_ref()?.kind.ship_status()
     }
 
     /// Returns the valid ship status based on the given timestamp.
@@ -308,5 +302,3 @@ impl LiveStateResolver {
             .as_ref()
     }
 }
-
-

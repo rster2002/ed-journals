@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::ship::ShipModule;
+use serde::{Deserialize, Serialize};
 
 /// Fired when information about the player's stored modules is provided.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

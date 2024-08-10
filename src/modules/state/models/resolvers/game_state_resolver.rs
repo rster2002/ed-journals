@@ -7,9 +7,9 @@ use std::collections::HashMap;
 use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
-use crate::state::LogState;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::traits::state_resolver::StateResolver;
+use crate::state::LogState;
 
 /// High level state resolver which encapsulates [LogState] and in turn
 /// [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
@@ -69,12 +69,12 @@ impl GameStateResolver {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
     use crate::logs::blocking::LogDirReader;
+    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
+    use std::collections::HashSet;
     use std::env::current_dir;
     use std::time::Instant;
-    use crate::state::traits::state_resolver::StateResolver;
 
     #[test]
     fn state_is_correct() {

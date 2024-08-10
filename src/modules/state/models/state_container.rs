@@ -1,15 +1,15 @@
+use crate::state::models::feed_result::FeedResult;
+use crate::state::traits::state_resolver::StateResolver;
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 use std::mem;
 use std::ops::{Deref, DerefMut};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use crate::state::models::feed_result::FeedResult;
-use crate::state::models::resolvers::game_state_resolver::GameStateResolver;
-use crate::state::traits::state_resolver::StateResolver;
 
 /// This is what is used internally take care of input and manage flushing and handling retries.
 pub struct StateContainer<S, T>
-    where S : StateResolver<T>,
-          T : Clone,
+where
+    S: StateResolver<T>,
+    T: Clone,
 {
     /// The inner resolver which is what actually takes input and does something with it. The state
     /// container calls the methods on the given [StateResolver].
@@ -21,8 +21,9 @@ pub struct StateContainer<S, T>
 }
 
 impl<S, T> StateContainer<S, T>
-    where S : StateResolver<T>,
-          T : Clone,
+where
+    S: StateResolver<T>,
+    T: Clone,
 {
     /// Takes the log events and processes it in the state. Note that it does not guarantee that the
     /// event will be processed immediately. In some situations the event will be queued when the
@@ -30,7 +31,7 @@ impl<S, T> StateContainer<S, T>
     /// For those events to be processed, you need to call [StateContainer::flush]. This will go through
     /// the remaining events and tries to process them.
     pub fn feed(&mut self, input: &T) {
-        let handle_result = self.inner.feed(&input);
+        let handle_result = self.inner.feed(input);
 
         if let FeedResult::Later = handle_result {
             self.later.push(input.clone());
@@ -54,8 +55,9 @@ impl<S, T> StateContainer<S, T>
 }
 
 impl<S, T> Deref for StateContainer<S, T>
-    where S : StateResolver<T>,
-          T : Clone,
+where
+    S: StateResolver<T>,
+    T: Clone,
 {
     type Target = S;
 
@@ -65,8 +67,9 @@ impl<S, T> Deref for StateContainer<S, T>
 }
 
 impl<S, T> DerefMut for StateContainer<S, T>
-where S : StateResolver<T>,
-      T : Clone,
+where
+    S: StateResolver<T>,
+    T: Clone,
 {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
@@ -74,8 +77,9 @@ where S : StateResolver<T>,
 }
 
 impl<S, T> Default for StateContainer<S, T>
-    where S : StateResolver<T> + Default,
-          T : Clone
+where
+    S: StateResolver<T> + Default,
+    T: Clone,
 {
     fn default() -> Self {
         StateContainer {
@@ -86,24 +90,26 @@ impl<S, T> Default for StateContainer<S, T>
 }
 
 impl<S, T> Serialize for StateContainer<S, T>
-where S : StateResolver<T> + Serialize,
-      T : Clone
+where
+    S: StateResolver<T> + Serialize,
+    T: Clone,
 {
     fn serialize<Se>(&self, serializer: Se) -> Result<Se::Ok, Se::Error>
     where
-        Se: Serializer
+        Se: Serializer,
     {
         self.inner.serialize(serializer)
     }
 }
 
 impl<'de, S, T> Deserialize<'de> for StateContainer<S, T>
-where S : StateResolver<T> + Deserialize<'de>,
-      T : Clone
+where
+    S: StateResolver<T> + Deserialize<'de>,
+    T: Clone,
 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
-        D: Deserializer<'de>
+        D: Deserializer<'de>,
     {
         Ok(StateContainer {
             inner: S::deserialize(deserializer)?,
@@ -113,8 +119,9 @@ where S : StateResolver<T> + Deserialize<'de>,
 }
 
 impl<S, T> From<S> for StateContainer<S, T>
-    where S : StateResolver<T>,
-          T : Clone,
+where
+    S: StateResolver<T>,
+    T: Clone,
 {
     fn from(value: S) -> Self {
         StateContainer {
@@ -125,8 +132,9 @@ impl<S, T> From<S> for StateContainer<S, T>
 }
 
 impl<S, T> Debug for StateContainer<S, T>
-where S : StateResolver<T> + Debug,
-      T : Clone
+where
+    S: StateResolver<T> + Debug,
+    T: Clone,
 {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Debug::fmt(&self.inner, f)

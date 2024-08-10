@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::exobiology::{Species, Variant};
+use serde::{Deserialize, Serialize};
 
 /// A confirmed location of a specific organic on a planet.
 #[derive(Debug, Serialize, Deserialize)]
