@@ -3,9 +3,9 @@ use std::path::Path;
 use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::journal::LiveJournalBufferError;
 use crate::journal::models::journal_event::JournalEvent;
 use crate::journal::shared::journal_buffer::LiveJournalBuffer;
+use crate::journal::LiveJournalBufferError;
 use crate::logs::blocking::{LogDirReader, LogDirReaderError};
 use crate::modules::journal::models::journal_event_kind::JournalEventKind;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
@@ -18,10 +18,10 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 ///
 /// ```rust
 /// # use std::env::current_dir;
-/// use std::path::PathBuf;
+/// use ed_journals::journal::auto_detect_journal_path;
 /// use ed_journals::journal::blocking::LiveJournalDirReader;
 ///
-/// let path = PathBuf::from("somePath");
+/// let path = auto_detect_journal_path();
 /// # let path = current_dir()
 /// #    .unwrap()
 /// #    .join("test-files")
@@ -44,13 +44,13 @@ pub struct LiveJournalDirReader {
 #[derive(Debug, Error)]
 pub enum JournalDirWatcherError {
     #[error(transparent)]
-    LogDirReaderError(#[from] LogDirReaderError),
+    LogDirReader(#[from] LogDirReaderError),
 
     #[error(transparent)]
-    LiveJournalBufferError(#[from] LiveJournalBufferError),
+    LiveJournalBuffer(#[from] LiveJournalBufferError),
 
     #[error(transparent)]
-    NotifyError(#[from] notify::Error),
+    Notify(#[from] notify::Error),
 }
 
 impl LiveJournalDirReader {

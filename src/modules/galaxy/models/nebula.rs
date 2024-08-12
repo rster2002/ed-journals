@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 
-use strum::{EnumIter, IntoEnumIterator};
 use crate::galaxy::GalacticDistance;
+use strum::{EnumIter, IntoEnumIterator};
 
 #[derive(Debug, EnumIter)]
 pub enum Nebula {
@@ -398,7 +398,10 @@ impl Nebula {
 
     /// Calculates the closest nebula to the given coordinates.
     pub fn closest_to(pos: [f32; 3]) -> Nebula {
-        let mut closest = (Nebula::AquilaDarkRegion, GalacticDistance::from_ly(f32::MAX));
+        let mut closest = (
+            Nebula::AquilaDarkRegion,
+            GalacticDistance::from_ly(f32::MAX),
+        );
 
         for nebula in Nebula::iter() {
             let distance = nebula.distance_to(pos);

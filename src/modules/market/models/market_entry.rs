@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::{Commodity, CommodityCategory};
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct MarketEntry {
     #[serde(rename = "id")]

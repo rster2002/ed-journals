@@ -188,10 +188,8 @@ pub struct ScanEventBeltCluster {}
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        modules::logs::content::log_event_content::scan_event::ScanEvent,
-    };
     use crate::galaxy::LocalDistance;
+    use crate::modules::logs::content::log_event_content::scan_event::ScanEvent;
 
     #[test]
     fn scan_event_is_parsed_correctly() {

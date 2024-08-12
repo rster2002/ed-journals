@@ -1,5 +1,5 @@
-use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
+use std::cmp::Ordering;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct GalacticDistance(f32);

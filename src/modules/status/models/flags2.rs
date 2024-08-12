@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// A second flags field which includes flags for the on-foot status of the player.
-#[derive(Debug, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct Flags2(u64);
 
 impl Flags2 {

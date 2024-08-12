@@ -6,10 +6,10 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase")]
 pub struct ApproachBodyEvent {
     /// The star system the approached body is part of.
-    star_system: String,
+    pub star_system: String,
 
     /// The name of the body which the player is approaching.
-    body: String,
+    pub body: String,
 }
 
 #[cfg(test)]
