@@ -4,7 +4,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierCrewServicesEvent {
-    /// The ID of the carrier of which the crew was changed.
+    /// The ID of the carrier of which the crew was changed. This is functionally the same as the
+    /// market id.
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
 
