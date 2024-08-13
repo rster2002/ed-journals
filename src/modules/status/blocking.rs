@@ -41,7 +41,7 @@ mod tests {
     fn none_status_file_is_parsed_correctly() {
         let file = test_root().join("json").join("StatusNone.json");
 
-        let string_contents = read_to_string(&file).unwrap();
+        let string_contents = read_to_string(file).unwrap();
 
         let status = serde_json::from_str::<Status>(&string_contents);
 
@@ -54,7 +54,7 @@ mod tests {
     fn supercruise_status_file_is_parsed_correctly() {
         let file = test_root().join("json").join("StatusSupercruise.json");
 
-        let string_contents = read_to_string(&file).unwrap();
+        let string_contents = read_to_string(file).unwrap();
 
         let status = serde_json::from_str::<Status>(&string_contents);
 
@@ -71,7 +71,7 @@ mod tests {
     fn landed_status_file_is_parsed_correctly() {
         let file = test_root().join("json").join("StatusLanded.json");
 
-        let string_contents = read_to_string(&file).unwrap();
+        let string_contents = read_to_string(file).unwrap();
 
         let status = serde_json::from_str::<Status>(&string_contents);
 
@@ -89,7 +89,7 @@ mod tests {
     fn srv_status_file_is_parsed_correctly() {
         let file = test_root().join("json").join("StatusSRV.json");
 
-        let string_contents = read_to_string(&file).unwrap();
+        let string_contents = read_to_string(file).unwrap();
 
         let status = serde_json::from_str::<Status>(&string_contents);
 
@@ -105,7 +105,7 @@ mod tests {
     fn on_foot_status_file_is_parsed_correctly() {
         let file = test_root().join("json").join("StatusOnFoot.json");
 
-        let string_contents = read_to_string(&file).unwrap();
+        let string_contents = read_to_string(file).unwrap();
 
         let status = serde_json::from_str::<Status>(&string_contents);
 

@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::trading::Commodity;
+use serde::{Deserialize, Serialize};
 
 /// Fired when the player collected a commodity.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
