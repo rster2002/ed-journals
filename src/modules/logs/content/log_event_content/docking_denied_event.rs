@@ -22,7 +22,7 @@ pub struct DockingDeniedEvent {
 
 /// The reason why the player was denied docking access.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase", untagged)]
+#[serde(rename_all = "PascalCase")]
 pub enum DockingDeniedReason {
     /// There are currently no landing pads available for the player to land on.
     NoSpace,
@@ -41,6 +41,9 @@ pub enum DockingDeniedReason {
 
     /// The player has an active fighter out.
     ActiveFighter,
+
+    /// The player does not have docking permissions for the given fleet carrier.
+    RestrictedAccess,
 
     /// The reason was not specified.
     NoReason,
