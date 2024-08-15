@@ -1,6 +1,8 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, PartialEq, Eq)]
+/// The current flags for the player. These flags are mostly for things that are related to
+/// the player's ship.
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct Flags(u64);
 
 impl Flags {
@@ -25,7 +27,7 @@ impl Flags {
         self.0 & 8 != 0
     }
 
-    /// Whether player is currently flight in supercruise.
+    /// Whether player is currently flying in supercruise.
     pub fn supercruise(&self) -> bool {
         self.0 & 16 != 0
     }
@@ -36,7 +38,7 @@ impl Flags {
     }
 
     // TODO check behaviour in SRV
-    /// Whether the hardpoints of the ship are deployed.
+    /// Whether the hardpoints of the ship are currently deployed.
     pub fn hardpoints_deployed(&self) -> bool {
         self.0 & 64 != 0
     }
@@ -169,6 +171,7 @@ impl Flags {
         self.0 & 1073741824 != 0
     }
 
+    /// Whether the SRV has the high beam lights active.
     pub fn srv_high_beam(&self) -> bool {
         self.0 & 2147483648 != 0
     }

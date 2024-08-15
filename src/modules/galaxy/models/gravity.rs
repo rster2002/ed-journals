@@ -1,5 +1,5 @@
-use std::fmt::Debug;
 use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
 
 /// Gravity in m/s².
 #[derive(Serialize, Deserialize, Clone, PartialEq)]

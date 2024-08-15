@@ -2,13 +2,12 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::exobiology::{Genus, Species, Variant};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanOrganicEvent {
     /// Possible values seem to be "Sample", "Analyze", "Log". It seems that the first scan for
-    /// a bio species uses `Sample`, then the second consists of two back to back events: one with
-    /// `Sample` and the one immediately after with `Analyze`. The contents seem to be the same. And
-    /// the third and last entry seems to be `Log`.
+    /// a bio species uses `Log`, then the second scan uses `Sample` The third one logs one `Sample`
+    /// entry and immediately followed with `Analyze`. The contents seem to be the same.
     pub scan_type: ScanOrganicEventScanType,
     pub genus: Genus,
 

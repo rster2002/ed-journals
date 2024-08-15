@@ -1,21 +1,33 @@
 use std::collections::HashMap;
 
+use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
 use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use crate::logs::scan_event::ScanEventKind;
+use crate::logs::scan_event::{ScanEvent, ScanEventKind};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
-use crate::state::models::planet_state::planet_species_entry::PlanetSpeciesEntry;
-use crate::state::models::planet_state::PlanetState;
+use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::PlanetSpeciesEntry;
+use crate::state::traits::state_resolver::StateResolver;
+use crate::state::PlanetState;
 
 #[derive(Serialize)]
-pub struct SystemState {
+pub struct SystemStateResolver {
+    /// Information about the system.
     pub location_info: LocationInfo,
-    pub bodies: HashMap<u8, PlanetState>,
+
+    /// Entries for state for planets in the system.
+    pub planet_state: HashMap<u8, PlanetState>,
+
+    /// Scans for each star in the system.
+    pub star_scans: HashMap<u8, ScanEvent>,
+
+    /// Scans for each cluster in the system.
+    pub belt_scans: HashMap<u8, ScanEvent>,
+
     pub visits: Vec<DateTime<Utc>>,
     pub carrier_visits: Vec<DateTime<Utc>>,
     pub number_of_bodies: Option<u8>,
@@ -25,9 +37,9 @@ pub struct SystemState {
     pub exobiology_system: TargetSystem,
 }
 
-impl SystemState {
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
-        let Some(system_address) = log_event.content.system_address() else {
+impl StateResolver<LogEvent> for SystemStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        let Some(system_address) = input.content.system_address() else {
             return FeedResult::Skipped;
         };
 
@@ -35,7 +47,7 @@ impl SystemState {
             return FeedResult::Skipped;
         }
 
-        match &log_event.content {
+        match &input.content {
             LogEventContent::FSSDiscoveryScan(event) => {
                 self.number_of_bodies = Some(event.body_count);
                 self.progress = event.progress;
@@ -49,35 +61,49 @@ impl SystemState {
                     self.station_signals.push(event.clone());
                 }
             }
-            LogEventContent::Scan(event) => match &event.kind {
-                ScanEventKind::Star(star) => {
-                    self.exobiology_system.stars_in_system.insert(
-                        event.body_id,
-                        SpawnSourceStar {
-                            class: star.star_type.clone(),
-                            luminosity: star.luminosity.clone(),
-                        },
-                    );
-                }
-                ScanEventKind::Planet(planet) => {
-                    self.bodies
-                        .entry(event.body_id)
-                        .or_insert_with(|| PlanetState::from((event, planet)));
+            LogEventContent::Scan(event) => {
+                match &event.kind {
+                    ScanEventKind::Star(star) => {
+                        self.exobiology_system.stars_in_system.insert(
+                            event.body_id,
+                            SpawnSourceStar {
+                                class: star.star_type.clone(),
+                                luminosity: star.luminosity.clone(),
+                            },
+                        );
 
-                    self.exobiology_system
-                        .planet_classes_in_system
-                        .insert(planet.planet_class.clone());
+                        self.star_scans.insert(event.body_id, event.clone());
+                    }
+                    ScanEventKind::Planet(planet) => {
+                        self.planet_state
+                            .entry(event.body_id)
+                            .or_insert_with(|| PlanetState::from((event, planet)));
+
+                        self.exobiology_system
+                            .planet_classes_in_system
+                            .insert(planet.planet_class.clone());
+                    }
+                    ScanEventKind::BeltCluster(_) => {
+                        self.belt_scans.insert(event.body_id, event.clone());
+                    }
                 }
-                ScanEventKind::BeltCluster(_) => {}
-            },
+
+                if let Some(total_bodies) = self.number_of_bodies {
+                    let new_factor = self.nr_of_scanned_bodies() as f32 / total_bodies as f32;
+
+                    if new_factor > self.progress {
+                        self.progress = new_factor;
+                    }
+                }
+            }
 
             _ => {
-                if let Some(body_id) = log_event.content.body_id() {
-                    let Some(body) = self.bodies.get_mut(&body_id) else {
+                if let Some(body_id) = input.content.body_id() {
+                    let Some(body) = self.planet_state.get_mut(&body_id) else {
                         return FeedResult::Later;
                     };
 
-                    return body.feed_log_event(log_event);
+                    body.feed(input);
                 }
             }
         }
@@ -85,8 +111,47 @@ impl SystemState {
         FeedResult::Accepted
     }
 
+    fn flush_inner(&mut self) {
+        for body in self.planet_state.values_mut() {
+            body.flush_inner();
+        }
+    }
+}
+
+impl SystemStateResolver {
     pub fn visit(&mut self, date_time: &DateTime<Utc>) {
         self.visits.push(*date_time);
+    }
+
+    /// Returns the total number of scans, which includes planets, stars and belt clusters.
+    pub fn nr_of_scans(&self) -> usize {
+        self.planet_state.len() + self.star_scans.len() + self.belt_scans.len()
+    }
+
+    /// Returns the total number of scanned bodies, which includes planets and stars. Take note
+    /// that this does not include scanned belt clusters as they are not counted towards the total
+    /// number of scanned bodies in game.
+    pub fn nr_of_scanned_bodies(&self) -> usize {
+        self.planet_state.len() + self.star_scans.len()
+    }
+
+    /// Returns all the scan events for this system.
+    pub fn all_scans(&self) -> Vec<&ScanEvent> {
+        let mut result = Vec::with_capacity(self.nr_of_scans());
+
+        for planet in self.planet_state.values() {
+            result.push(&planet.scan);
+        }
+
+        for star_scan in self.star_scans.values() {
+            result.push(star_scan)
+        }
+
+        for belt_scan in self.belt_scans.values() {
+            result.push(belt_scan)
+        }
+
+        result
     }
 
     pub fn carrier_visit(&mut self, date_time: &DateTime<Utc>) {
@@ -101,30 +166,10 @@ impl SystemState {
 
     pub fn get_possible_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
         Some(
-            self.bodies
+            self.planet_state
                 .get(&body_id)?
                 .get_possible_planet_species(&self.exobiology_system),
         )
-    }
-}
-
-impl From<&LocationInfo> for SystemState {
-    fn from(value: &LocationInfo) -> Self {
-        SystemState {
-            location_info: value.clone(),
-            bodies: HashMap::new(),
-            visits: Vec::new(),
-            carrier_visits: Vec::new(),
-            number_of_bodies: None,
-            progress: 0.0,
-            all_found: false,
-            station_signals: Vec::new(),
-            exobiology_system: TargetSystem {
-                star_system_position: value.star_pos,
-                planet_classes_in_system: Default::default(),
-                stars_in_system: Default::default(),
-            },
-        }
     }
 }
 
@@ -132,10 +177,9 @@ impl From<&LocationInfo> for SystemState {
 mod tests {
     use std::env::current_dir;
 
-    use strum::IntoEnumIterator;
-
-    use crate::exobiology::Species;
+    use crate::exobiology::SpawnSource;
     use crate::logs::blocking::LogDirReader;
+    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
 
     const KNOWN_SPECIES: &[(u64, u8, &[Species])] = &[
@@ -221,10 +265,10 @@ mod tests {
 
         let log_dir = LogDirReader::open(dir_path);
 
-        let mut state = GameState::new();
+        let mut state = GameState::default();
 
         for entry in log_dir {
-            state.feed_log_event(&entry.unwrap());
+            state.feed(&entry.unwrap());
         }
 
         state.flush();

@@ -247,7 +247,7 @@ use crate::logs::content::log_event_content::community_goal_event::CommunityGoal
 use crate::logs::content::log_event_content::ship_redeemed::ShipRedeemed;
 use crate::logs::content::log_event_content::shipyard_redeem::ShipyardRedeem;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
-use crate::modules::small::SmallSystemInfo;
+use crate::modules::partials::PartialSystemInfo;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -860,21 +860,20 @@ impl LogEventContent {
         })
     }
 
-    pub fn small_system_info(&self) -> Option<SmallSystemInfo> {
-        match (self.system_address(), self.star_name()) {
-            (Some(system_address), Some(star_name)) => Some(SmallSystemInfo {
-                system_address,
-                star_name: star_name.to_string(),
-            }),
-            (_, _) => None,
-        }
+    pub fn small_system_info(&self) -> Option<PartialSystemInfo> {
+        let system_address = self.system_address()?;
+        let star_name = self.star_name()?;
+
+        Some(PartialSystemInfo {
+            system_address,
+            star_name: star_name.to_string(),
+        })
     }
 
     pub fn body_id(&self) -> Option<u8> {
         Some(match self {
             LogEventContent::Location(event) => event.location_info.body_id,
             LogEventContent::FSDJump(event) => event.system_info.body_id,
-            LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
@@ -888,7 +887,6 @@ impl LogEventContent {
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::ScanOrganic(event) => event.body,
-            LogEventContent::Touchdown(event) => event.body_id,
             _ => return None,
         })
     }
@@ -897,7 +895,6 @@ impl LogEventContent {
         Some(match self {
             LogEventContent::Location(event) => &event.location_info.body,
             LogEventContent::FSDJump(event) => &event.system_info.body,
-            LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::ApproachSettlement(event) => &event.body_name,
             LogEventContent::CarrierJumpRequest(event) => match &event.body {

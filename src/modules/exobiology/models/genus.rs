@@ -273,7 +273,7 @@ impl Display for Genus {
 
 impl Genus {
     /// The minimum distance in meters required between two samples.
-    pub fn minimum_distance(&self) -> u16 {
+    pub fn minimum_distance(&self) -> u32 {
         match self {
             Genus::Aleoida => 150,
             Genus::AmphoraPlant => 100,

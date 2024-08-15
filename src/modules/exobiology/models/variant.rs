@@ -4,15 +4,15 @@ use std::str::FromStr;
 
 use lazy_static::lazy_static;
 use regex::Regex;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
-use crate::from_str_deserialize_impl;
+use crate::deserialize_in_order_impl;
 use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
 pub struct Variant {
     pub species: Species,
     pub color: VariantColor,
@@ -62,12 +62,11 @@ impl FromStr for Variant {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Ok(species) = Species::from_str(s) {
-            if NONE_VARIANTS.contains(&species) {
-                return Ok(Variant {
-                    species,
-                    color: VariantColor::None,
-                });
-            }
+            return Ok(Variant {
+                species,
+                color: VariantColor::None,
+            });
+        }
 
             return Err(VariantError::FailedToParse(s.to_string()));
         }
@@ -97,7 +96,26 @@ impl FromStr for Variant {
     }
 }
 
-from_str_deserialize_impl!(Variant);
+#[derive(Deserialize)]
+struct VariantInput {
+    pub species: Species,
+    pub color: VariantColor,
+}
+
+impl From<VariantInput> for Variant {
+    fn from(value: VariantInput) -> Self {
+        Variant {
+            species: value.species,
+            color: value.color,
+        }
+    }
+}
+
+deserialize_in_order_impl!(
+    Variant =>
+        A # String,
+        B ! VariantInput,
+);
 
 impl Display for Variant {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -166,7 +184,7 @@ mod tests {
     #[test]
     fn variants_test_file_entries_all_parse() {
         let content = include_str!("zz_variants.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {
@@ -184,7 +202,7 @@ mod tests {
     #[test]
     fn variants_datadump_test_file_entries_all_parse() {
         let content = include_str!("zz_datamined_variants.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {

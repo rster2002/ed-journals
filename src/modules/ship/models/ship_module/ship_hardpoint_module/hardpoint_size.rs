@@ -89,7 +89,7 @@ impl TryFrom<u8> for HardpointSize {
             2 => HardpointSize::Medium,
             3 => HardpointSize::Large,
             4 => HardpointSize::Huge,
-            _  => return Err(HardpointSizeError::UnknownHardpointSizeNumber(value)),
+            _ => return Err(HardpointSizeError::UnknownHardpointSizeNumber(value)),
         })
     }
 }

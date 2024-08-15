@@ -2,6 +2,7 @@ use crate::galaxy::{
     Atmosphere, Gravity, LocalDistance, PlanetClass, PlanetComposition, Volcanism,
 };
 use crate::logs::scan_event::ScanEventParent;
+use crate::logs::scan_event::ScanEventParent;
 use crate::materials::Material;
 use serde::Serialize;
 use std::collections::HashSet;
