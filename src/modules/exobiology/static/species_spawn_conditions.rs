@@ -1,4 +1,3 @@
-use std::any;
 
 use lazy_static::lazy_static;
 
@@ -2029,7 +2028,7 @@ mod tests {
     use std::env::current_dir;
     use std::fs::File;
     use crate::exobiology::{SpawnCondition, Species};
-    use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, BodyType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
+    use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
     const ALL_CSV_FILES: &[&str] = &[
         "aleoida-arcus.csv",
@@ -2151,7 +2150,6 @@ mod tests {
         let mut csv_reader = csv::Reader::from_reader(file);
 
         csv_reader.records()
-            .into_iter()
             .filter_map(|record| {
                 match record {
                     Ok(record) => Some(PlanetDetails {
@@ -2215,7 +2213,7 @@ mod tests {
             entry_count += 1;
             expect_success.insert(case.name.to_string());
 
-            if !check_spawn_condition(&spawn_conditions, &case) {
+            if !check_spawn_condition(spawn_conditions, &case) {
                 failed_cases.push(case);
             }
         }
@@ -2240,7 +2238,7 @@ mod tests {
 
                 exclude_entry_count += 1;
 
-                if check_spawn_condition(&spawn_conditions, &case) {
+                if check_spawn_condition(spawn_conditions, &case) {
                     succeeded.push(case);
                 }
             }
@@ -2254,15 +2252,15 @@ mod tests {
         // 0.5% of cases are allowed to fail
         if failed_ratio >= 0.005 {
             dbg!(failed_cases.get(1));
-            assert!(false);
+            panic!("Too many failed test cases");
         }
 
         // 25% of cases are allowed to succeed. Some species just have some overlap for spawning
         // conditions so best to not worry too much about this number. It's much more important to
         // make sure none of the actual cases fail.
         if false_pos_ratio >= 0.25 {
-            dbg!(succeeded.get(0));
-            assert!(false);
+            dbg!(succeeded.first());
+            panic!("Too many false positives");
         }
     }
 
@@ -2323,7 +2321,7 @@ mod tests {
                 &planet_details.volcanism.kind == volcanism
             }
             SpawnCondition::AnyVolcanism => {
-                &planet_details.volcanism.kind != &VolcanismType::None
+                planet_details.volcanism.kind != VolcanismType::None
             }
             SpawnCondition::MinPressure(min_pressure) => {
                 &planet_details.pressure >= min_pressure
@@ -2332,7 +2330,7 @@ mod tests {
                 &planet_details.pressure <= max_pressure
             }
             SpawnCondition::Region(region) => {
-                &planet_details.region == region || &planet_details.region == &Region::Unknown
+                &planet_details.region == region || planet_details.region == Region::Unknown
             }
             SpawnCondition::Special => false,
             SpawnCondition::Any(conditions) => {

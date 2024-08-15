@@ -760,8 +760,7 @@ mod tests {
         for species in Species::iter() {
             assert!(SPECIES_SPAWN_CONDITIONS
                 .iter()
-                .find(|(s, _)| *s == species)
-                .is_some());
+                .any(|(s, _)| *s == species));
         }
     }
 }

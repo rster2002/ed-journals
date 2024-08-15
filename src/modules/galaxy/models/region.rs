@@ -2,7 +2,6 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use thiserror::Error;
 use crate::exploration::r#static::region::REGION_MAP;
 use crate::exploration::r#static::region_map::REGIONS;
 

@@ -5,13 +5,12 @@ use std::collections::HashSet;
 
 use crate::exobiology::{SpawnSource, TargetPlanet, TargetSystem};
 use crate::exploration::{CodexEntry, PlanetarySignalType};
-use crate::galaxy::LocalDistance;
 use serde::Serialize;
 use thiserror::Error;
 
 use crate::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use crate::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use crate::logs::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet};
+use crate::logs::scan_event::ScanEvent;
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::logs::touchdown_event::TouchdownEvent;
 use crate::logs::{LogEvent, LogEventContent};

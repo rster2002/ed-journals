@@ -175,9 +175,8 @@ impl SystemStateResolver {
 mod tests {
     use std::env::current_dir;
 
-    use crate::exobiology::{SpawnSource, Species};
+    use crate::exobiology::Species;
     use crate::logs::blocking::LogDirReader;
-    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
 
     const KNOWN_SPECIES: &[(u64, u8, &[Species])] = &[
@@ -288,8 +287,7 @@ mod tests {
                 for possible in &possible_species {
                     let found = expected.2
                         .iter()
-                        .find(|species| species == &&possible.specie)
-                        .is_some();
+                        .any(|species| species == &possible.specie);
 
                     // Checks that all the actual species are in the list
                     assert!(found);
@@ -298,8 +296,7 @@ mod tests {
                 for expected in expected.2 {
                     let found = possible_species
                         .iter()
-                        .find(|entry| &entry.specie == expected)
-                        .is_some();
+                        .any(|entry| &entry.specie == expected);
 
                     // Check that all the expected entries are in the list
                     assert!(found);
