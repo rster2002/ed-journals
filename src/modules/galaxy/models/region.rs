@@ -1,9 +1,9 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
 use crate::exploration::r#static::region::REGION_MAP;
 use crate::exploration::r#static::region_map::REGIONS;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Region {
@@ -226,50 +226,54 @@ impl Region {
 
 impl Display for Region {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Region::Unknown => "Unknown",
-            Region::GalacticCenter => "Galactic Center",
-            Region::EmpyreonStraits => "Empyreon Straits",
-            Region::RykersHope => "Rykers Hope",
-            Region::OdinsHold => "Odins Hold",
-            Region::NormaArm => "Norma Arm",
-            Region::ArcadianStream => "Arcadian Stream",
-            Region::Izanami => "Izanami",
-            Region::InnerOrionPerseusConflux => "Inner Orion-PerseusC onflux",
-            Region::InnerScutumCentaurusArm => "Inner Scutum-Centaurus Arm",
-            Region::NormaExpanse => "Norma Expanse",
-            Region::TrojanBelt => "Trojan Belt",
-            Region::TheVeils => "The Veils",
-            Region::NewtonsVault => "Newton's Vault",
-            Region::TheConduit => "The Conduit",
-            Region::OuterOrionPerseusConflux => "Outer Orion-Perseus Conflux",
-            Region::OrionCygnusArm => "Orion-Cygnus Arm",
-            Region::Temple => "Temple",
-            Region::InnerOrionSpur => "Inner Orion Spur",
-            Region::HawkingsGap => "Hawking's Gap",
-            Region::DrymansPoint => "Dryman's Point",
-            Region::SagittariusCarinaArm => "Sagittarius-Carina Arm",
-            Region::MareSomnia => "Mare Somnia",
-            Region::Acheron => "Acheron",
-            Region::FormorianFrontier => "Formorian Frontier",
-            Region::HieronymusDelta => "Hieronymus Delta",
-            Region::OuterScutumCentaurusArm => "Outer Scutum-Centaurus Arm",
-            Region::OuterArm => "Outer Arm",
-            Region::AquilasHalo => "Aquila's Halo",
-            Region::ErrantMarches => "Errant Marches",
-            Region::PerseusArm => "Perseus Arm",
-            Region::FormidineRift => "Formidine Rift",
-            Region::VulcanGate => "Vulcan Gate",
-            Region::ElysianShore => "Elysian Shore",
-            Region::SanguineousRim => "Sanguineous Rim",
-            Region::OuterOrionSpur => "Outer Orion Spur",
-            Region::AchillessAltar => "Achilles's Altar",
-            Region::Xibalba => "Xibalba",
-            Region::LysasSong => "Lysas Song",
-            Region::Tenebrae => "Tenebrae",
-            Region::TheAbyss => "The Abyss",
-            Region::KeplersCrest => "Kepler's Crest",
-            Region::TheVoid => "The Void",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                Region::Unknown => "Unknown",
+                Region::GalacticCenter => "Galactic Center",
+                Region::EmpyreonStraits => "Empyreon Straits",
+                Region::RykersHope => "Rykers Hope",
+                Region::OdinsHold => "Odins Hold",
+                Region::NormaArm => "Norma Arm",
+                Region::ArcadianStream => "Arcadian Stream",
+                Region::Izanami => "Izanami",
+                Region::InnerOrionPerseusConflux => "Inner Orion-PerseusC onflux",
+                Region::InnerScutumCentaurusArm => "Inner Scutum-Centaurus Arm",
+                Region::NormaExpanse => "Norma Expanse",
+                Region::TrojanBelt => "Trojan Belt",
+                Region::TheVeils => "The Veils",
+                Region::NewtonsVault => "Newton's Vault",
+                Region::TheConduit => "The Conduit",
+                Region::OuterOrionPerseusConflux => "Outer Orion-Perseus Conflux",
+                Region::OrionCygnusArm => "Orion-Cygnus Arm",
+                Region::Temple => "Temple",
+                Region::InnerOrionSpur => "Inner Orion Spur",
+                Region::HawkingsGap => "Hawking's Gap",
+                Region::DrymansPoint => "Dryman's Point",
+                Region::SagittariusCarinaArm => "Sagittarius-Carina Arm",
+                Region::MareSomnia => "Mare Somnia",
+                Region::Acheron => "Acheron",
+                Region::FormorianFrontier => "Formorian Frontier",
+                Region::HieronymusDelta => "Hieronymus Delta",
+                Region::OuterScutumCentaurusArm => "Outer Scutum-Centaurus Arm",
+                Region::OuterArm => "Outer Arm",
+                Region::AquilasHalo => "Aquila's Halo",
+                Region::ErrantMarches => "Errant Marches",
+                Region::PerseusArm => "Perseus Arm",
+                Region::FormidineRift => "Formidine Rift",
+                Region::VulcanGate => "Vulcan Gate",
+                Region::ElysianShore => "Elysian Shore",
+                Region::SanguineousRim => "Sanguineous Rim",
+                Region::OuterOrionSpur => "Outer Orion Spur",
+                Region::AchillessAltar => "Achilles's Altar",
+                Region::Xibalba => "Xibalba",
+                Region::LysasSong => "Lysas Song",
+                Region::Tenebrae => "Tenebrae",
+                Region::TheAbyss => "The Abyss",
+                Region::KeplersCrest => "Kepler's Crest",
+                Region::TheVoid => "The Void",
+            }
+        )
     }
 }

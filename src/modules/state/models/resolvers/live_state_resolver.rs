@@ -1,7 +1,6 @@
 pub mod organic_location;
 pub mod touchdown_location;
 
-use std::ops::Sub;
 use crate::backpack::Backpack;
 use crate::cargo::Cargo;
 use crate::journal::{JournalEvent, JournalEventKind};
@@ -19,6 +18,7 @@ use crate::state::traits::state_resolver::StateResolver;
 use crate::status::{PlanetStatus, ShipStatus, Status};
 use chrono::{DateTime, TimeDelta, Utc};
 use serde::{Deserialize, Serialize};
+use std::ops::Sub;
 
 /// Life state tracks state from the logs and combines them with state from live files like for
 /// example the status.json file to provide more context in some instances. Something that is
@@ -304,8 +304,7 @@ impl LiveStateResolver {
     }
 
     fn is_valid_live_state(live_timestamp: &DateTime<Utc>, log_timestamp: &DateTime<Utc>) -> bool {
-        let grace_period = TimeDelta::new(2, 0)
-            .expect("This should always complete");
+        let grace_period = TimeDelta::new(2, 0).expect("This should always complete");
 
         &log_timestamp.sub(grace_period) >= live_timestamp
     }

@@ -102,24 +102,21 @@ impl<'a> SpawnSource<'a> {
             SpawnCondition::MaterialPresence(material) => {
                 self.target_planet.materials.contains(material)
             }
-            SpawnCondition::RockyComposition => {
-                self.target_planet
-                    .composition
-                    .as_ref()
-                    .is_some_and(|composition| composition.rock > 0.0)
-            }
-            SpawnCondition::IcyComposition => {
-                self.target_planet
-                    .composition
-                    .as_ref()
-                    .is_some_and(|composition| composition.ice > 0.0)
-            }
-            SpawnCondition::MetalComposition => {
-                self.target_planet
-                    .composition
-                    .as_ref()
-                    .is_some_and(|composition| composition.metal > 0.0)
-            }
+            SpawnCondition::RockyComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.rock > 0.0),
+            SpawnCondition::IcyComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.ice > 0.0),
+            SpawnCondition::MetalComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.metal > 0.0),
             SpawnCondition::MinPressure(min_pressure) => {
                 &self.target_planet.pressure >= min_pressure
             }
@@ -127,8 +124,9 @@ impl<'a> SpawnSource<'a> {
                 &self.target_planet.pressure <= max_pressure
             }
             SpawnCondition::Region(region) => {
-                Region::from_pos(self.target_system.star_system_position)
-                    .is_some_and(|actual_region| &actual_region == region || actual_region == Region::Unknown)
+                Region::from_pos(self.target_system.star_system_position).is_some_and(
+                    |actual_region| &actual_region == region || actual_region == Region::Unknown,
+                )
             }
             SpawnCondition::Special => false,
 

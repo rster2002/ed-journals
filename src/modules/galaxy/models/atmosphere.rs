@@ -64,7 +64,8 @@ impl FromStr for Atmosphere {
             None => AtmosphereDensity::Normal,
         };
 
-        let kind = captures.get(4)
+        let kind = captures
+            .get(4)
             .expect("Should have been captured already")
             .as_str()
             .parse()
@@ -78,8 +79,8 @@ from_str_deserialize_impl!(Atmosphere);
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use crate::galaxy::Atmosphere;
+    use std::str::FromStr;
 
     #[test]
     fn atmosphere_test_cases_are_parsed_correctly() {
@@ -89,7 +90,7 @@ mod tests {
             "Thin Carbon dioxide-rich",
             "None",
             "thick  atmosphere", // Because of course this is in there
-            "", // WHY?!
+            "",                  // WHY?!
         ];
 
         for case in test_cases {

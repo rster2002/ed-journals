@@ -758,9 +758,7 @@ mod tests {
     #[test]
     fn all_species_have_matching_spawn_conditions() {
         for species in Species::iter() {
-            assert!(SPECIES_SPAWN_CONDITIONS
-                .iter()
-                .any(|(s, _)| *s == species));
+            assert!(SPECIES_SPAWN_CONDITIONS.iter().any(|(s, _)| *s == species));
         }
     }
 }

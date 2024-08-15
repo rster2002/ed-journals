@@ -36,7 +36,6 @@ pub enum VariantError {
 lazy_static! {
     static ref VARIANT_REGEX: Regex =
         Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap();
-
     static ref NONE_VARIANTS: HashSet<Species> = HashSet::from([
         Species::AnemoneLuteolum,
         Species::AnemonePuniceum,

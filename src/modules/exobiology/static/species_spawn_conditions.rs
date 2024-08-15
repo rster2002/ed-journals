@@ -1,4 +1,3 @@
-
 use lazy_static::lazy_static;
 
 use crate::exobiology::{SpawnCondition, Species};
@@ -2024,11 +2023,14 @@ lazy_static! {
 
 #[cfg(test)]
 mod tests {
+    use crate::exobiology::{SpawnCondition, Species};
+    use crate::galaxy::{
+        Atmosphere, AtmosphereDensity, AtmosphereType, Gravity, PlanetClass, Region, Volcanism,
+        VolcanismClassification, VolcanismType,
+    };
     use std::collections::HashSet;
     use std::env::current_dir;
     use std::fs::File;
-    use crate::exobiology::{SpawnCondition, Species};
-    use crate::galaxy::{Atmosphere, AtmosphereDensity, AtmosphereType, Gravity, PlanetClass, Region, Volcanism, VolcanismClassification, VolcanismType};
 
     const ALL_CSV_FILES: &[&str] = &[
         "aleoida-arcus.csv",
@@ -2144,53 +2146,37 @@ mod tests {
             .join("species-planets")
             .join(file_name);
 
-        let file = File::open(file_path)
-            .unwrap();
+        let file = File::open(file_path).unwrap();
 
         let mut csv_reader = csv::Reader::from_reader(file);
 
-        csv_reader.records()
-            .filter_map(|record| {
-                match record {
-                    Ok(record) => Some(PlanetDetails {
-                        name: record.get(10)
-                            .unwrap()
-                            .to_string(),
-                        temperature: record.get(16)?
-                            .parse()
-                            .ok()?,
-                        gravity: Gravity::from_g(
-                            record.get(15)?
-                                .parse::<f32>()
-                                .ok()?
-                        ),
-                        volcanism: match record.get(14)? {
-                            "No volcanism" => Volcanism {
-                                kind: VolcanismType::None,
-                                classification: VolcanismClassification::Minor,
-                            },
-                            volcanism => volcanism.parse()
-                                .unwrap()
+        csv_reader
+            .records()
+            .filter_map(|record| match record {
+                Ok(record) => Some(PlanetDetails {
+                    name: record.get(10).unwrap().to_string(),
+                    temperature: record.get(16)?.parse().ok()?,
+                    gravity: Gravity::from_g(record.get(15)?.parse::<f32>().ok()?),
+                    volcanism: match record.get(14)? {
+                        "No volcanism" => Volcanism {
+                            kind: VolcanismType::None,
+                            classification: VolcanismClassification::Minor,
                         },
-                        pressure: record.get(13)?
-                            .parse()
-                            .ok()?,
-                        atmosphere: match record.get(12)? {
-                            "No atmosphere" => Atmosphere {
-                                hot: false,
-                                density: AtmosphereDensity::Normal,
-                                kind: AtmosphereType::None,
-                            },
-                            atmosphere => atmosphere.parse()
-                                .unwrap(),
+                        volcanism => volcanism.parse().unwrap(),
+                    },
+                    pressure: record.get(13)?.parse().ok()?,
+                    atmosphere: match record.get(12)? {
+                        "No atmosphere" => Atmosphere {
+                            hot: false,
+                            density: AtmosphereDensity::Normal,
+                            kind: AtmosphereType::None,
                         },
-                        planet_class: record.get(11)?
-                            .parse()
-                            .unwrap(),
-                        region: Region::from_name(record.get(5)?),
-                    }),
-                    Err(_) => None
-                }
+                        atmosphere => atmosphere.parse().unwrap(),
+                    },
+                    planet_class: record.get(11)?.parse().unwrap(),
+                    region: Region::from_name(record.get(5)?),
+                }),
+                Err(_) => None,
             })
             .collect()
     }
@@ -2247,7 +2233,12 @@ mod tests {
         let failed_ratio = failed_cases.len() as f32 / entry_count as f32;
         let false_pos_ratio = succeeded.len() as f32 / exclude_entry_count as f32;
 
-        dbg!(&failed_ratio, &false_pos_ratio, expect_success.len(), skipped_expected);
+        dbg!(
+            &failed_ratio,
+            &false_pos_ratio,
+            expect_success.len(),
+            skipped_expected
+        );
 
         // 0.5% of cases are allowed to fail
         if failed_ratio >= 0.005 {
@@ -2287,14 +2278,13 @@ mod tests {
     //
     // }
 
-    fn check_spawn_condition(spawn_condition: &SpawnCondition, planet_details: &PlanetDetails) -> bool {
+    fn check_spawn_condition(
+        spawn_condition: &SpawnCondition,
+        planet_details: &PlanetDetails,
+    ) -> bool {
         match spawn_condition {
-            SpawnCondition::MinMeanTemperature(min) => {
-                &planet_details.temperature >= min
-            }
-            SpawnCondition::MaxMeanTemperature(max) => {
-                &planet_details.temperature <= max
-            }
+            SpawnCondition::MinMeanTemperature(min) => &planet_details.temperature >= min,
+            SpawnCondition::MaxMeanTemperature(max) => &planet_details.temperature <= max,
             SpawnCondition::NoAtmosphere => {
                 matches!(planet_details.atmosphere.kind, AtmosphereType::None)
             }
@@ -2317,30 +2307,20 @@ mod tests {
             SpawnCondition::MainStarClass(_) => true,
             // TODO
             SpawnCondition::ParentStarClass(_) => true,
-            SpawnCondition::VolcanismType(volcanism) => {
-                &planet_details.volcanism.kind == volcanism
-            }
-            SpawnCondition::AnyVolcanism => {
-                planet_details.volcanism.kind != VolcanismType::None
-            }
-            SpawnCondition::MinPressure(min_pressure) => {
-                &planet_details.pressure >= min_pressure
-            }
-            SpawnCondition::MaxPressure(max_pressure) => {
-                &planet_details.pressure <= max_pressure
-            }
+            SpawnCondition::VolcanismType(volcanism) => &planet_details.volcanism.kind == volcanism,
+            SpawnCondition::AnyVolcanism => planet_details.volcanism.kind != VolcanismType::None,
+            SpawnCondition::MinPressure(min_pressure) => &planet_details.pressure >= min_pressure,
+            SpawnCondition::MaxPressure(max_pressure) => &planet_details.pressure <= max_pressure,
             SpawnCondition::Region(region) => {
                 &planet_details.region == region || planet_details.region == Region::Unknown
             }
             SpawnCondition::Special => false,
-            SpawnCondition::Any(conditions) => {
-                conditions.iter()
-                    .any(|condition| check_spawn_condition(condition, planet_details))
-            }
-            SpawnCondition::All(conditions) => {
-                conditions.iter()
-                    .all(|condition| check_spawn_condition(condition, planet_details))
-            }
+            SpawnCondition::Any(conditions) => conditions
+                .iter()
+                .any(|condition| check_spawn_condition(condition, planet_details)),
+            SpawnCondition::All(conditions) => conditions
+                .iter()
+                .all(|condition| check_spawn_condition(condition, planet_details)),
             _ => true,
         }
     }

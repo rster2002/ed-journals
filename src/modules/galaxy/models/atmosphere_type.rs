@@ -1,8 +1,8 @@
 use std::str::FromStr;
 
+use crate::from_str_deserialize_impl;
 use serde::Serialize;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum AtmosphereType {
@@ -51,7 +51,9 @@ impl FromStr for AtmosphereType {
             "nitrogen" => AtmosphereType::Nitrogen,
             "ammonia rich" | "ammoniarich" | "ammonia-rich" => AtmosphereType::AmmoniaRich,
             "neon" => AtmosphereType::Neon,
-            "carbon dioxide rich" | "carbondioxiderich" | "carbon dioxide-rich" => AtmosphereType::CarbonDioxideRich,
+            "carbon dioxide rich" | "carbondioxiderich" | "carbon dioxide-rich" => {
+                AtmosphereType::CarbonDioxideRich
+            }
             "methane" => AtmosphereType::Methane,
             "water rich" | "waterrich" | "water-rich" => AtmosphereType::WaterRich,
             "carbon dioxide" | "carbondioxide" => AtmosphereType::CarbonDioxide,
@@ -64,7 +66,9 @@ impl FromStr for AtmosphereType {
             "neon rich" | "neonrich" | "neon-rich" => AtmosphereType::NeonRich,
             "oxygen" => AtmosphereType::Oxygen,
             "ammonia oxygen" | "ammoniaoxygen" => AtmosphereType::AmmoniaOxygen,
-            "sulphur dioxide" | "sulphurdioxide" | "sulfur dioxide" | "sulfurdioxide" => AtmosphereType::SulfurDioxide,
+            "sulphur dioxide" | "sulphurdioxide" | "sulfur dioxide" | "sulfurdioxide" => {
+                AtmosphereType::SulfurDioxide
+            }
             "metallic vapour" | "metallicvapour" => AtmosphereType::MetallicVapour,
 
             #[cfg(feature = "strict")]

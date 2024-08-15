@@ -1,4 +1,5 @@
 use crate::exobiology::TargetPlanet;
+use crate::galaxy::LocalDistance;
 use crate::logs::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet};
 use crate::logs::LogEvent;
 use crate::state::models::resolvers::planet_state_resolver::{
@@ -6,7 +7,6 @@ use crate::state::models::resolvers::planet_state_resolver::{
 };
 use crate::state::models::state_container::StateContainer;
 use std::collections::HashSet;
-use crate::galaxy::LocalDistance;
 
 pub type PlanetState = StateContainer<PlanetStateResolver, LogEvent>;
 

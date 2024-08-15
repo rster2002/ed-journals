@@ -178,7 +178,10 @@ impl PlanetStateResolver {
 
     /// Returns `Some(Vec)` of possible spawnable entries and returns `None` if there are no
     /// biological signals on the planet.
-    pub fn get_planet_species(&self, target_system: &TargetSystem) -> Option<Vec<PlanetSpeciesEntry>> {
+    pub fn get_planet_species(
+        &self,
+        target_system: &TargetSystem,
+    ) -> Option<Vec<PlanetSpeciesEntry>> {
         if !self.has_biological_signals() {
             return None;
         }
@@ -189,7 +192,10 @@ impl PlanetStateResolver {
     /// Returns entries for all species that could theoretically spawn on the planet and indicates
     /// if they can actually spawn or not. This does not check if there even are any biological
     /// signals on the planet.
-    pub fn get_possible_planet_species(&self, target_system: &TargetSystem) -> Vec<PlanetSpeciesEntry> {
+    pub fn get_possible_planet_species(
+        &self,
+        target_system: &TargetSystem,
+    ) -> Vec<PlanetSpeciesEntry> {
         let spawn_source = SpawnSource {
             target_system,
             target_planet: &self.exobiology_body,
@@ -260,8 +266,7 @@ impl PlanetStateResolver {
     /// signals for the planet. If the signals are not known or if there are no biological signals
     /// on the planet, the function returns `None`.
     pub fn all_species_scanned(&self) -> Option<bool> {
-        let signals = self.signal_counts
-            .as_ref()?;
+        let signals = self.signal_counts.as_ref()?;
 
         if signals.biological_signal_count == 0 {
             return None;

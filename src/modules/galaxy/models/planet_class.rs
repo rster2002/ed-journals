@@ -1,9 +1,9 @@
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum PlanetClass {
@@ -55,7 +55,8 @@ impl FromStr for PlanetClass {
             return Err(PlanetClassError::FailedToParse(s.to_string()));
         };
 
-        let class_name: &str = &captures.get(1)
+        let class_name: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -122,14 +123,12 @@ impl PlanetClass {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use crate::galaxy::PlanetClass;
+    use std::str::FromStr;
 
     #[test]
     fn planet_class_test_cases_are_parsed_correctly() {
-        let test_cases = [
-            "rocky body",
-        ];
+        let test_cases = ["rocky body"];
 
         for case in test_cases {
             let result = PlanetClass::from_str(case);

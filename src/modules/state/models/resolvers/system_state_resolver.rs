@@ -1,16 +1,16 @@
 use std::collections::HashMap;
 
-use chrono::{DateTime, Utc};
-use serde::Serialize;
 use crate::exobiology::{SpawnSourceStar, TargetSystem};
-use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use crate::logs::scan_event::{ScanEvent, ScanEventKind};
+use crate::logs::{LogEvent, LogEventContent};
 use crate::modules::civilization::LocationInfo;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::PlanetSpeciesEntry;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::PlanetState;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct SystemStateResolver {
@@ -180,77 +180,112 @@ mod tests {
     use crate::state::GameState;
 
     const KNOWN_SPECIES: &[(u64, u8, &[Species])] = &[
-        (2874004872433, 17, &[
-            Species::BacteriumVesicula,
-            Species::FonticuluaCampestris,
-        ]),
-        (1247495096115, 20, &[
-            Species::BacteriumCerbrus,
-            Species::BacteriumTela,
-            Species::StratumTectonicas,
-        ]),
-        (5071685950649, 10, &[
-            Species::BacteriumCerbrus,
-            Species::BacteriumTela,
-            Species::StratumTectonicas,
-        ]),
-        (1487946155795, 15, &[
-            Species::BacteriumAurasus,
-            Species::ConchaLabiata,
-            Species::StratumPaleas,
-            Species::TubusConifer,
-        ]),
-        (1487946155795, 16, &[
-            Species::BacteriumAurasus,
-            Species::ConchaLabiata,
-            Species::StratumPaleas,
-            Species::TubusConifer,
-            // This seems anomalous, but cannot confirm. The species failure is 0.03% so ¯\_(ツ)_/¯
-            // Species::TussockIgnis,
-        ]),
-        (1487946155795, 28, &[
-            Species::BacteriumVesicula,
-            Species::FonticuluaCampestris,
-        ]),
-        (1487811905211, 15, &[
-            Species::BacteriumCerbrus,
-            Species::StratumAraneamus,
-        ]),
-        (1487811905211, 25, &[
-            Species::AleoidaSpica,
-            Species::BacteriumAlcyoneum,
-            Species::ConchaAureolas,
-            Species::FungoidaGelata,
-            Species::FungoidaSetisis,
-            Species::OsseusSpiralis,
-            Species::StratumPaleas,
-            Species::TussockDivisa,
-        ]),
-        (1487811905211, 27, &[
-            Species::BacteriumAlcyoneum,
-            Species::ConchaAureolas,
-            Species::FungoidaGelata,
-            Species::FungoidaSetisis,
-            Species::OsseusSpiralis,
-            Species::TussockDivisa,
-        ]),
-        (147379439083, 46, &[
-            Species::BacteriumAlcyoneum,
-            Species::ConchaAureolas,
-            Species::FrutexaFlabellum,
-            Species::FungoidaGelata,
-            Species::FungoidaSetisis,
-            Species::OsseusSpiralis,
-            Species::StratumPaleas,
-        ]),
-        (147379439083, 47, &[
-            Species::BacteriumAlcyoneum,
-            Species::ConchaAureolas,
-            Species::FrutexaFlabellum,
-            Species::FungoidaGelata,
-            Species::FungoidaSetisis,
-            Species::OsseusSpiralis,
-        ]),
+        (
+            2874004872433,
+            17,
+            &[Species::BacteriumVesicula, Species::FonticuluaCampestris],
+        ),
+        (
+            1247495096115,
+            20,
+            &[
+                Species::BacteriumCerbrus,
+                Species::BacteriumTela,
+                Species::StratumTectonicas,
+            ],
+        ),
+        (
+            5071685950649,
+            10,
+            &[
+                Species::BacteriumCerbrus,
+                Species::BacteriumTela,
+                Species::StratumTectonicas,
+            ],
+        ),
+        (
+            1487946155795,
+            15,
+            &[
+                Species::BacteriumAurasus,
+                Species::ConchaLabiata,
+                Species::StratumPaleas,
+                Species::TubusConifer,
+            ],
+        ),
+        (
+            1487946155795,
+            16,
+            &[
+                Species::BacteriumAurasus,
+                Species::ConchaLabiata,
+                Species::StratumPaleas,
+                Species::TubusConifer,
+                // This seems anomalous, but cannot confirm. The species failure is 0.03% so ¯\_(ツ)_/¯
+                // Species::TussockIgnis,
+            ],
+        ),
+        (
+            1487946155795,
+            28,
+            &[Species::BacteriumVesicula, Species::FonticuluaCampestris],
+        ),
+        (
+            1487811905211,
+            15,
+            &[Species::BacteriumCerbrus, Species::StratumAraneamus],
+        ),
+        (
+            1487811905211,
+            25,
+            &[
+                Species::AleoidaSpica,
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::StratumPaleas,
+                Species::TussockDivisa,
+            ],
+        ),
+        (
+            1487811905211,
+            27,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::TussockDivisa,
+            ],
+        ),
+        (
+            147379439083,
+            46,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FrutexaFlabellum,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::StratumPaleas,
+            ],
+        ),
+        (
+            147379439083,
+            47,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FrutexaFlabellum,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+            ],
+        ),
     ];
 
     #[test]
@@ -277,17 +312,18 @@ mod tests {
                     continue;
                 };
 
-                let possible_species = system.get_possible_spawnable_species(expected.1)
-                    .unwrap();
+                let possible_species = system.get_possible_spawnable_species(expected.1).unwrap();
 
-                dbg!(&system.planet_state.get(&expected.1).unwrap().scan, &possible_species, &expected);
+                dbg!(
+                    &system.planet_state.get(&expected.1).unwrap().scan,
+                    &possible_species,
+                    &expected
+                );
 
                 assert_eq!(possible_species.len(), expected.2.len());
 
                 for possible in &possible_species {
-                    let found = expected.2
-                        .iter()
-                        .any(|species| species == &possible.specie);
+                    let found = expected.2.iter().any(|species| species == &possible.specie);
 
                     // Checks that all the actual species are in the list
                     assert!(found);
@@ -303,7 +339,5 @@ mod tests {
                 }
             }
         }
-
-
     }
 }
