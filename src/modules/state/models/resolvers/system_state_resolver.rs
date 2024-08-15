@@ -1,9 +1,7 @@
 use std::collections::HashMap;
 
-use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
-
 use crate::exobiology::{SpawnSourceStar, TargetSystem};
 use crate::logs::{LogEvent, LogEventContent};
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
@@ -159,7 +157,7 @@ impl SystemStateResolver {
     }
 
     pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
-        self.bodies
+        self.planet_state
             .get(&body_id)?
             .get_planet_species(&self.exobiology_system)
     }
@@ -177,7 +175,7 @@ impl SystemStateResolver {
 mod tests {
     use std::env::current_dir;
 
-    use crate::exobiology::SpawnSource;
+    use crate::exobiology::{SpawnSource, Species};
     use crate::logs::blocking::LogDirReader;
     use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
@@ -283,7 +281,7 @@ mod tests {
                 let possible_species = system.get_possible_spawnable_species(expected.1)
                     .unwrap();
 
-                dbg!(&system.bodies.get(&expected.1).unwrap().scan, &possible_species, &expected);
+                dbg!(&system.planet_state.get(&expected.1).unwrap().scan, &possible_species, &expected);
 
                 assert_eq!(possible_species.len(), expected.2.len());
 

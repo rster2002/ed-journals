@@ -78,9 +78,9 @@ impl FromStr for PlanetClass {
             "class i gas giant" => PlanetClass::ClassIGasGiant,
 
             "sudarsky class i gas giant" => PlanetClass::SudarskyClassIGasGiant,
-            "sudarsky class ii gas giant" => PlanetClass::SudarskyClassIiGasGiant,
-            "sudarsky class iii gas giant" => PlanetClass::SudarskyClassIiiGasGiant,
-            "sudarsky class iv gas giant" => PlanetClass::SudarskyClassIvGasGiant,
+            "sudarsky class ii gas giant" => PlanetClass::SudarskyClassIIGasGiant,
+            "sudarsky class iii gas giant" => PlanetClass::SudarskyClassIIIGasGiant,
+            "sudarsky class iv gas giant" => PlanetClass::SudarskyClassIVGasGiant,
             "sudarsky class v gas giant" => PlanetClass::SudarskyClassVGasGiant,
             "helium rich gas giant" => PlanetClass::HeliumRichGasGiant,
             "helium gas giant" => PlanetClass::HeliumGasGiant,

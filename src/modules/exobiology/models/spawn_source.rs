@@ -8,12 +8,7 @@ use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
 use crate::exobiology::models::spawn_source::target_planet::TargetPlanet;
 use crate::exobiology::models::spawn_source::target_system::TargetSystem;
 use crate::exobiology::{SpawnCondition, Species};
-use crate::galaxy::{
-    Atmosphere, AtmosphereDensity, AtmosphereType, Nebula, PlanetClass, PlanetComposition, Region,
-    StarClass, StarLuminosity, Volcanism, VolcanismType,
-};
-use crate::logs::scan_event::ScanEventParent;
-use crate::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, VolcanismType};
+use crate::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, Region, VolcanismType};
 use crate::logs::scan_event::ScanEventParent;
 
 #[derive(Debug)]

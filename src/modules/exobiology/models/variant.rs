@@ -68,9 +68,6 @@ impl FromStr for Variant {
             });
         }
 
-            return Err(VariantError::FailedToParse(s.to_string()));
-        }
-
         let Some(captures) = VARIANT_REGEX.captures(s) else {
             return Err(VariantError::FailedToParse(s.to_string()));
         };
