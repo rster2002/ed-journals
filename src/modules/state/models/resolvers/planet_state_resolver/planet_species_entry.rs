@@ -17,7 +17,7 @@ pub struct PlanetSpeciesEntry {
     pub logged: bool,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, PartialEq, Eq)]
 pub enum WillSpawn {
     Yes,
     Maybe,

@@ -37,7 +37,7 @@ mod tests {
 
     #[test]
     fn community_goal_event_is_parsed_correctly() {
-        let goal: CommunityGoalEvent = serde_json::from_str(
+        let _: CommunityGoalEvent = serde_json::from_str(
             r#"
             {
               "timestamp": "2024-04-02T16:09:59Z",
@@ -72,7 +72,7 @@ mod tests {
 
     #[test]
     fn community_goal_is_parsed_correctly() {
-        let goal: CommunityGoalEventGoal = serde_json::from_str(
+        let _: CommunityGoalEventGoal = serde_json::from_str(
             r#"
             {
               "CGID": 804,

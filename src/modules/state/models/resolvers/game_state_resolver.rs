@@ -70,7 +70,6 @@ impl GameStateResolver {
 #[cfg(test)]
 mod tests {
     use crate::logs::blocking::LogDirReader;
-    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
     use std::collections::HashSet;
     use std::env::current_dir;

@@ -70,14 +70,12 @@ mod tests {
         let mut entry_count = 0;
 
         for journal in &logs {
-            let mut found_file_header = false;
             let reader = journal.create_blocking_reader().unwrap();
 
             for entry in reader {
                 entry_count += 1;
 
                 if let LogEventContent::FileHeader(_) = entry.unwrap().content {
-                    found_file_header = true;
                     file_header_count += 1;
                 }
             }
