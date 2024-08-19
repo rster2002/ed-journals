@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::station::CarrierFinance;
+use serde::{Deserialize, Serialize};
 
 /// Fired when there is any update related to the carrier's finances.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

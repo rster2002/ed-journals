@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::station::CarrierCrewRole;
+use serde::{Deserialize, Serialize};
 
 /// Fired when changes were made to a fleet carrier service.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
