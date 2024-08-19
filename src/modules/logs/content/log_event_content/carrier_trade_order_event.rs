@@ -2,38 +2,64 @@ use serde::{Deserialize, Serialize};
 
 use crate::mixed::MixedCommodity;
 
+/// Fired when managing a trade order. This is fired for trade orders for both ship commodities and
+/// odyssey items.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierTradeOrderEvent {
+    /// The id of the carrier that the player deposited fuel to. This is functionally the same as
+    /// the market id.
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
+
+    /// Whether the trade order is going through the black market.
     pub black_market: bool,
+
+    /// The commodity this trade order is for. Note that this can both be a ship commodity and an
+    /// odyssey item.
     pub commodity: MixedCommodity,
 
+    /// The localized name of the commodity for this trade odder.
     #[serde(rename = "Commodity_Localised")]
     pub commodity_localized: Option<String>,
 
+    /// The type of action for this order.
     #[serde(flatten)]
     pub order: CarrierTradeOrderEventOrder,
+
+    /// The set price for the trade order. For purchase orders it is the price per commodity that
+    /// has been reserved. For sale orders, this is the price per commodity the carrier is buying
+    /// for.
     pub price: Option<u64>,
 }
 
+/// The type of action for a given trade order.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierTradeOrderEventOrder {
+    /// For when the fleet carrier is buying commodities from other commanders, with the specified
+    /// number of commodities to buy.
     PurchaseOrder(u32),
+
+    /// For when the fleet carrier is selling commodities to other commanders, with a specified
+    /// number of commodities to sell.
     SaleOrder(u32),
+
+    /// For when cancelling the given trade order. Is always true.
     CancelTrade(bool),
 }
 
 impl CarrierTradeOrderEventOrder {
+    /// Whether the given order is a purchase order.
     pub fn is_purchase_order(&self) -> bool {
         matches!(self, CarrierTradeOrderEventOrder::PurchaseOrder(_))
     }
 
+    /// Whether the given order is a sell order.
     pub fn is_sale_order(&self) -> bool {
         matches!(self, CarrierTradeOrderEventOrder::SaleOrder(_))
     }
 
+    /// Whether the given order is a cancellation.
     pub fn is_cancel_trade_order(&self) -> bool {
         matches!(self, CarrierTradeOrderEventOrder::CancelTrade(_))
     }

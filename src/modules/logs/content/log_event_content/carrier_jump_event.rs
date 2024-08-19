@@ -17,7 +17,7 @@ pub struct CarrierJumpEvent {
     #[serde(default)]
     pub on_foot: bool,
 
-    /// Information about the system the carrier is jumping to.
+    /// Information about the system the carrier has jumped to.
     #[serde(flatten)]
     pub system_info: LocationInfo,
 }
