@@ -84,7 +84,6 @@ pub struct CarrierStatsEventSpaceUsage {
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventCrewEntry {
     /// The service this entry is for.
-    #[serde(default)]
     pub crew_role: CarrierCrewRole,
 
     /// Whether the given service is installed on the carrier.

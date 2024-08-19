@@ -24,4 +24,8 @@ pub enum CarrierCrewRole {
 
     #[serde(rename = "VoucherRedemption")]
     RedemptionOffice,
+
+    #[cfg(not(feature = "strict"))]
+    #[serde(untagged)]
+    Unknown(String),
 }
