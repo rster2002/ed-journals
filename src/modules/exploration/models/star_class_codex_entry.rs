@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use lazy_static::lazy_static;
@@ -40,6 +41,12 @@ impl FromStr for StarClassCodexEntry {
                 .as_str()
                 .parse()?,
         ))
+    }
+}
+
+impl Display for StarClassCodexEntry {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Star class: {}", self.0)
     }
 }
 

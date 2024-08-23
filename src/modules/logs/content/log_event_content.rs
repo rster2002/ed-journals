@@ -1,6 +1,6 @@
 use kinded::Kinded;
 use serde::{Deserialize, Serialize};
-#[cfg(not(feature = "strict"))]
+#[cfg(feature = "allow-unknown")]
 use serde_json::Value;
 
 use afmu_repairs_event::AFMURepairsEvent;
@@ -788,7 +788,8 @@ pub enum LogEventContent {
     WingJoin(WingJoinEvent),
     WingLeave,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(Value),
 }

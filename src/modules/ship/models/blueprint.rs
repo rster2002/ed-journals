@@ -198,7 +198,8 @@ pub enum Blueprint {
     #[serde(rename = "Misc_ChaffCapacity")]
     ChaffCapacity,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -270,7 +271,7 @@ impl Display for Blueprint {
                 Blueprint::WeaponShortRange => "Short Range",
                 Blueprint::WeaponSturdy => "Sturdy",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Blueprint::Unknown(unknown) => return write!(f, "Unknown blueprint: {}", unknown),
             }
         )

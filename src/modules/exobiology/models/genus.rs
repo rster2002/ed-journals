@@ -75,7 +75,8 @@ pub enum Genus {
     #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
     ThargoidBarnacle,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -264,7 +265,7 @@ impl Display for Genus {
                 Genus::Tussock => "Tussock",
                 Genus::ThargoidBarnacle => "Thargoid Barnacle",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
             }
         )
@@ -300,7 +301,7 @@ impl Genus {
             // TODO check what this should be
             Genus::ThargoidBarnacle => 0,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Genus::Unknown(_) => 0,
         }
     }
@@ -330,7 +331,7 @@ impl Genus {
             Genus::Tussock => 24500,
             Genus::ThargoidBarnacle => 21000,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Genus::Unknown(_) => 0,
         }
     }

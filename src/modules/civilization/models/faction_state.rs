@@ -27,7 +27,8 @@ pub enum FactionState {
     War,
     None,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -61,7 +62,7 @@ impl Display for FactionState {
                 FactionState::War => "War",
                 FactionState::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 FactionState::Unknown(unknown) =>
                     return write!(f, "Unknown faction state: {}", unknown),
             }

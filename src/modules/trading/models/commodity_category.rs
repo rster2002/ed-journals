@@ -58,7 +58,8 @@ pub enum CommodityCategory {
 
     None,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -499,7 +500,7 @@ impl From<Commodity> for CommodityCategory {
 
             Commodity::Limpet => CommodityCategory::None,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Commodity::Unknown(value) => {
                 CommodityCategory::Unknown(format!("Unknown commodity: '{}'", value))
             }
@@ -532,7 +533,7 @@ impl Display for CommodityCategory {
                 CommodityCategory::Powerplay => "Powerplay",
                 CommodityCategory::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 CommodityCategory::Unknown(unknown) => unknown,
             }
         )

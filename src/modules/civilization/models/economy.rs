@@ -58,7 +58,8 @@ pub enum Economy {
     #[serde(rename = "$economy_None;")]
     None,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -88,7 +89,7 @@ impl Display for Economy {
                 Economy::Undefined => "Undefined",
                 Economy::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Economy::Unknown(unknown) => return write!(f, "Unknown economy: {}", unknown),
             }
         )

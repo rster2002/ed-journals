@@ -92,7 +92,8 @@ pub enum ShipModule {
     #[serde(untagged)]
     StringLights(ShipStringLights),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -190,7 +191,7 @@ impl Display for ShipModule {
             ShipModule::StringLights(_) => write!(f, "String Lights"),
             ShipModule::ShipKitModule(module) => write!(f, "Skip kit module: {}", module.name),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),
         }
     }

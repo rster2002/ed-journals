@@ -48,6 +48,7 @@ pub enum DockingDeniedReason {
     /// The reason was not specified.
     NoReason,
 
-    #[cfg(not(feature = "strict"))]
-    Other(String),
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    Unknown(String),
 }

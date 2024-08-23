@@ -220,7 +220,8 @@ pub enum Item {
     ShieldProjector,
     EBreach,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }
 
@@ -442,10 +443,10 @@ impl Item {
             "amm_grenade_shield" => Item::ShieldProjector,
             "bypass" => Item::EBreach,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Item::Unknown(name.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(ItemError::UnknownItem(name.to_string())),
         })
     }
@@ -690,7 +691,7 @@ impl Display for Item {
                 Item::ShieldProjector => "Shield Projector",
                 Item::EBreach => "E-Breach",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),
             }
         )

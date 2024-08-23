@@ -18,7 +18,8 @@ pub enum ItemType {
 
     Mission,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -230,7 +231,7 @@ impl From<Item> for ItemType {
             | Item::ShieldProjector
             | Item::EBreach => ItemType::Consumable,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Item::Unknown(item) => ItemType::Unknown(format!("Unknown item: {}", item)),
         }
     }

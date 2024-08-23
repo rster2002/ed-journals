@@ -49,7 +49,8 @@ pub enum Government {
     #[serde(alias = "$government_Carrier;")]
     PrivateOwnership,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -77,7 +78,7 @@ impl Display for Government {
 
                 Government::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Government::Unknown(unknown) =>
                     return write!(f, "Unknown government: {}", unknown),
             }

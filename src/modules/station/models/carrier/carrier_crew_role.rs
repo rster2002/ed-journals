@@ -25,7 +25,8 @@ pub enum CarrierCrewRole {
     #[serde(rename = "VoucherRedemption")]
     RedemptionOffice,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }

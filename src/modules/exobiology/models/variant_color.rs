@@ -38,7 +38,8 @@ pub enum VariantColor {
     None,
 
     /// This should realistically never happen without changes in the logs.
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown,
 }
 
@@ -504,10 +505,10 @@ impl TryFrom<(&Species, &VariantSource)> for VariantColor {
 
             (Genus::SinuousTubers, _, _) => VariantColor::None,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             (_, _, _) => VariantColor::Unknown,
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             (_, _, _) => {
                 #[cfg(test)]
                 dbg!(value);
@@ -549,7 +550,8 @@ impl Display for VariantColor {
                 VariantColor::Yellow => "Yellow",
                 VariantColor::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
+#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 VariantColor::Unknown => "Unknown",
             }
         )

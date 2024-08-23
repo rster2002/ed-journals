@@ -30,7 +30,8 @@ pub enum PlanetarySignalType {
     #[serde(untagged)]
     Commodity(Commodity),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -50,7 +51,7 @@ impl Display for PlanetarySignalType {
                 PlanetarySignalType::Other => "Other",
                 PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 PlanetarySignalType::Unknown(unknown) =>
                     return write!(f, "Unknown planetary signal: {}", unknown),
             }

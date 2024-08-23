@@ -18,7 +18,8 @@ pub enum ModuleClass {
     H,
     I,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown,
 }
 
@@ -42,10 +43,10 @@ impl TryFrom<u8> for ModuleClass {
             2 => Ok(ModuleClass::D),
             1 => Ok(ModuleClass::E),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(ModuleClass::Unknown),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(ModuleClassError::UnknownModuleClass(value)),
         }
     }
@@ -66,10 +67,11 @@ impl FromStr for ModuleClass {
             "H" | "h" => Ok(ModuleClass::H),
             "I" | "i" => Ok(ModuleClass::I),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
+#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             _ => Ok(ModuleClass::Unknown),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(ModuleClassError::UnknownModuleClassString(s.to_string())),
         }
     }
@@ -91,7 +93,8 @@ impl Display for ModuleClass {
                 ModuleClass::H => "H",
                 ModuleClass::I => "I",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
+#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 ModuleClass::Unknown => "U",
             }
         )
@@ -107,10 +110,12 @@ impl From<&ArmorGrade> for ModuleClass {
             ArmorGrade::MirroredSurfaceComposite => ModuleClass::A,
             ArmorGrade::ReactiveSurfaceComposite => ModuleClass::A,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
+#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             ArmorGrade::Unknown(_) => ModuleClass::Unknown,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
+#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             ArmorGrade::UnknownString(_) => ModuleClass::Unknown,
         }
     }
