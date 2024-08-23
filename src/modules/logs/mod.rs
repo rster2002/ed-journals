@@ -274,4 +274,5 @@ pub mod blocking;
 
 /// Contains readers for when working in an asynchronous environment like Tokio.
 #[cfg(feature = "asynchronous")]
+#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 pub mod asynchronous;
