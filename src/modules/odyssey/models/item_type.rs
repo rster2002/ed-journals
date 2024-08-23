@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::Item;
 
+/// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ItemType {
     #[serde(alias = "$MICRORESOURCE_CATEGORY_Data;")]
