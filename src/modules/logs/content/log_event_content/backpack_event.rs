@@ -1,3 +1,5 @@
+//! Fired when the backpack.json file is updated.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::Item;

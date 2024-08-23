@@ -1,3 +1,5 @@
+//! Fired when the player clears their ship after being arrested while on-foot.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipType;

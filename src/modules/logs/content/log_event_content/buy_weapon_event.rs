@@ -1,3 +1,5 @@
+//! Fired when the player buys an (Odyssey) weapon.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Weapon, WeaponMod};

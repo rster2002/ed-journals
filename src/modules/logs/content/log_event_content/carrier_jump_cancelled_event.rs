@@ -1,3 +1,5 @@
+//! Fired when the current planned carrier jump was cancelled.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the current planned carrier jump was cancelled.

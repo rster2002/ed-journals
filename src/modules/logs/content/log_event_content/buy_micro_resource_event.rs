@@ -1,3 +1,5 @@
+//! Fired when performing a trade with Odyssey bartenders.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Item, ItemType};

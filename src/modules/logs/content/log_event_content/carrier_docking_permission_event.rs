@@ -1,3 +1,5 @@
+//! Fired when the fleet carrier owner changes the docking permissions for their fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::CarrierDockingAccess;

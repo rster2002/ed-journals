@@ -1,3 +1,5 @@
+//! Fired when the player buys a new Odyssey suit.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Suit, SuitMod};

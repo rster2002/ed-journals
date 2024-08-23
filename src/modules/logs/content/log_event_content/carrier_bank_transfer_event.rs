@@ -1,3 +1,5 @@
+//! Fired when the player transfers credits either to or from their fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player transfers credits either to or from their fleet carrier.

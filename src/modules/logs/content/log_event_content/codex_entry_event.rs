@@ -1,3 +1,5 @@
+//! Fired when the player registers a new entry in their codex.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::exploration::CodexEntry;
@@ -115,9 +117,13 @@ pub enum CodexEntryEventSubcategory {
     Unknown(String),
 }
 
+/// Details about the location of the codex entry on a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CodexEntryEventPlanetaryLocation {
+    /// The latitude of the codex entry on a planet.
     pub latitude: f32,
+
+    /// The longitude of the codex entry on a planet.
     pub longitude: f32,
 }

@@ -1,3 +1,5 @@
+//! Fired when the player buys a new fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys a new fleet carrier.

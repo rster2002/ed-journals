@@ -1,3 +1,5 @@
+//! Fired when the player confirms transfers between their ship, SRV or fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

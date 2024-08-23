@@ -1,3 +1,5 @@
+//! Fired when the owner changes their fleet carrier's name.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the owner changes their fleet carrier's name.

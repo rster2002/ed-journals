@@ -1,6 +1,8 @@
+//! Fired when the player applies to a squadron.
+
 use serde::{Deserialize, Serialize};
 
-/// Fired when the player applies to a squadron event.
+/// Fired when the player applies to a squadron.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct AppliedToSquadronEvent {

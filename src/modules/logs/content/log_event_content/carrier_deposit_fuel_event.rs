@@ -1,3 +1,5 @@
+//! Fired when the player deposits tritium to the given carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player deposits tritium to the given carrier.

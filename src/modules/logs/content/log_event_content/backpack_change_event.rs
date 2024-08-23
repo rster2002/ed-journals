@@ -1,3 +1,5 @@
+//! Fired when there is a change in the player's (odyssey) backpack.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Item, ItemType};

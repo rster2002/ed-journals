@@ -1,3 +1,5 @@
+//! Fired when the carrier performs the jump after the jump countdown.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::civilization::LocationInfo;

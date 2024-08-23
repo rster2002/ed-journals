@@ -1,3 +1,5 @@
+//! Fired when managing ship packs on a fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when managing ship packs on a fleet carrier.

@@ -1,3 +1,5 @@
+//! Fired when the player cancels their fleet carrier decommission.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player cancels their fleet carrier decommission.

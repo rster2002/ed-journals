@@ -1,3 +1,5 @@
+//! Fired when there is any update related to the carrier's finances.
+
 use crate::station::CarrierFinance;
 use serde::{Deserialize, Serialize};
 

@@ -1,3 +1,5 @@
+//! Fired when the player buys limpets at a station.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys limpets at a station.

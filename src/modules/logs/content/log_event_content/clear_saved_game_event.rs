@@ -1,3 +1,5 @@
+//! Fired when the player clear their save, deleting all progress.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player clear their save, deleting all progress.

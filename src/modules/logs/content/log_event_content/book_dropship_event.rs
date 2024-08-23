@@ -1,3 +1,5 @@
+//! Fired when the player books a drop-ship at Frontline Solutions.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player books a drop-ship at Frontline Solutions.

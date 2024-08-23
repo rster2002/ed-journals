@@ -1,3 +1,5 @@
+//! Fired when the player buys exploration data for a system.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys exploration data for a system.

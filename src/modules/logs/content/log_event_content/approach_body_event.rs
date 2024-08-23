@@ -1,3 +1,5 @@
+//! Fired whenever the player approaches a body.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired whenever the player approaches a body. This is usually when the game also performs a scan

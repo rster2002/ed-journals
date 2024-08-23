@@ -1,3 +1,5 @@
+//! Fired when the player cancels a taxi.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player cancels a taxi.

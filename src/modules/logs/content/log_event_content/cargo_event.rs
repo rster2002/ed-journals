@@ -1,3 +1,5 @@
+//! Fired when the player collected a commodity.
+
 use crate::trading::Commodity;
 use serde::{Deserialize, Serialize};
 

@@ -1,3 +1,5 @@
+//! Fired when changes were made to a fleet carrier service.
+
 use crate::station::CarrierCrewRole;
 use serde::{Deserialize, Serialize};
 

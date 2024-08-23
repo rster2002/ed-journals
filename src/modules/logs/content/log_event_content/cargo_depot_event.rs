@@ -1,3 +1,5 @@
+//! Fired when the player delivers or collects commodities for a given mission.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

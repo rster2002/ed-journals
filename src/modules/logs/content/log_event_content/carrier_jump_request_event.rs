@@ -1,3 +1,5 @@
+//! Fired when the fleet carrier owner schedules a jump.
+
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 

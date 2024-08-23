@@ -1,8 +1,10 @@
+//! Fired when managing a fleet carrier trade order.
+
 use serde::{Deserialize, Serialize};
 
 use crate::mixed::MixedCommodity;
 
-/// Fired when managing a trade order. This is fired for trade orders for both ship commodities and
+/// Fired when managing a fleet carrier trade order. This is fired for trade orders for both ship commodities and
 /// odyssey items.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]

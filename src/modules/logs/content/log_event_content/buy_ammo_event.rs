@@ -1,3 +1,5 @@
+//! Fired when the player buys ammo at a station.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys ammo at a station.

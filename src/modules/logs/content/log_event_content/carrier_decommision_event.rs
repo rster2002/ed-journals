@@ -1,3 +1,5 @@
+//! Fired when the player schedules their carrier for decommission.
+
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 

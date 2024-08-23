@@ -1,3 +1,5 @@
+//! Fired whenever the player cracks open an asteroid.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired whenever the player cracks open an asteroid.

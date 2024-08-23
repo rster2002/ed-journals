@@ -1,3 +1,5 @@
+//! Fired when the player approaches a planetary settlement.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationInfo;

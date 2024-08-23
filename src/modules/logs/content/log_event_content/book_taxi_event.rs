@@ -1,3 +1,5 @@
+//! Fired when the player books a taxi at Apex Interstellar Transport.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player books a taxi at Apex Interstellar Transport.

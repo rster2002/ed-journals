@@ -1,3 +1,5 @@
+//! Fired whenever the player uses an AFMU to repair another module in their ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipModule;

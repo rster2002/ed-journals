@@ -1,3 +1,5 @@
+//! Fired when the player takes on a bounty.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::Citizen;

@@ -1,3 +1,5 @@
+//! Fired when the player buys trading data for a specific system.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys trading data for a specific system.

@@ -1,3 +1,5 @@
+//! Fired when opening the fleet carrier management panel.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::CarrierDockingAccess;
