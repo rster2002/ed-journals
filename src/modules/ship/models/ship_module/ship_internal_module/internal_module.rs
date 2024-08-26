@@ -186,12 +186,19 @@ impl InternalModule {
     pub fn internal_type(&self) -> InternalType {
         match self {
             InternalModule::FrameShiftDrive
+            | InternalModule::FrameShiftDriveOvercharged
             | InternalModule::PowerPlant
+            | InternalModule::GuardianHybridPowerPlant
             | InternalModule::Thrusters
             | InternalModule::PowerDistributor
+            | InternalModule::GuardianHybridPowerDistributor
             | InternalModule::LifeSupport
             | InternalModule::PlanetApproachSuite
-            | InternalModule::Sensors => InternalType::Core,
+            | InternalModule::BasicDiscoveryScanner
+            | InternalModule::IntermediateDiscoveryScanner
+            | InternalModule::AdvancedDiscoveryScanner
+            | InternalModule::Sensors
+            | InternalModule::Armor(_) => InternalType::Core,
 
             _ => InternalType::Optional,
         }
@@ -207,10 +214,13 @@ impl InternalModule {
         matches!(self.internal_type(), InternalType::Optional)
     }
 
+    /// Whether the module is a module that is unlocked through powerplay.
     pub fn is_powerplay_module(&self) -> bool {
         matches!(self, InternalModule::PrismaticShieldGenerator)
     }
 
+    /// Whether the module is a module that is unlocked using guardian parts at a guardian
+    /// technology broker.
     pub fn is_guardian_module(&self) -> bool {
         matches!(
             self,
@@ -223,7 +233,7 @@ impl InternalModule {
         )
     }
 
-    pub fn special_grades(&self, size: u8, grade: Option<&ModuleClass>) -> Option<ModuleClass> {
+    pub(crate) fn special_grades(&self, size: u8, grade: Option<&ModuleClass>) -> Option<ModuleClass> {
         Some(match (self, size, grade) {
             (InternalModule::IntermediateDiscoveryScanner, _, _) => ModuleClass::D,
             (InternalModule::AdvancedDiscoveryScanner, _, _) => ModuleClass::C,

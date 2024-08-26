@@ -44,12 +44,15 @@ pub enum ShipModule {
     )]
     CargoBayDoor,
 
+    /// Spacial case for the data link scanner.
     #[serde(alias = "hpt_shipdatalinkscanner")]
     DataLinkScanner,
 
+    /// Spacial case for the codex scanner.
     #[serde(alias = "int_codexscanner")]
     CodexScanner,
 
+    /// Spacial case for the discovery scanner.
     #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
     DiscoverScanner,
 
@@ -99,10 +102,12 @@ pub enum ShipModule {
 }
 
 impl ShipModule {
+    /// Whether the module is any kind of hardpoint module, including utility modules.
     pub fn is_hardpoint_module(&self) -> bool {
         matches!(self, ShipModule::Hardpoint(_))
     }
 
+    /// Whether the module is a full-sized hardpoint module. This does not include utility modules.
     pub fn is_full_sized_hardpoint_module(&self) -> bool {
         let ShipModule::Hardpoint(hardpoint) = self else {
             return false;
@@ -111,6 +116,7 @@ impl ShipModule {
         hardpoint.is_full_sized_module()
     }
 
+    /// Whether the module is a utility module.
     pub fn is_utility_module(&self) -> bool {
         let ShipModule::Hardpoint(hardpoint) = self else {
             return false;
@@ -119,10 +125,12 @@ impl ShipModule {
         hardpoint.is_utility_module()
     }
 
+    /// Whether the module is any internal module. This includes both core- and optional internals.
     pub fn is_internal_module(&self) -> bool {
-        matches!(self, ShipModule::Hardpoint(_))
+        matches!(self, ShipModule::Internal(_))
     }
 
+    /// Whether the module is a core internal module.
     pub fn is_core_internal(&self) -> bool {
         let ShipModule::Internal(internal) = self else {
             return false;
@@ -131,6 +139,7 @@ impl ShipModule {
         internal.is_core_internal()
     }
 
+    /// Whether the module is an optional internal module.
     pub fn is_optional_internal(&self) -> bool {
         let ShipModule::Internal(internal) = self else {
             return false;
@@ -139,6 +148,7 @@ impl ShipModule {
         internal.is_optional_internal()
     }
 
+    /// Whether the module is a module that is unlocked through powerplay.
     pub fn is_powerplay_module(&self) -> bool {
         match self {
             ShipModule::Internal(internal) => internal.is_powerplay_module(),
@@ -147,6 +157,8 @@ impl ShipModule {
         }
     }
 
+    /// Whether the module is a module that is unlocked using guardian parts at a guardian
+    /// technology broker.
     pub fn is_guardian_module(&self) -> bool {
         match self {
             ShipModule::Internal(internal) => internal.is_guardian_module(),
@@ -155,6 +167,8 @@ impl ShipModule {
         }
     }
 
+    /// Whether the module is a cosmetic module. The game tracks these cosmetics as modules that
+    /// slot into special slots.
     pub fn is_cosmetic(&self) -> bool {
         matches!(
             self,

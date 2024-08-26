@@ -6,6 +6,7 @@ use thiserror::Error;
 
 use crate::modules::ship::{ArmorGrade, ArmorModule};
 
+/// The class of a module. Not all classes are available for every module.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ModuleClass {
     A,
@@ -68,7 +69,6 @@ impl FromStr for ModuleClass {
             "I" | "i" => Ok(ModuleClass::I),
 
             #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             _ => Ok(ModuleClass::Unknown),
 
             #[cfg(not(feature = "allow-unknown"))]
@@ -94,7 +94,6 @@ impl Display for ModuleClass {
                 ModuleClass::I => "I",
 
                 #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 ModuleClass::Unknown => "U",
             }
         )
@@ -111,11 +110,9 @@ impl From<&ArmorGrade> for ModuleClass {
             ArmorGrade::ReactiveSurfaceComposite => ModuleClass::A,
 
             #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             ArmorGrade::Unknown(_) => ModuleClass::Unknown,
 
             #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             ArmorGrade::UnknownString(_) => ModuleClass::Unknown,
         }
     }
