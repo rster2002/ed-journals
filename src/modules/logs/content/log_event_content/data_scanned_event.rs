@@ -1,12 +1,15 @@
 use serde::{Deserialize, Serialize};
 
+/// Fired when scanning data while in a ship or SRV.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DataScannedEvent {
+    /// The type of datapoint scanned.
     #[serde(rename = "Type")]
     pub kind: DataScannedEventType,
 }
 
+/// The type of datapoint scanned.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum DataScannedEventType {
     #[serde(rename = "$Datascan_AbandonedDataLog;")]
