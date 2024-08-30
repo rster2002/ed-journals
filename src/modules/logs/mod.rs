@@ -13,6 +13,12 @@
 //!   manually manage threads, especially when using the 'live' readers.
 //! * The [asynchronous](logs::asynchronous) module contains the readers for when you're working in an asynchronous
 //!   environment like for example when using tokio.
+//!
+//! Using these models, you can read the contents of the journal log files. Note however that this
+//! is **lossy**, meaning that it is possible to deserialize the contents of a log file, but it is
+//! not possible to serialize the resulting entry back to the same log entry. It is possible to
+//! serialize the contents using [serde], but this will have a different shape than how it was
+//! originally formatted on the log file.
 
 pub use content::log_event_content::afmu_repairs_event;
 pub use content::log_event_content::applied_to_squadron_event;

@@ -1,12 +1,18 @@
 use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
-
+use crate::exploration::models::planet_class_codex_entry::PlanetClassCodexEntry;
 use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::StarClassCodexEntry;
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CodexEntry {
+    #[serde(rename = "$Codex_Ent_Neutron_Stars_Name;")]
+    NeutronStars,
+
+    #[serde(untagged)]
+    PlanetClass(PlanetClassCodexEntry),
+
     /// Genus codex entry registered when scanning the first genus in the given region.
     #[serde(untagged)]
     Genus(Genus),
@@ -33,13 +39,15 @@ pub enum CodexEntry {
 impl Display for CodexEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            CodexEntry::NeutronStars => write!(f, "Neutron Star"),
+            CodexEntry::PlanetClass(planet_class) => write!(f, "{}", planet_class),
             CodexEntry::Genus(genus) => write!(f, "{}", genus),
             CodexEntry::Species(species) => write!(f, "{}", species),
             CodexEntry::Variant(variant) => write!(f, "{}", variant),
             CodexEntry::StarClass(star_class) => write!(f, "{}", star_class),
 
             #[cfg(feature = "allow-unknown")]
-            CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{}'", star_class),
+            CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{}'", unknown),
         }
     }
 }

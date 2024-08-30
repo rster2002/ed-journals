@@ -3,6 +3,8 @@ pub use models::codex_entry::CodexEntry;
 pub use models::planetary_signal_type::PlanetarySignalType;
 pub use models::star_class_codex_entry::StarClassCodexEntry;
 pub use models::star_class_codex_entry::StarClassCodexEntryError;
+pub use models::planet_class_codex_entry::PlanetClassCodexEntry;
+pub use models::planet_class_codex_entry::PlanetClassCodexEntryError;
 
 mod functions;
 mod models;

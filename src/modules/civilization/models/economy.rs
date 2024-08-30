@@ -2,6 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
+/// A type of economy that can be related to a system or station.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Economy {
     #[serde(rename = "$economy_Agri;")]

@@ -9,9 +9,11 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::modules::galaxy::{StarClass, StarClassError};
 
+/// New-type used for parsing star class codex entries.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct StarClassCodexEntry(pub StarClass);
 
+/// Enum for errors that occur when parsing a star class codex entry.
 #[derive(Debug, Error)]
 pub enum StarClassCodexEntryError {
     #[error("Failed to parse star class codex entry: '{0}'")]

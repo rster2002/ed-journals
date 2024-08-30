@@ -2,6 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
+/// The type of government.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Government {
     #[serde(alias = "$government_Anarchy;")]
@@ -46,6 +47,7 @@ pub enum Government {
     #[serde(alias = "$government_Prison;")]
     Prison,
 
+    /// Private ownership indicates a fleet carrier that is owned by a player.
     #[serde(alias = "$government_Carrier;")]
     PrivateOwnership,
 

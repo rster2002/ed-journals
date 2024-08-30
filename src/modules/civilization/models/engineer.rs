@@ -3,6 +3,7 @@ use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
+/// Names of the engineers that are available in the game.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Engineer {
     DidiVatermann,

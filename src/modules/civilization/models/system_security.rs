@@ -2,6 +2,8 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
+/// The level of security present in a system which controls how much security force is present in
+/// the system.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum SystemSecurity {
     #[serde(rename = "$SYSTEM_SECURITY_high;")]
