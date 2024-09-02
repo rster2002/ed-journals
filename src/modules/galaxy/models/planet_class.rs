@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
@@ -47,7 +47,7 @@ impl FromStr for PlanetClass {
         let string = s.to_ascii_lowercase()
             .replace('_', " ");
 
-        let s: &str = &string.trim_end_matches('s')
+        let s: &str = string.trim_end_matches('s')
             .trim_end_matches(" body")
             .trim_end_matches(" world");
 

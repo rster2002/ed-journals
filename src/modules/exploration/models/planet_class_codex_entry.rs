@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use lazy_static::lazy_static;
 use regex::Regex;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::galaxy::{PlanetClass, PlanetClassError};
@@ -31,7 +31,7 @@ impl FromStr for PlanetClassCodexEntry {
     type Err = PlanetClassCodexEntryError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let captures = PLANET_CLASS_CODEX_ENTRY_REGEX.captures(&s)
+        let captures = PLANET_CLASS_CODEX_ENTRY_REGEX.captures(s)
             .ok_or(PlanetClassCodexEntryError::FailedToParse(s.to_string()))?;
 
         let terraformable = captures.get(1)
@@ -48,7 +48,7 @@ impl FromStr for PlanetClassCodexEntry {
         Ok(PlanetClassCodexEntry {
             terraformable: terraformable == "TRF",
             has_atmosphere: !no_atmosphere,
-            planet_class: PlanetClass::from_str(&planet_class)?,
+            planet_class: PlanetClass::from_str(planet_class)?,
         })
     }
 }

@@ -162,7 +162,7 @@ impl FromStr for ShipInternalModule {
             .transpose()?
             .map(|grade_nr| grade_nr.try_into())
             .transpose()?
-            .map(|class| module.special_grades(size, Some(&class)).unwrap_or_else(|| class))
+            .map(|class| module.special_grades(size, Some(&class)).unwrap_or(class))
             .or_else(|| module.special_grades(size, None))
             .unwrap_or(ModuleClass::E);
 
