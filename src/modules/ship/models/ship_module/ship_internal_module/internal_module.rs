@@ -233,7 +233,11 @@ impl InternalModule {
         )
     }
 
-    pub(crate) fn special_grades(&self, size: u8, grade: Option<&ModuleClass>) -> Option<ModuleClass> {
+    pub(crate) fn special_grades(
+        &self,
+        size: u8,
+        grade: Option<&ModuleClass>,
+    ) -> Option<ModuleClass> {
         Some(match (self, size, grade) {
             (InternalModule::IntermediateDiscoveryScanner, _, _) => ModuleClass::D,
             (InternalModule::AdvancedDiscoveryScanner, _, _) => ModuleClass::C,

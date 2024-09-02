@@ -1,11 +1,11 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
+use crate::from_str_deserialize_impl;
+use crate::galaxy::{PlanetClass, PlanetClassError};
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
-use crate::galaxy::{PlanetClass, PlanetClassError};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct PlanetClassCodexEntry {
@@ -24,26 +24,29 @@ pub enum PlanetClassCodexEntryError {
 }
 
 lazy_static! {
-    static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex = Regex::new(r#"^\$Codex_Ent_(Standard|TRF)(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
+    static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex =
+        Regex::new(r#"^\$Codex_Ent_(Standard|TRF)(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
 }
 
 impl FromStr for PlanetClassCodexEntry {
     type Err = PlanetClassCodexEntryError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let captures = PLANET_CLASS_CODEX_ENTRY_REGEX.captures(s)
+        let captures = PLANET_CLASS_CODEX_ENTRY_REGEX
+            .captures(s)
             .ok_or(PlanetClassCodexEntryError::FailedToParse(s.to_string()))?;
 
-        let terraformable = captures.get(1)
+        let terraformable = captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str();
 
-        let planet_class = captures.get(3)
+        let planet_class = captures
+            .get(3)
             .expect("Should have been captured already")
             .as_str();
 
-        let no_atmosphere = captures.get(4)
-            .is_some();
+        let no_atmosphere = captures.get(4).is_some();
 
         Ok(PlanetClassCodexEntry {
             terraformable: terraformable == "TRF",
@@ -71,8 +74,8 @@ impl Display for PlanetClassCodexEntry {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use crate::exploration::PlanetClassCodexEntry;
+    use std::str::FromStr;
 
     #[test]
     fn planet_class_codex_cases_are_parsed_correctly() {

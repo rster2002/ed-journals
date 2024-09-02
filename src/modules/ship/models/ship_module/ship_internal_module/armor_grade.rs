@@ -64,7 +64,6 @@ impl FromStr for ArmorGrade {
             "reactive" => ArmorGrade::ReactiveSurfaceComposite,
 
             #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             _ => ArmorGrade::UnknownString(s.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
@@ -86,11 +85,9 @@ impl Display for ArmorGrade {
                 ArmorGrade::ReactiveSurfaceComposite => "Reactive Surface Composite",
 
                 #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 ArmorGrade::Unknown(_) => "Unknown composite",
 
                 #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 ArmorGrade::UnknownString(_) => "Unknown composite",
             }
         )

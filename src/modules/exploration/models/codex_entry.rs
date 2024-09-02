@@ -1,8 +1,8 @@
-use std::fmt::{Display, Formatter};
-use serde::{Deserialize, Serialize};
 use crate::exploration::models::planet_class_codex_entry::PlanetClassCodexEntry;
 use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::StarClassCodexEntry;
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

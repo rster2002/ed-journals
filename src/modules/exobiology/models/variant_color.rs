@@ -551,7 +551,6 @@ impl Display for VariantColor {
                 VariantColor::None => "None",
 
                 #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 VariantColor::Unknown => "Unknown",
             }
         )

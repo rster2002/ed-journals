@@ -23,7 +23,7 @@ pub enum MercenaryRank {
     EliteV,
 
     #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -54,7 +54,6 @@ impl TryFrom<u8> for MercenaryRank {
             13 => Ok(MercenaryRank::EliteV),
 
             #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
             _ => Ok(MercenaryRank::Unknown(value)),
 
             #[cfg(not(feature = "allow-unknown"))]
@@ -87,7 +86,6 @@ impl Display for MercenaryRank {
                 MercenaryRank::EliteV => "Elite V",
 
                 #[cfg(feature = "allow-unknown")]
-#[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
                 MercenaryRank::Unknown(unknown) =>
                     return write!(f, "Unknown mercenary rank nr: {}", unknown),
             }

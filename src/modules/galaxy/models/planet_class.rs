@@ -1,8 +1,8 @@
+use crate::from_str_deserialize_impl;
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::Serialize;
 use thiserror::Error;
-use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum PlanetClass {
@@ -44,10 +44,10 @@ impl FromStr for PlanetClass {
     type Err = PlanetClassError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let string = s.to_ascii_lowercase()
-            .replace('_', " ");
+        let string = s.to_ascii_lowercase().replace('_', " ");
 
-        let s: &str = string.trim_end_matches('s')
+        let s: &str = string
+            .trim_end_matches('s')
             .trim_end_matches(" body")
             .trim_end_matches(" world");
 
@@ -64,11 +64,21 @@ impl FromStr for PlanetClass {
             "water giant with life" | "giant with water life" => PlanetClass::WaterGiantWithLife,
             "gas giant with water based life" => PlanetClass::GasGiantWithWaterBasedLife,
             "gas giant with ammonia based life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
-            "sudarsky class i gas giant" | "sudarsky class i" => PlanetClass::SudarskyClassIGasGiant,
-            "sudarsky class ii gas giant" | "sudarsky class ii" => PlanetClass::SudarskyClassIIGasGiant,
-            "sudarsky class iii gas giant" | "sudarsky class iii" => PlanetClass::SudarskyClassIIIGasGiant,
-            "sudarsky class iv gas giant" | "sudarsky class iv" => PlanetClass::SudarskyClassIVGasGiant,
-            "sudarsky class v gas giant" | "sudarsky class v" => PlanetClass::SudarskyClassVGasGiant,
+            "sudarsky class i gas giant" | "sudarsky class i" => {
+                PlanetClass::SudarskyClassIGasGiant
+            }
+            "sudarsky class ii gas giant" | "sudarsky class ii" => {
+                PlanetClass::SudarskyClassIIGasGiant
+            }
+            "sudarsky class iii gas giant" | "sudarsky class iii" => {
+                PlanetClass::SudarskyClassIIIGasGiant
+            }
+            "sudarsky class iv gas giant" | "sudarsky class iv" => {
+                PlanetClass::SudarskyClassIVGasGiant
+            }
+            "sudarsky class v gas giant" | "sudarsky class v" => {
+                PlanetClass::SudarskyClassVGasGiant
+            }
             "helium rich gas giant" => PlanetClass::HeliumRichGasGiant,
             "helium gas giant" => PlanetClass::HeliumGasGiant,
 
@@ -115,29 +125,34 @@ impl PlanetClass {
 
 impl Display for PlanetClass {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            PlanetClass::MetalRichBody => "Metal Rich Body",
-            PlanetClass::HighMetalContentBody => "High Metal Content Body",
-            PlanetClass::RockyBody => "Rocky Body",
-            PlanetClass::IcyBody => "Icy Body",
-            PlanetClass::RockyIceBody => "Rocky Ice Body",
-            PlanetClass::EarthlikeBody => "Earth-like Body",
-            PlanetClass::WaterWorld => "Water World",
-            PlanetClass::AmmoniaWorld => "Ammonia World",
-            PlanetClass::WaterGiant => "Water Giant",
-            PlanetClass::WaterGiantWithLife => "Water Giant with life",
-            PlanetClass::GasGiantWithWaterBasedLife => "Gas Giant with water based life",
-            PlanetClass::GasGiantWithAmmoniaBasedLife => "Gas Giant with ammonia based life",
-            PlanetClass::SudarskyClassIGasGiant => "Sudarsky Class I Gas Giant",
-            PlanetClass::SudarskyClassIIGasGiant => "Sudarsky Class II Gas Giant",
-            PlanetClass::SudarskyClassIIIGasGiant => "Sudarsky Class III Gas Giant",
-            PlanetClass::SudarskyClassIVGasGiant => "Sudarsky Class IV Gas Giant",
-            PlanetClass::SudarskyClassVGasGiant => "Sudarsky Class V Gas Giant",
-            PlanetClass::HeliumRichGasGiant => "Helium Rich Gas Giant",
-            PlanetClass::HeliumGasGiant => "Helium Gas Giant",
+        write!(
+            f,
+            "{}",
+            match self {
+                PlanetClass::MetalRichBody => "Metal Rich Body",
+                PlanetClass::HighMetalContentBody => "High Metal Content Body",
+                PlanetClass::RockyBody => "Rocky Body",
+                PlanetClass::IcyBody => "Icy Body",
+                PlanetClass::RockyIceBody => "Rocky Ice Body",
+                PlanetClass::EarthlikeBody => "Earth-like Body",
+                PlanetClass::WaterWorld => "Water World",
+                PlanetClass::AmmoniaWorld => "Ammonia World",
+                PlanetClass::WaterGiant => "Water Giant",
+                PlanetClass::WaterGiantWithLife => "Water Giant with life",
+                PlanetClass::GasGiantWithWaterBasedLife => "Gas Giant with water based life",
+                PlanetClass::GasGiantWithAmmoniaBasedLife => "Gas Giant with ammonia based life",
+                PlanetClass::SudarskyClassIGasGiant => "Sudarsky Class I Gas Giant",
+                PlanetClass::SudarskyClassIIGasGiant => "Sudarsky Class II Gas Giant",
+                PlanetClass::SudarskyClassIIIGasGiant => "Sudarsky Class III Gas Giant",
+                PlanetClass::SudarskyClassIVGasGiant => "Sudarsky Class IV Gas Giant",
+                PlanetClass::SudarskyClassVGasGiant => "Sudarsky Class V Gas Giant",
+                PlanetClass::HeliumRichGasGiant => "Helium Rich Gas Giant",
+                PlanetClass::HeliumGasGiant => "Helium Gas Giant",
 
-            #[cfg(feature = "allow-unknown")]
-            PlanetClass::Unknown(unknown) => return write!(f, "Unknown planet class: '{}'", unknown)
-        })
+                #[cfg(feature = "allow-unknown")]
+                PlanetClass::Unknown(unknown) =>
+                    return write!(f, "Unknown planet class: '{}'", unknown),
+            }
+        )
     }
 }
