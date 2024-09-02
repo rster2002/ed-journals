@@ -4,11 +4,13 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use crate::from_str_deserialize_impl;
 use crate::galaxy::{PlanetClass, PlanetClassError};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct PlanetClassCodexEntry {
     pub terraformable: bool,
+    pub has_atmosphere: bool,
     pub planet_class: PlanetClass,
 }
 
@@ -22,7 +24,7 @@ pub enum PlanetClassCodexEntryError {
 }
 
 lazy_static! {
-    static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex = Regex::new(r#"^\$Codex_Ent_(Standard|TRF)_(.+?)_Name;$"#).unwrap();
+    static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex = Regex::new(r#"^\$Codex_Ent_(Standard|TRF)(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
 }
 
 impl FromStr for PlanetClassCodexEntry {
@@ -36,16 +38,22 @@ impl FromStr for PlanetClassCodexEntry {
             .expect("Should have been captured already")
             .as_str();
 
-        let planet_class = captures.get(2)
+        let planet_class = captures.get(3)
             .expect("Should have been captured already")
             .as_str();
 
+        let no_atmosphere = captures.get(4)
+            .is_some();
+
         Ok(PlanetClassCodexEntry {
             terraformable: terraformable == "TRF",
+            has_atmosphere: !no_atmosphere,
             planet_class: PlanetClass::from_str(&planet_class)?,
         })
     }
 }
+
+from_str_deserialize_impl!(PlanetClassCodexEntry);
 
 impl Display for PlanetClassCodexEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -58,5 +66,30 @@ impl Display for PlanetClassCodexEntry {
             },
             self.planet_class
         )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+    use crate::exploration::PlanetClassCodexEntry;
+
+    #[test]
+    fn planet_class_codex_cases_are_parsed_correctly() {
+        let cases = [
+            "$Codex_Ent_TRF_Water_Worlds_Name;",
+            "$Codex_Ent_Standard_Water_Worlds_Name;",
+            "$Codex_Ent_Standard_Ter_High_Metal_Content_Name;",
+            "$Codex_Ent_Standard_Metal_Rich_No_Atmos_Name;",
+            "$Codex_Ent_Standard_Ice_No_Atmos_Name;",
+            "$Codex_Ent_Standard_Sudarsky_Class_III_Name;",
+        ];
+
+        for case in cases {
+            let result = PlanetClassCodexEntry::from_str(case);
+
+            dbg!(&result);
+            assert!(result.is_ok());
+        }
     }
 }

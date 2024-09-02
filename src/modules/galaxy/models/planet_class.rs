@@ -2,8 +2,9 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use crate::from_str_deserialize_impl;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum PlanetClass {
     MetalRichBody,
     HighMetalContentBody,
@@ -43,26 +44,33 @@ impl FromStr for PlanetClass {
     type Err = PlanetClassError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let string = s.to_ascii_lowercase()
+            .replace('_', " ");
+
+        let s: &str = &string.trim_end_matches('s')
+            .trim_end_matches(" body")
+            .trim_end_matches(" world");
+
         Ok(match s {
-            "Metal rich body" => PlanetClass::MetalRichBody,
-            "High metal content body" => PlanetClass::HighMetalContentBody,
-            "Rocky body" => PlanetClass::RockyBody,
-            "Icy body" => PlanetClass::IcyBody,
-            "Rocky ice body" => PlanetClass::RockyIceBody,
-            "Earthlike body" => PlanetClass::EarthlikeBody,
-            "Water world" => PlanetClass::WaterWorld,
-            "Ammonia world" => PlanetClass::AmmoniaWorld,
-            "Water giant" => PlanetClass::WaterGiant,
-            "Water giant with life" => PlanetClass::WaterGiantWithLife,
-            "Gas giant with water based life" => PlanetClass::GasGiantWithWaterBasedLife,
-            "Gas giant with ammonia based life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
-            "Sudarsky class I gas giant" => PlanetClass::SudarskyClassIGasGiant,
-            "Sudarsky class II gas giant" => PlanetClass::SudarskyClassIIGasGiant,
-            "Sudarsky class III gas giant" => PlanetClass::SudarskyClassIIIGasGiant,
-            "Sudarsky class IV gas giant" => PlanetClass::SudarskyClassIVGasGiant,
-            "Sudarsky class V gas giant" => PlanetClass::SudarskyClassVGasGiant,
-            "Helium rich gas giant" => PlanetClass::HeliumRichGasGiant,
-            "Helium gas giant" => PlanetClass::HeliumGasGiant,
+            "metal rich" => PlanetClass::MetalRichBody,
+            "high metal content" => PlanetClass::HighMetalContentBody,
+            "rocky" => PlanetClass::RockyBody,
+            "icy" | "ice" => PlanetClass::IcyBody,
+            "rocky ice" => PlanetClass::RockyIceBody,
+            "earthlike" => PlanetClass::EarthlikeBody,
+            "water" => PlanetClass::WaterWorld,
+            "ammonia" => PlanetClass::AmmoniaWorld,
+            "water giant" => PlanetClass::WaterGiant,
+            "water giant with life" | "giant with water life" => PlanetClass::WaterGiantWithLife,
+            "gas giant with water based life" => PlanetClass::GasGiantWithWaterBasedLife,
+            "gas giant with ammonia based life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
+            "sudarsky class i gas giant" | "sudarsky class i" => PlanetClass::SudarskyClassIGasGiant,
+            "sudarsky class ii gas giant" | "sudarsky class ii" => PlanetClass::SudarskyClassIIGasGiant,
+            "sudarsky class iii gas giant" | "sudarsky class iii" => PlanetClass::SudarskyClassIIIGasGiant,
+            "sudarsky class iv gas giant" | "sudarsky class iv" => PlanetClass::SudarskyClassIVGasGiant,
+            "sudarsky class v gas giant" | "sudarsky class v" => PlanetClass::SudarskyClassVGasGiant,
+            "helium rich gas giant" => PlanetClass::HeliumRichGasGiant,
+            "helium gas giant" => PlanetClass::HeliumGasGiant,
 
             #[cfg(feature = "allow-unknown")]
             _ => PlanetClass::Unknown(s.to_string()),
@@ -72,6 +80,8 @@ impl FromStr for PlanetClass {
         })
     }
 }
+
+from_str_deserialize_impl!(PlanetClass);
 
 impl PlanetClass {
     /// Returns the base exploration value of the star planet class.
