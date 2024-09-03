@@ -57,13 +57,13 @@ impl FromStr for PlanetClass {
             "rocky" => PlanetClass::RockyBody,
             "icy" | "ice" => PlanetClass::IcyBody,
             "rocky ice" => PlanetClass::RockyIceBody,
-            "earthlike" => PlanetClass::EarthlikeBody,
+            "earthlike" | "earth like" => PlanetClass::EarthlikeBody,
             "water" => PlanetClass::WaterWorld,
             "ammonia" => PlanetClass::AmmoniaWorld,
             "water giant" => PlanetClass::WaterGiant,
-            "water giant with life" | "giant with water life" => PlanetClass::WaterGiantWithLife,
-            "gas giant with water based life" => PlanetClass::GasGiantWithWaterBasedLife,
-            "gas giant with ammonia based life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
+            "water giant with life" => PlanetClass::WaterGiantWithLife,
+            "gas giant with water based life" | "giant with water life" => PlanetClass::GasGiantWithWaterBasedLife,
+            "gas giant with ammonia based life" | "giant with ammonia life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
             "sudarsky class i gas giant" | "sudarsky class i" => {
                 PlanetClass::SudarskyClassIGasGiant
             }

@@ -3,6 +3,7 @@ use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::StarClassCodexEntry;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -10,8 +11,14 @@ pub enum CodexEntry {
     #[serde(rename = "$Codex_Ent_Neutron_Stars_Name;")]
     NeutronStars,
 
+    #[serde(rename = "$Codex_Ent_Black_Holes_Name;")]
+    BlackHoles,
+
     #[serde(untagged)]
     PlanetClass(PlanetClassCodexEntry),
+
+    #[serde(untagged)]
+    Geological(CodexGeologicalEntry),
 
     /// Genus codex entry registered when scanning the first genus in the given region.
     #[serde(untagged)]
@@ -40,6 +47,8 @@ impl Display for CodexEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             CodexEntry::NeutronStars => write!(f, "Neutron Star"),
+            CodexEntry::BlackHoles => write!(f, "Black Hole"),
+            CodexEntry::Geological(_) => {}
             CodexEntry::PlanetClass(planet_class) => write!(f, "{}", planet_class),
             CodexEntry::Genus(genus) => write!(f, "{}", genus),
             CodexEntry::Species(species) => write!(f, "{}", species),

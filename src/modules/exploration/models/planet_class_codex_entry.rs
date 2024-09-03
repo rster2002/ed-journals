@@ -25,7 +25,7 @@ pub enum PlanetClassCodexEntryError {
 
 lazy_static! {
     static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex =
-        Regex::new(r#"^\$Codex_Ent_(Standard|TRF)(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
+        Regex::new(r#"^\$Codex_Ent(_(Standard|TRF))?(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
 }
 
 impl FromStr for PlanetClassCodexEntry {
@@ -37,19 +37,18 @@ impl FromStr for PlanetClassCodexEntry {
             .ok_or(PlanetClassCodexEntryError::FailedToParse(s.to_string()))?;
 
         let terraformable = captures
-            .get(1)
-            .expect("Should have been captured already")
-            .as_str();
+            .get(2)
+            .is_some_and(|capture| capture.as_str() == "TRF");
 
         let planet_class = captures
-            .get(3)
+            .get(4)
             .expect("Should have been captured already")
             .as_str();
 
-        let no_atmosphere = captures.get(4).is_some();
+        let no_atmosphere = captures.get(5).is_some();
 
         Ok(PlanetClassCodexEntry {
-            terraformable: terraformable == "TRF",
+            terraformable,
             has_atmosphere: !no_atmosphere,
             planet_class: PlanetClass::from_str(planet_class)?,
         })
@@ -86,6 +85,8 @@ mod tests {
             "$Codex_Ent_Standard_Metal_Rich_No_Atmos_Name;",
             "$Codex_Ent_Standard_Ice_No_Atmos_Name;",
             "$Codex_Ent_Standard_Sudarsky_Class_III_Name;",
+            "$Codex_Ent_Earth_Likes_Name;",
+            "$Codex_Ent_Standard_Giant_With_Ammonia_Life_Name;",
         ];
 
         for case in cases {
