@@ -135,7 +135,7 @@ impl FromStr for StarClass {
             "DCV" | "dcv" => StarClass::DCV,
             "DX" | "dx" => StarClass::DX,
 
-            "N" | "n" => StarClass::N,
+            "N" | "n" | "Neutron_Stars" => StarClass::N,
             "H" | "h" => StarClass::H,
             "X" | "x" => StarClass::X,
             "SupermassiveBlackHole" | "supermassiveblackhole" => StarClass::SupermassiveBlackHole,

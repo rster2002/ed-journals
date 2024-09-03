@@ -53,3 +53,8 @@ impl Display for StarClassCodexEntry {
 }
 
 from_str_deserialize_impl!(StarClassCodexEntry);
+
+#[cfg(test)]
+mod tests {
+
+}
