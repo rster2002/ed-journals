@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexAnomalyEntry {
     LagrangeClouds,
     ETypeAnomalies,

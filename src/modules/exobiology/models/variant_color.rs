@@ -7,7 +7,7 @@ use crate::modules::exobiology::{Genus, Species, VariantSource};
 use crate::modules::galaxy::StarClass;
 use crate::modules::materials::Material;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum VariantColor {
     Amethyst,
     Aquamarine,

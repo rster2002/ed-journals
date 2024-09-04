@@ -7,14 +7,8 @@ use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
 
 /// Codex entry name.
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexEntry {
-    // #[serde(rename = "$Codex_Ent_Neutron_Stars_Name;")]
-    // NeutronStars,
-
-    // #[serde(rename = "$Codex_Ent_Black_Holes_Name;")]
-    // BlackHoles,
-
     #[serde(untagged)]
     PlanetClass(PlanetClassCodexEntry),
 
@@ -62,6 +56,34 @@ impl Display for CodexEntry {
 
             #[cfg(feature = "allow-unknown")]
             CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{}'", unknown),
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::Value;
+    use crate::exploration::CodexEntry;
+
+    #[test]
+    fn codex_entries_are_parsed_correctly() {
+        let cases = [
+            "$Codex_Ent_TRF_Water_Worlds_Name;",
+            "$Codex_Ent_Standard_Water_Worlds_Name;",
+            "$Codex_Ent_Standard_Ter_High_Metal_Content_Name;",
+            "$Codex_Ent_Standard_Metal_Rich_No_Atmos_Name;",
+            "$Codex_Ent_Standard_Ice_No_Atmos_Name;",
+            "$Codex_Ent_Standard_Sudarsky_Class_III_Name;",
+            "$Codex_Ent_Earth_Likes_Name;",
+            "$Codex_Ent_Standard_Giant_With_Ammonia_Life_Name;",
+            "$Codex_Ent_Neutron_Stars_Name;",
+        ];
+
+        for case in cases {
+            let result = serde_json::from_value::<CodexEntry>(Value::String(case.to_string()));
+
+            dbg!(&result);
+            assert!(result.is_ok());
         }
     }
 }

@@ -7,7 +7,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub struct PlanetClassCodexEntry {
     pub terraformable: bool,
     pub has_atmosphere: bool,
