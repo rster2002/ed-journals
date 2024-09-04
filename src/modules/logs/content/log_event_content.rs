@@ -878,7 +878,7 @@ impl LogEventContent {
             LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
-            LogEventContent::CodexEntry(event) => event.body_id,
+            LogEventContent::CodexEntry(event) => event.body_id?,
             LogEventContent::DropshipDeploy(event) => event.body_id,
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,
