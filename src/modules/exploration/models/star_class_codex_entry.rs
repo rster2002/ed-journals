@@ -86,7 +86,29 @@ impl FromStr for StarClassCodexEntry {
 
 impl Display for StarClassCodexEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Star class: {}", self.0)
+        write!(f, "{}", match self {
+            StarClassCodexEntry::OTypeStar => "O Type Star",
+            StarClassCodexEntry::BTypeStar => "B Type Star",
+            StarClassCodexEntry::ATypeStar => "A Type Star",
+            StarClassCodexEntry::FTypeStar => "F Type Star",
+            StarClassCodexEntry::GTypeStar => "G Type Star",
+            StarClassCodexEntry::KTypeStar => "K Type Star",
+            StarClassCodexEntry::MTypeStar => "M Type Star",
+            StarClassCodexEntry::LTypeStar => "L Type Star",
+            StarClassCodexEntry::TTypeStar => "T Type Star",
+            StarClassCodexEntry::TTauriTypeStar => "T Tauri TypeStar",
+            StarClassCodexEntry::AeBeTypeStar => "AeBe TypeStar",
+            StarClassCodexEntry::YTypeStar => "Y TypeStar",
+            StarClassCodexEntry::CNTypeStar => "CN TypeStar",
+            StarClassCodexEntry::CJTypeStar => "CJ TypeStar",
+            StarClassCodexEntry::MSTypeStar => "MS TypeStar",
+            StarClassCodexEntry::STypeStar => "S TypeStar",
+            StarClassCodexEntry::WolfRayetTypeStar => "Wolf-Rayet Type Star",
+            StarClassCodexEntry::WhiteDwarf => "White Dwarf",
+            StarClassCodexEntry::NeutronStar => "Neutron Star",
+            StarClassCodexEntry::BlackHole => "Black Hole",
+            StarClassCodexEntry::SupermassiveBlackHole => "Supermassive Black Hole",
+        })
     }
 }
 
