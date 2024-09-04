@@ -49,7 +49,7 @@ pub struct CodexEntryEvent {
 
     /// The body id of the subject of the entry or has been scanned on.
     #[serde(rename = "BodyID")]
-    pub body_id: u8,
+    pub body_id: Option<u8>,
 
     // TODO sometimes missing, sometimes an empty string
     pub nearest_destination: Option<String>,
