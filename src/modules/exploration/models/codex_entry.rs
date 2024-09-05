@@ -67,22 +67,17 @@ mod tests {
 
     #[test]
     fn codex_entries_are_parsed_correctly() {
-        let cases = [
-            "$Codex_Ent_TRF_Water_Worlds_Name;",
-            "$Codex_Ent_Standard_Water_Worlds_Name;",
-            "$Codex_Ent_Standard_Ter_High_Metal_Content_Name;",
-            "$Codex_Ent_Standard_Metal_Rich_No_Atmos_Name;",
-            "$Codex_Ent_Standard_Ice_No_Atmos_Name;",
-            "$Codex_Ent_Standard_Sudarsky_Class_III_Name;",
-            "$Codex_Ent_Earth_Likes_Name;",
-            "$Codex_Ent_Standard_Giant_With_Ammonia_Life_Name;",
-            "$Codex_Ent_Neutron_Stars_Name;",
-        ];
+        let content = include_str!("zz_codex_entries");
+        let lines = content.lines();
 
-        for case in cases {
-            let result = serde_json::from_value::<CodexEntry>(Value::String(case.to_string()));
+        for line in lines {
+            if line.starts_with('#') {
+                continue;
+            }
 
-            dbg!(&result);
+            let result = serde_json::from_value::<CodexEntry>(Value::String(line.to_string()));
+
+            dbg!(&line, &result);
             assert!(result.is_ok());
         }
     }
