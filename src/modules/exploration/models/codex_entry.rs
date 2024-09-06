@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
+use crate::exploration::models::codex_thargoid_entry::CodexThargoidEntry;
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
@@ -17,6 +18,9 @@ pub enum CodexEntry {
 
     #[serde(untagged)]
     Anomalous(CodexAnomalyEntry),
+
+    #[serde(untagged)]
+    Thargoid(CodexThargoidEntry),
 
     /// Genus codex entry registered when scanning the first genus in the given region.
     #[serde(untagged)]
@@ -48,6 +52,7 @@ impl Display for CodexEntry {
             // CodexEntry::BlackHoles => write!(f, "Black Hole"),
             CodexEntry::Geological(geological) => write!(f, "{}", geological),
             CodexEntry::Anomalous(anomalous) => write!(f, "{}", anomalous),
+            CodexEntry::Thargoid(targoid) => write!(f, "{}", targoid),
             CodexEntry::PlanetClass(planet_class) => write!(f, "{}", planet_class),
             CodexEntry::Genus(genus) => write!(f, "{}", genus),
             CodexEntry::Species(species) => write!(f, "{}", species),
@@ -77,7 +82,10 @@ mod tests {
 
             let result = serde_json::from_value::<CodexEntry>(Value::String(line.to_string()));
 
-            dbg!(&line, &result);
+            if result.is_err() {
+                dbg!(&line, &result);
+            }
+
             assert!(result.is_ok());
         }
     }
