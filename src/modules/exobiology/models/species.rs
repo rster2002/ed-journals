@@ -23,22 +23,14 @@ pub enum Species {
     AmphoraPlant,
 
     // Anemones
-    // TODO needs to be verified
-    AnemoneLuteolum,
-    // TODO needs to be verified
-    AnemoneCroceum,
-    // TODO needs to be verified
-    AnemonePuniceum,
-    // TODO needs to be verified
-    AnemoneRoseum,
-    // TODO needs to be verified
-    AnemoneBlatteumBioluminescent,
-    // TODO needs to be verified
-    AnemoneRubeumBioluminescent,
-    // TODO needs to be verified
-    AnemonePrasinumBioluminescent,
-    // TODO needs to be verified
-    AnemoneRoseumBioluminescent,
+    AnemoneLuteolum, // TODO needs to be verified
+    AnemoneCroceum, // TODO needs to be verified
+    AnemonePuniceum, // TODO needs to be verified
+    AnemoneRoseum, // TODO needs to be verified
+    AnemoneBlatteumBioluminescent, // TODO needs to be verified
+    AnemoneRubeumBioluminescent, // TODO needs to be verified
+    AnemonePrasinumBioluminescent, // TODO needs to be verified
+    AnemoneRoseumBioluminescent, // TODO needs to be verified
 
     // Bark mounds
     BarkMound,
@@ -59,22 +51,14 @@ pub enum Species {
     BacteriumVerrata,
 
     // Brain tree
-    // TODO needs to be verified
-    BrainTreeRoseum,
-    // TODO needs to be verified
-    BrainTreeGypseeum,
-    // TODO needs to be verified
-    BrainTreeOstrinum,
-    // TODO needs to be verified
-    BrainTreeViride,
-    // TODO needs to be verified
-    BrainTreeLividum,
-    // TODO needs to be verified
-    BrainTreeAureum,
-    // TODO needs to be verified
-    BrainTreePuniceum,
-    // TODO needs to be verified
-    BrainTreeLindigoticum,
+    BrainTreeRoseum, // TODO needs to be verified
+    BrainTreeGypseeum, // TODO needs to be verified
+    BrainTreeOstrinum, // TODO needs to be verified
+    BrainTreeViride, // TODO needs to be verified
+    BrainTreeLividum, // TODO needs to be verified
+    BrainTreeAureum, // TODO needs to be verified
+    BrainTreePuniceum, // TODO needs to be verified
+    BrainTreeLindigoticum, // TODO needs to be verified
 
     // Cactoida
     CactoidaCortexum,
@@ -144,22 +128,14 @@ pub enum Species {
     ReceptaConditivus,
 
     // Sinuous tubers
-    // TODO needs to be verified
-    SinuousTubersRoseum,
-    // TODO needs to be verified
-    SinuousTubersPrasinum,
-    // TODO needs to be verified
-    SinuousTubersAlbidum,
-    // TODO needs to be verified
-    SinuousTubersCaeruleum,
-    // TODO needs to be verified
-    SinuousTubersBlatteum,
-    // TODO needs to be verified
-    SinuousTubersLindigoticum,
-    // TODO needs to be verified
-    SinuousTubersViolaceum,
-    // TODO needs to be verified
-    SinuousTubersViride,
+    SinuousTubersRoseum, // TODO needs to be verified
+    SinuousTubersPrasinum, // TODO needs to be verified
+    SinuousTubersAlbidum, // TODO needs to be verified
+    SinuousTubersCaeruleum, // TODO needs to be verified
+    SinuousTubersBlatteum, // TODO needs to be verified
+    SinuousTubersLindigoticum, // TODO needs to be verified
+    SinuousTubersViolaceum, // TODO needs to be verified
+    SinuousTubersViride, // TODO needs to be verified
 
     // Stratum
     StratumExcutitus,
@@ -196,16 +172,11 @@ pub enum Species {
     TussockCapillum,
 
     // Thargoid barnacles
-    // TODO needs to be verified
-    ThargoidBarnacleCommon,
-    // TODO needs to be verified
-    ThargoidBarnacleLarge,
-    // TODO needs to be verified
-    ThargoidBarnacleBarbs,
-    // TODO needs to be verified
-    ThargoidBarnacleMatrixSubmerged,
-    // TODO needs to be verified
-    ThargoidBarnacleMatrix,
+    ThargoidBarnacleCommon, // TODO needs to be verified
+    ThargoidBarnacleLarge, // TODO needs to be verified
+    ThargoidBarnacleBarbs, // TODO needs to be verified
+    ThargoidBarnacleMatrixSubmerged, // TODO needs to be verified
+    ThargoidBarnacleMatrix, // TODO needs to be verified
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -700,6 +671,9 @@ impl Species {
             Species::SinuousTubersLindigoticum => 0,
             Species::SinuousTubersViolaceum => 0,
             Species::SinuousTubersViride => 0,
+
+            #[cfg(feature = "allow-unknown")]
+            Species::Unknown(_) => 0,
         }
     }
 }

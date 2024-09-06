@@ -1,85 +1,87 @@
 use std::fmt::{Display, Formatter};
-
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
-
+use thiserror::Error;
+use crate::from_str_deserialize_impl;
 use crate::modules::exobiology::Species;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum Genus {
-    #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
     Aleoida,
-
     AmphoraPlant,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
-    Anemone,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Cone_Name;")]
-    BarkMound,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
+    Anemone, // TODO needs to be verified
+    BarkMound, // TODO needs to be verified
     Bacterium,
-
-    #[serde(rename = "$Codex_Ent_Brancae_Name;")]
     BrainTree,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_Genus_Name;")]
     Cactoida,
-
-    #[serde(rename = "$Codex_Ent_Clypeus_Genus_Name;")]
     Clypeus,
-
-    #[serde(rename = "$Codex_Ent_Conchas_Genus_Name;")]
     Concha,
-
-    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
     CrystallineShards,
-
-    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
     Electricae,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
     Fonticulua,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
     Frutexa,
-
-    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
-
-    #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]
     Fungoida,
-
-    #[serde(rename = "$Codex_Ent_Osseus_Genus_Name;")]
     Osseus,
-
-    #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
     Recepta,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Tube_Name;")]
-    SinuousTubers,
-
-    #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
+    SinuousTubers, // TODO needs to be verified
     Stratum,
-
-    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
     Tubus,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
     Tussock,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
-    ThargoidBarnacle,
+    ThargoidBarnacle, // TODO needs to be verified
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
+
+#[derive(Debug, Error)]
+pub enum GenusError {
+    #[error("Failed to parse genus: '{0}'")]
+    FailedToParse(String),
+}
+
+impl FromStr for Genus {
+    type Err = GenusError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let string: &str = &s.to_ascii_lowercase();
+
+        Ok(match string {
+            "$codex_ent_aleoids_genus_name;" => Genus::Aleoida,
+            "$codex_ent_vents_name;" => Genus::AmphoraPlant,
+            "$codex_ent_sphere_name;" => Genus::Anemone,
+            "$codex_ent_cone_name;" => Genus::BarkMound,
+            "$codex_ent_bacterial_genus_name;" => Genus::Bacterium,
+            "$codex_ent_brancae_name;" => Genus::BrainTree,
+            "$codex_ent_cactoid_genus_name;" => Genus::Cactoida,
+            "$codex_ent_clypeus_genus_name;" => Genus::Clypeus,
+            "$codex_ent_conchas_genus_name;" => Genus::Concha,
+            "$codex_ent_ground_struct_ice_name;" => Genus::CrystallineShards,
+            "$codex_ent_electricae_genus_name;" => Genus::Electricae,
+            "$codex_ent_fonticulus_genus_name;" => Genus::Fonticulua,
+            "$codex_ent_shrubs_genus_name;" => Genus::Frutexa,
+            "$codex_ent_fumerolas_genus_name;" => Genus::Fumerola,
+            "$codex_ent_fungoids_genus_name;" => Genus::Fungoida,
+            "$codex_ent_osseus_genus_name;" => Genus::Osseus,
+            "$codex_ent_recepta_genus_name;" => Genus::Recepta,
+            "$codex_ent_tube_name;" => Genus::SinuousTubers,
+            "$codex_ent_stratum_genus_name;" => Genus::Stratum,
+            "$codex_ent_tubus_genus_name;" => Genus::Tubus,
+            "$codex_ent_tussocks_genus_name;" => Genus::Tussock,
+            "$codex_ent_thargoid_barnacle_name;" => Genus::ThargoidBarnacle,
+
+            #[cfg(feature = "allow-unknown")]
+            _ => Genus::Unknown(string.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
+            _ => return Err(GenusError::FailedToParse(string.to_string())),
+        })
+    }
+}
+
+from_str_deserialize_impl!(Genus);
 
 impl From<&Species> for Genus {
     fn from(value: &Species) -> Self {
@@ -226,6 +228,9 @@ impl From<&Species> for Genus {
             | Species::ThargoidBarnacleBarbs
             | Species::ThargoidBarnacleMatrixSubmerged
             | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
+
+            #[cfg(feature = "allow-unknown")]
+            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {}", unknown))
         }
     }
 }
