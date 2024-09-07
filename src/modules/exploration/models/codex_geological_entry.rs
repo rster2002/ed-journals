@@ -12,6 +12,18 @@ pub enum CodexGeologicalEntry {
     IceGeyser,
     LavaSpout,
     GasVent,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    Unknown(String),
+}
+
+impl CodexGeologicalEntry {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, CodexGeologicalEntry::Unknown(_))
+    }
 }
 
 #[derive(Debug, Error)]

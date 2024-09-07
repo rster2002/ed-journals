@@ -21,6 +21,14 @@ pub enum CodexThargoidEntry {
     Unknown(String),
 }
 
+impl CodexThargoidEntry {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, CodexThargoidEntry::Unknown(_))
+    }
+}
+
 #[derive(Debug, Error)]
 pub enum CoxexThargoidEntryError {
     #[error("Failed to parse Thargoid codex entry: '{0}'")]

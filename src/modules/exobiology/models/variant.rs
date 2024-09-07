@@ -18,6 +18,15 @@ pub struct Variant {
     pub color: VariantColor,
 }
 
+impl Variant {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self.species, Species::Unknown(_))
+            || matches!(self.color, VariantColor::Unknown)
+    }
+}
+
 #[derive(Debug, Error)]
 pub enum VariantError {
     #[error("Failed to parse species: {0}")]

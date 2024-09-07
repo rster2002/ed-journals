@@ -8,47 +8,26 @@ use thiserror::Error;
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
 use crate::exploration::models::codex_guardian_entry::CodexGuardianEntry;
+use crate::exploration::models::codex_planet_entry::CodexPlanetEntry;
 use crate::exploration::models::codex_thargoid_entry::CodexThargoidEntry;
 use crate::from_str_deserialize_impl;
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexEntry {
-    #[serde(untagged)]
-    PlanetClass(PlanetClassCodexEntry),
-
-    #[serde(untagged)]
+    PlanetClass(CodexPlanetEntry),
     Geological(CodexGeologicalEntry),
-
-    #[serde(untagged)]
     Anomalous(CodexAnomalyEntry),
-
-    #[serde(untagged)]
     Thargoid(CodexThargoidEntry),
-
-    #[serde(untagged)]
     Guardian(CodexGuardianEntry),
-
-    /// Genus codex entry registered when scanning the first genus in the given region.
-    #[serde(untagged)]
     Genus(Genus),
-
-    /// Genus codex entry registered when scanning the first species in the given region.
-    #[serde(untagged)]
     Species(Species),
-
-    /// Genus codex entry registered when scanning the first variant in the given region.
-    #[serde(untagged)]
     Variant(Variant),
-
-    /// Genus codex entry registered when scanning the star class in the given region.
-    #[serde(untagged)]
     StarClass(CodexStarClassEntry),
 
     /// Unknown codex entry.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    #[serde(untagged)]
     Unknown(String),
 }
 
@@ -61,37 +40,59 @@ pub enum CodexEntryError {
 impl FromStr for CodexEntry {
     type Err = CodexEntryError;
 
+    #[cfg(not(feature = "allow-unknown"))]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(entry) = PlanetClassCodexEntry::from_str(s) {
-            return Ok(CodexEntry::PlanetClass(entry));
+
+    }
+
+    #[cfg(feature = "allow-unknown")]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(entry) = CodexPlanetEntry::from_str(s) {
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::PlanetClass(entry));
+            }
         }
 
         if let Ok(entry) = CodexGeologicalEntry::from_str(s) {
-            return Ok(CodexEntry::Geological(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Geological(entry));
+            }
         }
 
         if let Ok(entry) = CodexAnomalyEntry::from_str(s) {
-            return Ok(CodexEntry::Anomalous(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Anomalous(entry));
+            }
         }
 
         if let Ok(entry) = CodexThargoidEntry::from_str(s) {
-            return Ok(CodexEntry::Thargoid(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Thargoid(entry));
+            }
         }
 
         if let Ok(entry) = Genus::from_str(s) {
-            return Ok(CodexEntry::Genus(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Genus(entry));
+            }
         }
 
         if let Ok(entry) = Species::from_str(s) {
-            return Ok(CodexEntry::Species(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Species(entry));
+            }
         }
 
         if let Ok(entry) = Variant::from_str(s) {
-            return Ok(CodexEntry::Variant(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Variant(entry));
+            }
         }
 
         if let Ok(entry) = CodexStarClassEntry::from_str(s) {
-            return Ok(CodexEntry::StarClass(entry));
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::StarClass(entry));
+            }
         }
 
         Err(CodexEntryError::UnknownEntry(s.to_string()))

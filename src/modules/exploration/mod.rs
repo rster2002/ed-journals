@@ -8,4 +8,4 @@ pub use models::codex_star_class_entry::StarClassCodexEntryError;
 
 mod functions;
 mod models;
-mod shared;
+pub(crate) mod shared;

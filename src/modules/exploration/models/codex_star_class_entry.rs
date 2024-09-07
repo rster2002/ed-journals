@@ -47,6 +47,14 @@ pub enum CodexStarClassEntry {
     Unknown(String),
 }
 
+impl CodexStarClassEntry {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, CodexStarClassEntry::Unknown(_))
+    }
+}
+
 /// Enum for errors that occur when parsing a star class codex entry.
 #[derive(Debug, Error)]
 pub enum StarClassCodexEntryError {

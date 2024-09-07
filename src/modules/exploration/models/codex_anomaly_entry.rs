@@ -11,6 +11,18 @@ pub enum CodexAnomalyEntry {
     PTypeAnomalies,
     QTypeAnomalies,
     TTypeAnomalies,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    Unknown(String),
+}
+
+impl CodexAnomalyEntry {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, CodexAnomalyEntry::Unknown(_))
+    }
 }
 
 pub enum CodexAnomalyError {}
