@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
@@ -10,6 +11,16 @@ pub enum CodexAnomalyEntry {
     PTypeAnomalies,
     QTypeAnomalies,
     TTypeAnomalies,
+}
+
+pub enum CodexAnomalyError {}
+
+impl FromStr for CodexAnomalyEntry {
+    type Err = CodexAnomalyError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        todo!()
+    }
 }
 
 impl Display for CodexAnomalyEntry {

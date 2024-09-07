@@ -1,14 +1,18 @@
 use crate::exploration::models::planet_class_codex_entry::PlanetClassCodexEntry;
 use crate::modules::exobiology::{Genus, Species, Variant};
-use crate::modules::exploration::StarClassCodexEntry;
+use crate::modules::exploration::CodexStarClassEntry;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
+use crate::exploration::models::codex_guardian_entry::CodexGuardianEntry;
 use crate::exploration::models::codex_thargoid_entry::CodexThargoidEntry;
+use crate::from_str_deserialize_impl;
 
 /// Codex entry name.
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexEntry {
     #[serde(untagged)]
     PlanetClass(PlanetClassCodexEntry),
@@ -21,6 +25,9 @@ pub enum CodexEntry {
 
     #[serde(untagged)]
     Thargoid(CodexThargoidEntry),
+
+    #[serde(untagged)]
+    Guardian(CodexGuardianEntry),
 
     /// Genus codex entry registered when scanning the first genus in the given region.
     #[serde(untagged)]
@@ -36,7 +43,7 @@ pub enum CodexEntry {
 
     /// Genus codex entry registered when scanning the star class in the given region.
     #[serde(untagged)]
-    StarClass(StarClassCodexEntry),
+    StarClass(CodexStarClassEntry),
 
     /// Unknown codex entry.
     #[cfg(feature = "allow-unknown")]
@@ -44,6 +51,54 @@ pub enum CodexEntry {
     #[serde(untagged)]
     Unknown(String),
 }
+
+#[derive(Debug, Error)]
+pub enum CodexEntryError {
+    #[error("Unknown codex entry: '{0}'")]
+    UnknownEntry(String),
+}
+
+impl FromStr for CodexEntry {
+    type Err = CodexEntryError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(entry) = PlanetClassCodexEntry::from_str(s) {
+            return Ok(CodexEntry::PlanetClass(entry));
+        }
+
+        if let Ok(entry) = CodexGeologicalEntry::from_str(s) {
+            return Ok(CodexEntry::Geological(entry));
+        }
+
+        if let Ok(entry) = CodexAnomalyEntry::from_str(s) {
+            return Ok(CodexEntry::Anomalous(entry));
+        }
+
+        if let Ok(entry) = CodexThargoidEntry::from_str(s) {
+            return Ok(CodexEntry::Thargoid(entry));
+        }
+
+        if let Ok(entry) = Genus::from_str(s) {
+            return Ok(CodexEntry::Genus(entry));
+        }
+
+        if let Ok(entry) = Species::from_str(s) {
+            return Ok(CodexEntry::Species(entry));
+        }
+
+        if let Ok(entry) = Variant::from_str(s) {
+            return Ok(CodexEntry::Variant(entry));
+        }
+
+        if let Ok(entry) = CodexStarClassEntry::from_str(s) {
+            return Ok(CodexEntry::StarClass(entry));
+        }
+
+        Err(CodexEntryError::UnknownEntry(s.to_string()))
+    }
+}
+
+from_str_deserialize_impl!(CodexEntry);
 
 impl Display for CodexEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -58,6 +113,7 @@ impl Display for CodexEntry {
             CodexEntry::Species(species) => write!(f, "{}", species),
             CodexEntry::Variant(variant) => write!(f, "{}", variant),
             CodexEntry::StarClass(star_class) => write!(f, "{}", star_class),
+            CodexEntry::Guardian(guardian) => write!(f, "{}", guardian),
 
             #[cfg(feature = "allow-unknown")]
             CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{}'", unknown),

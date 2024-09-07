@@ -25,7 +25,7 @@ pub enum PlanetClassCodexEntryError {
 
 lazy_static! {
     static ref PLANET_CLASS_CODEX_ENTRY_REGEX: Regex =
-        Regex::new(r#"^\$Codex_Ent(_(Standard|TRF))?(_Ter)?_(.+?)(_No_Atmos)?_Name;$"#).unwrap();
+        Regex::new(r#"^\$[cC]odex_[eE]nt(_([sS]tandard|TRF))?(_[tT]er)?_(.+?)(_[nN]o_[aA]tmos)?_[nN]ame;$"#).unwrap();
 }
 
 impl FromStr for PlanetClassCodexEntry {
