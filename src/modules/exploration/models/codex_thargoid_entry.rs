@@ -21,6 +21,7 @@ pub enum CodexThargoidEntry {
     Barnacles,
     Basilisk,
     Berserker,
+    Cyclops,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -72,6 +73,7 @@ impl FromStr for CodexThargoidEntry {
             "barnacles" => CodexThargoidEntry::Barnacles,
             "basilisk" => CodexThargoidEntry::Basilisk,
             "berserker" => CodexThargoidEntry::Berserker,
+            "cyclops" => CodexThargoidEntry::Cyclops,
 
             #[cfg(feature = "allow-unknown")]
             _ => CodexThargoidEntry::Unknown(string.to_string()),
@@ -101,6 +103,7 @@ impl Display for CodexThargoidEntry {
             CodexThargoidEntry::Barnacles => "Barnacles",
             CodexThargoidEntry::Basilisk => "Basilisk",
             CodexThargoidEntry::Berserker => "Berserker",
+            CodexThargoidEntry::Cyclops => "Cyclops",
 
             #[cfg(feature = "allow-unknown")]
             CodexThargoidEntry::Unknown(unknown) => return write!(f, "Unknown codex entry: '{}'", unknown),

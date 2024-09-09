@@ -7,7 +7,16 @@ use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexPlanetEntry {
+    EarthLike,
+
     AmmoniaWorld,
+    DenseAmmoniaWorld,
+    DenseWaterWorld,
+    DenseTerraformableHighMetalContentPlanet,
+    DenseTerraformableIcePlanet,
+    DenseTerraformableMetalRichPlanet,
+    DenseTerraformableRockyIcePlanet,
+    DenseTerraformableRockyPlanet,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -45,7 +54,16 @@ impl FromStr for CodexPlanetEntry {
             .to_ascii_lowercase();
 
         Ok(match string {
+            "earth_likes" => CodexPlanetEntry::EarthLike,
+
             "ammonia_worlds" => CodexPlanetEntry::AmmoniaWorld,
+            "dense_ammonia_worlds" => CodexPlanetEntry::DenseAmmoniaWorld,
+            "dense_water_worlds" => CodexPlanetEntry::DenseWaterWorld,
+            "dense_ter_high_metal_content" => CodexPlanetEntry::DenseTerraformableHighMetalContentPlanet,
+            "dense_ter_ice" => CodexPlanetEntry::DenseTerraformableIcePlanet,
+            "dense_ter_metal_rich" => CodexPlanetEntry::DenseTerraformableMetalRichPlanet,
+            "dense_ter_rocky_ice" => CodexPlanetEntry::DenseTerraformableRockyIcePlanet,
+            "dense_ter_rocky" => CodexPlanetEntry::DenseTerraformableRockyPlanet,
 
             #[cfg(feature = "allow-unknown")]
             _ => CodexPlanetEntry::Unknown(string.to_string()),
@@ -61,7 +79,16 @@ from_str_deserialize_impl!(CodexPlanetEntry);
 impl Display for CodexPlanetEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", match self {
-            CodexPlanetEntry::AmmoniaWorld => "ammonia_world",
+            CodexPlanetEntry::EarthLike => "earth_like",
+
+            CodexPlanetEntry::AmmoniaWorld => "Ammonia World",
+            CodexPlanetEntry::DenseAmmoniaWorld => "Dense Ammonia World",
+            CodexPlanetEntry::DenseWaterWorld => "Dense Water World",
+            CodexPlanetEntry::DenseTerraformableHighMetalContentPlanet => "Dense Terraformable High Metal Content Planet",
+            CodexPlanetEntry::DenseTerraformableIcePlanet => "Dense Terraformable Ice Planet",
+            CodexPlanetEntry::DenseTerraformableMetalRichPlanet => "Dense Terraformable Metal-Rich Planet",
+            CodexPlanetEntry::DenseTerraformableRockyIcePlanet => "Dense Terraformable Rocky Ice Planet",
+            CodexPlanetEntry::DenseTerraformableRockyPlanet => "Dense Terraformable Rocky Planet",
 
             #[cfg(feature = "allow-unknown")]
             CodexPlanetEntry::Unknown(unknown) => return write!(f, "Unknown planet codex entry: {}", unknown),
