@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::Serialize;
 use thiserror::Error;
@@ -14,6 +15,8 @@ pub enum CodexPlanetEntry {
 }
 
 impl CodexPlanetEntry {
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
         matches!(self, CodexPlanetEntry::Unknown(_))
     }
@@ -42,7 +45,7 @@ impl FromStr for CodexPlanetEntry {
             .to_ascii_lowercase();
 
         Ok(match string {
-            "ammonia_world" => CodexPlanetEntry::AmmoniaWorld,
+            "ammonia_worlds" => CodexPlanetEntry::AmmoniaWorld,
 
             #[cfg(feature = "allow-unknown")]
             _ => CodexPlanetEntry::Unknown(string.to_string()),
@@ -54,3 +57,14 @@ impl FromStr for CodexPlanetEntry {
 }
 
 from_str_deserialize_impl!(CodexPlanetEntry);
+
+impl Display for CodexPlanetEntry {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            CodexPlanetEntry::AmmoniaWorld => "ammonia_world",
+
+            #[cfg(feature = "allow-unknown")]
+            CodexPlanetEntry::Unknown(unknown) => return write!(f, "Unknown planet codex entry: {}", unknown),
+        })
+    }
+}

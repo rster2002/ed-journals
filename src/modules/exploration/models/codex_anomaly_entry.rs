@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexAnomalyEntry {
@@ -25,13 +26,20 @@ impl CodexAnomalyEntry {
     }
 }
 
-pub enum CodexAnomalyError {}
+#[derive(Debug, Error)]
+pub enum CodexAnomalyError {
+    #[error("Failed to parse codex anomaly entry: '{0}'")]
+    FailedToParse(String),
+
+    #[error("Unknown codex anomaly entry: '{0}'")]
+    UnknownEntry(String),
+}
 
 impl FromStr for CodexAnomalyEntry {
     type Err = CodexAnomalyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        todo!()
+        Err(CodexAnomalyError::FailedToParse(s.to_string()))
     }
 }
 

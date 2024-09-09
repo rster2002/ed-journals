@@ -15,7 +15,7 @@ use crate::from_str_deserialize_impl;
 /// Codex entry name.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexEntry {
-    PlanetClass(CodexPlanetEntry),
+    Planet(CodexPlanetEntry),
     Geological(CodexGeologicalEntry),
     Anomalous(CodexAnomalyEntry),
     Thargoid(CodexThargoidEntry),
@@ -42,14 +42,50 @@ impl FromStr for CodexEntry {
 
     #[cfg(not(feature = "allow-unknown"))]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(entry) = CodexPlanetEntry::from_str(s) {
+            return Ok(CodexEntry::Planet(entry));
+        }
 
+        if let Ok(entry) = CodexGeologicalEntry::from_str(s) {
+            return Ok(CodexEntry::Geological(entry));
+        }
+
+        if let Ok(entry) = CodexAnomalyEntry::from_str(s) {
+            return Ok(CodexEntry::Anomalous(entry));
+        }
+
+        if let Ok(entry) = CodexThargoidEntry::from_str(s) {
+            return Ok(CodexEntry::Thargoid(entry));
+        }
+
+        if let Ok(entry) = CodexGuardianEntry::from_str(s) {
+            return Ok(CodexEntry::Guardian(entry));
+        }
+
+        if let Ok(entry) = Genus::from_str(s) {
+            return Ok(CodexEntry::Genus(entry));
+        }
+
+        if let Ok(entry) = Species::from_str(s) {
+            return Ok(CodexEntry::Species(entry));
+        }
+
+        if let Ok(entry) = Variant::from_str(s) {
+            return Ok(CodexEntry::Variant(entry));
+        }
+
+        if let Ok(entry) = CodexStarClassEntry::from_str(s) {
+            return Ok(CodexEntry::StarClass(entry));
+        }
+
+        Err(CodexEntryError::UnknownEntry(s.to_string()))
     }
 
     #[cfg(feature = "allow-unknown")]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Ok(entry) = CodexPlanetEntry::from_str(s) {
             if !entry.is_unknown() {
-                return Ok(CodexEntry::PlanetClass(entry));
+                return Ok(CodexEntry::Planet(entry));
             }
         }
 
@@ -68,6 +104,12 @@ impl FromStr for CodexEntry {
         if let Ok(entry) = CodexThargoidEntry::from_str(s) {
             if !entry.is_unknown() {
                 return Ok(CodexEntry::Thargoid(entry));
+            }
+        }
+
+        if let Ok(entry) = CodexGuardianEntry::from_str(s) {
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::Guardian(entry));
             }
         }
 
@@ -109,7 +151,7 @@ impl Display for CodexEntry {
             CodexEntry::Geological(geological) => write!(f, "{}", geological),
             CodexEntry::Anomalous(anomalous) => write!(f, "{}", anomalous),
             CodexEntry::Thargoid(targoid) => write!(f, "{}", targoid),
-            CodexEntry::PlanetClass(planet_class) => write!(f, "{}", planet_class),
+            CodexEntry::Planet(planet_class) => write!(f, "{}", planet_class),
             CodexEntry::Genus(genus) => write!(f, "{}", genus),
             CodexEntry::Species(species) => write!(f, "{}", species),
             CodexEntry::Variant(variant) => write!(f, "{}", variant),

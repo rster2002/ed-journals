@@ -39,7 +39,7 @@ impl FromStr for CodexGeologicalEntry {
     type Err = CodexGeologicalError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        todo!()
+        Err(CodexGeologicalError::FailedToParse(s.to_string()))
     }
 }
 

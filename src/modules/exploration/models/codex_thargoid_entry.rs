@@ -16,6 +16,12 @@ pub enum CodexThargoidEntry {
     CoralTree,
     CoralRoot,
 
+    CausticGenerator,
+    Banshee,
+    Barnacles,
+    Basilisk,
+    Berserker,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
@@ -61,6 +67,12 @@ impl FromStr for CodexThargoidEntry {
             "thargoid_coral_tree" => CodexThargoidEntry::CoralTree,
             "thargoid_coral_root" => CodexThargoidEntry::CoralRoot,
 
+            "caustic_generator" => CodexThargoidEntry::CausticGenerator,
+            "banshee" => CodexThargoidEntry::Banshee,
+            "barnacles" => CodexThargoidEntry::Barnacles,
+            "basilisk" => CodexThargoidEntry::Basilisk,
+            "berserker" => CodexThargoidEntry::Berserker,
+
             #[cfg(feature = "allow-unknown")]
             _ => CodexThargoidEntry::Unknown(string.to_string()),
 
@@ -83,6 +95,12 @@ impl Display for CodexThargoidEntry {
             CodexThargoidEntry::TowerExtraHigh => "Extra High Thargoid Tower",
             CodexThargoidEntry::CoralTree => "Thargoid Coral Tree",
             CodexThargoidEntry::CoralRoot => "Thargoid Coral Root",
+
+            CodexThargoidEntry::CausticGenerator => "Caustic Generator",
+            CodexThargoidEntry::Banshee => "Banshee",
+            CodexThargoidEntry::Barnacles => "Barnacles",
+            CodexThargoidEntry::Basilisk => "Basilisk",
+            CodexThargoidEntry::Berserker => "Berserker",
 
             #[cfg(feature = "allow-unknown")]
             CodexThargoidEntry::Unknown(unknown) => return write!(f, "Unknown codex entry: '{}'", unknown),
