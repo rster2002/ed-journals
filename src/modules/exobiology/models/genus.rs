@@ -137,7 +137,7 @@ impl FromStr for Genus {
             "cactoid_genus" => Genus::Cactoida,
             "clypeus_genus" => Genus::Clypeus,
             "conchas_genus" => Genus::Concha,
-            "ground_struct_ice" => Genus::CrystallineShards,
+            "ground_struct_ice" | "ice_structures" => Genus::CrystallineShards,
             "electricae_genus" => Genus::Electricae,
             "fonticulus_genus" => Genus::Fonticulua,
             "shrubs_genus" => Genus::Frutexa,

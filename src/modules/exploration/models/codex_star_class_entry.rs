@@ -95,10 +95,20 @@ pub enum CodexStarClassEntry {
     GTypeSupergiant,
     GTypeHypergiant,
 
-    OTypeStar,
+    KTypes,
     KTypeStar,
-    MTypeStar,
+    KTypeGiant,
+    KTypeSupergiant,
+    KTypeHypergiant,
+
+    LTypes,
     LTypeStar,
+    LTypeGiant,
+    LTypeSupergiant,
+    LTypeHypergiant,
+
+    OTypeStar,
+    MTypeStar,
     TTypeStar,
     TTauriTypeStar,
     YTypeStar,
@@ -232,10 +242,20 @@ impl FromStr for CodexStarClassEntry {
             "g_typesupergiant" => CodexStarClassEntry::GTypeSupergiant,
             "g_typehypergiant" => CodexStarClassEntry::GTypeHypergiant,
 
-            "o_type" => CodexStarClassEntry::OTypeStar,
+            "k_types" => CodexStarClassEntry::KTypes,
             "k_type" => CodexStarClassEntry::KTypeStar,
-            "m_type" => CodexStarClassEntry::MTypeStar,
+            "k_typegiant" => CodexStarClassEntry::KTypeGiant,
+            "k_typesupergiant" => CodexStarClassEntry::KTypeSupergiant,
+            "k_typehypergiant" => CodexStarClassEntry::KTypeHypergiant,
+
+            "l_types" => CodexStarClassEntry::LTypes,
             "l_type" => CodexStarClassEntry::LTypeStar,
+            "l_typegiant" => CodexStarClassEntry::LTypeGiant,
+            "l_typesupergiant" => CodexStarClassEntry::LTypeSupergiant,
+            "l_typehypergiant" => CodexStarClassEntry::LTypeHypergiant,
+
+            "o_type" => CodexStarClassEntry::OTypeStar,
+            "m_type" => CodexStarClassEntry::MTypeStar,
             "t_type" => CodexStarClassEntry::TTypeStar,
             // T Tauri Type
             "y_type" => CodexStarClassEntry::YTypeStar,
@@ -361,10 +381,20 @@ impl Display for CodexStarClassEntry {
             CodexStarClassEntry::GTypeSupergiant => "G Type Supergiant",
             CodexStarClassEntry::GTypeHypergiant => "G Type Hypergiant",
 
-            CodexStarClassEntry::OTypeStar => "O Type Star",
+            CodexStarClassEntry::KTypes => "K Type Stars",
             CodexStarClassEntry::KTypeStar => "K Type Star",
-            CodexStarClassEntry::MTypeStar => "M Type Star",
+            CodexStarClassEntry::KTypeGiant => "K Type Giant",
+            CodexStarClassEntry::KTypeSupergiant => "K Type Supergiant",
+            CodexStarClassEntry::KTypeHypergiant => "K Type Hypergiant",
+
+            CodexStarClassEntry::LTypes => "L Type Stars",
             CodexStarClassEntry::LTypeStar => "L Type Star",
+            CodexStarClassEntry::LTypeGiant => "L Type Giant",
+            CodexStarClassEntry::LTypeSupergiant => "L Type Supergiant",
+            CodexStarClassEntry::LTypeHypergiant => "L Type Hypergiant",
+
+            CodexStarClassEntry::OTypeStar => "O Type Star",
+            CodexStarClassEntry::MTypeStar => "M Type Star",
             CodexStarClassEntry::TTypeStar => "T Type Star",
             CodexStarClassEntry::TTauriTypeStar => "T Tauri TypeStar",
             CodexStarClassEntry::YTypeStar => "Y TypeStar",

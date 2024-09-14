@@ -2,6 +2,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::exploration::StarClassCodexEntryError;
 use crate::from_str_deserialize_impl;
@@ -23,6 +24,49 @@ pub enum CodexGeologicalEntry {
     FumaroleSilicateVapourGeysers,
     FumaroleSulfurDioxideMagma,
     FumaroleWaterGeysers,
+
+    IceFumarole,
+    IceFumaroleAmmoniaGeysers,
+    IceFumaroleCarbonDioxideGeysers,
+    IceFumaroleHeliumGeysers,
+    IceFumaroleMethaneGeysers,
+    IceFumaroleNitrogenGeysers,
+    IceFumaroleSilicateVapourGeysers,
+    IceFumaroleSulfurDioxideMagma,
+    IceFumaroleWaterGeysers,
+
+    GasVents,
+    GasVentsAmmoniaGeysers,
+    GasVentsCarbonDioxideGeysers,
+    GasVentsHeliumGeysers,
+    GasVentsMethaneGeysers,
+    GasVentsNitrogenGeysers,
+    GasVentsSilicateVapourGeysers,
+    GasVentsSulfurDioxideMagma,
+    GasVentsWaterGeysers,
+
+    Geysers,
+    GeysersAmmoniaGeysers,
+    GeysersCarbonDioxideGeysers,
+    GeysersHeliumGeysers,
+    GeysersMethaneGeysers,
+    GeysersNitrogenGeysers,
+    GeysersSulfurDioxideMagma,
+    GeysersWaterGeysers,
+
+    IceGeysers,
+    IceGeysersAmmoniaGeysers,
+    IceGeysersCarbonDioxideGeysers,
+    IceGeysersHeliumGeysers,
+    IceGeysersMethaneGeysers,
+    IceGeysersNitrogenGeysers,
+    IceGeysersSulfurDioxideMagma,
+    IceGeysersWaterGeysers,
+
+    LavaSpouts,
+    LavaSpoutsIronMagma,
+    LavaSpoutsSilicateMagma,
+    LavaSpoutsSulfurDioxideMagma,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -70,6 +114,49 @@ impl FromStr for CodexGeologicalEntry {
             "fumarole_sulphurdioxidemagma" => CodexGeologicalEntry::FumaroleSulfurDioxideMagma,
             "fumarole_watergeysers" => CodexGeologicalEntry::FumaroleWaterGeysers,
 
+            "icefumarole" => CodexGeologicalEntry::IceFumarole,
+            "icefumarole_ammoniageysers" => CodexGeologicalEntry::IceFumaroleAmmoniaGeysers,
+            "icefumarole_carbondioxidegeysers" => CodexGeologicalEntry::IceFumaroleCarbonDioxideGeysers,
+            "icefumarole_heliumgeysers" => CodexGeologicalEntry::IceFumaroleHeliumGeysers,
+            "icefumarole_methanegeysers" => CodexGeologicalEntry::IceFumaroleMethaneGeysers,
+            "icefumarole_nitrogengeysers" => CodexGeologicalEntry::IceFumaroleNitrogenGeysers,
+            "icefumarole_silicatevapourgeysers" => CodexGeologicalEntry::IceFumaroleSilicateVapourGeysers,
+            "icefumarole_sulphurdioxidemagma" => CodexGeologicalEntry::IceFumaroleSulfurDioxideMagma,
+            "icefumarole_watergeysers" => CodexGeologicalEntry::IceFumaroleWaterGeysers,
+
+            "gas_vents" => CodexGeologicalEntry::GasVents,
+            "gas_vents_ammoniageysers" => CodexGeologicalEntry::GasVentsAmmoniaGeysers,
+            "gas_vents_carbondioxidegeysers" => CodexGeologicalEntry::GasVentsCarbonDioxideGeysers,
+            "gas_vents_heliumgeysers" => CodexGeologicalEntry::GasVentsHeliumGeysers,
+            "gas_vents_methanegeysers" => CodexGeologicalEntry::GasVentsMethaneGeysers,
+            "gas_vents_nitrogengeysers" => CodexGeologicalEntry::GasVentsNitrogenGeysers,
+            "gas_vents_silicatevapourgeysers" => CodexGeologicalEntry::GasVentsSilicateVapourGeysers,
+            "gas_vents_sulphurdioxidemagma" => CodexGeologicalEntry::GasVentsSulfurDioxideMagma,
+            "gas_vents_watergeysers" => CodexGeologicalEntry::GasVentsWaterGeysers,
+
+            "geysers" => CodexGeologicalEntry::Geysers,
+            "geysers_ammoniageysers" => CodexGeologicalEntry::GeysersAmmoniaGeysers,
+            "geysers_carbondioxidegeysers" => CodexGeologicalEntry::GeysersCarbonDioxideGeysers,
+            "geysers_heliumgeysers" => CodexGeologicalEntry::GeysersHeliumGeysers,
+            "geysers_methanegeysers" => CodexGeologicalEntry::GeysersMethaneGeysers,
+            "geysers_nitrogengeysers" => CodexGeologicalEntry::GeysersNitrogenGeysers,
+            "geysers_sulphurdioxidemagma" => CodexGeologicalEntry::GeysersSulfurDioxideMagma,
+            "geysers_watergeysers" => CodexGeologicalEntry::GeysersWaterGeysers,
+
+            "icegeysers" => CodexGeologicalEntry::IceGeysers,
+            "icegeysers_ammoniageysers" => CodexGeologicalEntry::IceGeysersAmmoniaGeysers,
+            "icegeysers_carbondioxidegeysers" => CodexGeologicalEntry::IceGeysersCarbonDioxideGeysers,
+            "icegeysers_heliumgeysers" => CodexGeologicalEntry::IceGeysersHeliumGeysers,
+            "icegeysers_methanegeysers" => CodexGeologicalEntry::IceGeysersMethaneGeysers,
+            "icegeysers_nitrogengeysers" => CodexGeologicalEntry::IceGeysersNitrogenGeysers,
+            "icegeysers_sulphurdioxidemagma" => CodexGeologicalEntry::IceGeysersSulfurDioxideMagma,
+            "icegeysers_watergeysers" => CodexGeologicalEntry::IceGeysersWaterGeysers,
+
+            "lava_spouts" => CodexGeologicalEntry::LavaSpouts,
+            "lava_spouts_ironmagma" => CodexGeologicalEntry::LavaSpoutsIronMagma,
+            "lava_spouts_silicatemagma" => CodexGeologicalEntry::LavaSpoutsSilicateMagma,
+            "lava_spouts_sulphurdioxidemagma" => CodexGeologicalEntry::LavaSpoutsSulfurDioxideMagma,
+
             #[cfg(feature = "allow-unknown")]
             _ => CodexGeologicalEntry::Unknown(string.to_string()),
 
@@ -91,14 +178,57 @@ impl Display for CodexGeologicalEntry {
             // CodexGeologicalEntry::LavaSpout => "Lava Spout",
             // CodexGeologicalEntry::GasVent => "Gas Vent",
             CodexGeologicalEntry::Fumarole => "Fumarole",
-            CodexGeologicalEntry::FumaroleAmmoniaGeysers => "Fumarole Ammonia Geysers",
-            CodexGeologicalEntry::FumaroleCarbondioxideGeysers => "Fumarole Carbondioxide Geysers",
-            CodexGeologicalEntry::FumaroleHeliumGeysers => "Fumarole Helium Geysers",
-            CodexGeologicalEntry::FumaroleMethaneGeysers => "Fumarole MethaneGeysers",
-            CodexGeologicalEntry::FumaroleNitrogenGeysers => "Fumarole Nitrogen Geysers",
-            CodexGeologicalEntry::FumaroleSilicateVapourGeysers => "Fumarole Silicate VapourGeysers",
-            CodexGeologicalEntry::FumaroleSulfurDioxideMagma => "Fumarole Sulfur Dioxide Magma",
-            CodexGeologicalEntry::FumaroleWaterGeysers => "Fumarole Water Geysers",
+            CodexGeologicalEntry::FumaroleAmmoniaGeysers => "Ammonia Fumarole",
+            CodexGeologicalEntry::FumaroleCarbondioxideGeysers => "Carbon Dioxide Fumarole",
+            CodexGeologicalEntry::FumaroleHeliumGeysers => "Helium Fumarole",
+            CodexGeologicalEntry::FumaroleMethaneGeysers => "Methane Fumarole",
+            CodexGeologicalEntry::FumaroleNitrogenGeysers => "Nitrogen Fumarole",
+            CodexGeologicalEntry::FumaroleSilicateVapourGeysers => "Silicate Vapour Fumarole",
+            CodexGeologicalEntry::FumaroleSulfurDioxideMagma => "Sulfur Dioxide Fumarole",
+            CodexGeologicalEntry::FumaroleWaterGeysers => "Water Geysers Fumarole",
+
+            CodexGeologicalEntry::IceFumarole => "Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleAmmoniaGeysers => "Ammonia Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleCarbonDioxideGeysers => "Carbon Dioxide Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleHeliumGeysers => "Helium Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleMethaneGeysers => "Methane Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleNitrogenGeysers => "Nitrogen Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleSilicateVapourGeysers => "Silicate Vapour Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleSulfurDioxideMagma => "Sulfur Dioxide Ice Fumarole",
+            CodexGeologicalEntry::IceFumaroleWaterGeysers => "Water Geysers Ice Fumarole",
+
+            CodexGeologicalEntry::GasVents => "Gas Vents",
+            CodexGeologicalEntry::GasVentsAmmoniaGeysers => "Ammonia Gas Vents",
+            CodexGeologicalEntry::GasVentsCarbonDioxideGeysers => "Carbon Dioxide Gas Vents",
+            CodexGeologicalEntry::GasVentsHeliumGeysers => "Helium Gas Vents",
+            CodexGeologicalEntry::GasVentsMethaneGeysers => "Methane Gas Vents",
+            CodexGeologicalEntry::GasVentsNitrogenGeysers => "Nitrogen Gas Vents",
+            CodexGeologicalEntry::GasVentsSilicateVapourGeysers => "Silicate Vapour Gas Vents",
+            CodexGeologicalEntry::GasVentsSulfurDioxideMagma => "Sulfur Dioxide Gas Vents",
+            CodexGeologicalEntry::GasVentsWaterGeysers => "Water Gas Vents",
+
+            CodexGeologicalEntry::Geysers => "Geysers",
+            CodexGeologicalEntry::GeysersAmmoniaGeysers => "Ammonia Geysers",
+            CodexGeologicalEntry::GeysersCarbonDioxideGeysers => "Carbon Dioxide Geysers",
+            CodexGeologicalEntry::GeysersHeliumGeysers => "Helium Geysers",
+            CodexGeologicalEntry::GeysersMethaneGeysers => "Methane Geysers",
+            CodexGeologicalEntry::GeysersNitrogenGeysers => "Nitrogen Geysers",
+            CodexGeologicalEntry::GeysersSulfurDioxideMagma => "Sulfur Dioxide Geysers",
+            CodexGeologicalEntry::GeysersWaterGeysers => "Water Geysers",
+
+            CodexGeologicalEntry::IceGeysers => "Ice Geysers",
+            CodexGeologicalEntry::IceGeysersAmmoniaGeysers => "Ammonia Ice Geysers",
+            CodexGeologicalEntry::IceGeysersCarbonDioxideGeysers => "Carbon Dioxide Ice Geysers",
+            CodexGeologicalEntry::IceGeysersHeliumGeysers => "Helium Ice Geysers",
+            CodexGeologicalEntry::IceGeysersMethaneGeysers => "Methane Ice Geysers",
+            CodexGeologicalEntry::IceGeysersNitrogenGeysers => "Nitrogen Ice Geysers",
+            CodexGeologicalEntry::IceGeysersSulfurDioxideMagma => "Sulfur Dioxide Ice Geysers",
+            CodexGeologicalEntry::IceGeysersWaterGeysers => "Water Ice Geysers",
+
+            CodexGeologicalEntry::LavaSpouts => "Lava Spouts",
+            CodexGeologicalEntry::LavaSpoutsIronMagma => "Iron Magma Lava Spouts",
+            CodexGeologicalEntry::LavaSpoutsSilicateMagma => "Silicate Magma Lava Spouts",
+            CodexGeologicalEntry::LavaSpoutsSulfurDioxideMagma => "Sulfur Dioxide Magma Lava Spouts",
 
             #[cfg(feature = "allow-unknown")]
             CodexGeologicalEntry::Unknown(unknown) => return write!(f, "Unknown geological codex entry: {}", unknown),

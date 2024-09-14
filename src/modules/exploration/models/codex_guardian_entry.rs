@@ -17,6 +17,14 @@ pub enum CodexGuardianEntry {
     AncientTotem,
     AncientUrn,
 
+    GuardianBeacons,
+    GuardianDataBank,
+    GuardianDataLogs,
+    GuardianPad,
+    GuardianPylon,
+    GuardianSentinel,
+    GuardianTerminal,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
@@ -61,6 +69,14 @@ impl FromStr for CodexGuardianEntry {
             "ancient_totem" => CodexGuardianEntry::AncientTotem,
             "ancient_urn" => CodexGuardianEntry::AncientUrn,
 
+            "guardian_beacons" => CodexGuardianEntry::GuardianBeacons,
+            "guardian_data_bank" => CodexGuardianEntry::GuardianDataBank,
+            "guardian_data_logs" => CodexGuardianEntry::GuardianDataLogs,
+            "guardian_pad" => CodexGuardianEntry::GuardianPad,
+            "guardian_pylon" => CodexGuardianEntry::GuardianPylon,
+            "guardian_sentinel" => CodexGuardianEntry::GuardianSentinel,
+            "guardian_terminal" => CodexGuardianEntry::GuardianTerminal,
+
             #[cfg(feature = "allow-unknown")]
             _ => CodexGuardianEntry::Unknown(string.to_string()),
 
@@ -83,6 +99,14 @@ impl Display for CodexGuardianEntry {
             CodexGuardianEntry::AncientTablet => "Ancient Tablet",
             CodexGuardianEntry::AncientTotem => "Ancient Totem",
             CodexGuardianEntry::AncientUrn => "Ancient Urn",
+
+            CodexGuardianEntry::GuardianBeacons => "Guardian Beacons",
+            CodexGuardianEntry::GuardianDataBank => "Guardian Data Bank",
+            CodexGuardianEntry::GuardianDataLogs => "Guardian Data Logs",
+            CodexGuardianEntry::GuardianPad => "Guardian Pad",
+            CodexGuardianEntry::GuardianPylon => "Guardian Pylon",
+            CodexGuardianEntry::GuardianSentinel => "Guardian Sentinel",
+            CodexGuardianEntry::GuardianTerminal => "Guardian Terminal",
 
             #[cfg(feature = "allow-unknown")]
             CodexGuardianEntry::Unknown(unknown) => return write!(f, "Unknown guardian codex entry: {}", unknown),

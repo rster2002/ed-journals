@@ -16,12 +16,18 @@ pub enum CodexThargoidEntry {
     CoralTree,
     CoralRoot,
 
+    Barnacles,
     CausticGenerator,
     Banshee,
-    Barnacles,
+
+    Interceptors,
     Basilisk,
     Berserker,
+    Inciter,
     Cyclops,
+    Glaive,
+    Hunter,
+    Hydra,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -71,9 +77,15 @@ impl FromStr for CodexThargoidEntry {
             "caustic_generator" => CodexThargoidEntry::CausticGenerator,
             "banshee" => CodexThargoidEntry::Banshee,
             "barnacles" => CodexThargoidEntry::Barnacles,
+
+            "interceptors" => CodexThargoidEntry::Interceptors,
             "basilisk" => CodexThargoidEntry::Basilisk,
             "berserker" => CodexThargoidEntry::Berserker,
+            "inciter" => CodexThargoidEntry::Inciter,
             "cyclops" => CodexThargoidEntry::Cyclops,
+            "glaive" => CodexThargoidEntry::Glaive,
+            "hunters" => CodexThargoidEntry::Hunter,
+            "hydra" => CodexThargoidEntry::Hydra,
 
             #[cfg(feature = "allow-unknown")]
             _ => CodexThargoidEntry::Unknown(string.to_string()),
@@ -101,9 +113,15 @@ impl Display for CodexThargoidEntry {
             CodexThargoidEntry::CausticGenerator => "Caustic Generator",
             CodexThargoidEntry::Banshee => "Banshee",
             CodexThargoidEntry::Barnacles => "Barnacles",
+
+            CodexThargoidEntry::Interceptors => "Interceptors",
             CodexThargoidEntry::Basilisk => "Basilisk",
             CodexThargoidEntry::Berserker => "Berserker",
+            CodexThargoidEntry::Inciter => "Inciter",
             CodexThargoidEntry::Cyclops => "Cyclops",
+            CodexThargoidEntry::Glaive => "Glaive",
+            CodexThargoidEntry::Hunter => "Hunter",
+            CodexThargoidEntry::Hydra => "Hydra",
 
             #[cfg(feature = "allow-unknown")]
             CodexThargoidEntry::Unknown(unknown) => return write!(f, "Unknown codex entry: '{}'", unknown),
