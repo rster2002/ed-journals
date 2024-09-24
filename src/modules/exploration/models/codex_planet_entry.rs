@@ -127,6 +127,7 @@ impl FromStr for CodexPlanetEntry {
             .as_str()
             .to_ascii_lowercase();
 
+        // TODO TER might actually stand for 'terrestrial' and TRF might stand for 'terraformable'.
         Ok(match string {
             "earth_likes" => CodexPlanetEntry::EarthLike,
             "ammonia_worlds" => CodexPlanetEntry::AmmoniaWorlds,
