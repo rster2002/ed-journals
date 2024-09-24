@@ -107,16 +107,60 @@ pub enum CodexStarClassEntry {
     LTypeSupergiant,
     LTypeHypergiant,
 
-    OTypeStar,
+    MTypes,
     MTypeStar,
-    TTypeStar,
-    TTauriTypeStar,
-    YTypeStar,
+    MTypeGiant,
+    MTypeSupergiant,
+    MTypeHypergiant,
+
+    MSTypes,
     MSTypeStar,
+    MSTypeGiant,
+    MSTypeSupergiant,
+    MSTypeHypergiant,
+
+    OTypes,
+    OTypeStar,
+    OTypeGiant,
+    OTypeSupergiant,
+    OTypeHypergiant,
+
+    STypes,
     STypeStar,
-    WolfRayetTypeStar,
-    WhiteDwarf,
-    NeutronStar,
+    STypeGiant,
+    STypeSupergiant,
+    STypeHypergiant,
+
+    TTypes,
+    TTypeStar,
+    TTypeGiant,
+    TTypeSupergiant,
+    TTypeHypergiant,
+
+    TTSTypes,
+    TTSTypeStar,
+    TTSTypeGiant,
+    TTSTypeSupergiant,
+    TTSTypeHypergiant,
+
+    WType,
+    WCType,
+    WNType,
+    WNCType,
+    WOType,
+
+    YTypes,
+    YTypeStar,
+    YTypeGiant,
+    YTypeSupergiant,
+    YTypeHypergiant,
+
+    WhiteDwarfs,
+    WolfRayetStars,
+
+    // TODO
+    TTauriTypeStar,
+    NeutronStars,
     BlackHole,
     SupermassiveBlackHole,
 
@@ -254,14 +298,59 @@ impl FromStr for CodexStarClassEntry {
             "l_typesupergiant" => CodexStarClassEntry::LTypeSupergiant,
             "l_typehypergiant" => CodexStarClassEntry::LTypeHypergiant,
 
-            "o_type" => CodexStarClassEntry::OTypeStar,
+            "m_types" => CodexStarClassEntry::MTypes,
             "m_type" => CodexStarClassEntry::MTypeStar,
-            "t_type" => CodexStarClassEntry::TTypeStar,
-            // T Tauri Type
-            "y_type" => CodexStarClassEntry::YTypeStar,
-            "ms_type" => CodexStarClassEntry::MSTypeStar,
-            "s_type" => CodexStarClassEntry::STypeStar,
+            "m_typegiant" => CodexStarClassEntry::MTypeGiant,
+            "m_typesupergiant" => CodexStarClassEntry::MTypeSupergiant,
+            "m_typehypergiant" => CodexStarClassEntry::MTypeHypergiant,
 
+            "ms_types" => CodexStarClassEntry::MSTypes,
+            "ms_type" => CodexStarClassEntry::MSTypeStar,
+            "ms_typegiant" => CodexStarClassEntry::MSTypeGiant,
+            "ms_typesupergiant" => CodexStarClassEntry::MSTypeSupergiant,
+            "ms_typehypergiant" => CodexStarClassEntry::MSTypeHypergiant,
+
+            "o_types" => CodexStarClassEntry::MSTypes,
+            "o_type" => CodexStarClassEntry::MSTypeStar,
+            "o_typegiant" => CodexStarClassEntry::MSTypeGiant,
+            "o_typesupergiant" => CodexStarClassEntry::MSTypeSupergiant,
+            "o_typehypergiant" => CodexStarClassEntry::MSTypeHypergiant,
+
+            "s_types" => CodexStarClassEntry::STypes,
+            "s_type" => CodexStarClassEntry::STypeStar,
+            "s_typegiant" => CodexStarClassEntry::STypeGiant,
+            "s_typesupergiant" => CodexStarClassEntry::STypeSupergiant,
+            "s_typehypergiant" => CodexStarClassEntry::STypeHypergiant,
+
+            "t_types" => CodexStarClassEntry::TTypes,
+            "t_type" => CodexStarClassEntry::TTypeStar,
+            "t_typegiant" => CodexStarClassEntry::TTypeGiant,
+            "t_typesupergiant" => CodexStarClassEntry::TTypeSupergiant,
+            "t_typehypergiant" => CodexStarClassEntry::TTypeHypergiant,
+
+            "tts_types" => CodexStarClassEntry::TTypes,
+            "tts_type" => CodexStarClassEntry::TTypeStar,
+            "tts_typegiant" => CodexStarClassEntry::TTypeGiant,
+            "tts_typesupergiant" => CodexStarClassEntry::TTypeSupergiant,
+            "tts_typehypergiant" => CodexStarClassEntry::TTypeHypergiant,
+
+            "w_type" => CodexStarClassEntry::WType,
+            "wc_type" => CodexStarClassEntry::WCType,
+            "wn_type" => CodexStarClassEntry::WNType,
+            "wnc_type" => CodexStarClassEntry::WNCType,
+            "wo_type" => CodexStarClassEntry::WOType,
+
+            "y_types" => CodexStarClassEntry::YTypes,
+            "y_type" => CodexStarClassEntry::YTypeStar,
+            "y_typegiant" => CodexStarClassEntry::YTypeGiant,
+            "y_typesupergiant" => CodexStarClassEntry::YTypeSupergiant,
+            "y_typehypergiant" => CodexStarClassEntry::YTypeHypergiant,
+
+            "white_dwarfs" => CodexStarClassEntry::WhiteDwarfs,
+            "wolf_rayet_stars" => CodexStarClassEntry::WolfRayetStars,
+
+            // TODO
+            // T Tauri Type
             // Wolf-Rayet Star
             // White Dwarf star
             // Neutron star
@@ -269,7 +358,7 @@ impl FromStr for CodexStarClassEntry {
             // Supermassive black hole
 
             "black_holes" => CodexStarClassEntry::BlackHole,
-            "neutron_stars" => CodexStarClassEntry::NeutronStar,
+            "neutron_stars" => CodexStarClassEntry::NeutronStars,
 
             #[cfg(feature = "allow-unknown")]
             _ => CodexStarClassEntry::Unknown(string.to_string()),
@@ -393,16 +482,61 @@ impl Display for CodexStarClassEntry {
             CodexStarClassEntry::LTypeSupergiant => "L Type Supergiant",
             CodexStarClassEntry::LTypeHypergiant => "L Type Hypergiant",
 
-            CodexStarClassEntry::OTypeStar => "O Type Star",
+            CodexStarClassEntry::MTypes => "M Type Stars",
             CodexStarClassEntry::MTypeStar => "M Type Star",
+            CodexStarClassEntry::MTypeGiant => "M Type Giant",
+            CodexStarClassEntry::MTypeSupergiant => "M Type Supergiant",
+            CodexStarClassEntry::MTypeHypergiant => "M Type Hypergiant",
+
+            CodexStarClassEntry::MSTypes => "MS Type Stars",
+            CodexStarClassEntry::MSTypeStar => "MS Type Star",
+            CodexStarClassEntry::MSTypeGiant => "MS Type Giant",
+            CodexStarClassEntry::MSTypeSupergiant => "MS Type Supergiant",
+            CodexStarClassEntry::MSTypeHypergiant => "MS Type Hypergiant",
+
+            CodexStarClassEntry::OTypes => "O Type Stars",
+            CodexStarClassEntry::OTypeStar => "O Type Star",
+            CodexStarClassEntry::OTypeGiant => "O Type Giant",
+            CodexStarClassEntry::OTypeSupergiant => "O Type Supergiant",
+            CodexStarClassEntry::OTypeHypergiant => "O Type Hypergiant",
+
+            CodexStarClassEntry::STypes => "S Type Stars",
+            CodexStarClassEntry::STypeStar => "S Type Star",
+            CodexStarClassEntry::STypeGiant => "S Type Giant",
+            CodexStarClassEntry::STypeSupergiant => "S Type Supergiant",
+            CodexStarClassEntry::STypeHypergiant => "S Type Hypergiant",
+
+            CodexStarClassEntry::TTypes => "T Type Stars",
             CodexStarClassEntry::TTypeStar => "T Type Star",
+            CodexStarClassEntry::TTypeGiant => "T Type Giant",
+            CodexStarClassEntry::TTypeSupergiant => "T Type Supergiant",
+            CodexStarClassEntry::TTypeHypergiant => "T Type Hypergiant",
+
+            CodexStarClassEntry::TTSTypes => "TTS Type Stars",
+            CodexStarClassEntry::TTSTypeStar => "TTS Type Star",
+            CodexStarClassEntry::TTSTypeGiant => "TTS Type Giant",
+            CodexStarClassEntry::TTSTypeSupergiant => "TTS Type Supergiant",
+            CodexStarClassEntry::TTSTypeHypergiant => "TTS Type Hypergiant",
+
+            CodexStarClassEntry::WType => "W Type",
+            CodexStarClassEntry::WCType => "WC Type",
+            CodexStarClassEntry::WNType => "WN Type",
+            CodexStarClassEntry::WNCType => "WNC Type",
+            CodexStarClassEntry::WOType => "WO Type",
+
+            CodexStarClassEntry::YTypes => "Y Type Stars",
+            CodexStarClassEntry::YTypeStar => "Y Type Star",
+            CodexStarClassEntry::YTypeGiant => "Y Type Giant",
+            CodexStarClassEntry::YTypeSupergiant => "Y Type Supergiant",
+            CodexStarClassEntry::YTypeHypergiant => "Y Type Hypergiant",
+
+            CodexStarClassEntry::WhiteDwarfs => "White Dwarfs",
+            CodexStarClassEntry::WolfRayetStars => "Wolf-Rayet Stars",
+
+            // TODO
             CodexStarClassEntry::TTauriTypeStar => "T Tauri TypeStar",
             CodexStarClassEntry::YTypeStar => "Y TypeStar",
-            CodexStarClassEntry::MSTypeStar => "MS TypeStar",
-            CodexStarClassEntry::STypeStar => "S TypeStar",
-            CodexStarClassEntry::WolfRayetTypeStar => "Wolf-Rayet Type Star",
-            CodexStarClassEntry::WhiteDwarf => "White Dwarf",
-            CodexStarClassEntry::NeutronStar => "Neutron Star",
+            CodexStarClassEntry::NeutronStars => "Neutron Star",
             CodexStarClassEntry::BlackHole => "Black Hole",
             CodexStarClassEntry::SupermassiveBlackHole => "Supermassive Black Hole",
 

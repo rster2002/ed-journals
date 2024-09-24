@@ -26,6 +26,24 @@ pub enum CodexAnomalyEntry {
     YellowGasClouds,
     StormingYellowGasClouds,
 
+    MetallicStructures,
+
+    Mollusc1V1,
+    Mollusc1V2,
+    Mollusc1V3,
+    Mollusc1V4,
+    Mollusc1V5,
+    Mollusc1V6,
+    Mollusc3V1,
+    Mollusc3V2,
+    Mollusc3V3,
+    Mollusc3V4,
+    Mollusc3V6,
+
+    PlateStructures,
+
+    SilicateStructures,
+
     // ETypeAnomalies,
     // KTypeAnomalies,
     // LTypeAnomalies,
@@ -87,6 +105,24 @@ impl FromStr for CodexAnomalyEntry {
             "gas_clds_yellow" => CodexAnomalyEntry::YellowGasClouds,
             "gas_clds_yellow_storm" => CodexAnomalyEntry::StormingYellowGasClouds,
 
+            "metalic_structures" => CodexAnomalyEntry::MetallicStructures,
+
+            "mollusc1_v1" => CodexAnomalyEntry::Mollusc1V1,
+            "mollusc1_v2" => CodexAnomalyEntry::Mollusc1V2,
+            "mollusc1_v3" => CodexAnomalyEntry::Mollusc1V3,
+            "mollusc1_v4" => CodexAnomalyEntry::Mollusc1V4,
+            "mollusc1_v5" => CodexAnomalyEntry::Mollusc1V5,
+            "mollusc1_v6" => CodexAnomalyEntry::Mollusc1V6,
+            "mollusc3_v1" => CodexAnomalyEntry::Mollusc3V1,
+            "mollusc3_v2" => CodexAnomalyEntry::Mollusc3V2,
+            "mollusc3_v3" => CodexAnomalyEntry::Mollusc3V3,
+            "mollusc3_v4" => CodexAnomalyEntry::Mollusc3V4,
+            "mollusc3_v6" => CodexAnomalyEntry::Mollusc3V6,
+
+            "plate_structures" => CodexAnomalyEntry::PlateStructures,
+
+            "silicate_structures" => CodexAnomalyEntry::SilicateStructures,
+
             #[cfg(feature = "allow-unknown")]
             _ => CodexAnomalyEntry::Unknown(string.to_string()),
 
@@ -116,6 +152,24 @@ impl Display for CodexAnomalyEntry {
             CodexAnomalyEntry::StandardGasClouds => "Standing Gas Clouds",
             CodexAnomalyEntry::YellowGasClouds => "Yellow Gas Clouds",
             CodexAnomalyEntry::StormingYellowGasClouds => "Storming Yellow Gas Clouds",
+
+            CodexAnomalyEntry::MetallicStructures => "Metallic Structures",
+
+            CodexAnomalyEntry::Mollusc1V1 => "Mollusc 1 V1",
+            CodexAnomalyEntry::Mollusc1V2 => "Mollusc 1 V2",
+            CodexAnomalyEntry::Mollusc1V3 => "Mollusc 1 V3",
+            CodexAnomalyEntry::Mollusc1V4 => "Mollusc 1 V4",
+            CodexAnomalyEntry::Mollusc1V5 => "Mollusc 1 V5",
+            CodexAnomalyEntry::Mollusc1V6 => "Mollusc 1 V6",
+            CodexAnomalyEntry::Mollusc3V1 => "Mollusc 3 V1",
+            CodexAnomalyEntry::Mollusc3V2 => "Mollusc 3 V2",
+            CodexAnomalyEntry::Mollusc3V3 => "Mollusc 3 V3",
+            CodexAnomalyEntry::Mollusc3V4 => "Mollusc 3 V4",
+            CodexAnomalyEntry::Mollusc3V6 => "Mollusc 3 V6",
+
+            CodexAnomalyEntry::PlateStructures => "Plate Structures",
+
+            CodexAnomalyEntry::SilicateStructures => "Silicate Structures",
 
             #[cfg(feature = "allow-unknown")]
             CodexAnomalyEntry::Unknown(unknown) => return write!(f, "Unknown anomaly codex entry: {}", unknown),
