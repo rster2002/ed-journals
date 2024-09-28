@@ -65,7 +65,7 @@ impl CodexThargoidEntry {
 }
 
 #[derive(Debug, Error)]
-pub enum CoxexThargoidEntryError {
+pub enum CoxexThargoidError {
     #[error("Failed to parse Thargoid codex entry: '{0}'")]
     FailedToParse(String),
 
@@ -74,11 +74,11 @@ pub enum CoxexThargoidEntryError {
 }
 
 impl FromStr for CodexThargoidEntry {
-    type Err = CoxexThargoidEntryError;
+    type Err = CoxexThargoidError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let Some(captures) = CODEX_REGEX.captures(s) else {
-            return Err(CoxexThargoidEntryError::FailedToParse(s.to_string()));
+            return Err(CoxexThargoidError::FailedToParse(s.to_string()));
         };
 
         let string: &str = &captures.get(1)
@@ -135,7 +135,7 @@ impl FromStr for CodexThargoidEntry {
             _ => CodexThargoidEntry::Unknown(string.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => return Err(CoxexThargoidEntryError::UnknownEntry(string.to_string())),
+            _ => return Err(CoxexThargoidError::UnknownEntry(string.to_string())),
         })
     }
 }

@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
-use crate::exploration::StarClassCodexEntryError;
+use crate::exploration::CodexStarClassError;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]

@@ -179,7 +179,7 @@ impl CodexStarClassEntry {
 
 /// Enum for errors that occur when parsing a star class codex entry.
 #[derive(Debug, Error)]
-pub enum StarClassCodexEntryError {
+pub enum CodexStarClassError {
     #[error("Failed to parse star class codex entry: '{0}'")]
     FailedToParse(String),
 
@@ -188,11 +188,11 @@ pub enum StarClassCodexEntryError {
 }
 
 impl FromStr for CodexStarClassEntry {
-    type Err = StarClassCodexEntryError;
+    type Err = CodexStarClassError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let Some(captures) = CODEX_REGEX.captures(s) else {
-            return Err(StarClassCodexEntryError::FailedToParse(s.to_string()));
+            return Err(CodexStarClassError::FailedToParse(s.to_string()));
         };
 
         let string: &str = &captures.get(1)
@@ -364,7 +364,7 @@ impl FromStr for CodexStarClassEntry {
             _ => CodexStarClassEntry::Unknown(string.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => return Err(StarClassCodexEntryError::UnknownEntry(s.to_string())),
+            _ => return Err(CodexStarClassError::UnknownEntry(s.to_string())),
         })
         // let Some(captures) = STAR_CLASS_CODEX_ENTRY_REGEX.captures(s) else {
         //     return Err(StarClassCodexEntryError::FailedToParse(s.to_string()));

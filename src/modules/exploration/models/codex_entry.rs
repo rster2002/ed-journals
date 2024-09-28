@@ -1,4 +1,3 @@
-use crate::exploration::models::planet_class_codex_entry::PlanetClassCodexEntry;
 use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::CodexStarClassEntry;
 use serde::{Deserialize, Serialize};

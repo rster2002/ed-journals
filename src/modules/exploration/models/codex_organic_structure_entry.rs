@@ -22,7 +22,7 @@ impl CodexOrganicStructureEntry {
 }
 
 #[derive(Debug, Error)]
-pub enum CodexOrganicStructuresError {
+pub enum CodexOrganicStructureError {
     #[error("Failed to parse planet codex entry: '{0}'")]
     FailedToParse(String),
 
@@ -31,11 +31,11 @@ pub enum CodexOrganicStructuresError {
 }
 
 impl FromStr for CodexOrganicStructureEntry {
-    type Err = CodexOrganicStructuresError;
+    type Err = CodexOrganicStructureError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let Some(captures) = CODEX_REGEX.captures(s) else {
-            return Err(CodexOrganicStructuresError::FailedToParse(s.to_string()));
+            return Err(CodexOrganicStructureError::FailedToParse(s.to_string()));
         };
 
         let string: &str = &captures.get(1)
@@ -50,7 +50,7 @@ impl FromStr for CodexOrganicStructureEntry {
             _ => CodexOrganicStructureEntry::Unknown(string.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => return Err(CodexOrganicStructuresError::UnknownEntry(string.to_string())),
+            _ => return Err(CodexOrganicStructureError::UnknownEntry(string.to_string())),
         })
     }
 }
