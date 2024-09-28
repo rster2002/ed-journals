@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-
+use lazy_static::lazy_static;
 use crate::exobiology::Genus;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -184,6 +184,13 @@ pub enum Species {
     Unknown(String),
 }
 
+#[cfg(feature = "allow-unknown")]
+lazy_static! {
+    static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![
+        SpawnCondition::Special,
+    ];
+}
+
 impl Species {
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -192,6 +199,11 @@ impl Species {
     }
 
     pub fn spawn_conditions(&self) -> &Vec<SpawnCondition> {
+        #[cfg(feature = "allow-unknown")]
+        if let Species::Unknown(_) = self {
+            return &UNKNOWN_SPAWN_CONDITIONS;
+        }
+
         &SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
@@ -704,6 +716,7 @@ mod tests {
     #[test]
     fn all_species_have_matching_spawn_conditions() {
         for species in Species::iter() {
+            dbg!(&species);
             assert!(!species.spawn_conditions().is_empty());
         }
     }

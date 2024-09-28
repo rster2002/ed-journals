@@ -51,11 +51,14 @@ impl FromStr for Variant {
     type Err = VariantError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(species) = Species::from_str(s) {
-            return Ok(Variant {
+        match Species::from_str(s) {
+            #[cfg(feature = "allow-unknown")]
+            Ok(species) if species.is_unknown() => {},
+            Ok(species) => return Ok(Variant {
                 species,
                 color: VariantColor::None,
-            });
+            }),
+            Err(_) => {},
         }
 
         let Some(captures) = VARIANT_REGEX.captures(s) else {
