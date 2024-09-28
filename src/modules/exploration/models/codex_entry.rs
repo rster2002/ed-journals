@@ -1,9 +1,3 @@
-use crate::modules::exobiology::{Genus, Species, Variant};
-use crate::modules::exploration::CodexStarClassEntry;
-use serde::Serialize;
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use thiserror::Error;
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
 use crate::exploration::models::codex_guardian_entry::CodexGuardianEntry;
@@ -11,6 +5,12 @@ use crate::exploration::models::codex_organic_structure_entry::CodexOrganicStruc
 use crate::exploration::models::codex_planet_entry::CodexPlanetEntry;
 use crate::exploration::models::codex_thargoid_entry::CodexThargoidEntry;
 use crate::from_str_deserialize_impl;
+use crate::modules::exobiology::{Genus, Species, Variant};
+use crate::modules::exploration::CodexStarClassEntry;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 
 /// Codex entry name.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
@@ -178,8 +178,8 @@ impl Display for CodexEntry {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::Value;
     use crate::exploration::CodexEntry;
+    use serde_json::Value;
 
     #[test]
     fn codex_entries_are_parsed_correctly() {

@@ -1,16 +1,16 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use serde::Serialize;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
 use crate::modules::exobiology::Species;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum Genus {
     Aleoida,
     AmphoraPlant,
-    Anemone, // TODO needs to be verified
+    Anemone,   // TODO needs to be verified
     BarkMound, // TODO needs to be verified
     Bacterium,
     BrainTree,
@@ -122,7 +122,8 @@ impl FromStr for Genus {
             return Err(GenusError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -309,7 +310,7 @@ impl From<&Species> for Genus {
             | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
 
             #[cfg(feature = "allow-unknown")]
-            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {}", unknown))
+            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {}", unknown)),
         }
     }
 }

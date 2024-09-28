@@ -62,8 +62,12 @@ impl FromStr for PlanetClass {
             "ammonia" => PlanetClass::AmmoniaWorld,
             "water giant" => PlanetClass::WaterGiant,
             "water giant with life" => PlanetClass::WaterGiantWithLife,
-            "gas giant with water based life" | "giant with water life" => PlanetClass::GasGiantWithWaterBasedLife,
-            "gas giant with ammonia based life" | "giant with ammonia life" => PlanetClass::GasGiantWithAmmoniaBasedLife,
+            "gas giant with water based life" | "giant with water life" => {
+                PlanetClass::GasGiantWithWaterBasedLife
+            }
+            "gas giant with ammonia based life" | "giant with ammonia life" => {
+                PlanetClass::GasGiantWithAmmoniaBasedLife
+            }
             "sudarsky class i gas giant" | "sudarsky class i" => {
                 PlanetClass::SudarskyClassIGasGiant
             }

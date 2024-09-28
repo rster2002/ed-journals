@@ -1,8 +1,8 @@
 pub use functions::calculate_estimated_worth::calculate_estimated_worth;
-pub use models::codex_entry::CodexEntry;
-pub use models::codex_entry::CodexEntryError;
 pub use models::codex_anomaly_entry::CodexAnomalyEntry;
 pub use models::codex_anomaly_entry::CodexAnomalyError;
+pub use models::codex_entry::CodexEntry;
+pub use models::codex_entry::CodexEntryError;
 pub use models::codex_geological_entry::CodexGeologicalEntry;
 pub use models::codex_geological_entry::CodexGeologicalError;
 pub use models::codex_organic_structure_entry::CodexOrganicStructureEntry;

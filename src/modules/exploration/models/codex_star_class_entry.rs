@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::Serialize;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
+use serde::Serialize;
+use thiserror::Error;
 
 /// New-type used for parsing star class codex entries.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
@@ -192,7 +192,8 @@ impl FromStr for CodexStarClassEntry {
             return Err(CodexStarClassError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -353,7 +354,6 @@ impl FromStr for CodexStarClassEntry {
             // Neutron star
             // Black hole
             // Supermassive black hole
-
             "black_holes" => CodexStarClassEntry::BlackHole,
             "neutron_stars" => CodexStarClassEntry::NeutronStars,
 
@@ -381,160 +381,165 @@ from_str_deserialize_impl!(CodexStarClassEntry);
 
 impl Display for CodexStarClassEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexStarClassEntry::ATypes => "A Type Stars",
-            CodexStarClassEntry::ATypeStar => "A Type Star",
-            CodexStarClassEntry::ATypeGiant => "A Type Giant",
-            CodexStarClassEntry::ATypeSupergiant => "A Type Supergiant",
-            CodexStarClassEntry::ATypeHypergiant => "A Type Hypergiant",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexStarClassEntry::ATypes => "A Type Stars",
+                CodexStarClassEntry::ATypeStar => "A Type Star",
+                CodexStarClassEntry::ATypeGiant => "A Type Giant",
+                CodexStarClassEntry::ATypeSupergiant => "A Type Supergiant",
+                CodexStarClassEntry::ATypeHypergiant => "A Type Hypergiant",
 
-            CodexStarClassEntry::AeBeTypes => "AeBe Type Stars",
-            CodexStarClassEntry::AeBeTypeStar => "AeBe Type Star",
-            CodexStarClassEntry::AeBeTypeGiant => "AeBe Type Giant",
-            CodexStarClassEntry::AeBeTypeSupergiant => "AeBe Type Supergiant",
-            CodexStarClassEntry::AeBeTypeHypergiant => "AeBe Type Hypergiant",
+                CodexStarClassEntry::AeBeTypes => "AeBe Type Stars",
+                CodexStarClassEntry::AeBeTypeStar => "AeBe Type Star",
+                CodexStarClassEntry::AeBeTypeGiant => "AeBe Type Giant",
+                CodexStarClassEntry::AeBeTypeSupergiant => "AeBe Type Supergiant",
+                CodexStarClassEntry::AeBeTypeHypergiant => "AeBe Type Hypergiant",
 
-            CodexStarClassEntry::BTypes => "B Type Stars",
-            CodexStarClassEntry::BTypeStar => "B Type Star",
-            CodexStarClassEntry::BTypeGiant => "B Type Giant",
-            CodexStarClassEntry::BTypeSupergiant => "B Type Supergiant",
-            CodexStarClassEntry::BTypeHypergiant => "B Type Hypergiant",
+                CodexStarClassEntry::BTypes => "B Type Stars",
+                CodexStarClassEntry::BTypeStar => "B Type Star",
+                CodexStarClassEntry::BTypeGiant => "B Type Giant",
+                CodexStarClassEntry::BTypeSupergiant => "B Type Supergiant",
+                CodexStarClassEntry::BTypeHypergiant => "B Type Hypergiant",
 
-            CodexStarClassEntry::CTypes => "C Type Stars",
-            CodexStarClassEntry::CTypeStar => "C Type Star",
-            CodexStarClassEntry::CTypeGiant => "C Type Giant",
-            CodexStarClassEntry::CTypeSupergiant => "C Type Supergiant",
-            CodexStarClassEntry::CTypeHypergiant => "C Type Hypergiant",
+                CodexStarClassEntry::CTypes => "C Type Stars",
+                CodexStarClassEntry::CTypeStar => "C Type Star",
+                CodexStarClassEntry::CTypeGiant => "C Type Giant",
+                CodexStarClassEntry::CTypeSupergiant => "C Type Supergiant",
+                CodexStarClassEntry::CTypeHypergiant => "C Type Hypergiant",
 
-            CodexStarClassEntry::CHTypes => "CH Type Stars",
-            CodexStarClassEntry::CHTypeStar => "CH Type Star",
-            CodexStarClassEntry::CHTypeGiant => "CH Type Giant",
-            CodexStarClassEntry::CHTypeSupergiant => "CH Type Supergiant",
-            CodexStarClassEntry::CHTypeHypergiant => "CH Type Hypergiant",
+                CodexStarClassEntry::CHTypes => "CH Type Stars",
+                CodexStarClassEntry::CHTypeStar => "CH Type Star",
+                CodexStarClassEntry::CHTypeGiant => "CH Type Giant",
+                CodexStarClassEntry::CHTypeSupergiant => "CH Type Supergiant",
+                CodexStarClassEntry::CHTypeHypergiant => "CH Type Hypergiant",
 
-            CodexStarClassEntry::CHDTypes => "CHD Type Stars",
-            CodexStarClassEntry::CHDTypeStar => "CHD Type Star",
-            CodexStarClassEntry::CHDTypeGiant => "CHD Type Giant",
-            CodexStarClassEntry::CHDTypeSupergiant => "CHD Type Supergiant",
-            CodexStarClassEntry::CHDTypeHypergiant => "CHD Type Hypergiant",
+                CodexStarClassEntry::CHDTypes => "CHD Type Stars",
+                CodexStarClassEntry::CHDTypeStar => "CHD Type Star",
+                CodexStarClassEntry::CHDTypeGiant => "CHD Type Giant",
+                CodexStarClassEntry::CHDTypeSupergiant => "CHD Type Supergiant",
+                CodexStarClassEntry::CHDTypeHypergiant => "CHD Type Hypergiant",
 
-            CodexStarClassEntry::CJTypes => "CJ Type Stars",
-            CodexStarClassEntry::CJTypeStar => "CJ Type Star",
-            CodexStarClassEntry::CJTypeGiant => "CJ Type Giant",
-            CodexStarClassEntry::CJTypeSupergiant => "CJ Type Supergiant",
-            CodexStarClassEntry::CJTypeHypergiant => "CJ Type Hypergiant",
+                CodexStarClassEntry::CJTypes => "CJ Type Stars",
+                CodexStarClassEntry::CJTypeStar => "CJ Type Star",
+                CodexStarClassEntry::CJTypeGiant => "CJ Type Giant",
+                CodexStarClassEntry::CJTypeSupergiant => "CJ Type Supergiant",
+                CodexStarClassEntry::CJTypeHypergiant => "CJ Type Hypergiant",
 
-            CodexStarClassEntry::CNTypes => "CN Type Stars",
-            CodexStarClassEntry::CNTypeStar => "CN Type Star",
-            CodexStarClassEntry::CNTypeGiant => "CN Type Giant",
-            CodexStarClassEntry::CNTypeSupergiant => "CN Type Supergiant",
-            CodexStarClassEntry::CNTypeHypergiant => "CN Type Hypergiant",
+                CodexStarClassEntry::CNTypes => "CN Type Stars",
+                CodexStarClassEntry::CNTypeStar => "CN Type Star",
+                CodexStarClassEntry::CNTypeGiant => "CN Type Giant",
+                CodexStarClassEntry::CNTypeSupergiant => "CN Type Supergiant",
+                CodexStarClassEntry::CNTypeHypergiant => "CN Type Hypergiant",
 
-            CodexStarClassEntry::CSTypes => "CS Type Stars",
-            CodexStarClassEntry::CSTypeStar => "CS Type Star",
-            CodexStarClassEntry::CSTypeGiant => "CS Type Giant",
-            CodexStarClassEntry::CSTypeSupergiant => "CS Type Supergiant",
-            CodexStarClassEntry::CSTypeHypergiant => "CS Type Hypergiant",
+                CodexStarClassEntry::CSTypes => "CS Type Stars",
+                CodexStarClassEntry::CSTypeStar => "CS Type Star",
+                CodexStarClassEntry::CSTypeGiant => "CS Type Giant",
+                CodexStarClassEntry::CSTypeSupergiant => "CS Type Supergiant",
+                CodexStarClassEntry::CSTypeHypergiant => "CS Type Hypergiant",
 
-            CodexStarClassEntry::DType => "D Type Star",
+                CodexStarClassEntry::DType => "D Type Star",
 
-            CodexStarClassEntry::DAType => "DA Type",
-            CodexStarClassEntry::DATypeHypergiant => "DA Type Hypergiant",
-            CodexStarClassEntry::DABType => "DAB Type",
-            CodexStarClassEntry::DAOType => "DAO Type",
-            CodexStarClassEntry::DAVType => "DAV Type",
-            CodexStarClassEntry::DAZType => "DAZ Type",
-            CodexStarClassEntry::DBType => "DB Type",
-            CodexStarClassEntry::DBVType => "DBV Type",
-            CodexStarClassEntry::DBZType => "DBZ Type",
-            CodexStarClassEntry::DCType => "DC Type",
-            CodexStarClassEntry::DCVType => "CV Type",
+                CodexStarClassEntry::DAType => "DA Type",
+                CodexStarClassEntry::DATypeHypergiant => "DA Type Hypergiant",
+                CodexStarClassEntry::DABType => "DAB Type",
+                CodexStarClassEntry::DAOType => "DAO Type",
+                CodexStarClassEntry::DAVType => "DAV Type",
+                CodexStarClassEntry::DAZType => "DAZ Type",
+                CodexStarClassEntry::DBType => "DB Type",
+                CodexStarClassEntry::DBVType => "DBV Type",
+                CodexStarClassEntry::DBZType => "DBZ Type",
+                CodexStarClassEntry::DCType => "DC Type",
+                CodexStarClassEntry::DCVType => "CV Type",
 
-            CodexStarClassEntry::DOType => "DO Type",
-            CodexStarClassEntry::DOVType => "DOV Type",
-            CodexStarClassEntry::DQType => "DQ Type",
-            CodexStarClassEntry::DXType => "DX Type",
+                CodexStarClassEntry::DOType => "DO Type",
+                CodexStarClassEntry::DOVType => "DOV Type",
+                CodexStarClassEntry::DQType => "DQ Type",
+                CodexStarClassEntry::DXType => "DX Type",
 
-            CodexStarClassEntry::FTypes => "F Type Stars",
-            CodexStarClassEntry::FTypeStar => "F Type Star",
-            CodexStarClassEntry::FTypeGiant => "F Type Giant",
-            CodexStarClassEntry::FTypeSupergiant => "F Type Supergiant",
-            CodexStarClassEntry::FTypeHypergiant => "F Type Hypergiant",
+                CodexStarClassEntry::FTypes => "F Type Stars",
+                CodexStarClassEntry::FTypeStar => "F Type Star",
+                CodexStarClassEntry::FTypeGiant => "F Type Giant",
+                CodexStarClassEntry::FTypeSupergiant => "F Type Supergiant",
+                CodexStarClassEntry::FTypeHypergiant => "F Type Hypergiant",
 
-            CodexStarClassEntry::GTypes => "G Type Stars",
-            CodexStarClassEntry::GTypeStar => "G Type Star",
-            CodexStarClassEntry::GTypeGiant => "G Type Giant",
-            CodexStarClassEntry::GTypeSupergiant => "G Type Supergiant",
-            CodexStarClassEntry::GTypeHypergiant => "G Type Hypergiant",
+                CodexStarClassEntry::GTypes => "G Type Stars",
+                CodexStarClassEntry::GTypeStar => "G Type Star",
+                CodexStarClassEntry::GTypeGiant => "G Type Giant",
+                CodexStarClassEntry::GTypeSupergiant => "G Type Supergiant",
+                CodexStarClassEntry::GTypeHypergiant => "G Type Hypergiant",
 
-            CodexStarClassEntry::KTypes => "K Type Stars",
-            CodexStarClassEntry::KTypeStar => "K Type Star",
-            CodexStarClassEntry::KTypeGiant => "K Type Giant",
-            CodexStarClassEntry::KTypeSupergiant => "K Type Supergiant",
-            CodexStarClassEntry::KTypeHypergiant => "K Type Hypergiant",
+                CodexStarClassEntry::KTypes => "K Type Stars",
+                CodexStarClassEntry::KTypeStar => "K Type Star",
+                CodexStarClassEntry::KTypeGiant => "K Type Giant",
+                CodexStarClassEntry::KTypeSupergiant => "K Type Supergiant",
+                CodexStarClassEntry::KTypeHypergiant => "K Type Hypergiant",
 
-            CodexStarClassEntry::LTypes => "L Type Stars",
-            CodexStarClassEntry::LTypeStar => "L Type Star",
-            CodexStarClassEntry::LTypeGiant => "L Type Giant",
-            CodexStarClassEntry::LTypeSupergiant => "L Type Supergiant",
-            CodexStarClassEntry::LTypeHypergiant => "L Type Hypergiant",
+                CodexStarClassEntry::LTypes => "L Type Stars",
+                CodexStarClassEntry::LTypeStar => "L Type Star",
+                CodexStarClassEntry::LTypeGiant => "L Type Giant",
+                CodexStarClassEntry::LTypeSupergiant => "L Type Supergiant",
+                CodexStarClassEntry::LTypeHypergiant => "L Type Hypergiant",
 
-            CodexStarClassEntry::MTypes => "M Type Stars",
-            CodexStarClassEntry::MTypeStar => "M Type Star",
-            CodexStarClassEntry::MTypeGiant => "M Type Giant",
-            CodexStarClassEntry::MTypeSupergiant => "M Type Supergiant",
-            CodexStarClassEntry::MTypeHypergiant => "M Type Hypergiant",
+                CodexStarClassEntry::MTypes => "M Type Stars",
+                CodexStarClassEntry::MTypeStar => "M Type Star",
+                CodexStarClassEntry::MTypeGiant => "M Type Giant",
+                CodexStarClassEntry::MTypeSupergiant => "M Type Supergiant",
+                CodexStarClassEntry::MTypeHypergiant => "M Type Hypergiant",
 
-            CodexStarClassEntry::MSTypes => "MS Type Stars",
-            CodexStarClassEntry::MSTypeStar => "MS Type Star",
-            CodexStarClassEntry::MSTypeGiant => "MS Type Giant",
-            CodexStarClassEntry::MSTypeSupergiant => "MS Type Supergiant",
-            CodexStarClassEntry::MSTypeHypergiant => "MS Type Hypergiant",
+                CodexStarClassEntry::MSTypes => "MS Type Stars",
+                CodexStarClassEntry::MSTypeStar => "MS Type Star",
+                CodexStarClassEntry::MSTypeGiant => "MS Type Giant",
+                CodexStarClassEntry::MSTypeSupergiant => "MS Type Supergiant",
+                CodexStarClassEntry::MSTypeHypergiant => "MS Type Hypergiant",
 
-            CodexStarClassEntry::OTypes => "O Type Stars",
-            CodexStarClassEntry::OTypeStar => "O Type Star",
-            CodexStarClassEntry::OTypeGiant => "O Type Giant",
-            CodexStarClassEntry::OTypeSupergiant => "O Type Supergiant",
-            CodexStarClassEntry::OTypeHypergiant => "O Type Hypergiant",
+                CodexStarClassEntry::OTypes => "O Type Stars",
+                CodexStarClassEntry::OTypeStar => "O Type Star",
+                CodexStarClassEntry::OTypeGiant => "O Type Giant",
+                CodexStarClassEntry::OTypeSupergiant => "O Type Supergiant",
+                CodexStarClassEntry::OTypeHypergiant => "O Type Hypergiant",
 
-            CodexStarClassEntry::STypes => "S Type Stars",
-            CodexStarClassEntry::STypeStar => "S Type Star",
-            CodexStarClassEntry::STypeGiant => "S Type Giant",
-            CodexStarClassEntry::STypeSupergiant => "S Type Supergiant",
-            CodexStarClassEntry::STypeHypergiant => "S Type Hypergiant",
+                CodexStarClassEntry::STypes => "S Type Stars",
+                CodexStarClassEntry::STypeStar => "S Type Star",
+                CodexStarClassEntry::STypeGiant => "S Type Giant",
+                CodexStarClassEntry::STypeSupergiant => "S Type Supergiant",
+                CodexStarClassEntry::STypeHypergiant => "S Type Hypergiant",
 
-            CodexStarClassEntry::TTypes => "T Type Stars",
-            CodexStarClassEntry::TTypeStar => "T Type Star",
-            CodexStarClassEntry::TTypeGiant => "T Type Giant",
-            CodexStarClassEntry::TTypeSupergiant => "T Type Supergiant",
-            CodexStarClassEntry::TTypeHypergiant => "T Type Hypergiant",
+                CodexStarClassEntry::TTypes => "T Type Stars",
+                CodexStarClassEntry::TTypeStar => "T Type Star",
+                CodexStarClassEntry::TTypeGiant => "T Type Giant",
+                CodexStarClassEntry::TTypeSupergiant => "T Type Supergiant",
+                CodexStarClassEntry::TTypeHypergiant => "T Type Hypergiant",
 
-            CodexStarClassEntry::TTSTypes => "TTS Type Stars",
-            CodexStarClassEntry::TTSTypeStar => "TTS Type Star",
-            CodexStarClassEntry::TTSTypeGiant => "TTS Type Giant",
-            CodexStarClassEntry::TTSTypeSupergiant => "TTS Type Supergiant",
-            CodexStarClassEntry::TTSTypeHypergiant => "TTS Type Hypergiant",
+                CodexStarClassEntry::TTSTypes => "TTS Type Stars",
+                CodexStarClassEntry::TTSTypeStar => "TTS Type Star",
+                CodexStarClassEntry::TTSTypeGiant => "TTS Type Giant",
+                CodexStarClassEntry::TTSTypeSupergiant => "TTS Type Supergiant",
+                CodexStarClassEntry::TTSTypeHypergiant => "TTS Type Hypergiant",
 
-            CodexStarClassEntry::WType => "W Type",
-            CodexStarClassEntry::WCType => "WC Type",
-            CodexStarClassEntry::WNType => "WN Type",
-            CodexStarClassEntry::WNCType => "WNC Type",
-            CodexStarClassEntry::WOType => "WO Type",
+                CodexStarClassEntry::WType => "W Type",
+                CodexStarClassEntry::WCType => "WC Type",
+                CodexStarClassEntry::WNType => "WN Type",
+                CodexStarClassEntry::WNCType => "WNC Type",
+                CodexStarClassEntry::WOType => "WO Type",
 
-            CodexStarClassEntry::YTypes => "Y Type Stars",
-            CodexStarClassEntry::YTypeStar => "Y Type Star",
-            CodexStarClassEntry::YTypeGiant => "Y Type Giant",
-            CodexStarClassEntry::YTypeSupergiant => "Y Type Supergiant",
-            CodexStarClassEntry::YTypeHypergiant => "Y Type Hypergiant",
+                CodexStarClassEntry::YTypes => "Y Type Stars",
+                CodexStarClassEntry::YTypeStar => "Y Type Star",
+                CodexStarClassEntry::YTypeGiant => "Y Type Giant",
+                CodexStarClassEntry::YTypeSupergiant => "Y Type Supergiant",
+                CodexStarClassEntry::YTypeHypergiant => "Y Type Hypergiant",
 
-            CodexStarClassEntry::WhiteDwarfs => "White Dwarfs",
-            CodexStarClassEntry::WolfRayetStars => "Wolf-Rayet Stars",
+                CodexStarClassEntry::WhiteDwarfs => "White Dwarfs",
+                CodexStarClassEntry::WolfRayetStars => "Wolf-Rayet Stars",
 
-            CodexStarClassEntry::NeutronStars => "Neutron Star",
-            CodexStarClassEntry::BlackHole => "Black Hole",
+                CodexStarClassEntry::NeutronStars => "Neutron Star",
+                CodexStarClassEntry::BlackHole => "Black Hole",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexStarClassEntry::Unknown(unknown) => return write!(f, "Unknown star codex entry: {}", unknown),
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexStarClassEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown star codex entry: {}", unknown),
+            }
+        )
     }
 }

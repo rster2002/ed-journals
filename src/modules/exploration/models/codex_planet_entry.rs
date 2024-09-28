@@ -1,9 +1,9 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use serde::Serialize;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexPlanetEntry {
@@ -159,7 +159,8 @@ impl FromStr for CodexPlanetEntry {
             return Err(CodexPlanetError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -221,7 +222,9 @@ impl FromStr for CodexPlanetEntry {
             "standard_water_giant_with_life" => CodexPlanetEntry::StandardWaterGiantWithLife,
 
             // Standard planets without an atmosphere
-            "standard_high_metal_content_no_atmos" => CodexPlanetEntry::StandardHighMetalContentNoAtmosphere,
+            "standard_high_metal_content_no_atmos" => {
+                CodexPlanetEntry::StandardHighMetalContentNoAtmosphere
+            }
             "standard_ice_no_atmos" => CodexPlanetEntry::StandardIceNoAtmosphere,
             "standard_metal_rich_no_atmos" => CodexPlanetEntry::StandardMetalRichNoAtmosphere,
             "standard_rocky_ice_no_atmos" => CodexPlanetEntry::StandardRockyIceNoAtmosphere,
@@ -275,7 +278,9 @@ impl FromStr for CodexPlanetEntry {
             "trf_water_worlds" => CodexPlanetEntry::TerraformableWaterWorlds,
 
             // Terraformable no atmosphere planets
-            "trf_high_metal_content_no_atmos" => CodexPlanetEntry::TerraformableHighMetalContentNoAtmosphere,
+            "trf_high_metal_content_no_atmos" => {
+                CodexPlanetEntry::TerraformableHighMetalContentNoAtmosphere
+            }
             "trf_ice_no_atmos" => CodexPlanetEntry::TerraformableIceNoAtmosphere,
             "trf_metal_rich_no_atmos" => CodexPlanetEntry::TerraformableMetalRichNoAtmosphere,
             "trf_rocky_ice_no_atmos" => CodexPlanetEntry::TerraformableRockyIceNoAtmosphere,
@@ -301,114 +306,130 @@ from_str_deserialize_impl!(CodexPlanetEntry);
 
 impl Display for CodexPlanetEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexPlanetEntry::EarthLike => "earth_like",
-            CodexPlanetEntry::AmmoniaWorlds => "Ammonia World",
-            CodexPlanetEntry::WaterWorlds => "Water Worlds",
-            CodexPlanetEntry::WaterGiant => "Water Giant",
-            CodexPlanetEntry::WaterGiantWithLife => "Water Giant with Life",
-            CodexPlanetEntry::SudarskyClassI => "Sudarsky Class I",
-            CodexPlanetEntry::SudarskyClassII => "Sudarsky Class II",
-            CodexPlanetEntry::SudarskyClassIII => "Sudarsky Class III",
-            CodexPlanetEntry::SudarskyClassIV => "Sudarsky Class IV",
-            CodexPlanetEntry::SudarskyClassV => "Sudarsky Class V",
-            CodexPlanetEntry::SupermassiveBlackHoles => "Supermassive Black Holes",
-            CodexPlanetEntry::Helium => "Helium Planet",
-            CodexPlanetEntry::HeliumRich => "Helium-Rich Planet",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexPlanetEntry::EarthLike => "earth_like",
+                CodexPlanetEntry::AmmoniaWorlds => "Ammonia World",
+                CodexPlanetEntry::WaterWorlds => "Water Worlds",
+                CodexPlanetEntry::WaterGiant => "Water Giant",
+                CodexPlanetEntry::WaterGiantWithLife => "Water Giant with Life",
+                CodexPlanetEntry::SudarskyClassI => "Sudarsky Class I",
+                CodexPlanetEntry::SudarskyClassII => "Sudarsky Class II",
+                CodexPlanetEntry::SudarskyClassIII => "Sudarsky Class III",
+                CodexPlanetEntry::SudarskyClassIV => "Sudarsky Class IV",
+                CodexPlanetEntry::SudarskyClassV => "Sudarsky Class V",
+                CodexPlanetEntry::SupermassiveBlackHoles => "Supermassive Black Holes",
+                CodexPlanetEntry::Helium => "Helium Planet",
+                CodexPlanetEntry::HeliumRich => "Helium-Rich Planet",
 
-            CodexPlanetEntry::DenseAmmoniaWorlds => "Dense Ammonia World",
-            CodexPlanetEntry::DenseWaterWorlds => "Dense Water Worlds",
-            CodexPlanetEntry::DenseHighMetalContent => "Dense High Metal Content Planet",
-            CodexPlanetEntry::DenseIce => "Dense Ice Planet",
-            CodexPlanetEntry::DenseMetalRich => "Dense Metal-Rich Planet",
-            CodexPlanetEntry::DenseRockyIce => "Dense Rocky Ice Planet",
-            CodexPlanetEntry::DenseRocky => "Dense Rocky Planet",
+                CodexPlanetEntry::DenseAmmoniaWorlds => "Dense Ammonia World",
+                CodexPlanetEntry::DenseWaterWorlds => "Dense Water Worlds",
+                CodexPlanetEntry::DenseHighMetalContent => "Dense High Metal Content Planet",
+                CodexPlanetEntry::DenseIce => "Dense Ice Planet",
+                CodexPlanetEntry::DenseMetalRich => "Dense Metal-Rich Planet",
+                CodexPlanetEntry::DenseRockyIce => "Dense Rocky Ice Planet",
+                CodexPlanetEntry::DenseRocky => "Dense Rocky Planet",
 
-            CodexPlanetEntry::StandardAmmoniaWorlds => "Standard Ammonia Worlds",
-            CodexPlanetEntry::StandardGiantWithAmmoniaLife => "Standard Giant with Ammonia Life",
-            CodexPlanetEntry::StandardGiantWithWaterLife => "Standard Giant with Water Life",
-            CodexPlanetEntry::StandardGiants => "Standard Giants",
-            CodexPlanetEntry::StandardHelium => "Standard Helium",
-            CodexPlanetEntry::StandardHeliumRich => "Standard Helium-Rich",
-            CodexPlanetEntry::StandardHighMetalContentNoAtmosphere => "Standard High Metal Content, No Atmosphere",
-            CodexPlanetEntry::StandardIceNoAtmosphere => "Standard Ice, No Atmosphere",
-            CodexPlanetEntry::StandardMetalRichNoAtmosphere => "Standard Metal-Rich, No Atmosphere",
-            CodexPlanetEntry::StandardPlanetStandard => "Standard Planet Standard",
-            CodexPlanetEntry::StandardPlanetTerraformable => "Standard Planet Terraformable",
-            CodexPlanetEntry::StandardRockyIceNoAtmosphere => "Standard Rocky Ice, No Atmosphere",
-            CodexPlanetEntry::StandardRockyNoAtmosphere => "Standard Rocky, No Atmosphere",
+                CodexPlanetEntry::StandardAmmoniaWorlds => "Standard Ammonia Worlds",
+                CodexPlanetEntry::StandardGiantWithAmmoniaLife =>
+                    "Standard Giant with Ammonia Life",
+                CodexPlanetEntry::StandardGiantWithWaterLife => "Standard Giant with Water Life",
+                CodexPlanetEntry::StandardGiants => "Standard Giants",
+                CodexPlanetEntry::StandardHelium => "Standard Helium",
+                CodexPlanetEntry::StandardHeliumRich => "Standard Helium-Rich",
+                CodexPlanetEntry::StandardHighMetalContentNoAtmosphere =>
+                    "Standard High Metal Content, No Atmosphere",
+                CodexPlanetEntry::StandardIceNoAtmosphere => "Standard Ice, No Atmosphere",
+                CodexPlanetEntry::StandardMetalRichNoAtmosphere =>
+                    "Standard Metal-Rich, No Atmosphere",
+                CodexPlanetEntry::StandardPlanetStandard => "Standard Planet Standard",
+                CodexPlanetEntry::StandardPlanetTerraformable => "Standard Planet Terraformable",
+                CodexPlanetEntry::StandardRockyIceNoAtmosphere =>
+                    "Standard Rocky Ice, No Atmosphere",
+                CodexPlanetEntry::StandardRockyNoAtmosphere => "Standard Rocky, No Atmosphere",
 
-            CodexPlanetEntry::StandardSudarskyClassI => "Standard Sudarsky Class I",
-            CodexPlanetEntry::StandardSudarskyClassII => "Standard Sudarsky Class II",
-            CodexPlanetEntry::StandardSudarskyClassIII => "Standard Sudarsky Class III",
-            CodexPlanetEntry::StandardSudarskyClassIV => "Standard Sudarsky Class IV",
-            CodexPlanetEntry::StandardSudarskyClassV => "Standard Sudarsky Class V",
+                CodexPlanetEntry::StandardSudarskyClassI => "Standard Sudarsky Class I",
+                CodexPlanetEntry::StandardSudarskyClassII => "Standard Sudarsky Class II",
+                CodexPlanetEntry::StandardSudarskyClassIII => "Standard Sudarsky Class III",
+                CodexPlanetEntry::StandardSudarskyClassIV => "Standard Sudarsky Class IV",
+                CodexPlanetEntry::StandardSudarskyClassV => "Standard Sudarsky Class V",
 
-            CodexPlanetEntry::StandardHighMetalContent => "Standard High Metal Content",
-            CodexPlanetEntry::StandardIce => "Standard Ice",
-            CodexPlanetEntry::StandardMetalRich => "Standard Metal-Rich",
-            CodexPlanetEntry::StandardRockyIce => "Standard Rocky Ice",
-            CodexPlanetEntry::StandardRocky => "Standard Rocky",
+                CodexPlanetEntry::StandardHighMetalContent => "Standard High Metal Content",
+                CodexPlanetEntry::StandardIce => "Standard Ice",
+                CodexPlanetEntry::StandardMetalRich => "Standard Metal-Rich",
+                CodexPlanetEntry::StandardRockyIce => "Standard Rocky Ice",
+                CodexPlanetEntry::StandardRocky => "Standard Rocky",
 
-            CodexPlanetEntry::StandardWaterGiant => "Standard Water Giant",
-            CodexPlanetEntry::StandardWaterGiantWithLife => "Standard Water Giant with Life",
-            CodexPlanetEntry::StandardWaterWorlds => "Standard Water Worlds",
+                CodexPlanetEntry::StandardWaterGiant => "Standard Water Giant",
+                CodexPlanetEntry::StandardWaterGiantWithLife => "Standard Water Giant with Life",
+                CodexPlanetEntry::StandardWaterWorlds => "Standard Water Worlds",
 
-            CodexPlanetEntry::LightAmmoniaWorlds => "Light Ammonia Worlds",
-            CodexPlanetEntry::LightWaterWorlds => "Light Water Worlds",
-            CodexPlanetEntry::LightHighMetalContent => "Light High Metal Content Planet",
-            CodexPlanetEntry::LightIce => "Light Ice Planet",
-            CodexPlanetEntry::LightMetalRich => "Light Metal-Rich Planet",
-            CodexPlanetEntry::LightRockyIce => "Light Rocky Ice Planet",
-            CodexPlanetEntry::LightRocky => "Light Rocky Planet",
+                CodexPlanetEntry::LightAmmoniaWorlds => "Light Ammonia Worlds",
+                CodexPlanetEntry::LightWaterWorlds => "Light Water Worlds",
+                CodexPlanetEntry::LightHighMetalContent => "Light High Metal Content Planet",
+                CodexPlanetEntry::LightIce => "Light Ice Planet",
+                CodexPlanetEntry::LightMetalRich => "Light Metal-Rich Planet",
+                CodexPlanetEntry::LightRockyIce => "Light Rocky Ice Planet",
+                CodexPlanetEntry::LightRocky => "Light Rocky Planet",
 
-            CodexPlanetEntry::GreenGiants => "Green Giants",
-            CodexPlanetEntry::GiantWithAmmoniaLife => "Giant with Ammonia Life",
-            CodexPlanetEntry::GiantWithWaterLife => "Giant with Water Life",
-            CodexPlanetEntry::GreenGiantWithAmmoniaLife => "Green Giant with Ammonia Life",
-            CodexPlanetEntry::GreenGiantWithWaterLife => "Green Giant with Water Life",
-            CodexPlanetEntry::GreenSudarskyClassI => "Green Sudarsky Class I",
-            CodexPlanetEntry::GreenSudarskyClassII => "Green Sudarsky Class II",
-            CodexPlanetEntry::GreenSudarskyClassIII => "Green Sudarsky Class III",
-            CodexPlanetEntry::GreenSudarskyClassIV => "Green Sudarsky Class IV",
-            CodexPlanetEntry::GreenSudarskyClassV => "Green Sudarsky Class V",
-            CodexPlanetEntry::GreenWaterGiant => "Green Water Giant",
-            CodexPlanetEntry::GreenWaterGiantWithLife => "Green Water Giant with Life",
-            CodexPlanetEntry::GreenHelium => "Green Helium Planet",
-            CodexPlanetEntry::GreenHeliumRich => "Green Helium-Rich Planet",
+                CodexPlanetEntry::GreenGiants => "Green Giants",
+                CodexPlanetEntry::GiantWithAmmoniaLife => "Giant with Ammonia Life",
+                CodexPlanetEntry::GiantWithWaterLife => "Giant with Water Life",
+                CodexPlanetEntry::GreenGiantWithAmmoniaLife => "Green Giant with Ammonia Life",
+                CodexPlanetEntry::GreenGiantWithWaterLife => "Green Giant with Water Life",
+                CodexPlanetEntry::GreenSudarskyClassI => "Green Sudarsky Class I",
+                CodexPlanetEntry::GreenSudarskyClassII => "Green Sudarsky Class II",
+                CodexPlanetEntry::GreenSudarskyClassIII => "Green Sudarsky Class III",
+                CodexPlanetEntry::GreenSudarskyClassIV => "Green Sudarsky Class IV",
+                CodexPlanetEntry::GreenSudarskyClassV => "Green Sudarsky Class V",
+                CodexPlanetEntry::GreenWaterGiant => "Green Water Giant",
+                CodexPlanetEntry::GreenWaterGiantWithLife => "Green Water Giant with Life",
+                CodexPlanetEntry::GreenHelium => "Green Helium Planet",
+                CodexPlanetEntry::GreenHeliumRich => "Green Helium-Rich Planet",
 
-            CodexPlanetEntry::HighMetalContent => "High Metal Content Planet",
-            CodexPlanetEntry::Ice => "Ice Planet",
-            CodexPlanetEntry::MetalRich => "Metal-Rich Planet",
-            CodexPlanetEntry::RockyIce => "Rocky Ice Planet",
-            CodexPlanetEntry::Rocky => "Rocky Planet",
+                CodexPlanetEntry::HighMetalContent => "High Metal Content Planet",
+                CodexPlanetEntry::Ice => "Ice Planet",
+                CodexPlanetEntry::MetalRich => "Metal-Rich Planet",
+                CodexPlanetEntry::RockyIce => "Rocky Ice Planet",
+                CodexPlanetEntry::Rocky => "Rocky Planet",
 
-            CodexPlanetEntry::MetalRichNoAtmosphere => "Metal-Rich, No Atmosphere",
-            CodexPlanetEntry::HighMetalContentNoAtmosphere => "High Metal Content Planet, No Atmosphere",
-            CodexPlanetEntry::IceNoAtmosphere => "Ice Planet, No Atmosphere",
-            CodexPlanetEntry::RockyIceNoAtmosphere => "Rocky Ice Planet, No Atmosphere",
-            CodexPlanetEntry::RockyNoAtmosphere => "Rocky Planet, No Atmosphere",
+                CodexPlanetEntry::MetalRichNoAtmosphere => "Metal-Rich, No Atmosphere",
+                CodexPlanetEntry::HighMetalContentNoAtmosphere =>
+                    "High Metal Content Planet, No Atmosphere",
+                CodexPlanetEntry::IceNoAtmosphere => "Ice Planet, No Atmosphere",
+                CodexPlanetEntry::RockyIceNoAtmosphere => "Rocky Ice Planet, No Atmosphere",
+                CodexPlanetEntry::RockyNoAtmosphere => "Rocky Planet, No Atmosphere",
 
-            // Terraformable non-terrestrial planets
-            CodexPlanetEntry::TerraformableAmmoniaWorlds => "Terraformable Ammonia Worlds",
-            CodexPlanetEntry::TerraformableWaterWorlds => "Terraformable Water Worlds",
+                // Terraformable non-terrestrial planets
+                CodexPlanetEntry::TerraformableAmmoniaWorlds => "Terraformable Ammonia Worlds",
+                CodexPlanetEntry::TerraformableWaterWorlds => "Terraformable Water Worlds",
 
-            // Terraformable no atmosphere planets
-            CodexPlanetEntry::TerraformableHighMetalContentNoAtmosphere => "Terraformable High Metal Content Planet, No Atmosphere",
-            CodexPlanetEntry::TerraformableIceNoAtmosphere => "Terraformable Ice Planet, No Atmosphere",
-            CodexPlanetEntry::TerraformableMetalRichNoAtmosphere => "Terraformable Metal-Rich Planet, No Atmosphere",
-            CodexPlanetEntry::TerraformableRockyIceNoAtmosphere => "Terraformable Rocky Ice Planet, No Atmosphere",
-            CodexPlanetEntry::TerraformableRockyNoAtmosphere => "Terraformable Rocky Planet, No Atmosphere",
+                // Terraformable no atmosphere planets
+                CodexPlanetEntry::TerraformableHighMetalContentNoAtmosphere =>
+                    "Terraformable High Metal Content Planet, No Atmosphere",
+                CodexPlanetEntry::TerraformableIceNoAtmosphere =>
+                    "Terraformable Ice Planet, No Atmosphere",
+                CodexPlanetEntry::TerraformableMetalRichNoAtmosphere =>
+                    "Terraformable Metal-Rich Planet, No Atmosphere",
+                CodexPlanetEntry::TerraformableRockyIceNoAtmosphere =>
+                    "Terraformable Rocky Ice Planet, No Atmosphere",
+                CodexPlanetEntry::TerraformableRockyNoAtmosphere =>
+                    "Terraformable Rocky Planet, No Atmosphere",
 
-            // Terraformable terrestrial planets
-            CodexPlanetEntry::TerraformableHighMetalContent => "Terraformable High Metal Content Planet",
-            CodexPlanetEntry::TerraformableIce => "Terraformable Ice Planet",
-            CodexPlanetEntry::TerraformableMetalRich => "Terraformable Metal-Rich Planet",
-            CodexPlanetEntry::TerraformableRockyIce => "Terraformable Rocky Ice Planet",
-            CodexPlanetEntry::TerraformableRocky => "Terraformable Rocky Planet",
+                // Terraformable terrestrial planets
+                CodexPlanetEntry::TerraformableHighMetalContent =>
+                    "Terraformable High Metal Content Planet",
+                CodexPlanetEntry::TerraformableIce => "Terraformable Ice Planet",
+                CodexPlanetEntry::TerraformableMetalRich => "Terraformable Metal-Rich Planet",
+                CodexPlanetEntry::TerraformableRockyIce => "Terraformable Rocky Ice Planet",
+                CodexPlanetEntry::TerraformableRocky => "Terraformable Rocky Planet",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexPlanetEntry::Unknown(unknown) => return write!(f, "Unknown planet codex entry: {}", unknown),
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexPlanetEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown planet codex entry: {}", unknown),
+            }
+        )
     }
 }

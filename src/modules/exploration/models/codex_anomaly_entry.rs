@@ -1,8 +1,8 @@
+use crate::exploration::shared::codex_regex::CODEX_REGEX;
+use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
 use thiserror::Error;
-use crate::exploration::shared::codex_regex::CODEX_REGEX;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexAnomalyEntry {
@@ -49,7 +49,6 @@ pub enum CodexAnomalyEntry {
     // PTypeAnomalies,
     // QTypeAnomalies,
     // TTypeAnomalies,
-
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
@@ -80,7 +79,8 @@ impl FromStr for CodexAnomalyEntry {
             return Err(CodexAnomalyError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -133,52 +133,56 @@ impl FromStr for CodexAnomalyEntry {
 
 impl Display for CodexAnomalyEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexAnomalyEntry::LagrangeClouds => "Lagrange Clouds",
-            CodexAnomalyEntry::BlueGasClouds => "Blue Gas Clouds",
-            CodexAnomalyEntry::StormingBlueGasClouds => "Storming Blue Gas Clouds",
-            CodexAnomalyEntry::ChargedGasClouds => "Charged Gas Clouds",
-            CodexAnomalyEntry::GreenGasClouds => "Green Gas Clouds",
-            CodexAnomalyEntry::StormingGreenGasClouds => "Storming Green Gas Clouds",
-            CodexAnomalyEntry::LightGasClouds => "Light Gas Clouds",
-            CodexAnomalyEntry::GasClouds => "Gas Clouds",
-            CodexAnomalyEntry::OrangeGasClouds => "Orange Gas Clouds",
-            CodexAnomalyEntry::StormingOrangeGasClouds => "Storming Orange Gas Clouds",
-            CodexAnomalyEntry::PinkGasClouds => "Pink Gas Clouds",
-            CodexAnomalyEntry::StormingPinkGasClouds => "Storming Pink Gas Clouds",
-            CodexAnomalyEntry::RedGasClouds => "Red Gas Clouds",
-            CodexAnomalyEntry::StormingRedGasClouds => "Storming Red Gas Clouds",
-            CodexAnomalyEntry::StandardGasClouds => "Standing Gas Clouds",
-            CodexAnomalyEntry::YellowGasClouds => "Yellow Gas Clouds",
-            CodexAnomalyEntry::StormingYellowGasClouds => "Storming Yellow Gas Clouds",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexAnomalyEntry::LagrangeClouds => "Lagrange Clouds",
+                CodexAnomalyEntry::BlueGasClouds => "Blue Gas Clouds",
+                CodexAnomalyEntry::StormingBlueGasClouds => "Storming Blue Gas Clouds",
+                CodexAnomalyEntry::ChargedGasClouds => "Charged Gas Clouds",
+                CodexAnomalyEntry::GreenGasClouds => "Green Gas Clouds",
+                CodexAnomalyEntry::StormingGreenGasClouds => "Storming Green Gas Clouds",
+                CodexAnomalyEntry::LightGasClouds => "Light Gas Clouds",
+                CodexAnomalyEntry::GasClouds => "Gas Clouds",
+                CodexAnomalyEntry::OrangeGasClouds => "Orange Gas Clouds",
+                CodexAnomalyEntry::StormingOrangeGasClouds => "Storming Orange Gas Clouds",
+                CodexAnomalyEntry::PinkGasClouds => "Pink Gas Clouds",
+                CodexAnomalyEntry::StormingPinkGasClouds => "Storming Pink Gas Clouds",
+                CodexAnomalyEntry::RedGasClouds => "Red Gas Clouds",
+                CodexAnomalyEntry::StormingRedGasClouds => "Storming Red Gas Clouds",
+                CodexAnomalyEntry::StandardGasClouds => "Standing Gas Clouds",
+                CodexAnomalyEntry::YellowGasClouds => "Yellow Gas Clouds",
+                CodexAnomalyEntry::StormingYellowGasClouds => "Storming Yellow Gas Clouds",
 
-            CodexAnomalyEntry::MetallicStructures => "Metallic Structures",
+                CodexAnomalyEntry::MetallicStructures => "Metallic Structures",
 
-            CodexAnomalyEntry::Mollusc1V1 => "Mollusc 1 V1",
-            CodexAnomalyEntry::Mollusc1V2 => "Mollusc 1 V2",
-            CodexAnomalyEntry::Mollusc1V3 => "Mollusc 1 V3",
-            CodexAnomalyEntry::Mollusc1V4 => "Mollusc 1 V4",
-            CodexAnomalyEntry::Mollusc1V5 => "Mollusc 1 V5",
-            CodexAnomalyEntry::Mollusc1V6 => "Mollusc 1 V6",
-            CodexAnomalyEntry::Mollusc3V1 => "Mollusc 3 V1",
-            CodexAnomalyEntry::Mollusc3V2 => "Mollusc 3 V2",
-            CodexAnomalyEntry::Mollusc3V3 => "Mollusc 3 V3",
-            CodexAnomalyEntry::Mollusc3V4 => "Mollusc 3 V4",
-            CodexAnomalyEntry::Mollusc3V6 => "Mollusc 3 V6",
+                CodexAnomalyEntry::Mollusc1V1 => "Mollusc 1 V1",
+                CodexAnomalyEntry::Mollusc1V2 => "Mollusc 1 V2",
+                CodexAnomalyEntry::Mollusc1V3 => "Mollusc 1 V3",
+                CodexAnomalyEntry::Mollusc1V4 => "Mollusc 1 V4",
+                CodexAnomalyEntry::Mollusc1V5 => "Mollusc 1 V5",
+                CodexAnomalyEntry::Mollusc1V6 => "Mollusc 1 V6",
+                CodexAnomalyEntry::Mollusc3V1 => "Mollusc 3 V1",
+                CodexAnomalyEntry::Mollusc3V2 => "Mollusc 3 V2",
+                CodexAnomalyEntry::Mollusc3V3 => "Mollusc 3 V3",
+                CodexAnomalyEntry::Mollusc3V4 => "Mollusc 3 V4",
+                CodexAnomalyEntry::Mollusc3V6 => "Mollusc 3 V6",
 
-            CodexAnomalyEntry::PlateStructures => "Plate Structures",
+                CodexAnomalyEntry::PlateStructures => "Plate Structures",
 
-            CodexAnomalyEntry::SilicateStructures => "Silicate Structures",
+                CodexAnomalyEntry::SilicateStructures => "Silicate Structures",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexAnomalyEntry::Unknown(unknown) => return write!(f, "Unknown anomaly codex entry: {}", unknown),
-
-            // CodexAnomalyEntry::ETypeAnomalies => "E Type Anomalies",
-            // CodexAnomalyEntry::KTypeAnomalies => "K Type Anomalies",
-            // CodexAnomalyEntry::LTypeAnomalies => "L Type Anomalies",
-            // CodexAnomalyEntry::PTypeAnomalies => "P Type Anomalies",
-            // CodexAnomalyEntry::QTypeAnomalies => "Q Type Anomalies",
-            // CodexAnomalyEntry::TTypeAnomalies => "T Type Anomalies",
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexAnomalyEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown anomaly codex entry: {}", unknown),
+                // CodexAnomalyEntry::ETypeAnomalies => "E Type Anomalies",
+                // CodexAnomalyEntry::KTypeAnomalies => "K Type Anomalies",
+                // CodexAnomalyEntry::LTypeAnomalies => "L Type Anomalies",
+                // CodexAnomalyEntry::PTypeAnomalies => "P Type Anomalies",
+                // CodexAnomalyEntry::QTypeAnomalies => "Q Type Anomalies",
+                // CodexAnomalyEntry::TTypeAnomalies => "T Type Anomalies",
+            }
+        )
     }
 }

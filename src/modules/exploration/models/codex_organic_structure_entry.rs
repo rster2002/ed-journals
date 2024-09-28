@@ -1,8 +1,8 @@
+use crate::exploration::shared::codex_regex::CODEX_REGEX;
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::Serialize;
 use thiserror::Error;
-use crate::exploration::shared::codex_regex::CODEX_REGEX;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexOrganicStructureEntry {
@@ -38,7 +38,8 @@ impl FromStr for CodexOrganicStructureEntry {
             return Err(CodexOrganicStructureError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -57,11 +58,16 @@ impl FromStr for CodexOrganicStructureEntry {
 
 impl Display for CodexOrganicStructureEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexOrganicStructureEntry::StolonTree => "Stolon Tree",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexOrganicStructureEntry::StolonTree => "Stolon Tree",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexOrganicStructureEntry::Unknown(unknown) => return write!(f, "Unknown organic structure codex entry: {}", unknown),
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexOrganicStructureEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown organic structure codex entry: {}", unknown),
+            }
+        )
     }
 }

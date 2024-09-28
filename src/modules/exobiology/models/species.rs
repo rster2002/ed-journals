@@ -1,13 +1,13 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
 use crate::exobiology::Genus;
-use serde::Serialize;
-use strum::EnumIter;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use strum::EnumIter;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, Hash, Eq, PartialEq, EnumIter)]
 pub enum Species {
@@ -22,14 +22,14 @@ pub enum Species {
     AmphoraPlant,
 
     // Anemones
-    AnemoneLuteolum, // TODO needs to be verified
-    AnemoneCroceum, // TODO needs to be verified
-    AnemonePuniceum, // TODO needs to be verified
-    AnemoneRoseum, // TODO needs to be verified
+    AnemoneLuteolum,               // TODO needs to be verified
+    AnemoneCroceum,                // TODO needs to be verified
+    AnemonePuniceum,               // TODO needs to be verified
+    AnemoneRoseum,                 // TODO needs to be verified
     AnemoneBlatteumBioluminescent, // TODO needs to be verified
-    AnemoneRubeumBioluminescent, // TODO needs to be verified
+    AnemoneRubeumBioluminescent,   // TODO needs to be verified
     AnemonePrasinumBioluminescent, // TODO needs to be verified
-    AnemoneRoseumBioluminescent, // TODO needs to be verified
+    AnemoneRoseumBioluminescent,   // TODO needs to be verified
 
     // Bark mounds
     BarkMound,
@@ -50,13 +50,13 @@ pub enum Species {
     BacteriumVerrata,
 
     // Brain tree
-    BrainTreeRoseum, // TODO needs to be verified
-    BrainTreeGypseeum, // TODO needs to be verified
-    BrainTreeOstrinum, // TODO needs to be verified
-    BrainTreeViride, // TODO needs to be verified
-    BrainTreeLividum, // TODO needs to be verified
-    BrainTreeAureum, // TODO needs to be verified
-    BrainTreePuniceum, // TODO needs to be verified
+    BrainTreeRoseum,       // TODO needs to be verified
+    BrainTreeGypseeum,     // TODO needs to be verified
+    BrainTreeOstrinum,     // TODO needs to be verified
+    BrainTreeViride,       // TODO needs to be verified
+    BrainTreeLividum,      // TODO needs to be verified
+    BrainTreeAureum,       // TODO needs to be verified
+    BrainTreePuniceum,     // TODO needs to be verified
     BrainTreeLindigoticum, // TODO needs to be verified
 
     // Cactoida
@@ -127,14 +127,14 @@ pub enum Species {
     ReceptaConditivus,
 
     // Sinuous tubers
-    SinuousTubersRoseum, // TODO needs to be verified
-    SinuousTubersPrasinum, // TODO needs to be verified
-    SinuousTubersAlbidum, // TODO needs to be verified
-    SinuousTubersCaeruleum, // TODO needs to be verified
-    SinuousTubersBlatteum, // TODO needs to be verified
+    SinuousTubersRoseum,       // TODO needs to be verified
+    SinuousTubersPrasinum,     // TODO needs to be verified
+    SinuousTubersAlbidum,      // TODO needs to be verified
+    SinuousTubersCaeruleum,    // TODO needs to be verified
+    SinuousTubersBlatteum,     // TODO needs to be verified
     SinuousTubersLindigoticum, // TODO needs to be verified
-    SinuousTubersViolaceum, // TODO needs to be verified
-    SinuousTubersViride, // TODO needs to be verified
+    SinuousTubersViolaceum,    // TODO needs to be verified
+    SinuousTubersViride,       // TODO needs to be verified
 
     // Stratum
     StratumExcutitus,
@@ -171,11 +171,11 @@ pub enum Species {
     TussockCapillum,
 
     // Thargoid barnacles
-    ThargoidBarnacleCommon, // TODO needs to be verified
-    ThargoidBarnacleLarge, // TODO needs to be verified
-    ThargoidBarnacleBarbs, // TODO needs to be verified
+    ThargoidBarnacleCommon,          // TODO needs to be verified
+    ThargoidBarnacleLarge,           // TODO needs to be verified
+    ThargoidBarnacleBarbs,           // TODO needs to be verified
     ThargoidBarnacleMatrixSubmerged, // TODO needs to be verified
-    ThargoidBarnacleMatrix, // TODO needs to be verified
+    ThargoidBarnacleMatrix,          // TODO needs to be verified
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -184,9 +184,7 @@ pub enum Species {
 
 #[cfg(feature = "allow-unknown")]
 lazy_static! {
-    static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![
-        SpawnCondition::Special,
-    ];
+    static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![SpawnCondition::Special,];
 }
 
 impl Species {
@@ -388,7 +386,8 @@ impl FromStr for Species {
             return Err(SpeciesError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();

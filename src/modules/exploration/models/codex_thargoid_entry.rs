@@ -1,9 +1,9 @@
-use std::fmt::Display;
-use std::str::FromStr;
-use serde::Serialize;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
+use serde::Serialize;
+use std::fmt::Display;
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexThargoidEntry {
@@ -81,7 +81,8 @@ impl FromStr for CodexThargoidEntry {
             return Err(CoxexThargoidError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -144,53 +145,58 @@ from_str_deserialize_impl!(CodexThargoidEntry);
 
 impl Display for CodexThargoidEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexThargoidEntry::LargeSpike => "Large Thargoid Spike",
-            CodexThargoidEntry::Tower => "Thargoid Tower",
-            CodexThargoidEntry::TowerLow => "Low Thargoid Tower",
-            CodexThargoidEntry::TowerMedium => "Medium Thargoid Tower",
-            CodexThargoidEntry::TowerHigh => "High Thargoid Tower",
-            CodexThargoidEntry::TowerExtraHigh => "Extra High Thargoid Tower",
-            CodexThargoidEntry::Coral => "Thargoid Coral",
-            CodexThargoidEntry::CoralTree => "Thargoid Coral Tree",
-            CodexThargoidEntry::CoralRoot => "Thargoid Coral Root",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexThargoidEntry::LargeSpike => "Large Thargoid Spike",
+                CodexThargoidEntry::Tower => "Thargoid Tower",
+                CodexThargoidEntry::TowerLow => "Low Thargoid Tower",
+                CodexThargoidEntry::TowerMedium => "Medium Thargoid Tower",
+                CodexThargoidEntry::TowerHigh => "High Thargoid Tower",
+                CodexThargoidEntry::TowerExtraHigh => "Extra High Thargoid Tower",
+                CodexThargoidEntry::Coral => "Thargoid Coral",
+                CodexThargoidEntry::CoralTree => "Thargoid Coral Tree",
+                CodexThargoidEntry::CoralRoot => "Thargoid Coral Root",
 
-            CodexThargoidEntry::Canister => "Thargoid Canister",
-            CodexThargoidEntry::Datascan => "Thargoid Datascan",
-            CodexThargoidEntry::Pod => "Thargoid Pod",
-            CodexThargoidEntry::Transmitter => "Thargoid Transmitter",
+                CodexThargoidEntry::Canister => "Thargoid Canister",
+                CodexThargoidEntry::Datascan => "Thargoid Datascan",
+                CodexThargoidEntry::Pod => "Thargoid Pod",
+                CodexThargoidEntry::Transmitter => "Thargoid Transmitter",
 
-            CodexThargoidEntry::UnknownArtifact => "Unknown Artifact",
-            CodexThargoidEntry::UnknownProbe => "Unknown Probe",
-            CodexThargoidEntry::UnknownRelay => "Unknown Relay",
+                CodexThargoidEntry::UnknownArtifact => "Unknown Artifact",
+                CodexThargoidEntry::UnknownProbe => "Unknown Probe",
+                CodexThargoidEntry::UnknownRelay => "Unknown Relay",
 
-            CodexThargoidEntry::CausticGenerator => "Caustic Generator",
-            CodexThargoidEntry::Banshee => "Banshee",
-            CodexThargoidEntry::Barnacles => "Barnacles",
-            CodexThargoidEntry::Revenant => "Revenant",
-            CodexThargoidEntry::Scavenger => "Scavenger",
+                CodexThargoidEntry::CausticGenerator => "Caustic Generator",
+                CodexThargoidEntry::Banshee => "Banshee",
+                CodexThargoidEntry::Barnacles => "Barnacles",
+                CodexThargoidEntry::Revenant => "Revenant",
+                CodexThargoidEntry::Scavenger => "Scavenger",
 
-            CodexThargoidEntry::Scouts => "Scouts",
-            CodexThargoidEntry::Marauder => "Marauder",
-            CodexThargoidEntry::Berserker => "Berserker",
-            CodexThargoidEntry::Regenerator => "Regenerator",
-            CodexThargoidEntry::Inciter => "Inciter",
+                CodexThargoidEntry::Scouts => "Scouts",
+                CodexThargoidEntry::Marauder => "Marauder",
+                CodexThargoidEntry::Berserker => "Berserker",
+                CodexThargoidEntry::Regenerator => "Regenerator",
+                CodexThargoidEntry::Inciter => "Inciter",
 
-            CodexThargoidEntry::Interceptors => "Interceptors",
-            CodexThargoidEntry::Basilisk => "Basilisk",
-            CodexThargoidEntry::Cyclops => "Cyclops",
-            CodexThargoidEntry::Glaive => "Glaive",
-            CodexThargoidEntry::Scythe => "Scythe",
-            CodexThargoidEntry::Hunter => "Hunter",
-            CodexThargoidEntry::Medusa => "Medusa",
-            CodexThargoidEntry::Hydra => "Hydra",
-            CodexThargoidEntry::Orthrus => "Orthrus",
+                CodexThargoidEntry::Interceptors => "Interceptors",
+                CodexThargoidEntry::Basilisk => "Basilisk",
+                CodexThargoidEntry::Cyclops => "Cyclops",
+                CodexThargoidEntry::Glaive => "Glaive",
+                CodexThargoidEntry::Scythe => "Scythe",
+                CodexThargoidEntry::Hunter => "Hunter",
+                CodexThargoidEntry::Medusa => "Medusa",
+                CodexThargoidEntry::Hydra => "Hydra",
+                CodexThargoidEntry::Orthrus => "Orthrus",
 
-            CodexThargoidEntry::WreckedInterceptor => "Wrecked Interceptor",
-            CodexThargoidEntry::WreckedScout => "Wrecked Scout",
+                CodexThargoidEntry::WreckedInterceptor => "Wrecked Interceptor",
+                CodexThargoidEntry::WreckedScout => "Wrecked Scout",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexThargoidEntry::Unknown(unknown) => return write!(f, "Unknown codex entry: '{}'", unknown),
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexThargoidEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown codex entry: '{}'", unknown),
+            }
+        )
     }
 }

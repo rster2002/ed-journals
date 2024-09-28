@@ -22,8 +22,7 @@ impl Variant {
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
-        matches!(self.species, Species::Unknown(_))
-            || matches!(self.color, VariantColor::Unknown)
+        matches!(self.species, Species::Unknown(_)) || matches!(self.color, VariantColor::Unknown)
     }
 }
 
@@ -53,12 +52,14 @@ impl FromStr for Variant {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match Species::from_str(s) {
             #[cfg(feature = "allow-unknown")]
-            Ok(species) if species.is_unknown() => {},
-            Ok(species) => return Ok(Variant {
-                species,
-                color: VariantColor::None,
-            }),
-            Err(_) => {},
+            Ok(species) if species.is_unknown() => {}
+            Ok(species) => {
+                return Ok(Variant {
+                    species,
+                    color: VariantColor::None,
+                })
+            }
+            Err(_) => {}
         }
 
         let Some(captures) = VARIANT_REGEX.captures(s) else {
@@ -70,8 +71,7 @@ impl FromStr for Variant {
             .expect("Should have been captured already")
             .as_str();
 
-        let species = format!("{}_Name;", species)
-            .parse()?;
+        let species = format!("{}_Name;", species).parse()?;
 
         let variant_source: VariantSource = captures
             .get(4)
@@ -165,8 +165,8 @@ mod tests {
                 Variant {
                     species: Species::AleoidaArcus,
                     color: VariantColor::Green,
-                }
-            )
+                },
+            ),
         ];
 
         for (case, expected) in test_cases {

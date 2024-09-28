@@ -1,9 +1,9 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use serde::Serialize;
-use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexGuardianEntry {
@@ -53,7 +53,8 @@ impl FromStr for CodexGuardianEntry {
             return Err(CodexGuardianEntryError::FailedToParse(s.to_string()));
         };
 
-        let string: &str = &captures.get(1)
+        let string: &str = &captures
+            .get(1)
             .expect("Should have been captured already")
             .as_str()
             .to_ascii_lowercase();
@@ -89,26 +90,31 @@ from_str_deserialize_impl!(CodexGuardianEntry);
 
 impl Display for CodexGuardianEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            CodexGuardianEntry::AncientCasket => "Ancient Casket",
-            CodexGuardianEntry::AncientKey => "Ancient Key",
-            CodexGuardianEntry::AncientOrb => "Ancient Orb",
-            CodexGuardianEntry::AncientRelic => "Ancient Relic",
-            CodexGuardianEntry::AncientRelics => "Ancient Relics",
-            CodexGuardianEntry::AncientTablet => "Ancient Tablet",
-            CodexGuardianEntry::AncientTotem => "Ancient Totem",
-            CodexGuardianEntry::AncientUrn => "Ancient Urn",
+        write!(
+            f,
+            "{}",
+            match self {
+                CodexGuardianEntry::AncientCasket => "Ancient Casket",
+                CodexGuardianEntry::AncientKey => "Ancient Key",
+                CodexGuardianEntry::AncientOrb => "Ancient Orb",
+                CodexGuardianEntry::AncientRelic => "Ancient Relic",
+                CodexGuardianEntry::AncientRelics => "Ancient Relics",
+                CodexGuardianEntry::AncientTablet => "Ancient Tablet",
+                CodexGuardianEntry::AncientTotem => "Ancient Totem",
+                CodexGuardianEntry::AncientUrn => "Ancient Urn",
 
-            CodexGuardianEntry::GuardianBeacons => "Guardian Beacons",
-            CodexGuardianEntry::GuardianDataBank => "Guardian Data Bank",
-            CodexGuardianEntry::GuardianDataLogs => "Guardian Data Logs",
-            CodexGuardianEntry::GuardianPad => "Guardian Pad",
-            CodexGuardianEntry::GuardianPylon => "Guardian Pylon",
-            CodexGuardianEntry::GuardianSentinel => "Guardian Sentinel",
-            CodexGuardianEntry::GuardianTerminal => "Guardian Terminal",
+                CodexGuardianEntry::GuardianBeacons => "Guardian Beacons",
+                CodexGuardianEntry::GuardianDataBank => "Guardian Data Bank",
+                CodexGuardianEntry::GuardianDataLogs => "Guardian Data Logs",
+                CodexGuardianEntry::GuardianPad => "Guardian Pad",
+                CodexGuardianEntry::GuardianPylon => "Guardian Pylon",
+                CodexGuardianEntry::GuardianSentinel => "Guardian Sentinel",
+                CodexGuardianEntry::GuardianTerminal => "Guardian Terminal",
 
-            #[cfg(feature = "allow-unknown")]
-            CodexGuardianEntry::Unknown(unknown) => return write!(f, "Unknown guardian codex entry: {}", unknown),
-        })
+                #[cfg(feature = "allow-unknown")]
+                CodexGuardianEntry::Unknown(unknown) =>
+                    return write!(f, "Unknown guardian codex entry: {}", unknown),
+            }
+        )
     }
 }
