@@ -30,7 +30,9 @@ pub enum CodexGuardianEntry {
 }
 
 impl CodexGuardianEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
         matches!(self, CodexGuardianEntry::Unknown(_))
     }

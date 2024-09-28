@@ -46,6 +46,15 @@ pub enum PlanetarySignalType {
     Unknown(String),
 }
 
+impl PlanetarySignalType {
+    /// Whether the current variant is unknown.
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, PlanetarySignalType::Unknown(_))
+    }
+}
+
 impl Display for PlanetarySignalType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(

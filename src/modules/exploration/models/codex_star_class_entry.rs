@@ -6,7 +6,7 @@ use crate::from_str_deserialize_impl;
 use serde::Serialize;
 use thiserror::Error;
 
-/// New-type used for parsing star class codex entries.
+/// Codex entries related to star class.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexStarClassEntry {
     ATypes,
@@ -167,6 +167,7 @@ pub enum CodexStarClassEntry {
 }
 
 impl CodexStarClassEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {

@@ -5,6 +5,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
+/// Codex entries related to geological points-of-interest.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexGeologicalEntry {
     Fumarole,
@@ -66,6 +67,7 @@ pub enum CodexGeologicalEntry {
 }
 
 impl CodexGeologicalEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
@@ -177,12 +179,6 @@ impl Display for CodexGeologicalEntry {
             f,
             "{}",
             match self {
-                // CodexGeologicalEntry::Fumarole => "Fumarole",
-                // CodexGeologicalEntry::IceFumarole => "Ice Fumarole",
-                // CodexGeologicalEntry::Geyser => "Geyser",
-                // CodexGeologicalEntry::IceGeyser => "Ice Geyser",
-                // CodexGeologicalEntry::LavaSpout => "Lava Spout",
-                // CodexGeologicalEntry::GasVent => "Gas Vent",
                 CodexGeologicalEntry::Fumarole => "Fumarole",
                 CodexGeologicalEntry::FumaroleAmmoniaGeysers => "Ammonia Fumarole",
                 CodexGeologicalEntry::FumaroleCarbondioxideGeysers => "Carbon Dioxide Fumarole",

@@ -4,6 +4,8 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
+/// Codex entries related to organic structures other than the ones already covered by
+/// [crate::exobiology::Genus], [crate::exobiology::Species] and [crate::exobiology::Variant].
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexOrganicStructureEntry {
     StolonTree,
@@ -14,6 +16,7 @@ pub enum CodexOrganicStructureEntry {
 }
 
 impl CodexOrganicStructureEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {

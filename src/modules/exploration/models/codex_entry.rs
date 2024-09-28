@@ -12,7 +12,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
-/// Codex entry name.
+/// Model for any kind of codex entry.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexEntry {
     Planet(CodexPlanetEntry),
@@ -30,6 +30,15 @@ pub enum CodexEntry {
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
+}
+
+impl CodexEntry {
+    /// Whether the current variant is unknown.
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, CodexEntry::Unknown(_))
+    }
 }
 
 #[derive(Debug, Error)]

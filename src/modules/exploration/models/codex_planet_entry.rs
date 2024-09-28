@@ -5,6 +5,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
+/// Codex entries related to planet types.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexPlanetEntry {
     EarthLike,
@@ -135,6 +136,7 @@ pub enum CodexPlanetEntry {
 }
 
 impl CodexPlanetEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {

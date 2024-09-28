@@ -188,6 +188,7 @@ lazy_static! {
 }
 
 impl Species {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {

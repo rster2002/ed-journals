@@ -4,6 +4,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
+/// Codex entries related to anomalies.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexAnomalyEntry {
     LagrangeClouds,
@@ -43,18 +44,13 @@ pub enum CodexAnomalyEntry {
 
     SilicateStructures,
 
-    // ETypeAnomalies,
-    // KTypeAnomalies,
-    // LTypeAnomalies,
-    // PTypeAnomalies,
-    // QTypeAnomalies,
-    // TTypeAnomalies,
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }
 
 impl CodexAnomalyEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {

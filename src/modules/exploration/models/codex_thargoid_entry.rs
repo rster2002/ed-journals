@@ -5,6 +5,7 @@ use std::fmt::Display;
 use std::str::FromStr;
 use thiserror::Error;
 
+/// Codex entries related to Thargoids.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexThargoidEntry {
     LargeSpike,
@@ -57,6 +58,7 @@ pub enum CodexThargoidEntry {
 }
 
 impl CodexThargoidEntry {
+    /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
