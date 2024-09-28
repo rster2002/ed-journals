@@ -8,6 +8,7 @@ use thiserror::Error;
 use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::models::codex_geological_entry::CodexGeologicalEntry;
 use crate::exploration::models::codex_guardian_entry::CodexGuardianEntry;
+use crate::exploration::models::codex_organic_structure_entry::CodexOrganicStructureEntry;
 use crate::exploration::models::codex_planet_entry::CodexPlanetEntry;
 use crate::exploration::models::codex_thargoid_entry::CodexThargoidEntry;
 use crate::from_str_deserialize_impl;
@@ -23,6 +24,7 @@ pub enum CodexEntry {
     Genus(Genus),
     Species(Species),
     Variant(Variant),
+    OrganicStructure(CodexOrganicStructureEntry),
     StarClass(CodexStarClassEntry),
 
     /// Unknown codex entry.
@@ -72,6 +74,10 @@ impl FromStr for CodexEntry {
 
         if let Ok(entry) = Variant::from_str(s) {
             return Ok(CodexEntry::Variant(entry));
+        }
+
+        if let Ok(entry) = CodexOrganicStructureEntry::from_str(s) {
+            return Ok(CodexEntry::OrganicStructure(entry));
         }
 
         if let Ok(entry) = CodexStarClassEntry::from_str(s) {
@@ -131,6 +137,12 @@ impl FromStr for CodexEntry {
             }
         }
 
+        if let Ok(entry) = CodexOrganicStructureEntry::from_str(s) {
+            if !entry.is_unknown() {
+                return Ok(CodexEntry::OrganicStructure(entry));
+            }
+        }
+
         if let Ok(entry) = CodexStarClassEntry::from_str(s) {
             if !entry.is_unknown() {
                 return Ok(CodexEntry::StarClass(entry));
@@ -155,6 +167,7 @@ impl Display for CodexEntry {
             CodexEntry::Genus(genus) => write!(f, "{}", genus),
             CodexEntry::Species(species) => write!(f, "{}", species),
             CodexEntry::Variant(variant) => write!(f, "{}", variant),
+            CodexEntry::OrganicStructure(organic_structure) => write!(f, "{}", organic_structure),
             CodexEntry::StarClass(star_class) => write!(f, "{}", star_class),
             CodexEntry::Guardian(guardian) => write!(f, "{}", guardian),
 

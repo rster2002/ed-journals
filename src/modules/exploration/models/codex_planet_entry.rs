@@ -18,6 +18,8 @@ pub enum CodexPlanetEntry {
     SudarskyClassIV,
     SudarskyClassV,
     SupermassiveBlackHoles,
+    Helium,
+    HeliumRich,
 
     // Unspecified terrestrial planets
     HighMetalContent,
@@ -106,6 +108,8 @@ pub enum CodexPlanetEntry {
     GreenSudarskyClassV,
     GreenWaterGiant,
     GreenWaterGiantWithLife,
+    GreenHelium,
+    GreenHeliumRich,
 
     // Terraformable non-terrestrial planets
     TerraformableAmmoniaWorlds,
@@ -124,8 +128,6 @@ pub enum CodexPlanetEntry {
     TerraformableMetalRich,
     TerraformableRockyIce,
     TerraformableRocky,
-
-    // TODO $codex_ent_trf_... entries. Not sure what they even are
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -175,6 +177,8 @@ impl FromStr for CodexPlanetEntry {
             "sudarsky_class_iv" => CodexPlanetEntry::SudarskyClassIV,
             "sudarsky_class_v" => CodexPlanetEntry::SudarskyClassV,
             "supermassiveblack_holes" => CodexPlanetEntry::SupermassiveBlackHoles,
+            "helium" => CodexPlanetEntry::Helium,
+            "helium_rich" => CodexPlanetEntry::HeliumRich,
 
             // Unspecified terrestrial planets
             "ter_high_metal_content" => CodexPlanetEntry::HighMetalContent,
@@ -263,6 +267,8 @@ impl FromStr for CodexPlanetEntry {
             "green_sudarsky_class_v" => CodexPlanetEntry::GreenSudarskyClassV,
             "green_water_giant" => CodexPlanetEntry::GreenWaterGiant,
             "green_water_giant_with_life" => CodexPlanetEntry::GreenWaterGiantWithLife,
+            "green_helium" => CodexPlanetEntry::GreenHelium,
+            "green_helium_rich" => CodexPlanetEntry::GreenHeliumRich,
 
             // Terraformable non-terrestrial planets
             "trf_ammonia_worlds" => CodexPlanetEntry::TerraformableAmmoniaWorlds,
@@ -307,6 +313,8 @@ impl Display for CodexPlanetEntry {
             CodexPlanetEntry::SudarskyClassIV => "Sudarsky Class IV",
             CodexPlanetEntry::SudarskyClassV => "Sudarsky Class V",
             CodexPlanetEntry::SupermassiveBlackHoles => "Supermassive Black Holes",
+            CodexPlanetEntry::Helium => "Helium Planet",
+            CodexPlanetEntry::HeliumRich => "Helium-Rich Planet",
 
             CodexPlanetEntry::DenseAmmoniaWorlds => "Dense Ammonia World",
             CodexPlanetEntry::DenseWaterWorlds => "Dense Water Worlds",
@@ -366,6 +374,8 @@ impl Display for CodexPlanetEntry {
             CodexPlanetEntry::GreenSudarskyClassV => "Green Sudarsky Class V",
             CodexPlanetEntry::GreenWaterGiant => "Green Water Giant",
             CodexPlanetEntry::GreenWaterGiantWithLife => "Green Water Giant with Life",
+            CodexPlanetEntry::GreenHelium => "Green Helium Planet",
+            CodexPlanetEntry::GreenHeliumRich => "Green Helium-Rich Planet",
 
             CodexPlanetEntry::HighMetalContent => "High Metal Content Planet",
             CodexPlanetEntry::Ice => "Ice Planet",
