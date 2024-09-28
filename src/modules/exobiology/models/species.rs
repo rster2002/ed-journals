@@ -1,9 +1,7 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use lazy_static::lazy_static;
 use crate::exobiology::Genus;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use serde::Serialize;
 use strum::EnumIter;
 use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;

@@ -2,7 +2,6 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
-use crate::exploration::models::codex_planet_entry::CodexPlanetError;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]

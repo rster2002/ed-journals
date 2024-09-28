@@ -1,6 +1,6 @@
 use crate::modules::exobiology::{Genus, Species, Variant};
 use crate::modules::exploration::CodexStarClassEntry;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;

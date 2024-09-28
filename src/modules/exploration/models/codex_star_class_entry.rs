@@ -158,11 +158,8 @@ pub enum CodexStarClassEntry {
     WhiteDwarfs,
     WolfRayetStars,
 
-    // TODO
-    TTauriTypeStar,
     NeutronStars,
     BlackHole,
-    SupermassiveBlackHole,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -533,12 +530,8 @@ impl Display for CodexStarClassEntry {
             CodexStarClassEntry::WhiteDwarfs => "White Dwarfs",
             CodexStarClassEntry::WolfRayetStars => "Wolf-Rayet Stars",
 
-            // TODO
-            CodexStarClassEntry::TTauriTypeStar => "T Tauri TypeStar",
-            CodexStarClassEntry::YTypeStar => "Y TypeStar",
             CodexStarClassEntry::NeutronStars => "Neutron Star",
             CodexStarClassEntry::BlackHole => "Black Hole",
-            CodexStarClassEntry::SupermassiveBlackHole => "Supermassive Black Hole",
 
             #[cfg(feature = "allow-unknown")]
             CodexStarClassEntry::Unknown(unknown) => return write!(f, "Unknown star codex entry: {}", unknown),

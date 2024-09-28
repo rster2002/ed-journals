@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;

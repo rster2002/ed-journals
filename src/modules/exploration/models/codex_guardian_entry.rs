@@ -1,8 +1,7 @@
-use std::fmt::{write, Display, Formatter};
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
-use crate::exploration::models::codex_planet_entry::CodexPlanetError;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
 

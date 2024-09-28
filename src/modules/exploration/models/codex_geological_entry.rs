@@ -1,20 +1,12 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
-use crate::exploration::models::codex_anomaly_entry::CodexAnomalyEntry;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
-use crate::exploration::CodexStarClassError;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum CodexGeologicalEntry {
-    // IceFumarole,
-    // Geyser,
-    // IceGeyser,
-    // LavaSpout,
-    // GasVent,
-
     Fumarole,
     FumaroleAmmoniaGeysers,
     FumaroleCarbondioxideGeysers,
