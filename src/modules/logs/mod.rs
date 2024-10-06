@@ -112,7 +112,7 @@ pub use content::log_event_content::fighter_destroyed_event;
 pub use content::log_event_content::fighter_rebuilt_event;
 pub use content::log_event_content::file_header_event;
 pub use content::log_event_content::friends_event;
-pub use content::log_event_content::fs_embark_event;
+pub use content::log_event_content::fc_embark_event;
 pub use content::log_event_content::fsd_jump_event;
 pub use content::log_event_content::fsd_target_event;
 pub use content::log_event_content::fss_all_bodies_found_event;
