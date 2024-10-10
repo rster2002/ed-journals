@@ -122,7 +122,8 @@ pub enum StationService {
     #[serde(rename = "modulepacks")]
     ModulePacks,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -172,7 +173,7 @@ impl Display for StationService {
                 StationService::Shop => "Shop",
                 StationService::ModulePacks => "Module Packs",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 StationService::Unknown(unknown) =>
                     return write!(f, "Unknown station service: {}", unknown),
             }

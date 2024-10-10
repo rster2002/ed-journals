@@ -41,7 +41,8 @@ pub enum ThargoidWarState {
     #[serde(rename = "")]
     Unspecified,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -60,7 +61,7 @@ impl Display for ThargoidWarState {
                 ThargoidWarState::UnknownState => "Unknown",
                 ThargoidWarState::Unspecified => "Unspecified",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ThargoidWarState::Unknown(unknown) =>
                     return write!(f, "Unknown thargoid war state: {}", unknown),
             }

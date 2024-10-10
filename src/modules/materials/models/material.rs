@@ -162,7 +162,8 @@ pub enum Material {
     UntypicalShieldScans,
     UnusualEncryptedFiles,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }
 
@@ -330,7 +331,7 @@ impl Material {
             Material::MassiveEnergySurgeAnalytics => 0,
             Material::ThargoidInterdictionTelemetry => 0,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Material::Unknown(_) => 0,
         }
     }
@@ -500,10 +501,10 @@ impl FromStr for Material {
             "guardian_vesselblueprint" => Material::GuardianVesselBlueprintFragment,
             "guardian_weaponblueprint" => Material::GuardianWeaponBlueprintFragment,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Material::Unknown(s.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(MaterialError::UnknownMaterial(s.to_string())),
         })
     }
@@ -669,7 +670,7 @@ impl Display for Material {
                 Material::UntypicalShieldScans => "Untypical Shield Scans",
                 Material::UnusualEncryptedFiles => "Unusual Encrypted Files",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Material::Unknown(unknown) => return write!(f, "Unknown material: {}", unknown),
             }
         )

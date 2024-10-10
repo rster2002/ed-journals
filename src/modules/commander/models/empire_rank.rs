@@ -23,7 +23,8 @@ pub enum EmpireRank {
     Prince,
     King,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -54,10 +55,10 @@ impl TryFrom<u8> for EmpireRank {
             13 => Ok(EmpireRank::Prince),
             14 => Ok(EmpireRank::King),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(EmpireRank::Unknown(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(EmpireRankError::UnknownEmpireRank(value)),
         }
     }
@@ -87,7 +88,7 @@ impl Display for EmpireRank {
                 EmpireRank::Prince => "Prince",
                 EmpireRank::King => "King",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 EmpireRank::Unknown(unknown) =>
                     return write!(f, "Unknown empire rank nr: {}", unknown),
             }

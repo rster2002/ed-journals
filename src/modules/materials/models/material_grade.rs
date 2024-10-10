@@ -13,7 +13,8 @@ pub enum MaterialGrade {
     /// Used for odyssey materials
     None,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown,
 }
 
@@ -27,7 +28,7 @@ impl MaterialGrade {
             MaterialGrade::Grade5 => 5,
             MaterialGrade::None => 0,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             MaterialGrade::Unknown => 0,
         }
     }
@@ -41,7 +42,7 @@ impl MaterialGrade {
             MaterialGrade::Grade5 => 100,
             MaterialGrade::None => 0,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             MaterialGrade::Unknown => 250,
         }
     }
@@ -226,7 +227,7 @@ impl From<&Material> for MaterialGrade {
             Material::GuardianVesselBlueprintFragment => MaterialGrade::Grade5,
             Material::GuardianWeaponBlueprintFragment => MaterialGrade::Grade5,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Material::Unknown(_) => MaterialGrade::Unknown,
         }
     }

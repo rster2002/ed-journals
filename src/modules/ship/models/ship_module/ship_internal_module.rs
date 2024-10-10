@@ -20,9 +20,16 @@ pub mod internal_type;
 /// Model for internal modules, this includes both core internals and optional internals.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipInternalModule {
+    /// The kind internal module, which can both be core- and optional internals.
     pub module: InternalModule,
+
+    /// The module size.
     pub size: u8,
+
+    /// The class of the module.
     pub class: ModuleClass,
+
+    /// Whether the module is a free module.
     pub free: bool,
 }
 
@@ -48,22 +55,28 @@ pub enum ShipInternalModuleError {
 }
 
 impl ShipInternalModule {
+    /// Returns whether the module is a core- or optional type.
     pub fn internal_type(&self) -> InternalType {
         self.module.internal_type()
     }
 
+    /// Whether the module is a core internal.
     pub fn is_core_internal(&self) -> bool {
         self.module.is_core()
     }
 
+    /// Whether the module is an option internal.
     pub fn is_optional_internal(&self) -> bool {
         self.module.is_optional()
     }
 
+    /// Whether the module is a module that is unlocked through powerplay.
     pub fn is_powerplay_module(&self) -> bool {
         self.module.is_powerplay_module()
     }
 
+    /// Whether the module is a module that is unlocked using guardian parts at a guardian
+    /// technology broker.
     pub fn is_guardian_module(&self) -> bool {
         self.module.is_guardian_module()
     }
@@ -149,10 +162,7 @@ impl FromStr for ShipInternalModule {
             .transpose()?
             .map(|grade_nr| grade_nr.try_into())
             .transpose()?
-            .map(|class| match module.special_grades(size, Some(&class)) {
-                Some(replacement) => replacement,
-                None => class,
-            })
+            .map(|class| module.special_grades(size, Some(&class)).unwrap_or(class))
             .or_else(|| module.special_grades(size, None))
             .unwrap_or(ModuleClass::E);
 

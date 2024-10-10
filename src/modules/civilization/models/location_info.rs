@@ -5,6 +5,7 @@ use crate::modules::civilization::{
 };
 use crate::modules::galaxy::BodyType;
 
+/// Shared model for information about a given location.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LocationInfo {
@@ -35,27 +36,42 @@ pub struct LocationInfo {
     #[serde(rename = "SystemSecondEconomy_Localised")]
     pub system_second_economy_localized: Option<String>,
 
+    /// The primary government in the system.
     pub system_government: Government,
 
+    /// The localized name of the primary government in the system.
     #[serde(rename = "SystemGovernment_Localised")]
     pub system_government_localized: Option<String>,
 
+    /// The level of security presence in the system.
     pub system_security: SystemSecurity,
 
+    /// The localized name of the security presence in the system.
     #[serde(rename = "SystemSecurity_Localised")]
     pub system_security_localized: Option<String>,
+
+    /// The number of citizens that live in the system.
     pub population: u64,
+
+    /// The name of the body the location refers to.
     pub body: String,
 
+    /// The id of the body the location refers to.
     #[serde(rename = "BodyID")]
     pub body_id: u8,
+
+    /// The kind of body the location refers to.
     pub body_type: BodyType,
 
+    /// A list of factions that are present in the system.
     #[serde(default)]
     pub factions: Vec<Faction>,
 
+    /// A list of conflicts/wars currently active in the system.
     #[serde(default)]
     pub conflicts: Vec<Conflict>,
+
+    /// Information about the state of the Thargoid war in the current system, if any.
     pub thargoid_war: Option<ThargoidWar>,
     // TODO include powerplay
 }

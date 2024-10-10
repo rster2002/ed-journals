@@ -1,6 +1,6 @@
 use kinded::Kinded;
 use serde::{Deserialize, Serialize};
-#[cfg(not(feature = "strict"))]
+#[cfg(feature = "allow-unknown")]
 use serde_json::Value;
 
 use afmu_repairs_event::AFMURepairsEvent;
@@ -94,7 +94,7 @@ use fighter_destroyed_event::FighterDestroyedEvent;
 use fighter_rebuilt_event::FighterRebuiltEvent;
 use file_header_event::FileHeaderEvent;
 use friends_event::FriendsEvent;
-use fs_embark_event::FCMaterialsEvent;
+use fc_embark_event::FCEmbarkEvent;
 use fsd_jump_event::FSDJumpEvent;
 use fsd_target_event::FSDTargetEvent;
 use fss_all_bodies_found_event::FSSAllBodiesFoundEvent;
@@ -341,7 +341,7 @@ pub mod fighter_destroyed_event;
 pub mod fighter_rebuilt_event;
 pub mod file_header_event;
 pub mod friends_event;
-pub mod fs_embark_event;
+pub mod fc_embark_event;
 pub mod fsd_jump_event;
 pub mod fsd_target_event;
 pub mod fss_all_bodies_found_event;
@@ -706,7 +706,7 @@ pub enum LogEventContent {
     DropItems(DropItemsEvent),
     DropshipDeploy(DropshipDeployEvent),
     Embark(EmbarkEvent),
-    FCMaterials(FCMaterialsEvent),
+    FCMaterials(FCEmbarkEvent),
     LoadoutEquipModule(LoadoutEquipModuleEvent),
     LoadoutRemoveModule(LoadoutRemoveModuleEvent),
     RenameSuitLoadout(RenameSuitLoadoutEvent),
@@ -788,7 +788,8 @@ pub enum LogEventContent {
     WingJoin(WingJoinEvent),
     WingLeave,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(Value),
 }
@@ -877,7 +878,7 @@ impl LogEventContent {
             LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
-            LogEventContent::CodexEntry(event) => event.body_id,
+            LogEventContent::CodexEntry(event) => event.body_id?,
             LogEventContent::DropshipDeploy(event) => event.body_id,
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,

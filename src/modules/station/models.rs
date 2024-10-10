@@ -1,4 +1,4 @@
-pub mod carrier_docking_access;
+pub mod carrier;
 pub mod mission_type;
 pub mod station_info;
 pub mod station_service;
