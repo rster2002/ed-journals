@@ -30,6 +30,8 @@ pub struct EmbarkEvent {
 
     #[serde(rename = "SRV")]
     pub srv: bool,
+    #[serde(default)]
     pub taxi: bool,
+    #[serde(default)]
     pub multicrew: bool,
 }

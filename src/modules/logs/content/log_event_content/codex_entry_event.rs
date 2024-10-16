@@ -28,7 +28,7 @@ pub struct CodexEntryEvent {
     pub system: String,
     pub system_address: u64,
 
-    #[serde(rename = "BodyID")]
+    #[serde(rename = "BodyID", default)]
     pub body_id: u8,
 
     // TODO sometimes missing, sometimes an empty string

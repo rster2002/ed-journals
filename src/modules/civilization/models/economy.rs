@@ -49,6 +49,9 @@ pub enum Economy {
     #[serde(rename = "$economy_Repair;")]
     Repair,
 
+    #[serde(rename = "$economy_Prison;")]
+    Prison,
+
     #[serde(rename = "$economy_Undefined;")]
     Undefined,
 
@@ -81,6 +84,7 @@ impl Display for Economy {
                 Economy::Rescue => "Rescue",
                 Economy::Damaged => "Damaged",
                 Economy::Repair => "Repair",
+                Economy::Prison => "Prison",
                 Economy::Undefined => "Undefined",
                 Economy::None => "None",
 

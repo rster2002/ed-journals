@@ -18,6 +18,6 @@ pub struct ApproachSettlementEvent {
     #[serde(rename = "BodyID")]
     pub body_id: u8,
     pub body_name: String,
-    pub latitude: f32,
-    pub longitude: f32,
+    pub latitude: Option<f32>,
+    pub longitude: Option<f32>,
 }

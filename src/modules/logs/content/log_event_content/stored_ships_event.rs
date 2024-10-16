@@ -37,7 +37,7 @@ pub struct StoredShipEventRemoteShip {
 
     #[serde(rename = "ShipType_Localised")]
     pub ship_type_localized: Option<String>,
-    pub name: String,
+    pub name: Option<String>,
 
     #[serde(default)]
     pub in_transit: bool,

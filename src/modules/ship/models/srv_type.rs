@@ -23,3 +23,9 @@ impl Display for SRVType {
         )
     }
 }
+
+impl Default for SRVType {
+    fn default() -> Self {
+        Self::Scarab
+    }
+}

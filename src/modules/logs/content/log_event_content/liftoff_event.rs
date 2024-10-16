@@ -5,16 +5,20 @@ use serde::{Deserialize, Serialize};
 pub struct LiftoffEvent {
     #[serde(flatten)]
     pub position: Option<LiftoffEventPosition>,
-    pub star_system: String,
-    pub system_address: u64,
-    pub body: String,
+    pub star_system: Option<String>,
+    pub system_address: Option<u64>,
+    pub body: Option<String>,
 
     #[serde(rename = "BodyID")]
-    pub body_id: u64,
+    pub body_id: Option<u64>,
+    #[serde(default)]
     pub on_station: bool,
+    #[serde(default)]
     pub on_planet: bool,
+    #[serde(default)]
     pub multicrew: bool,
     pub nearest_destination: Option<String>,
+    #[serde(default)]
     pub taxi: bool,
     pub player_controlled: bool,
 }
@@ -57,10 +61,10 @@ mod tests {
                         latitude: 14.493_94,
                         longitude: 177.978_47,
                     }),
-                    star_system: "HIP 36731".to_string(),
-                    system_address: 251029096803,
-                    body: "HIP 36731 3 c".to_string(),
-                    body_id: 26,
+                    star_system: Some("HIP 36731".to_string()),
+                    system_address: Some(251029096803),
+                    body: Some("HIP 36731 3 c".to_string()),
+                    body_id: Some(26),
                     on_station: false,
                     on_planet: true,
                     multicrew: false,
@@ -92,10 +96,10 @@ mod tests {
                         latitude: -63.379852,
                         longitude: 5.273848,
                     }),
-                    star_system: "Gludgae XP-E d12-0".to_string(),
-                    system_address: 11232479211,
-                    body: "Gludgae XP-E d12-0 8 a".to_string(),
-                    body_id: 11,
+                    star_system: Some("Gludgae XP-E d12-0".to_string()),
+                    system_address: Some(11232479211),
+                    body: Some("Gludgae XP-E d12-0 8 a".to_string()),
+                    body_id: Some(11),
                     on_station: false,
                     on_planet: true,
                     multicrew: false,

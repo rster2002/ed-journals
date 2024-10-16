@@ -15,8 +15,14 @@ pub struct StatisticsEvent {
 
     #[serde(rename = "Search_And_Rescue")]
     pub search_and_rescue: StatisticsSearchAndRescue,
+    // Field does not exist in older Journal versions
+    #[serde(default)]
     pub crafting: StatisticsCrafting,
+    // Field does not exist in older Journal versions
+    #[serde(default)]
     pub crew: StatisticsCrew,
+    // Field does not exist in older Journal versions
+    #[serde(default)]
     pub multicrew: StatisticsMulticrew,
 }
 
@@ -70,7 +76,8 @@ pub struct StatisticsCombat {
     #[serde(rename = "Highest_Single_Reward")]
     pub highest_single_reward: u64,
 
-    #[serde(rename = "Skimmers_Killed")]
+    // Older log files do not have this field, thus we assume 0
+    #[serde(rename = "Skimmers_Killed", default)]
     pub skimmers_killed: u32,
 }
 
@@ -136,7 +143,8 @@ pub struct StatisticsMining {
     #[serde(rename = "Quantity_Mined")]
     quantity_mined: u32,
 
-    #[serde(rename = "Materials_Collected")]
+    // Field does not exist in older Journal files, thus we assume a value of 0
+    #[serde(rename = "Materials_Collected", default)]
     materials_collected: u32,
 }
 
@@ -198,7 +206,7 @@ pub struct StatisticsSearchAndRescue {
     pub search_rescue_count: u32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
@@ -223,22 +231,22 @@ pub struct StatisticsCrafting {
     pub recipes_generated_rank_5: u32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrew {
-    #[serde(rename = "NpcCrew_TotalWages")]
+    #[serde(rename = "NpcCrew_TotalWages", default)]
     pub npc_crew_total_wages: u64,
 
-    #[serde(rename = "NpcCrew_Hired")]
+    #[serde(rename = "NpcCrew_Hired", default)]
     pub npc_crew_hired: u32,
 
-    #[serde(rename = "NpcCrew_Fired")]
+    #[serde(rename = "NpcCrew_Fired", default)]
     pub npc_crew_fired: u32,
 
-    #[serde(rename = "NpcCrew_Died")]
+    #[serde(rename = "NpcCrew_Died", default)]
     pub npc_crew_died: u32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]

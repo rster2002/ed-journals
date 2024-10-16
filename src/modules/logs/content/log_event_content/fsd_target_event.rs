@@ -11,6 +11,6 @@ pub struct FSDTargetEvent {
     name: String,
 
     #[serde(default)]
-    remaining_jumps_in_route: u8,
+    remaining_jumps_in_route: u16,
     star_class: StarClass,
 }
