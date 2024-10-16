@@ -131,6 +131,9 @@ mod tests {
             count += 1;
         }
 
+        #[cfg(not(feature = "journals-pre-v4"))]
         assert_eq!(count, 870929);
+        #[cfg(feature = "journals-pre-v4")]
+        assert_eq!(count, 871505);
     }
 }

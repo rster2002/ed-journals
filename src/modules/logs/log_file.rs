@@ -42,10 +42,15 @@ pub enum LogFileError {
     IO(#[from] io::Error),
 }
 
+#[cfg(not(feature = "journals-pre-v4"))]
+type RegexList = [(Regex, &'static str); 1];
+#[cfg(feature = "journals-pre-v4")]
+type RegexList = [(Regex, &'static str); 2];
 lazy_static! {
-    static ref FILE_NAME_REGEXES: [(Regex, &'static str); 2] = [
+    static ref FILE_NAME_REGEXES: RegexList = [
         (Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap(), "%Y-%m-%dT%H%M%S"),
         // format = Journal.YYMMDDHHMMSS.01.log
+        #[cfg(feature = "journals-pre-v4")]
         (Regex::new(r"Journal\.(\d{12})\.(\d{2})\.log").unwrap(), "%y%m%d%H%M%S"),
     ];
 }
