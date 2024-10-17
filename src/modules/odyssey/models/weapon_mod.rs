@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// A mod applied to an Odyssey weapon.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum WeaponMod {

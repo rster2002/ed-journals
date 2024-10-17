@@ -7,20 +7,30 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 use crate::deserialize_in_order_impl;
+use crate::exobiology::models::species::SpeciesError;
 use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };
 
-#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub struct Variant {
     pub species: Species,
     pub color: VariantColor,
 }
 
+impl Variant {
+    /// Whether the current variant is unknown.
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self.species, Species::Unknown(_)) || matches!(self.color, VariantColor::Unknown)
+    }
+}
+
 #[derive(Debug, Error)]
 pub enum VariantError {
     #[error("Failed to parse species: {0}")]
-    FailedToParseSpecies(#[source] serde_json::Error),
+    FailedToParseSpecies(#[from] SpeciesError),
 
     #[error(transparent)]
     VariantSourceError(#[from] VariantSourceError),
@@ -34,18 +44,23 @@ pub enum VariantError {
 
 lazy_static! {
     static ref VARIANT_REGEX: Regex =
-        Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap();
+        Regex::new(r#"^(\$[cC]odex_[eE]nt_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_[nN]ame;)?$"#).unwrap();
 }
 
 impl FromStr for Variant {
     type Err = VariantError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(species) = Species::from_str(s) {
-            return Ok(Variant {
-                species,
-                color: VariantColor::None,
-            });
+        match Species::from_str(s) {
+            #[cfg(feature = "allow-unknown")]
+            Ok(species) if species.is_unknown() => {}
+            Ok(species) => {
+                return Ok(Variant {
+                    species,
+                    color: VariantColor::None,
+                })
+            }
+            Err(_) => {}
         }
 
         let Some(captures) = VARIANT_REGEX.captures(s) else {
@@ -57,9 +72,7 @@ impl FromStr for Variant {
             .expect("Should have been captured already")
             .as_str();
 
-        let species = format!("{}_Name;", species)
-            .parse()
-            .map_err(VariantError::FailedToParseSpecies)?;
+        let species = format!("{}_Name;", species).parse()?;
 
         let variant_source: VariantSource = captures
             .get(4)
@@ -148,10 +161,21 @@ mod tests {
                     color: VariantColor::Red,
                 },
             ),
+            (
+                "$codex_ent_aleoids_01_a_name;",
+                Variant {
+                    species: Species::AleoidaArcus,
+                    color: VariantColor::Green,
+                },
+            ),
         ];
 
         for (case, expected) in test_cases {
             let result = Variant::from_str(case);
+
+            if result.is_err() {
+                dbg!(&case, &result);
+            }
 
             assert!(result.is_ok());
             assert_eq!(result.unwrap(), expected);

@@ -2,6 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
+/// A type of economy that can be related to a system or station.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Economy {
     #[serde(rename = "$economy_Agri;")]
@@ -58,7 +59,8 @@ pub enum Economy {
     #[serde(rename = "$economy_None;")]
     None,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -88,7 +90,7 @@ impl Display for Economy {
                 Economy::Undefined => "Undefined",
                 Economy::None => "None",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Economy::Unknown(unknown) => return write!(f, "Unknown economy: {}", unknown),
             }
         )

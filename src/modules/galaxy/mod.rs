@@ -12,6 +12,7 @@ pub use models::local_distance::LocalDistance;
 pub use models::nebula::Nebula;
 pub use models::orbit_info::OrbitInfo;
 pub use models::planet_class::PlanetClass;
+pub use models::planet_class::PlanetClassError;
 pub use models::planet_composition::PlanetComposition;
 pub use models::region::Region;
 pub use models::ring_class::RingClass;

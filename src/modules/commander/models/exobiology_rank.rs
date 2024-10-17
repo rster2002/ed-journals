@@ -22,7 +22,8 @@ pub enum ExobiologyRank {
     EliteIV,
     EliteV,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -52,10 +53,10 @@ impl TryFrom<u8> for ExobiologyRank {
             12 => Ok(ExobiologyRank::EliteIV),
             13 => Ok(ExobiologyRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(ExobiologyRank::Unknown(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(ExobiologyRankError::UnknownExobiologyRank(value)),
         }
     }
@@ -84,7 +85,7 @@ impl Display for ExobiologyRank {
                 ExobiologyRank::EliteIV => "Elite IV",
                 ExobiologyRank::EliteV => "Elite V",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ExobiologyRank::Unknown(unknown) =>
                     return write!(f, "Unknown exobiology rank nr: {}", unknown),
             }

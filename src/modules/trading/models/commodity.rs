@@ -458,7 +458,8 @@ pub enum Commodity {
     // None
     Limpet,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }
 
@@ -891,10 +892,10 @@ impl Commodity {
             "federaltradecontracts" => Commodity::FederalTradeContracts,
             "patreusgarisonsupplies" => Commodity::PatreusGarrisonSupplies,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Commodity::Unknown(name.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(CommodityError::UnknownCommodity(name.to_string())),
         })
     }
@@ -1380,7 +1381,7 @@ impl Display for Commodity {
                 Commodity::FederalTradeContracts => "Federal Trade Contracts",
                 Commodity::PatreusGarrisonSupplies => "Patreus Garrison Supplies",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Commodity::Unknown(unknown) => unknown,
             }
         )

@@ -12,7 +12,8 @@ pub enum SuitType {
     DominatorSuit,
     MaverickSuit,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -35,10 +36,10 @@ impl FromStr for SuitType {
             "tacticalsuit" => SuitType::DominatorSuit,
             "utilitysuit" => SuitType::MaverickSuit,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => SuitType::Unknown(s.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(SuitTypeError::UnknownSuitType(s.to_string())),
         })
     }

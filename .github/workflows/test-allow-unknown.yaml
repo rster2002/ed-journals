@@ -1,4 +1,4 @@
-name: Tests strict
+name: Tests allow unknown
 
 on:
   push:
@@ -18,4 +18,4 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Run tests
-      run: cargo test --features strict --verbose
+      run: cargo test --features allow-unknown --verbose
