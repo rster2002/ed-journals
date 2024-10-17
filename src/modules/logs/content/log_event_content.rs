@@ -920,7 +920,6 @@ impl LogEventContent {
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::ScanOrganic(event) => event.body,
-            LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::Liftoff(event) => event.body_id,
 
             #[cfg(feature = "legacy")]
