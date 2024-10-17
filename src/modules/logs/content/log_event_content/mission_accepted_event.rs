@@ -7,8 +7,10 @@ use crate::modules::station::MissionType;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionAcceptedEvent {
+    /// The kind of mission that was accepted.
     pub name: MissionType,
 
+    /// The localized name of the accepted mission.
     #[serde(rename = "Localised_Name")]
     pub localized_name: Option<String>,
     pub faction: String,
