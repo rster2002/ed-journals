@@ -247,7 +247,7 @@ use crate::logs::content::log_event_content::community_goal_event::CommunityGoal
 use crate::logs::content::log_event_content::ship_redeemed::ShipRedeemed;
 use crate::logs::content::log_event_content::shipyard_redeem::ShipyardRedeem;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
-use crate::modules::small::SmallSystemInfo;
+use crate::modules::partials::PartialSystemInfo;
 
 #[cfg(feature = "legacy")]
 use crate::logs::content::log_event_content::legacy_liftoff_event::LegacyLiftoffEvent;
@@ -885,14 +885,14 @@ impl LogEventContent {
         })
     }
 
-    pub fn small_system_info(&self) -> Option<SmallSystemInfo> {
-        match (self.system_address(), self.star_name()) {
-            (Some(system_address), Some(star_name)) => Some(SmallSystemInfo {
-                system_address,
-                star_name: star_name.to_string(),
-            }),
-            (_, _) => None,
-        }
+    pub fn small_system_info(&self) -> Option<PartialSystemInfo> {
+        let system_address = self.system_address()?;
+        let star_name = self.star_name()?;
+
+        Some(PartialSystemInfo {
+            system_address,
+            star_name: star_name.to_string(),
+        })
     }
 
     pub fn body_id(&self) -> Option<u8> {

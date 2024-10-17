@@ -1,5 +1,5 @@
-use std::fmt::Debug;
 use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
 
 /// Model for working with local (system) distances. Expects the value to be in LS.
 #[derive(Serialize, Deserialize, Clone, PartialEq)]

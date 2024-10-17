@@ -1,52 +1,70 @@
-use chrono::{DateTime, Utc};
-use serde::Serialize;
+use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
 use crate::logs::carrier_stats_event::CarrierStatsEvent;
 use crate::logs::{LogEvent, LogEventContent};
-use crate::logs::carrier_jump_request_event::CarrierJumpRequestEvent;
-use crate::small::SmallSystemInfo;
+use crate::partials::PartialSystemInfo;
 use crate::state::models::feed_result::FeedResult;
+use crate::state::traits::state_resolver::StateResolver;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
 #[derive(Serialize)]
-pub struct CarrierState {
+pub struct CarrierStateResolver {
     pub stats: CarrierStatsEvent,
-    pub flight_history: Vec<SmallSystemInfo>,
+    pub flight_history: Vec<PartialSystemInfo>,
     pub last_location_update: DateTime<Utc>,
     pub scheduled_jump: Option<CarrierJumpRequestEvent>,
     pub scrap_time: Option<DateTime<Utc>>,
 }
 
-impl CarrierState {
-    pub fn feed_log_event(&mut self, log_event: &LogEvent) -> FeedResult {
-        match &log_event.content {
+impl StateResolver<LogEvent> for CarrierStateResolver {
+    fn feed(&mut self, input: &LogEvent) -> FeedResult {
+        match &input.content {
             LogEventContent::CarrierStats(stats) => {
                 self.stats = stats.clone();
-            },
+            }
             LogEventContent::CarrierDecommission(decommission) => {
-                self.scrap_time = Some(decommission.scrap_time.clone());
-            },
+                self.scrap_time = Some(decommission.scrap_time);
+            }
             LogEventContent::CarrierCancelDecommission(_) => {
                 self.scrap_time = None;
-            },
+            }
             LogEventContent::CarrierJumpRequest(request) => {
                 self.scheduled_jump = Some(request.clone());
-            },
+            }
             LogEventContent::CarrierBuy(_) => {
-                self.update_location(&log_event);
-            },
+                self.update_location(input);
+            }
             LogEventContent::CarrierJump(_) => {
-                self.update_location(&log_event);
-            },
-            _ => {},
+                self.update_location(input);
+            }
+            _ => {}
         }
 
         FeedResult::Accepted
     }
+}
 
+impl From<CarrierStatsEvent> for CarrierStateResolver {
+    fn from(value: CarrierStatsEvent) -> Self {
+        CarrierStateResolver {
+            stats: value,
+            flight_history: Vec::new(),
+            last_location_update: Default::default(),
+            scheduled_jump: None,
+            scrap_time: None,
+        }
+    }
+}
+
+impl CarrierStateResolver {
     /// Returns the scheduled jump. This is a bit more reliable than just checking if
     /// `scheduled_jump` is Some value as this also checks the departure time. There could be
     /// instances where the scheduled jump might not be unset for example when not logged in.
-    pub fn get_scheduled_jump(&self, target_time: &DateTime<Utc>) -> Option<CarrierJumpRequestEvent> {
-        let Some(request) = &self.scheduled_jump else  {
+    pub fn get_scheduled_jump(
+        &self,
+        target_time: &DateTime<Utc>,
+    ) -> Option<CarrierJumpRequestEvent> {
+        let Some(request) = &self.scheduled_jump else {
             return None;
         };
 
@@ -78,18 +96,6 @@ impl CarrierState {
                     self.last_location_update = log_event.timestamp;
                 }
             }
-        }
-    }
-}
-
-impl From<CarrierStatsEvent> for CarrierState {
-    fn from(value: CarrierStatsEvent) -> Self {
-        CarrierState {
-            stats: value,
-            flight_history: Vec::new(),
-            last_location_update: Default::default(),
-            scheduled_jump: None,
-            scrap_time: None,
         }
     }
 }

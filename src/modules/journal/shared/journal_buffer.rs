@@ -2,14 +2,14 @@ use std::collections::VecDeque;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
-use notify::{Event, EventKind};
 use notify::event::{CreateKind, DataChange, ModifyKind};
+use notify::{Event, EventKind};
 use thiserror::Error;
 
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::cargo::blocking::{read_cargo_file, ReadCargoFileError};
-use crate::journal::JournalEventKind;
 use crate::journal::models::journal_event::JournalEvent;
+use crate::journal::JournalEventKind;
 use crate::market::blocking::{read_market_file, ReadMarketFileError};
 use crate::modules_info::blocking::{read_modules_info_file, ReadModulesInfoFileError};
 use crate::nav_route::blocking::{read_nav_route_file, ReadNavRouteFileError};
@@ -88,6 +88,7 @@ impl LiveJournalBuffer {
                             is_live: true,
                             kind: JournalEventKind::StatusEvent(status),
                         }),
+                        Err(ReadStatusFileError::Empty) => continue,
                         Err(error) => Err(error.into()),
                     });
             }

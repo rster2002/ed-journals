@@ -70,6 +70,12 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_EP_down;")]
     EconomicStationDecrease,
 
+    #[serde(rename = "$MISSIONUTIL_Interaction_Summary_Outbreak_up;")]
+    OutbreakStationIncrease,
+
+    #[serde(rename = "$MISSIONUTIL_Interaction_Summary_Outbreak_down;")]
+    OutbreakStationDecrease,
+
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_SP_up;")]
     SecurityFactionIncrease,
 

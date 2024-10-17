@@ -1,10 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
+use crate::exobiology::Genus;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use strum::EnumIter;
-use crate::exobiology::Genus;
 
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
@@ -65,7 +65,6 @@ pub enum Species {
     AnemoneRoseumBioluminescent,
 
     // Bark mounds
-    // TODO needs to be verified
     #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
@@ -635,7 +634,7 @@ impl Species {
             Species::BacteriumVesicula => 1_000_000,
             Species::BacteriumAlcyoneum => 1_658_500,
             Species::BacteriumTela => 1_949_000,
-            Species::BacteriumInformem => 8_418_00,
+            Species::BacteriumInformem => 8_418_000,
             Species::BacteriumVolu => 7_774_700,
             Species::BacteriumBullaris => 1_152_500,
             Species::BacteriumOmentum => 4_689_800,
@@ -698,10 +697,10 @@ impl Species {
 
             Species::ReceptaUmbrux => 12_934_900,
             Species::ReceptaDeltahedronix => 16_202_800,
-            Species::ReceptaConditivus => 14_3133_700,
+            Species::ReceptaConditivus => 14_313_700,
 
             Species::StratumExcutitus => 2_448_900,
-            Species::StratumPaleas => 1_362_00,
+            Species::StratumPaleas => 1_362_000,
             Species::StratumLaminamus => 2_788_300,
             Species::StratumAraneamus => 2_448_900,
             Species::StratumLimaxus => 1_362_000,

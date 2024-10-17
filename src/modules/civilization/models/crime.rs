@@ -99,13 +99,13 @@ pub enum Crime {
 
 #[cfg(test)]
 mod tests {
-    use serde_json::Value;
     use crate::civilization::Crime;
+    use serde_json::Value;
 
     #[test]
     fn all_crimes_are_parsed_correctly() {
         let content = include_str!("zz_crimes.txt");
-        let mut lines = content.lines();
+        let lines = content.lines();
 
         for line in lines {
             if line.starts_with('#') {

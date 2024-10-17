@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use serde::Serialize;
 use crate::materials::Material;
+use serde::Serialize;
+use std::collections::HashMap;
 
 #[derive(Serialize, Default)]
 pub struct MaterialsState {
@@ -20,7 +20,9 @@ impl MaterialsState {
     pub fn add_material_count(&mut self, material: Material, count: u16) {
         self.materials
             .entry(material.clone())
-            .and_modify(|current| *current = (*current + count).min(material.grade().grade_storage_limit()))
+            .and_modify(|current| {
+                *current = (*current + count).min(material.grade().grade_storage_limit())
+            })
             .or_insert(count.min(material.grade().grade_storage_limit()));
     }
 
@@ -51,7 +53,7 @@ impl MaterialsState {
 #[cfg(test)]
 mod tests {
     use crate::materials::Material;
-    use crate::state::models::materials_state::MaterialsState;
+    use crate::state::models::state::materials_state::MaterialsState;
 
     #[test]
     fn material_state_is_modified_correctly() {

@@ -101,10 +101,10 @@ pub mod station;
 /// player can encounter.
 pub mod thargoid;
 
-/// This module contains 'small' models that are used to create representations for certain things
+/// This module contains partial models that are used to create representations for certain things
 /// without needing to include all the information as it can differ quite a bit between the
 /// different events of the game.
-pub mod small;
+pub mod partials;
 
 /// Sometimes the game reuses certain events and instead of 'ship' data it sets Odyssey related
 /// data. These mixed data types handle these differences.

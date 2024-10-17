@@ -33,10 +33,10 @@ pub use modules::modules_info;
 pub use modules::nav_route;
 pub use modules::odyssey;
 pub use modules::outfitting;
+pub use modules::partials;
 pub use modules::ship;
 pub use modules::ship_locker;
 pub use modules::shipyard;
-pub use modules::small;
 pub use modules::state;
 pub use modules::station;
 pub use modules::status;
@@ -47,10 +47,10 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use std::env::current_dir;
-    use std::path::PathBuf;
     use crate::logs::LogDir;
     use crate::logs::LogEventContent;
+    use std::env::current_dir;
+    use std::path::PathBuf;
 
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
