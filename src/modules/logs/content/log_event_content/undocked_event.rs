@@ -10,6 +10,8 @@ pub struct UndockedEvent {
 
     #[serde(rename = "MarketID")]
     pub market_id: u64,
+    #[serde(default)]
     pub taxi: bool,
+    #[serde(default)]
     pub multicrew: bool,
 }

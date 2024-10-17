@@ -2,8 +2,9 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 pub enum SRVType {
+    #[default]
     #[serde(rename = "testbuggy")]
     Scarab,
 

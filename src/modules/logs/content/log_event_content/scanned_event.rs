@@ -10,4 +10,6 @@ pub struct ScannedEvent {
 #[serde(rename_all = "PascalCase")]
 pub enum ScannedEventScanType {
     Cargo,
+    Crime,
+    Data,
 }

@@ -65,7 +65,7 @@ pub struct StoredShipEventRemoteShip {
 
     /// The custom name of the remotely stored ship. Unlike how [StoredShipEventLocalShip] works,
     /// if the ship does not have a custom name is an empty string.
-    pub name: String,
+    pub name: Option<String>,
 
     /// Whether the ship is currently being transferred between locations.
     #[serde(default)]

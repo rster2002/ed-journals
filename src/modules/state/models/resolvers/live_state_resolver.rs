@@ -1,7 +1,6 @@
 pub mod organic_location;
 pub mod touchdown_location;
 
-use std::ops::Sub;
 use crate::backpack::Backpack;
 use crate::cargo::Cargo;
 use crate::journal::{JournalEvent, JournalEventKind};
@@ -19,6 +18,7 @@ use crate::state::traits::state_resolver::StateResolver;
 use crate::status::{PlanetStatus, ShipStatus, Status};
 use chrono::{DateTime, TimeDelta, Utc};
 use serde::{Deserialize, Serialize};
+use std::ops::Sub;
 
 /// Life state tracks state from the logs and combines them with state from live files like for
 /// example the status.json file to provide more context in some instances. Something that is
@@ -173,7 +173,7 @@ impl LiveStateResolver {
     pub fn valid_status(&self, timestamp: &DateTime<Utc>) -> Option<&Status> {
         let status = self.status.as_ref()?;
 
-        if Self::is_valid_live_state(&status.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&status.timestamp, timestamp) {
             Some(status)
         } else {
             None
@@ -184,7 +184,7 @@ impl LiveStateResolver {
     pub fn valid_module_info(&self, timestamp: &DateTime<Utc>) -> Option<&ModulesInfo> {
         let module_info = self.modules_info.as_ref()?;
 
-        if Self::is_valid_live_state(&module_info.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&module_info.timestamp, timestamp) {
             Some(module_info)
         } else {
             None
@@ -195,7 +195,7 @@ impl LiveStateResolver {
     pub fn valid_cargo(&self, timestamp: &DateTime<Utc>) -> Option<&Cargo> {
         let cargo = self.cargo.as_ref()?;
 
-        if Self::is_valid_live_state(&cargo.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&cargo.timestamp, timestamp) {
             Some(cargo)
         } else {
             None
@@ -206,7 +206,7 @@ impl LiveStateResolver {
     pub fn valid_nav_route(&self, timestamp: &DateTime<Utc>) -> Option<&NavRoute> {
         let nav_route = self.nav_route.as_ref()?;
 
-        if Self::is_valid_live_state(&nav_route.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&nav_route.timestamp, timestamp) {
             Some(nav_route)
         } else {
             None
@@ -217,7 +217,7 @@ impl LiveStateResolver {
     pub fn valid_outfitting(&self, timestamp: &DateTime<Utc>) -> Option<&Outfitting> {
         let outfitting = self.outfitting.as_ref()?;
 
-        if Self::is_valid_live_state(&outfitting.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&outfitting.timestamp, timestamp) {
             Some(outfitting)
         } else {
             None
@@ -228,7 +228,7 @@ impl LiveStateResolver {
     pub fn valid_shipyard(&self, timestamp: &DateTime<Utc>) -> Option<&Shipyard> {
         let shipyard = self.shipyard.as_ref()?;
 
-        if Self::is_valid_live_state(&shipyard.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&shipyard.timestamp, timestamp) {
             Some(shipyard)
         } else {
             None
@@ -239,7 +239,7 @@ impl LiveStateResolver {
     pub fn valid_market(&self, timestamp: &DateTime<Utc>) -> Option<&Market> {
         let market = self.market.as_ref()?;
 
-        if Self::is_valid_live_state(&market.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&market.timestamp, timestamp) {
             Some(market)
         } else {
             None
@@ -250,7 +250,7 @@ impl LiveStateResolver {
     pub fn valid_backpack(&self, timestamp: &DateTime<Utc>) -> Option<&Backpack> {
         let backpack = self.backpack.as_ref()?;
 
-        if Self::is_valid_live_state(&backpack.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&backpack.timestamp, timestamp) {
             Some(backpack)
         } else {
             None
@@ -261,7 +261,7 @@ impl LiveStateResolver {
     pub fn valid_ship_locker(&self, timestamp: &DateTime<Utc>) -> Option<&ShipLocker> {
         let ship_locker = self.ship_locker.as_ref()?;
 
-        if Self::is_valid_live_state(&ship_locker.timestamp, &timestamp) {
+        if Self::is_valid_live_state(&ship_locker.timestamp, timestamp) {
             Some(ship_locker)
         } else {
             None
@@ -304,8 +304,7 @@ impl LiveStateResolver {
     }
 
     fn is_valid_live_state(live_timestamp: &DateTime<Utc>, log_timestamp: &DateTime<Utc>) -> bool {
-        let grace_period = TimeDelta::new(2, 0)
-            .expect("This should always complete");
+        let grace_period = TimeDelta::new(2, 0).expect("This should always complete");
 
         &log_timestamp.sub(grace_period) >= live_timestamp
     }
