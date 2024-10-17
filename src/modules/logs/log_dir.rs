@@ -36,14 +36,11 @@ impl LogDir {
         self.dir_path
             .read_dir()?
             .filter_map(|entry| match entry {
-                Ok(entry) => {
-                    let log_file = LogFile::try_from(entry);
-                    match log_file {
-                        Ok(journal_file) => Some(Ok(journal_file)),
-                        Err(LogFileError::IncorrectFileName) => None,
-                        Err(err) => Some(Err(err.into())),
-                    }
-                }
+                Ok(entry) => match LogFile::try_from(entry) {
+                    Ok(journal_file) => Some(Ok(journal_file)),
+                    Err(LogFileError::IncorrectFileName) => None,
+                    Err(err) => Some(Err(err.into())),
+                },
                 Err(err) => Some(Err(err.into())),
             })
             .collect::<Result<Vec<LogFile>, LogDirError>>()

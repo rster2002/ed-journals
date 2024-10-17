@@ -10,11 +10,10 @@ pub struct DockingRequestedEvent {
 
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    #[serde(default)]
-    pub landing_pads: DockingRequestedEventLandingPads,
+    pub landing_pads: Option<DockingRequestedEventLandingPads>,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct DockingRequestedEventLandingPads {
     pub small: u8,

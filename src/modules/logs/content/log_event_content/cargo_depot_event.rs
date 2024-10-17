@@ -9,8 +9,7 @@ pub struct CargoDepotEvent {
     pub mission_id: u64,
     pub update_type: CargoDepotEventUpdateType,
     pub cargo_type: Option<Commodity>,
-    #[serde(default)]
-    pub count: u16,
+    pub count: Option<u16>,
 
     #[serde(rename = "StartMarketID")]
     pub start_market_id: u64,

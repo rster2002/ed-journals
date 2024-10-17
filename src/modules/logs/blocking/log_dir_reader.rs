@@ -1,6 +1,5 @@
 use std::path::Path;
 
-use log::{debug, error};
 use thiserror::Error;
 
 use crate::logs::blocking::{LogFileReader, LogFileReaderError};

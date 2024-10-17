@@ -18,6 +18,14 @@ pub struct ApproachSettlementEvent {
     #[serde(rename = "BodyID")]
     pub body_id: u8,
     pub body_name: String,
-    pub latitude: Option<f32>,
-    pub longitude: Option<f32>,
+
+    #[serde(flatten)]
+    pub location: Option<ApproachSettlementEventLocation>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct ApproachSettlementEventLocation {
+    pub latitude: f32,
+    pub longitude: f32,
 }

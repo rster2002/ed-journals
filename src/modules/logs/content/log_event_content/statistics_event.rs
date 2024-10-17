@@ -15,15 +15,9 @@ pub struct StatisticsEvent {
 
     #[serde(rename = "Search_And_Rescue")]
     pub search_and_rescue: StatisticsSearchAndRescue,
-    // Field does not exist in older Journal versions
-    #[serde(default)]
-    pub crafting: StatisticsCrafting,
-    // Field does not exist in older Journal versions
-    #[serde(default)]
-    pub crew: StatisticsCrew,
-    // Field does not exist in older Journal versions
-    #[serde(default)]
-    pub multicrew: StatisticsMulticrew,
+    pub crafting: Option<StatisticsCrafting>,
+    pub crew: Option<StatisticsCrew>,
+    pub multicrew: Option<StatisticsMulticrew>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -206,7 +200,7 @@ pub struct StatisticsSearchAndRescue {
     pub search_rescue_count: u32,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
@@ -231,7 +225,7 @@ pub struct StatisticsCrafting {
     pub recipes_generated_rank_5: u32,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages", default)]
     pub npc_crew_total_wages: u64,
@@ -246,7 +240,7 @@ pub struct StatisticsCrew {
     pub npc_crew_died: u32,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]

@@ -813,7 +813,7 @@ impl LogEventContent {
             LogEventContent::FSSDiscoveryScan(event) => event.system_address,
             LogEventContent::FSSSignalDiscovered(event) => event.system_address,
             LogEventContent::LeaveBody(event) => event.system_address,
-            LogEventContent::Liftoff(event) => return event.system_address,
+            LogEventContent::Liftoff(event) => event.system_address,
             LogEventContent::NavBeaconScan(event) => event.system_address,
             LogEventContent::SAAScanComplete(event) => event.system_address,
             LogEventContent::SAASignalsFound(event) => event.system_address,
@@ -826,7 +826,7 @@ impl LogEventContent {
             },
             LogEventContent::SupercruiseEntry(event) => event.system_address,
             LogEventContent::SupercruiseExit(event) => event.system_address,
-            LogEventContent::Touchdown(event) => return event.system_address,
+            LogEventContent::Touchdown(event) => event.system_address,
             _ => return None,
         })
     }
@@ -846,9 +846,7 @@ impl LogEventContent {
             LogEventContent::FSSAllBodiesFound(event) => &event.system_name,
             LogEventContent::FSSDiscoveryScan(event) => &event.system_name,
             LogEventContent::LeaveBody(event) => &event.star_system,
-            LogEventContent::Liftoff(event) => {
-                return event.star_system.as_ref().map(|star| star.as_str())
-            }
+            LogEventContent::Liftoff(event) => &event.star_system,
             LogEventContent::Scan(event) => &event.star_system,
             LogEventContent::ScanBaryCentre(event) => &event.star_system,
             LogEventContent::StartJump(event) => match &event.jump {
@@ -857,9 +855,7 @@ impl LogEventContent {
             },
             LogEventContent::SupercruiseEntry(event) => &event.star_system,
             LogEventContent::SupercruiseExit(event) => &event.star_system,
-            LogEventContent::Touchdown(event) => {
-                return event.star_system.as_ref().map(|star| star.as_str())
-            }
+            LogEventContent::Touchdown(event) => &event.star_system,
             _ => return None,
         })
     }
@@ -881,7 +877,7 @@ impl LogEventContent {
             LogEventContent::CarrierJump(event) => event.system_info.body_id,
             LogEventContent::ApproachSettlement(event) => event.body_id,
             LogEventContent::CarrierJumpRequest(event) => event.body_id,
-            LogEventContent::CodexEntry(event) => event.body_id,
+            LogEventContent::CodexEntry(event) => event.body_id?,
             LogEventContent::DropshipDeploy(event) => event.body_id,
             LogEventContent::FSSBodySignals(event) => event.body_id,
             LogEventContent::LeaveBody(event) => event.body_id,
@@ -889,7 +885,7 @@ impl LogEventContent {
             LogEventContent::SAASignalsFound(event) => event.body_id,
             LogEventContent::ScanBaryCentre(event) => event.body_id,
             LogEventContent::Scan(event) => event.body_id,
-            LogEventContent::Touchdown(event) => return event.body_id,
+            LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::ScanOrganic(event) => event.body,
             _ => return None,
         })
@@ -910,9 +906,7 @@ impl LogEventContent {
             LogEventContent::LeaveBody(event) => &event.body,
             LogEventContent::SAAScanComplete(event) => &event.body_name,
             LogEventContent::Scan(event) => &event.body_name,
-            LogEventContent::Touchdown(event) => {
-                return event.body.as_ref().map(|body| body.as_str())
-            }
+            LogEventContent::Touchdown(event) => &event.body,
             _ => return None,
         })
     }

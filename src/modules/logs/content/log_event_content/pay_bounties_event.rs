@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub struct PayBountiesEvent {
     pub amount: u64,
     pub broker_percentage: Option<f32>,
+    
     #[serde(default)]
     pub all_fines: bool,
     pub faction: Option<String>,

@@ -10,9 +10,8 @@ pub struct LaunchSRVEvent {
     #[serde(rename = "SRVType", default)]
     pub srv_type: SRVType,
 
-    // See above
-    #[serde(rename = "SRVType_Localised", default = "default_srv_type_localized")]
-    pub srv_type_localized: String,
+    #[serde(rename = "SRVType_Localised")]
+    pub srv_type_localized: Option<String>,
 
     // TODO check if this can be replaced with an enum
     pub loadout: String,
@@ -20,8 +19,4 @@ pub struct LaunchSRVEvent {
     #[serde(rename = "ID")]
     pub id: u8,
     pub player_controlled: bool,
-}
-
-fn default_srv_type_localized() -> String {
-    SRVType::default().to_string()
 }
