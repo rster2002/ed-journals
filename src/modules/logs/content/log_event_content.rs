@@ -249,6 +249,12 @@ use crate::logs::content::log_event_content::shipyard_redeem::ShipyardRedeem;
 use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
 use crate::modules::small::SmallSystemInfo;
 
+#[cfg(feature = "legacy")]
+use crate::logs::content::log_event_content::legacy_liftoff_event::LegacyLiftoffEvent;
+
+#[cfg(feature = "legacy")]
+use crate::logs::content::log_event_content::legacy_touchdown_event::LegacyTouchdownEvent;
+
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
 pub mod approach_body_event;
@@ -491,6 +497,12 @@ pub mod wing_add_event;
 pub mod wing_invite_event;
 pub mod wing_join_event;
 pub mod won_a_trophy_for_squadron_event;
+
+#[cfg(feature = "legacy")]
+pub mod legacy_liftoff_event;
+
+#[cfg(feature = "legacy")]
+pub mod legacy_touchdown_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///
@@ -788,6 +800,15 @@ pub enum LogEventContent {
     WingJoin(WingJoinEvent),
     WingLeave,
 
+    // Legacy
+    #[cfg(feature = "legacy")]
+    #[serde(untagged)]
+    LegacyLiftoffEvent(LegacyLiftoffEvent),
+
+    #[cfg(feature = "legacy")]
+    #[serde(untagged)]
+    LegacyTouchdownEvent(LegacyTouchdownEvent),
+
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]
     Unknown(Value),
@@ -827,6 +848,8 @@ impl LogEventContent {
             LogEventContent::SupercruiseEntry(event) => event.system_address,
             LogEventContent::SupercruiseExit(event) => event.system_address,
             LogEventContent::Touchdown(event) => event.system_address,
+            LogEventContent::LegacyLiftoffEvent(event) => event.system_address?,
+            LogEventContent::LegacyTouchdownEvent(event) => event.system_address?,
             _ => return None,
         })
     }
@@ -856,6 +879,8 @@ impl LogEventContent {
             LogEventContent::SupercruiseEntry(event) => &event.star_system,
             LogEventContent::SupercruiseExit(event) => &event.star_system,
             LogEventContent::Touchdown(event) => &event.star_system,
+            LogEventContent::LegacyLiftoffEvent(event) => event.star_system.as_ref()?,
+            LogEventContent::LegacyTouchdownEvent(event) => &event.star_system.as_ref()?,
             _ => return None,
         })
     }
@@ -887,6 +912,10 @@ impl LogEventContent {
             LogEventContent::Scan(event) => event.body_id,
             LogEventContent::Touchdown(event) => event.body_id,
             LogEventContent::ScanOrganic(event) => event.body,
+            LogEventContent::Touchdown(event) => event.body_id,
+            LogEventContent::Liftoff(event) => event.body_id,
+            LogEventContent::LegacyLiftoffEvent(event) => event.body_id?,
+            LogEventContent::LegacyTouchdownEvent(event) => event.body_id?,
             _ => return None,
         })
     }
@@ -907,6 +936,9 @@ impl LogEventContent {
             LogEventContent::SAAScanComplete(event) => &event.body_name,
             LogEventContent::Scan(event) => &event.body_name,
             LogEventContent::Touchdown(event) => &event.body,
+            LogEventContent::Liftoff(event) => &event.body,
+            LogEventContent::LegacyLiftoffEvent(event) => &event.body.as_ref()?,
+            LogEventContent::LegacyTouchdownEvent(event) => &event.body.as_ref()?,
             _ => return None,
         })
     }
