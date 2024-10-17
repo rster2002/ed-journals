@@ -888,7 +888,7 @@ impl LogEventContent {
             LogEventContent::LegacyLiftoffEvent(event) => event.star_system.as_ref()?,
 
             #[cfg(feature = "legacy")]
-            LogEventContent::LegacyTouchdownEvent(event) => &event.star_system.as_ref()?,
+            LogEventContent::LegacyTouchdownEvent(event) => event.star_system.as_ref()?,
             _ => return None,
         })
     }
@@ -950,10 +950,10 @@ impl LogEventContent {
             LogEventContent::Liftoff(event) => &event.body,
 
             #[cfg(feature = "legacy")]
-            LogEventContent::LegacyLiftoffEvent(event) => &event.body.as_ref()?,
+            LogEventContent::LegacyLiftoffEvent(event) => event.body.as_ref()?,
 
             #[cfg(feature = "legacy")]
-            LogEventContent::LegacyTouchdownEvent(event) => &event.body.as_ref()?,
+            LogEventContent::LegacyTouchdownEvent(event) => event.body.as_ref()?,
             _ => return None,
         })
     }
