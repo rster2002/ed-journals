@@ -15,9 +15,9 @@ pub struct StatisticsEvent {
 
     #[serde(rename = "Search_And_Rescue")]
     pub search_and_rescue: StatisticsSearchAndRescue,
-    pub crafting: StatisticsCrafting,
-    pub crew: StatisticsCrew,
-    pub multicrew: StatisticsMulticrew,
+    pub crafting: Option<StatisticsCrafting>,
+    pub crew: Option<StatisticsCrew>,
+    pub multicrew: Option<StatisticsMulticrew>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -70,7 +70,8 @@ pub struct StatisticsCombat {
     #[serde(rename = "Highest_Single_Reward")]
     pub highest_single_reward: u64,
 
-    #[serde(rename = "Skimmers_Killed")]
+    // Older log files do not have this field, thus we assume 0
+    #[serde(rename = "Skimmers_Killed", default)]
     pub skimmers_killed: u32,
 }
 
@@ -136,7 +137,8 @@ pub struct StatisticsMining {
     #[serde(rename = "Quantity_Mined")]
     quantity_mined: u32,
 
-    #[serde(rename = "Materials_Collected")]
+    // Field does not exist in older Journal files, thus we assume a value of 0
+    #[serde(rename = "Materials_Collected", default)]
     materials_collected: u32,
 }
 
@@ -226,16 +228,16 @@ pub struct StatisticsCrafting {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages")]
-    pub npc_crew_total_wages: u64,
+    pub npc_crew_total_wages: Option<u64>,
 
     #[serde(rename = "NpcCrew_Hired")]
-    pub npc_crew_hired: u32,
+    pub npc_crew_hired: Option<u32>,
 
     #[serde(rename = "NpcCrew_Fired")]
-    pub npc_crew_fired: u32,
+    pub npc_crew_fired: Option<u32>,
 
     #[serde(rename = "NpcCrew_Died")]
-    pub npc_crew_died: u32,
+    pub npc_crew_died: Option<u32>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

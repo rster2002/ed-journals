@@ -26,7 +26,7 @@ pub struct CommunityGoalEventGoal {
     pub player_in_top_rank: bool,
     pub tier_reached: Option<String>,
     pub player_percentile_band: u8,
-    pub bonus: u64,
+    pub bonus: Option<u64>,
 }
 
 #[cfg(test)]

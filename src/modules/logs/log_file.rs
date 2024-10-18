@@ -42,15 +42,29 @@ pub enum LogFileError {
     IO(#[from] io::Error),
 }
 
+#[cfg(not(feature = "legacy"))]
+type RegexList = [(Regex, &'static str); 1];
+
+#[cfg(feature = "legacy")]
+type RegexList = [(Regex, &'static str); 2];
+
 lazy_static! {
-    static ref FILE_NAME_REGEX: Regex =
-        Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap();
+    static ref FILE_NAME_REGEXES: RegexList = [
+        // Journal.YYYY-MM-DDTHHmmss.01.log
+        (Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap(), "%Y-%m-%dT%H%M%S"),
+
+        // Journal.YYMMDDHHMMSS.01.log
+        #[cfg(feature = "legacy")]
+        (Regex::new(r"Journal\.(\d{12})\.(\d{2})\.log").unwrap(), "%y%m%d%H%M%S"),
+    ];
 }
 
 impl LogFile {
     /// Checks if the given file name (including the extension) matches that of a journal log file.
     pub fn is_match(name: &str) -> bool {
-        FILE_NAME_REGEX.is_match(name)
+        FILE_NAME_REGEXES
+            .iter()
+            .any(|(regex, _)| regex.is_match(name))
     }
 
     /// Creates a new reader using the path of the journal log file.
@@ -101,27 +115,37 @@ impl TryFrom<DirEntry> for LogFile {
             .to_str()
             .ok_or(LogFileError::FailedToRepresentOsString)?;
 
-        let captures = FILE_NAME_REGEX
-            .captures(file_name)
-            .ok_or(LogFileError::IncorrectFileName)?;
+        FILE_NAME_REGEXES
+            .iter()
+            .find_map(|(regex, ts_format)| {
+                regex.captures(file_name).map(|captures| {
+                    let timestamp_str = captures
+                        .get(1)
+                        .expect("Regex should have already matched")
+                        .as_str();
 
-        let timestamp_str = captures
-            .get(1)
-            .expect("Regex should have already matched")
-            .as_str();
-
-        let native_date_time = NaiveDateTime::parse_from_str(timestamp_str, "%Y-%m-%dT%H%M%S")?;
-        let part = captures
-            .get(2)
-            .expect("Regex should have already matched")
-            .as_str()
-            .parse()?;
-
-        Ok(LogFile {
-            path: value.path().to_path_buf(),
-            naive_date_time: native_date_time,
-            part,
-        })
+                    match NaiveDateTime::parse_from_str(timestamp_str, ts_format) {
+                        Ok(native_date_time) => {
+                            match captures
+                                .get(2)
+                                .expect("Regex should have already matched")
+                                .as_str()
+                                .parse()
+                            {
+                                Ok(part) => Some(Ok(LogFile {
+                                    path: value.path().to_path_buf(),
+                                    naive_date_time: native_date_time,
+                                    part,
+                                })),
+                                Err(err) => Some(Err(err.into())),
+                            }
+                        }
+                        Err(err) => Some(Err(err.into())),
+                    }
+                })
+            })
+            .flatten()
+            .unwrap_or(Err(LogFileError::IncorrectFileName))
     }
 }
 

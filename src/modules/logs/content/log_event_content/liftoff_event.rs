@@ -10,7 +10,7 @@ pub struct LiftoffEvent {
     pub body: String,
 
     #[serde(rename = "BodyID")]
-    pub body_id: u64,
+    pub body_id: u8,
     pub on_station: bool,
     pub on_planet: bool,
     pub multicrew: bool,
