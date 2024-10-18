@@ -44,12 +44,16 @@ pub enum LogFileError {
 
 #[cfg(not(feature = "legacy"))]
 type RegexList = [(Regex, &'static str); 1];
+
 #[cfg(feature = "legacy")]
 type RegexList = [(Regex, &'static str); 2];
+
 lazy_static! {
     static ref FILE_NAME_REGEXES: RegexList = [
+        // Journal.YYYY-MM-DDTHHmmss.01.log
         (Regex::new(r"Journal\.(\d{4}-\d{2}-\d{2}T\d+)\.(\d{2})\.log").unwrap(), "%Y-%m-%dT%H%M%S"),
-        // format = Journal.YYMMDDHHMMSS.01.log
+
+        // Journal.YYMMDDHHMMSS.01.log
         #[cfg(feature = "legacy")]
         (Regex::new(r"Journal\.(\d{12})\.(\d{2})\.log").unwrap(), "%y%m%d%H%M%S"),
     ];
