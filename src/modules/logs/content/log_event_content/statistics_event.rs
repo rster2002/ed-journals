@@ -227,17 +227,17 @@ pub struct StatisticsCrafting {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StatisticsCrew {
-    #[serde(rename = "NpcCrew_TotalWages", default)]
-    pub npc_crew_total_wages: u64,
+    #[serde(rename = "NpcCrew_TotalWages")]
+    pub npc_crew_total_wages: Option<u64>,
 
-    #[serde(rename = "NpcCrew_Hired", default)]
-    pub npc_crew_hired: u32,
+    #[serde(rename = "NpcCrew_Hired")]
+    pub npc_crew_hired: Option<u32>,
 
-    #[serde(rename = "NpcCrew_Fired", default)]
-    pub npc_crew_fired: u32,
+    #[serde(rename = "NpcCrew_Fired")]
+    pub npc_crew_fired: Option<u32>,
 
-    #[serde(rename = "NpcCrew_Died", default)]
-    pub npc_crew_died: u32,
+    #[serde(rename = "NpcCrew_Died")]
+    pub npc_crew_died: Option<u32>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
