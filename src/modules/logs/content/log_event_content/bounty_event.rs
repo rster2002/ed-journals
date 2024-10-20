@@ -51,7 +51,7 @@ pub struct BountyEventNormalReward {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventSkimmer {
-    pub faction: String,
+    pub faction: Option<String>,
     pub target: String,
     pub reward: u64,
     pub victim_faction: String,

@@ -35,3 +35,6 @@ tokio-test = "0.4.4"
 default = ["asynchronous", "strict"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 strict = []
+# Enables loading Journal files from before game version 4. Not fully supported and may lead to
+# parsing errors. In such cases, PRs with affected Journal files/events are appreciated :)
+legacy = []

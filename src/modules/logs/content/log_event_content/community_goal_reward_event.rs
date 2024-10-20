@@ -6,6 +6,8 @@ pub struct CommunityGoalRewardEvent {
     #[serde(rename = "CGID")]
     pub cgid: u64,
     pub name: String,
+
+    #[serde(alias = "System")]
     pub system_name: String,
     pub reward: u64,
 }

@@ -902,7 +902,7 @@ impl Commodity {
 
 lazy_static! {
     static ref COMMODITY_NAME_REGEX: Regex =
-        Regex::new(r#"^\$?(USSCargo)?([a-zA-Z_0-9]+?)(_[nN]ame;)?$"#).unwrap();
+        Regex::new(r#"^\$?(USSCargo|usscargo)?([a-zA-Z_0-9]+?)(_[nN]ame;)?$"#).unwrap();
 }
 
 impl FromStr for Commodity {

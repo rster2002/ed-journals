@@ -2,28 +2,36 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct TouchdownEvent {
+pub struct LegacyTouchdownEvent {
     pub player_controlled: bool,
+
+    #[serde(default)]
     pub taxi: bool,
+
+    #[serde(default)]
     pub multicrew: bool,
-    pub star_system: String,
-    pub system_address: u64,
-    pub body: String,
+    pub star_system: Option<String>,
+    pub system_address: Option<u64>,
+    pub body: Option<String>,
 
     #[serde(rename = "BodyID")]
-    pub body_id: u8,
+    pub body_id: Option<u8>,
+
+    #[serde(default)]
     pub on_station: bool,
+
+    #[serde(default)]
     pub on_planet: bool,
 
     #[serde(flatten)]
-    pub location: Option<TouchdownEventPosition>,
+    pub location: Option<LegacyTouchdownEventPosition>,
 
     pub nearest_destination: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
-pub struct TouchdownEventPosition {
+pub struct LegacyTouchdownEventPosition {
     pub latitude: f32,
     pub longitude: f32,
 }
