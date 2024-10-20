@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
-
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
-
+use serde_json::Value;
 use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
 use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
 use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
@@ -182,6 +182,14 @@ impl ShipModule {
                 | ShipModule::Bobble(_)
                 | ShipModule::StringLights(_)
         )
+    }
+}
+
+impl FromStr for ShipModule {
+    type Err = serde_json::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        serde_json::from_value(Value::String(s.to_string()))
     }
 }
 
