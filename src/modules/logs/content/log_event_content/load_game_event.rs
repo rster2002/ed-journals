@@ -48,6 +48,7 @@ mod tests {
     };
     use crate::modules::ship::ShipType;
 
+    #[test]
     fn load_game_event_is_parsed_correctly() {
         let parsed: LoadGameEvent = serde_json::from_str(
             r#"

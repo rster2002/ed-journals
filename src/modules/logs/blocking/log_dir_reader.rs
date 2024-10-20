@@ -126,10 +126,10 @@ mod tests {
         let reader = LogDirReader::open(dir_path);
 
         let mut count = 0;
-        for entry in reader {
+        for _ in reader {
             count += 1;
         }
 
-        assert!(count >= 870929);
+        assert!(count > 870929);
     }
 }

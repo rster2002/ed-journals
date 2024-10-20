@@ -50,7 +50,7 @@ pub enum CodexEntryEventCategory {
     StellarBodies,
 
     #[serde(rename = "$Codex_Category_Civilisations;")]
-    Civilisations,
+    Civilizations,
 
     #[cfg(not(feature = "strict"))]
     #[serde(untagged)]

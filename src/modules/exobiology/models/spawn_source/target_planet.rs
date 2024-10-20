@@ -1,4 +1,6 @@
-use crate::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
+use crate::galaxy::{
+    Atmosphere, Gravity, LocalDistance, PlanetClass, PlanetComposition, Volcanism,
+};
 use crate::logs::scan_event::ScanEventParent;
 use crate::materials::Material;
 use serde::Serialize;
@@ -6,6 +8,7 @@ use std::collections::HashSet;
 
 #[derive(Debug, Serialize)]
 pub struct TargetPlanet {
+    pub is_landable: bool,
     pub atmosphere: Atmosphere,
     pub gravity: Gravity,
     pub class: PlanetClass,
@@ -14,6 +17,7 @@ pub struct TargetPlanet {
     pub materials: HashSet<Material>,
     pub composition: Option<PlanetComposition>,
     pub parents: Vec<ScanEventParent>,
-    pub semi_major_axis: f32,
+    pub semi_major_axis: LocalDistance,
     pub geological_signals_present: bool,
+    pub pressure: f32,
 }

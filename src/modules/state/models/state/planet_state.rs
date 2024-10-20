@@ -1,4 +1,5 @@
 use crate::exobiology::TargetPlanet;
+use crate::galaxy::LocalDistance;
 use crate::logs::scan_event::{ScanEvent, ScanEventKind, ScanEventPlanet};
 use crate::logs::LogEvent;
 use crate::state::models::resolvers::planet_state_resolver::{
@@ -22,6 +23,8 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
             logged_species: HashSet::new(),
             commodity_signals: Vec::new(),
             exobiology_body: TargetPlanet {
+                is_landable: value.1.landable,
+                pressure: value.1.surface_pressure,
                 atmosphere: value.1.atmosphere.clone(),
                 gravity: value.1.surface_gravity.clone(),
                 class: value.1.planet_class.clone(),
@@ -37,7 +40,7 @@ impl From<(&ScanEvent, &ScanEventPlanet)> for PlanetState {
                 ),
                 composition: value.1.composition.clone(),
                 parents: value.0.parents.clone(),
-                semi_major_axis: value.1.orbit_info.semi_major_axis,
+                semi_major_axis: LocalDistance::from_m(value.1.orbit_info.semi_major_axis),
                 geological_signals_present: false,
             },
         })

@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
@@ -35,6 +36,24 @@ pub enum VariantError {
 lazy_static! {
     static ref VARIANT_REGEX: Regex =
         Regex::new(r#"^(\$Codex_Ent_([a-zA-Z]+)_(\d+))_([a-zA-Z]+)(_Name;)?$"#).unwrap();
+    static ref NONE_VARIANTS: HashSet<Species> = HashSet::from([
+        Species::AnemoneLuteolum,
+        Species::AnemonePuniceum,
+        Species::AnemoneBlatteumBioluminescent,
+        Species::AnemoneRubeumBioluminescent,
+        Species::AnemonePrasinumBioluminescent,
+        Species::AnemoneRoseumBioluminescent,
+        Species::CrystallineShards,
+        Species::BarkMound,
+        Species::BrainTreeRoseum,
+        Species::BrainTreeGypseeum,
+        Species::BrainTreeOstrinum,
+        Species::BrainTreeViride,
+        Species::BrainTreeLividum,
+        Species::BrainTreeAureum,
+        Species::BrainTreePuniceum,
+        Species::BrainTreeLindigoticum,
+    ]);
 }
 
 impl FromStr for Variant {

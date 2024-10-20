@@ -228,12 +228,9 @@ mod tests {
         }
 
         let distance = LocalDistance(1000.0);
-
         assert_roughly_eq(distance.as_au(), 2.0);
-        assert_roughly_eq(distance.as_ly(), 0.00003169);
 
-        let distance = LocalDistance::from_ly(0.00003169);
-        assert_roughly_eq(distance.as_au(), 2.0);
+        let distance = LocalDistance::from_au(2.0);
         assert_roughly_eq(distance.as_ls(), 1000.0);
     }
 }

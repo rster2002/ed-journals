@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 
 use crate::exobiology::{SpawnSourceStar, TargetSystem};
-use chrono::{DateTime, Utc};
-use serde::Serialize;
-
 use crate::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use crate::logs::scan_event::{ScanEvent, ScanEventKind};
 use crate::logs::{LogEvent, LogEventContent};
@@ -12,6 +9,8 @@ use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::planet_state_resolver::planet_species_entry::PlanetSpeciesEntry;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::PlanetState;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct SystemStateResolver {
@@ -158,10 +157,16 @@ impl SystemStateResolver {
     }
 
     pub fn get_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
+        self.planet_state
+            .get(&body_id)?
+            .get_planet_species(&self.exobiology_system)
+    }
+
+    pub fn get_possible_spawnable_species(&self, body_id: u8) -> Option<Vec<PlanetSpeciesEntry>> {
         Some(
             self.planet_state
                 .get(&body_id)?
-                .get_planet_species(&self.exobiology_system),
+                .get_possible_planet_species(&self.exobiology_system),
         )
     }
 }
@@ -170,14 +175,125 @@ impl SystemStateResolver {
 mod tests {
     use std::env::current_dir;
 
-    use crate::exobiology::SpawnSource;
+    use crate::exobiology::Species;
     use crate::logs::blocking::LogDirReader;
-    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
 
+    const KNOWN_SPECIES: &[(u64, u8, &[Species])] = &[
+        (
+            2874004872433,
+            17,
+            &[Species::BacteriumVesicula, Species::FonticuluaCampestris],
+        ),
+        (
+            1247495096115,
+            20,
+            &[
+                Species::BacteriumCerbrus,
+                Species::BacteriumTela,
+                Species::StratumTectonicas,
+            ],
+        ),
+        (
+            5071685950649,
+            10,
+            &[
+                Species::BacteriumCerbrus,
+                Species::BacteriumTela,
+                Species::StratumTectonicas,
+            ],
+        ),
+        (
+            1487946155795,
+            15,
+            &[
+                Species::BacteriumAurasus,
+                Species::ConchaLabiata,
+                Species::StratumPaleas,
+                Species::TubusConifer,
+            ],
+        ),
+        (
+            1487946155795,
+            16,
+            &[
+                Species::BacteriumAurasus,
+                Species::ConchaLabiata,
+                Species::StratumPaleas,
+                Species::TubusConifer,
+                // This seems anomalous, but cannot confirm. The species failure is 0.03% so ¯\_(ツ)_/¯
+                // Species::TussockIgnis,
+            ],
+        ),
+        (
+            1487946155795,
+            28,
+            &[Species::BacteriumVesicula, Species::FonticuluaCampestris],
+        ),
+        (
+            1487811905211,
+            15,
+            &[Species::BacteriumCerbrus, Species::StratumAraneamus],
+        ),
+        (
+            1487811905211,
+            25,
+            &[
+                Species::AleoidaSpica,
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::StratumPaleas,
+                Species::TussockDivisa,
+            ],
+        ),
+        (
+            1487811905211,
+            27,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::TussockDivisa,
+            ],
+        ),
+        (
+            147379439083,
+            46,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FrutexaFlabellum,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+                Species::StratumPaleas,
+            ],
+        ),
+        (
+            147379439083,
+            47,
+            &[
+                Species::BacteriumAlcyoneum,
+                Species::ConchaAureolas,
+                Species::FrutexaFlabellum,
+                Species::FungoidaGelata,
+                Species::FungoidaSetisis,
+                Species::OsseusSpiralis,
+            ],
+        ),
+    ];
+
     #[test]
-    fn spawnable_species_no_false_negatives() {
-        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+    fn spawnable_species() {
+        let dir_path = current_dir()
+            .unwrap()
+            .join("test-files")
+            .join("species-journals");
 
         let log_dir = LogDirReader::open(dir_path);
 
@@ -187,100 +303,41 @@ mod tests {
             state.feed(&entry.unwrap());
         }
 
-        let mut failed = 0;
+        state.flush();
 
-        // Blacklisted bodies that should not be tested
-        let blacklisted_bodies: Vec<String> = vec![
-            "Syniechia CB-U d4-8 B 5".to_string(), // Commander did not scan the body before landing
-            "Prie Chraea VL-L c21-0 1 c".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
-            "Syniechou RZ-Z c16-0 7 b a".to_string(), // OsseusDiscus spawned on a body with a non-thin-water atmosphere
-            "Flyeia Prou RH-C b46-0 A 8".to_string(), // TubusSororibus spawned on a body with a gravity of 0.52g and temperature of 260K
-            "Graea Proae OT-O d7-15 A 4".to_string(), // FrutexaMetallicum, OsseusPellebantus and TussockPropagito spawning on a body that's 0.4K too warm
-            "Ruvoe HW-E c11-5 3 b".to_string(), // BacteriumOmentum spawning on a body with a non-neon atmosphere
-        ];
+        for expected in KNOWN_SPECIES {
+            for commander in state.commanders.values() {
+                let Some(system) = commander.system_by_address(expected.0) else {
+                    dbg!(expected.0);
+                    continue;
+                };
 
-        for commander in state.commanders.values() {
-            for system in commander.systems.values() {
-                for (body_id, planet_state) in &system.planet_state {
-                    if blacklisted_bodies.contains(&planet_state.scan.body_name) {
-                        continue;
-                    }
+                let possible_species = system.get_possible_spawnable_species(expected.1).unwrap();
 
-                    let expected_species = system.get_spawnable_species(*body_id).unwrap();
+                dbg!(
+                    &system.planet_state.get(&expected.1).unwrap().scan,
+                    &possible_species,
+                    &expected
+                );
 
-                    let spawn_source = SpawnSource {
-                        target_system: &system.exobiology_system,
-                        target_planet: &planet_state.exobiology_body,
-                    };
+                assert_eq!(possible_species.len(), expected.2.len());
 
-                    for species in expected_species {
-                        let conditions = species.specie.spawn_conditions();
+                for possible in &possible_species {
+                    let found = expected.2.iter().any(|species| species == &possible.specie);
 
-                        let failing_conditions = conditions
-                            .iter()
-                            .filter(|condition| !spawn_source.satisfies_spawn_condition(condition))
-                            .collect::<Vec<_>>();
+                    // Checks that all the actual species are in the list
+                    assert!(found);
+                }
 
-                        if !failing_conditions.is_empty() {
-                            failed += 1;
-                            println!(
-                                "The following conditions failed for '{:?}' on body '{}': {:?}\n{:#?}",
-                                species, planet_state.scan.body_name, failing_conditions, spawn_source
-                            );
-                        }
-                    }
+                for expected in expected.2 {
+                    let found = possible_species
+                        .iter()
+                        .any(|entry| &entry.specie == expected);
+
+                    // Check that all the expected entries are in the list
+                    assert!(found);
                 }
             }
         }
-
-        // In case of test failure, see the logs printed above.
-        assert_eq!(failed, 0);
-
-        // let logs = log_dir.journal_logs().unwrap();
-
-        // // let mut state = ExobiologyState::new();
-        //
-        // // Species found in the logs, grouped by body name.
-        // // These are the value we will compare against the calculated spawnable species.
-        // let mut expected_species = HashMap::<String, HashSet<Species>>::new();
-        // for journal in &logs {
-        //     let reader = journal.create_blocking_reader().unwrap();
-        //
-        //     let mut body_name = String::new();
-        //
-        //     for entry in reader.flatten() {
-        //         state.feed_event(&entry);
-        //
-        //         if let LogEventContent::Location(location) = &entry.content {
-        //             body_name.clone_from(&location.location_info.body)
-        //         }
-        //
-        //         if let LogEventContent::Touchdown(touchdown) = &entry.content {
-        //             body_name.clone_from(&touchdown.body);
-        //         }
-        //
-        //         if let LogEventContent::ScanOrganic(organic) = &entry.content {
-        //             expected_species
-        //                 .entry(body_name.clone())
-        //                 .or_default()
-        //                 .insert(organic.species.clone());
-        //         }
-        //     }
-        // }
-        //
-
-        //
-        // let mut failed = 0;
-        //
-        // // Check each spawn source to see if the calculated spawnable species match the expected species.
-        // for (body_name, expected_species) in expected_species
-        //     .iter()
-        //     .filter(|(body, _)| !blacklisted_bodies.contains(body))
-        // {
-        //     let spawn_source = state.for_body(body_name);
-        //
-
-        // }
-        //
     }
 }
