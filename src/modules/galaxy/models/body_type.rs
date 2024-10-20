@@ -12,6 +12,7 @@ pub enum BodyType {
     // TODO add description on when this is used
     Null,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }

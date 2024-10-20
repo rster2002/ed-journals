@@ -1,21 +1,18 @@
+//! Fired when there is any update related to the carrier's finances.
+
+use crate::station::CarrierFinance;
 use serde::{Deserialize, Serialize};
 
+/// Fired when there is any update related to the carrier's finances.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierFinanceEvent {
+    /// The id of the carrier that the player deposited fuel to. This is functionally the same as
+    /// the market id.
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
-    pub carrier_balance: u64,
-    pub reserve_balance: u64,
-    pub available_balance: u64,
-    pub reserve_percent: f32,
 
-    #[serde(rename = "TaxRate_rearm")]
-    pub tax_rate_rearm: f32,
-
-    #[serde(rename = "TaxRate_refuel")]
-    pub tax_rate_refuel: f32,
-
-    #[serde(rename = "TaxRate_repair")]
-    pub tax_rate_repair: f32,
+    /// Financial details for a given fleet carrier.
+    #[serde(flatten)]
+    pub finance: CarrierFinance,
 }

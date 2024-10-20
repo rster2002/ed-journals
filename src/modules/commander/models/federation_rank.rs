@@ -23,7 +23,8 @@ pub enum FederationRank {
     ViceAdmiral,
     Admiral,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -54,10 +55,10 @@ impl TryFrom<u8> for FederationRank {
             13 => Ok(FederationRank::ViceAdmiral),
             14 => Ok(FederationRank::Admiral),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(FederationRank::Unknown(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(FederationRankError::UnknownFederationRank(value)),
         }
     }
@@ -87,7 +88,7 @@ impl Display for FederationRank {
                 FederationRank::ViceAdmiral => "Vice Admiral",
                 FederationRank::Admiral => "Admiral",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 FederationRank::Unknown(unknown) =>
                     return write!(f, "Unknown federation rank nr: {}", unknown),
             }

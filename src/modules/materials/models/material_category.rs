@@ -20,7 +20,8 @@ pub enum MaterialCategory {
     #[serde(alias = "encoded", alias = "$MICRORESOURCE_CATEGORY_Encoded;")]
     Encoded,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -177,7 +178,7 @@ impl From<&Material> for MaterialCategory {
             | Material::GuardianVesselBlueprintFragment
             | Material::GuardianWeaponBlueprintFragment => MaterialCategory::Encoded,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Material::Unknown(value) => {
                 MaterialCategory::Unknown(format!("Unknown material: '{}'", value))
             }
@@ -201,7 +202,7 @@ impl Display for MaterialCategory {
                 MaterialCategory::Manufactured => "Manufactured",
                 MaterialCategory::Encoded => "Encoded",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 MaterialCategory::Unknown(unknown) => return write!(f, "{}", unknown),
             }
         )

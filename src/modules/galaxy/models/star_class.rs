@@ -149,7 +149,7 @@ impl FromStr for StarClass {
             }
             "G_WhiteSuperGiant" | "g_whitesupergiant" => StarClass::GWhiteSuperGiant,
             "MRedSuperGiant" | "mredsupergiant" | "M_RedSuperGiant" => StarClass::MRedSuperGiant,
-            "MRedGiant" | "mredgiant" | "M_RedGiant" => StarClass::KOrangeGiant,
+            "MRedGiant" | "mredgiant" | "M_RedGiant" | "M_TypeGiant" => StarClass::MRedGiant,
             "KOrangeGiant" | "korangegiant" | "K_OrangeGiant" => StarClass::KOrangeGiant,
             "RoguePlanet" | "rogueplanet" => StarClass::RoguePlanet,
             "Nebula" | "nebula" => StarClass::Nebula,

@@ -181,7 +181,8 @@ pub enum HardpointModule {
     #[serde(rename = "xenoscanner_basic")]
     XenoScanner,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -315,7 +316,7 @@ impl Display for HardpointModule {
                 HardpointModule::XenoScanner => "Xeno Scanner",
                 HardpointModule::AdvancedMissileRack => "Advanced Missile Rack",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
             }
         )

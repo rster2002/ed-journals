@@ -81,7 +81,7 @@ from_str_deserialize_impl!(Suit);
 //                 Suit::DominatorSuit => "Dominator Suit",
 //                 Suit::MaverickSuit => "Maverick Suit",
 //
-//                 #[cfg(not(feature = "strict"))]
+//                 #[cfg(feature = "allow-unknown")]
 //                 Suit::Unknown(unknown) => return write!(f, "Unknown suit: {}", unknown),
 //             }
 //         )

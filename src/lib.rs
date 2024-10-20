@@ -1,3 +1,5 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
+
 //! # ED Journals
 //!
 //! This library provides models and utilities to work with Elite Dangerous journal files.

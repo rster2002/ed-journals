@@ -2,38 +2,63 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipType;
 
+/// Fired when loading into the game.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadGameEvent {
+    /// The name of the player.
     pub commander: String,
 
+    /// The Frontier ID of the player.
     #[serde(rename = "FID")]
     pub fid: String,
+
+    /// Whether horizons content has been enabled.
     pub horizons: bool,
 
+    /// Whether odyssey content has been enabled.
     #[serde(default)]
     pub odyssey: bool,
 
+    /// Information about the current active ship of the player.
     #[serde(flatten)]
     pub ship_info: Option<LoadGameEventShipInfo>,
+
+    /// The gamemode the player loaded into.
     pub game_mode: Option<LoadGameEventGameMode>,
+
+    /// The number of credits the player has in the bank.
     pub credits: u64,
+
+    /// The number of credits the player has open in loans.
     pub loan: u64,
 }
 
+/// Information about the current active ship of the player.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadGameEventShipInfo {
+    /// The kind of ship currently active.
     pub ship: ShipType,
 
+    /// The id of the active ship.
     #[serde(rename = "ShipID")]
     pub ship_id: u32,
+
+    /// The name of the ship.
     pub ship_name: String,
+
+    /// The id nameplate of the ship.
     pub ship_ident: String,
+
+    /// The current fuel level of the active ship.
     pub fuel_level: f32,
+
+    /// The max fuel capacity of the active ship.
     pub fuel_capacity: f32,
 }
 
+/// The gamemode the player loaded into.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum LoadGameEventGameMode {
     Open,

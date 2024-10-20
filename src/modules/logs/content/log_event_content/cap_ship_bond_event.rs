@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+// TODO
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CapShipBondEvent {

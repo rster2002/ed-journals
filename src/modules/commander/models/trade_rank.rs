@@ -22,7 +22,8 @@ pub enum TradeRank {
     EliteIV,
     EliteV,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -52,10 +53,10 @@ impl TryFrom<u8> for TradeRank {
             12 => Ok(TradeRank::EliteIV),
             13 => Ok(TradeRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(TradeRank::Unknown(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(TradeRankError::UnknownTradeRank(value)),
         }
     }
@@ -84,7 +85,7 @@ impl Display for TradeRank {
                 TradeRank::EliteIV => "Elite IV",
                 TradeRank::EliteV => "Elite V",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 TradeRank::Unknown(unknown) =>
                     return write!(f, "Unknown trade rank nr: {}", unknown),
             }

@@ -21,10 +21,12 @@ pub enum CombatRank {
     EliteIV,
     EliteV,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     UnknownU8(u8),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     UnknownString(String),
 }
 
@@ -60,10 +62,10 @@ impl TryFrom<u8> for CombatRank {
             12 => Ok(CombatRank::EliteIV),
             13 => Ok(CombatRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(CombatRank::UnknownU8(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(CombatRankError::UnknownCombatRank(value)),
         }
     }
@@ -89,10 +91,10 @@ impl FromStr for CombatRank {
             "EliteIV" => Ok(CombatRank::EliteIV),
             "EliteV" => Ok(CombatRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(CombatRank::UnknownString(s.to_string())),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(CombatRankError::UnknownCombatString(s.to_string())),
         }
     }
@@ -144,11 +146,11 @@ impl Display for CombatRank {
                 CombatRank::EliteIV => "Elite IV",
                 CombatRank::EliteV => "Elite V",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownU8(unknown) =>
                     return write!(f, "Unknown combat rank nr: {}", unknown),
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownString(unknown) =>
                     return write!(f, "Unknown combat rank: {}", unknown),
             }
