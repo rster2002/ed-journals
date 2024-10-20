@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
@@ -87,5 +89,32 @@ impl PlanetClass {
             PlanetClass::EarthlikeBody => 116_295,
             _ => 93_328,
         }
+    }
+}
+
+impl Display for PlanetClass {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+        let string = match self {
+            Self::MetalRichBody => "Metal rich body",
+            Self::HighMetalContentBody => "High metal content body",
+            Self::RockyBody => "Rocky body",
+            Self::IcyBody => "Icy body",
+            Self::RockyIceBody => "Rocky ice body",
+            Self::EarthlikeBody => "Earthlike body",
+            Self::WaterWorld => "Water world",
+            Self::AmmoniaWorld => "Ammonia world",
+            Self::WaterGiant => "Water giant",
+            Self::WaterGiantWithLife => "Water giant with life",
+            Self::GasGiantWithWaterBasedLife => "Gas giant with water based life",
+            Self::GasGiantWithAmmoniaBasedLife => "Gas giant with ammonia based life",
+            Self::SudarskyClassIGasGiant => "Sudarsky class I gas giant",
+            Self::SudarskyClassIIGasGiant => "Sudarsky class II gas giant",
+            Self::SudarskyClassIIIGasGiant => "Sudarsky class III gas giant",
+            Self::SudarskyClassIVGasGiant => "Sudarsky class IV gas giant",
+            Self::SudarskyClassVGasGiant => "Sudarsky class V gas giant",
+            Self::HeliumRichGasGiant => "Helium rich gas giant",
+            Self::HeliumGasGiant => "Helium gas giant",
+        };
+        write!(f, "{}", string)
     }
 }
