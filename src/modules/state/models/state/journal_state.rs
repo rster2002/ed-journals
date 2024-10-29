@@ -2,6 +2,7 @@ use crate::journal::JournalEvent;
 use crate::state::models::resolvers::journal_state_resolver::JournalStateResolver;
 use crate::state::{LiveState, StateContainer};
 use std::collections::HashMap;
+use crate::state::resolvers::live_state_resolver::live_state_entry_owned::LiveStateEntryOwned;
 
 /// Journal state tracks both log and live events from json files. It's important to note however
 /// that state that is built from the json files is volatile and is only kept in memory. To save
@@ -61,8 +62,8 @@ use std::collections::HashMap;
 /// ```
 pub type JournalState = StateContainer<JournalStateResolver, JournalEvent>;
 
-impl From<HashMap<String, LiveState>> for JournalState {
-    fn from(value: HashMap<String, LiveState>) -> Self {
+impl From<HashMap<String, LiveStateEntryOwned>> for JournalState {
+    fn from(value: HashMap<String, LiveStateEntryOwned>) -> Self {
         StateContainer::from(JournalStateResolver::from(value))
     }
 }

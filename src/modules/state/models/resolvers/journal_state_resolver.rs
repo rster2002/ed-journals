@@ -10,6 +10,8 @@ use crate::state::models::feed_result::FeedResult;
 use crate::state::models::resolvers::journal_state_resolver::journal_commander_entry::JournalCommanderEntry;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::{LiveState, LogState};
+use crate::state::resolvers::live_state_resolver::live_state_entry::LiveStateEntry;
+use crate::state::resolvers::live_state_resolver::live_state_entry_owned::LiveStateEntryOwned;
 
 /// State which tracks both log events and events that are fired when a json file updates.
 #[derive(Serialize, Default)]
@@ -47,17 +49,18 @@ impl StateResolver<JournalEvent> for JournalStateResolver {
     }
 }
 
-impl From<HashMap<String, LiveState>> for JournalStateResolver {
-    fn from(value: HashMap<String, LiveState>) -> Self {
+impl From<HashMap<String, LiveStateEntryOwned>> for JournalStateResolver {
+    fn from(value: HashMap<String, LiveStateEntryOwned>) -> Self {
         Self {
             commanders: value
                 .into_iter()
-                .map(|(key, state)| {
+                .map(|(key, entry)| {
                     (
                         key,
                         JournalCommanderEntry {
+                            name: entry.name,
                             log_state: LogState::default(),
-                            live_state: state,
+                            live_state: entry.state,
                         },
                     )
                 })
@@ -80,10 +83,13 @@ impl JournalStateResolver {
             .and_then(|commander_id| self.commanders.get_mut(commander_id))
     }
 
-    pub fn all_live_state(&self) -> HashMap<&String, &LiveState> {
+    pub fn all_live_state(&self) -> HashMap<&String, LiveStateEntry> {
         self.commanders
             .iter()
-            .map(|(key, value)| (key, &value.live_state))
+            .map(|(key, value)| (key, LiveStateEntry {
+                name: &value.name,
+                state: &value.live_state,
+            }))
             .collect()
     }
 }

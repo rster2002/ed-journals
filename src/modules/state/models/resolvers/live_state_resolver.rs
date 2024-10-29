@@ -1,5 +1,7 @@
 pub mod organic_location;
 pub mod touchdown_location;
+pub mod live_state_entry_owned;
+pub mod live_state_entry;
 
 use crate::backpack::Backpack;
 use crate::cargo::Cargo;

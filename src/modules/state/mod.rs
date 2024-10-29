@@ -21,7 +21,10 @@
 //! }
 //! ```
 
+pub use models::resolvers::game_state_resolver::game_commander_entry::GameCommanderEntry;
 pub use models::resolvers::journal_state_resolver::journal_commander_entry::JournalCommanderEntry;
+pub use models::resolvers::live_state_resolver::live_state_entry::LiveStateEntry;
+pub use models::resolvers::live_state_resolver::live_state_entry_owned::LiveStateEntryOwned;
 pub use models::resolvers::live_state_resolver::organic_location::OrganicLocation;
 pub use models::resolvers::live_state_resolver::touchdown_location::TouchdownLocation;
 pub use models::resolvers::log_state_resolver::current_organic_progress::CurrentOrganicProgress;
