@@ -2,12 +2,15 @@
 //! [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
 //! resolver handles all log events, but keep track of which commander the logs belong to.
 
+pub mod game_commander_entry;
+
 use std::collections::HashMap;
 
 use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
+use crate::state::resolvers::game_state_resolver::game_commander_entry::GameCommanderEntry;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::LogState;
 
@@ -17,7 +20,7 @@ use crate::state::LogState;
 #[derive(Serialize, Default)]
 pub struct GameStateResolver {
     /// A map of commanders that are tracked, where the key is the Frontier ID of the commander.
-    pub commanders: HashMap<String, LogState>,
+    pub commanders: HashMap<String, GameCommanderEntry>,
     current_commander_id: Option<String>,
 }
 
@@ -28,8 +31,13 @@ impl StateResolver<LogEvent> for GameStateResolver {
                 self.current_commander_id = Some(commander.fid.to_string());
 
                 if !self.commanders.contains_key(&commander.fid) {
-                    self.commanders
-                        .insert(commander.fid.to_string(), LogState::default());
+                    self.commanders.insert(
+                        commander.fid.to_string(),
+                        GameCommanderEntry {
+                            name: commander.name.to_string(),
+                            log_state: LogState::default(),
+                        },
+                    );
                 }
             }
             _ => {
@@ -46,7 +54,7 @@ impl StateResolver<LogEvent> for GameStateResolver {
 
     fn flush_inner(&mut self) {
         for commander in self.commanders.values_mut() {
-            commander.flush();
+            commander.log_state.flush();
         }
     }
 }
@@ -57,6 +65,7 @@ impl GameStateResolver {
         self.current_commander_id
             .as_ref()
             .and_then(|commander_id| self.commanders.get(commander_id))
+            .map(|entry| &entry.log_state)
     }
 
     /// Returns a mutable reference to the current active commander in the logs.
@@ -64,6 +73,7 @@ impl GameStateResolver {
         self.current_commander_id
             .as_ref()
             .and_then(|commander_id| self.commanders.get_mut(commander_id))
+            .map(|entry| &mut entry.log_state)
     }
 }
 
@@ -95,7 +105,7 @@ mod tests {
 
         // Confirms that there are only one species of each genus on each planet
         for commander in state.commanders.values() {
-            for system in commander.systems.values() {
+            for system in commander.log_state.systems.values() {
                 for body in system.planet_state.values() {
                     let mut genuses = HashSet::new();
 

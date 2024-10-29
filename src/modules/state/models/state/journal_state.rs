@@ -1,6 +1,7 @@
 use crate::journal::JournalEvent;
 use crate::state::models::resolvers::journal_state_resolver::JournalStateResolver;
-use crate::state::{LiveState, StateContainer};
+use crate::state::resolvers::live_state_resolver::live_state_entry_owned::LiveStateEntryOwned;
+use crate::state::StateContainer;
 use std::collections::HashMap;
 
 /// Journal state tracks both log and live events from json files. It's important to note however
@@ -17,7 +18,7 @@ use std::collections::HashMap;
 /// use std::path::Path;
 /// use ed_journals::journal::auto_detect_journal_path;
 /// use ed_journals::journal::blocking::LiveJournalDirReader;
-/// use ed_journals::state::{JournalState, LiveState};
+/// use ed_journals::state::{JournalState, LiveStateEntryOwned};
 ///
 /// // In this example we will save the live state to a file called 'live_state.json'.
 /// let path = Path::new("live_state.json");
@@ -28,7 +29,7 @@ use std::collections::HashMap;
 ///     // You need to create a HashMap with strings as keys and live states as values like shown
 ///     // below.
 ///     let string_contents = fs::read_to_string(&path).unwrap();
-///     let parsed: HashMap<String, LiveState> = serde_json::from_str(&string_contents).unwrap();
+///     let parsed: HashMap<String, LiveStateEntryOwned> = serde_json::from_str(&string_contents).unwrap();
 ///
 ///     JournalState::from(parsed)
 /// } else {
@@ -61,8 +62,8 @@ use std::collections::HashMap;
 /// ```
 pub type JournalState = StateContainer<JournalStateResolver, JournalEvent>;
 
-impl From<HashMap<String, LiveState>> for JournalState {
-    fn from(value: HashMap<String, LiveState>) -> Self {
+impl From<HashMap<String, LiveStateEntryOwned>> for JournalState {
+    fn from(value: HashMap<String, LiveStateEntryOwned>) -> Self {
         StateContainer::from(JournalStateResolver::from(value))
     }
 }

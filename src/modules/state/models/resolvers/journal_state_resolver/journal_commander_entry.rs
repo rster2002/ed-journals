@@ -5,6 +5,7 @@ use std::cmp::Ordering;
 
 #[derive(Default, Serialize)]
 pub struct JournalCommanderEntry {
+    pub name: String,
     pub log_state: LogState,
     pub live_state: LiveState,
 }
