@@ -10,9 +10,9 @@ use serde::Serialize;
 
 use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
+use crate::state::resolvers::game_state_resolver::game_commander_entry::GameCommanderEntry;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::LogState;
-use crate::state::resolvers::game_state_resolver::game_commander_entry::GameCommanderEntry;
 
 /// High level state resolver which encapsulates [LogState] and in turn
 /// [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
@@ -31,11 +31,13 @@ impl StateResolver<LogEvent> for GameStateResolver {
                 self.current_commander_id = Some(commander.fid.to_string());
 
                 if !self.commanders.contains_key(&commander.fid) {
-                    self.commanders
-                        .insert(commander.fid.to_string(), GameCommanderEntry {
+                    self.commanders.insert(
+                        commander.fid.to_string(),
+                        GameCommanderEntry {
                             name: commander.name.to_string(),
                             log_state: LogState::default(),
-                        });
+                        },
+                    );
                 }
             }
             _ => {

@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::state::LogState;
+use serde::Serialize;
 
 #[derive(Default, Serialize)]
 pub struct GameCommanderEntry {

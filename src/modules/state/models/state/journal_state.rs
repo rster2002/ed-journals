@@ -1,8 +1,8 @@
 use crate::journal::JournalEvent;
 use crate::state::models::resolvers::journal_state_resolver::JournalStateResolver;
-use crate::state::{LiveState, StateContainer};
-use std::collections::HashMap;
 use crate::state::resolvers::live_state_resolver::live_state_entry_owned::LiveStateEntryOwned;
+use crate::state::StateContainer;
+use std::collections::HashMap;
 
 /// Journal state tracks both log and live events from json files. It's important to note however
 /// that state that is built from the json files is volatile and is only kept in memory. To save

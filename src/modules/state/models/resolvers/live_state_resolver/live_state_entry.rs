@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::state::LiveState;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct LiveStateEntry<'a> {

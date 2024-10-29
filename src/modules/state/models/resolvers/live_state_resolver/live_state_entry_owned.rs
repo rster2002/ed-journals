@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::state::LiveState;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct LiveStateEntryOwned {
