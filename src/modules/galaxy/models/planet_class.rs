@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
@@ -86,6 +88,80 @@ impl PlanetClass {
             PlanetClass::WaterWorld => 116_295,
             PlanetClass::EarthlikeBody => 116_295,
             _ => 93_328,
+        }
+    }
+}
+
+impl Display for PlanetClass {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::MetalRichBody => "Metal rich body",
+                Self::HighMetalContentBody => "High metal content body",
+                Self::RockyBody => "Rocky body",
+                Self::IcyBody => "Icy body",
+                Self::RockyIceBody => "Rocky ice body",
+                Self::EarthlikeBody => "Earthlike body",
+                Self::WaterWorld => "Water world",
+                Self::AmmoniaWorld => "Ammonia world",
+                Self::WaterGiant => "Water giant",
+                Self::WaterGiantWithLife => "Water giant with life",
+                Self::GasGiantWithWaterBasedLife => "Gas giant with water based life",
+                Self::GasGiantWithAmmoniaBasedLife => "Gas giant with ammonia based life",
+                Self::SudarskyClassIGasGiant => "Sudarsky class I gas giant",
+                Self::SudarskyClassIIGasGiant => "Sudarsky class II gas giant",
+                Self::SudarskyClassIIIGasGiant => "Sudarsky class III gas giant",
+                Self::SudarskyClassIVGasGiant => "Sudarsky class IV gas giant",
+                Self::SudarskyClassVGasGiant => "Sudarsky class V gas giant",
+                Self::HeliumRichGasGiant => "Helium rich gas giant",
+                Self::HeliumGasGiant => "Helium gas giant",
+            }
+        )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Ensure that deserializing and Display are consistent
+    #[test]
+    fn conversion_soundness() {
+        let planets = [
+            PlanetClass::MetalRichBody,
+            PlanetClass::HighMetalContentBody,
+            PlanetClass::RockyBody,
+            PlanetClass::IcyBody,
+            PlanetClass::RockyIceBody,
+            PlanetClass::EarthlikeBody,
+            PlanetClass::WaterWorld,
+            PlanetClass::AmmoniaWorld,
+            PlanetClass::WaterGiant,
+            PlanetClass::WaterGiantWithLife,
+            PlanetClass::GasGiantWithWaterBasedLife,
+            PlanetClass::GasGiantWithAmmoniaBasedLife,
+            PlanetClass::SudarskyClassIGasGiant,
+            PlanetClass::SudarskyClassIIGasGiant,
+            PlanetClass::SudarskyClassIIIGasGiant,
+            PlanetClass::SudarskyClassIVGasGiant,
+            PlanetClass::SudarskyClassVGasGiant,
+            PlanetClass::HeliumRichGasGiant,
+            PlanetClass::HeliumGasGiant,
+        ];
+
+        for planet in planets {
+            let planet_string = planet.to_string();
+            let planet_json_string = format!("\"{}\"", planet_string);
+            let planet_deserialized = serde_json::de::from_str::<PlanetClass>(&planet_json_string);
+            assert!(
+                planet_deserialized.is_ok(),
+                "Failed to deserialize {}: {:?}",
+                planet_string,
+                planet_deserialized
+            );
+            assert_eq!(planet, planet_deserialized.unwrap());
         }
     }
 }
