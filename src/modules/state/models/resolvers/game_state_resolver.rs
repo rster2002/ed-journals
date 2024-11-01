@@ -35,17 +35,31 @@ impl StateResolver<LogEvent> for GameStateResolver {
                         commander.fid.to_string(),
                         GameCommanderEntry {
                             name: commander.name.to_string(),
+                            game_mode: None,
                             log_state: LogState::default(),
                         },
                     );
                 }
             }
+
             _ => {
                 let Some(current) = self.current_commander_mut() else {
                     return FeedResult::Later;
                 };
 
-                current.log_state.feed(input);
+                match &input.content {
+                    LogEventContent::LoadGame(load_game_event) => {
+                        current.game_mode = load_game_event.game_mode.clone();
+                    }
+                    LogEventContent::Music(music_event)
+                        if music_event.music_track == "MainMenu" =>
+                    {
+                        // Player exited to games' main menu. TODO: Is this check sufficient or is there a better way?
+                        current.game_mode = None;
+                    }
+                    LogEventContent::Shutdown => current.game_mode = None,
+                    _ => current.log_state.feed(input),
+                }
             }
         }
 
