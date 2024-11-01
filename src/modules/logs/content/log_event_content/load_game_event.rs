@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipType;
@@ -16,6 +18,7 @@ pub struct LoadGameEvent {
 
     #[serde(flatten)]
     pub ship_info: Option<LoadGameEventShipInfo>,
+    #[serde(flatten)]
     pub game_mode: Option<LoadGameEventGameMode>,
     pub credits: u64,
     pub loan: u64,
@@ -35,10 +38,20 @@ pub struct LoadGameEventShipInfo {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(tag = "GameMode", content = "Group")]
 pub enum LoadGameEventGameMode {
     Open,
     Solo,
-    Group,
+    Group(String),
+}
+
+impl Display for LoadGameEventGameMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+        match self {
+            Self::Open | Self::Solo => write!(f, "{:?}", self),
+            Self::Group(group) => write!(f, "Group ({})", group),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -48,6 +61,30 @@ mod tests {
     };
     use crate::modules::ship::ShipType;
 
+    #[test]
+    fn game_mode_parsed_correctly() {
+        let items = [
+            (LoadGameEventGameMode::Open, r#"{"GameMode": "Open"}"#),
+            (LoadGameEventGameMode::Solo, r#"{"GameMode": "Solo"}"#),
+            (
+                LoadGameEventGameMode::Group(String::from("asdf")),
+                r#"{"GameMode": "Group", "Group": "asdf"}"#,
+            ),
+        ];
+
+        for (expected, json_str) in items {
+            let parsed = serde_json::from_str(json_str);
+            assert!(
+                parsed.is_ok(),
+                "Failed to parse: {}: {:?}",
+                json_str,
+                parsed
+            );
+            assert_eq!(expected, parsed.unwrap());
+        }
+    }
+
+    #[test]
     fn load_game_event_is_parsed_correctly() {
         let parsed: LoadGameEvent = serde_json::from_str(
             r#"
@@ -61,7 +98,8 @@ mod tests {
                 "ShipIdent": "hr-17f",
                 "FuelLevel": 3.964024,
                 "FuelCapacity": 8,
-                "GameMode": "Open",
+                "GameMode": "Group",
+                "Group": "Asdf",
                 "Credits": 2890718739,
                 "Loan": 0
             }
@@ -73,7 +111,7 @@ mod tests {
             commander: "HRC-2".to_string(),
             fid: "F44396".to_string(),
             horizons: true,
-            odyssey: true,
+            odyssey: false,
             ship_info: Some(LoadGameEventShipInfo {
                 ship: ShipType::FerDeLance,
                 ship_id: 19,
@@ -82,7 +120,7 @@ mod tests {
                 fuel_level: 3.964024,
                 fuel_capacity: 8.0,
             }),
-            game_mode: Some(LoadGameEventGameMode::Open),
+            game_mode: Some(LoadGameEventGameMode::Group(String::from("Asdf"))),
             credits: 2890718739,
             loan: 0,
         };

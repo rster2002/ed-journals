@@ -163,6 +163,9 @@ impl StateResolver<LogEvent> for LogStateResolver {
                     None => return FeedResult::Later,
                 }
             }
+            // Should be unreachable because this is already handled in GameCommanderEntry, however we dont want to
+            // panic via unreachable!() here, just in case..
+            LogEventContent::LoadGame(_) => {}
             _ => {}
         }
 
