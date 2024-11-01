@@ -94,7 +94,7 @@ impl PlanetClass {
 
 impl Display for PlanetClass {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
-        let string = match self {
+        write!(f, "{}", match self {
             Self::MetalRichBody => "Metal rich body",
             Self::HighMetalContentBody => "High metal content body",
             Self::RockyBody => "Rocky body",
@@ -114,8 +114,7 @@ impl Display for PlanetClass {
             Self::SudarskyClassVGasGiant => "Sudarsky class V gas giant",
             Self::HeliumRichGasGiant => "Helium rich gas giant",
             Self::HeliumGasGiant => "Helium gas giant",
-        };
-        write!(f, "{}", string)
+        })
     }
 }
 
