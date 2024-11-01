@@ -118,3 +118,47 @@ impl Display for PlanetClass {
         write!(f, "{}", string)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Ensure that deserializing and Display are consistent
+    #[test]
+    fn conversion_soundness() {
+        let planets = [
+            PlanetClass::MetalRichBody,
+            PlanetClass::HighMetalContentBody,
+            PlanetClass::RockyBody,
+            PlanetClass::IcyBody,
+            PlanetClass::RockyIceBody,
+            PlanetClass::EarthlikeBody,
+            PlanetClass::WaterWorld,
+            PlanetClass::AmmoniaWorld,
+            PlanetClass::WaterGiant,
+            PlanetClass::WaterGiantWithLife,
+            PlanetClass::GasGiantWithWaterBasedLife,
+            PlanetClass::GasGiantWithAmmoniaBasedLife,
+            PlanetClass::SudarskyClassIGasGiant,
+            PlanetClass::SudarskyClassIIGasGiant,
+            PlanetClass::SudarskyClassIIIGasGiant,
+            PlanetClass::SudarskyClassIVGasGiant,
+            PlanetClass::SudarskyClassVGasGiant,
+            PlanetClass::HeliumRichGasGiant,
+            PlanetClass::HeliumGasGiant,
+        ];
+
+        for planet in planets {
+            let planet_string = planet.to_string();
+            let planet_json_string = format!("\"{}\"", planet_string);
+            let planet_deserialized = serde_json::de::from_str::<PlanetClass>(&planet_json_string);
+            assert!(
+                planet_deserialized.is_ok(),
+                "Failed to deserialize {}: {:?}",
+                planet_string,
+                planet_deserialized
+            );
+            assert_eq!(planet, planet_deserialized.unwrap());
+        }
+    }
+}
