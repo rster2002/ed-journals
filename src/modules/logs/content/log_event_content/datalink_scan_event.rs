@@ -1,3 +1,5 @@
+//! Fired when the player scans a datapoint and extracts a message from it.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player scans a datapoint and extracts a message from it.

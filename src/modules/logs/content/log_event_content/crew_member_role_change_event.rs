@@ -1,3 +1,5 @@
+//! Fired whenever another player changes their own role.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired whenever another player changes their own role.

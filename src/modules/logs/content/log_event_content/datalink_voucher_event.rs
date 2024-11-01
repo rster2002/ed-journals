@@ -1,3 +1,5 @@
+//! Fired when a faction has paid for scanning a datapoint.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when a faction has paid for scanning a datapoint.

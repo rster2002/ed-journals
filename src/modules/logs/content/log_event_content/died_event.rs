@@ -1,3 +1,6 @@
+//! Fired when the player dies. Depending on the way the player died the event contains different
+//! information.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::CombatRank;

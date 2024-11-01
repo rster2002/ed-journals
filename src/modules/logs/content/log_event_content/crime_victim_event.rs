@@ -1,7 +1,9 @@
+//! Fired when the player is the target of a crime.
+
 use crate::civilization::Crime;
 use serde::{Deserialize, Serialize};
 
-/// Fired when the player
+/// Fired when the player is the target of a crime.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CrimeVictimEvent {

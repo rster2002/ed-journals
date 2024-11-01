@@ -3,6 +3,7 @@ use std::str::FromStr;
 
 use serde::{Deserialize, Deserializer, Serialize};
 use thiserror::Error;
+use crate::deserialize_in_order_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum CombatRank {
@@ -100,30 +101,36 @@ impl FromStr for CombatRank {
     }
 }
 
-#[derive(Deserialize)]
-#[serde(untagged)]
-enum CombatInput {
-    U8(u8),
-    String(String),
-}
+deserialize_in_order_impl!(
+    CombatRank =>
+        A ? u8,
+        B # String,
+);
 
-impl<'de> serde::Deserialize<'de> for CombatRank {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let input = CombatInput::deserialize(deserializer)?;
-
-        match input {
-            CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
-                serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
-            })?),
-            CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
-                serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
-            })?),
-        }
-    }
-}
+// #[derive(Deserialize)]
+// #[serde(untagged)]
+// enum CombatInput {
+//     U8(u8),
+//     String(String),
+// }
+//
+// impl<'de> serde::Deserialize<'de> for CombatRank {
+//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+//     where
+//         D: Deserializer<'de>,
+//     {
+//         let input = CombatInput::deserialize(deserializer)?;
+//
+//         match input {
+//             CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
+//                 serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
+//             })?),
+//             CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
+//                 serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
+//             })?),
+//         }
+//     }
+// }
 
 impl Display for CombatRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

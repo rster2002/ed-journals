@@ -1,3 +1,5 @@
+//! Fired when scanning data while in a ship or SRV.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when scanning data while in a ship or SRV.

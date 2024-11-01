@@ -1,3 +1,5 @@
+//! Fired when deleting a suit load-out.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::Suit;

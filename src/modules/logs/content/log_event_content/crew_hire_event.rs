@@ -1,3 +1,5 @@
+//! Fired when the player fires a new crew member.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::CombatRank;

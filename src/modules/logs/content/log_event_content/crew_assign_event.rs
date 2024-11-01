@@ -1,3 +1,5 @@
+//! Fired when assigning crew.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when assigning crew.

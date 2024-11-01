@@ -1,3 +1,5 @@
+//! Fired whenever a new player joins a multi-crew session.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired whenever a new player joins a multi-crew session.

@@ -1,3 +1,5 @@
+//! Fired when the player fires a crew member.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player fires a crew member.

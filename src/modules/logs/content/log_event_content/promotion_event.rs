@@ -5,12 +5,13 @@ use crate::modules::commander::{
     TradeRank,
 };
 
+/// Fired when the player is promoted for a given rank.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum PromotionEvent {
     Exobiologist(ExobiologyRank),
     Combat(CombatRank),
-
+    
     #[serde(rename = "Soldier")]
     Mercenary(MercenaryRank),
     Trade(TradeRank),
