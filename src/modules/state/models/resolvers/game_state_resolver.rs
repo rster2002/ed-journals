@@ -45,7 +45,7 @@ impl StateResolver<LogEvent> for GameStateResolver {
                     return FeedResult::Later;
                 };
 
-                current.feed(input);
+                current.log_state.feed(input);
             }
         }
 
@@ -61,26 +61,23 @@ impl StateResolver<LogEvent> for GameStateResolver {
 
 impl GameStateResolver {
     /// Returns the current commander which is active in the logs.
-    pub fn current_commander(&self) -> Option<&LogState> {
+    pub fn current_commander(&self) -> Option<&GameCommanderEntry> {
         self.current_commander_id
             .as_ref()
             .and_then(|commander_id| self.commanders.get(commander_id))
-            .map(|entry| &entry.log_state)
     }
 
     /// Returns a mutable reference to the current active commander in the logs.
-    pub fn current_commander_mut(&mut self) -> Option<&mut LogState> {
+    pub fn current_commander_mut(&mut self) -> Option<&mut GameCommanderEntry> {
         self.current_commander_id
             .as_ref()
             .and_then(|commander_id| self.commanders.get_mut(commander_id))
-            .map(|entry| &mut entry.log_state)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::logs::blocking::LogDirReader;
-    use crate::state::traits::state_resolver::StateResolver;
     use crate::state::GameState;
     use std::collections::HashSet;
     use std::env::current_dir;
