@@ -163,7 +163,6 @@ impl StateResolver<LogEvent> for LogStateResolver {
                     None => return FeedResult::Later,
                 }
             }
-
             _ => {}
         }
 
