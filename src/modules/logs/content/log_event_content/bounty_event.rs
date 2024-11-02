@@ -80,7 +80,7 @@ pub struct BountyEventNormalReward {
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventSkimmer {
     /// The name of the faction that placed the bounty.
-    pub faction: String,
+    pub faction: Option<String>,
 
     /// The name of the target.
     pub target: String,

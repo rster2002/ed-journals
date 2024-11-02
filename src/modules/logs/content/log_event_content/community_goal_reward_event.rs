@@ -14,6 +14,7 @@ pub struct CommunityGoalRewardEvent {
     pub name: String,
 
     /// The system where the community goal is located in.
+    #[serde(alias = "System")]
     pub system_name: String,
 
     /// The number of credits the player has been awarded for participating in the community goal.

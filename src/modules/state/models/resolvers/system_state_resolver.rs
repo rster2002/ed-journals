@@ -200,7 +200,7 @@ mod tests {
         ];
 
         for commander in state.commanders.values() {
-            for system in commander.systems.values() {
+            for system in commander.log_state.systems.values() {
                 for (body_id, planet_state) in &system.planet_state {
                     if blacklisted_bodies.contains(&planet_state.scan.body_name) {
                         continue;

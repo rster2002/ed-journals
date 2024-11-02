@@ -39,3 +39,6 @@ rustdoc-args = ["--cfg", "docsrs"]
 default = ["asynchronous"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
 allow-unknown = []
+# Enables loading Journal files from before game version 4. Not fully supported and may lead to
+# parsing errors. In such cases, PRs with affected Journal files/events are appreciated :)
+legacy = []

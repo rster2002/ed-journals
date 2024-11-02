@@ -8,13 +8,15 @@ use crate::modules::ship::SRVType;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LaunchSRVEvent {
+    // The default is necessary because when SRVs were released, there was only
+    // the Scarab. Therefore, this field did not exist.
     /// The type of SRV launched.
-    #[serde(rename = "SRVType")]
+    #[serde(rename = "SRVType", default)]
     pub srv_type: SRVType,
 
     /// The localized name of the type of SRV launched.
     #[serde(rename = "SRVType_Localised")]
-    pub srv_type_localized: String,
+    pub srv_type_localized: Option<String>,
 
     // TODO check if this can be replaced with an enum
     pub loadout: String,

@@ -21,7 +21,7 @@ pub struct LiftoffEvent {
 
     /// The id of the body the player lifting off from.
     #[serde(rename = "BodyID")]
-    pub body_id: u64,
+    pub body_id: u8,
 
     /// Whether the player is lifting off from a settlement.
     pub on_station: bool,

@@ -19,7 +19,7 @@ pub struct DockingRequestedEvent {
     pub market_id: u64,
 
     /// The number of available landing pads at the given station.
-    pub landing_pads: DockingRequestedEventLandingPads,
+    pub landing_pads: Option<DockingRequestedEventLandingPads>,
 }
 
 /// The number of available landing pads at the given station.

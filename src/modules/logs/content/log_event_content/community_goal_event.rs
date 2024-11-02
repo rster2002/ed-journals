@@ -53,7 +53,7 @@ pub struct CommunityGoalEventGoal {
     /// The highest rank the current player has reached.
     pub tier_reached: Option<String>,
     pub player_percentile_band: u8,
-    pub bonus: u64,
+    pub bonus: Option<u64>,
 }
 
 #[cfg(test)]

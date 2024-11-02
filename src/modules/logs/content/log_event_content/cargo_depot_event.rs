@@ -16,10 +16,10 @@ pub struct CargoDepotEvent {
     pub update_type: CargoDepotEventUpdateType,
 
     /// The commodity which were collected or delivered.
-    pub cargo_type: Commodity,
+    pub cargo_type: Option<Commodity>,
 
     /// The number of items which were collected or delivered.
-    pub count: u16,
+    pub count: Option<u16>,
 
     /// The market id where the player should collect the commodities from.
     #[serde(rename = "StartMarketID")]

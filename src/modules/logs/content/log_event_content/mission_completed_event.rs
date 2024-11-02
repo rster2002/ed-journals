@@ -82,6 +82,9 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_SP_down;")]
     SecurityFactionDecrease,
 
+    #[serde(rename = "$MISSIONUTIL_Interaction_Summary_Outbreak_down;")]
+    OutbreakDecrease,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]

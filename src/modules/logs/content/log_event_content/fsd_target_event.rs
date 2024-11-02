@@ -17,7 +17,8 @@ pub struct FSDTargetEvent {
     name: String,
 
     /// Number of remaining jumps on the route, if any.
-    remaining_jumps_in_route: Option<u8>,
+    #[serde(default)]
+    remaining_jumps_in_route: u32,
 
     /// Star class of the select system.
     star_class: StarClass,

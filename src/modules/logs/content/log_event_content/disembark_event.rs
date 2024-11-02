@@ -51,8 +51,10 @@ pub struct DisembarkEvent {
     pub srv: bool,
 
     /// Whether the player has embarked a taxi.
+    #[serde(default)]
     pub taxi: bool,
 
     /// Whether the player has embarked multicrew.
+    #[serde(default)]
     pub multicrew: bool,
 }

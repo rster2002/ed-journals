@@ -13,6 +13,7 @@ pub struct PayBountiesEvent {
     pub broker_percentage: Option<f32>,
 
     /// Whether all fines have been paid in one go.
+    #[serde(default)]
     pub all_fines: bool,
 
     /// The faction the bounties were paid at.
