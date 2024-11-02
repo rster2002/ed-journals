@@ -205,7 +205,7 @@ pub struct MissionType(pub String);
 //     #[serde(untagged)]
 //     SightseeingMission(SightseeingMission),
 //
-//     #[cfg(not(feature = "strict"))]
+//     #[cfg(feature = "allow-unknown")]
 //     #[serde(untagged)]
 //     Unknown(String),
 // }

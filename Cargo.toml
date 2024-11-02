@@ -31,10 +31,14 @@ directories = "5.0.1"
 [dev-dependencies]
 tokio-test = "0.4.4"
 
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
 [features]
-default = ["asynchronous", "strict"]
+default = ["asynchronous"]
 asynchronous = ["dep:tokio", "dep:async-mutex"]
-strict = []
+allow-unknown = []
 # Enables loading Journal files from before game version 4. Not fully supported and may lead to
 # parsing errors. In such cases, PRs with affected Journal files/events are appreciated :)
 legacy = []

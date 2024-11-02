@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// The kind of crime that can be committed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum Crime {

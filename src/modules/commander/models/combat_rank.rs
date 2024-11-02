@@ -1,7 +1,8 @@
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
-use serde::{Deserialize, Deserializer, Serialize};
+use crate::deserialize_in_order_impl;
+use serde::Serialize;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
@@ -21,10 +22,12 @@ pub enum CombatRank {
     EliteIV,
     EliteV,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     UnknownU8(u8),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     UnknownString(String),
 }
 
@@ -60,10 +63,10 @@ impl TryFrom<u8> for CombatRank {
             12 => Ok(CombatRank::EliteIV),
             13 => Ok(CombatRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(CombatRank::UnknownU8(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(CombatRankError::UnknownCombatRank(value)),
         }
     }
@@ -89,39 +92,45 @@ impl FromStr for CombatRank {
             "EliteIV" => Ok(CombatRank::EliteIV),
             "EliteV" => Ok(CombatRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(CombatRank::UnknownString(s.to_string())),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(CombatRankError::UnknownCombatString(s.to_string())),
         }
     }
 }
 
-#[derive(Deserialize)]
-#[serde(untagged)]
-enum CombatInput {
-    U8(u8),
-    String(String),
-}
+deserialize_in_order_impl!(
+    CombatRank =>
+        A ? u8,
+        B # String,
+);
 
-impl<'de> serde::Deserialize<'de> for CombatRank {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let input = CombatInput::deserialize(deserializer)?;
-
-        match input {
-            CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
-                serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
-            })?),
-            CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
-                serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
-            })?),
-        }
-    }
-}
+// #[derive(Deserialize)]
+// #[serde(untagged)]
+// enum CombatInput {
+//     U8(u8),
+//     String(String),
+// }
+//
+// impl<'de> serde::Deserialize<'de> for CombatRank {
+//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+//     where
+//         D: Deserializer<'de>,
+//     {
+//         let input = CombatInput::deserialize(deserializer)?;
+//
+//         match input {
+//             CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
+//                 serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
+//             })?),
+//             CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
+//                 serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
+//             })?),
+//         }
+//     }
+// }
 
 impl Display for CombatRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -144,11 +153,11 @@ impl Display for CombatRank {
                 CombatRank::EliteIV => "Elite IV",
                 CombatRank::EliteV => "Elite V",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownU8(unknown) =>
                     return write!(f, "Unknown combat rank nr: {}", unknown),
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownString(unknown) =>
                     return write!(f, "Unknown combat rank: {}", unknown),
             }

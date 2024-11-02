@@ -1,3 +1,13 @@
+//! Contains everything that has to do with ships, including the different types of ships, but also
+//! the different modules that can be equipped.
+//!
+//! You usually want to use one of the top-level models like:
+//! * [ShipType] for parsing which type of ship is being used.
+//! * [ShipModule] for parsing any kind of ship module, including optional- and core internals,
+//!   full-sized hardpoints and utility modules, hulls and cosmetics and some internal modules which
+//!   are not modules which can be outfitted, but they may appear in some of the journal logs.
+//! * [FighterType] and [SRVType] are small enums to specify their respective variants.
+
 pub use models::blueprint::Blueprint;
 pub use models::blueprint_modifier::BlueprintModifier;
 pub use models::fighter_loadout::FighterLoadout;

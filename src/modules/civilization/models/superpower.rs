@@ -13,7 +13,8 @@ pub enum Superpower {
     PlayerPilots,
     Thargoid,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -33,7 +34,7 @@ impl Display for Superpower {
                 Superpower::PlayerPilots => "Player Pilots",
                 Superpower::Thargoid => "Thargoid",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Superpower::Unknown(unknown) =>
                     return write!(f, "Unknown superpower: {}", unknown),
             }

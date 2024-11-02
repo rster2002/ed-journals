@@ -1,21 +1,44 @@
+//! Fired when lifting off from a planet.
+
 use serde::{Deserialize, Serialize};
 
+/// Fired when lifting off from a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LiftoffEvent {
+    /// The coordinates where the player has lifted off when on a planet.
     #[serde(flatten)]
     pub position: Option<LiftoffEventPosition>,
+
+    /// The name of the star system the player is currently in.
     pub star_system: String,
+
+    /// The address of the star system the player is currently in.
     pub system_address: u64,
+
+    /// The name of the body the player lifting off from.
     pub body: String,
 
+    /// The id of the body the player lifting off from.
     #[serde(rename = "BodyID")]
     pub body_id: u8,
+
+    /// Whether the player is lifting off from a settlement.
     pub on_station: bool,
+
+    /// Whether the player is lifting off from the surface of the planet and not from a landing pad.
     pub on_planet: bool,
+
+    /// Whether the player is currently in multicrew.
     pub multicrew: bool,
+
+    /// Name of the nearest destination.
     pub nearest_destination: Option<String>,
+
+    /// Whether the liftoff is fired from a taxi ship.
     pub taxi: bool,
+
+    /// Whether the player is controlling the ship.
     pub player_controlled: bool,
 }
 
@@ -24,6 +47,12 @@ pub struct LiftoffEvent {
 pub struct LiftoffEventPosition {
     pub latitude: f32,
     pub longitude: f32,
+}
+
+impl From<LiftoffEventPosition> for (f32, f32) {
+    fn from(val: LiftoffEventPosition) -> Self {
+        (val.latitude, val.longitude)
+    }
 }
 
 #[cfg(test)]

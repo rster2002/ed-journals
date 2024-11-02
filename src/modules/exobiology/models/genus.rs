@@ -1,84 +1,168 @@
-use std::fmt::{Display, Formatter};
-
-use serde::{Deserialize, Serialize};
-
+use crate::exploration::shared::codex_regex::CODEX_REGEX;
+use crate::from_str_deserialize_impl;
 use crate::modules::exobiology::Species;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use thiserror::Error;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum Genus {
-    #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
     Aleoida,
-
     AmphoraPlant,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
-    Anemone,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Cone_Name;")]
-    BarkMound,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
+    Anemone,   // TODO needs to be verified
+    BarkMound, // TODO needs to be verified
     Bacterium,
-
-    #[serde(rename = "$Codex_Ent_Brancae_Name;")]
     BrainTree,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_Genus_Name;")]
     Cactoida,
-
-    #[serde(rename = "$Codex_Ent_Clypeus_Genus_Name;")]
     Clypeus,
-
-    #[serde(rename = "$Codex_Ent_Conchas_Genus_Name;")]
     Concha,
-
-    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
     CrystallineShards,
-
-    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
     Electricae,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
     Fonticulua,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
     Frutexa,
-
-    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
-
-    #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]
     Fungoida,
-
-    #[serde(rename = "$Codex_Ent_Osseus_Genus_Name;")]
     Osseus,
-
-    #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
     Recepta,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Tube_Name;")]
-    SinuousTubers,
-
-    #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
+    SinuousTubers, // TODO needs to be verified
     Stratum,
-
-    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
     Tubus,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
     Tussock,
+    ThargoidBarnacle, // TODO needs to be verified
 
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Name;")]
-    ThargoidBarnacle,
-
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
+
+impl Genus {
+    /// Whether the current variant is unknown.
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, Genus::Unknown(_))
+    }
+
+    /// The minimum distance in meters required between two samples.
+    pub fn minimum_distance(&self) -> u32 {
+        match self {
+            Genus::Aleoida => 150,
+            Genus::AmphoraPlant => 100,
+            Genus::Anemone => 100,
+            Genus::BarkMound => 100,
+            Genus::Bacterium => 500,
+            Genus::BrainTree => 100,
+            Genus::Cactoida => 300,
+            Genus::Clypeus => 150,
+            Genus::Concha => 150,
+            Genus::CrystallineShards => 100,
+            Genus::Electricae => 1000,
+            Genus::Fonticulua => 500,
+            Genus::Frutexa => 150,
+            Genus::Fumerola => 100,
+            Genus::Fungoida => 300,
+            Genus::Osseus => 800,
+            Genus::Recepta => 150,
+            Genus::SinuousTubers => 100,
+            Genus::Stratum => 500,
+            Genus::Tubus => 800,
+            Genus::Tussock => 200,
+
+            // TODO check what this should be
+            Genus::ThargoidBarnacle => 0,
+
+            #[cfg(feature = "allow-unknown")]
+            Genus::Unknown(_) => 0,
+        }
+    }
+
+    pub fn id(&self) -> u64 {
+        match self {
+            Genus::Aleoida => 23100,
+            Genus::AmphoraPlant => 2101400,
+            Genus::Anemone => 2100400,
+            Genus::BarkMound => 2100300,
+            Genus::Bacterium => 23200,
+            Genus::BrainTree => 2100200,
+            Genus::Cactoida => 23300,
+            Genus::Clypeus => 23400,
+            Genus::Concha => 23500,
+            Genus::CrystallineShards => 2101500,
+            Genus::Electricae => 23600,
+            Genus::Fonticulua => 23700,
+            Genus::Frutexa => 24400,
+            Genus::Fumerola => 23800,
+            Genus::Fungoida => 23900,
+            Genus::Osseus => 24000,
+            Genus::Recepta => 24100,
+            Genus::SinuousTubers => 2100500,
+            Genus::Stratum => 24200,
+            Genus::Tubus => 24300,
+            Genus::Tussock => 24500,
+            Genus::ThargoidBarnacle => 21000,
+
+            #[cfg(feature = "allow-unknown")]
+            Genus::Unknown(_) => 0,
+        }
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum GenusError {
+    #[error("Failed to parse genus: '{0}'")]
+    FailedToParse(String),
+}
+
+impl FromStr for Genus {
+    type Err = GenusError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let Some(captures) = CODEX_REGEX.captures(s) else {
+            return Err(GenusError::FailedToParse(s.to_string()));
+        };
+
+        let string: &str = &captures
+            .get(1)
+            .expect("Should have been captured already")
+            .as_str()
+            .to_ascii_lowercase();
+
+        Ok(match string {
+            "aleoids_genus" => Genus::Aleoida,
+            "vents" => Genus::AmphoraPlant,
+            "sphere" => Genus::Anemone,
+            "cone" => Genus::BarkMound,
+            "bacterial_genus" => Genus::Bacterium,
+            "brancae" => Genus::BrainTree,
+            "cactoid_genus" => Genus::Cactoida,
+            "clypeus_genus" => Genus::Clypeus,
+            "conchas_genus" => Genus::Concha,
+            "ground_struct_ice" | "ice_structures" => Genus::CrystallineShards,
+            "electricae_genus" => Genus::Electricae,
+            "fonticulus_genus" => Genus::Fonticulua,
+            "shrubs_genus" => Genus::Frutexa,
+            "fumerolas_genus" => Genus::Fumerola,
+            "fungoids_genus" => Genus::Fungoida,
+            "osseus_genus" => Genus::Osseus,
+            "recepta_genus" => Genus::Recepta,
+            "tube" => Genus::SinuousTubers,
+            "stratum_genus" => Genus::Stratum,
+            "tubus_genus" => Genus::Tubus,
+            "tussocks_genus" => Genus::Tussock,
+            "thargoid_barnacle" => Genus::ThargoidBarnacle,
+
+            #[cfg(feature = "allow-unknown")]
+            _ => Genus::Unknown(string.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
+            _ => return Err(GenusError::FailedToParse(string.to_string())),
+        })
+    }
+}
+
+from_str_deserialize_impl!(Genus);
 
 impl From<&Species> for Genus {
     fn from(value: &Species) -> Self {
@@ -225,6 +309,9 @@ impl From<&Species> for Genus {
             | Species::ThargoidBarnacleBarbs
             | Species::ThargoidBarnacleMatrixSubmerged
             | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
+
+            #[cfg(feature = "allow-unknown")]
+            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {}", unknown)),
         }
     }
 }
@@ -264,74 +351,9 @@ impl Display for Genus {
                 Genus::Tussock => "Tussock",
                 Genus::ThargoidBarnacle => "Thargoid Barnacle",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
             }
         )
-    }
-}
-
-impl Genus {
-    /// The minimum distance in meters required between two samples.
-    pub fn minimum_distance(&self) -> u32 {
-        match self {
-            Genus::Aleoida => 150,
-            Genus::AmphoraPlant => 100,
-            Genus::Anemone => 100,
-            Genus::BarkMound => 100,
-            Genus::Bacterium => 500,
-            Genus::BrainTree => 100,
-            Genus::Cactoida => 300,
-            Genus::Clypeus => 150,
-            Genus::Concha => 150,
-            Genus::CrystallineShards => 100,
-            Genus::Electricae => 1000,
-            Genus::Fonticulua => 500,
-            Genus::Frutexa => 150,
-            Genus::Fumerola => 100,
-            Genus::Fungoida => 300,
-            Genus::Osseus => 800,
-            Genus::Recepta => 150,
-            Genus::SinuousTubers => 100,
-            Genus::Stratum => 500,
-            Genus::Tubus => 800,
-            Genus::Tussock => 200,
-
-            // TODO check what this should be
-            Genus::ThargoidBarnacle => 0,
-
-            #[cfg(not(feature = "strict"))]
-            Genus::Unknown(_) => 0,
-        }
-    }
-
-    pub fn id(&self) -> u64 {
-        match self {
-            Genus::Aleoida => 23100,
-            Genus::AmphoraPlant => 2101400,
-            Genus::Anemone => 2100400,
-            Genus::BarkMound => 2100300,
-            Genus::Bacterium => 23200,
-            Genus::BrainTree => 2100200,
-            Genus::Cactoida => 23300,
-            Genus::Clypeus => 23400,
-            Genus::Concha => 23500,
-            Genus::CrystallineShards => 2101500,
-            Genus::Electricae => 23600,
-            Genus::Fonticulua => 23700,
-            Genus::Frutexa => 24400,
-            Genus::Fumerola => 23800,
-            Genus::Fungoida => 23900,
-            Genus::Osseus => 24000,
-            Genus::Recepta => 24100,
-            Genus::SinuousTubers => 2100500,
-            Genus::Stratum => 24200,
-            Genus::Tubus => 24300,
-            Genus::Tussock => 24500,
-            Genus::ThargoidBarnacle => 21000,
-
-            #[cfg(not(feature = "strict"))]
-            Genus::Unknown(_) => 0,
-        }
     }
 }

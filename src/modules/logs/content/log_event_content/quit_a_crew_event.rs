@@ -1,3 +1,5 @@
+//! Fired when the current player leaves a multi-crew session.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the current player leaves a multi-crew session.

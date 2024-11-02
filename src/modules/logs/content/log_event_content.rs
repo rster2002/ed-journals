@@ -1,6 +1,6 @@
 use kinded::Kinded;
 use serde::{Deserialize, Serialize};
-#[cfg(not(feature = "strict"))]
+#[cfg(feature = "allow-unknown")]
 use serde_json::Value;
 
 use afmu_repairs_event::AFMURepairsEvent;
@@ -89,12 +89,12 @@ use engineer_craft_event::EngineerCraftEvent;
 use engineer_progress_event::EngineerProgressEvent;
 use escape_interdiction_event::EscapeInterdictionEvent;
 use faction_kill_bond_event::FactionKillBondEvent;
+use fc_embark_event::FCEmbarkEvent;
 use fetch_remote_module_event::FetchRemoteModuleEvent;
 use fighter_destroyed_event::FighterDestroyedEvent;
 use fighter_rebuilt_event::FighterRebuiltEvent;
 use file_header_event::FileHeaderEvent;
 use friends_event::FriendsEvent;
-use fs_embark_event::FCMaterialsEvent;
 use fsd_jump_event::FSDJumpEvent;
 use fsd_target_event::FSDTargetEvent;
 use fss_all_bodies_found_event::FSSAllBodiesFoundEvent;
@@ -342,12 +342,12 @@ pub mod engineer_craft_event;
 pub mod engineer_progress_event;
 pub mod escape_interdiction_event;
 pub mod faction_kill_bond_event;
+pub mod fc_embark_event;
 pub mod fetch_remote_module_event;
 pub mod fighter_destroyed_event;
 pub mod fighter_rebuilt_event;
 pub mod file_header_event;
 pub mod friends_event;
-pub mod fs_embark_event;
 pub mod fsd_jump_event;
 pub mod fsd_target_event;
 pub mod fss_all_bodies_found_event;
@@ -511,6 +511,7 @@ pub mod legacy_touchdown_event;
 /// > on [GitHub](https://github.com/rster2002/ed-journals/issues/new).
 #[derive(Debug, Serialize, Deserialize, Kinded, Clone, PartialEq)]
 #[serde(tag = "event")]
+#[non_exhaustive]
 pub enum LogEventContent {
     // Startup
     Cargo(CargoEvent),
@@ -718,7 +719,7 @@ pub enum LogEventContent {
     DropItems(DropItemsEvent),
     DropshipDeploy(DropshipDeployEvent),
     Embark(EmbarkEvent),
-    FCMaterials(FCMaterialsEvent),
+    FCMaterials(FCEmbarkEvent),
     LoadoutEquipModule(LoadoutEquipModuleEvent),
     LoadoutRemoveModule(LoadoutRemoveModuleEvent),
     RenameSuitLoadout(RenameSuitLoadoutEvent),
@@ -809,7 +810,8 @@ pub enum LogEventContent {
     #[serde(untagged)]
     LegacyTouchdownEvent(LegacyTouchdownEvent),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(Value),
 }

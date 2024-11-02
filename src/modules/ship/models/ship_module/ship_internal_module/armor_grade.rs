@@ -12,10 +12,12 @@ pub enum ArmorGrade {
     MirroredSurfaceComposite,
     ReactiveSurfaceComposite,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     UnknownString(String),
 }
 
@@ -39,10 +41,10 @@ impl TryFrom<u8> for ArmorGrade {
             4 => ArmorGrade::MirroredSurfaceComposite,
             5 => ArmorGrade::ReactiveSurfaceComposite,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => ArmorGrade::Unknown(value),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(ArmorGradeError::UnknownArmorGrade(value)),
         })
     }
@@ -61,10 +63,10 @@ impl FromStr for ArmorGrade {
             "mirrored" => ArmorGrade::MirroredSurfaceComposite,
             "reactive" => ArmorGrade::ReactiveSurfaceComposite,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => ArmorGrade::UnknownString(s.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(ArmorGradeError::UnknownArmorGradeString(s.to_string())),
         })
     }
@@ -82,10 +84,10 @@ impl Display for ArmorGrade {
                 ArmorGrade::MirroredSurfaceComposite => "Mirrored Surface Composite",
                 ArmorGrade::ReactiveSurfaceComposite => "Reactive Surface Composite",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ArmorGrade::Unknown(_) => "Unknown composite",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ArmorGrade::UnknownString(_) => "Unknown composite",
             }
         )

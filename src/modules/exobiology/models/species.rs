@@ -1,597 +1,207 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-
 use crate::exobiology::Genus;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use strum::EnumIter;
-
+use crate::exploration::shared::codex_regex::CODEX_REGEX;
+use crate::from_str_deserialize_impl;
 use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
+use lazy_static::lazy_static;
+use serde::Serialize;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
+use strum::EnumIter;
+use thiserror::Error;
 
-#[derive(Debug, Serialize, Deserialize, Clone, Hash, Eq, PartialEq, EnumIter)]
+#[derive(Debug, Serialize, Clone, Hash, Eq, PartialEq, EnumIter)]
 pub enum Species {
     // Aleoids
-    #[serde(rename = "$Codex_Ent_Aleoids_01_Name;")]
     AleoidaArcus,
-
-    #[serde(rename = "$Codex_Ent_Aleoids_02_Name;")]
     AleoidaCoronamus,
-
-    #[serde(rename = "$Codex_Ent_Aleoids_03_Name;")]
     AleoidaSpica,
-
-    #[serde(rename = "$Codex_Ent_Aleoids_04_Name;")]
     AleoidaLaminiae,
-
-    #[serde(rename = "$Codex_Ent_Aleoids_05_Name;")]
     AleoidaGravis,
 
     // Amphora plant
-    #[serde(rename = "$Codex_Ent_Vents_Name;")]
     AmphoraPlant,
 
     // Anemones
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
-    AnemoneLuteolum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereABCD_01_Name;")]
-    AnemoneCroceum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereABCD_02_Name;")]
-    AnemonePuniceum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereABCD_03_Name;")]
-    AnemoneRoseum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
-    AnemoneBlatteumBioluminescent,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
-    AnemoneRubeumBioluminescent,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
-    AnemonePrasinumBioluminescent,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SphereEFGH_03_Name;")]
-    AnemoneRoseumBioluminescent,
+    AnemoneLuteolum,               // TODO needs to be verified
+    AnemoneCroceum,                // TODO needs to be verified
+    AnemonePuniceum,               // TODO needs to be verified
+    AnemoneRoseum,                 // TODO needs to be verified
+    AnemoneBlatteumBioluminescent, // TODO needs to be verified
+    AnemoneRubeumBioluminescent,   // TODO needs to be verified
+    AnemonePrasinumBioluminescent, // TODO needs to be verified
+    AnemoneRoseumBioluminescent,   // TODO needs to be verified
 
     // Bark mounds
-    #[serde(rename = "$Codex_Ent_Cone_Name;")]
     BarkMound,
 
     // Bacterium
-    #[serde(rename = "$Codex_Ent_Bacterial_01_Name;")]
     BacteriumAurasus,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_02_Name;")]
     BacteriumNebulus,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_03_Name;")]
     BacteriumScopulum,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_04_Name;")]
     BacteriumAcies,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_05_Name;")]
     BacteriumVesicula,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_06_Name;")]
     BacteriumAlcyoneum,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_07_Name;")]
     BacteriumTela,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_08_Name;")]
     BacteriumInformem,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_09_Name;")]
     BacteriumVolu,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_10_Name;")]
     BacteriumBullaris,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_11_Name;")]
     BacteriumOmentum,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_12_Name;")]
     BacteriumCerbrus,
-
-    #[serde(rename = "$Codex_Ent_Bacterial_13_Name;")]
     BacteriumVerrata,
 
     // Brain tree
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Seed_Name;")]
-    BrainTreeRoseum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedABCD_01_Name;")]
-    BrainTreeGypseeum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedABCD_02_Name;")]
-    BrainTreeOstrinum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedABCD_03_Name;")]
-    BrainTreeViride,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedEFGH_Name;")]
-    BrainTreeLividum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedEFGH_01_Name;")]
-    BrainTreeAureum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedEFGH_02_Name;")]
-    BrainTreePuniceum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_SeedEFGH_03_Name;")]
-    BrainTreeLindigoticum,
+    BrainTreeRoseum,       // TODO needs to be verified
+    BrainTreeGypseeum,     // TODO needs to be verified
+    BrainTreeOstrinum,     // TODO needs to be verified
+    BrainTreeViride,       // TODO needs to be verified
+    BrainTreeLividum,      // TODO needs to be verified
+    BrainTreeAureum,       // TODO needs to be verified
+    BrainTreePuniceum,     // TODO needs to be verified
+    BrainTreeLindigoticum, // TODO needs to be verified
 
     // Cactoida
-    #[serde(rename = "$Codex_Ent_Cactoid_01_Name;")]
     CactoidaCortexum,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_02_Name;")]
     CactoidaLapis,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_03_Name;")]
     CactoidaVermis,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_04_Name;")]
     CactoidaPullulanta,
-
-    #[serde(rename = "$Codex_Ent_Cactoid_05_Name;")]
     CactoidaPeperatis,
 
     // Clypeus
-    #[serde(rename = "$Codex_Ent_Clypeus_01_Name;")]
     ClypeusLacrimam,
-
-    #[serde(rename = "$Codex_Ent_Clypeus_02_Name;")]
     ClypeusMargaritus,
-
-    #[serde(rename = "$Codex_Ent_Clypeus_03_Name;")]
     ClypeusSpeculumi,
 
     // Conchas
-    #[serde(rename = "$Codex_Ent_Conchas_01_Name;")]
     ConchaRenibus,
-
-    #[serde(rename = "$Codex_Ent_Conchas_02_Name;")]
     ConchaAureolas,
-
-    #[serde(rename = "$Codex_Ent_Conchas_03_Name;")]
     ConchaLabiata,
-
-    #[serde(rename = "$Codex_Ent_Conchas_04_Name;")]
     ConchaBiconcavis,
 
     // Crystalline shards
-    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
     CrystallineShards,
 
     // Electricae
-    #[serde(rename = "$Codex_Ent_Electricae_01_Name;")]
     ElectricaePluma,
-
-    #[serde(rename = "$Codex_Ent_Electricae_02_Name;")]
     ElectricaeRadialem,
 
     // Fonticulus
-    #[serde(rename = "$Codex_Ent_Fonticulus_01_Name;")]
     FonticuluaSegmentatus,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_02_Name;")]
     FonticuluaCampestris,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_03_Name;")]
     FonticuluaUpupam,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_04_Name;")]
     FonticuluaLapida,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_05_Name;")]
     FonticuluaFluctus,
-
-    #[serde(rename = "$Codex_Ent_Fonticulus_06_Name;")]
     FonticuluaDigitos,
 
     // Frutexa
-    #[serde(rename = "$Codex_Ent_Shrubs_01_Name;")]
     FrutexaFlabellum,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_02_Name;")]
     FrutexaAcus,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_03_Name;")]
     FrutexaMetallicum,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_04_Name;")]
     FrutexaFlammasis,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_05_Name;")]
     FrutexaFera,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_06_Name;")]
     FrutexaSponsae,
-
-    #[serde(rename = "$Codex_Ent_Shrubs_07_Name;")]
     FrutexaCollum,
 
     // Fumerola
-    #[serde(rename = "$Codex_Ent_Fumerolas_01_Name;")]
     FumerolaCarbosis,
-
-    #[serde(rename = "$Codex_Ent_Fumerolas_02_Name;")]
     FumerolaExtremus,
-
-    #[serde(rename = "$Codex_Ent_Fumerolas_03_Name;")]
     FumerolaNitris,
-
-    #[serde(rename = "$Codex_Ent_Fumerolas_04_Name;")]
     FumerolaAquatis,
 
     // Fungoida
-    #[serde(rename = "$Codex_Ent_Fungoids_01_Name;")]
     FungoidaSetisis,
-
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Name;")]
     FungoidaStabitis,
-
-    #[serde(rename = "$Codex_Ent_Fungoids_03_Name;")]
     FungoidaBullarum,
-
-    #[serde(rename = "$Codex_Ent_Fungoids_04_Name;")]
     FungoidaGelata,
 
     // Osseus
-    #[serde(rename = "$Codex_Ent_Osseus_01_Name;")]
     OsseusFractus,
-
-    #[serde(rename = "$Codex_Ent_Osseus_02_Name;")]
     OsseusDiscus,
-
-    #[serde(rename = "$Codex_Ent_Osseus_03_Name;")]
     OsseusSpiralis,
-
-    #[serde(rename = "$Codex_Ent_Osseus_04_Name;")]
     OsseusPumice,
-
-    #[serde(rename = "$Codex_Ent_Osseus_05_Name;")]
     OsseusCornibus,
-
-    #[serde(rename = "$Codex_Ent_Osseus_06_Name;")]
     OsseusPellebantus,
 
     // Recepta
-    #[serde(rename = "$Codex_Ent_Recepta_01_Name;")]
     ReceptaUmbrux,
-
-    #[serde(rename = "$Codex_Ent_Recepta_02_Name;")]
     ReceptaDeltahedronix,
-
-    #[serde(rename = "$Codex_Ent_Recepta_03_Name;")]
     ReceptaConditivus,
 
     // Sinuous tubers
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Tube_Name;")]
-    SinuousTubersRoseum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeABCD_01_Name;")]
-    SinuousTubersPrasinum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeABCD_02_Name;")]
-    SinuousTubersAlbidum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeABCD_03_Name;")]
-    SinuousTubersCaeruleum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeEFGH_Name;")]
-    SinuousTubersBlatteum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeEFGH_01_Name;")]
-    SinuousTubersLindigoticum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeEFGH_02_Name;")]
-    SinuousTubersViolaceum,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_TubeEFGH_03_Name;")]
-    SinuousTubersViride,
+    SinuousTubersRoseum,       // TODO needs to be verified
+    SinuousTubersPrasinum,     // TODO needs to be verified
+    SinuousTubersAlbidum,      // TODO needs to be verified
+    SinuousTubersCaeruleum,    // TODO needs to be verified
+    SinuousTubersBlatteum,     // TODO needs to be verified
+    SinuousTubersLindigoticum, // TODO needs to be verified
+    SinuousTubersViolaceum,    // TODO needs to be verified
+    SinuousTubersViride,       // TODO needs to be verified
 
     // Stratum
-    #[serde(rename = "$Codex_Ent_Stratum_01_Name;")]
     StratumExcutitus,
-
-    #[serde(rename = "$Codex_Ent_Stratum_02_Name;")]
     StratumPaleas,
-
-    #[serde(rename = "$Codex_Ent_Stratum_03_Name;")]
     StratumLaminamus,
-
-    #[serde(rename = "$Codex_Ent_Stratum_04_Name;")]
     StratumAraneamus,
-
-    #[serde(rename = "$Codex_Ent_Stratum_05_Name;")]
     StratumLimaxus,
-
-    #[serde(rename = "$Codex_Ent_Stratum_06_Name;")]
     StratumCucumisis,
-
-    #[serde(rename = "$Codex_Ent_Stratum_07_Name;")]
     StratumTectonicas,
-
-    #[serde(rename = "$Codex_Ent_Stratum_08_Name;")]
     StratumFrigus,
 
     // Tubus
-    #[serde(rename = "$Codex_Ent_Tubus_01_Name;")]
     TubusConifer,
-
-    #[serde(rename = "$Codex_Ent_Tubus_02_Name;")]
     TubusSororibus,
-
-    #[serde(rename = "$Codex_Ent_Tubus_03_Name;")]
     TubusCavas,
-
-    #[serde(rename = "$Codex_Ent_Tubus_04_Name;")]
     TubusRosarium,
-
-    #[serde(rename = "$Codex_Ent_Tubus_05_Name;")]
     TubusCompagibus,
 
     // Tussock
-    #[serde(rename = "$Codex_Ent_Tussocks_01_Name;")]
     TussockPennata,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_02_Name;")]
     TussockVentusa,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_03_Name;")]
     TussockIgnis,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_04_Name;")]
     TussockCultro,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_05_Name;")]
     TussockCatena,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_06_Name;")]
     TussockPennatis,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_07_Name;")]
     TussockSerrati,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_08_Name;")]
     TussockAlbata,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_09_Name;")]
     TussockPropagito,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_10_Name;")]
     TussockDivisa,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_11_Name;")]
     TussockCaputus,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_12_Name;")]
     TussockTriticum,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_13_Name;")]
     TussockStigmasis,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_14_Name;")]
     TussockVirgam,
-
-    #[serde(rename = "$Codex_Ent_Tussocks_15_Name;")]
     TussockCapillum,
 
     // Thargoid barnacles
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_01_Name;")]
-    ThargoidBarnacleCommon,
+    ThargoidBarnacleCommon,          // TODO needs to be verified
+    ThargoidBarnacleLarge,           // TODO needs to be verified
+    ThargoidBarnacleBarbs,           // TODO needs to be verified
+    ThargoidBarnacleMatrixSubmerged, // TODO needs to be verified
+    ThargoidBarnacleMatrix,          // TODO needs to be verified
 
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_02_Name;")]
-    ThargoidBarnacleLarge,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Spikes_Name;")]
-    ThargoidBarnacleBarbs,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Submerged_Name;")]
-    ThargoidBarnacleMatrixSubmerged,
-
-    // TODO needs to be verified
-    #[serde(rename = "$Codex_Ent_Thargoid_Barnacle_Matrix_Name;")]
-    ThargoidBarnacleMatrix,
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    Unknown(String),
 }
 
-impl FromStr for Species {
-    type Err = serde_json::Error;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        serde_json::from_value(Value::String(s.to_string()))
-    }
-}
-
-impl Display for Species {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
-                Species::AleoidaArcus => "Aleoida Arcus",
-                Species::AleoidaCoronamus => "Aleoida Coronamus",
-                Species::AleoidaGravis => "Aleoida Gravis",
-                Species::AleoidaLaminiae => "Aleoida Laminiae",
-                Species::AleoidaSpica => "Aleoida Spica",
-                Species::AmphoraPlant => "Amphora Plant",
-
-                Species::AnemoneLuteolum => "Luteolum Anemone",
-                Species::AnemoneBlatteumBioluminescent => "Blatteum Bioluminescent Anemone",
-                Species::AnemoneCroceum => "Croceum Anemone",
-                Species::AnemonePrasinumBioluminescent => "Prasinum Bioluminescent Anemone",
-                Species::AnemonePuniceum => "Puniceum Anemone",
-                Species::AnemoneRoseum => "Roseum Anemone",
-                Species::AnemoneRoseumBioluminescent => "Roseum Bioluminescent Anemone",
-                Species::AnemoneRubeumBioluminescent => "Rubeum Bioluminescent Anemone",
-
-                Species::BarkMound => "Bark Mound",
-
-                Species::BacteriumAcies => "Bacterium Acies",
-                Species::BacteriumAlcyoneum => "Bacterium Alcyoneum",
-                Species::BacteriumAurasus => "Bacterium Aurasus",
-                Species::BacteriumBullaris => "Bacterium Bullaris",
-                Species::BacteriumCerbrus => "Bacterium Cerbrus",
-                Species::BacteriumInformem => "Bacterium Informem",
-                Species::BacteriumNebulus => "Bacterium Nebulus",
-                Species::BacteriumOmentum => "Bacterium Omentum",
-                Species::BacteriumScopulum => "Bacterium Scopulum",
-                Species::BacteriumTela => "Bacterium Tela",
-                Species::BacteriumVerrata => "Bacterium Verrata",
-                Species::BacteriumVesicula => "Bacterium Vesicula",
-                Species::BacteriumVolu => "Bacterium Volu",
-
-                Species::BrainTreeAureum => "Aureum Brain Tree ",
-                Species::BrainTreeGypseeum => "Gypseeum Brain Tree ",
-                Species::BrainTreeLindigoticum => "Lindigoticum Brain Tree ",
-                Species::BrainTreeLividum => "Lividum Brain Tree ",
-                Species::BrainTreeOstrinum => "Ostrinum Brain Tree ",
-                Species::BrainTreePuniceum => "Puniceum Brain Tree ",
-                Species::BrainTreeRoseum => "Roseum Brain Tree ",
-                Species::BrainTreeViride => "Viride Brain Tree ",
-
-                Species::CactoidaCortexum => "Cactoida Cortexum",
-                Species::CactoidaLapis => "Cactoida Lapis",
-                Species::CactoidaPullulanta => "Cactoida Pullulanta",
-                Species::CactoidaVermis => "Cactoida Vermis",
-                Species::CactoidaPeperatis => "Cactoida Peperatis",
-
-                Species::CrystallineShards => "Crystaline Shards",
-
-                Species::ClypeusLacrimam => "Clypeus Lacrimam",
-                Species::ClypeusMargaritus => "Clypeus Margaritus",
-                Species::ClypeusSpeculumi => "Clypeus Speculumi",
-
-                Species::ConchaAureolas => "Concha Aureolas",
-                Species::ConchaBiconcavis => "Concha Biconcavis",
-                Species::ConchaLabiata => "Concha Labiata",
-                Species::ConchaRenibus => "Concha Renibus",
-
-                Species::ElectricaePluma => "Electricae Pluma",
-                Species::ElectricaeRadialem => "Electricae Radialem",
-
-                Species::FonticuluaCampestris => "Fonticulua Campestris",
-                Species::FonticuluaDigitos => "Fonticulua Digitos",
-                Species::FonticuluaFluctus => "Fonticulua Fluctus",
-                Species::FonticuluaLapida => "Fonticulua Lapida",
-                Species::FonticuluaSegmentatus => "Fonticulua Segmentatus",
-                Species::FonticuluaUpupam => "Fonticulua Upupam",
-
-                Species::FrutexaAcus => "Frutexa Acus",
-                Species::FrutexaCollum => "Frutexa Collum",
-                Species::FrutexaFera => "Frutexa Fera",
-                Species::FrutexaFlabellum => "Frutexa Flabellum",
-                Species::FrutexaFlammasis => "Frutexa Flammasis",
-                Species::FrutexaMetallicum => "Frutexa Metallicum",
-                Species::FrutexaSponsae => "Frutexa Sponsae",
-
-                Species::FumerolaAquatis => "Fumerola Aquatis",
-                Species::FumerolaCarbosis => "Fumerola Carbosis",
-                Species::FumerolaExtremus => "Fumerola Extremus",
-                Species::FumerolaNitris => "Fumerola Nitris",
-
-                Species::FungoidaBullarum => "Fungoida Bullarum",
-                Species::FungoidaGelata => "Fungoida Gelata",
-                Species::FungoidaSetisis => "Fungoida Setisis",
-                Species::FungoidaStabitis => "Fungoida Stabitis",
-
-                Species::OsseusCornibus => "Osseus Cornibus",
-                Species::OsseusDiscus => "Osseus Discus",
-                Species::OsseusFractus => "Osseus Fractus",
-                Species::OsseusPellebantus => "Osseus Pellebantus",
-                Species::OsseusPumice => "Osseus Pumice",
-                Species::OsseusSpiralis => "Osseus Spiralis",
-
-                Species::ReceptaConditivus => "Recepta Conditivus",
-                Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
-                Species::ReceptaUmbrux => "Recepta Umbrux",
-
-                Species::SinuousTubersAlbidum => "Albidum Sinuous Tubers",
-                Species::SinuousTubersBlatteum => "Blatteum Sinuous Tubers",
-                Species::SinuousTubersCaeruleum => "Caeruleum Sinuous Tubers",
-                Species::SinuousTubersLindigoticum => "Lindigoticum Sinuous Tubers",
-                Species::SinuousTubersPrasinum => "Prasinum Sinuous Tubers",
-                Species::SinuousTubersRoseum => "Roseum Sinuous Tubers",
-                Species::SinuousTubersViolaceum => "Violaceum Sinuous Tubers",
-                Species::SinuousTubersViride => "Viride Sinuous Tubers",
-
-                Species::StratumAraneamus => "Stratum Araneamus",
-                Species::StratumCucumisis => "Stratum Cucumisis",
-                Species::StratumExcutitus => "Stratum Excutitus",
-                Species::StratumFrigus => "Stratum Frigus",
-                Species::StratumLaminamus => "Stratum Laminamus",
-                Species::StratumLimaxus => "Stratum Limaxus",
-                Species::StratumPaleas => "Stratum Paleas",
-                Species::StratumTectonicas => "Stratum Tectonicas",
-
-                Species::TubusCavas => "Tubus Cavas",
-                Species::TubusCompagibus => "Tubus Compagibus",
-                Species::TubusConifer => "Tubus Conifer",
-                Species::TubusRosarium => "Tubus Rosarium",
-                Species::TubusSororibus => "Tubus Sororibus",
-
-                Species::TussockAlbata => "Tussock Albata",
-                Species::TussockCapillum => "Tussock Capillum",
-                Species::TussockCaputus => "Tussock Caputus",
-                Species::TussockCatena => "Tussock Catena",
-                Species::TussockCultro => "Tussock Cultro",
-                Species::TussockDivisa => "Tussock Divisa",
-                Species::TussockIgnis => "Tussock Ignis",
-                Species::TussockPennata => "Tussock Pennata",
-                Species::TussockPennatis => "Tussock Pennatis",
-                Species::TussockPropagito => "Tussock Propagito",
-                Species::TussockSerrati => "Tussock Serrati",
-                Species::TussockStigmasis => "Tussock Stigmasis",
-                Species::TussockTriticum => "Tussock Triticum",
-                Species::TussockVentusa => "Tussock Ventusa",
-                Species::TussockVirgam => "Tussock Virgam",
-
-                Species::ThargoidBarnacleCommon => "Common Thargoid Barnacle",
-                Species::ThargoidBarnacleLarge => "Large Thargoid Barnacle",
-                Species::ThargoidBarnacleBarbs => "Thargoid Barnacle Barbs",
-                Species::ThargoidBarnacleMatrixSubmerged => "Thargoid Barnacle Matrix Submerged",
-                Species::ThargoidBarnacleMatrix => "Thargoid Barnacle Matrix",
-            }
-        )
-    }
+#[cfg(feature = "allow-unknown")]
+lazy_static! {
+    static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![SpawnCondition::Special,];
 }
 
 impl Species {
+    /// Whether the current variant is unknown.
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, Species::Unknown(_))
+    }
+
     pub fn spawn_conditions(&self) -> &Vec<SpawnCondition> {
+        #[cfg(feature = "allow-unknown")]
+        if let Species::Unknown(_) = self {
+            return &UNKNOWN_SPAWN_CONDITIONS;
+        }
+
         &SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
@@ -754,7 +364,345 @@ impl Species {
             Species::SinuousTubersLindigoticum => 0,
             Species::SinuousTubersViolaceum => 0,
             Species::SinuousTubersViride => 0,
+
+            #[cfg(feature = "allow-unknown")]
+            Species::Unknown(_) => 0,
         }
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum SpeciesError {
+    #[error("Failed to parse species: '{0}'")]
+    FailedToParse(String),
+
+    #[error("Unknown species: '{0}'")]
+    UnknownSpecies(String),
+}
+
+impl FromStr for Species {
+    type Err = SpeciesError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let Some(captures) = CODEX_REGEX.captures(s) else {
+            return Err(SpeciesError::FailedToParse(s.to_string()));
+        };
+
+        let string: &str = &captures
+            .get(1)
+            .expect("Should have been captured already")
+            .as_str()
+            .to_ascii_lowercase();
+
+        Ok(match string {
+            "aleoids_01" => Species::AleoidaArcus,
+            "aleoids_02" => Species::AleoidaCoronamus,
+            "aleoids_03" => Species::AleoidaSpica,
+            "aleoids_04" => Species::AleoidaLaminiae,
+            "aleoids_05" => Species::AleoidaGravis,
+
+            "vents" => Species::AmphoraPlant,
+
+            "sphere" => Species::AnemoneLuteolum,
+            "sphereabcd_01" => Species::AnemoneCroceum,
+            "sphereabcd_02" => Species::AnemonePuniceum,
+            "sphereabcd_03" => Species::AnemoneRoseum,
+            "sphereefgh" => Species::AnemoneBlatteumBioluminescent,
+            "sphereefgh_01" => Species::AnemoneRubeumBioluminescent,
+            "sphereefgh_02" => Species::AnemonePrasinumBioluminescent,
+            "sphereefgh_03" => Species::AnemoneRoseumBioluminescent,
+
+            "cone" => Species::BarkMound,
+
+            "bacterial_01" => Species::BacteriumAurasus,
+            "bacterial_02" => Species::BacteriumNebulus,
+            "bacterial_03" => Species::BacteriumScopulum,
+            "bacterial_04" => Species::BacteriumAcies,
+            "bacterial_05" => Species::BacteriumVesicula,
+            "bacterial_06" => Species::BacteriumAlcyoneum,
+            "bacterial_07" => Species::BacteriumTela,
+            "bacterial_08" => Species::BacteriumInformem,
+            "bacterial_09" => Species::BacteriumVolu,
+            "bacterial_10" => Species::BacteriumBullaris,
+            "bacterial_11" => Species::BacteriumOmentum,
+            "bacterial_12" => Species::BacteriumCerbrus,
+            "bacterial_13" => Species::BacteriumVerrata,
+
+            "seed" => Species::BrainTreeRoseum,
+            "seedabcd_01" => Species::BrainTreeGypseeum,
+            "seedabcd_02" => Species::BrainTreeOstrinum,
+            "seedabcd_03" => Species::BrainTreeViride,
+            "seedefgh" => Species::BrainTreeLividum,
+            "seedefgh_01" => Species::BrainTreeAureum,
+            "seedefgh_02" => Species::BrainTreePuniceum,
+            "seedefgh_03" => Species::BrainTreeLindigoticum,
+
+            "cactoid_01" => Species::CactoidaCortexum,
+            "cactoid_02" => Species::CactoidaLapis,
+            "cactoid_03" => Species::CactoidaVermis,
+            "cactoid_04" => Species::CactoidaPullulanta,
+            "cactoid_05" => Species::CactoidaPeperatis,
+
+            "clypeus_01" => Species::ClypeusLacrimam,
+            "clypeus_02" => Species::ClypeusMargaritus,
+            "clypeus_03" => Species::ClypeusSpeculumi,
+
+            "conchas_01" => Species::ConchaRenibus,
+            "conchas_02" => Species::ConchaAureolas,
+            "conchas_03" => Species::ConchaLabiata,
+            "conchas_04" => Species::ConchaBiconcavis,
+
+            "ground_struct_ice" => Species::CrystallineShards,
+
+            "electricae_01" => Species::ElectricaePluma,
+            "electricae_02" => Species::ElectricaeRadialem,
+
+            "fonticulus_01" => Species::FonticuluaSegmentatus,
+            "fonticulus_02" => Species::FonticuluaCampestris,
+            "fonticulus_03" => Species::FonticuluaUpupam,
+            "fonticulus_04" => Species::FonticuluaLapida,
+            "fonticulus_05" => Species::FonticuluaFluctus,
+            "fonticulus_06" => Species::FonticuluaDigitos,
+
+            "shrubs_01" => Species::FrutexaFlabellum,
+            "shrubs_02" => Species::FrutexaAcus,
+            "shrubs_03" => Species::FrutexaMetallicum,
+            "shrubs_04" => Species::FrutexaFlammasis,
+            "shrubs_05" => Species::FrutexaFera,
+            "shrubs_06" => Species::FrutexaSponsae,
+            "shrubs_07" => Species::FrutexaCollum,
+
+            "fumerolas_01" => Species::FumerolaCarbosis,
+            "fumerolas_02" => Species::FumerolaExtremus,
+            "fumerolas_03" => Species::FumerolaNitris,
+            "fumerolas_04" => Species::FumerolaAquatis,
+
+            "fungoids_01" => Species::FungoidaSetisis,
+            "fungoids_02" => Species::FungoidaStabitis,
+            "fungoids_03" => Species::FungoidaBullarum,
+            "fungoids_04" => Species::FungoidaGelata,
+
+            "osseus_01" => Species::OsseusFractus,
+            "osseus_02" => Species::OsseusDiscus,
+            "osseus_03" => Species::OsseusSpiralis,
+            "osseus_04" => Species::OsseusPumice,
+            "osseus_05" => Species::OsseusCornibus,
+            "osseus_06" => Species::OsseusPellebantus,
+
+            "recepta_01" => Species::ReceptaUmbrux,
+            "recepta_02" => Species::ReceptaDeltahedronix,
+            "recepta_03" => Species::ReceptaConditivus,
+
+            "tube" => Species::SinuousTubersRoseum,
+            "tubeabcd_01" => Species::SinuousTubersPrasinum,
+            "tubeabcd_02" => Species::SinuousTubersAlbidum,
+            "tubeabcd_03" => Species::SinuousTubersCaeruleum,
+            "tubeefgh" => Species::SinuousTubersBlatteum,
+            "tubeefgh_01" => Species::SinuousTubersLindigoticum,
+            "tubeefgh_02" => Species::SinuousTubersViolaceum,
+            "tubeefgh_03" => Species::SinuousTubersViride,
+
+            "stratum_01" => Species::StratumExcutitus,
+            "stratum_02" => Species::StratumPaleas,
+            "stratum_03" => Species::StratumLaminamus,
+            "stratum_04" => Species::StratumAraneamus,
+            "stratum_05" => Species::StratumLimaxus,
+            "stratum_06" => Species::StratumCucumisis,
+            "stratum_07" => Species::StratumTectonicas,
+            "stratum_08" => Species::StratumFrigus,
+
+            "tubus_01" => Species::TubusConifer,
+            "tubus_02" => Species::TubusSororibus,
+            "tubus_03" => Species::TubusCavas,
+            "tubus_04" => Species::TubusRosarium,
+            "tubus_05" => Species::TubusCompagibus,
+
+            "tussocks_01" => Species::TussockPennata,
+            "tussocks_02" => Species::TussockVentusa,
+            "tussocks_03" => Species::TussockIgnis,
+            "tussocks_04" => Species::TussockCultro,
+            "tussocks_05" => Species::TussockCatena,
+            "tussocks_06" => Species::TussockPennatis,
+            "tussocks_07" => Species::TussockSerrati,
+            "tussocks_08" => Species::TussockAlbata,
+            "tussocks_09" => Species::TussockPropagito,
+            "tussocks_10" => Species::TussockDivisa,
+            "tussocks_11" => Species::TussockCaputus,
+            "tussocks_12" => Species::TussockTriticum,
+            "tussocks_13" => Species::TussockStigmasis,
+            "tussocks_14" => Species::TussockVirgam,
+            "tussocks_15" => Species::TussockCapillum,
+
+            "thargoid_barnacle_01" => Species::ThargoidBarnacleCommon,
+            "thargoid_barnacle_02" => Species::ThargoidBarnacleLarge,
+            "thargoid_barnacle_spikes" => Species::ThargoidBarnacleBarbs,
+            "thargoid_barnacle_matrix_submerged" => Species::ThargoidBarnacleMatrixSubmerged,
+            "thargoid_barnacle_matrix" => Species::ThargoidBarnacleMatrix,
+
+            #[cfg(feature = "allow-unknown")]
+            _ => Species::Unknown(s.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
+            _ => return Err(SpeciesError::UnknownSpecies(s.to_string())),
+        })
+    }
+}
+
+from_str_deserialize_impl!(Species);
+
+impl Display for Species {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Species::AleoidaArcus => "Aleoida Arcus",
+                Species::AleoidaCoronamus => "Aleoida Coronamus",
+                Species::AleoidaGravis => "Aleoida Gravis",
+                Species::AleoidaLaminiae => "Aleoida Laminiae",
+                Species::AleoidaSpica => "Aleoida Spica",
+                Species::AmphoraPlant => "Amphora Plant",
+
+                Species::AnemoneLuteolum => "Luteolum Anemone",
+                Species::AnemoneBlatteumBioluminescent => "Blatteum Bioluminescent Anemone",
+                Species::AnemoneCroceum => "Croceum Anemone",
+                Species::AnemonePrasinumBioluminescent => "Prasinum Bioluminescent Anemone",
+                Species::AnemonePuniceum => "Puniceum Anemone",
+                Species::AnemoneRoseum => "Roseum Anemone",
+                Species::AnemoneRoseumBioluminescent => "Roseum Bioluminescent Anemone",
+                Species::AnemoneRubeumBioluminescent => "Rubeum Bioluminescent Anemone",
+
+                Species::BarkMound => "Bark Mound",
+
+                Species::BacteriumAcies => "Bacterium Acies",
+                Species::BacteriumAlcyoneum => "Bacterium Alcyoneum",
+                Species::BacteriumAurasus => "Bacterium Aurasus",
+                Species::BacteriumBullaris => "Bacterium Bullaris",
+                Species::BacteriumCerbrus => "Bacterium Cerbrus",
+                Species::BacteriumInformem => "Bacterium Informem",
+                Species::BacteriumNebulus => "Bacterium Nebulus",
+                Species::BacteriumOmentum => "Bacterium Omentum",
+                Species::BacteriumScopulum => "Bacterium Scopulum",
+                Species::BacteriumTela => "Bacterium Tela",
+                Species::BacteriumVerrata => "Bacterium Verrata",
+                Species::BacteriumVesicula => "Bacterium Vesicula",
+                Species::BacteriumVolu => "Bacterium Volu",
+
+                Species::BrainTreeAureum => "Aureum Brain Tree ",
+                Species::BrainTreeGypseeum => "Gypseeum Brain Tree ",
+                Species::BrainTreeLindigoticum => "Lindigoticum Brain Tree ",
+                Species::BrainTreeLividum => "Lividum Brain Tree ",
+                Species::BrainTreeOstrinum => "Ostrinum Brain Tree ",
+                Species::BrainTreePuniceum => "Puniceum Brain Tree ",
+                Species::BrainTreeRoseum => "Roseum Brain Tree ",
+                Species::BrainTreeViride => "Viride Brain Tree ",
+
+                Species::CactoidaCortexum => "Cactoida Cortexum",
+                Species::CactoidaLapis => "Cactoida Lapis",
+                Species::CactoidaPullulanta => "Cactoida Pullulanta",
+                Species::CactoidaVermis => "Cactoida Vermis",
+                Species::CactoidaPeperatis => "Cactoida Peperatis",
+
+                Species::CrystallineShards => "Crystaline Shards",
+
+                Species::ClypeusLacrimam => "Clypeus Lacrimam",
+                Species::ClypeusMargaritus => "Clypeus Margaritus",
+                Species::ClypeusSpeculumi => "Clypeus Speculumi",
+
+                Species::ConchaAureolas => "Concha Aureolas",
+                Species::ConchaBiconcavis => "Concha Biconcavis",
+                Species::ConchaLabiata => "Concha Labiata",
+                Species::ConchaRenibus => "Concha Renibus",
+
+                Species::ElectricaePluma => "Electricae Pluma",
+                Species::ElectricaeRadialem => "Electricae Radialem",
+
+                Species::FonticuluaCampestris => "Fonticulua Campestris",
+                Species::FonticuluaDigitos => "Fonticulua Digitos",
+                Species::FonticuluaFluctus => "Fonticulua Fluctus",
+                Species::FonticuluaLapida => "Fonticulua Lapida",
+                Species::FonticuluaSegmentatus => "Fonticulua Segmentatus",
+                Species::FonticuluaUpupam => "Fonticulua Upupam",
+
+                Species::FrutexaAcus => "Frutexa Acus",
+                Species::FrutexaCollum => "Frutexa Collum",
+                Species::FrutexaFera => "Frutexa Fera",
+                Species::FrutexaFlabellum => "Frutexa Flabellum",
+                Species::FrutexaFlammasis => "Frutexa Flammasis",
+                Species::FrutexaMetallicum => "Frutexa Metallicum",
+                Species::FrutexaSponsae => "Frutexa Sponsae",
+
+                Species::FumerolaAquatis => "Fumerola Aquatis",
+                Species::FumerolaCarbosis => "Fumerola Carbosis",
+                Species::FumerolaExtremus => "Fumerola Extremus",
+                Species::FumerolaNitris => "Fumerola Nitris",
+
+                Species::FungoidaBullarum => "Fungoida Bullarum",
+                Species::FungoidaGelata => "Fungoida Gelata",
+                Species::FungoidaSetisis => "Fungoida Setisis",
+                Species::FungoidaStabitis => "Fungoida Stabitis",
+
+                Species::OsseusCornibus => "Osseus Cornibus",
+                Species::OsseusDiscus => "Osseus Discus",
+                Species::OsseusFractus => "Osseus Fractus",
+                Species::OsseusPellebantus => "Osseus Pellebantus",
+                Species::OsseusPumice => "Osseus Pumice",
+                Species::OsseusSpiralis => "Osseus Spiralis",
+
+                Species::ReceptaConditivus => "Recepta Conditivus",
+                Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
+                Species::ReceptaUmbrux => "Recepta Umbrux",
+
+                Species::SinuousTubersAlbidum => "Albidum Sinuous Tubers",
+                Species::SinuousTubersBlatteum => "Blatteum Sinuous Tubers",
+                Species::SinuousTubersCaeruleum => "Caeruleum Sinuous Tubers",
+                Species::SinuousTubersLindigoticum => "Lindigoticum Sinuous Tubers",
+                Species::SinuousTubersPrasinum => "Prasinum Sinuous Tubers",
+                Species::SinuousTubersRoseum => "Roseum Sinuous Tubers",
+                Species::SinuousTubersViolaceum => "Violaceum Sinuous Tubers",
+                Species::SinuousTubersViride => "Viride Sinuous Tubers",
+
+                Species::StratumAraneamus => "Stratum Araneamus",
+                Species::StratumCucumisis => "Stratum Cucumisis",
+                Species::StratumExcutitus => "Stratum Excutitus",
+                Species::StratumFrigus => "Stratum Frigus",
+                Species::StratumLaminamus => "Stratum Laminamus",
+                Species::StratumLimaxus => "Stratum Limaxus",
+                Species::StratumPaleas => "Stratum Paleas",
+                Species::StratumTectonicas => "Stratum Tectonicas",
+
+                Species::TubusCavas => "Tubus Cavas",
+                Species::TubusCompagibus => "Tubus Compagibus",
+                Species::TubusConifer => "Tubus Conifer",
+                Species::TubusRosarium => "Tubus Rosarium",
+                Species::TubusSororibus => "Tubus Sororibus",
+
+                Species::TussockAlbata => "Tussock Albata",
+                Species::TussockCapillum => "Tussock Capillum",
+                Species::TussockCaputus => "Tussock Caputus",
+                Species::TussockCatena => "Tussock Catena",
+                Species::TussockCultro => "Tussock Cultro",
+                Species::TussockDivisa => "Tussock Divisa",
+                Species::TussockIgnis => "Tussock Ignis",
+                Species::TussockPennata => "Tussock Pennata",
+                Species::TussockPennatis => "Tussock Pennatis",
+                Species::TussockPropagito => "Tussock Propagito",
+                Species::TussockSerrati => "Tussock Serrati",
+                Species::TussockStigmasis => "Tussock Stigmasis",
+                Species::TussockTriticum => "Tussock Triticum",
+                Species::TussockVentusa => "Tussock Ventusa",
+                Species::TussockVirgam => "Tussock Virgam",
+
+                Species::ThargoidBarnacleCommon => "Common Thargoid Barnacle",
+                Species::ThargoidBarnacleLarge => "Large Thargoid Barnacle",
+                Species::ThargoidBarnacleBarbs => "Thargoid Barnacle Barbs",
+                Species::ThargoidBarnacleMatrixSubmerged => "Thargoid Barnacle Matrix Submerged",
+                Species::ThargoidBarnacleMatrix => "Thargoid Barnacle Matrix",
+
+                #[cfg(feature = "allow-unknown")]
+                Species::Unknown(unknown) => return write!(f, "Unknown species: {}", unknown),
+            }
+        )
     }
 }
 
@@ -767,6 +715,7 @@ mod tests {
     #[test]
     fn all_species_have_matching_spawn_conditions() {
         for species in Species::iter() {
+            dbg!(&species);
             assert!(!species.spawn_conditions().is_empty());
         }
     }

@@ -22,7 +22,8 @@ pub enum ExplorationRank {
     EliteIV,
     EliteV,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
 }
 
@@ -52,10 +53,10 @@ impl TryFrom<u8> for ExplorationRank {
             12 => Ok(ExplorationRank::EliteIV),
             13 => Ok(ExplorationRank::EliteV),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => Ok(ExplorationRank::Unknown(value)),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => Err(ExplorationRankError::UnknownExplorationRank(value)),
         }
     }
@@ -84,7 +85,7 @@ impl Display for ExplorationRank {
                 ExplorationRank::EliteIV => "Elite IV",
                 ExplorationRank::EliteV => "Elite V",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ExplorationRank::Unknown(unknown) =>
                     return write!(f, "Unknown exploration rank nr: {}", unknown),
             }

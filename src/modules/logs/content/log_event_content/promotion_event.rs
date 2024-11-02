@@ -1,3 +1,5 @@
+//! Fired when the player is promoted for a given rank.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::{
@@ -5,6 +7,7 @@ use crate::modules::commander::{
     TradeRank,
 };
 
+/// Fired when the player is promoted for a given rank.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum PromotionEvent {

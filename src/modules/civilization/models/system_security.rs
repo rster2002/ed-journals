@@ -2,6 +2,8 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
+/// The level of security present in a system which controls how much security force is present in
+/// the system.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum SystemSecurity {
     #[serde(rename = "$SYSTEM_SECURITY_high;")]
@@ -19,7 +21,8 @@ pub enum SystemSecurity {
     #[serde(rename = "$GALAXY_MAP_INFO_state_lawless;")]
     Lawless,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -36,7 +39,7 @@ impl Display for SystemSecurity {
                 SystemSecurity::Anarchy => "Anarchy",
                 SystemSecurity::Lawless => "Lawless",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 SystemSecurity::Unknown(unknown) =>
                     return write!(f, "Unknown system security: {}", unknown),
             }

@@ -7,6 +7,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum ShipType {
     Adder,
     AllianceChieftain,
@@ -49,7 +50,8 @@ pub enum ShipType {
     ViperMkIV,
     Vulture,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -108,10 +110,10 @@ impl FromStr for ShipType {
             "viper_mkiv" => ShipType::ViperMkIV,
             "vulture" => ShipType::Vulture,
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => ShipType::Unknown(s.to_string()),
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(ShipTypeError::UnknownShipType(s.to_string())),
         })
     }
@@ -166,7 +168,7 @@ impl Display for ShipType {
                 ShipType::ViperMkIV => "Viper Mk IV",
                 ShipType::Vulture => "Vulture",
 
-                #[cfg(not(feature = "strict"))]
+                #[cfg(feature = "allow-unknown")]
                 ShipType::Unknown(unknown) => unknown,
             }
         )

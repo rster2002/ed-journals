@@ -1,13 +1,20 @@
+//! Fired when the player takes on a new mission.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::mixed::MixedCommodity;
 use crate::modules::station::MissionType;
 
+/// Fired when the player takes on a new mission.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionAcceptedEvent {
+    /// The kind of mission that was accepted.
     pub name: MissionType,
-    pub localised_name: String,
+
+    /// The localized name of the accepted mission.
+    #[serde(rename = "Localised_Name")]
+    pub localized_name: Option<String>,
     pub faction: String,
 
     #[serde(rename = "MissionID")]

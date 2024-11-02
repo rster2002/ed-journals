@@ -3,6 +3,7 @@ use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
+/// Names of the engineers that are available in the game.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Engineer {
     DidiVatermann,
@@ -50,6 +51,50 @@ pub enum Engineer {
 }
 
 impl Engineer {
+    pub fn id(&self) -> u64 {
+        match self {
+            Engineer::DidiVatermann => 300000,
+            Engineer::BillTurner => 300010,
+            Engineer::BrooTarquin => 300030,
+            Engineer::TheSarge => 300040,
+            Engineer::ZacariahNemo => 300050,
+            Engineer::LizRyder => 300080,
+            Engineer::HeraTani => 300090,
+            Engineer::FelicityFarseer => 300100,
+            Engineer::RamTah => 300110,
+            Engineer::LeiCheung => 300120,
+            Engineer::PetraOlmanova => 300130,
+            Engineer::ColonelBrisDekker => 300140,
+            Engineer::MarshaHicks => 300150,
+            Engineer::ElviraMartuuk => 300160,
+            Engineer::TheDweller => 300180,
+            Engineer::MarcoQwent => 300200,
+            Engineer::SeleneJean => 300210,
+            Engineer::ProfessorPalin => 300220,
+            Engineer::LoriJameson => 300230,
+            Engineer::JuriIshmaak => 300250,
+            Engineer::TodTheBlasterMcQuinn => 300260,
+            Engineer::TianaFortune => 300270,
+            Engineer::MelBrandon => 300280,
+            Engineer::EtienneDorn => 300290,
+            Engineer::ChloeSedesi => 300300,
+            Engineer::JudeNavarro => 400001,
+            Engineer::DominoGreen => 400002,
+            Engineer::HeroFerrari => 400003,
+            Engineer::KitFowler => 400004,
+            Engineer::WellingtonBeck => 400005,
+            Engineer::TerraVelasquez => 400006,
+            Engineer::UmaLaszlo => 400007,
+            Engineer::OdenGeiger => 400008,
+            Engineer::YardenBond => 400009,
+            Engineer::Baltanos => 400010,
+            Engineer::EleanorBresa => 400011,
+            Engineer::RosaDayette => 400012,
+            Engineer::YiShen => 400013,
+            Engineer::System => 399999,
+        }
+    }
+
     pub fn get_system_address(&self) -> u64 {
         match self {
             Engineer::DidiVatermann => 3932277478114,

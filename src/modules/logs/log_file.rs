@@ -10,6 +10,7 @@ use regex::Regex;
 use thiserror::Error;
 
 #[cfg(feature = "asynchronous")]
+#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 use super::asynchronous;
 use super::blocking;
 
@@ -81,6 +82,7 @@ impl LogFile {
     }
 
     #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         asynchronous::LogFileReader::open(self.path.as_path())
             .await
@@ -88,6 +90,7 @@ impl LogFile {
     }
 
     #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn create_live_async_reader(
         &self,
     ) -> Result<asynchronous::LiveLogFileReader, asynchronous::LiveLogFileReaderError> {

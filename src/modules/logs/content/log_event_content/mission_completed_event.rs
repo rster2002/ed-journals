@@ -85,7 +85,8 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_Outbreak_down;")]
     OutbreakDecrease,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }
@@ -98,7 +99,8 @@ pub enum MissionCompletedEventTrend {
     DownGood,
     DownBad,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
 }

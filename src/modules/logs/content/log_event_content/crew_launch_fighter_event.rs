@@ -1,3 +1,5 @@
+//! Fired when another player in a multi-crew session launches a fighter.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when another player in a multi-crew session launches a fighter.

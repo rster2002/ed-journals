@@ -1,12 +1,19 @@
+//! Fired when the player starts as a new commander.
+
 use serde::{Deserialize, Serialize};
 
+/// Fired when the player starts as a new commander.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct NewCommanderEvent {
+    /// The name of the newly created commander.
     pub name: String,
 
+    /// The Frontier ID.
     #[serde(rename = "FID")]
     pub fid: String,
+
+    /// The name of the package the new commander will deploy with.
     pub package: String,
 }
 

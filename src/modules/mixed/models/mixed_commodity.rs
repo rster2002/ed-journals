@@ -14,7 +14,8 @@ pub enum MixedCommodity {
     ShipCommodity(Commodity),
     OdysseyItem(Item),
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
 }
 
@@ -31,7 +32,7 @@ impl FromStr for MixedCommodity {
         let ship_commodity = Commodity::from_str(s);
 
         match ship_commodity {
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Ok(Commodity::Unknown(_)) => {}
             Ok(commodity) => return Ok(MixedCommodity::ShipCommodity(commodity)),
             Err(_) => {}
@@ -40,16 +41,16 @@ impl FromStr for MixedCommodity {
         let odyssey_item = Item::from_str(s);
 
         match odyssey_item {
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             Ok(Item::Unknown(_)) => {}
             Ok(item) => return Ok(MixedCommodity::OdysseyItem(item)),
             Err(_) => {}
         }
 
-        #[cfg(not(feature = "strict"))]
+        #[cfg(feature = "allow-unknown")]
         return Ok(MixedCommodity::Unknown(s.to_string()));
 
-        #[cfg(feature = "strict")]
+        #[cfg(not(feature = "allow-unknown"))]
         return Err(MixedCommodityError::UnknownCommodity(s.to_string()));
     }
 }

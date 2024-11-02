@@ -1,3 +1,5 @@
+//! Fired when the carrier performs the jump after the jump countdown.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::civilization::LocationInfo;
@@ -17,7 +19,7 @@ pub struct CarrierJumpEvent {
     #[serde(default)]
     pub on_foot: bool,
 
-    /// Information about the system the carrier is jumping to.
+    /// Information about the system the carrier has jumped to.
     #[serde(flatten)]
     pub system_info: LocationInfo,
 }

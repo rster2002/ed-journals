@@ -1,10 +1,12 @@
+//! Fired when the player buys a new fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys a new fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierBuyEvent {
-    /// The ID of the carrier bought. This is unique to this specific carrier.
+    /// The id of the fleet carrier bought. This is functionally the same as the market id.
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
 
