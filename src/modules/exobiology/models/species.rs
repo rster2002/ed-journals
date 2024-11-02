@@ -6,6 +6,7 @@ use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAW
 use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
+use lazy_static::lazy_static;
 use strum::EnumIter;
 use thiserror::Error;
 
