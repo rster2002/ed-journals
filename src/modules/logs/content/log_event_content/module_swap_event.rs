@@ -1,7 +1,7 @@
 //! Fired when swapping a module from one slot to another.
 
-use std::str::FromStr;
 use serde::{Deserialize, Deserializer, Serialize};
+use std::str::FromStr;
 
 use crate::modules::ship::{ShipSlot, ShipType};
 use crate::ship::ShipModule;
@@ -45,7 +45,8 @@ pub struct ModuleSwapEvent {
 }
 
 fn deserialize_to_item<'de, D>(deserializer: D) -> Result<Option<ShipModule>, D::Error>
-where D: Deserializer<'de>
+where
+    D: Deserializer<'de>,
 {
     let string = String::deserialize(deserializer)?;
 

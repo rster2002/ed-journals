@@ -1,9 +1,9 @@
 //! Fired when the player contributes to an unlock requirement for an engineer.
 
-use serde::{Deserialize, Serialize};
 use crate::civilization::Engineer;
 use crate::modules::materials::Material;
 use crate::modules::trading::Commodity;
+use serde::{Deserialize, Serialize};
 
 /// Fired when the player contributes to an unlock requirement for an engineer.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

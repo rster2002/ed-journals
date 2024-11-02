@@ -1,7 +1,6 @@
 //! Always the first event that is fired for a log file.
 
 use serde::{Deserialize, Serialize};
-use crate::logs::continued_event::ContinuedEvent;
 
 /// Always the first event that is fired for a log file. In the case where a log file is
 /// [Continued](ContinuedEvent), the continued log file gets its own file header with a new part

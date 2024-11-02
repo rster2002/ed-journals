@@ -39,7 +39,6 @@ pub struct ApproachSettlementEvent {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ApproachSettlementEventLocation {
-
     /// The latitude of the settlement on the planet.
     pub latitude: f32,
 

@@ -13,7 +13,7 @@ use crate::modules::commander::{
 pub enum PromotionEvent {
     Exobiologist(ExobiologyRank),
     Combat(CombatRank),
-    
+
     #[serde(rename = "Soldier")]
     Mercenary(MercenaryRank),
     Trade(TradeRank),

@@ -1,7 +1,3 @@
-use std::fmt::{Display, Formatter};
-use std::str::FromStr;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
 use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
 use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
 use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
@@ -11,6 +7,10 @@ use crate::modules::ship::{
     ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
     ShipPaintJob, ShipVoicepack,
 };
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 pub mod module_class;
 pub mod ship_bobble;

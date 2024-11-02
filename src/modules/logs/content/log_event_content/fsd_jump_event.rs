@@ -1,8 +1,8 @@
 //! Fired when the player jumps to another system.
 
-use serde::{Deserialize, Serialize};
 use crate::galaxy::GalacticDistance;
 use crate::modules::civilization::LocationInfo;
+use serde::{Deserialize, Serialize};
 
 /// Fired when the player jumps to another system. This is fired when traveling between systems.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

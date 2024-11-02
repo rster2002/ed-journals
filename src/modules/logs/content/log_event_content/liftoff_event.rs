@@ -49,9 +49,9 @@ pub struct LiftoffEventPosition {
     pub longitude: f32,
 }
 
-impl Into<(f32, f32)> for LiftoffEventPosition {
-    fn into(self) -> (f32, f32) {
-        (self.latitude, self.longitude)
+impl From<LiftoffEventPosition> for (f32, f32) {
+    fn from(val: LiftoffEventPosition) -> Self {
+        (val.latitude, val.longitude)
     }
 }
 

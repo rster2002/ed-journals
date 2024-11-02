@@ -1,7 +1,6 @@
 //! Includes information about the current progress of the player to the next rank.
 
 use serde::{Deserialize, Serialize};
-use crate::commander::{CombatRank, EmpireRank, ExplorationRank, FederationRank, TradeRank};
 
 /// Includes information about the current progress of the player to the next rank.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
