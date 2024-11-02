@@ -9,6 +9,7 @@ use crate::ship::ModuleClass;
 
 /// The kind of internal module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum InternalModule {
     #[serde(rename = "hyperdrive")]
     FrameShiftDrive,

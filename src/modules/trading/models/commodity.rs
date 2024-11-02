@@ -9,6 +9,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum Commodity {
     // Chemicals
     AgronomicTreatment,
