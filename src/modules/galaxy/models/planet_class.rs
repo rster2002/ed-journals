@@ -57,7 +57,7 @@ impl FromStr for PlanetClass {
             "rocky" => PlanetClass::RockyBody,
             "icy" | "ice" => PlanetClass::IcyBody,
             "rocky ice" => PlanetClass::RockyIceBody,
-            "earthlike" | "earth like" => PlanetClass::EarthlikeBody,
+            "earthlike" | "earth like" | "earth-like" => PlanetClass::EarthlikeBody,
             "water" => PlanetClass::WaterWorld,
             "ammonia" => PlanetClass::AmmoniaWorld,
             "water giant" => PlanetClass::WaterGiant,
