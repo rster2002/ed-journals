@@ -1,3 +1,5 @@
+//! Fired when selling multiple entries of exploration data.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when selling multiple entries of exploration data.

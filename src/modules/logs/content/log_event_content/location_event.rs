@@ -1,3 +1,7 @@
+//! Fired at times when the game loads in a location, usually when just starting the game or when
+//! the player is moven between locations for example by using a fleet carrier escape pod or when
+//! the player died.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::civilization::LocationInfo;

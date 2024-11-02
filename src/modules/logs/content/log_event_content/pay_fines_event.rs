@@ -1,3 +1,5 @@
+//! Fired when the player pays off any outstanding fines.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player pays off any outstanding fines.

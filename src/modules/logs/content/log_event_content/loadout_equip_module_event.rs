@@ -1,3 +1,5 @@
+//! Fired when equipping a module to a suit loadout.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Suit, SuitSlot, Weapon, WeaponMod};

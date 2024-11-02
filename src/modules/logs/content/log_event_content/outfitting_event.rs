@@ -1,3 +1,5 @@
+//! Emitted when opening the outfitting menu.
+
 use serde::{Deserialize, Serialize};
 
 /// Emitted when opening the outfitting menu. The contents of the outfitting menu are written to a

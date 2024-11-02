@@ -1,3 +1,5 @@
+//! Fired when there is a change in the combat rank of one of the hired crew members.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::CombatRank;

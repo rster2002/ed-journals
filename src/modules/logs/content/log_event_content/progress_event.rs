@@ -1,3 +1,5 @@
+//! Includes information about the current ranks of the player.
+
 use serde::{Deserialize, Serialize};
 use crate::commander::{CombatRank, EmpireRank, ExplorationRank, FederationRank, TradeRank};
 

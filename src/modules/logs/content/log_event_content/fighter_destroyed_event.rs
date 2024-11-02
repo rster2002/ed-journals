@@ -1,3 +1,5 @@
+//! Fired when a deployed ship launched fighter was destroyed.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when a deployed ship launched fighter was destroyed.

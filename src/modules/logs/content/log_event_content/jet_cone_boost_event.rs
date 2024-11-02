@@ -1,3 +1,5 @@
+//! Fired when the player boosts their FSD using a jet cone.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player boosts their FSD using a jet cone.

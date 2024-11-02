@@ -1,3 +1,5 @@
+//! Fired when the player discards a material.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::materials::{Material, MaterialCategory};

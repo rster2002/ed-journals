@@ -1,3 +1,5 @@
+//! Fired when the player 'honks' in a system.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player 'honks' in a system.

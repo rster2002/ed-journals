@@ -1,3 +1,5 @@
+//! Fired when removing a module from a suit loadout.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Suit, SuitSlot, Weapon, WeaponMod};

@@ -1,3 +1,5 @@
+//! Fired when the player leaves a body.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player leaves a body.

@@ -1,3 +1,6 @@
+//! Fired when the player initiates a module transfer to move a module from another station to the
+//! station the player is currently docked at.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipType};

@@ -1,3 +1,5 @@
+//! Fired when discovering a body in a given system, either through proximity or through the FSS.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when discovering a body in a given system, either through proximity or through the FSS.

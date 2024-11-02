@@ -1,3 +1,5 @@
+//! Market data is written to a separate file called `market.json`.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

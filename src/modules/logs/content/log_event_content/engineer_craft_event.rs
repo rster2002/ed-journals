@@ -1,3 +1,5 @@
+//! Fired when the player applies an engineering modification to one of their ship's modules.
+
 use crate::civilization::Engineer;
 use serde::{Deserialize, Serialize};
 

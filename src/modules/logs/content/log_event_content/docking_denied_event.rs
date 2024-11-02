@@ -1,3 +1,5 @@
+//! Fired when the player requested docking permission, but was denied.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

@@ -1,3 +1,5 @@
+//! Fired when the player is fuel scooping.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player is fuel scooping.

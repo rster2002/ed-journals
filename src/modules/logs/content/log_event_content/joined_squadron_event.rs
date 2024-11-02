@@ -1,3 +1,5 @@
+//! Fired when the player joins a squadron.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player joins a squadron.

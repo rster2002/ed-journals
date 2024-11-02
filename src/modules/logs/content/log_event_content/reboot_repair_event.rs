@@ -1,3 +1,5 @@
+//! Fired when performing a reboot and repair.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipSlot;

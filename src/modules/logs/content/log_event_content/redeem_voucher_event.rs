@@ -1,3 +1,5 @@
+//! Fired when redeeming any kind of voucher.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when redeeming any kind of voucher.

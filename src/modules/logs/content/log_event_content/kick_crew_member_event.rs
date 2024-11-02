@@ -1,3 +1,5 @@
+//! Fired when the current player kicks another player from the multi-crew session.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the current player kicks another player from the multi-crew session.

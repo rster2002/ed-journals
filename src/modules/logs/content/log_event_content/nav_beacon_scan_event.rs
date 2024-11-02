@@ -1,3 +1,5 @@
+//! Fired when the player scans a system's nav beacon.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player scans a system's nav beacon.

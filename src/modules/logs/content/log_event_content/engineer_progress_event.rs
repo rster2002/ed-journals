@@ -1,3 +1,5 @@
+//! Includes information about engineer progress.
+
 use crate::civilization::Engineer;
 use serde::{Deserialize, Serialize};
 

@@ -1,3 +1,5 @@
+//! Fired when the player completes an interdiction.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::CombatRank;

@@ -1,3 +1,5 @@
+//! Fired when the player has been interdicted and lost.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player has been interdicted and lost.

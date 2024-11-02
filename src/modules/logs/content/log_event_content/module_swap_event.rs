@@ -1,3 +1,5 @@
+//! Fired when swapping a module from one slot to another.
+
 use std::str::FromStr;
 use serde::{Deserialize, Deserializer, Serialize};
 

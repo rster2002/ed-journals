@@ -1,3 +1,5 @@
+//! Fired when the ship launched fighter has been rebuild.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::FighterLoadout;

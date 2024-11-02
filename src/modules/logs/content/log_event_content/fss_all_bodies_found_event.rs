@@ -1,3 +1,5 @@
+//! Fired when the player has scanned discovered all the bodies for a given system.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player has scanned discovered all the bodies for a given system. Discovering a

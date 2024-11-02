@@ -1,3 +1,5 @@
+//! Fired when a ship launched fighter docks back to the mother ship.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when a ship launched fighter docks back to the mother ship.

@@ -1,3 +1,5 @@
+//! Fired when the player drops an Odyssey item.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::odyssey::{Item, ItemType};

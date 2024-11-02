@@ -1,3 +1,5 @@
+//! Fired when the player left a squadron.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player left a squadron.

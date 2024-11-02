@@ -1,3 +1,5 @@
+//! Fired when the player escapes an interdiction attempt.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player escapes an interdiction attempt.

@@ -1,3 +1,5 @@
+//! Fired when the player abandons a mission.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::MissionType;

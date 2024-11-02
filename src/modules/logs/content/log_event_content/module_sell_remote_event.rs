@@ -1,3 +1,5 @@
+//! Fired when selling a module that is stored at another location.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipType};

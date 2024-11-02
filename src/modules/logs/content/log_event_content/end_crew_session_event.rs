@@ -1,3 +1,5 @@
+//! Fired when the whole multi-crew session has ended.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the whole multi-crew session has ended.

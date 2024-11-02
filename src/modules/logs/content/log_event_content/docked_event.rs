@@ -1,3 +1,5 @@
+//! Fired when the player docks at a station or settlement.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::{StationInfo, StationType};

@@ -1,3 +1,5 @@
+//! Fired when the given body has any special signals.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::exploration::PlanetarySignalType;

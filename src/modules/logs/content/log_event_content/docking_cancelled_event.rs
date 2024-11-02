@@ -1,3 +1,5 @@
+//! Fired when the player cancels the docking procedure.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

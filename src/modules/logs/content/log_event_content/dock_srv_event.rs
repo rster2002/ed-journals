@@ -1,3 +1,5 @@
+//! Fired when the player docks their SRV to their ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::SRVType;

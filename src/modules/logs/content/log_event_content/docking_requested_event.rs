@@ -1,3 +1,5 @@
+//! Fired when the player has successfully required permission to dock to a given station.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

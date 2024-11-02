@@ -1,3 +1,5 @@
+//! Fired when the player starts as a new commander.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player starts as a new commander.

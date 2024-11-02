@@ -1,3 +1,5 @@
+//! Fired during startup containing a list of material the player currently has.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::materials::Material;

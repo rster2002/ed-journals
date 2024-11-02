@@ -1,3 +1,5 @@
+//! Fired when the player has paid of their bounties.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player has paid of their bounties.

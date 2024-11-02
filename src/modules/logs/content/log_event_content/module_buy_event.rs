@@ -1,3 +1,5 @@
+//! Fired when buying a new module and equipping it to the current active ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipSlot, ShipType};

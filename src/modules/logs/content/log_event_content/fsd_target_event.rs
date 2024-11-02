@@ -1,3 +1,5 @@
+//! Fired when targeting a system for an FSD jump.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::galaxy::StarClass;

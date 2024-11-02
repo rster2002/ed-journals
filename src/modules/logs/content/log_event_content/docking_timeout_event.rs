@@ -1,3 +1,5 @@
+//! Fired when the player did not dock within the given time window.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

@@ -1,3 +1,6 @@
+//! When buying a module but storing at the current location instead of equipping it to the current
+//! ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipType};

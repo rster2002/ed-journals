@@ -1,3 +1,5 @@
+//! Fired when the player received a kill bond for a faction kill.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player received a kill bond for a faction kill.

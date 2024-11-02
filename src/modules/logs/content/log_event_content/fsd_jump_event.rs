@@ -1,3 +1,5 @@
+//! Fired when the player jumps to another system.
+
 use serde::{Deserialize, Serialize};
 use crate::galaxy::GalacticDistance;
 use crate::modules::civilization::LocationInfo;

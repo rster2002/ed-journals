@@ -1,3 +1,5 @@
+//! Fired when the player discovers a non-body signal.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player discovers a non-body signal.

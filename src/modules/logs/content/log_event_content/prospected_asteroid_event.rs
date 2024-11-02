@@ -1,3 +1,5 @@
+//! Fired when a prospector limpet is used on an asteroid.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

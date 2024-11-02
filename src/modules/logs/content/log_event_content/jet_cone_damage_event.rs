@@ -1,3 +1,5 @@
+//! Fired when a module receives damage from a jet cone.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipModule;

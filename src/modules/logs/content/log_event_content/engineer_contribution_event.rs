@@ -1,9 +1,11 @@
+//! Fired when the player contributes to an unlock requirement for an engineer.
+
 use serde::{Deserialize, Serialize};
 use crate::civilization::Engineer;
 use crate::modules::materials::Material;
 use crate::modules::trading::Commodity;
 
-/// Fired when the player contributes to a unlock requirement for an engineer.
+/// Fired when the player contributes to an unlock requirement for an engineer.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEvent {

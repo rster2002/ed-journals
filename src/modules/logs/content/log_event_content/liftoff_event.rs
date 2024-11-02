@@ -1,3 +1,5 @@
+//! Fired when lifting off from a planet.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when lifting off from a planet.

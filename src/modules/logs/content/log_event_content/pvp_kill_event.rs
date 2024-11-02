@@ -1,3 +1,5 @@
+//! Fired when the player kills another player in combat.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::CombatRank;

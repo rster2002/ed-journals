@@ -1,3 +1,5 @@
+//! Fired when there is a change to the player's passenger manifest.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when there is a change to the player's passenger manifest.

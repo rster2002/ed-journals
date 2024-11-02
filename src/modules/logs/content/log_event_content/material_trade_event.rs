@@ -1,3 +1,5 @@
+//! Fired when the player trades engineering materials at a material trader.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::materials::{Material, MaterialCategory};

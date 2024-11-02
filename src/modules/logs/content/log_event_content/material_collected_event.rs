@@ -1,3 +1,5 @@
+//! Fired when the player collects an engineering material.
+
 use crate::materials::{Material, MaterialCategory};
 use serde::{Deserialize, Serialize};
 

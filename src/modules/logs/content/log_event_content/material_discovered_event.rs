@@ -1,3 +1,5 @@
+//! Fired when the player collects a specific material for the first time.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::materials::{Material, MaterialCategory};

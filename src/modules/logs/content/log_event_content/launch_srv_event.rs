@@ -1,3 +1,5 @@
+//! Fired when launching an SRV while landed on a planet.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::SRVType;

@@ -1,3 +1,5 @@
+//! Fired when the player sells a module.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipSlot, ShipType};

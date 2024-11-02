@@ -1,3 +1,5 @@
+//! Fired when the player receives a text message.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player receives a text message.

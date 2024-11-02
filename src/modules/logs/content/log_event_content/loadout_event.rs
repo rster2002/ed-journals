@@ -1,3 +1,5 @@
+//! Fired when there are updates to the player's ship modules.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipSlot, ShipType};

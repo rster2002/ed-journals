@@ -1,3 +1,5 @@
+//! Always the first event that is fired for a log file.
+
 use serde::{Deserialize, Serialize};
 use crate::logs::continued_event::ContinuedEvent;
 

@@ -1,3 +1,5 @@
+//! Fired when storing multiple modules at the current location at once.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{Blueprint, ShipModule, ShipSlot, ShipType};

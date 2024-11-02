@@ -1,3 +1,5 @@
+//! Fired when storing a module.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipSlot, ShipType};

@@ -1,3 +1,5 @@
+//! Fired when launching a ship launched fighter.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::FighterLoadout;

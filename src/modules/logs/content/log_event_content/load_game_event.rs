@@ -1,3 +1,5 @@
+//! Fired when loading into the game.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::ShipType;

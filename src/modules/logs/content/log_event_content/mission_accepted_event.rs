@@ -1,3 +1,5 @@
+//! Fired when the player takes on a new mission.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::mixed::MixedCommodity;

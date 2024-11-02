@@ -1,3 +1,5 @@
+//! Fired when the player deploys from a dropship into a combat zone.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player deploys from a dropship into a combat zone.

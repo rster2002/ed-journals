@@ -1,3 +1,5 @@
+//! Fired when the player embarks at a fleet carrier.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player embarks at a fleet carrier.

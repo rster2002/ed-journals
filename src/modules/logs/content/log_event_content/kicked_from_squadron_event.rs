@@ -1,3 +1,5 @@
+//! Fired when the player was kicked from a squadron.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player was kicked from a squadron.

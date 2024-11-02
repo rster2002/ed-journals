@@ -1,3 +1,5 @@
+//! Fired when ejecting cargo out of the player's ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

@@ -1,3 +1,5 @@
+//! Fired when a commodity has been refined.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

@@ -1,3 +1,5 @@
+//! Fired when selling commodities at a given market.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::trading::Commodity;

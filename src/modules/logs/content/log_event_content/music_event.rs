@@ -1,3 +1,5 @@
+//! Fired when the game changes the music track.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the game changes the music track.

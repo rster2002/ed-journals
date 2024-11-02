@@ -1,3 +1,5 @@
+//! Fired when the owner of a squadron disbands a squadron.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the owner of a squadron disbands a squadron.

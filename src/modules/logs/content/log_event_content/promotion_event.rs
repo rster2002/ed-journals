@@ -1,3 +1,5 @@
+//! Fired when the player is promoted for a given rank.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::commander::{

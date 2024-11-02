@@ -1,3 +1,5 @@
+//! Fired when the player paid the wage of an NPC, which happens automatically.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player paid the wage of an NPC, which happens automatically.

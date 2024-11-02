@@ -1,3 +1,5 @@
+//! Fired when the player disembarks from their ship.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::station::StationType;

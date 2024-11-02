@@ -1,3 +1,5 @@
+//! Fired when the player received hull damage.
+
 use serde::{Deserialize, Serialize};
 
 /// Fired when the player received hull damage.

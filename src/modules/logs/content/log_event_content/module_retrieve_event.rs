@@ -1,3 +1,5 @@
+//! Fired when installing a module directly from storage.
+
 use serde::{Deserialize, Serialize};
 
 use crate::modules::ship::{ShipModule, ShipSlot, ShipType};
