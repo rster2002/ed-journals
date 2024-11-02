@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use crate::deserialize_in_order_impl;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]

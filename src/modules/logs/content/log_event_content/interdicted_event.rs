@@ -39,6 +39,6 @@ impl InterdictedEvent {
 
     /// Whether the interdictor is an NPC pilot.
     pub fn is_npc_pilot(&self) -> bool {
-        !self.is_thargoid && !self.is_thargoid
+        !self.is_thargoid && !self.is_player
     }
 }
