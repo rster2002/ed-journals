@@ -16,6 +16,10 @@ pub enum Weapon {
     )]
     KarmaC44,
 
+    #[serde(
+        alias = "Wpn_M_Launcher_Rocket_SAuto",
+        alias = "wpn_m_launcher_rocket_sauto",
+    )]
     KarmaL6,
 
     #[serde(
@@ -48,6 +52,10 @@ pub enum Weapon {
     )]
     ManticoreTormentor,
 
+    #[serde(
+        alias = "Wpn_M_AssaultRifle_Laser_FAuto",
+        alias = "wpn_m_assaultrifle_laser_fauto",
+    )]
     TKAphelion,
 
     #[serde(
@@ -56,6 +64,10 @@ pub enum Weapon {
     )]
     TKEclipse,
 
+    #[serde(
+        alias = "Wpn_S_Pistol_Laser_SAuto",
+        alias = "wpn_s_pistol_laser_sauto"
+    )]
     TKZenith,
 }
 

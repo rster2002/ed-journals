@@ -15,6 +15,8 @@ pub enum WeaponMod {
 
     #[serde(rename = "weapon_suppression_unpressurised")]
     UnpressurizedNoiceSuppressor,
+
+    #[serde(rename = "weapon_range")]
     GreaterRange,
 
     #[serde(rename = "weapon_clipsize")]
