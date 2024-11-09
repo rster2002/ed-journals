@@ -184,7 +184,7 @@ pub enum Species {
 }
 
 lazy_static! {
-    static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![SpawnCondition::Special,];
+    static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] = &[SpawnCondition::Special];
 }
 
 impl Species {
@@ -195,7 +195,7 @@ impl Species {
         matches!(self, Species::Unknown(_))
     }
 
-    pub fn spawn_conditions(&self) -> &Vec<SpawnCondition> {
+    pub fn spawn_conditions(&self) -> &[SpawnCondition<'_>] {
         #[cfg(feature = "allow-unknown")]
         if let Species::Unknown(_) = self {
             return &UNKNOWN_SPAWN_CONDITIONS;
