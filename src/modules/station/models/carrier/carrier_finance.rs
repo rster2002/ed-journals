@@ -4,15 +4,16 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierFinance {
-    /// The current balance of the carrier in credits.
-    pub carrier_balance: u64,
+    /// The current balance of the carrier in credits. Note that this can be negative if the carrier
+    /// is in debt.
+    pub carrier_balance: i64,
 
     /// The reserve balance of the carrier in credits reserved for weekly upkeep.
     pub reserve_balance: u64,
 
     /// The total available balance of the carrier in credits. This balance may be used for active
-    /// buy orders.
-    pub available_balance: u64,
+    /// buy orders. Note that this can be negative if the carrier is in debt.
+    pub available_balance: i64,
 
     /// The percentage of the available balance that is reserved for weekly upkeep.
     #[serde(default)]

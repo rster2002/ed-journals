@@ -17,9 +17,11 @@ pub enum SuitMod {
     IncreasedSprintDuration,
 
     /// Increases movement speed when carrying a weapon.
+    #[serde(rename = "suit_adsmovementspeed")]
     CombatMovementSpeed,
 
     /// Increases how long you can use your jetpack.
+    #[serde(rename = "suit_improvedjumpassist")]
     ImprovedJumpAssist,
 
     /// Increases the maximum oxygen capacity the suit can carry.
@@ -27,6 +29,7 @@ pub enum SuitMod {
     IncreasedAirReserves,
 
     /// Adds the ability to use nightvision.
+    #[serde(rename = "suit_nightvision")]
     NightVision,
 
     /// Increases the scanning range.
@@ -38,9 +41,11 @@ pub enum SuitMod {
     ExtraBackpackCapacity,
 
     /// Increases melee damage.
+    #[serde(rename = "suit_increasedmeleedamage")]
     AddedMeleeDamage,
 
     /// Decreases how much damage the player takes from various sources.
+    #[serde(rename = "suit_improvedarmourrating")]
     DamageResistance,
 
     /// Increases how much extra ammo the player can carry.
