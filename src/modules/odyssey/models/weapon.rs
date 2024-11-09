@@ -18,7 +18,7 @@ pub enum Weapon {
 
     #[serde(
         alias = "Wpn_M_Launcher_Rocket_SAuto",
-        alias = "wpn_m_launcher_rocket_sauto",
+        alias = "wpn_m_launcher_rocket_sauto"
     )]
     KarmaL6,
 
@@ -54,7 +54,7 @@ pub enum Weapon {
 
     #[serde(
         alias = "Wpn_M_AssaultRifle_Laser_FAuto",
-        alias = "wpn_m_assaultrifle_laser_fauto",
+        alias = "wpn_m_assaultrifle_laser_fauto"
     )]
     TKAphelion,
 
@@ -64,10 +64,7 @@ pub enum Weapon {
     )]
     TKEclipse,
 
-    #[serde(
-        alias = "Wpn_S_Pistol_Laser_SAuto",
-        alias = "wpn_s_pistol_laser_sauto"
-    )]
+    #[serde(alias = "Wpn_S_Pistol_Laser_SAuto", alias = "wpn_s_pistol_laser_sauto")]
     TKZenith,
 }
 
