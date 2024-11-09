@@ -7,7 +7,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
-#[non_exhaustive]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum ShipType {
     Adder,
     AllianceChieftain,
@@ -52,7 +52,6 @@ pub enum ShipType {
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    #[serde(untagged)]
     Unknown(String),
 }
 

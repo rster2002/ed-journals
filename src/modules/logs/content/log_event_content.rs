@@ -511,7 +511,7 @@ pub mod legacy_touchdown_event;
 /// > on [GitHub](https://github.com/rster2002/ed-journals/issues/new).
 #[derive(Debug, Serialize, Deserialize, Kinded, Clone, PartialEq)]
 #[serde(tag = "event")]
-#[non_exhaustive]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum LogEventContent {
     // Startup
     Cargo(CargoEvent),

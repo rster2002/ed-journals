@@ -9,7 +9,7 @@ use crate::ship::ModuleClass;
 
 /// The kind of internal module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[non_exhaustive]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum InternalModule {
     #[serde(rename = "hyperdrive")]
     FrameShiftDrive,
@@ -172,6 +172,11 @@ pub enum InternalModule {
 
     #[serde(untagged)]
     Armor(ArmorModule),
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl FromStr for InternalModule {

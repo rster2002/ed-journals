@@ -9,7 +9,7 @@ use crate::materials::MaterialGrade;
 use crate::modules::materials::MaterialCategory;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
-#[non_exhaustive]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Material {
     // Raw
     Antimony,
