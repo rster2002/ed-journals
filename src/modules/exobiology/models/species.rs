@@ -183,7 +183,6 @@ pub enum Species {
     Unknown(String),
 }
 
-#[cfg(feature = "allow-unknown")]
 lazy_static! {
     static ref UNKNOWN_SPAWN_CONDITIONS: Vec<SpawnCondition> = vec![SpawnCondition::Special,];
 }
