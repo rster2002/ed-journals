@@ -184,7 +184,8 @@ pub enum Species {
 }
 
 lazy_static! {
-    static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] = &[SpawnCondition::Special];
+    static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] =
+        &[SpawnCondition::Special];
 }
 
 impl Species {
@@ -201,7 +202,7 @@ impl Species {
             return &UNKNOWN_SPAWN_CONDITIONS;
         }
 
-        &SPECIES_SPAWN_CONDITIONS
+        SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
             .expect("Species should always have a matching spawning condition")
