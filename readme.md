@@ -18,7 +18,6 @@ release.
 - [x] Async variants of models, especially the `JournalReader`.
 - [x] Automatic journal detection based on platform etc.
 - [x] Exobiology utilities for things like predicting available species based on planet scan etc.
-- [ ] Exploration utilities for pointing out special or unusual discoveries.
 
 ## Contributing
 
