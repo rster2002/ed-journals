@@ -4,7 +4,7 @@ use crate::modules::galaxy::{
 };
 
 #[derive(Debug)]
-pub enum SpawnCondition {
+pub enum SpawnCondition<'a> {
     MinMeanTemperature(f32),
     MaxMeanTemperature(f32),
     NoAtmosphere,
@@ -38,6 +38,6 @@ pub enum SpawnCondition {
 
     Special,
 
-    Any(Vec<SpawnCondition>),
-    All(Vec<SpawnCondition>),
+    Any(&'a [SpawnCondition<'a>]),
+    All(&'a [SpawnCondition<'a>]),
 }
