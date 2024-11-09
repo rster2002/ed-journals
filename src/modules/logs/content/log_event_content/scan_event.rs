@@ -145,6 +145,9 @@ pub struct ScanEventPlanet {
     pub orbit_info: OrbitInfo,
     pub rotation_period: f32,
     pub axial_tilt: f32,
+
+    #[serde(default)]
+    pub rings: Vec<ScanEventRing>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
