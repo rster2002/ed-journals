@@ -37,7 +37,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 #[derive(Debug)]
 pub struct LiveJournalDirReader {
     blocker: AsyncBlocker,
-    _watcher: RecommendedWatcher,
+    watcher: RecommendedWatcher,
     log_dir_reader: LogDirReader,
     journal_buffer: LiveJournalBuffer,
 }
@@ -77,7 +77,7 @@ impl LiveJournalDirReader {
 
         Ok(LiveJournalDirReader {
             blocker,
-            _watcher: watcher,
+            watcher,
             log_dir_reader,
             journal_buffer,
         })
