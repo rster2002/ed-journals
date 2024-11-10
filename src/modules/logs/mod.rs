@@ -264,6 +264,7 @@ pub use content::log_event_content::wing_join_event;
 pub use content::log_event_content::won_a_trophy_for_squadron_event;
 pub use content::LogEvent;
 pub use content::LogEventContent;
+pub use content::LogEventContentKind;
 pub use log_dir::LogDir;
 pub use log_dir::LogDirError;
 pub use log_file::LogFile;
