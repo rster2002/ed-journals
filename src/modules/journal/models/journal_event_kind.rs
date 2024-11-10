@@ -12,7 +12,7 @@ use serde::Serialize;
 
 /// This event is fired from the [LiveJournalDirReader] when any change happens in the journal
 /// directory and includes all the possible models that could have been updated.
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 // The large enum variant is allowed here as this is usually allocated by the reader anyway and
 // adding another box here wouldn't be that useful. Also even though it's large, it's not huge.
 #[allow(clippy::large_enum_variant)]
