@@ -39,7 +39,7 @@ impl CodexGuardianEntry {
 }
 
 #[derive(Debug, Error)]
-pub enum CodexGuardianEntryError {
+pub enum CodexGuardianError {
     #[error("Failed to parse guardian codex entry: '{0}'")]
     FailedToParse(String),
 
@@ -48,11 +48,11 @@ pub enum CodexGuardianEntryError {
 }
 
 impl FromStr for CodexGuardianEntry {
-    type Err = CodexGuardianEntryError;
+    type Err = CodexGuardianError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let Some(captures) = CODEX_REGEX.captures(s) else {
-            return Err(CodexGuardianEntryError::FailedToParse(s.to_string()));
+            return Err(CodexGuardianError::FailedToParse(s.to_string()));
         };
 
         let string: &str = &captures
@@ -83,7 +83,7 @@ impl FromStr for CodexGuardianEntry {
             _ => CodexGuardianEntry::Unknown(string.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => return Err(CodexGuardianEntryError::UnknownEntry(string.to_string())),
+            _ => return Err(CodexGuardianError::UnknownEntry(string.to_string())),
         })
     }
 }
