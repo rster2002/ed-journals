@@ -5,6 +5,8 @@ pub use models::codex_entry::CodexEntry;
 pub use models::codex_entry::CodexEntryError;
 pub use models::codex_geological_entry::CodexGeologicalEntry;
 pub use models::codex_geological_entry::CodexGeologicalError;
+pub use models::codex_guardian_entry::CodexGuardianEntry;
+pub use models::codex_guardian_entry::CodexGuardianError;
 pub use models::codex_organic_structure_entry::CodexOrganicStructureEntry;
 pub use models::codex_organic_structure_entry::CodexOrganicStructureError;
 pub use models::codex_planet_entry::CodexPlanetEntry;
