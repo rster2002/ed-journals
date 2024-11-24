@@ -6,4 +6,6 @@ pub struct DestinationStatus {
     pub system: u64,
     pub body: u8,
     pub name: String,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: Option<String>,
 }
