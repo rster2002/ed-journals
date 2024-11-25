@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// A mod applied to an Odyssey weapon.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum WeaponMod {
     #[serde(rename = "weapon_handling")]
     FasterHandling,
@@ -33,4 +34,9 @@ pub enum WeaponMod {
 
     #[serde(rename = "weapon_stability")]
     Stability,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }

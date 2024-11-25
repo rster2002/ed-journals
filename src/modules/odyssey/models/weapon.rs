@@ -3,6 +3,7 @@ use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Weapon {
     #[serde(
         alias = "Wpn_M_AssaultRifle_Kinetic_FAuto",
@@ -66,6 +67,11 @@ pub enum Weapon {
 
     #[serde(alias = "Wpn_S_Pistol_Laser_SAuto", alias = "wpn_s_pistol_laser_sauto")]
     TKZenith,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl Display for Weapon {

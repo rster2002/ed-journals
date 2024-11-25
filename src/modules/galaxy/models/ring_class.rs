@@ -13,4 +13,9 @@ pub enum RingClass {
 
     #[serde(rename = "eRingClass_Icy")]
     Icy,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }

@@ -35,6 +35,7 @@ pub mod ship_weapon_color;
 ///
 /// The same is true for core internals and optional internals which both use [ShipInternalModule].
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum ShipModule {
     /// Special case for the cargo bay door.
     #[serde(

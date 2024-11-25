@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// A mod applied to a suit.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum SuitMod {
     /// Reduces the battery consumption of the suit's utility tool.
     #[serde(rename = "suit_reducedtoolbatteryconsumption")]
@@ -59,4 +60,9 @@ pub enum SuitMod {
     /// Decreases noise and in turn improves stealth.
     #[serde(rename = "suit_quieterfootsteps")]
     QuieterFootsteps,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }

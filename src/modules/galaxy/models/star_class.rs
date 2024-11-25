@@ -77,6 +77,10 @@ pub enum StarClass {
     // No category
     MS,
     S,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    Unknown(String),
 }
 
 #[derive(Debug, Error)]
@@ -158,6 +162,10 @@ impl FromStr for StarClass {
             "MS" | "ms" => StarClass::MS,
             "S" | "s" => StarClass::S,
 
+            #[cfg(feature = "allow-unknown")]
+            _ => StarClass::Unknown(s.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(StarClassError::UnknownStarClass(s.to_string())),
         })
     }
@@ -256,6 +264,9 @@ impl Display for StarClass {
                 StarClass::StellarRemnantNebula => "StellarRemnantNebula",
                 StarClass::MS => "MS",
                 StarClass::S => "S",
+
+                #[cfg(feature = "allow-unknown")]
+                StarClass::Unknown(unknown) => return write!(f, "Unknown star class: {}", unknown),
             }
         )
     }

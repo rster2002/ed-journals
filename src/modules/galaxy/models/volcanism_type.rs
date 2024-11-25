@@ -53,6 +53,11 @@ pub enum VolcanismType {
 
     #[serde(alias = "rocky magma")]
     RockyMagma,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl FromStr for VolcanismType {

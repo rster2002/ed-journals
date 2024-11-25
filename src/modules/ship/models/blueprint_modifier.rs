@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// When applying blueprint to modules, modifiers are applied to the modules which are the things
 /// that actually change the stats of the module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum BlueprintModifier {
     Size,
     Class,

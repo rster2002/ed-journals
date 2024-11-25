@@ -47,6 +47,11 @@ pub enum Citizen {
         alias = "rangedsuitai_class3"
     )]
     Sniper,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl Display for Citizen {
@@ -62,6 +67,9 @@ impl Display for Citizen {
                 Citizen::Scout => "Scout",
                 Citizen::Striker => "Striker",
                 Citizen::Sniper => "Sniper",
+
+                #[cfg(feature = "allow-unknown")]
+                Citizen::Unknown(unknown) => return write!(f, "Unknown citizen: {}", unknown),
             }
         )
     }

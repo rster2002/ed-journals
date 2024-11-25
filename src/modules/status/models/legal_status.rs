@@ -17,4 +17,9 @@ pub enum LegalStatus {
     PassengerWanted,
     Warrant,
     Thargoid,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    UnknownString(String),
 }

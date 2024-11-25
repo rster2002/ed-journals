@@ -3,6 +3,7 @@ use std::fmt::{Display, Formatter};
 
 /// Engineering blueprint that can be applied to certain ship modules.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Blueprint {
     // Armor
     #[serde(rename = "Armour_Explosive")]

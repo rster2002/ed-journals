@@ -21,6 +21,7 @@ pub struct ShipSlot {
 
 // TODO kinda want to refactor this to use untagged variants
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum ShipSlotKind {
     ShipCockpit,
     CargoHatch,
@@ -47,6 +48,9 @@ pub enum ShipSlotKind {
     ShipKitWings,
     ShipKitTail,
     ShipKitBumper,
+
+    // There is currently no Unknown variant here as it wouldn't make sense to have an unknown kind
+    // and then return a ShipSlot after parsing.
 }
 
 #[derive(Debug, Error)]

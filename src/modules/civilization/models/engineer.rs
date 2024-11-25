@@ -48,6 +48,11 @@ pub enum Engineer {
     /// This is a special engineer that does not actually exist, but seems to be used for
     /// pre-engineered modules.
     System,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl Engineer {
@@ -92,6 +97,9 @@ impl Engineer {
             Engineer::RosaDayette => 400012,
             Engineer::YiShen => 400013,
             Engineer::System => 399999,
+
+            #[cfg(feature = "allow-unknown")]
+            Engineer::Unknown(_) => 0,
         }
     }
 
@@ -136,6 +144,9 @@ impl Engineer {
             Engineer::RosaDayette => 59166629864010,
             Engineer::YiShen => 13736779007129,
             Engineer::System => 0,
+
+            #[cfg(feature = "allow-unknown")]
+            Engineer::Unknown(_) => 0,
         }
     }
 
@@ -180,6 +191,9 @@ impl Engineer {
             Engineer::RosaDayette => 128986587,
             Engineer::YiShen => 128987355,
             Engineer::System => 0,
+
+            #[cfg(feature = "allow-unknown")]
+            Engineer::Unknown(_) => 0,
         }
     }
 }
@@ -229,6 +243,9 @@ impl Display for Engineer {
                 Engineer::RosaDayette => "Rosa Dayette",
                 Engineer::YiShen => "Yi Shen",
                 Engineer::System => "System",
+
+                #[cfg(feature = "allow-unknown")]
+                Engineer::Unknown(unknown) => return write!(f, "Unknown engineer: {}", unknown),
             }
         )
     }

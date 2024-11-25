@@ -66,6 +66,11 @@ pub enum AtmosphereType {
 
     #[serde(alias = "metallic vapour")]
     MetallicVapour,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl FromStr for AtmosphereType {
