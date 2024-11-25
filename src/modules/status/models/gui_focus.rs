@@ -18,14 +18,6 @@ pub enum GuiFocus {
     FSSMode,
     SAAMode,
     Codex,
-
-    #[cfg(feature = "allow-unknown")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    UnknownU8(u8),
-
-    #[cfg(feature = "allow-unknown")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    UnknownString(String),
 }
 
 #[derive(Debug, Error)]
@@ -55,10 +47,6 @@ impl TryFrom<u8> for GuiFocus {
             10 => GuiFocus::SAAMode,
             11 => GuiFocus::Codex,
 
-            #[cfg(feature = "allow-unknown")]
-            _ => GuiFocus::UnknownU8(value),
-
-            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(GuiFocusError::UnknownValue(value)),
         })
     }
@@ -82,10 +70,6 @@ impl FromStr for GuiFocus {
             "SAAMode" => GuiFocus::SAAMode,
             "Codex" => GuiFocus::Codex,
 
-            #[cfg(feature = "allow-unknown")]
-            _ => GuiFocus::UnknownString(s.to_string()),
-
-            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(GuiFocusError::UnknownStringValue(s.to_string())),
         })
     }

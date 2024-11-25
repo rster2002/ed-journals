@@ -20,9 +20,4 @@ pub enum CarrierDockingAccess {
     /// No-one other than the owner of the fleer carrier can dock.
     #[serde(rename = "none")]
     None,
-
-    #[cfg(feature = "allow-unknown")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    #[serde(untagged)]
-    Unknown(String),
 }

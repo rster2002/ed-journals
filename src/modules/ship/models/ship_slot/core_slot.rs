@@ -17,11 +17,6 @@ pub enum CoreSlot {
     FrameShiftDrive,
     FuelTank,
     PlanetaryApproachSuite,
-
-    #[cfg(feature = "allow-unknown")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    #[serde(untagged)]
-    Unknown(String),
 }
 
 #[derive(Debug, Error)]

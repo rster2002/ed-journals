@@ -93,6 +93,9 @@ impl Display for Weapon {
                 Weapon::TKAphelion => "TK Aphelion",
                 Weapon::TKEclipse => "TK Eclipse",
                 Weapon::TKZenith => "TK Zenith ",
+
+                #[cfg(feature = "allow-unknown")]
+                Weapon::Unknown(unknown) => return write!(f, "Unknown weapon {}", unknown),
             }
         )
     }

@@ -1,109 +1,35 @@
-use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-use std::hash::{Hash, Hasher};
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, Hash, PartialOrd, Eq)]
 pub enum StarLuminosity {
-    O,
-    I,
-    Ia0,
-    Ia,
-    Ib,
-    Iab,
-    II,
-    IIa,
-    IIab,
-    IIb,
-    III,
-    IIIa,
-    IIIab,
-    IIIb,
-    IV,
-    IVa,
-    IVab,
-    IVb,
-    V,
-    Va,
-    Vab,
-    Vb,
-    Vz,
-    VI,
-    VII,
-
+    O = 25,
+    I = 24,
+    Ia0 = 23,
+    Ia = 22,
+    Ib = 21,
+    Iab = 20,
+    II = 19,
+    IIa = 18,
+    IIab = 17,
+    IIb = 16,
+    III = 15,
+    IIIa = 14,
+    IIIab = 13,
+    IIIb = 12,
+    IV = 11,
+    IVa = 10,
+    IVab = 9,
+    IVb = 8,
+    V = 7,
+    Va = 6,
+    Vab = 5,
+    Vb = 4,
+    Vz = 3,
+    VI = 2,
+    VII = 1,
     #[serde(alias = "0")]
-    Zero,
-
-    #[serde(untagged)]
-    #[cfg(feature = "allow-unknown")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-    Unknown(String),
-}
-
-impl StarLuminosity {
-    fn order_number(&self) -> u8 {
-        match self {
-            StarLuminosity::O => 26,
-            StarLuminosity::I => 25,
-            StarLuminosity::Ia0 => 24,
-            StarLuminosity::Ia => 23,
-            StarLuminosity::Ib => 22,
-            StarLuminosity::Iab => 21,
-            StarLuminosity::II => 20,
-            StarLuminosity::IIa => 19,
-            StarLuminosity::IIab => 18,
-            StarLuminosity::IIb => 17,
-            StarLuminosity::III => 16,
-            StarLuminosity::IIIa => 15,
-            StarLuminosity::IIIab => 14,
-            StarLuminosity::IIIb => 13,
-            StarLuminosity::IV => 12,
-            StarLuminosity::IVa => 11,
-            StarLuminosity::IVab => 10,
-            StarLuminosity::IVb => 9,
-            StarLuminosity::V => 8,
-            StarLuminosity::Va => 7,
-            StarLuminosity::Vab => 6,
-            StarLuminosity::Vb => 5,
-            StarLuminosity::Vz => 4,
-            StarLuminosity::VI => 3,
-            StarLuminosity::VII => 2,
-            StarLuminosity::Zero => 1,
-
-            #[cfg(feature = "allow-unknown")]
-            StarLuminosity::Unknown(_) => 0,
-        }
-    }
-}
-
-impl PartialEq<Self> for StarLuminosity {
-    fn eq(&self, other: &Self) -> bool {
-        self.order_number() == other.order_number()
-    }
-}
-
-impl Eq for StarLuminosity {}
-
-impl PartialOrd<Self> for StarLuminosity {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.order_number().cmp(&other.order_number()))
-    }
-}
-
-impl Ord for StarLuminosity {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.order_number().cmp(&other.order_number())
-    }
-}
-
-impl Hash for StarLuminosity {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        match self {
-            #[cfg(feature = "allow-unknown")]
-            StarLuminosity::Unknown(unknown) => unknown.hash(state),
-            _ => self.order_number().hash(state),
-        }
-    }
+    Zero = 0,
 }
 
 impl Display for StarLuminosity {
@@ -138,9 +64,6 @@ impl Display for StarLuminosity {
                 StarLuminosity::VI => "VI",
                 StarLuminosity::VII => "VII",
                 StarLuminosity::Zero => "Zero",
-
-                #[cfg(feature = "allow-unknown")]
-                StarLuminosity::Unknown(unknown) => return write!(f, "Unknown luminosity: {}", unknown),
             }
         )
     }
