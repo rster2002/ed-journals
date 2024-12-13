@@ -14,9 +14,9 @@ use crate::state::resolvers::game_state_resolver::game_commander_entry::GameComm
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::LogState;
 
-/// High level state resolver which encapsulates [LogState] and in turn
-/// [LogStateResolver](super::log_state_resolver::LogStateResolver). Like the LogStateResolver, this
-/// resolver handles all log events, but keep track of which commander the logs belong to.
+/// The complete state of the whole game. This includes potentially the different commanders that
+/// use the same game installation. By feeding the state entries from the journal log files it
+/// creates a state which makes it easier to read information about the game.
 #[derive(Serialize, Default)]
 pub struct GameStateResolver {
     /// A map of commanders that are tracked, where the key is the Frontier ID of the commander.
