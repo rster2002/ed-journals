@@ -16,10 +16,10 @@ use crate::logs::statistics_event::StatisticsEvent;
 use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
-use crate::state::models::state::materials_state::MaterialsState;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::{MissionState, SystemState};
 use current_organic_progress::CurrentOrganicProgress;
+use crate::state::MaterialsState;
 
 pub mod current_organic_progress;
 
@@ -98,37 +98,6 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 }
             },
 
-            LogEventContent::Materials(event) => {
-                for material in &event.raw {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-
-                for material in &event.encoded {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-
-                for material in &event.manufactured {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-            }
-            LogEventContent::MaterialCollected(event) => {
-                self.material_state
-                    .add_material_count(event.name.clone(), event.count);
-            }
-            LogEventContent::MaterialDiscarded(event) => {
-                self.material_state
-                    .remove_material_count(event.name.clone(), event.count);
-            }
-            LogEventContent::MaterialTrade(event) => {
-                self.material_state
-                    .remove_material_count(event.paid.material.clone(), event.paid.quantity);
-                self.material_state
-                    .add_material_count(event.received.material.clone(), event.received.quantity);
-            }
-
             LogEventContent::CarrierStats(stats) => {
                 if self.carrier_state.is_none() {
                     let mut state: CarrierState = stats.clone().into();
@@ -182,6 +151,8 @@ impl StateResolver<LogEvent> for LogStateResolver {
 
             system.feed(input);
         }
+
+        self.material_state.feed(input);
 
         FeedResult::Accepted
     }
