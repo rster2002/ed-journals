@@ -17,7 +17,7 @@ pub struct SpawnSource<'a> {
     pub target_planet: &'a TargetPlanet,
 }
 
-impl<'a> SpawnSource<'a> {
+impl SpawnSource<'_> {
     /// Returns a list of species that could spawn on this spawn source.
     pub fn get_spawnable_species(&self) -> Vec<Species> {
         Species::iter()
