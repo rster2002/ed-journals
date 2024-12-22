@@ -1,9 +1,9 @@
-use crate::materials::Material;
-use serde::Serialize;
-use std::collections::HashMap;
 use crate::logs::{LogEvent, LogEventContent};
+use crate::materials::Material;
 use crate::state::models::feed_result::FeedResult;
 use crate::state::traits::state_resolver::StateResolver;
+use serde::Serialize;
+use std::collections::HashMap;
 
 #[derive(Serialize, Default)]
 pub struct MaterialsStateResolver {
@@ -68,23 +68,23 @@ impl StateResolver<LogEvent> for MaterialsStateResolver {
                 for material in &event.manufactured {
                     self.set_material_count(material.name.clone(), material.count);
                 }
-            },
+            }
             LogEventContent::MaterialCollected(event) => {
                 self.add_material_count(event.name.clone(), event.count);
-            },
+            }
             LogEventContent::MaterialDiscarded(event) => {
                 self.remove_material_count(event.name.clone(), event.count);
-            },
+            }
             LogEventContent::MaterialTrade(event) => {
                 self.remove_material_count(event.paid.material.clone(), event.paid.quantity);
                 self.add_material_count(event.received.material.clone(), event.received.quantity);
-            },
+            }
 
             LogEventContent::EngineerCraft(event) => {
                 for ingredient in &event.ingredients {
                     self.remove_material_count(ingredient.name.clone(), ingredient.count);
                 }
-            },
+            }
 
             _ => return FeedResult::Skipped,
         }

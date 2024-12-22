@@ -17,9 +17,9 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
 use crate::state::traits::state_resolver::StateResolver;
+use crate::state::MaterialsState;
 use crate::state::{MissionState, SystemState};
 use current_organic_progress::CurrentOrganicProgress;
-use crate::state::MaterialsState;
 
 pub mod current_organic_progress;
 
