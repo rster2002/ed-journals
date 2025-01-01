@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::modules::materials::MaterialCategory;
 use crate::modules::mixed::models::mixed_material::MixedMaterial;
-use crate::modules::odyssey::ItemType;
+use crate::modules::odyssey::ItemCategory;
 
 /// In some cases, the game emits events that refer to materials, but can also contain Odyssey
 /// items. If that is the case, this model will be used instead.
@@ -10,7 +10,7 @@ use crate::modules::odyssey::ItemType;
 #[serde(untagged)]
 pub enum MixedMaterialCategory {
     ShipMaterial(MaterialCategory),
-    OdysseyMaterial(ItemType),
+    OdysseyMaterial(ItemCategory),
 }
 
 impl From<MixedMaterial> for MixedMaterialCategory {

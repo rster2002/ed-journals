@@ -1,10 +1,11 @@
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
-
+use thiserror::Error;
 use crate::modules::odyssey::Item;
 
 /// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-pub enum ItemType {
+pub enum ItemCategory {
     #[serde(alias = "$MICRORESOURCE_CATEGORY_Data;")]
     Data,
 
@@ -17,6 +18,9 @@ pub enum ItemType {
     Tech,
     Consumable,
 
+    #[serde(alias = "Component", alias = "$MICRORESOURCE_CATEGORY_Component;")]
+    Component,
+
     Mission,
 
     #[cfg(feature = "allow-unknown")]
@@ -25,7 +29,21 @@ pub enum ItemType {
     Unknown(String),
 }
 
-impl From<Item> for ItemType {
+#[derive(Debug, Error)]
+pub enum ItemCategoryError {
+    #[error("Unknown item category: '{0}'")]
+    UnknownItemCategory(String),
+}
+
+impl FromStr for ItemCategory {
+    type Err = ItemCategoryError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        todo!()
+    }
+}
+
+impl From<Item> for ItemCategory {
     fn from(value: Item) -> Self {
         match value {
             Item::AccidentLogs
@@ -141,7 +159,7 @@ impl From<Item> for ItemType {
             | Item::VisitorRegister
             | Item::WeaponInventory
             | Item::WeaponTestData
-            | Item::XenoDefenceProtocols => ItemType::Data,
+            | Item::XenoDefenceProtocols => ItemCategory::Data,
 
             Item::AgriculturalProcessSample
             | Item::BiochemicalAgent
@@ -187,7 +205,7 @@ impl From<Item> for ItemType {
             | Item::TrueFormFossil
             | Item::UniversalTranslator
             | Item::VehicleSchematic
-            | Item::WeaponSchematic => ItemType::Goods,
+            | Item::WeaponSchematic => ItemCategory::Goods,
 
             Item::Aerogel
             | Item::ChemicalCatalyst
@@ -198,7 +216,7 @@ impl From<Item> for ItemType {
             | Item::OxygenicBacteria
             | Item::PHNeutraliser
             | Item::RDX
-            | Item::ViscoelasticPolymer => ItemType::Chemicals,
+            | Item::ViscoelasticPolymer => ItemCategory::Chemicals,
 
             Item::CircuitBoard
             | Item::CircuitSwitch
@@ -211,7 +229,7 @@ impl From<Item> for ItemType {
             | Item::MicroTransformer
             | Item::Microelectrode
             | Item::Motor
-            | Item::OpticalFibre => ItemType::Circuits,
+            | Item::OpticalFibre => ItemCategory::Circuits,
 
             Item::CarbonFibrePlating
             | Item::EncryptedMemoryChip
@@ -223,17 +241,17 @@ impl From<Item> for ItemType {
             | Item::TitaniumPlating
             | Item::Transmitter
             | Item::TungstenCarbide
-            | Item::WeaponComponent => ItemType::Tech,
+            | Item::WeaponComponent => ItemCategory::Tech,
 
             Item::EnergyCell
             | Item::FragGranade
             | Item::Medkit
             | Item::ShieldDisruptor
             | Item::ShieldProjector
-            | Item::EBreach => ItemType::Consumable,
+            | Item::EBreach => ItemCategory::Consumable,
 
             #[cfg(feature = "allow-unknown")]
-            Item::Unknown(item) => ItemType::Unknown(format!("Unknown item: {}", item)),
+            Item::Unknown(item) => ItemCategory::Unknown(format!("Unknown item: {}", item)),
         }
     }
 }
