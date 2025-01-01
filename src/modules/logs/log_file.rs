@@ -4,16 +4,16 @@ use std::io;
 use std::num::ParseIntError;
 use std::path::PathBuf;
 
-use chrono::NaiveDateTime;
-use lazy_static::lazy_static;
-use regex::Regex;
-use thiserror::Error;
-use crate::logs::blocking::LogFileReaderError as BlockingLogFileReaderError;
-use crate::logs::asynchronous::LogFileReaderError as AsyncLogFileReaderError;
 #[cfg(feature = "asynchronous")]
 #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 use super::asynchronous;
 use super::blocking;
+use crate::logs::asynchronous::LogFileReaderError as AsyncLogFileReaderError;
+use crate::logs::blocking::LogFileReaderError as BlockingLogFileReaderError;
+use chrono::NaiveDateTime;
+use lazy_static::lazy_static;
+use regex::Regex;
+use thiserror::Error;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]
@@ -75,7 +75,7 @@ impl LogFile {
     /// Creates a new reader using the path of the journal log file.
     pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader, LogFileError> {
         blocking::LogFileReader::open(self.path.as_path())
-            .map_err(|e| LogFileError::FailedToOpenBlockingReader(e))
+            .map_err(LogFileError::FailedToOpenBlockingReader)
     }
 
     /// Creates a new live reader using the path of the journal log file.
@@ -90,7 +90,7 @@ impl LogFile {
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         asynchronous::LogFileReader::open(self.path.as_path())
             .await
-            .map_err(|e| LogFileError::FailedToOpenAsyncReader(e))
+            .map_err(LogFileError::FailedToOpenAsyncReader)
     }
 
     #[cfg(feature = "asynchronous")]

@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
-use notify::event::{CreateKind, DataChange, ModifyKind};
+use notify::event::{CreateKind, ModifyKind};
 use notify::{Event, EventKind};
 use thiserror::Error;
 
