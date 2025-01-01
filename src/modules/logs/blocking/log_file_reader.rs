@@ -114,7 +114,7 @@ impl LogFileReader {
 
         // If it reaches this point that means that the whole read buffer has been processed, so it
         // can be cleared.
-        self.file_read_buffer = String::new();
+        self.file_read_buffer.clear();
 
         Ok(())
     }
