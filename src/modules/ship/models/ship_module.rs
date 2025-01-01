@@ -40,7 +40,8 @@ pub enum ShipModule {
     #[serde(
         alias = "modularcargobaydoor",
         alias = "modularcargobaydoorfdl",
-        alias = "$modularcargobaydoor_name;"
+        alias = "$modularcargobaydoor_name;",
+        alias = "$modularcargobaydoorfdl_name;",
     )]
     CargoBayDoor,
 
