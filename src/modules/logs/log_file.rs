@@ -8,7 +8,8 @@ use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
 use thiserror::Error;
-
+use crate::logs::blocking::LogFileReaderError as BlockingLogFileReaderError;
+use crate::logs::asynchronous::LogFileReaderError as AsyncLogFileReaderError;
 #[cfg(feature = "asynchronous")]
 #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 use super::asynchronous;
@@ -30,8 +31,11 @@ pub enum LogFileError {
     #[error("Incorrect file name")]
     IncorrectFileName,
 
-    #[error("Failed to open reader")]
-    FailedToOpenReader,
+    #[error("Failed to open reader: {0}")]
+    FailedToOpenBlockingReader(#[from] BlockingLogFileReaderError),
+
+    #[error("Failed to open reader: {0}")]
+    FailedToOpenAsyncReader(#[from] AsyncLogFileReaderError),
 
     #[error("Failed to parse journal date time: {0}")]
     FailedToParseDateTime(#[from] chrono::ParseError),
@@ -71,7 +75,7 @@ impl LogFile {
     /// Creates a new reader using the path of the journal log file.
     pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader, LogFileError> {
         blocking::LogFileReader::open(self.path.as_path())
-            .map_err(|_| LogFileError::FailedToOpenReader)
+            .map_err(|e| LogFileError::FailedToOpenBlockingReader(e))
     }
 
     /// Creates a new live reader using the path of the journal log file.
@@ -86,7 +90,7 @@ impl LogFile {
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         asynchronous::LogFileReader::open(self.path.as_path())
             .await
-            .map_err(|_| LogFileError::FailedToOpenReader)
+            .map_err(|e| LogFileError::FailedToOpenAsyncReader(e))
     }
 
     #[cfg(feature = "asynchronous")]
