@@ -26,12 +26,6 @@ pub enum ItemCategory {
     Unknown(String),
 }
 
-#[derive(Debug, Error)]
-pub enum ItemCategoryError {
-    #[error("Unknown item category: '{0}'")]
-    UnknownItemCategory(String),
-}
-
 impl From<Item> for ItemCategory {
     fn from(value: Item) -> Self {
         match value {
