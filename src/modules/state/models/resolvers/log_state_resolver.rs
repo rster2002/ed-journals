@@ -14,6 +14,7 @@ use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::scan_event::ScanEvent;
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::logs::statistics_event::StatisticsEvent;
+use crate::logs::touchdown_event::TouchdownEvent;
 use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
@@ -21,7 +22,6 @@ use crate::state::traits::state_resolver::StateResolver;
 use crate::state::SystemState;
 use crate::state::{MaterialsState, ShipyardState};
 use current_organic_progress::CurrentOrganicProgress;
-use crate::logs::touchdown_event::TouchdownEvent;
 
 pub mod current_organic_progress;
 
