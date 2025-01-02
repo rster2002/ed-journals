@@ -21,6 +21,7 @@ use crate::state::traits::state_resolver::StateResolver;
 use crate::state::SystemState;
 use crate::state::{MaterialsState, ShipyardState};
 use current_organic_progress::CurrentOrganicProgress;
+use crate::logs::touchdown_event::TouchdownEvent;
 
 pub mod current_organic_progress;
 
@@ -43,9 +44,12 @@ pub struct LogStateResolver {
 
     /// Keeps track of the current materials the player has.
     pub material_state: MaterialsState,
-    // pub mission_state: MissionState,
+
     /// Information about the player's stored ships.
     pub shipyard_state: ShipyardState,
+
+    /// Current touchdown event. Is set back to none when the player lifts off or dies.
+    pub touchdown: Option<TouchdownEvent>,
 
     /// State regarding the player's carrier if they own one. `None` means that the player does
     /// not own one or that their carrier has been scrapped.
@@ -72,6 +76,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             }
             LogEventContent::Died(_) => {
                 self.current_exploration_data.clear();
+                self.touchdown = None;
             }
             LogEventContent::Rank(ranks) => {
                 self.rank = Some(ranks.clone());
@@ -133,6 +138,12 @@ impl StateResolver<LogEvent> for LogStateResolver {
 
             LogEventContent::Loadout(event) => {
                 self.current_loadout = Some(event.clone());
+            }
+            LogEventContent::Touchdown(event) => {
+                self.touchdown = Some(event.clone());
+            }
+            LogEventContent::Liftoff(_) => {
+                self.touchdown = None;
             }
 
             LogEventContent::CarrierJump(_)
