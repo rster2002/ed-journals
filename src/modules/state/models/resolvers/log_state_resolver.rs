@@ -17,9 +17,10 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
 use crate::state::traits::state_resolver::StateResolver;
-use crate::state::MaterialsState;
+use crate::state::{MaterialsState, ShipyardState};
 use crate::state::{MissionState, SystemState};
 use current_organic_progress::CurrentOrganicProgress;
+use crate::logs::loadout_event::LoadoutEvent;
 
 pub mod current_organic_progress;
 
@@ -28,15 +29,39 @@ pub mod current_organic_progress;
 /// does.
 #[derive(Serialize, Default)]
 pub struct LogStateResolver {
+    /// Systems that the player has visited.
     pub systems: HashMap<u64, SystemState>,
+
+    /// The system address the player is currently in.
     pub current_system: Option<u64>,
+
+    /// Information about the current exobiology scans the player is performing.
     pub current_organic_progress: Option<CurrentOrganicProgress>,
+
+    /// List of scans that have been performed since the last time the player has sold data or died.
     pub current_exploration_data: Vec<ScanEvent>,
+
+    /// Keeps track of the current materials the player has.
     pub material_state: MaterialsState,
-    pub mission_state: MissionState,
+    // pub mission_state: MissionState,
+
+    /// Information about the player's stored ships.
+    pub shipyard_state: ShipyardState,
+
+    /// State regarding the player's carrier if they own one. `None` means that the player does
+    /// not own one or that their carrier has been scrapped.
     pub carrier_state: Option<CarrierState>,
+
+    /// The lastest loadout event fired for the player.
+    pub current_loadout: Option<LoadoutEvent>,
+
+    /// The lastest rank event fired for the player.
     pub rank: Option<RankEvent>,
+
+    /// The lastest reputation event fired for the player.
     pub reputation: Option<ReputationEvent>,
+
+    /// The lastest statistics event fired for the player.
     pub statistics: Option<StatisticsEvent>,
 }
 
@@ -73,13 +98,13 @@ impl StateResolver<LogEvent> for LogStateResolver {
             LogEventContent::Location(location) => {
                 self.current_system = Some(location.location_info.system_address);
 
-                let system = self.upset_system(&location.location_info);
+                let system = self.upsert_system(&location.location_info);
                 system.visit(&input.timestamp);
             }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);
 
-                let system = self.upset_system(&fsd_jump.system_info);
+                let system = self.upsert_system(&fsd_jump.system_info);
                 system.visit(&input.timestamp);
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
@@ -107,6 +132,10 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 }
             }
 
+            LogEventContent::Loadout(event) => {
+                self.current_loadout = Some(event.clone());
+            }
+
             LogEventContent::CarrierJump(_)
             | LogEventContent::CarrierBuy(_)
             | LogEventContent::CarrierJumpRequest(_)
@@ -123,7 +152,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             | LogEventContent::CarrierNameChange(_)
             | LogEventContent::CarrierJumpCancelled(_) => {
                 if let LogEventContent::CarrierJump(carrier_jump) = &input.content {
-                    let system = self.upset_system(&carrier_jump.system_info);
+                    let system = self.upsert_system(&carrier_jump.system_info);
                     system.carrier_visit(&input.timestamp);
                 }
 
@@ -153,6 +182,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
         }
 
         self.material_state.feed(input);
+        self.shipyard_state.feed(input);
 
         FeedResult::Accepted
     }
@@ -165,7 +195,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
 }
 
 impl LogStateResolver {
-    pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
+    pub fn upsert_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
         self.systems
             .entry(location_info.system_address)
             .or_insert_with(|| location_info.into());

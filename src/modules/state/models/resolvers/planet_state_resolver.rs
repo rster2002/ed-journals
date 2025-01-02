@@ -25,26 +25,35 @@ use crate::trading::Commodity;
 
 #[derive(Debug, Serialize)]
 pub struct PlanetStateResolver {
+    /// The scan associated with this planet.
     pub scan: ScanEvent,
 
+    /// The SAA scan for this planet, if any.
     pub saa_scan: Option<SAAScanCompleteEvent>,
+
+    /// List of SAA signals for this planet.
     pub saa_signals: Vec<SAASignalsFoundEventSignal>,
+
+    /// List of genuses found by SAA, if any.
     pub saa_genuses: Option<HashSet<Genus>>,
 
+    /// Species that have been scanned on the planet.
     pub scanned_species: HashSet<Species>,
+
+    /// Species that have been fully logged on the planet.
     pub logged_species: HashSet<Species>,
 
+    /// List of touchdowns on the planet.
     pub touchdowns: Vec<TouchdownEvent>,
-    pub exobiology_body: TargetPlanet,
 
+    /// Signals found on the planet.
     pub signal_counts: Option<SignalCounts>,
-    // pub human_signal_count: Option<usize>,
-    // pub biological_signal_count: Option<usize>,
-    // pub geological_signal_count: Option<usize>,
-    // pub thargoid_signal_count: Option<usize>,
-    // pub guardian_signal_count: Option<usize>,
-    // pub other_signal_count: Option<usize>,
+
+    /// Commodity signals that have been found on the planet.
     pub commodity_signals: Vec<Commodity>,
+
+    /// Information about the planet needed for exobiology predictions.
+    pub exobiology_body: TargetPlanet,
 }
 
 #[derive(Debug, Error)]
