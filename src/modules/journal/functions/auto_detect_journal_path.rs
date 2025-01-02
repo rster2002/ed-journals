@@ -31,7 +31,7 @@ pub fn auto_detect_journal_path() -> Option<PathBuf> {
             return None;
         }
 
-        return Some(expected_path);
+        Some(expected_path)
     }
 
     #[cfg(target_family = "unix")]

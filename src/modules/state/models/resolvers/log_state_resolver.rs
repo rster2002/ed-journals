@@ -18,7 +18,7 @@ use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
 use crate::state::traits::state_resolver::StateResolver;
 use crate::state::{MaterialsState, ShipyardState};
-use crate::state::{MissionState, SystemState};
+use crate::state::SystemState;
 use current_organic_progress::CurrentOrganicProgress;
 use crate::logs::loadout_event::LoadoutEvent;
 
