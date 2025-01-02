@@ -32,7 +32,7 @@ impl JournalCommanderEntry {
                     &(planet_status.latitude, planet_status.longitude),
                 )
             })
-            .min_by(|a, b| a.partial_cmp(b).unwrap_or(Ordering::Equal))
+            .min_by(|a, b| b.partial_cmp(a).unwrap_or(Ordering::Equal))
     }
 
     /// Returns true when the player is far enough from previous scans for the current organic.
