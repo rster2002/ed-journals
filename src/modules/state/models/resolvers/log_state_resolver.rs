@@ -8,6 +8,7 @@ use serde::Serialize;
 
 use crate::civilization::LocationInfo;
 use crate::exploration::calculate_estimated_worth;
+use crate::logs::loadout_event::LoadoutEvent;
 use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::scan_event::ScanEvent;
@@ -17,10 +18,9 @@ use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
 use crate::state::traits::state_resolver::StateResolver;
-use crate::state::{MaterialsState, ShipyardState};
 use crate::state::SystemState;
+use crate::state::{MaterialsState, ShipyardState};
 use current_organic_progress::CurrentOrganicProgress;
-use crate::logs::loadout_event::LoadoutEvent;
 
 pub mod current_organic_progress;
 
@@ -44,7 +44,6 @@ pub struct LogStateResolver {
     /// Keeps track of the current materials the player has.
     pub material_state: MaterialsState,
     // pub mission_state: MissionState,
-
     /// Information about the player's stored ships.
     pub shipyard_state: ShipyardState,
 
