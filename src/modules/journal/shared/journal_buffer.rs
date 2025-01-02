@@ -6,6 +6,9 @@ use notify::event::{CreateKind, ModifyKind};
 use notify::{Event, EventKind};
 use thiserror::Error;
 
+#[cfg(target_family = "unix")]
+use notify::event::DataChange;
+
 use crate::backpack::blocking::{read_backpack_file, ReadBackpackFileError};
 use crate::cargo::blocking::{read_cargo_file, ReadCargoFileError};
 use crate::journal::models::journal_event::JournalEvent;
