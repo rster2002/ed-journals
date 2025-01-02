@@ -1,26 +1,28 @@
 use std::str::FromStr;
+use lazy_static::lazy_static;
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use crate::modules::odyssey::Item;
 
+// $MICRORESOURCE_CATEGORY_Data;
+
 /// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ItemCategory {
-    #[serde(alias = "$MICRORESOURCE_CATEGORY_Data;")]
+    #[serde(alias = "Data", alias = "$MICRORESOURCE_CATEGORY_Data;")]
     Data,
-
-    #[serde(alias = "Item", alias = "$MICRORESOURCE_CATEGORY_Item;")]
-    Goods,
-
-    #[serde(alias = "Component")]
-    Chemicals,
-    Circuits,
-    Tech,
-    Consumable,
 
     #[serde(alias = "Component", alias = "$MICRORESOURCE_CATEGORY_Component;")]
     Component,
 
+    #[serde(alias = "Item", alias = "$MICRORESOURCE_CATEGORY_Item;")]
+    Item,
+
+    #[serde(alias = "Consumable", alias = "$MICRORESOURCE_CATEGORY_Consumable;")]
+    Consumable,
+
+    #[serde(alias = "Mission", alias = "$MICRORESOURCE_CATEGORY_Mission;")]
     Mission,
 
     #[cfg(feature = "allow-unknown")]
@@ -33,14 +35,6 @@ pub enum ItemCategory {
 pub enum ItemCategoryError {
     #[error("Unknown item category: '{0}'")]
     UnknownItemCategory(String),
-}
-
-impl FromStr for ItemCategory {
-    type Err = ItemCategoryError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        todo!()
-    }
 }
 
 impl From<Item> for ItemCategory {
@@ -205,20 +199,10 @@ impl From<Item> for ItemCategory {
             | Item::TrueFormFossil
             | Item::UniversalTranslator
             | Item::VehicleSchematic
-            | Item::WeaponSchematic => ItemCategory::Goods,
-
-            Item::Aerogel
-            | Item::ChemicalCatalyst
-            | Item::ChemicalSuperbase
-            | Item::Epinephrine
-            | Item::EpoxyAdhesive
-            | Item::Graphene
-            | Item::OxygenicBacteria
-            | Item::PHNeutraliser
-            | Item::RDX
-            | Item::ViscoelasticPolymer => ItemCategory::Chemicals,
+            | Item::WeaponSchematic => ItemCategory::Item,
 
             Item::CircuitBoard
+            | Item::CarbonFibrePlating
             | Item::CircuitSwitch
             | Item::ElectricalFuse
             | Item::ElectricalWiring
@@ -229,9 +213,17 @@ impl From<Item> for ItemCategory {
             | Item::MicroTransformer
             | Item::Microelectrode
             | Item::Motor
-            | Item::OpticalFibre => ItemCategory::Circuits,
-
-            Item::CarbonFibrePlating
+            | Item::OpticalFibre
+            | Item::Aerogel
+            | Item::ChemicalCatalyst
+            | Item::ChemicalSuperbase
+            | Item::Epinephrine
+            | Item::EpoxyAdhesive
+            | Item::Graphene
+            | Item::OxygenicBacteria
+            | Item::PHNeutraliser
+            | Item::RDX
+            | Item::ViscoelasticPolymer
             | Item::EncryptedMemoryChip
             | Item::MemoryChip
             | Item::MicroHydraulics
@@ -241,7 +233,7 @@ impl From<Item> for ItemCategory {
             | Item::TitaniumPlating
             | Item::Transmitter
             | Item::TungstenCarbide
-            | Item::WeaponComponent => ItemCategory::Tech,
+            | Item::WeaponComponent => ItemCategory::Component,
 
             Item::EnergyCell
             | Item::FragGranade
