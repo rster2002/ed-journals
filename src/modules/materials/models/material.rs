@@ -449,6 +449,7 @@ impl FromStr for Material {
             "tg_propulsionelement" => Material::PropulsionElements,
             "unknownenergysource" => Material::SensorFragment,
             "thargoidorganiccircuitry" => Material::ThargoidOrganicCircuitry,
+            "unknownorganiccircuitry" => Material::ThargoidOrganicCircuitry,
             "guardian_powercell" => Material::GuardianPowerCell,
             "guardian_sentinel_wreckagecomponents" => Material::GuardianWreckageComponents,
             "guardian_powerconduit" => Material::GuardianPowerConduit,

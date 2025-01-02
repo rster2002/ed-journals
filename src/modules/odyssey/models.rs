@@ -1,6 +1,6 @@
 pub mod citizen;
 pub mod item;
-pub mod item_type;
+pub mod item_category;
 pub mod suit;
 pub mod suit_mod;
 pub mod suit_module;

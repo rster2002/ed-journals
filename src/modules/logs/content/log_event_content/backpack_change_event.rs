@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::modules::odyssey::{Item, ItemType};
+use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when there is a change in the player's (odyssey) backpack.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -37,5 +37,5 @@ pub struct BackpackChangeEventItem {
 
     /// The type of items which has been changed.
     #[serde(rename = "Type")]
-    pub kind: ItemType,
+    pub kind: ItemCategory,
 }
