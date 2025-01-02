@@ -5,11 +5,8 @@ use std::num::ParseIntError;
 use std::path::PathBuf;
 
 #[cfg(feature = "asynchronous")]
-#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 use super::asynchronous;
 use super::blocking;
-use crate::logs::asynchronous::LogFileReaderError as AsyncLogFileReaderError;
-use crate::logs::blocking::LogFileReaderError as BlockingLogFileReaderError;
 use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
@@ -32,10 +29,12 @@ pub enum LogFileError {
     IncorrectFileName,
 
     #[error("Failed to open reader: {0}")]
-    FailedToOpenBlockingReader(#[from] BlockingLogFileReaderError),
+    FailedToOpenBlockingReader(#[from] blocking::LogFileReaderError),
 
+    #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     #[error("Failed to open reader: {0}")]
-    FailedToOpenAsyncReader(#[from] AsyncLogFileReaderError),
+    FailedToOpenAsyncReader(#[from] asynchronous::LogFileReaderError),
 
     #[error("Failed to parse journal date time: {0}")]
     FailedToParseDateTime(#[from] chrono::ParseError),
