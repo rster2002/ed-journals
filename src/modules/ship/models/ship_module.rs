@@ -41,7 +41,7 @@ pub enum ShipModule {
         alias = "modularcargobaydoor",
         alias = "modularcargobaydoorfdl",
         alias = "$modularcargobaydoor_name;",
-        alias = "$modularcargobaydoorfdl_name;",
+        alias = "$modularcargobaydoorfdl_name;"
     )]
     CargoBayDoor,
 

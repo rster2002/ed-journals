@@ -1,11 +1,6 @@
-use std::str::FromStr;
-use lazy_static::lazy_static;
-use regex::Regex;
+use crate::modules::odyssey::Item;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
-use crate::modules::odyssey::Item;
-
-// $MICRORESOURCE_CATEGORY_Data;
 
 /// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
