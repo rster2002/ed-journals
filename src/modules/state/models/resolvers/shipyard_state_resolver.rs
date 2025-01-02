@@ -11,7 +11,8 @@ use crate::state::traits::state_resolver::StateResolver;
 use serde::Serialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Serialize)]
+/// Keeps track of the player's stored ships.
+#[derive(Debug, Default, Serialize)]
 pub struct ShipyardStateResolver {
     pub ships: HashMap<u64, ShipEntry>,
 }

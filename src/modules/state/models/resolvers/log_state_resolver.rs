@@ -8,17 +8,19 @@ use serde::Serialize;
 
 use crate::civilization::LocationInfo;
 use crate::exploration::calculate_estimated_worth;
+use crate::logs::loadout_event::LoadoutEvent;
 use crate::logs::rank_event::RankEvent;
 use crate::logs::reputation_event::ReputationEvent;
 use crate::logs::scan_event::ScanEvent;
 use crate::logs::scan_organic_event::ScanOrganicEventScanType;
 use crate::logs::statistics_event::StatisticsEvent;
+use crate::logs::touchdown_event::TouchdownEvent;
 use crate::logs::{LogEvent, LogEventContent};
 use crate::state::models::feed_result::FeedResult;
 use crate::state::models::state::carrier_state::CarrierState;
-use crate::state::models::state::materials_state::MaterialsState;
 use crate::state::traits::state_resolver::StateResolver;
-use crate::state::{MissionState, SystemState};
+use crate::state::SystemState;
+use crate::state::{MaterialsState, ShipyardState};
 use current_organic_progress::CurrentOrganicProgress;
 
 pub mod current_organic_progress;
@@ -28,15 +30,41 @@ pub mod current_organic_progress;
 /// does.
 #[derive(Serialize, Default)]
 pub struct LogStateResolver {
+    /// Systems that the player has visited.
     pub systems: HashMap<u64, SystemState>,
+
+    /// The system address the player is currently in.
     pub current_system: Option<u64>,
+
+    /// Information about the current exobiology scans the player is performing.
     pub current_organic_progress: Option<CurrentOrganicProgress>,
+
+    /// List of scans that have been performed since the last time the player has sold data or died.
     pub current_exploration_data: Vec<ScanEvent>,
+
+    /// Keeps track of the current materials the player has.
     pub material_state: MaterialsState,
-    pub mission_state: MissionState,
+
+    /// Information about the player's stored ships.
+    pub shipyard_state: ShipyardState,
+
+    /// Current touchdown event. Is set back to none when the player lifts off or dies.
+    pub touchdown: Option<TouchdownEvent>,
+
+    /// State regarding the player's carrier if they own one. `None` means that the player does
+    /// not own one or that their carrier has been scrapped.
     pub carrier_state: Option<CarrierState>,
+
+    /// The lastest loadout event fired for the player.
+    pub current_loadout: Option<LoadoutEvent>,
+
+    /// The lastest rank event fired for the player.
     pub rank: Option<RankEvent>,
+
+    /// The lastest reputation event fired for the player.
     pub reputation: Option<ReputationEvent>,
+
+    /// The lastest statistics event fired for the player.
     pub statistics: Option<StatisticsEvent>,
 }
 
@@ -48,6 +76,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             }
             LogEventContent::Died(_) => {
                 self.current_exploration_data.clear();
+                self.touchdown = None;
             }
             LogEventContent::Rank(ranks) => {
                 self.rank = Some(ranks.clone());
@@ -73,13 +102,13 @@ impl StateResolver<LogEvent> for LogStateResolver {
             LogEventContent::Location(location) => {
                 self.current_system = Some(location.location_info.system_address);
 
-                let system = self.upset_system(&location.location_info);
+                let system = self.upsert_system(&location.location_info);
                 system.visit(&input.timestamp);
             }
             LogEventContent::FSDJump(fsd_jump) => {
                 self.current_system = Some(fsd_jump.system_info.system_address);
 
-                let system = self.upset_system(&fsd_jump.system_info);
+                let system = self.upsert_system(&fsd_jump.system_info);
                 system.visit(&input.timestamp);
             }
             LogEventContent::ScanOrganic(scan_organic) => match &scan_organic.scan_type {
@@ -98,37 +127,6 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 }
             },
 
-            LogEventContent::Materials(event) => {
-                for material in &event.raw {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-
-                for material in &event.encoded {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-
-                for material in &event.manufactured {
-                    self.material_state
-                        .set_material_count(material.name.clone(), material.count);
-                }
-            }
-            LogEventContent::MaterialCollected(event) => {
-                self.material_state
-                    .add_material_count(event.name.clone(), event.count);
-            }
-            LogEventContent::MaterialDiscarded(event) => {
-                self.material_state
-                    .remove_material_count(event.name.clone(), event.count);
-            }
-            LogEventContent::MaterialTrade(event) => {
-                self.material_state
-                    .remove_material_count(event.paid.material.clone(), event.paid.quantity);
-                self.material_state
-                    .add_material_count(event.received.material.clone(), event.received.quantity);
-            }
-
             LogEventContent::CarrierStats(stats) => {
                 if self.carrier_state.is_none() {
                     let mut state: CarrierState = stats.clone().into();
@@ -136,6 +134,16 @@ impl StateResolver<LogEvent> for LogStateResolver {
 
                     self.carrier_state = Some(state);
                 }
+            }
+
+            LogEventContent::Loadout(event) => {
+                self.current_loadout = Some(event.clone());
+            }
+            LogEventContent::Touchdown(event) => {
+                self.touchdown = Some(event.clone());
+            }
+            LogEventContent::Liftoff(_) => {
+                self.touchdown = None;
             }
 
             LogEventContent::CarrierJump(_)
@@ -154,7 +162,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
             | LogEventContent::CarrierNameChange(_)
             | LogEventContent::CarrierJumpCancelled(_) => {
                 if let LogEventContent::CarrierJump(carrier_jump) = &input.content {
-                    let system = self.upset_system(&carrier_jump.system_info);
+                    let system = self.upsert_system(&carrier_jump.system_info);
                     system.carrier_visit(&input.timestamp);
                 }
 
@@ -183,6 +191,9 @@ impl StateResolver<LogEvent> for LogStateResolver {
             system.feed(input);
         }
 
+        self.material_state.feed(input);
+        self.shipyard_state.feed(input);
+
         FeedResult::Accepted
     }
 
@@ -194,7 +205,7 @@ impl StateResolver<LogEvent> for LogStateResolver {
 }
 
 impl LogStateResolver {
-    pub fn upset_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
+    pub fn upsert_system(&mut self, location_info: &LocationInfo) -> &mut SystemState {
         self.systems
             .entry(location_info.system_address)
             .or_insert_with(|| location_info.into());

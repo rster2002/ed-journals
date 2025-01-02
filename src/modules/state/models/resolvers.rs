@@ -7,6 +7,7 @@ pub mod game_state_resolver;
 pub mod journal_state_resolver;
 pub mod live_state_resolver;
 pub mod log_state_resolver;
+pub mod materials_state_resolver;
 pub mod mission_state_resolver;
 pub mod planet_state_resolver;
 pub mod shipyard_state_resolver;
