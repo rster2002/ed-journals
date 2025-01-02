@@ -1,6 +1,5 @@
 use crate::modules::odyssey::Item;
 use serde::{Deserialize, Serialize};
-use thiserror::Error;
 
 /// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
