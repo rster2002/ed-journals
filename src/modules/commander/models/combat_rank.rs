@@ -34,41 +34,41 @@ pub enum CombatRank {
 #[derive(Debug, Error)]
 pub enum CombatRankError {
     #[error("Unknown combat rank with id '{0}'")]
-    UnknownCombatRank(u8),
+    UnknownId(u8),
 
     #[error("Unknown combat rank string: '{0}'")]
-    UnknownCombatString(String),
+    UnknownString(String),
 
-    #[error("Incorrect type used for combat rank")]
-    IncorrectType,
+    // #[error("Incorrect type used for combat rank")]
+    // IncorrectType,
 }
 
 impl TryFrom<u8> for CombatRank {
     type Error = CombatRankError;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
-        match value {
-            0 => Ok(CombatRank::Harmless),
-            1 => Ok(CombatRank::MostlyHarmless),
-            2 => Ok(CombatRank::Novice),
-            3 => Ok(CombatRank::Competent),
-            4 => Ok(CombatRank::Expert),
-            5 => Ok(CombatRank::Master),
-            6 => Ok(CombatRank::Dangerous),
-            7 => Ok(CombatRank::Deadly),
-            8 => Ok(CombatRank::Elite),
-            9 => Ok(CombatRank::EliteI),
-            10 => Ok(CombatRank::EliteII),
-            11 => Ok(CombatRank::EliteIII),
-            12 => Ok(CombatRank::EliteIV),
-            13 => Ok(CombatRank::EliteV),
+        Ok(match value {
+            0 => CombatRank::Harmless,
+            1 => CombatRank::MostlyHarmless,
+            2 => CombatRank::Novice,
+            3 => CombatRank::Competent,
+            4 => CombatRank::Expert,
+            5 => CombatRank::Master,
+            6 => CombatRank::Dangerous,
+            7 => CombatRank::Deadly,
+            8 => CombatRank::Elite,
+            9 => CombatRank::EliteI,
+            10 => CombatRank::EliteII,
+            11 => CombatRank::EliteIII,
+            12 => CombatRank::EliteIV,
+            13 => CombatRank::EliteV,
 
             #[cfg(feature = "allow-unknown")]
-            _ => Ok(CombatRank::UnknownU8(value)),
+            _ => CombatRank::UnknownU8(value),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => Err(CombatRankError::UnknownCombatRank(value)),
-        }
+            _ => return Err(CombatRankError::UnknownId(value)),
+        })
     }
 }
 
@@ -76,28 +76,28 @@ impl FromStr for CombatRank {
     type Err = CombatRankError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "Harmless" => Ok(CombatRank::Harmless),
-            "MostlyHarmless" => Ok(CombatRank::MostlyHarmless),
-            "Novice" => Ok(CombatRank::Novice),
-            "Competent" => Ok(CombatRank::Competent),
-            "Expert" => Ok(CombatRank::Expert),
-            "Master" => Ok(CombatRank::Master),
-            "Dangerous" => Ok(CombatRank::Dangerous),
-            "Deadly" => Ok(CombatRank::Deadly),
-            "Elite" => Ok(CombatRank::Elite),
-            "EliteI" => Ok(CombatRank::EliteI),
-            "EliteII" => Ok(CombatRank::EliteII),
-            "EliteIII" => Ok(CombatRank::EliteIII),
-            "EliteIV" => Ok(CombatRank::EliteIV),
-            "EliteV" => Ok(CombatRank::EliteV),
+        Ok(match s {
+            "Harmless" => CombatRank::Harmless,
+            "MostlyHarmless" => CombatRank::MostlyHarmless,
+            "Novice" => CombatRank::Novice,
+            "Competent" => CombatRank::Competent,
+            "Expert" => CombatRank::Expert,
+            "Master" => CombatRank::Master,
+            "Dangerous" => CombatRank::Dangerous,
+            "Deadly" => CombatRank::Deadly,
+            "Elite" => CombatRank::Elite,
+            "EliteI" => CombatRank::EliteI,
+            "EliteII" => CombatRank::EliteII,
+            "EliteIII" => CombatRank::EliteIII,
+            "EliteIV" => CombatRank::EliteIV,
+            "EliteV" => CombatRank::EliteV,
 
             #[cfg(feature = "allow-unknown")]
-            _ => Ok(CombatRank::UnknownString(s.to_string())),
+            _ => CombatRank::UnknownString(s.to_string()),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => Err(CombatRankError::UnknownCombatString(s.to_string())),
-        }
+            _ => return Err(CombatRankError::UnknownString(s.to_string())),
+        })
     }
 }
 
@@ -106,31 +106,6 @@ deserialize_in_order_impl!(
         A ? u8,
         B # String,
 );
-
-// #[derive(Deserialize)]
-// #[serde(untagged)]
-// enum CombatInput {
-//     U8(u8),
-//     String(String),
-// }
-//
-// impl<'de> serde::Deserialize<'de> for CombatRank {
-//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-//     where
-//         D: Deserializer<'de>,
-//     {
-//         let input = CombatInput::deserialize(deserializer)?;
-//
-//         match input {
-//             CombatInput::U8(value) => Ok(CombatRank::try_from(value).map_err(|_| {
-//                 serde::de::Error::custom(format!("Failed to deserialize u8: got '{}'", value))
-//             })?),
-//             CombatInput::String(value) => Ok(CombatRank::from_str(&value).map_err(|_| {
-//                 serde::de::Error::custom(format!("Failed to deserialize string: got '{}'", value))
-//             })?),
-//         }
-//     }
-// }
 
 impl Display for CombatRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
