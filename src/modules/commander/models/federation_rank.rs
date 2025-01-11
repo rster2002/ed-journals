@@ -1,9 +1,9 @@
 use std::fmt::{Display, Formatter};
-
+use std::str::FromStr;
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::try_from_deserialize_impl;
+use crate::{deserialize_in_order_impl, try_from_deserialize_impl};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum FederationRank {
@@ -26,45 +26,86 @@ pub enum FederationRank {
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    UnknownString(String),
 }
 
 #[derive(Debug, Error)]
 pub enum FederationRankError {
     #[error("Unknown federation rank with id '{0}'")]
-    UnknownFederationRank(u8),
+    UnknownId(u8),
+
+    #[error("Unknown federation rank string '{0}'")]
+    UnknownString(String),
 }
 
 impl TryFrom<u8> for FederationRank {
     type Error = FederationRankError;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
-        match value {
-            0 => Ok(FederationRank::None),
-            1 => Ok(FederationRank::Recruit),
-            2 => Ok(FederationRank::Cadet),
-            3 => Ok(FederationRank::Midshipman),
-            4 => Ok(FederationRank::PettyOfficer),
-            5 => Ok(FederationRank::ChiefPettyOfficer),
-            6 => Ok(FederationRank::WarrantOfficer),
-            7 => Ok(FederationRank::Ensign),
-            8 => Ok(FederationRank::Lieutenant),
-            9 => Ok(FederationRank::LieutenantCommander),
-            10 => Ok(FederationRank::PostCommander),
-            11 => Ok(FederationRank::PostCaptain),
-            12 => Ok(FederationRank::RearAdmiral),
-            13 => Ok(FederationRank::ViceAdmiral),
-            14 => Ok(FederationRank::Admiral),
+        Ok(match value {
+            0 => FederationRank::None,
+            1 => FederationRank::Recruit,
+            2 => FederationRank::Cadet,
+            3 => FederationRank::Midshipman,
+            4 => FederationRank::PettyOfficer,
+            5 => FederationRank::ChiefPettyOfficer,
+            6 => FederationRank::WarrantOfficer,
+            7 => FederationRank::Ensign,
+            8 => FederationRank::Lieutenant,
+            9 => FederationRank::LieutenantCommander,
+            10 => FederationRank::PostCommander,
+            11 => FederationRank::PostCaptain,
+            12 => FederationRank::RearAdmiral,
+            13 => FederationRank::ViceAdmiral,
+            14 => FederationRank::Admiral,
 
             #[cfg(feature = "allow-unknown")]
-            _ => Ok(FederationRank::Unknown(value)),
+            _ => FederationRank::Unknown(value),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => Err(FederationRankError::UnknownFederationRank(value)),
-        }
+            _ => return Err(FederationRankError::UnknownId(value)),
+        })
     }
 }
 
-try_from_deserialize_impl!(u8 => FederationRank);
+impl FromStr for FederationRank {
+    type Err = FederationRankError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "None" => FederationRank::None,
+            "Recruit" => FederationRank::Recruit,
+            "Cadet" => FederationRank::Cadet,
+            "Midshipman" => FederationRank::Midshipman,
+            "PettyOfficer" => FederationRank::PettyOfficer,
+            "ChiefPettyOfficer" => FederationRank::ChiefPettyOfficer,
+            "WarrantOfficer" => FederationRank::WarrantOfficer,
+            "Ensign" => FederationRank::Ensign,
+            "Lieutenant" => FederationRank::Lieutenant,
+            "LieutenantCommander" => FederationRank::LieutenantCommander,
+            "PostCommander" => FederationRank::PostCommander,
+            "PostCaptain" => FederationRank::PostCaptain,
+            "RearAdmiral" => FederationRank::RearAdmiral,
+            "ViceAdmiral" => FederationRank::ViceAdmiral,
+            "Admiral" => FederationRank::Admiral,
+
+            #[cfg(feature = "allow-unknown")]
+            _ => FederationRank::UnknownString(s.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
+            _ => return Err(FederationRankError::UnknownString(s.to_string())),
+        })
+    }
+}
+
+deserialize_in_order_impl!(
+    FederationRank =>
+        A ? u8,
+        B # String,
+);
 
 impl Display for FederationRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -91,6 +132,10 @@ impl Display for FederationRank {
                 #[cfg(feature = "allow-unknown")]
                 FederationRank::Unknown(unknown) =>
                     return write!(f, "Unknown federation rank nr: {}", unknown),
+
+                #[cfg(feature = "allow-unknown")]
+                FederationRank::UnknownString(unknown) =>
+                    return write!(f, "Unknown federation rank string: '{}'", unknown),
             }
         )
     }

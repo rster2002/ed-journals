@@ -1,9 +1,9 @@
 use std::fmt::{Display, Formatter};
-
+use std::str::FromStr;
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::try_from_deserialize_impl;
+use crate::{deserialize_in_order_impl, try_from_deserialize_impl};
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum MercenaryRank {
@@ -25,44 +25,84 @@ pub enum MercenaryRank {
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(u8),
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    UnknownString(String),
 }
 
 #[derive(Debug, Error)]
 pub enum MercenaryRankError {
     #[error("Unknown mercenary rank with id '{0}'")]
-    UnknownMercenaryRank(u8),
+    UnknownId(u8),
+
+    #[error("Unknown mercenary rank string '{0}'")]
+    UnknownString(String),
 }
 
 impl TryFrom<u8> for MercenaryRank {
     type Error = MercenaryRankError;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
-        match value {
-            0 => Ok(MercenaryRank::Defenceless),
-            1 => Ok(MercenaryRank::MostlyDefenceless),
-            2 => Ok(MercenaryRank::Rookie),
-            3 => Ok(MercenaryRank::Soldier),
-            4 => Ok(MercenaryRank::Gunslinger),
-            5 => Ok(MercenaryRank::Warrior),
-            6 => Ok(MercenaryRank::Gladiator),
-            7 => Ok(MercenaryRank::Deadeye),
-            8 => Ok(MercenaryRank::Elite),
-            9 => Ok(MercenaryRank::EliteI),
-            10 => Ok(MercenaryRank::EliteII),
-            11 => Ok(MercenaryRank::EliteIII),
-            12 => Ok(MercenaryRank::EliteIV),
-            13 => Ok(MercenaryRank::EliteV),
+        Ok(match value {
+            0 => MercenaryRank::Defenceless,
+            1 => MercenaryRank::MostlyDefenceless,
+            2 => MercenaryRank::Rookie,
+            3 => MercenaryRank::Soldier,
+            4 => MercenaryRank::Gunslinger,
+            5 => MercenaryRank::Warrior,
+            6 => MercenaryRank::Gladiator,
+            7 => MercenaryRank::Deadeye,
+            8 => MercenaryRank::Elite,
+            9 => MercenaryRank::EliteI,
+            10 => MercenaryRank::EliteII,
+            11 => MercenaryRank::EliteIII,
+            12 => MercenaryRank::EliteIV,
+            13 => MercenaryRank::EliteV,
 
             #[cfg(feature = "allow-unknown")]
-            _ => Ok(MercenaryRank::Unknown(value)),
+            _ => MercenaryRank::Unknown(value),
 
             #[cfg(not(feature = "allow-unknown"))]
-            _ => Err(MercenaryRankError::UnknownMercenaryRank(value)),
-        }
+            _ => return Err(MercenaryRankError::UnknownId(value)),
+        })
     }
 }
 
-try_from_deserialize_impl!(u8 => MercenaryRank);
+impl FromStr for MercenaryRank {
+    type Err = MercenaryRankError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "Defenceless" => MercenaryRank::Defenceless,
+            "MostlyDefenceless" => MercenaryRank::MostlyDefenceless,
+            "Rookie" => MercenaryRank::Rookie,
+            "Soldier" => MercenaryRank::Soldier,
+            "Gunslinger" => MercenaryRank::Gunslinger,
+            "Warrior" => MercenaryRank::Warrior,
+            "Gladiator" => MercenaryRank::Gladiator,
+            "Deadeye" => MercenaryRank::Deadeye,
+            "Elite" => MercenaryRank::Elite,
+            "EliteI" => MercenaryRank::EliteI,
+            "EliteII" => MercenaryRank::EliteII,
+            "EliteIII" => MercenaryRank::EliteIII,
+            "EliteIV" => MercenaryRank::EliteIV,
+            "EliteV" => MercenaryRank::EliteV,
+
+            #[cfg(feature = "allow-unknown")]
+            _ => MercenaryRank::UnknownString(s.to_string()),
+
+            #[cfg(not(feature = "allow-unknown"))]
+            _ => return Err(MercenaryRankError::UnknownString(s.to_string())),
+        })
+    }
+}
+
+deserialize_in_order_impl!(
+    MercenaryRank =>
+        A ? u8,
+        B # String,
+);
 
 impl Display for MercenaryRank {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -88,6 +128,10 @@ impl Display for MercenaryRank {
                 #[cfg(feature = "allow-unknown")]
                 MercenaryRank::Unknown(unknown) =>
                     return write!(f, "Unknown mercenary rank nr: {}", unknown),
+
+                #[cfg(feature = "allow-unknown")]
+                MercenaryRank::UnknownString(unknown) =>
+                    return write!(f, "Unknown mercenary rank string: {}", unknown),
             }
         )
     }

@@ -49,7 +49,7 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::LogDir;
+    use crate::logs::{LogDir, LogEvent};
     use crate::logs::LogEventContent;
     use std::env::current_dir;
     use std::path::PathBuf;
@@ -78,10 +78,21 @@ mod tests {
             for entry in reader {
                 entry_count += 1;
 
-                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
+                let entry = entry.unwrap();
+
+                if let LogEventContent::FileHeader(_) = &entry.content {
                     found_file_header = true;
                     file_header_count += 1;
                 }
+
+                let serialized = serde_json::to_string(&entry).unwrap();
+                let result = serde_json::from_str::<LogEvent>(&serialized);
+
+                if result.is_err() {
+                    dbg!(&serialized);
+                }
+
+                result.unwrap();
             }
         }
 
