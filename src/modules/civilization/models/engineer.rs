@@ -1,6 +1,7 @@
-use crate::try_from_deserialize_impl;
+use crate::{deserialize_in_order_impl, try_from_deserialize_impl};
 use serde::Serialize;
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use thiserror::Error;
 
 /// Names of the engineers that are available in the game.
@@ -238,6 +239,9 @@ impl Display for Engineer {
 pub enum EngineerError {
     #[error("Unknown engineer for id: {0}")]
     UnknownEngineerId(u64),
+
+    #[error("Unknown engineer string: {0}")]
+    UnknownString(String),
 }
 
 impl TryFrom<u64> for Engineer {
@@ -290,4 +294,58 @@ impl TryFrom<u64> for Engineer {
     }
 }
 
-try_from_deserialize_impl!(u64 => Engineer);
+impl FromStr for Engineer {
+    type Err = EngineerError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "DidiVatermann" => Engineer::DidiVatermann,
+            "BillTurner" => Engineer::BillTurner,
+            "BrooTarquin" => Engineer::BrooTarquin,
+            "TheSarge" => Engineer::TheSarge,
+            "ZacariahNemo" => Engineer::ZacariahNemo,
+            "LizRyder" => Engineer::LizRyder,
+            "HeraTani" => Engineer::HeraTani,
+            "FelicityFarseer" => Engineer::FelicityFarseer,
+            "RamTah" => Engineer::RamTah,
+            "LeiCheung" => Engineer::LeiCheung,
+            "PetraOlmanova" => Engineer::PetraOlmanova,
+            "ColonelBrisDekker" => Engineer::ColonelBrisDekker,
+            "MarshaHicks" => Engineer::MarshaHicks,
+            "ElviraMartuuk" => Engineer::ElviraMartuuk,
+            "TheDweller" => Engineer::TheDweller,
+            "MarcoQwent" => Engineer::MarcoQwent,
+            "SeleneJean" => Engineer::SeleneJean,
+            "ProfessorPalin" => Engineer::ProfessorPalin,
+            "LoriJameson" => Engineer::LoriJameson,
+            "JuriIshmaak" => Engineer::JuriIshmaak,
+            "TodTheBlasterMcQuinn" => Engineer::TodTheBlasterMcQuinn,
+            "TianaFortune" => Engineer::TianaFortune,
+            "MelBrandon" => Engineer::MelBrandon,
+            "EtienneDorn" => Engineer::EtienneDorn,
+            "ChloeSedesi" => Engineer::ChloeSedesi,
+            "JudeNavarro" => Engineer::JudeNavarro,
+            "DominoGreen" => Engineer::DominoGreen,
+            "HeroFerrari" => Engineer::HeroFerrari,
+            "KitFowler" => Engineer::KitFowler,
+            "WellingtonBeck" => Engineer::WellingtonBeck,
+            "TerraVelasquez" => Engineer::TerraVelasquez,
+            "UmaLaszlo" => Engineer::UmaLaszlo,
+            "OdenGeiger" => Engineer::OdenGeiger,
+            "YardenBond" => Engineer::YardenBond,
+            "Baltanos" => Engineer::Baltanos,
+            "EleanorBresa" => Engineer::EleanorBresa,
+            "RosaDayette" => Engineer::RosaDayette,
+            "YiShen" => Engineer::YiShen,
+            "System" => Engineer::System,
+
+            _ => return Err(EngineerError::UnknownString(s.to_string())),
+        })
+    }
+}
+
+deserialize_in_order_impl!(
+    Engineer =>
+        A ? u64,
+        B # String,
+);
