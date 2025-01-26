@@ -6,7 +6,7 @@ pub struct PowerplayEvent {
     pub power: String,
     pub rank: u8,
     pub merits: u32,
-    pub votes: u32,
+    pub votes: Option<u32>,
     pub time_pledged: u32,
 }
 
@@ -31,7 +31,7 @@ mod tests {
             power: "Edmund Mahon".to_string(),
             rank: 0,
             merits: 10,
-            votes: 0,
+            votes: Some(0),
             time_pledged: 433024,
         };
 

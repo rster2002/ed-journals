@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::modules::odyssey::{Item, ItemType};
+use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when performing a trade with Odyssey bartenders.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -27,7 +27,7 @@ pub struct BuyMicroResourceEventSingle {
     pub name_localized: Option<String>,
 
     /// The category of the item bought.
-    pub category: ItemType,
+    pub category: ItemCategory,
 
     /// The number of items that were bought.
     pub count: u16,
@@ -70,7 +70,7 @@ pub struct BuyMicroResourceEventResource {
     pub name_localized: Option<String>,
 
     /// The category of the item bought.
-    pub category: ItemType,
+    pub category: ItemCategory,
 
     /// The number of items that were bought.
     pub count: u16,

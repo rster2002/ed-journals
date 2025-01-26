@@ -1,7 +1,7 @@
 pub use models::citizen::Citizen;
 pub use models::item::Item;
 pub use models::item::ItemError;
-pub use models::item_type::ItemType;
+pub use models::item_category::ItemCategory;
 pub use models::suit::Suit;
 pub use models::suit::SuitError;
 pub use models::suit_mod::SuitMod;

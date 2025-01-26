@@ -10,5 +10,5 @@ pub struct ShipyardSellEvent {
     #[serde(rename = "SellShipID")]
     pub sell_ship_id: u64,
     pub ship_price: u64,
-    pub system: String,
+    pub system: Option<String>,
 }

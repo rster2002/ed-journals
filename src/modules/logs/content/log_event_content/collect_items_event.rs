@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::modules::odyssey::{Item, ItemType};
+use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when the player collects an Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -17,7 +17,7 @@ pub struct CollectItemsEvent {
 
     /// The type of item the player collected.
     #[serde(rename = "Type")]
-    pub kind: ItemType,
+    pub kind: ItemCategory,
 
     /// The id of the owner of the item.
     #[serde(rename = "OwnerID")]

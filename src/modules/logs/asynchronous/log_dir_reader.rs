@@ -56,6 +56,8 @@ impl LogDirReader {
         let length = files.len();
 
         for (index, file) in files.into_iter().enumerate() {
+            self.is_live = length == index + 1;
+
             let Some(current) = &self.current_file else {
                 self.set_current_file(file).await?;
 
@@ -67,8 +69,6 @@ impl LogDirReader {
 
                 return Ok(true);
             }
-
-            self.is_live = length == index + 1;
         }
 
         Ok(is_empty)
