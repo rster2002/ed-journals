@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::modules::odyssey::{Item, ItemType};
+use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when the player drops an Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -17,7 +17,7 @@ pub struct DropItemsEvent {
 
     /// The kind of item the player dropped.
     #[serde(rename = "Type")]
-    pub kind: ItemType,
+    pub kind: ItemCategory,
 
     /// The owner of the dropped item.
     #[serde(rename = "OwnerID")]
