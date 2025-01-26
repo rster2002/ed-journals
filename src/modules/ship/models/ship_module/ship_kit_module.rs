@@ -12,8 +12,8 @@ use crate::modules::ship::{ShipType, ShipTypeError};
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipKitModule {
     pub ship: ShipType,
-    pub kit_nr: u8,
     pub name: String,
+    pub piece: String,
 }
 
 #[derive(Debug, Error)]
@@ -30,7 +30,7 @@ pub enum ShipKitModuleError {
 
 lazy_static! {
     static ref SHIP_KIT_MODULE_REGEX: Regex =
-        Regex::new(r#"^([a-z0-9_]+?)_shipkit(\d)(\w+)$"#).unwrap();
+        Regex::new(r#"^([a-z0-9_]+?)_shipkit([a-z0-9]+)_([a-z0-9]+)$"#).unwrap();
 }
 
 impl FromStr for ShipKitModule {
@@ -47,19 +47,19 @@ impl FromStr for ShipKitModule {
             .as_str()
             .parse()?;
 
-        let kit_nr = captures
+        let name = captures
             .get(2)
             .expect("Should have been captured already")
             .as_str()
-            .parse()?;
+            .to_string();
 
-        let name = captures
+        let piece = captures
             .get(3)
             .expect("Should have been captured already")
             .as_str()
             .to_string();
 
-        Ok(ShipKitModule { ship, kit_nr, name })
+        Ok(ShipKitModule { ship, name, piece })
     }
 }
 
