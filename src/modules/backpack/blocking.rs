@@ -9,6 +9,7 @@ pub use crate::modules::shared::blocking::live_json_file_watcher::LiveJsonFileWa
 
 pub type BackpackFileWatcher = LiveJsonFileWatcher<Backpack>;
 
+/// Read the contents of the 'Backpack.json' file at the given path.
 pub fn read_backpack_file<P: AsRef<Path>>(path: P) -> Result<Backpack, ReadBackpackFileError> {
     Ok(serde_json::from_str(&fs::read_to_string(path)?)?)
 }

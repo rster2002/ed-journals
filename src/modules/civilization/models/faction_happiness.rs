@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// The happiness of a faction at a given location.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum FactionHappiness {
     #[serde(rename = "$Faction_HappinessBand1;")]
