@@ -27,12 +27,25 @@ pub struct SystemStateResolver {
     /// Scans for each cluster in the system.
     pub belt_scans: HashMap<u8, ScanEvent>,
 
+    /// Times when the player was in the system.
     pub visits: Vec<DateTime<Utc>>,
+
+    /// Times when the player's was in the system.
     pub carrier_visits: Vec<DateTime<Utc>>,
+
+    /// The number of bodies that are present in the system.
     pub number_of_bodies: Option<u8>,
+
+    /// Current progress of discovering all bodies in the system.
     pub progress: f32,
+
+    /// Whether all bodies have been discovered in the system.
     pub all_found: bool,
+
+    /// List of station signals.
     pub station_signals: Vec<FSSSignalDiscoveredEvent>,
+
+    /// Information about the system needed for exobiology predictions.
     pub exobiology_system: TargetSystem,
 }
 
