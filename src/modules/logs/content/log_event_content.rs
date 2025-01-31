@@ -250,10 +250,10 @@ use crate::logs::content::log_event_content::start_jump_event::StartJumpType;
 use crate::modules::partials::PartialSystemInfo;
 
 #[cfg(feature = "legacy")]
-use crate::logs::content::log_event_content::legacy_liftoff_event::LegacyLiftoffEvent;
+use legacy_liftoff_event::LegacyLiftoffEvent;
 
 #[cfg(feature = "legacy")]
-use crate::logs::content::log_event_content::legacy_touchdown_event::LegacyTouchdownEvent;
+use legacy_touchdown_event::LegacyTouchdownEvent;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -499,9 +499,11 @@ pub mod wing_join_event;
 pub mod won_a_trophy_for_squadron_event;
 
 #[cfg(feature = "legacy")]
+#[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
 pub mod legacy_liftoff_event;
 
 #[cfg(feature = "legacy")]
+#[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
 pub mod legacy_touchdown_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
@@ -803,10 +805,12 @@ pub enum LogEventContent {
 
     // Legacy
     #[cfg(feature = "legacy")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
     #[serde(untagged)]
     LegacyLiftoffEvent(LegacyLiftoffEvent),
 
     #[cfg(feature = "legacy")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
     #[serde(untagged)]
     LegacyTouchdownEvent(LegacyTouchdownEvent),
 

@@ -11,7 +11,7 @@ use crate::from_str_deserialize_impl;
 use crate::modules::ship::models::ship_slot::core_slot::CoreSlot;
 use crate::modules::ship::{HardpointSize, HardpointSizeError};
 
-mod core_slot;
+pub mod core_slot;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipSlot {

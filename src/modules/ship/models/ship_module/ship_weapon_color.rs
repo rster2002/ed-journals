@@ -9,7 +9,7 @@ use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipWeaponColor {
-    name: String,
+    pub name: String,
 }
 
 #[derive(Debug, Error)]
