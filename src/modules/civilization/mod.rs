@@ -1,6 +1,6 @@
 pub use models::conflict::Conflict;
-pub use models::conflict::ConflictStatus;
 pub use models::conflict::ConflictFaction;
+pub use models::conflict::ConflictStatus;
 pub use models::conflict::ConflictWarType;
 pub use models::crime::Crime;
 pub use models::economy::Economy;
