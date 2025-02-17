@@ -23,4 +23,6 @@ pub struct CrewAssignEvent {
 pub enum CrewAssignEventRole {
     /// The crew member has been set to active.
     Active,
+    /// The crew member has been set to inactive.
+    OnShoreLeave,
 }

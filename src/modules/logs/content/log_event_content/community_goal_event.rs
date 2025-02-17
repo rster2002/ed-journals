@@ -44,11 +44,13 @@ pub struct CommunityGoalEventGoal {
     #[serde(rename = "NumContributors")]
     pub number_of_contributors: u64,
 
-    /// The percentage of top players that are considered part of the top rank.
-    pub top_rank_size: u8,
+    /// The number of players that are considered part of the top rank, if the
+    /// community goal has a fixed-size top rank.
+    pub top_rank_size: Option<u8>,
 
-    /// Whether the current player is currently in the top rank.
-    pub player_in_top_rank: bool,
+    /// Whether the current player is currently in the top rank, if the community
+    /// goal has a fixed-size top rank.
+    pub player_in_top_rank: Option<bool>,
 
     /// The highest rank the current player has reached.
     pub tier_reached: Option<String>,
@@ -122,6 +124,36 @@ mod tests {
               "Bonus": 500000
             }
         "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn community_goal_event_is_parsed_correctly_without_top_rank() {
+        let goal: CommunityGoalEvent = serde_json::from_str(
+            r#"
+            {
+              "timestamp": "2025-02-17T18:37:51Z",
+              "event": "CommunityGoal",
+              "CurrentGoals": [
+                {
+                  "CGID": 812,
+                  "Title": "Brewer Corporation Planetary Survey Initiative",
+                  "SystemName": "HIP 90578",
+                  "MarketName": "Trailblazer Echo",
+                  "Expiry": "2025-02-18T20:00:00Z",
+                  "IsComplete": false,
+                  "CurrentTotal": 7265965,
+                  "PlayerContribution": 1431,
+                  "NumContributors": 15065,
+                  "TopTier": { "Name": "Tier 6", "Bonus": "" },
+                  "TierReached": "Tier 5",
+                  "PlayerPercentileBand": 25,
+                  "Bonus": 125000000
+                }
+              ]
+            }
+          "#,
         )
         .unwrap();
     }
