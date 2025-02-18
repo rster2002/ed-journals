@@ -181,6 +181,7 @@ use repair_all_event::RepairAllEvent;
 use repair_drone_event::RepairDroneEvent;
 use repair_event::RepairEvent;
 use reputation_event::ReputationEvent;
+use request_power_micro_resources::RequestPowerMicroResourcesEvent;
 use reservoir_replenished_event::ReservoirReplenishedEvent;
 use restock_vehicle_event::RestockVehicleEvent;
 use resurrect_event::ResurrectEvent;
@@ -434,6 +435,7 @@ pub mod repair_all_event;
 pub mod repair_drone_event;
 pub mod repair_event;
 pub mod reputation_event;
+pub mod request_power_micro_resources;
 pub mod reservoir_replenished_event;
 pub mod restock_vehicle_event;
 pub mod resurrect_event;
@@ -671,6 +673,7 @@ pub enum LogEventContent {
     PowerplayLeave(PowerplayLeaveEvent),
     PowerplaySalary(PowerplaySalaryEvent),
     PowerplayVote(PowerplayVoteEvent),
+    RequestPowerMicroResources(RequestPowerMicroResourcesEvent),
 
     // Squadrons
     AppliedToSquadron(AppliedToSquadronEvent),

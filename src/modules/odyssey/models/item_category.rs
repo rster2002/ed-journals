@@ -141,7 +141,11 @@ impl From<Item> for ItemCategory {
             | Item::VisitorRegister
             | Item::WeaponInventory
             | Item::WeaponTestData
-            | Item::XenoDefenceProtocols => ItemCategory::Data,
+            | Item::XenoDefenceProtocols
+            | Item::PowerplayAssociationData
+            | Item::PowerplayIndustrialData
+            | Item::PowerplayResearchData
+            | Item::PowerplayInjectionMalware => ItemCategory::Data,
 
             Item::AgriculturalProcessSample
             | Item::BiochemicalAgent
@@ -187,7 +191,11 @@ impl From<Item> for ItemCategory {
             | Item::TrueFormFossil
             | Item::UniversalTranslator
             | Item::VehicleSchematic
-            | Item::WeaponSchematic => ItemCategory::Item,
+            | Item::WeaponSchematic
+            | Item::PowerplayEnergyRegulator
+            | Item::PowerplayExtractionSample
+            | Item::PowerplayElectronics
+            | Item::PowerplayPersonalProtectiveEquipment => ItemCategory::Item,
 
             Item::CircuitBoard
             | Item::CarbonFibrePlating

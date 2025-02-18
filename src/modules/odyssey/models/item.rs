@@ -221,6 +221,16 @@ pub enum Item {
     ShieldProjector,
     EBreach,
 
+    // Powerplay
+    PowerplayEnergyRegulator,
+    PowerplayExtractionSample,
+    PowerplayIndustrialData,
+    PowerplayAssociationData,
+    PowerplayResearchData,
+    PowerplayElectronics,
+    PowerplayPersonalProtectiveEquipment,
+    PowerplayInjectionMalware,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     Unknown(String),
@@ -443,6 +453,16 @@ impl Item {
             "amm_grenade_emp" => Item::ShieldDisruptor,
             "amm_grenade_shield" => Item::ShieldProjector,
             "bypass" => Item::EBreach,
+
+            // Powerplay
+            "powerpower" => Item::PowerplayEnergyRegulator,
+            "powerextraction" => Item::PowerplayExtractionSample,
+            "powerfinancialrecords" => Item::PowerplayIndustrialData,
+            "poweremployeedata" => Item::PowerplayAssociationData,
+            "powerresearchdata" => Item::PowerplayResearchData,
+            "powerelectronics" => Item::PowerplayElectronics,
+            "powerequipment" => Item::PowerplayPersonalProtectiveEquipment,
+            "powerpreparationspyware" => Item::PowerplayInjectionMalware,
 
             #[cfg(feature = "allow-unknown")]
             _ => Item::Unknown(name.to_string()),
@@ -691,6 +711,17 @@ impl Display for Item {
                 Item::ShieldDisruptor => "Shield Disruptor",
                 Item::ShieldProjector => "Shield Projector",
                 Item::EBreach => "E-Breach",
+
+                // Powerplay
+                Item::PowerplayEnergyRegulator => "Powerplay Energy Regulator",
+                Item::PowerplayAssociationData => "Powerplay Association Data",
+                Item::PowerplayIndustrialData => "Powerplay Industrial Data",
+                Item::PowerplayResearchData => "Powerplay Research Data",
+                Item::PowerplayExtractionSample => "Powerplay Extraction Sample",
+                Item::PowerplayElectronics => "Powerplay Electronics Package",
+                Item::PowerplayPersonalProtectiveEquipment =>
+                    "Powerplay Personal Protective Equipment",
+                Item::PowerplayInjectionMalware => "Powerplay Injection Malware",
 
                 #[cfg(feature = "allow-unknown")]
                 Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),

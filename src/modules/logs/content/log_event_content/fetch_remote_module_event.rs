@@ -11,7 +11,7 @@ use crate::modules::ship::{ShipModule, ShipType};
 #[serde(rename_all = "PascalCase")]
 pub struct FetchRemoteModuleEvent {
     /// The storage slot number of the stored module.
-    pub storage_slot: u8,
+    pub storage_slot: u16,
 
     /// The module being transferred.
     pub stored_item: ShipModule,
