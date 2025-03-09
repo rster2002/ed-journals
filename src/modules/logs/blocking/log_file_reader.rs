@@ -44,10 +44,8 @@ use crate::logs::content::LogEvent;
 /// }
 /// ```
 #[derive(Debug)]
-pub struct LogFileReader<T>
-where T : Read + Seek
-{
-    inner: T,
+pub struct LogFileReader {
+    source: File,
     position: usize,
     file_read_buffer: String,
     entry_buffer: VecDeque<Result<LogEvent, LogFileReaderError>>,
@@ -66,32 +64,20 @@ pub enum LogFileReaderError {
     FailedToParseLine(#[from] serde_json::Error),
 }
 
-impl<T> LogFileReader<T>
-where T : Read + Seek
-{
-    pub fn new(inner: T) -> LogFileReader<T> {
-        LogFileReader {
-            inner,
+impl LogFileReader {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LogFileReaderError> {
+        Ok(LogFileReader {
+            source: File::open(path)?,
             position: 0,
             file_read_buffer: String::new(),
             entry_buffer: VecDeque::new(),
             failing: false,
-        }
+        })
     }
 
-    // pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LogFileReaderError> {
-    //     Ok(LogFileReader {
-    //         inner: File::open(path)?,
-    //         position: 0,
-    //         file_read_buffer: String::new(),
-    //         entry_buffer: VecDeque::new(),
-    //         failing: false,
-    //     })
-    // }
-
     fn read_next(&mut self) -> Result<(), LogFileReaderError> {
-        self.inner.seek(SeekFrom::Start(self.position as u64))?;
-        self.position += self.inner.read_to_string(&mut self.file_read_buffer)?;
+        self.source.seek(SeekFrom::Start(self.position as u64))?;
+        self.position += self.source.read_to_string(&mut self.file_read_buffer)?;
 
         // Set position back one space to ensure the reader doesn't skip a character during the
         // next read.
@@ -134,9 +120,7 @@ where T : Read + Seek
     }
 }
 
-impl<T> Iterator for LogFileReader<T>
-where T : Read + Seek,
-{
+impl Iterator for LogFileReader {
     type Item = Result<LogEvent, LogFileReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -170,7 +154,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly() {
         fs::write("a.tmp", "").unwrap();
-        let mut reader = LogFileReader::new("a.tmp").unwrap();
+        let mut reader = LogFileReader::open("a.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -203,7 +187,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly_2() {
         fs::write("d.tmp", "").unwrap();
-        let mut reader = LogFileReader::new("d.tmp").unwrap();
+        let mut reader = LogFileReader::open("d.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -236,7 +220,7 @@ mod tests {
     #[test]
     fn partial_last_lines_are_read_correctly_3() {
         fs::write("e.tmp", "").unwrap();
-        let mut reader = LogFileReader::new("e.tmp").unwrap();
+        let mut reader = LogFileReader::open("e.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -277,7 +261,7 @@ mod tests {
     #[test]
     fn incorrect_lines_return_an_err_only_when_it_is_expected() {
         fs::write("b.tmp", "").unwrap();
-        let mut reader = LogFileReader::new("b.tmp").unwrap();
+        let mut reader = LogFileReader::open("b.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
@@ -341,7 +325,7 @@ mod tests {
     #[test]
     fn last_lines_are_read_correctly() {
         fs::write("c.tmp", "").unwrap();
-        let mut reader = LogFileReader::new("c.tmp").unwrap();
+        let mut reader = LogFileReader::open("c.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
