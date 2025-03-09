@@ -23,8 +23,10 @@ pub enum LogDirError {
 }
 
 impl LogDir {
-    pub fn new(dir_path: PathBuf) -> LogDir {
-        LogDir { dir_path }
+    pub fn new(dir_path: impl Into<PathBuf>) -> LogDir {
+        LogDir {
+            dir_path: dir_path.into(),
+        }
     }
 
     pub fn path(&self) -> &Path {
