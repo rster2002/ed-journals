@@ -1,3 +1,4 @@
+use std::io::{Read, Seek};
 use std::path::Path;
 
 use notify::{Event, RecommendedWatcher, RecursiveMode, Watcher};
@@ -34,10 +35,12 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// }
 /// ```
 #[derive(Debug)]
-pub struct LiveJournalDirReader {
+pub struct LiveJournalDirReader<'a, T>
+where T : Read + Seek
+{
+    inner: LogDirReader<'a, T>,
     blocker: SyncBlocker,
     _watcher: RecommendedWatcher,
-    log_dir_reader: LogDirReader,
     journal_buffer: LiveJournalBuffer,
 }
 
@@ -53,10 +56,12 @@ pub enum JournalDirWatcherError {
     Notify(#[from] notify::Error),
 }
 
-impl LiveJournalDirReader {
+impl<'a, T> LiveJournalDirReader<'a, T>
+where T : Read + Seek,
+{
     /// Attempts to open the given path and tries to start watching the contents. Note that this
     /// does not check if the path actually points to a correct journal directory.
-    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, JournalDirWatcherError> {
+    pub fn open<P: AsRef<Path>>(path: P, inner: LogDirReader<'a, T>) -> Result<Self, JournalDirWatcherError> {
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
 
@@ -74,26 +79,26 @@ impl LiveJournalDirReader {
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        let log_dir_reader = LogDirReader::open(path);
-
         Ok(LiveJournalDirReader {
             blocker,
+            inner,
             _watcher: watcher,
-            log_dir_reader,
             journal_buffer,
         })
     }
 }
 
-impl Iterator for LiveJournalDirReader {
+impl<T> Iterator for LiveJournalDirReader<'_, T>
+where T : Read + Seek
+{
     type Item = Result<JournalEvent, JournalDirWatcherError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            if let Some(log_event) = self.log_dir_reader.next() {
+            if let Some(log_event) = self.inner.next() {
                 return Some(match log_event {
                     Ok(event) => Ok(JournalEvent {
-                        is_live: self.log_dir_reader.is_reading_latest(),
+                        is_live: self.inner.is_reading_latest(),
                         kind: JournalEventKind::LogEvent(event),
                     }),
                     Err(error) => Err(error.into()),
