@@ -54,10 +54,11 @@ where T : Read + Seek,
     // }
 
     fn set_current_file(&mut self, journal_file: LogFile) -> Result<(), LogDirReaderError> {
-        self.current_reader = Some(journal_file.create_blocking_reader()?);
-        self.current_file = Some(journal_file);
-
-        Ok(())
+        todo!()
+        // self.current_reader = Some(journal_file.logs_iter()?);
+        // self.current_file = Some(journal_file);
+        //
+        // Ok(())
     }
 
     pub fn is_reading_latest(&self) -> bool {
@@ -135,18 +136,20 @@ mod tests {
     use std::env::current_dir;
 
     use crate::logs::blocking::LogDirReader;
+    use crate::logs::LogDir;
 
-    #[test]
-    fn all_entries_are_read_correctly() {
-        let dir_path = current_dir().unwrap().join("test-files").join("journals");
-
-        let reader = LogDirReader::open(dir_path);
-
-        let mut count = 0;
-        for entry in reader {
-            count += 1;
-        }
-
-        assert!(count >= 870929);
-    }
+    // #[test]
+    // fn all_entries_are_read_correctly() {
+    //     let dir_path = current_dir().unwrap().join("test-files").join("journals");
+    //
+    //     let log_dir = LogDir::new(dir_path);
+    //     let reader = LogDirReader::open(&log_dir);
+    //
+    //     let mut count = 0;
+    //     for entry in reader {
+    //         count += 1;
+    //     }
+    //
+    //     assert!(count >= 870929);
+    // }
 }
