@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::fs::DirEntry;
 use std::io;
 use std::num::ParseIntError;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 #[cfg(feature = "asynchronous")]
 use super::asynchronous;
@@ -108,6 +108,10 @@ impl LogFile {
     /// Returns the part number.
     pub fn part(&self) -> u8 {
         self.part
+    }
+
+    pub fn path(&self) -> &Path {
+        self.path.as_path()
     }
 }
 
