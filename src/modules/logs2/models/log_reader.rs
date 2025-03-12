@@ -1,6 +1,6 @@
 use std::io::{Bytes, Read};
-use thiserror::Error;
 use crate::logs::LogEvent;
+use crate::modules::logs2::error::LogError;
 
 pub struct LogReader<T>
 where T : Read
@@ -8,12 +8,12 @@ where T : Read
     inner: Bytes<T>,
 }
 
-#[derive(Debug, Error)]
-#[error(transparent)]
-pub enum LogReaderError {
-    IO(#[from] std::io::Error),
-    SerdeJson(#[from] serde_json::Error),
-}
+// #[derive(Debug, Error)]
+// #[error(transparent)]
+// pub enum LogReaderError {
+//     IO(#[from] std::io::Error),
+//     SerdeJson(#[from] serde_json::Error),
+// }
 
 impl<T> LogReader<T>
 where T : Read
@@ -28,7 +28,7 @@ where T : Read
 impl<T> Iterator for LogReader<T>
 where T : Read
 {
-    type Item = Result<LogEvent, LogReaderError>;
+    type Item = Result<LogEvent, LogError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
@@ -39,7 +39,7 @@ where T : Read
                 Err(e) => return Some(Err(e.into())),
             };
 
-            if byte == b'\n' {
+            if byte == b'\n' && !line.is_empty() {
                 break;
             }
 
