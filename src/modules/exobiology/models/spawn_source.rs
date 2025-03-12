@@ -11,6 +11,8 @@ use crate::exobiology::{SpawnCondition, Species};
 use crate::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, VolcanismType};
 use crate::logs::scan_event::ScanEventParent;
 
+/// Model for predicting species at a given planet, bases on information about the system and
+/// planet.
 #[derive(Debug)]
 pub struct SpawnSource<'a> {
     pub target_system: &'a TargetSystem,
