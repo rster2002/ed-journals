@@ -22,40 +22,11 @@ pub struct CarrierCrewServicesEvent {
     pub crew_name: String,
 }
 
-// /// The given service the event is for.
-// #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-// pub enum CarrierCrewServicesEventCrewRole {
-//     Captain,
-//     CarrierFuel,
-//     Refuel,
-//     Repair,
-//     Rearm,
-//     Shipyard,
-//
-//     #[serde(rename = "Commodities")]
-//     Market,
-//
-//     BlackMarket,
-//
-//     #[serde(rename = "Exploration")]
-//     UniversalCartographers,
-//     VistaGenomics,
-//     PioneerSupplies,
-//     Bartender,
-//     Outfitting,
-//
-//     #[serde(rename = "VoucherRedemption")]
-//     RedemptionOffice,
-// }
-
 /// The operation for this event. Note that some of these variants are for changes and some are
 /// for the current status. This is because sometimes the [CarrierCrewServicesEvent] is fired
 /// without a change in operation status.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventOperation {
-    /// The service is currently active.
-    Active,
-
     /// The service is getting activated.
     Activate,
 
@@ -66,7 +37,9 @@ pub enum CarrierCrewServicesEventOperation {
     #[serde(rename = "Pause")]
     Suspended,
 
-    // TODO check this.
-    /// The service is getting replaced.
+    /// The service is being resumed.
+    Resume,
+
+    /// The crew associated with the service is being replaced.
     Replace,
 }

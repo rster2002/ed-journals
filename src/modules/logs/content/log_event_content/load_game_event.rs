@@ -75,6 +75,7 @@ mod tests {
     };
     use crate::modules::ship::ShipType;
 
+    #[test]
     fn load_game_event_is_parsed_correctly() {
         let parsed: LoadGameEvent = serde_json::from_str(
             r#"
@@ -100,7 +101,7 @@ mod tests {
             commander: "HRC-2".to_string(),
             fid: "F44396".to_string(),
             horizons: true,
-            odyssey: true,
+            odyssey: false,
             ship_info: Some(LoadGameEventShipInfo {
                 ship: ShipType::FerDeLance,
                 ship_id: 19,

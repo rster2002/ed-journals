@@ -3,7 +3,7 @@ use std::fs::{DirEntry, File};
 use std::io;
 use std::io::BufReader;
 use std::num::ParseIntError;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 #[cfg(feature = "asynchronous")]
 use crate::logs::asynchronous;
@@ -125,6 +125,10 @@ impl LogFile {
     /// Returns the part number.
     pub fn part(&self) -> u8 {
         self.part
+    }
+
+    pub fn path(&self) -> &Path {
+        self.path.as_path()
     }
 }
 

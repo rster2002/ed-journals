@@ -9,7 +9,7 @@ use crate::modules::ship::{ShipModule, ShipType};
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleSellRemoteEvent {
     /// The storage slot the module occupied
-    pub storage_slot: u8,
+    pub storage_slot: u16,
 
     /// The module that was sold.
     pub sell_item: ShipModule,
