@@ -2,30 +2,24 @@ use std::io::{Bytes, Read};
 use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
 
-pub struct LogReader<T>
+/// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
+pub struct LogIter<T>
 where T : Read
 {
     inner: Bytes<T>,
 }
 
-// #[derive(Debug, Error)]
-// #[error(transparent)]
-// pub enum LogReaderError {
-//     IO(#[from] std::io::Error),
-//     SerdeJson(#[from] serde_json::Error),
-// }
-
-impl<T> LogReader<T>
+impl<T> From<T> for LogIter<T>
 where T : Read
 {
-    pub fn new(inner: T) -> LogReader<T> {
-        LogReader {
-            inner: inner.bytes(),
+    fn from(value: T) -> Self {
+        LogIter {
+            inner: value.bytes(),
         }
     }
 }
 
-impl<T> Iterator for LogReader<T>
+impl<T> Iterator for LogIter<T>
 where T : Read
 {
     type Item = Result<LogEvent, LogError>;
@@ -50,7 +44,6 @@ where T : Read
             return None;
         }
 
-        dbg!(&line);
 
         Some(Ok(match serde_json::from_slice(&line) {
             Ok(event) => event,
@@ -67,7 +60,7 @@ mod tests {
     use std::time::Instant;
     use crate::logs::blocking::LogFileReader;
     use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::models::log_reader::LogReader;
+    use crate::modules::logs2::models::log_iter::LogIter;
 
     #[test]
     fn log_reader_reads_completed_file_correctly() {
@@ -75,7 +68,7 @@ mod tests {
 { "timestamp":"2020-09-21T19:04:51Z", "event":"Repair", "Item":"Wear", "Cost":10 }"#;
 
         let cursor = Cursor::new(data);
-        let mut reader = LogReader::new(cursor);
+        let mut reader = LogIter::from(cursor);
 
         assert!(reader.next().is_some());
         assert!(reader.next().is_some());
@@ -90,7 +83,7 @@ mod tests {
 "#;
 
         let cursor = Cursor::new(data);
-        let mut reader = LogReader::new(cursor);
+        let mut reader = LogIter::from(cursor);
 
         assert!(reader.next().is_some());
         assert!(reader.next().is_some());
@@ -104,7 +97,7 @@ mod tests {
         let file = File::open("c.tmp").unwrap();
         let buf_reader = BufReader::new(file);
 
-        let mut reader = LogReader::new(buf_reader);
+        let mut reader = LogIter::from(buf_reader);
 
         assert!(reader.next().is_none());
 
