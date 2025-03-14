@@ -86,7 +86,7 @@ mod tests {
     use tokio::fs::File;
     use tokio_util::compat::{FuturesAsyncReadCompatExt, TokioAsyncReadCompatExt};
     use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::models::async_iter::AsyncIter;
+    use crate::modules::logs2::AsyncIter;
 
     #[tokio::test]
     async fn async_reader_reads_complete_file_correctly() {

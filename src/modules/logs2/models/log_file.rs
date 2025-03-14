@@ -1,25 +1,26 @@
-use std::borrow::Cow;
-use std::path::{Path, PathBuf};
-use crate::modules::logs2::error::LogError;
-use crate::modules::logs2::models::log_iter::LogIter;
+pub mod live_iter;
+pub mod log_iter;
 
 #[cfg(feature = "asynchronous")]
-use crate::modules::logs2::models::async_iter::AsyncIter;
+pub mod async_iter;
 
-pub struct LogFile<'a> {
-    path: Cow<'a, Path>
+use std::path::{Path, PathBuf};
+use crate::modules::logs2::error::LogError;
+use crate::modules::logs2::models::log_dir::log_path::LogPath;
+use crate::modules::logs2::models::log_file::live_iter::LiveIter;
+use crate::modules::logs2::models::log_file::log_iter::LogIter;
+
+#[cfg(feature = "asynchronous")]
+use crate::modules::logs2::models::log_file::async_iter::AsyncIter;
+
+pub struct LogFile {
+    path: PathBuf,
 }
 
-impl<'a> LogFile<'a> {
-    pub fn new<P: AsRef<Path>>(path: &'a P) -> LogFile<'a> {
+impl LogFile {
+    pub fn new<P: AsRef<Path>>(path: P) -> LogFile {
         LogFile {
-            path: Cow::Borrowed(path.as_ref())
-        }
-    }
-
-    pub fn owned(path: PathBuf) -> LogFile<'static> {
-        LogFile {
-            path: Cow::Owned(path)
+            path: path.as_ref().to_path_buf(),
         }
     }
 
@@ -30,6 +31,10 @@ impl<'a> LogFile<'a> {
         Ok(LogIter::from(reader))
     }
 
+    pub fn live_iter(&self) -> Result<LiveIter, LogError> {
+        LiveIter::open(&self.path)
+    }
+
     #[cfg(feature = "asynchronous")]
     pub async fn async_iter(&self) -> Result<AsyncIter<tokio_util::compat::Compat<tokio::io::BufReader<tokio::fs::File>>>, LogError> {
         let file = tokio::fs::File::open(&self.path)
@@ -38,5 +43,13 @@ impl<'a> LogFile<'a> {
         let reader = tokio::io::BufReader::new(file);
 
         Ok(AsyncIter::from(reader))
+    }
+}
+
+impl From<LogPath> for LogFile {
+    fn from(value: LogPath) -> Self {
+        LogFile {
+            path: value.into(),
+        }
     }
 }

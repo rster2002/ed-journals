@@ -60,7 +60,7 @@ mod tests {
     use std::time::Instant;
     use crate::logs::blocking::LogFileReader;
     use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::models::log_iter::LogIter;
+    use crate::modules::logs2::LogIter;
 
     #[test]
     fn log_reader_reads_completed_file_correctly() {

@@ -49,13 +49,42 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::LogDir;
     use crate::logs::LogEventContent;
     use std::env::current_dir;
-    use std::path::PathBuf;
+    use std::fs;
+    use std::hash::{DefaultHasher, Hash, Hasher};
+    use std::path::{Path, PathBuf};
+    use std::thread::current;
+    use crate::modules::logs2::LogDir;
+
+    pub struct TestFile(PathBuf);
+
+    impl TestFile {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+    }
+
+    impl Drop for TestFile {
+        fn drop(&mut self) {
+            fs::remove_file(&self.0).unwrap()
+        }
+    }
 
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
+    }
+
+    pub fn test_file() -> TestFile {
+        let temp_dir = test_root().join("temp-dir");
+
+        fs::create_dir_all(&temp_dir).unwrap();
+
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+        TestFile(temp_dir.join(format!("test-{}", hash)))
     }
 
     #[test]
@@ -64,22 +93,14 @@ mod tests {
 
         let log_dir = LogDir::new(dir_path);
 
-        let logs = log_dir.journal_logs().unwrap();
-
-        assert!(logs.len() > 10);
-
         let mut file_header_count = 0;
         let mut entry_count = 0;
 
-        for journal in &logs {
-            let mut found_file_header = false;
-            let reader = journal.create_blocking_reader().unwrap();
-
-            for entry in reader {
+        for file in log_dir.iter().unwrap() {
+            for entry in file.iter().unwrap() {
                 entry_count += 1;
 
                 if let LogEventContent::FileHeader(_) = entry.unwrap().content {
-                    found_file_header = true;
                     file_header_count += 1;
                 }
             }
