@@ -1,4 +1,5 @@
 use std::io;
+use std::io::{Read, Seek};
 use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -28,9 +29,11 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// }
 /// ```
 #[derive(Debug)]
-pub struct LiveLogFileReader {
+pub struct LiveLogFileReader<T>
+where T : Read + Seek,
+{
+    inner: LogFileReader<T>,
     blocker: SyncBlocker,
-    log_file_reader: LogFileReader,
     _watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
 }
@@ -47,9 +50,11 @@ pub enum LiveLogFileReaderError {
     LogFileReaderError(#[from] LogFileReaderError),
 }
 
-impl LiveLogFileReader {
-    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveLogFileReaderError> {
-        let journal_file_reader = LogFileReader::open(&path)?;
+impl<T> LiveLogFileReader<T>
+where T : Read + Seek,
+{
+    pub fn new<P: AsRef<Path>>(path: P, inner: LogFileReader<T>) -> Result<Self, LiveLogFileReaderError> {
+        // let journal_file_reader = LogFileReader::new(&path)?;
 
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
@@ -63,11 +68,15 @@ impl LiveLogFileReader {
 
         Ok(LiveLogFileReader {
             blocker,
-            log_file_reader: journal_file_reader,
+            inner,
             _watcher: watcher,
             active: Arc::new(AtomicBool::new(true)),
         })
     }
+
+    // pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveLogFileReaderError> {
+
+    // }
 
     pub fn handle(&self) -> LiveLogFileHandle {
         LiveLogFileHandle {
@@ -90,7 +99,9 @@ impl LiveLogFileHandle {
     }
 }
 
-impl Iterator for LiveLogFileReader {
+impl<T> Iterator for LiveLogFileReader<T>
+where T : Read + Seek,
+{
     type Item = Result<LogEvent, LogFileReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -99,7 +110,7 @@ impl Iterator for LiveLogFileReader {
                 return None;
             }
 
-            match self.log_file_reader.next() {
+            match self.inner.next() {
                 Some(value) => return Some(value),
                 None => self.blocker.block(),
             }
