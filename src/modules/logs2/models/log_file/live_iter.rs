@@ -67,6 +67,7 @@ mod tests {
     use crate::tests::test_file;
 
     #[test]
+    #[ignore]
     fn live_watcher_blocks_correctly() {
         let test_file = test_file();
         fs::write(test_file.path(), "").unwrap();

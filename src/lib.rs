@@ -71,8 +71,41 @@ mod tests {
         }
     }
 
+    pub struct TestDir(PathBuf);
+
+    impl TestDir {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+
+        pub fn file(&self, number: u32) -> PathBuf {
+            self.0.join(format!("{}.tmp", number))
+        }
+    }
+
+    impl Drop for TestDir {
+        fn drop(&mut self) {
+            fs::remove_file(&self.0).unwrap()
+        }
+    }
+
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
+    }
+
+    pub fn test_dir() -> TestDir {
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+
+        let path = test_root()
+            .join("temp-dir")
+            .join(format!("dir-{}", hash));
+
+        fs::create_dir_all(&path).unwrap();
+
+        TestDir(path)
     }
 
     pub fn test_file() -> TestFile {
