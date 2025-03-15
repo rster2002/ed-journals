@@ -30,6 +30,27 @@ impl DirIter {
             entries: entries.into_iter(),
         })
     }
+
+    pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
+        let mut read_dir = tokio::fs::read_dir(path)
+            .await?;
+
+        let mut entries = Vec::new();
+
+        while let Some(entry) = read_dir.next_entry().await? {
+            match LogPath::try_from(entry.path().as_path()) {
+                Ok(path) => entries.push(path),
+                Err(LogError::IncorrectFileName) => continue,
+                Err(e) => return Err(e),
+            }
+        }
+
+        entries.sort();
+
+        Ok(DirIter {
+            entries: entries.into_iter(),
+        })
+    }
 }
 
 impl Iterator for DirIter {
