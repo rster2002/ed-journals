@@ -37,6 +37,10 @@ where T : Read
                 break;
             }
 
+            if byte == 0x00 || (line.is_empty() && byte == b' ') {
+                continue;
+            }
+
             line.push(byte);
         }
 
@@ -44,10 +48,14 @@ where T : Read
             return None;
         }
 
-
         Some(Ok(match serde_json::from_slice(&line) {
             Ok(event) => event,
-            Err(e) => return Some(Err(e.into())),
+            Err(e) => {
+                #[cfg(test)]
+                dbg!(&line);
+
+                return Some(Err(e.into()));
+            },
         }))
     }
 }

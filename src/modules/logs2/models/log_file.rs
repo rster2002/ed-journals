@@ -13,6 +13,7 @@ use crate::modules::logs2::models::log_file::log_iter::LogIter;
 #[cfg(feature = "asynchronous")]
 use crate::modules::logs2::models::log_file::async_iter::AsyncIter;
 
+#[derive(Debug)]
 pub struct LogFile {
     path: PathBuf,
 }

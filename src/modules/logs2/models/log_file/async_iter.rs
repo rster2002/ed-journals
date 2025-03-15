@@ -35,6 +35,10 @@ where T : AsyncRead + Unpin
                 break;
             }
 
+            if byte == 0x00 || (line.is_empty() && byte == b' ') {
+                continue;
+            }
+
             line.push(byte);
         }
 

@@ -49,13 +49,13 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::LogEventContent;
+    use crate::logs::{LogEvent, LogEventContent};
     use std::env::current_dir;
     use std::fs;
     use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::{Path, PathBuf};
     use std::thread::current;
-    use crate::modules::logs2::LogDir;
+    use crate::modules::logs2::{LogDir, LogError};
 
     pub struct TestFile(PathBuf);
 
@@ -100,7 +100,16 @@ mod tests {
             for entry in file.iter().unwrap() {
                 entry_count += 1;
 
-                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
+                let entry = match entry {
+                    Ok(entry) => entry,
+                    Err(error) => {
+                        dbg!(&file);
+                        dbg!(&error);
+                        panic!("{:?}", error);
+                    }
+                };
+
+                if let LogEventContent::FileHeader(_) = entry.content {
                     file_header_count += 1;
                 }
             }
