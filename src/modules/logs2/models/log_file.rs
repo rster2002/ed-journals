@@ -5,6 +5,7 @@ pub mod log_iter;
 pub mod async_iter;
 
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use crate::modules::logs2::error::LogError;
 use crate::modules::logs2::models::log_dir::log_path::LogPath;
 use crate::modules::logs2::models::log_file::live_iter::LiveIter;
@@ -12,17 +13,31 @@ use crate::modules::logs2::models::log_file::log_iter::LogIter;
 
 #[cfg(feature = "asynchronous")]
 use crate::modules::logs2::models::log_file::async_iter::AsyncIter;
+use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug)]
 pub struct LogFile {
     path: PathBuf,
+    blocker: Option<Arc<SyncBlocker>>,
 }
 
 impl LogFile {
     pub fn new<P: AsRef<Path>>(path: P) -> LogFile {
         LogFile {
             path: path.as_ref().to_path_buf(),
+            blocker: None,
         }
+    }
+
+    pub fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> LogFile {
+        LogFile {
+            path: path.as_ref().to_path_buf(),
+            blocker: Some(blocker),
+        }
+    }
+
+    pub fn set_blocker(&mut self, blocker: Arc<SyncBlocker>) {
+        self.blocker = Some(blocker);
     }
 
     pub fn iter(&self) -> Result<LogIter<std::io::BufReader<std::fs::File>>, LogError> {
@@ -51,6 +66,7 @@ impl From<LogPath> for LogFile {
     fn from(value: LogPath) -> Self {
         LogFile {
             path: value.into(),
+            blocker: None,
         }
     }
 }

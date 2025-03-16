@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::{BufReader};
 use std::path::Path;
+use std::sync::Arc;
 use notify::{RecommendedWatcher, Watcher};
 use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
@@ -9,17 +10,20 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 pub struct LiveIter {
     inner: LogIter<BufReader<File>>,
-    blocker: SyncBlocker,
+    blocker: Arc<SyncBlocker>,
     _watcher: RecommendedWatcher,
 }
 
 impl LiveIter {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<LiveIter, LogError> {
+        LiveIter::with_blocker(path, Arc::new(SyncBlocker::new()))
+    }
+
+    pub fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> Result<LiveIter, LogError> {
         let file = File::open(&path)?;
         let buf_reader = BufReader::new(file);
         let log_iter = LogIter::from(buf_reader);
 
-        let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
 
         // This is stopped when it is dropped
@@ -36,9 +40,13 @@ impl LiveIter {
         })
     }
 
-    pub fn unblock(&self) {
-        self.blocker.unblock();
+    pub fn blocker(&self) -> &SyncBlocker {
+        &self.blocker
     }
+
+    // pub fn unblock(&self) {
+    //     self.blocker.unblock();
+    // }
 }
 
 impl Iterator for LiveIter {

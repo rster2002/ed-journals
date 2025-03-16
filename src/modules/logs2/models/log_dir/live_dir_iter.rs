@@ -1,15 +1,16 @@
 use std::collections::VecDeque;
 use std::path::Path;
-use std::sync::{Arc, Weak};
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use std::sync::{Arc, Mutex, Weak};
+use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use notify::event::CreateKind;
 use crate::logs::LogEvent;
-use crate::modules::logs2::{DirIter, LogError, LogFile};
+use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 pub struct LiveDirIter {
     dir_iter: DirIter,
     blocker: SyncBlocker,
-    // current: Option<Weak<>>,
+    added: Arc<Mutex<VecDeque<Result<LogFile, LogError>>>>,
     _watcher: RecommendedWatcher,
 }
 
@@ -17,16 +18,36 @@ impl LiveDirIter {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LiveDirIter, LogError> {
         let dir_iter = DirIter::new(path.as_ref())?;
 
+        let added = Arc::new(Mutex::new(VecDeque::new()));
         let blocker = SyncBlocker::new();
+
         let local_blocker = blocker.clone();
+        let local_added = added.clone();
 
         // This is stopped when it is dropped
-        let mut watcher = notify::recommended_watcher(move |event| {
-            dbg!(&event);
+        let mut watcher = notify::recommended_watcher(move |event: notify::Result<Event>| {
             let Ok(event) = event else {
                 return;
             };
 
+            if !matches!(event, EventKind::Create(CreateKind::File)) {
+                return;
+            }
+
+            for path in event.paths {
+                let path = match LogPath::try_from(path.as_path()) {
+                    Ok(path) => path,
+                    Err(LogError::IncorrectFileName) => continue,
+                    Err(error) => {
+                        todo!()
+                    }
+                };
+            }
+
+            // dbg!(&event);
+            // let Ok(event) = event else {
+            //     return;
+            // };
 
             local_blocker.unblock();
         })?;
@@ -36,24 +57,25 @@ impl LiveDirIter {
         Ok(LiveDirIter {
             dir_iter,
             blocker,
+            added: VecDeque::new(),
             _watcher: watcher,
         })
     }
 }
 
 impl Iterator for LiveDirIter {
-    type Item = Result<Arc<LogFile>, LogError>;
+    type Item = Result<LogFile, LogError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some(entry) = self.dir_iter.next() {
-            let current = Arc::new(entry);
+        if let Some(mut entry) = self.dir_iter.next() {
+            entry.set_blocker(self.blocker.child());
 
-            return Some(Ok())
+            return Some(Ok(entry))
         }
 
         self.blocker.block();
 
-        None
+        self.added.pop_front().map(Ok)
     }
 }
 

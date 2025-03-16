@@ -1,16 +1,18 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, Weak};
 use std::thread;
 use std::thread::Thread;
 
 #[derive(Debug, Clone)]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+    children: Vec<Weak<SyncBlocker>>,
 }
 
 impl SyncBlocker {
     pub fn new() -> Self {
         SyncBlocker {
             waiting_thread: Arc::new(Mutex::new((None,))),
+            children: Vec::new(),
         }
     }
 
@@ -20,7 +22,17 @@ impl SyncBlocker {
         if let Some(thread) = guard.0.as_ref() {
             thread.unpark();
             guard.0 = None;
+
+            self.unblock_children();
         };
+    }
+
+    pub fn unblock_children(&self) {
+        for child in self.children.iter() {
+            if let Some(child) = child.upgrade() {
+                child.unblock();
+            }
+        }
     }
 
     pub fn block(&self) {
@@ -31,5 +43,12 @@ impl SyncBlocker {
         }
 
         thread::park();
+    }
+
+    pub fn child(&mut self) -> Arc<SyncBlocker> {
+        let child = Arc::new(SyncBlocker::new());
+        self.children.push(Arc::downgrade(&child));
+
+        child
     }
 }
