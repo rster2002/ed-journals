@@ -85,7 +85,7 @@ mod tests {
 
     impl Drop for TestDir {
         fn drop(&mut self) {
-            fs::remove_file(&self.0).unwrap()
+            fs::remove_dir_all(&self.0).unwrap();
         }
     }
 
@@ -103,6 +103,7 @@ mod tests {
             .join("temp-dir")
             .join(format!("dir-{}", hash));
 
+        let _ = fs::remove_dir_all(&path);
         fs::create_dir_all(&path).unwrap();
 
         TestDir(path)

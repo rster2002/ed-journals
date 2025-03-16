@@ -1,31 +1,37 @@
+use std::collections::VecDeque;
 use std::path::Path;
-use std::sync::Arc;
-use notify::RecommendedWatcher;
+use std::sync::{Arc, Weak};
+use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use crate::logs::LogEvent;
-use crate::modules::logs2::{DirIter, LogError};
+use crate::modules::logs2::{DirIter, LogError, LogFile};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 pub struct LiveDirIter {
     dir_iter: DirIter,
     blocker: SyncBlocker,
+    // current: Option<Weak<>>,
     _watcher: RecommendedWatcher,
 }
 
 impl LiveDirIter {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LiveDirIter, LogError> {
-        let dir_iter = DirIter::new(path)?;
+        let dir_iter = DirIter::new(path.as_ref())?;
 
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
 
         // This is stopped when it is dropped
         let mut watcher = notify::recommended_watcher(move |event| {
+            dbg!(&event);
             let Ok(event) = event else {
                 return;
             };
 
+
             local_blocker.unblock();
         })?;
+
+        watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LiveDirIter {
             dir_iter,
@@ -36,10 +42,18 @@ impl LiveDirIter {
 }
 
 impl Iterator for LiveDirIter {
-    type Item = Result<Arc<LogEvent>, LogError>;
+    type Item = Result<Arc<LogFile>, LogError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        
+        if let Some(entry) = self.dir_iter.next() {
+            let current = Arc::new(entry);
+
+            return Some(Ok())
+        }
+
+        self.blocker.block();
+
+        None
     }
 }
 
@@ -55,7 +69,8 @@ mod tests {
     #[test]
     fn live_watcher_blocks_correctly() {
         let dir = test_dir();
-        let first_file = dir.file(0);
+        let first_file = dir.path().join("Journal.2023-02-21T084116.01.log");
+        let second_file = dir.path().join("Journal.2023-02-21T084116.02.log");
 
         fs::write(
             &first_file,
@@ -72,8 +87,18 @@ mod tests {
             println!("Nope!");
 
             let mut live_dir = LiveDirIter::new(local_path).unwrap();
+            let mut file = live_dir.next()
+                .unwrap()
+                .unwrap()
+                .iter()
+                .unwrap();
 
+            assert!(file.next().is_some());
+
+            local_blocker.unblock();
             assert!(dbg!(live_dir.next()).is_some());
+
+            assert!(true);
 
             // let mut live_reader = LiveIter::open(local_path).unwrap();
             //
@@ -83,5 +108,17 @@ mod tests {
             // local_blocker.unblock();
             // assert!(dbg!(live_reader.next()).is_some());
         });
+
+        let handle2 = spawn(move || {
+            blocker.block();
+
+            fs::write(
+                &second_file,
+                r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+            )
+                .unwrap();
+        });
+
+        handle1.join().unwrap();
     }
 }
