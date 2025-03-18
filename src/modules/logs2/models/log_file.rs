@@ -29,6 +29,10 @@ impl LogFile {
         }
     }
 
+    pub fn log_path(&self) -> Option<LogPath> {
+        LogPath::try_from(self.path.as_path()).ok()
+    }
+
     pub fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> LogFile {
         LogFile {
             path: path.as_ref().to_path_buf(),
@@ -67,6 +71,15 @@ impl From<LogPath> for LogFile {
         LogFile {
             path: value.into(),
             blocker: None,
+        }
+    }
+}
+
+impl From<(LogPath, Arc<SyncBlocker>)> for LogFile {
+    fn from(value: (LogPath, Arc<SyncBlocker>)) -> Self {
+        LogFile {
+            path: value.0.into(),
+            blocker: Some(value.1),
         }
     }
 }

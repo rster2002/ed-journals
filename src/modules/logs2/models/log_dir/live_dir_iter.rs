@@ -10,6 +10,7 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 pub struct LiveDirIter {
     dir_iter: DirIter,
     blocker: SyncBlocker,
+    last: Option<LogPath>,
     added: Arc<Mutex<VecDeque<Result<LogFile, LogError>>>>,
     _watcher: RecommendedWatcher,
 }
@@ -21,7 +22,7 @@ impl LiveDirIter {
         let added = Arc::new(Mutex::new(VecDeque::new()));
         let blocker = SyncBlocker::new();
 
-        let local_blocker = blocker.clone();
+        let mut local_blocker = blocker.clone();
         let local_added = added.clone();
 
         // This is stopped when it is dropped
@@ -30,24 +31,29 @@ impl LiveDirIter {
                 return;
             };
 
-            if !matches!(event, EventKind::Create(CreateKind::File)) {
+            dbg!(&event);
+
+            if !matches!(event.kind, EventKind::Create(CreateKind::File)) {
                 return;
             }
+
+            let mut lock = local_added.lock()
+                .expect("lock should have been acquired");
 
             for path in event.paths {
                 let path = match LogPath::try_from(path.as_path()) {
                     Ok(path) => path,
                     Err(LogError::IncorrectFileName) => continue,
                     Err(error) => {
-                        todo!()
+                        lock.push_back(Err(error));
+                        continue;
                     }
                 };
-            }
 
-            // dbg!(&event);
-            // let Ok(event) = event else {
-            //     return;
-            // };
+                let log_file = LogFile::from(path);
+
+                lock.push_back(Ok(log_file));
+            }
 
             local_blocker.unblock();
         })?;
@@ -57,7 +63,8 @@ impl LiveDirIter {
         Ok(LiveDirIter {
             dir_iter,
             blocker,
-            added: VecDeque::new(),
+            added,
+            last: None,
             _watcher: watcher,
         })
     }
@@ -68,6 +75,7 @@ impl Iterator for LiveDirIter {
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(mut entry) = self.dir_iter.next() {
+            self.last = entry.log_path();
             entry.set_blocker(self.blocker.child());
 
             return Some(Ok(entry))
@@ -75,7 +83,19 @@ impl Iterator for LiveDirIter {
 
         self.blocker.block();
 
-        self.added.pop_front().map(Ok)
+        let value = self.added.lock()
+            .expect("lock should have been acquired")
+            .pop_front();
+
+        match value {
+            Some(Ok(mut entry)) => {
+                self.last = entry.log_path();
+                entry.set_blocker(self.blocker.child());
+
+                Some(Ok(entry))
+            },
+            _ => value,
+        }
     }
 }
 
