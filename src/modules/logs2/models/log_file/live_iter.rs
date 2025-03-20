@@ -8,6 +8,7 @@ use crate::modules::logs2::error::LogError;
 use crate::modules::logs2::LogIter;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
+#[derive(Debug)]
 pub struct LiveIter {
     inner: LogIter<BufReader<File>>,
     blocker: Arc<SyncBlocker>,
@@ -19,7 +20,7 @@ impl LiveIter {
         LiveIter::with_blocker(path, Arc::new(SyncBlocker::new()))
     }
 
-    pub fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> Result<LiveIter, LogError> {
+    pub(crate) fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> Result<LiveIter, LogError> {
         let file = File::open(&path)?;
         let buf_reader = BufReader::new(file);
         let log_iter = LogIter::from(buf_reader);
@@ -43,10 +44,6 @@ impl LiveIter {
     pub fn blocker(&self) -> &SyncBlocker {
         &self.blocker
     }
-
-    // pub fn unblock(&self) {
-    //     self.blocker.unblock();
-    // }
 }
 
 impl Iterator for LiveIter {

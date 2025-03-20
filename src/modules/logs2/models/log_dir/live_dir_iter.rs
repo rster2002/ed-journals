@@ -1,9 +1,8 @@
 use std::collections::VecDeque;
 use std::path::Path;
-use std::sync::{Arc, Mutex, Weak};
+use std::sync::{Arc, Mutex};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::CreateKind;
-use crate::logs::LogEvent;
 use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
@@ -19,8 +18,8 @@ impl LiveDirIter {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LiveDirIter, LogError> {
         let dir_iter = DirIter::new(path.as_ref())?;
 
-        let added = Arc::new(Mutex::new(VecDeque::new()));
         let blocker = SyncBlocker::new();
+        let added = Arc::new(Mutex::new(VecDeque::new()));
 
         let mut local_blocker = blocker.clone();
         let local_added = added.clone();
@@ -30,8 +29,6 @@ impl LiveDirIter {
             let Ok(event) = event else {
                 return;
             };
-
-            dbg!(&event);
 
             if !matches!(event.kind, EventKind::Create(CreateKind::File)) {
                 return;
@@ -56,6 +53,7 @@ impl LiveDirIter {
             }
 
             local_blocker.unblock();
+            dbg!(&local_blocker);
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
@@ -68,6 +66,14 @@ impl LiveDirIter {
             _watcher: watcher,
         })
     }
+
+    pub fn is_last(&self, log_file: &LogFile) -> bool {
+        let Some(last) = &self.last else {
+            return false;
+        };
+
+        log_file == last
+    }
 }
 
 impl Iterator for LiveDirIter {
@@ -75,7 +81,7 @@ impl Iterator for LiveDirIter {
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(mut entry) = self.dir_iter.next() {
-            self.last = entry.log_path();
+            self.last = Some(entry.log_path().clone());
             entry.set_blocker(self.blocker.child());
 
             return Some(Ok(entry))
@@ -89,7 +95,7 @@ impl Iterator for LiveDirIter {
 
         match value {
             Some(Ok(mut entry)) => {
-                self.last = entry.log_path();
+                self.last = Some(entry.log_path().clone());
                 entry.set_blocker(self.blocker.child());
 
                 Some(Ok(entry))
@@ -132,12 +138,15 @@ mod tests {
             let mut file = live_dir.next()
                 .unwrap()
                 .unwrap()
-                .iter()
+                .live_iter()
                 .unwrap();
 
-            assert!(file.next().is_some());
+            assert!(dbg!(file.next()).is_some());
+
+            dbg!(&file);
 
             local_blocker.unblock();
+            assert!(dbg!(file.next()).is_none());
             assert!(dbg!(live_dir.next()).is_some());
 
             assert!(true);

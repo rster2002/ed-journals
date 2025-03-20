@@ -5,7 +5,7 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use crate::modules::logs2::LogError;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LogPath {
     path: PathBuf,
     timestamp: NaiveDateTime,
@@ -69,6 +69,12 @@ impl TryFrom<&Path> for LogPath {
     }
 }
 
+impl AsRef<Path> for LogPath {
+    fn as_ref(&self) -> &Path {
+        self.path.as_path()
+    }
+}
+
 impl Into<PathBuf> for LogPath {
     fn into(self) -> PathBuf {
         self.path
@@ -77,13 +83,13 @@ impl Into<PathBuf> for LogPath {
 
 impl Eq for LogPath {}
 
-impl PartialEq<Self> for LogPath {
+impl PartialEq for LogPath {
     fn eq(&self, other: &Self) -> bool {
         self.path.eq(&other.path)
     }
 }
 
-impl PartialOrd<Self> for LogPath {
+impl PartialOrd for LogPath {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }

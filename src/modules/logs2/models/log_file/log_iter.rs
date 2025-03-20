@@ -3,6 +3,7 @@ use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
+#[derive(Debug)]
 pub struct LogIter<T>
 where T : Read
 {

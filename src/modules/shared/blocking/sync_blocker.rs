@@ -1,18 +1,18 @@
-use std::sync::{Arc, Mutex, Weak};
+use std::sync::{Arc, Mutex, RwLock, Weak};
 use std::thread;
 use std::thread::Thread;
 
 #[derive(Debug, Clone)]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
-    children: Vec<Weak<SyncBlocker>>,
+    children: Arc<RwLock<Vec<Weak<SyncBlocker>>>>,
 }
 
 impl SyncBlocker {
     pub fn new() -> Self {
         SyncBlocker {
             waiting_thread: Arc::new(Mutex::new((None,))),
-            children: Vec::new(),
+            children: Arc::new(RwLock::new(Vec::new())),
         }
     }
 
@@ -28,8 +28,15 @@ impl SyncBlocker {
     }
 
     pub fn unblock_children(&self) {
-        for child in self.children.iter() {
+        let iter = self.children.try_read()
+            .expect("Should have been acquired");
+
+        dbg!(&iter);
+
+        for child in iter.iter() {
+            dbg!("Handling child");
             if let Some(child) = child.upgrade() {
+                dbg!(&child);
                 child.unblock();
             }
         }
@@ -47,8 +54,11 @@ impl SyncBlocker {
 
     pub fn child(&mut self) -> Arc<SyncBlocker> {
         let child = Arc::new(SyncBlocker::new());
-        self.children.push(Arc::downgrade(&child));
 
-        child
+        self.children.write()
+            .expect("Failed to acquire lock")
+            .push(Arc::downgrade(&child));
+
+        dbg!(child)
     }
 }
