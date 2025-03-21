@@ -1,5 +1,6 @@
 mod error;
 mod models;
+mod functions;
 
 pub use error::LogError;
 
@@ -15,3 +16,5 @@ pub use models::log_file::LogFile;
 
 #[cfg(feature = "asynchronous")]
 pub use models::log_file::async_iter::AsyncIter;
+
+pub use functions::auto_detect_journal_path::auto_detect_journal_path;
