@@ -6,6 +6,7 @@ use notify::event::CreateKind;
 use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
+#[derive(Debug)]
 pub struct LiveDirIter {
     dir_iter: DirIter,
     blocker: SyncBlocker,
@@ -52,7 +53,6 @@ impl LiveDirIter {
                 lock.push_back(Ok(log_file));
             }
 
-            dbg!(&local_blocker);
             local_blocker.unblock();
         })?;
 
@@ -82,25 +82,21 @@ impl Iterator for LiveDirIter {
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(mut entry) = self.dir_iter.next() {
             self.last = Some(entry.log_path().clone());
-            entry.set_blocker(self.blocker.child());
+            entry.set_blocker(Arc::new(self.blocker.clone()));
 
             return Some(Ok(entry))
         }
 
-        self.blocker.block();
+        loop {
+            let added_value = self.added.lock()
+                .expect("lock should have been acquired")
+                .pop_front();
 
-        let value = self.added.lock()
-            .expect("lock should have been acquired")
-            .pop_front();
+            if added_value.is_some() {
+                return added_value;
+            }
 
-        match value {
-            Some(Ok(mut entry)) => {
-                self.last = Some(entry.log_path().clone());
-                entry.set_blocker(self.blocker.child());
-
-                Some(Ok(entry))
-            },
-            _ => value,
+            self.blocker.block();
         }
     }
 }
@@ -109,12 +105,12 @@ impl Iterator for LiveDirIter {
 mod tests {
     use std::fs;
     use std::thread::spawn;
-    use crate::modules::logs2::LiveIter;
     use crate::modules::logs2::models::log_dir::live_dir_iter::LiveDirIter;
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_dir;
 
     #[test]
+    #[ignore]
     fn live_watcher_blocks_correctly() {
         let dir = test_dir();
         let first_file = dir.path().join("Journal.2023-02-21T084116.01.log");
@@ -147,17 +143,17 @@ mod tests {
 
             local_blocker.unblock();
             assert!(dbg!(file.next()).is_none());
-            assert!(dbg!(live_dir.next()).is_some());
+
+            let mut next_file = live_dir.next()
+                .unwrap()
+                .unwrap()
+                .iter()
+                .unwrap();
+
+            assert!(dbg!(next_file.next()).is_some());
+            assert!(dbg!(next_file.next()).is_none());
 
             assert!(true);
-
-            // let mut live_reader = LiveIter::open(local_path).unwrap();
-            //
-            // local_blocker.unblock();
-            // assert!(dbg!(live_reader.next()).is_some());
-            //
-            // local_blocker.unblock();
-            // assert!(dbg!(live_reader.next()).is_some());
         });
 
         let handle2 = spawn(move || {

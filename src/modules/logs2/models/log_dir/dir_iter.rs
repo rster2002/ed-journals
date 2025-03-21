@@ -5,6 +5,7 @@ use std::vec::IntoIter;
 use crate::modules::logs2::{LogError, LogFile};
 use crate::modules::logs2::models::log_dir::log_path::LogPath;
 
+#[derive(Debug)]
 pub struct DirIter {
     entries: IntoIter<LogPath>,
 }
