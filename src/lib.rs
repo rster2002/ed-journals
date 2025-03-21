@@ -49,12 +49,12 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::{LogEvent, LogEventContent};
+    use crate::logs::LogEventContent;
     use crate::modules::logs2::LogDir;
     use std::env::current_dir;
     use std::fs;
     use std::hash::{DefaultHasher, Hash, Hasher};
-    use std::path::{Path, PathBuf};
+    use std::path::PathBuf;
     use std::thread::current;
 
     pub struct TestFile(PathBuf);

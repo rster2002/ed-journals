@@ -69,10 +69,10 @@ mod tests {
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_file;
     use std::fs;
-    use std::fs::File;
-    use std::io::BufReader;
-    use std::thread::{sleep, spawn};
-    use std::time::Duration;
+    
+    
+    use std::thread::spawn;
+    
 
     #[test]
     #[ignore]

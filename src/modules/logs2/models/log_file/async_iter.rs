@@ -92,7 +92,7 @@ mod tests {
     use futures::StreamExt;
     use tokio::fs;
     use tokio::fs::File;
-    use tokio_util::compat::{FuturesAsyncReadCompatExt, TokioAsyncReadCompatExt};
+    
 
     #[tokio::test]
     async fn async_reader_reads_complete_file_correctly() {
