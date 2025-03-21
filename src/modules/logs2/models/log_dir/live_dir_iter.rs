@@ -52,8 +52,8 @@ impl LiveDirIter {
                 lock.push_back(Ok(log_file));
             }
 
-            local_blocker.unblock();
             dbg!(&local_blocker);
+            local_blocker.unblock();
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
@@ -171,5 +171,6 @@ mod tests {
         });
 
         handle1.join().unwrap();
+        handle2.join().unwrap();
     }
 }

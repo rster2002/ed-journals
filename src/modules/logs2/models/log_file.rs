@@ -63,6 +63,7 @@ impl LogFile {
     /// Creates a new blocking iterator iterating over the log entries for this file. If there are
     /// no entries to read it will block until there are more entries.
     pub fn live_iter(&self) -> Result<LiveIter, LogError> {
+        dbg!(&self.blocker);
         match &self.blocker {
             Some(blocker) => LiveIter::with_blocker(&self.path, blocker.clone()),
             None => LiveIter::open(&self.path),

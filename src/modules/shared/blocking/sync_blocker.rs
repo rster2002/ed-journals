@@ -59,6 +59,8 @@ impl SyncBlocker {
             .expect("Failed to acquire lock")
             .push(Arc::downgrade(&child));
 
+        dbg!(&self);
+
         dbg!(child)
     }
 }
