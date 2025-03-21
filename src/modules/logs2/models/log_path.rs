@@ -1,9 +1,9 @@
-use std::cmp::Ordering;
-use std::path::{Path, PathBuf};
+use crate::modules::logs2::LogError;
 use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
-use crate::modules::logs2::LogError;
+use std::cmp::Ordering;
+use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
 pub struct LogPath {
@@ -33,7 +33,8 @@ impl TryFrom<&Path> for LogPath {
     type Error = LogError;
 
     fn try_from(value: &Path) -> Result<Self, Self::Error> {
-        let file_name = value.file_name()
+        let file_name = value
+            .file_name()
             .ok_or(LogError::MissingFileName)?
             .to_str()
             .ok_or(LogError::FailedToRepresentOsString)?;
@@ -49,20 +50,20 @@ impl TryFrom<&Path> for LogPath {
                 .as_str();
 
             let timestamp = NaiveDateTime::parse_from_str(timestamp_str, format)
-                .map_err(|e| LogError::FailedToParseLogTime(e))?;
+                .map_err(LogError::FailedToParseLogTime)?;
 
             let part = captures
                 .get(2)
                 .expect("Regex should have already matched")
                 .as_str()
                 .parse()
-                .map_err(|e| LogError::FailedToParsePart(e))?;
+                .map_err(LogError::FailedToParsePart)?;
 
             return Ok(LogPath {
                 path: value.to_path_buf(),
                 timestamp,
                 part,
-            })
+            });
         }
 
         Err(LogError::IncorrectFileName)
@@ -75,9 +76,9 @@ impl AsRef<Path> for LogPath {
     }
 }
 
-impl Into<PathBuf> for LogPath {
-    fn into(self) -> PathBuf {
-        self.path
+impl From<LogPath> for PathBuf {
+    fn from(val: LogPath) -> Self {
+        val.path
     }
 }
 

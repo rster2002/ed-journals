@@ -1,5 +1,5 @@
-use std::num::ParseIntError;
 use chrono::ParseError;
+use std::num::ParseIntError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -22,5 +22,5 @@ pub enum LogError {
     FailedToParseLogTime(#[source] ParseError),
 
     #[error("Failed to parse part number of log file")]
-    FailedToParsePart(#[source] ParseIntError)
+    FailedToParsePart(#[source] ParseIntError),
 }

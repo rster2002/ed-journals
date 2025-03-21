@@ -1,11 +1,9 @@
 pub mod dir_iter;
-pub mod log_path;
-mod live_dir_iter;
+pub mod live_dir_iter;
 
-use std::borrow::Cow;
-use std::path::{Path, PathBuf};
-use crate::modules::logs2::{AsyncIter, LogError, LogFile};
 use crate::modules::logs2::models::log_dir::dir_iter::DirIter;
+use crate::modules::logs2::{LogError, LogFile};
+use std::path::{Path, PathBuf};
 
 pub struct LogDir {
     path: PathBuf,
@@ -14,7 +12,7 @@ pub struct LogDir {
 impl LogDir {
     pub fn new<P: AsRef<Path>>(path: P) -> LogDir {
         LogDir {
-            path: path.as_ref().to_path_buf()
+            path: path.as_ref().to_path_buf(),
         }
     }
 

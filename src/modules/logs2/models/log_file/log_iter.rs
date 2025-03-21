@@ -1,17 +1,19 @@
-use std::io::{Bytes, Read};
 use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
+use std::io::{Bytes, Read};
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
 #[derive(Debug)]
 pub struct LogIter<T>
-where T : Read
+where
+    T: Read,
 {
     inner: Bytes<T>,
 }
 
 impl<T> From<T> for LogIter<T>
-where T : Read
+where
+    T: Read,
 {
     fn from(value: T) -> Self {
         LogIter {
@@ -21,14 +23,15 @@ where T : Read
 }
 
 impl<T> Iterator for LogIter<T>
-where T : Read
+where
+    T: Read,
 {
     type Item = Result<LogEvent, LogError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
 
-        while let Some(byte) = self.inner.next() {
+        for byte in self.inner.by_ref() {
             let byte = match byte {
                 Ok(byte) => byte,
                 Err(e) => return Some(Err(e.into())),
@@ -56,20 +59,20 @@ where T : Read
                 dbg!(&line);
 
                 return Some(Err(e.into()));
-            },
+            }
         }))
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::logs::blocking::LogFileReader;
+    use crate::logs::LogEventContentKind;
+    use crate::modules::logs2::LogIter;
     use std::fs;
     use std::fs::File;
     use std::io::{BufReader, Cursor};
     use std::time::Instant;
-    use crate::logs::blocking::LogFileReader;
-    use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::LogIter;
 
     #[test]
     fn log_reader_reads_completed_file_correctly() {

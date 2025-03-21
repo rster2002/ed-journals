@@ -4,13 +4,13 @@ pub mod log_iter;
 #[cfg(feature = "asynchronous")]
 pub mod async_iter;
 
-use std::cmp::Ordering;
-use std::path::{Path, PathBuf};
-use std::sync::Arc;
 use crate::modules::logs2::error::LogError;
-use crate::modules::logs2::models::log_dir::log_path::LogPath;
 use crate::modules::logs2::models::log_file::live_iter::LiveIter;
 use crate::modules::logs2::models::log_file::log_iter::LogIter;
+use crate::modules::logs2::models::log_path::LogPath;
+use std::cmp::Ordering;
+use std::path::Path;
+use std::sync::Arc;
 
 #[cfg(feature = "asynchronous")]
 use crate::modules::logs2::models::log_file::async_iter::AsyncIter;
@@ -35,7 +35,10 @@ impl LogFile {
         })
     }
 
-    pub(crate) fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> Result<LogFile, LogError> {
+    pub(crate) fn with_blocker<P: AsRef<Path>>(
+        path: P,
+        blocker: Arc<SyncBlocker>,
+    ) -> Result<LogFile, LogError> {
         let path = LogPath::try_from(path.as_ref())?;
 
         Ok(LogFile {
@@ -71,9 +74,13 @@ impl LogFile {
     }
 
     #[cfg(feature = "asynchronous")]
-    pub async fn async_iter(&self) -> Result<AsyncIter<tokio_util::compat::Compat<tokio::io::BufReader<tokio::fs::File>>>, LogError> {
-        let file = tokio::fs::File::open(&self.path)
-            .await?;
+    pub async fn async_iter(
+        &self,
+    ) -> Result<
+        AsyncIter<tokio_util::compat::Compat<tokio::io::BufReader<tokio::fs::File>>>,
+        LogError,
+    > {
+        let file = tokio::fs::File::open(&self.path).await?;
 
         let reader = tokio::io::BufReader::new(file);
 
@@ -116,7 +123,7 @@ impl PartialOrd<LogPath> for LogFile {
 impl From<LogPath> for LogFile {
     fn from(value: LogPath) -> Self {
         LogFile {
-            path: value.into(),
+            path: value,
             blocker: None,
         }
     }
@@ -125,7 +132,7 @@ impl From<LogPath> for LogFile {
 impl From<(LogPath, Arc<SyncBlocker>)> for LogFile {
     fn from(value: (LogPath, Arc<SyncBlocker>)) -> Self {
         LogFile {
-            path: value.0.into(),
+            path: value.0,
             blocker: Some(value.1),
         }
     }

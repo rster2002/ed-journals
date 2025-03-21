@@ -83,38 +83,38 @@ mod tests {
     use std::env::current_dir;
     use std::time::Instant;
 
-    // #[test]
-    // fn state_is_correct() {
-    //     let dir_path = current_dir().unwrap().join("test-files").join("journals");
-    //
-    //     let log_dir = LogDirReader::open(dir_path);
-    //
-    //     let mut state = GameState::default();
-    //     let instant = Instant::now();
-    //
-    //     for entry in log_dir {
-    //         state.feed(&entry.unwrap());
-    //     }
-    //
-    //     state.flush();
-    //
-    //     dbg!(instant.elapsed().as_nanos());
-    //
-    //     // Confirms that there are only one species of each genus on each planet
-    //     for commander in state.commanders.values() {
-    //         for system in commander.log_state.systems.values() {
-    //             for body in system.planet_state.values() {
-    //                 let mut genuses = HashSet::new();
-    //
-    //                 for species in &body.scanned_species {
-    //                     let inserted = genuses.insert(species.genus());
-    //
-    //                     if !inserted {
-    //                         panic!("Not here!");
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    #[test]
+    fn state_is_correct() {
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+
+        let log_dir = LogDirReader::open(dir_path);
+
+        let mut state = GameState::default();
+        let instant = Instant::now();
+
+        for entry in log_dir {
+            state.feed(&entry.unwrap());
+        }
+
+        state.flush();
+
+        dbg!(instant.elapsed().as_nanos());
+
+        // Confirms that there are only one species of each genus on each planet
+        for commander in state.commanders.values() {
+            for system in commander.log_state.systems.values() {
+                for body in system.planet_state.values() {
+                    let mut genuses = HashSet::new();
+
+                    for species in &body.scanned_species {
+                        let inserted = genuses.insert(species.genus());
+
+                        if !inserted {
+                            panic!("Not here!");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,12 +1,12 @@
-use std::fs::File;
-use std::io::{BufReader};
-use std::path::Path;
-use std::sync::Arc;
-use notify::{RecommendedWatcher, Watcher};
 use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
 use crate::modules::logs2::LogIter;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+use notify::{RecommendedWatcher, Watcher};
+use std::fs::File;
+use std::io::BufReader;
+use std::path::Path;
+use std::sync::Arc;
 
 #[derive(Debug)]
 pub struct LiveIter {
@@ -20,7 +20,10 @@ impl LiveIter {
         LiveIter::with_blocker(path, Arc::new(SyncBlocker::new()))
     }
 
-    pub(crate) fn with_blocker<P: AsRef<Path>>(path: P, blocker: Arc<SyncBlocker>) -> Result<LiveIter, LogError> {
+    pub(crate) fn with_blocker<P: AsRef<Path>>(
+        path: P,
+        blocker: Arc<SyncBlocker>,
+    ) -> Result<LiveIter, LogError> {
         let file = File::open(&path)?;
         let buf_reader = BufReader::new(file);
         let log_iter = LogIter::from(buf_reader);
@@ -62,14 +65,14 @@ impl Iterator for LiveIter {
 
 #[cfg(test)]
 mod tests {
+    use crate::modules::logs2::LiveIter;
+    use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+    use crate::tests::test_file;
     use std::fs;
     use std::fs::File;
     use std::io::BufReader;
     use std::thread::{sleep, spawn};
     use std::time::Duration;
-    use crate::modules::logs2::LiveIter;
-    use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
-    use crate::tests::test_file;
 
     #[test]
     #[ignore]

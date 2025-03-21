@@ -162,7 +162,7 @@ mod tests {
             "a.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
         )
-            .unwrap();
+        .unwrap();
 
         assert!(reader.next().is_none());
 
@@ -195,7 +195,7 @@ mod tests {
             "d.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
         )
-            .unwrap();
+        .unwrap();
 
         assert!(reader.next().is_none());
 

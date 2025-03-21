@@ -1,10 +1,10 @@
+use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
+use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+use notify::event::CreateKind;
+use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::collections::VecDeque;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::CreateKind;
-use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
-use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug)]
 pub struct LiveDirIter {
@@ -22,7 +22,7 @@ impl LiveDirIter {
         let blocker = SyncBlocker::new();
         let added = Arc::new(Mutex::new(VecDeque::new()));
 
-        let mut local_blocker = blocker.clone();
+        let local_blocker = blocker.clone();
         let local_added = added.clone();
 
         // This is stopped when it is dropped
@@ -35,8 +35,7 @@ impl LiveDirIter {
                 return;
             }
 
-            let mut lock = local_added.lock()
-                .expect("lock should have been acquired");
+            let mut lock = local_added.lock().expect("lock should have been acquired");
 
             for path in event.paths {
                 let path = match LogPath::try_from(path.as_path()) {
@@ -84,11 +83,13 @@ impl Iterator for LiveDirIter {
             self.last = Some(entry.log_path().clone());
             entry.set_blocker(Arc::new(self.blocker.clone()));
 
-            return Some(Ok(entry))
+            return Some(Ok(entry));
         }
 
         loop {
-            let added_value = self.added.lock()
+            let added_value = self
+                .added
+                .lock()
                 .expect("lock should have been acquired")
                 .pop_front();
 
@@ -103,11 +104,11 @@ impl Iterator for LiveDirIter {
 
 #[cfg(test)]
 mod tests {
-    use std::fs;
-    use std::thread::spawn;
     use crate::modules::logs2::models::log_dir::live_dir_iter::LiveDirIter;
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_dir;
+    use std::fs;
+    use std::thread::spawn;
 
     #[test]
     #[ignore]
@@ -129,22 +130,14 @@ mod tests {
 
         let handle1 = spawn(move || {
             let mut live_dir = LiveDirIter::new(local_path).unwrap();
-            let mut file = live_dir.next()
-                .unwrap()
-                .unwrap()
-                .live_iter()
-                .unwrap();
+            let mut file = live_dir.next().unwrap().unwrap().live_iter().unwrap();
 
             assert!(file.next().is_some());
 
             local_blocker.unblock();
             assert!(file.next().is_none());
 
-            let mut next_file = live_dir.next()
-                .unwrap()
-                .unwrap()
-                .iter()
-                .unwrap();
+            let mut next_file = live_dir.next().unwrap().unwrap().iter().unwrap();
 
             assert!(next_file.next().is_some());
             assert!(next_file.next().is_none());

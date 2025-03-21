@@ -50,12 +50,12 @@ mod modules;
 #[cfg(test)]
 mod tests {
     use crate::logs::{LogEvent, LogEventContent};
+    use crate::modules::logs2::LogDir;
     use std::env::current_dir;
     use std::fs;
     use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::{Path, PathBuf};
     use std::thread::current;
-    use crate::modules::logs2::{LogDir, LogError};
 
     pub struct TestFile(PathBuf);
 
@@ -99,9 +99,7 @@ mod tests {
 
         let hash = hasher.finish();
 
-        let path = test_root()
-            .join("temp-dir")
-            .join(format!("dir-{}", hash));
+        let path = test_root().join("temp-dir").join(format!("dir-{}", hash));
 
         let _ = fs::remove_dir_all(&path);
         fs::create_dir_all(&path).unwrap();

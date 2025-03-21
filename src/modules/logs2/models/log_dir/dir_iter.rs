@@ -1,9 +1,8 @@
-use std::borrow::Cow;
-use std::fs;
-use std::path::{Path, PathBuf};
-use std::vec::IntoIter;
+use crate::modules::logs2::models::log_path::LogPath;
 use crate::modules::logs2::{LogError, LogFile};
-use crate::modules::logs2::models::log_dir::log_path::LogPath;
+use std::fs;
+use std::path::Path;
+use std::vec::IntoIter;
 
 #[derive(Debug)]
 pub struct DirIter {
@@ -33,8 +32,7 @@ impl DirIter {
     }
 
     pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
-        let mut read_dir = tokio::fs::read_dir(path)
-            .await?;
+        let mut read_dir = tokio::fs::read_dir(path).await?;
 
         let mut entries = Vec::new();
 

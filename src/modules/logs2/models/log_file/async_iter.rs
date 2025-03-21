@@ -1,31 +1,32 @@
+use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
 use std::pin::{pin, Pin};
 use std::task::{Context, Poll};
-use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
 
 use crate::logs::LogEvent;
 use crate::modules::logs2::error::LogError;
 
 /// Asynchronous iterator for iterating over some [AsyncRead] and returning [LogEvents](LogEvent).
 pub struct AsyncIter<T>
-where T : AsyncRead + Unpin
+where
+    T: AsyncRead + Unpin,
 {
     inner: T,
 }
 
 impl<T> AsyncIter<T>
-where T : AsyncRead + Unpin
+where
+    T: AsyncRead + Unpin,
 {
     async fn inner_next(&mut self) -> Option<Result<LogEvent, LogError>> {
         let mut line = Vec::with_capacity(64);
 
         loop {
             let mut buf: [u8; 1] = [0; 1];
-            let result = self.inner.read(&mut buf)
-                .await;
+            let result = self.inner.read(&mut buf).await;
 
             match result {
                 Ok(0) => break,
-                Ok(_) => {},
+                Ok(_) => {}
                 Err(e) => return Some(Err(e.into())),
             }
 
@@ -54,17 +55,17 @@ where T : AsyncRead + Unpin
 }
 
 impl<T> From<T> for AsyncIter<T>
-where T : AsyncRead + Unpin
+where
+    T: AsyncRead + Unpin,
 {
     fn from(inner: T) -> Self {
-        AsyncIter {
-            inner,
-        }
+        AsyncIter { inner }
     }
 }
 
 impl<A> From<A> for AsyncIter<tokio_util::compat::Compat<A>>
-where A : tokio::io::AsyncRead + Unpin,
+where
+    A: tokio::io::AsyncRead + Unpin,
 {
     fn from(value: A) -> Self {
         let compat = tokio_util::compat::TokioAsyncReadCompatExt::compat(value);
@@ -73,7 +74,8 @@ where A : tokio::io::AsyncRead + Unpin,
 }
 
 impl<T> Stream for AsyncIter<T>
-where T : AsyncRead + Unpin
+where
+    T: AsyncRead + Unpin,
 {
     type Item = Result<LogEvent, LogError>;
 
@@ -84,13 +86,13 @@ where T : AsyncRead + Unpin
 
 #[cfg(test)]
 mod tests {
-    use futures::io::{Cursor};
+    use crate::logs::LogEventContentKind;
+    use crate::modules::logs2::AsyncIter;
+    use futures::io::Cursor;
     use futures::StreamExt;
     use tokio::fs;
     use tokio::fs::File;
     use tokio_util::compat::{FuturesAsyncReadCompatExt, TokioAsyncReadCompatExt};
-    use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::AsyncIter;
 
     #[tokio::test]
     async fn async_reader_reads_complete_file_correctly() {
@@ -109,14 +111,9 @@ mod tests {
     }
 
     async fn last_lines_are_read_correctly() {
-        fs::write("c.tmp", "")
-            .await
-            .unwrap();
+        fs::write("c.tmp", "").await.unwrap();
 
-        let file = File::open("c.tmp")
-            .await
-            .unwrap();
-
+        let file = File::open("c.tmp").await.unwrap();
 
         let buf_reader = tokio::io::BufReader::new(file);
 
