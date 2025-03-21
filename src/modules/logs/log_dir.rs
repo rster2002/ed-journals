@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
 use thiserror::Error;
-use crate::logs::blocking::LiveLogDirReader;
+
 use crate::modules::logs::{LogFile, LogFileError};
 
 /// Provides an abstraction for all the log files in the journal directory.
@@ -23,19 +23,13 @@ pub enum LogDirError {
 }
 
 impl LogDir {
-    pub fn new(dir_path: impl Into<PathBuf>) -> LogDir {
-        LogDir {
-            dir_path: dir_path.into(),
-        }
+    pub fn new(dir_path: PathBuf) -> LogDir {
+        LogDir { dir_path }
     }
 
     pub fn path(&self) -> &Path {
         self.dir_path.as_path()
     }
-
-    // pub fn live_logs<'a>(&'a self) -> LiveLogDirReader<'a> {
-    //     todo!()
-    // }
 
     /// Returns a list of journal log files found in the directory in any order.
     pub fn journal_logs(&self) -> Result<Vec<LogFile>, LogDirError> {
@@ -80,7 +74,7 @@ mod tests {
 
     #[test]
     fn journal_files_oldest_first_are_returned_in_the_correct_order() {
-        let dir_path = current_dir().unwrap().join("../../../../test-files").join("journals");
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
         let journal_dir = LogDir::new(dir_path);
 
@@ -97,7 +91,7 @@ mod tests {
 
     #[test]
     fn journal_files_newest_first_are_returned_in_the_correct_order() {
-        let dir_path = current_dir().unwrap().join("../../../../test-files").join("journals");
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
 
         let journal_dir = LogDir::new(dir_path);
 

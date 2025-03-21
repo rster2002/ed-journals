@@ -1,4 +1,3 @@
-use std::io::{Read, Seek};
 use std::path::Path;
 
 use thiserror::Error;
@@ -8,12 +7,10 @@ use crate::logs::content::LogEvent;
 use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 
 #[derive(Debug)]
-pub struct LogDirReader<'a, T>
-where T : Read + Seek
-{
-    dir: &'a LogDir,
+pub struct LogDirReader {
+    dir: LogDir,
     current_file: Option<LogFile>,
-    current_reader: Option<LogFileReader<T>>,
+    current_reader: Option<LogFileReader>,
     reading_latest: bool,
     failing: bool,
 }
@@ -30,12 +27,10 @@ pub enum LogDirReaderError {
     LogFileReaderError(#[from] LogFileReaderError),
 }
 
-impl<'a, T> LogDirReader<'a, T>
-where T : Read + Seek,
-{
-    pub fn open(dir: &'a LogDir) -> LogDirReader<'a, T> {
+impl LogDirReader {
+    pub fn open<P: AsRef<Path>>(path: P) -> Self {
         LogDirReader {
-            dir,
+            dir: LogDir::new(path.as_ref().to_path_buf()),
             current_file: None,
             current_reader: None,
             reading_latest: false,
@@ -43,22 +38,11 @@ where T : Read + Seek,
         }
     }
 
-    // pub fn open<P: AsRef<Path>>(path: P) -> Self {
-    //     LogDirReader {
-    //         dir: LogDir::new(path.as_ref().to_path_buf()),
-    //         current_file: None,
-    //         current_reader: None,
-    //         reading_latest: false,
-    //         failing: false,
-    //     }
-    // }
-
     fn set_current_file(&mut self, journal_file: LogFile) -> Result<(), LogDirReaderError> {
-        todo!()
-        // self.current_reader = Some(journal_file.logs_iter()?);
-        // self.current_file = Some(journal_file);
-        //
-        // Ok(())
+        self.current_reader = Some(journal_file.create_blocking_reader()?);
+        self.current_file = Some(journal_file);
+
+        Ok(())
     }
 
     pub fn is_reading_latest(&self) -> bool {
@@ -93,9 +77,7 @@ where T : Read + Seek,
     }
 }
 
-impl<T> Iterator for LogDirReader<'_, T>
-where T : Read + Seek,
-{
+impl Iterator for LogDirReader {
     type Item = Result<LogEvent, LogDirReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -136,20 +118,18 @@ mod tests {
     use std::env::current_dir;
 
     use crate::logs::blocking::LogDirReader;
-    use crate::logs::LogDir;
 
-    // #[test]
-    // fn all_entries_are_read_correctly() {
-    //     let dir_path = current_dir().unwrap().join("test-files").join("journals");
-    //
-    //     let log_dir = LogDir::new(dir_path);
-    //     let reader = LogDirReader::open(&log_dir);
-    //
-    //     let mut count = 0;
-    //     for entry in reader {
-    //         count += 1;
-    //     }
-    //
-    //     assert!(count >= 870929);
-    // }
+    #[test]
+    fn all_entries_are_read_correctly() {
+        let dir_path = current_dir().unwrap().join("test-files").join("journals");
+
+        let reader = LogDirReader::open(dir_path);
+
+        let mut count = 0;
+        for entry in reader {
+            count += 1;
+        }
+
+        assert!(count >= 870929);
+    }
 }

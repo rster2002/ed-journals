@@ -1,4 +1,3 @@
-use std::io::{Read, Seek};
 use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -30,11 +29,9 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// }
 /// ```
 #[derive(Debug)]
-pub struct LiveLogDirReader<'a, T>
-where T : Read + Seek
-{
-    inner: LogDirReader<'a, T>,
+pub struct LiveLogDirReader {
     blocker: SyncBlocker,
+    log_dir_reader: LogDirReader,
     _watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
 }
@@ -48,10 +45,10 @@ pub enum LiveLogDirReaderError {
     NotifyError(#[from] notify::Error),
 }
 
-impl<'a, T> LiveLogDirReader<'a, T>
-where T : Read + Seek
-{
-    pub fn open<P: AsRef<Path>>(path: P, inner: LogDirReader<'a, T>) -> Result<LiveLogDirReader<'a, T>, LiveLogDirReaderError> {
+impl LiveLogDirReader {
+    pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
+        let log_dir_reader = LogDirReader::open(&dir_path);
+
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
 
@@ -59,11 +56,11 @@ where T : Read + Seek
             local_blocker.unblock();
         })?;
 
-        watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
+        watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(Self {
             blocker,
-            inner,
+            log_dir_reader,
             active: Arc::new(AtomicBool::new(true)),
             _watcher: watcher,
         })
@@ -89,18 +86,16 @@ impl LiveLogDirHandle {
     }
 }
 
-impl<T> Iterator for LiveLogDirReader<'_, T>
-where T : Read + Seek,
-{
+impl Iterator for LiveLogDirReader {
     type Item = Result<LogEvent, LiveLogDirReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            if !self.active.load(Ordering::Relaxed) || self.inner.is_failing() {
+            if !self.active.load(Ordering::Relaxed) || self.log_dir_reader.is_failing() {
                 return None;
             }
 
-            let Some(result) = self.inner.next() else {
+            let Some(result) = self.log_dir_reader.next() else {
                 self.blocker.block();
                 continue;
             };

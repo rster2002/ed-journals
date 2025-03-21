@@ -1,13 +1,12 @@
 use std::cmp::Ordering;
-use std::fs::{DirEntry, File};
+use std::fs::DirEntry;
 use std::io;
-use std::io::BufReader;
 use std::num::ParseIntError;
 use std::path::{Path, PathBuf};
 
 #[cfg(feature = "asynchronous")]
-use crate::logs::asynchronous;
-use crate::logs::blocking;
+use super::asynchronous;
+use super::blocking;
 use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
@@ -72,33 +71,17 @@ impl LogFile {
             .any(|(regex, _)| regex.is_match(name))
     }
 
-    pub fn logs_iter(&self) -> Result<blocking::LogFileReader<BufReader<File>>, LogFileError> {
-        let file = File::open(&self.path)?;
-        let buf_reader = BufReader::new(file);
-
-        Ok(blocking::LogFileReader::new(buf_reader))
-    }
-
-
     /// Creates a new reader using the path of the journal log file.
-    #[deprecated]
-    pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader<BufReader<File>>, LogFileError> {
-        self.logs_iter()
-        // blocking::LogFileReader::open(self.path.as_path())
-        //     .map_err(LogFileError::FailedToOpenBlockingReader)
+    pub fn create_blocking_reader(&self) -> Result<blocking::LogFileReader, LogFileError> {
+        blocking::LogFileReader::open(self.path.as_path())
+            .map_err(LogFileError::FailedToOpenBlockingReader)
     }
 
     /// Creates a new live reader using the path of the journal log file.
     pub fn create_live_blocking_reader(
         &self,
-    ) -> Result<blocking::LiveLogFileReader<BufReader<File>>, blocking::LiveLogFileReaderError> {
-        let file = File::open(&self.path)?;
-        let buf_reader = BufReader::new(file);
-
-        let inner = blocking::LogFileReader::new(buf_reader);
-
-        blocking::LiveLogFileReader::new(&self.path, inner)
-        // blocking::LiveLogFileReader::open(&self.path)
+    ) -> Result<blocking::LiveLogFileReader, blocking::LiveLogFileReaderError> {
+        blocking::LiveLogFileReader::open(&self.path)
     }
 
     #[cfg(feature = "asynchronous")]
