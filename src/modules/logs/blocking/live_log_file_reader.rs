@@ -28,6 +28,7 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveLogFileReader {
     blocker: SyncBlocker,
     log_file_reader: LogFileReader,
@@ -36,6 +37,7 @@ pub struct LiveLogFileReader {
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LiveLogFileReaderError {
     #[error(transparent)]
     IO(#[from] io::Error),
@@ -78,6 +80,7 @@ impl LiveLogFileReader {
 }
 
 #[derive(Debug, Clone)]
+#[deprecated]
 pub struct LiveLogFileHandle {
     active: Arc<AtomicBool>,
     blocker: SyncBlocker,

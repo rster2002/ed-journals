@@ -1,8 +1,8 @@
 pub mod dir_iter;
 pub mod live_dir_iter;
 
-use crate::modules::logs2::models::log_dir::dir_iter::DirIter;
-use crate::modules::logs2::{LogError, LogFile};
+use crate::modules::io::models::log_dir::dir_iter::DirIter;
+use crate::modules::io::{LogError, LogFile};
 use std::path::{Path, PathBuf};
 
 pub struct LogDir {

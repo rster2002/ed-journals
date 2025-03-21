@@ -1,6 +1,8 @@
-/// Contains modules for working with journal log files providing readers for individual files or
-/// all files at once.
+/// Contains representations for the different kinds of event that are logged by the game.
 pub mod logs;
+
+/// Module for reading logs using various iterators.
+pub mod io;
 
 /// Allows for tracking journal directory as a whole, firing events for when logs change but also
 /// for when `.json` files are updated.
@@ -109,5 +111,3 @@ pub mod partials;
 /// Sometimes the game reuses certain events and instead of 'ship' data it sets Odyssey related
 /// data. These mixed data types handle these differences.
 pub mod mixed;
-
-pub mod logs2;

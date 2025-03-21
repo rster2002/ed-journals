@@ -1,6 +1,6 @@
 use crate::logs::LogEvent;
-use crate::modules::logs2::error::LogError;
-use crate::modules::logs2::LogIter;
+use crate::modules::io::error::LogError;
+use crate::modules::io::LogIter;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 use notify::{RecommendedWatcher, Watcher};
 use std::fs::File;
@@ -65,7 +65,7 @@ impl Iterator for LiveIter {
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::logs2::LiveIter;
+    use crate::modules::io::LiveIter;
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_file;
     use std::fs;

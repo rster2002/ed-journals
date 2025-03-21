@@ -1,5 +1,5 @@
 use crate::logs::LogEvent;
-use crate::modules::logs2::error::LogError;
+use crate::modules::io::error::LogError;
 use std::io::{Bytes, Read};
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
@@ -68,11 +68,10 @@ where
 mod tests {
     
     use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::LogIter;
     use std::fs;
     use std::fs::File;
     use std::io::{BufReader, Cursor};
-    
+    use crate::io::LogIter;
 
     #[test]
     fn log_reader_reads_completed_file_correctly() {

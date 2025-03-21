@@ -3,7 +3,7 @@ use std::pin::{pin, Pin};
 use std::task::{Context, Poll};
 
 use crate::logs::LogEvent;
-use crate::modules::logs2::error::LogError;
+use crate::modules::io::error::LogError;
 
 /// Asynchronous iterator for iterating over some [AsyncRead] and returning [LogEvents](LogEvent).
 pub struct AsyncIter<T>
@@ -87,7 +87,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::logs::LogEventContentKind;
-    use crate::modules::logs2::AsyncIter;
+    use crate::modules::io::AsyncIter;
     use futures::io::Cursor;
     use futures::StreamExt;
     use tokio::fs;

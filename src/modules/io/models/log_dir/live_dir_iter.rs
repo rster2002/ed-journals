@@ -1,4 +1,4 @@
-use crate::modules::logs2::{DirIter, LogError, LogFile, LogPath};
+use crate::modules::io::{DirIter, LogError, LogFile, LogPath};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 use notify::event::CreateKind;
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
@@ -104,7 +104,7 @@ impl Iterator for LiveDirIter {
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::logs2::models::log_dir::live_dir_iter::LiveDirIter;
+    use crate::modules::io::models::log_dir::live_dir_iter::LiveDirIter;
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_dir;
     use std::fs;

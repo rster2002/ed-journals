@@ -44,18 +44,19 @@ pub use modules::station;
 pub use modules::status;
 pub use modules::thargoid;
 pub use modules::trading;
+pub use modules::io;
 
 mod modules;
 
 #[cfg(test)]
 mod tests {
     use crate::logs::LogEventContent;
-    use crate::modules::logs2::LogDir;
     use std::env::current_dir;
     use std::fs;
     use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::PathBuf;
     use std::thread::current;
+    use crate::io::LogDir;
 
     pub struct TestFile(PathBuf);
 

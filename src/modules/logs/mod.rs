@@ -277,9 +277,11 @@ mod log_file;
 mod content;
 
 /// Contains readers for when working in a synchronous environment like a manually spawned thread.
+#[deprecated]
 pub mod blocking;
 
 /// Contains readers for when working in an asynchronous environment like Tokio.
 #[cfg(feature = "asynchronous")]
 #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+#[deprecated]
 pub mod asynchronous;

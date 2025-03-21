@@ -4,16 +4,16 @@ pub mod log_iter;
 #[cfg(feature = "asynchronous")]
 pub mod async_iter;
 
-use crate::modules::logs2::error::LogError;
-use crate::modules::logs2::models::log_file::live_iter::LiveIter;
-use crate::modules::logs2::models::log_file::log_iter::LogIter;
-use crate::modules::logs2::models::log_path::LogPath;
+use crate::modules::io::error::LogError;
+use crate::modules::io::models::log_file::live_iter::LiveIter;
+use crate::modules::io::models::log_file::log_iter::LogIter;
+use crate::modules::io::models::log_path::LogPath;
 use std::cmp::Ordering;
 use std::path::Path;
 use std::sync::Arc;
 
 #[cfg(feature = "asynchronous")]
-use crate::modules::logs2::models::log_file::async_iter::AsyncIter;
+use crate::modules::io::models::log_file::async_iter::AsyncIter;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug, Clone)]

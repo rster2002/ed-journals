@@ -1,5 +1,5 @@
-use crate::modules::logs2::models::log_path::LogPath;
-use crate::modules::logs2::{LogError, LogFile};
+use crate::modules::io::models::log_path::LogPath;
+use crate::modules::io::{LogError, LogFile};
 use std::fs;
 use std::path::Path;
 use std::vec::IntoIter;

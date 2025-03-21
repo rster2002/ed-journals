@@ -1,4 +1,4 @@
-use crate::modules::logs2::LogError;
+use crate::modules::io::LogError;
 use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
