@@ -128,8 +128,6 @@ mod tests {
         let local_path = dir.path();
 
         let handle1 = spawn(move || {
-            println!("Nope!");
-
             let mut live_dir = LiveDirIter::new(local_path).unwrap();
             let mut file = live_dir.next()
                 .unwrap()
@@ -137,12 +135,10 @@ mod tests {
                 .live_iter()
                 .unwrap();
 
-            assert!(dbg!(file.next()).is_some());
-
-            dbg!(&file);
+            assert!(file.next().is_some());
 
             local_blocker.unblock();
-            assert!(dbg!(file.next()).is_none());
+            assert!(file.next().is_none());
 
             let mut next_file = live_dir.next()
                 .unwrap()
@@ -150,8 +146,8 @@ mod tests {
                 .iter()
                 .unwrap();
 
-            assert!(dbg!(next_file.next()).is_some());
-            assert!(dbg!(next_file.next()).is_none());
+            assert!(next_file.next().is_some());
+            assert!(next_file.next().is_none());
 
             assert!(true);
         });
