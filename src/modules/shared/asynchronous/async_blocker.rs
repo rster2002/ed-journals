@@ -29,6 +29,20 @@ impl AsyncBlocker {
             .expect("Failed to perform async block");
     }
 
+    pub async fn unblock(&self) {
+        let mut guard = self.waiting_sender.lock().expect("Should have been locked");
+
+        if let Some(sender) = guard.0.as_ref() {
+            if sender.is_closed() {
+                return;
+            }
+
+            sender.send(()).await.expect("Failed to send");
+
+            guard.0 = None;
+        }
+    }
+
     pub fn unblock_blocking(&self) {
         let mut guard = self.waiting_sender.lock().expect("Should have been locked");
 
