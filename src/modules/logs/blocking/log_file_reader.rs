@@ -44,6 +44,7 @@ use crate::logs::content::LogEvent;
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct LogFileReader {
     source: File,
     position: usize,
@@ -53,6 +54,7 @@ pub struct LogFileReader {
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogFileReaderError {
     #[error(transparent)]
     IO(#[from] io::Error),

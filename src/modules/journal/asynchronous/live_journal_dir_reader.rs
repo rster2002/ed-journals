@@ -35,6 +35,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 /// # });
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveJournalDirReader {
     blocker: AsyncBlocker,
     _watcher: RecommendedWatcher,
