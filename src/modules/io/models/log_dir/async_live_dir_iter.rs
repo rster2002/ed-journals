@@ -118,7 +118,9 @@ mod tests {
     use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
     use crate::tests::test_dir;
     use tokio::{fs, spawn};
+    use crate::io::models::log_dir::async_live_dir_iter::AsyncLiveDirIter;
     use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+    use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream, StreamExt};
 
     #[tokio::test]
     // #[ignore]
@@ -140,15 +142,17 @@ mod tests {
         let local_path = dir.path();
 
         let handle1 = spawn(async move {
-            let mut live_dir = LiveDirIter::new(local_path).unwrap();
-            let mut file = live_dir.next().unwrap().unwrap().live_iter().unwrap();
+            let mut live_dir = AsyncLiveDirIter::new(local_path).await.unwrap();
+            let mut file = live_dir.next().await.unwrap().unwrap().live_iter().unwrap();
 
             assert!(file.next().is_some());
 
             local_blocker.unblock_blocking();
+            dbg!();
             assert!(file.next().is_none());
+            dbg!();
 
-            let mut next_file = live_dir.next().unwrap().unwrap().iter().unwrap();
+            let mut next_file = live_dir.next().await.unwrap().unwrap().iter().unwrap();
 
             assert!(next_file.next().is_some());
             assert!(next_file.next().is_none());
@@ -157,7 +161,9 @@ mod tests {
         });
 
         let handle2 = spawn(async move {
+            dbg!("Handle 2 start");
             blocker.block().await;
+            dbg!("Unblocked");
 
             fs::write(
                 &second_file,
@@ -165,6 +171,8 @@ mod tests {
             )
                 .await
                 .unwrap();
+
+            dbg!("Handle 2 done");
         });
 
         handle1.await.unwrap();

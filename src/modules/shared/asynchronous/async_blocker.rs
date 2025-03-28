@@ -1,5 +1,5 @@
-use std::sync::{Arc, Mutex};
-
+use std::sync::{Arc};
+use futures::lock::Mutex;
 use tokio::sync::mpsc::{channel, Sender};
 
 #[derive(Debug, Clone)]
@@ -18,7 +18,8 @@ impl AsyncBlocker {
         let (sender, mut receiver) = channel(2);
 
         {
-            let mut guard = self.waiting_sender.lock().expect("to gotten lock");
+            let mut guard = self.waiting_sender.lock()
+                .await;
 
             guard.0 = Some(sender);
         }
@@ -29,17 +30,26 @@ impl AsyncBlocker {
             .expect("Failed to perform async block");
     }
 
-    pub fn unblock_blocking(&self) {
-        let mut guard = self.waiting_sender.lock().expect("Should have been locked");
+    pub async fn unblock(&self) {
+        let mut guard = self.waiting_sender
+            .lock()
+            .await;
 
-        if let Some(sender) = guard.0.as_ref() {
+        if let Some(sender) = &guard.0 {
             if sender.is_closed() {
                 return;
             }
 
-            sender.blocking_send(()).expect("Failed to send");
+            sender.send(()).await.expect("Failed to send");
 
             guard.0 = None;
         }
+    }
+
+    pub fn unblock_blocking(&self) {
+        futures::executor::block_on(async {
+            self.unblock().await;
+        });
+        dbg!("Finished blocking");
     }
 }
