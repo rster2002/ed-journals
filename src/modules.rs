@@ -1,6 +1,8 @@
-/// Contains modules for working with journal log files providing readers for individual files or
-/// all files at once.
+/// Contains representations for the different kinds of event that are logged by the game.
 pub mod logs;
+
+/// Module for reading logs using various iterators.
+pub mod io;
 
 /// Allows for tracking journal directory as a whole, firing events for when logs change but also
 /// for when `.json` files are updated.
