@@ -39,8 +39,9 @@ impl AsyncLiveDirIter {
                 return;
             }
 
-            let mut lock = local_added.lock().await;
-                // .expect("lock should have been acquired");
+            let Ok(mut lock) = local_added.lock() else {
+                return;
+            };
 
             for path in event.paths {
                 let path = match LogPath::try_from(path.as_path()) {
@@ -91,8 +92,7 @@ impl AsyncLiveDirIter {
             let added_value = self
                 .added
                 .lock()
-                .await
-                // .expect("lock should have been acquired")
+                .expect("lock should have been acquired")
                 .pop_front();
 
             if added_value.is_some() {
@@ -105,10 +105,10 @@ impl AsyncLiveDirIter {
 }
 
 impl Stream for AsyncLiveDirIter {
-    type Item = Result<LogEvent, LogError>;
+    type Item = Result<LogFile, LogError>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        pin!(self.inner_next()).pull_inpin(cx)
+        pin!(self.inner_next()).poll_unpin(cx)
     }
 }
 
@@ -145,7 +145,7 @@ mod tests {
 
             assert!(file.next().is_some());
 
-            local_blocker.unblock().await;
+            local_blocker.unblock_blocking();
             assert!(file.next().is_none());
 
             let mut next_file = live_dir.next().unwrap().unwrap().iter().unwrap();
@@ -163,6 +163,7 @@ mod tests {
                 &second_file,
                 r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
             )
+                .await
                 .unwrap();
         });
 
