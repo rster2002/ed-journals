@@ -3,6 +3,7 @@ pub mod log_iter;
 
 #[cfg(feature = "asynchronous")]
 pub mod async_iter;
+mod live_async_iter;
 
 use crate::modules::io::error::LogError;
 use crate::modules::io::models::log_file::live_iter::LiveIter;
