@@ -58,7 +58,7 @@ impl AsyncLiveDirIter {
                 lock.push_back(Ok(log_file));
             }
 
-            local_blocker.unblock_blocking();
+            local_blocker.unblock();
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
@@ -147,7 +147,7 @@ mod tests {
 
             assert!(file.next().is_some());
 
-            local_blocker.unblock_blocking();
+            local_blocker.unblock();
             dbg!();
             assert!(file.next().is_none());
             dbg!();
