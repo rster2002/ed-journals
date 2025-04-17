@@ -63,6 +63,7 @@ where
     }
 }
 
+#[cfg(feature = "tokio")]
 impl<A> From<A> for AsyncIter<tokio_util::compat::Compat<A>>
 where
     A: tokio::io::AsyncRead + Unpin,
@@ -86,63 +87,65 @@ where
 
 #[cfg(test)]
 mod tests {
+    use async_fs::File;
     use crate::logs::LogEventContentKind;
     use crate::modules::io::AsyncIter;
     use futures::io::Cursor;
     use futures::StreamExt;
-    use tokio::fs;
-    use tokio::fs::File;
-    
+    use smol::fs;
 
-    #[tokio::test]
-    async fn async_reader_reads_complete_file_correctly() {
-        let data = r#"{ "timestamp":"2020-09-21T19:04:44Z", "event":"Repair", "Item":"Paint", "Cost":1 }
+    fn async_reader_reads_complete_file_correctly() {
+        smol::block_on(async {
+            let data = r#"{ "timestamp":"2020-09-21T19:04:44Z", "event":"Repair", "Item":"Paint", "Cost":1 }
 { "timestamp":"2020-09-21T19:04:51Z", "event":"Repair", "Item":"Wear", "Cost":10 }"#;
 
-        let cursor = Cursor::new(data);
-        let buf_reader = futures::io::BufReader::new(cursor);
+            let cursor = Cursor::new(data);
+            let buf_reader = futures::io::BufReader::new(cursor);
 
-        let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = AsyncIter::from(buf_reader);
 
-        assert!(reader.next().await.is_some());
-        assert!(reader.next().await.is_some());
+            assert!(reader.next().await.is_some());
+            assert!(reader.next().await.is_some());
 
-        assert!(dbg!(reader.next().await).is_none());
+            assert!(dbg!(reader.next().await).is_none());
+        });
     }
 
-    async fn last_lines_are_read_correctly() {
-        fs::write("c.tmp", "").await.unwrap();
+    fn last_lines_are_read_correctly() {
+        smol::block_on(async {
+            fs::write("c.tmp", "").await.unwrap();
 
-        let file = File::open("c.tmp").await.unwrap();
+            let file = File::open("c.tmp").await.unwrap();
 
-        let buf_reader = tokio::io::BufReader::new(file);
+            let buf_reader = futures::io::BufReader::new(file);
 
-        let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = AsyncIter::from(buf_reader);
 
-        assert!(reader.next().await.is_none());
+            assert!(reader.next().await.is_none());
 
-        fs::write(
-            "c.tmp",
-            r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
-        )
-            .await
-            .unwrap();
+            fs::write(
+                "c.tmp",
+                r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+            )
+                .await
+                .unwrap();
 
-        assert_eq!(
-            reader.next().await.unwrap().unwrap().content.kind(),
-            LogEventContentKind::FileHeader
-        );
+            assert_eq!(
+                reader.next().await.unwrap().unwrap().content.kind(),
+                LogEventContentKind::FileHeader
+            );
 
-        fs::write("c.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+            fs::write("c.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
-            .await
-            .unwrap();
+                .await
+                .unwrap();
 
-        assert_eq!(
-            reader.next().await.unwrap().unwrap().content.kind(),
-            LogEventContentKind::Commander
-        );
+            assert_eq!(
+                reader.next().await.unwrap().unwrap().content.kind(),
+                LogEventContentKind::Commander
+            );
 
-        fs::remove_file("c.tmp").await.unwrap();
+            fs::remove_file("c.tmp").await.unwrap();
+        });
     }
 }

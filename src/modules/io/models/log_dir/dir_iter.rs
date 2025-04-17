@@ -3,6 +3,7 @@ use crate::modules::io::{LogError, LogFile};
 use std::fs;
 use std::path::Path;
 use std::vec::IntoIter;
+use futures::StreamExt;
 
 #[derive(Debug)]
 pub struct DirIter {
@@ -32,12 +33,12 @@ impl DirIter {
     }
 
     pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
-        let mut read_dir = tokio::fs::read_dir(path).await?;
+        let mut read_dir = async_fs::read_dir(path).await?;
 
         let mut entries = Vec::new();
 
-        while let Some(entry) = read_dir.next_entry().await? {
-            match LogPath::try_from(entry.path().as_path()) {
+        while let Some(entry) = read_dir.next().await {
+            match LogPath::try_from(entry?.path().as_path()) {
                 Ok(path) => entries.push(path),
                 Err(LogError::IncorrectFileName) => continue,
                 Err(e) => return Err(e),

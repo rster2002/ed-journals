@@ -78,12 +78,12 @@ impl LogFile {
     pub async fn async_iter(
         &self,
     ) -> Result<
-        AsyncIter<tokio_util::compat::Compat<tokio::io::BufReader<tokio::fs::File>>>,
+        AsyncIter<futures::io::BufReader<async_fs::File>>,
         LogError,
     > {
-        let file = tokio::fs::File::open(&self.path).await?;
+        let file = async_fs::File::open(&self.path).await?;
 
-        let reader = tokio::io::BufReader::new(file);
+        let reader = futures::io::BufReader::new(file);
 
         Ok(AsyncIter::from(reader))
     }

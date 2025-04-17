@@ -3,19 +3,20 @@ use std::pin::{pin, Pin};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::task::{Context, Poll};
-use futures::{FutureExt, Stream, StreamExt};
+use async_fs::File;
+use futures::{AsyncRead, FutureExt, Stream, StreamExt};
+use futures::io::BufReader;
 use notify::{Event, EventKind, RecommendedWatcher, Watcher};
 use notify::event::{DataChange, ModifyKind, RemoveKind};
-use tokio::fs::File;
-use tokio::io::BufReader;
-use tokio_util::compat::Compat;
+// use tokio::fs::File;
+// use tokio::io::BufReader;
+// use tokio_util::compat::Compat;
 use crate::io::{AsyncIter, LogError};
 use crate::logs::LogEvent;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
-pub struct LiveAsyncIter
-{
-    inner: AsyncIter<Compat<BufReader<File>>>,
+pub struct LiveAsyncIter {
+    inner: AsyncIter<BufReader<File>>,
     blocker: Arc<AsyncBlocker>,
     removed: Arc<AtomicBool>,
     _watcher: RecommendedWatcher
@@ -23,10 +24,10 @@ pub struct LiveAsyncIter
 
 impl LiveAsyncIter {
     pub async fn open<P: AsRef<Path>>(path: P) -> Result<LiveAsyncIter, LogError> {
-        LiveAsyncIter::with_blocker(path, Arc::new(AsyncBlocker::default())).await
+        LiveAsyncIter::open_with_blocker(path, Arc::new(AsyncBlocker::default())).await
     }
 
-    pub async fn with_blocker<P: AsRef<Path>>(
+    pub async fn open_with_blocker<P: AsRef<Path>>(
         path: P,
         blocker: Arc<AsyncBlocker>,
     ) -> Result<LiveAsyncIter, LogError> {
@@ -96,22 +97,22 @@ impl Stream for LiveAsyncIter {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use futures::StreamExt;
-    use tokio::fs;
-    use crate::io::models::log_file::live_async_iter::LiveAsyncIter;
-    use crate::tests::{test_dir, test_file};
-
-    // Test manually
-    #[tokio::test]
-    #[ignore]
-    async fn works() {
-        fs::write("test.tmp", "").await.unwrap();
-
-        let mut live_async_iter = LiveAsyncIter::open("test.tmp").await.unwrap();
-
-        let entry = live_async_iter.next().await;
-        dbg!(entry);
-    }
-}
+// #[cfg(test)]
+// mod tests {
+//     use futures::StreamExt;
+//     use tokio::fs;
+//     use crate::io::models::log_file::live_async_iter::LiveAsyncIter;
+//     use crate::tests::{test_dir, test_file};
+//
+//     // Test manually
+//     #[tokio::test]
+//     #[ignore]
+//     async fn works() {
+//         fs::write("test.tmp", "").await.unwrap();
+//
+//         let mut live_async_iter = LiveAsyncIter::open("test.tmp").await.unwrap();
+//
+//         let entry = live_async_iter.next().await;
+//         dbg!(entry);
+//     }
+// }

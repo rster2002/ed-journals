@@ -2,9 +2,7 @@ use std::future::Future;
 use std::mem;
 use std::pin::Pin;
 use std::sync::{Arc, Mutex};
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::task::{Context, Poll, Waker};
-use tokio::sync::mpsc::{channel, Sender};
 
 #[derive(Debug, Default, Clone)]
 pub struct AsyncBlocker {
