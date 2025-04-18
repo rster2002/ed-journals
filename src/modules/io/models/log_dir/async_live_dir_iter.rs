@@ -7,7 +7,6 @@ use std::task::{Context, Poll};
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use notify::event::CreateKind;
 use crate::io::{DirIter, LogError, LogFile, LogPath};
-use crate::logs::LogEvent;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 #[derive(Debug)]

@@ -3,14 +3,18 @@ use crate::modules::io::{LogError, LogFile};
 use std::fs;
 use std::path::Path;
 use std::vec::IntoIter;
+
+#[cfg(feature = "asynchronous")]
 use futures::StreamExt;
 
+/// Iterator over the log files in a directory in chronological order.
 #[derive(Debug)]
 pub struct DirIter {
     entries: IntoIter<LogPath>,
 }
 
 impl DirIter {
+    /// Creates a new instance using synchronous operations.
     pub fn new<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
         let read_dir = fs::read_dir(path)?;
         let mut entries = Vec::new();
@@ -32,6 +36,9 @@ impl DirIter {
         })
     }
 
+    /// Creates a new instance using asynchronous operations.
+    #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
         let mut read_dir = async_fs::read_dir(path).await?;
 

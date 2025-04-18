@@ -26,7 +26,7 @@ strum = { version = "0.26.2", features = ["derive"] }
 directories = "5.0.1"
 futures = { version = "0.3.31", optional = true }
 async-fs = { version = "2.1.2", optional = true }
-#tokio-util = { version = "0.7.14", features = ["compat"] }
+tokio-util = { version = "0.7.14", features = ["compat"], optional = true }
 
 [dev-dependencies]
 smol = "2.0.2"
@@ -38,7 +38,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 [features]
 default = ["asynchronous"]
 asynchronous = ["dep:async-fs", "dep:async-mutex", "dep:futures"]
-tokio = ["asynchronous", "dep:tokio"]
+tokio = ["asynchronous", "dep:tokio", "dep:tokio-util", "tokio/fs"]
 allow-unknown = []
 # Enables loading Journal files from before game version 4. Not fully supported and may lead to
 # parsing errors. In such cases, PRs with affected Journal files/events are appreciated :)

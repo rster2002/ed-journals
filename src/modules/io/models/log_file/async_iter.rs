@@ -64,6 +64,7 @@ where
 }
 
 #[cfg(feature = "tokio")]
+#[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
 impl<A> From<A> for AsyncIter<tokio_util::compat::Compat<A>>
 where
     A: tokio::io::AsyncRead + Unpin,

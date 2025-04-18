@@ -3,7 +3,9 @@ pub mod log_iter;
 
 #[cfg(feature = "asynchronous")]
 pub mod async_iter;
-mod live_async_iter;
+
+#[cfg(feature = "asynchronous")]
+pub mod live_async_iter;
 
 use crate::modules::io::error::LogError;
 use crate::modules::io::models::log_file::live_iter::LiveIter;
@@ -75,6 +77,7 @@ impl LogFile {
     }
 
     #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn async_iter(
         &self,
     ) -> Result<

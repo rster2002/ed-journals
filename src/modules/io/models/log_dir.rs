@@ -1,5 +1,7 @@
 pub mod dir_iter;
 pub mod live_dir_iter;
+
+#[cfg(feature = "asynchronous")]
 pub mod async_live_dir_iter;
 
 use crate::modules::io::models::log_dir::dir_iter::DirIter;
@@ -73,11 +75,14 @@ impl LogDir {
     /// variant as all IO is performed when creating the iterator after which the operations are
     /// sync.
     #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn async_iter(&self) -> Result<DirIter, LogError> {
         DirIter::new_async(&self.path).await
     }
 
     /// Returns the last log file based on the timestamp in the file name using async IO.
+    #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn last_async(&self) -> Result<Option<LogFile>, LogError> {
         let iter = DirIter::new_async(&self.path).await?;
         Ok(iter.last())

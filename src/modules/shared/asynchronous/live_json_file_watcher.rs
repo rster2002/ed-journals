@@ -5,7 +5,6 @@ use std::path::{Path, PathBuf};
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use serde::Deserialize;
 use thiserror::Error;
-use tokio::fs;
 
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
@@ -63,7 +62,7 @@ where
 
         self.first = false;
 
-        let string_content = match fs::read_to_string(&self.path).await {
+        let string_content = match async_fs::read_to_string(&self.path).await {
             Ok(value) => value,
             Err(error) => return Some(Err(error.into())),
         };
