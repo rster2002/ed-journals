@@ -12,7 +12,7 @@ const FILES: &[(&str, &str)] = &[
 ];
 
 pub fn simulate_log_dir(name: &str) -> PathBuf {
-    let dir_root = test_root().join(name).to_path_buf();
+    let dir_root = test_dir().path().join(name).to_path_buf();
 
     if dir_root.exists() {
         fs::remove_dir_all(&dir_root).unwrap();
@@ -24,8 +24,6 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
 
     spawn(move || {
         for (file_name, contents) in FILES {
-            sleep(Duration::from_secs(1));
-
             let file_path = local_root.join(file_name);
 
             let file = File::create(&file_path).unwrap();
@@ -39,6 +37,8 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
 
                 sleep(Duration::from_millis(100));
             }
+
+            sleep(Duration::from_secs(1));
         }
 
         sleep(Duration::from_millis(10000));

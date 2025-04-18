@@ -109,53 +109,90 @@ mod tests {
     use crate::tests::test_dir;
     use std::fs;
     use std::thread::spawn;
+    use std::time::Instant;
+    use crate::modules::tests::simulate_log_dir;
 
     #[test]
     #[ignore]
     fn live_watcher_blocks_correctly() {
-        let dir = test_dir();
-        let first_file = dir.path().join("Journal.2023-02-21T084116.01.log");
-        let second_file = dir.path().join("Journal.2023-02-21T084116.02.log");
+        let dir_path = simulate_log_dir("live_watcher_blocks_correctly");
+        let live_dir_iter = LiveDirIter::new(dir_path).unwrap();
 
-        fs::write(
-            &first_file,
-            r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
-        )
-            .unwrap();
+        let mut file_count = 0;
 
-        let blocker = SyncBlocker::new();
+        for file in live_dir_iter {
+            file_count += 1;
 
-        let local_blocker = blocker.clone();
-        let local_path = dir.path();
+            let file = file.unwrap();
+            let live_iter = file.live_iter().unwrap();
 
-        let handle1 = spawn(move || {
-            let mut live_dir = LiveDirIter::new(local_path).unwrap();
-            let mut file = live_dir.next().unwrap().unwrap().live_iter().unwrap();
+            let mut i = 0;
+            let mut instant = Instant::now();
+            for entry in live_iter {
+                i += 1;
+                assert!(entry.is_ok());
 
-            assert!(file.next().is_some());
+                // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
+                // blocking has worked.
+                assert!(dbg!(instant.elapsed().as_millis()) > 90);
 
-            local_blocker.unblock();
-            assert!(file.next().is_none());
+                instant = Instant::now();
 
-            let mut next_file = live_dir.next().unwrap().unwrap().iter().unwrap();
+                if i > 20 {
+                    continue;
+                }
+            }
+            
+            if file_count == 3 {
+                return;
+            }
+        }
+        
+        unreachable!();
 
-            assert!(next_file.next().is_some());
-            assert!(next_file.next().is_none());
-
-            assert!(true);
-        });
-
-        let handle2 = spawn(move || {
-            blocker.block();
-
-            fs::write(
-                &second_file,
-                r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
-            )
-                .unwrap();
-        });
-
-        handle1.join().unwrap();
-        handle2.join().unwrap();
+        // let dir = test_dir();
+        // let first_file = dir.path().join("Journal.2023-02-21T084116.01.log");
+        // let second_file = dir.path().join("Journal.2023-02-21T084116.02.log");
+        //
+        // fs::write(
+        //     &first_file,
+        //     r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+        // )
+        //     .unwrap();
+        //
+        // let blocker = SyncBlocker::new();
+        //
+        // let local_blocker = blocker.clone();
+        // let local_path = dir.path();
+        //
+        // let handle1 = spawn(move || {
+        //     let mut live_dir = LiveDirIter::new(local_path).unwrap();
+        //     let mut file = live_dir.next().unwrap().unwrap().live_iter().unwrap();
+        //
+        //     assert!(file.next().is_some());
+        //
+        //     local_blocker.unblock();
+        //     assert!(file.next().is_none());
+        //
+        //     let mut next_file = live_dir.next().unwrap().unwrap().iter().unwrap();
+        //
+        //     assert!(next_file.next().is_some());
+        //     assert!(next_file.next().is_none());
+        //
+        //     assert!(true);
+        // });
+        //
+        // let handle2 = spawn(move || {
+        //     blocker.block();
+        //
+        //     fs::write(
+        //         &second_file,
+        //         r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+        //     )
+        //         .unwrap();
+        // });
+        //
+        // handle1.join().unwrap();
+        // handle2.join().unwrap();
     }
 }
