@@ -112,6 +112,6 @@ pub mod partials;
 /// data. These mixed data types handle these differences.
 pub mod mixed;
 
-// /// Internal utilities for testing.
-// #[cfg(test)]
-// mod tests;
+/// Internal utilities for testing.
+#[cfg(test)]
+mod tests;

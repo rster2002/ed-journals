@@ -57,64 +57,47 @@ impl Iterator for LiveIter {
             return Some(event);
         }
 
-        self.blocker.block();
+        loop {
+            self.blocker.block();
 
-        self.inner.next()
+            let entry = self.inner.next();
+            
+            if entry.is_some() {
+                return entry;
+            }
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::modules::io::LiveIter;
-    use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
-    use crate::tests::test_file;
-    use std::fs;
-
-    use std::thread::spawn;
+    use std::time::Instant;
+    use crate::modules::tests::simulate_log_file;
 
     #[test]
-    #[ignore]
     fn live_watcher_blocks_correctly() {
-        let test_file = test_file();
-        fs::write(test_file.path(), "").unwrap();
+        let path = simulate_log_file("live_watcher_blocks_correctly");
+        let live_reader = LiveIter::open(&path).unwrap();
 
-        let blocker = SyncBlocker::new();
+        let mut i = 0;
+        let mut instant = Instant::now();
+        for entry in live_reader {
+            i += 1;
+            assert!(entry.is_ok());
 
-        let local_blocker = blocker.clone();
-        let local_path = test_file.path();
-        let handle1 = spawn(move || {
-            println!("Nope!");
+            // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
+            // blocking has worked.
+            assert!(instant.elapsed().as_millis() > 90);
 
-            let mut live_reader = LiveIter::open(local_path).unwrap();
+            instant = Instant::now();
+            
+            if i > 20 {
+                return;
+            }
+        }
 
-            local_blocker.unblock();
-            assert!(dbg!(live_reader.next()).is_some());
-
-            local_blocker.unblock();
-            assert!(dbg!(live_reader.next()).is_some());
-        });
-
-        let local_blocker = blocker.clone();
-        let handle2 = spawn(move || {
-            println!("Haha first");
-            local_blocker.block();
-
-            fs::write(
-                test_file.path(),
-                r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
-            )
-                .unwrap();
-
-            local_blocker.block();
-
-            fs::write(test_file.path(), r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
-{"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
-                .unwrap();
-
-            println!("Haha second");
-        });
-
-        handle1.join().unwrap();
-        handle2.join().unwrap();
+        // We should never get here.
+        unreachable!();
     }
 }
