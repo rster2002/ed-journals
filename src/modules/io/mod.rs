@@ -1,6 +1,6 @@
 mod error;
-mod models;
 mod functions;
+mod models;
 
 pub use error::LogError;
 

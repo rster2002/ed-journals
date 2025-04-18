@@ -1,13 +1,13 @@
+use async_fs::File;
+use futures::io::BufReader;
+use futures::{FutureExt, Stream, StreamExt};
+use notify::event::{DataChange, ModifyKind, RemoveKind};
+use notify::{Event, EventKind, RecommendedWatcher, Watcher};
 use std::path::Path;
 use std::pin::{pin, Pin};
-use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
 use std::task::{Context, Poll};
-use async_fs::File;
-use futures::{AsyncRead, FutureExt, Stream, StreamExt};
-use futures::io::BufReader;
-use notify::{Event, EventKind, RecommendedWatcher, Watcher};
-use notify::event::{DataChange, ModifyKind, RemoveKind};
 // use tokio::fs::File;
 // use tokio::io::BufReader;
 // use tokio_util::compat::Compat;
@@ -19,7 +19,7 @@ pub struct LiveAsyncIter {
     inner: AsyncIter<BufReader<File>>,
     blocker: Arc<AsyncBlocker>,
     removed: Arc<AtomicBool>,
-    _watcher: RecommendedWatcher
+    _watcher: RecommendedWatcher,
 }
 
 impl LiveAsyncIter {
@@ -53,14 +53,15 @@ impl LiveAsyncIter {
             }
 
             match event.kind {
-                EventKind::Modify(ModifyKind::Any) | EventKind::Modify(ModifyKind::Data(DataChange::Any)) => {
+                EventKind::Modify(ModifyKind::Any)
+                | EventKind::Modify(ModifyKind::Data(DataChange::Any)) => {
                     local_blocker.unblock();
-                },
+                }
                 EventKind::Remove(RemoveKind::Any) => {
                     local_removed.store(true, Ordering::Relaxed);
                     local_blocker.unblock();
-                },
-                _ => {},
+                }
+                _ => {}
             }
         })?;
 
@@ -82,7 +83,7 @@ impl LiveAsyncIter {
         self.blocker.block().await;
 
         if self.removed.load(Ordering::Relaxed) {
-            return None
+            return None;
         }
 
         self.inner.next().await

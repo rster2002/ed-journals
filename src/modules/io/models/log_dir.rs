@@ -4,10 +4,10 @@ pub mod live_dir_iter;
 #[cfg(feature = "asynchronous")]
 pub mod async_live_dir_iter;
 
+use crate::io::LiveDirIter;
 use crate::modules::io::models::log_dir::dir_iter::DirIter;
 use crate::modules::io::{LogError, LogFile};
 use std::path::{Path, PathBuf};
-use crate::io::LiveDirIter;
 
 pub struct LogDir {
     path: PathBuf,

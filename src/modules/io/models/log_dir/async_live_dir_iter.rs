@@ -1,13 +1,13 @@
+use crate::io::{DirIter, LogError, LogFile, LogPath};
+use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+use futures::{FutureExt, Stream};
+use notify::event::CreateKind;
+use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::collections::VecDeque;
 use std::path::Path;
-use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
 use std::pin::{pin, Pin};
 use std::sync::{Arc, Mutex};
 use std::task::{Context, Poll};
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::CreateKind;
-use crate::io::{DirIter, LogError, LogFile, LogPath};
-use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 #[derive(Debug)]
 pub struct AsyncLiveDirIter {
@@ -22,7 +22,7 @@ impl AsyncLiveDirIter {
     pub async fn new<P: AsRef<Path>>(path: P) -> Result<AsyncLiveDirIter, LogError> {
         let dir_iter = DirIter::new_async(path.as_ref()).await?;
 
-        let blocker = AsyncBlocker::new();
+        let blocker = AsyncBlocker::default();
         let added = Arc::new(Mutex::new(VecDeque::new()));
 
         let local_blocker = blocker.clone();
@@ -80,7 +80,7 @@ impl AsyncLiveDirIter {
     }
 
     async fn inner_next(&mut self) -> Option<Result<LogFile, LogError>> {
-        if let Some(mut entry) = self.dir_iter.next() {
+        if let Some(entry) = self.dir_iter.next() {
             self.last = Some(entry.log_path().clone());
             // entry.set_blocker(Arc::new(self.blocker.clone()));
 
@@ -113,13 +113,12 @@ impl Stream for AsyncLiveDirIter {
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::io::models::log_dir::live_dir_iter::LiveDirIter;
-    use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
-    use crate::tests::test_dir;
-    use smol::{fs, spawn};
+
     use crate::io::models::log_dir::async_live_dir_iter::AsyncLiveDirIter;
     use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
-    use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream, StreamExt};
+    use crate::tests::test_dir;
+    use futures::StreamExt;
+    use smol::{fs, spawn};
 
     // #[ignore]
     fn async_live_watcher_blocks_correctly() {

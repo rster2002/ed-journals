@@ -88,9 +88,9 @@ where
 
 #[cfg(test)]
 mod tests {
-    use async_fs::File;
     use crate::logs::LogEventContentKind;
     use crate::modules::io::AsyncIter;
+    use async_fs::File;
     use futures::io::Cursor;
     use futures::StreamExt;
     use smol::fs;

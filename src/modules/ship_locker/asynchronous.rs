@@ -11,7 +11,9 @@ pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;
 pub async fn read_ship_locker_file<P: AsRef<Path>>(
     path: P,
 ) -> Result<ShipLocker, ReadShipLockerFileError> {
-    Ok(serde_json::from_str(&async_fs::read_to_string(path).await?)?)
+    Ok(serde_json::from_str(
+        &async_fs::read_to_string(path).await?,
+    )?)
 }
 
 #[derive(Debug, Error)]

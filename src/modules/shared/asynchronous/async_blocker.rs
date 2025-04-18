@@ -20,15 +20,13 @@ impl AsyncBlocker {
     }
 
     pub fn unblock(&self) {
-        let mut guard = self.waker.lock()
-            .expect("Waker mutex poisoned");
+        let mut guard = self.waker.lock().expect("Waker mutex poisoned");
 
         if guard.is_none() {
             return;
         }
 
-        let waker = mem::take(&mut *guard)
-            .expect("should have been checked");
+        let waker = mem::take(&mut *guard).expect("should have been checked");
 
         waker.wake();
     }
@@ -44,9 +42,7 @@ impl Future for AsyncBlock {
     type Output = ();
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        let mut mut_ref = self.waker
-            .lock()
-            .expect("poisoned async blocker");
+        let mut mut_ref = self.waker.lock().expect("poisoned async blocker");
 
         let _ = mem::replace(&mut *mut_ref, Some(cx.waker().clone()));
 

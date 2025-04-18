@@ -38,17 +38,17 @@ impl LogFile {
         })
     }
 
-    pub(crate) fn with_blocker<P: AsRef<Path>>(
-        path: P,
-        blocker: Arc<SyncBlocker>,
-    ) -> Result<LogFile, LogError> {
-        let path = LogPath::try_from(path.as_ref())?;
-
-        Ok(LogFile {
-            path,
-            blocker: Some(blocker),
-        })
-    }
+    // pub(crate) fn with_blocker<P: AsRef<Path>>(
+    //     path: P,
+    //     blocker: Arc<SyncBlocker>,
+    // ) -> Result<LogFile, LogError> {
+    //     let path = LogPath::try_from(path.as_ref())?;
+    //
+    //     Ok(LogFile {
+    //         path,
+    //         blocker: Some(blocker),
+    //     })
+    // }
 
     pub(crate) fn set_blocker(&mut self, blocker: Arc<SyncBlocker>) {
         self.blocker = Some(blocker);
@@ -80,10 +80,7 @@ impl LogFile {
     #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn async_iter(
         &self,
-    ) -> Result<
-        AsyncIter<futures::io::BufReader<async_fs::File>>,
-        LogError,
-    > {
+    ) -> Result<AsyncIter<futures::io::BufReader<async_fs::File>>, LogError> {
         let file = async_fs::File::open(&self.path).await?;
 
         let reader = futures::io::BufReader::new(file);
@@ -102,7 +99,7 @@ impl PartialEq for LogFile {
 
 impl PartialOrd for LogFile {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.path.partial_cmp(&other.path)
+        Some(self.cmp(other))
     }
 }
 

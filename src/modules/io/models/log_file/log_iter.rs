@@ -66,12 +66,12 @@ where
 
 #[cfg(test)]
 mod tests {
-    
+
+    use crate::io::LogIter;
     use crate::logs::LogEventContentKind;
     use std::fs;
     use std::fs::File;
     use std::io::{BufReader, Cursor};
-    use crate::io::LogIter;
 
     #[test]
     fn log_reader_reads_completed_file_correctly() {

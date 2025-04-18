@@ -26,6 +26,7 @@ pub use modules::commander;
 pub use modules::exobiology;
 pub use modules::exploration;
 pub use modules::galaxy;
+pub use modules::io;
 pub use modules::journal;
 pub use modules::logs;
 pub use modules::market;
@@ -44,19 +45,18 @@ pub use modules::station;
 pub use modules::status;
 pub use modules::thargoid;
 pub use modules::trading;
-pub use modules::io;
 
 mod modules;
 
 #[cfg(test)]
 mod tests {
+    use crate::io::LogDir;
     use crate::logs::LogEventContent;
     use std::env::current_dir;
     use std::fs;
     use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::PathBuf;
     use std::thread::current;
-    use crate::io::LogDir;
 
     pub struct TestFile(PathBuf);
 
