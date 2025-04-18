@@ -18,7 +18,7 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 ///
 /// ```rust
 /// # use std::env::current_dir;
-/// use ed_journals::journal::auto_detect_journal_path;
+/// use ed_journals::io::auto_detect_journal_path;
 /// use ed_journals::journal::blocking::LiveJournalDirReader;
 ///
 /// let path = auto_detect_journal_path();
