@@ -16,6 +16,7 @@ pub enum StationType {
     CraterPort,
     OnFootSettlement,
     SurfaceStation,
+    SpaceConstructionDepot,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -41,6 +42,7 @@ impl Display for StationType {
                 StationType::CraterPort => "Crater Port",
                 StationType::OnFootSettlement => "On-Foot Settlement",
                 StationType::SurfaceStation => "Surface Station",
+                StationType::SpaceConstructionDepot => "Space Construction Depot",
 
                 #[cfg(feature = "allow-unknown")]
                 StationType::Unknown(unknown) =>

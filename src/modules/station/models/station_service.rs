@@ -122,6 +122,12 @@ pub enum StationService {
     #[serde(rename = "modulepacks")]
     ModulePacks,
 
+    #[serde(rename = "registeringcolonisation")]
+    RegisteringColonisation,
+
+    #[serde(rename = "colonisationcontribution")]
+    ColonisationContribution,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
@@ -172,6 +178,8 @@ impl Display for StationService {
                 StationService::TechnologyBroker => "Technology Broker",
                 StationService::Shop => "Shop",
                 StationService::ModulePacks => "Module Packs",
+                StationService::RegisteringColonisation => "Registering Colonisation",
+                StationService::ColonisationContribution => "Colonisation Contribution",
 
                 #[cfg(feature = "allow-unknown")]
                 StationService::Unknown(unknown) =>

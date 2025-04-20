@@ -48,6 +48,8 @@ use clear_saved_game_event::ClearSavedGameEvent;
 use codex_entry_event::CodexEntryEvent;
 use collect_cargo_event::CollectCargoEvent;
 use collect_items_event::CollectItemsEvent;
+use colonisation_construction_depot_event::ColonisationConstructionDepotEvent;
+use colonisation_contribution_event::ColonisationContributionEvent;
 use commander_event::CommanderEvent;
 use commit_crime_event::CommitCrimeEvent;
 use community_goal_discard_event::CommunityGoalDiscardEvent;
@@ -301,6 +303,8 @@ pub mod clear_saved_game_event;
 pub mod codex_entry_event;
 pub mod collect_cargo_event;
 pub mod collect_items_event;
+pub mod colonisation_construction_depot_event;
+pub mod colonisation_contribution_event;
 pub mod commander_event;
 pub mod commit_crime_event;
 pub mod community_goal_discard_event;
@@ -742,6 +746,10 @@ pub enum LogEventContent {
     UpgradeSuit(UpgradeSuitEvent),
     UpgradeWeapon(UpgradeWeaponEvent),
     UseConsumable(UseConsumableEvent),
+
+    // Colonisation
+    ColonisationConstructionDepot(ColonisationConstructionDepotEvent),
+    ColonisationContribution(ColonisationContributionEvent),
 
     // Other
     #[serde(rename = "AfmuRepairs")]
