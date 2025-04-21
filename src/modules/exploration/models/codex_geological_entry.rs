@@ -7,6 +7,7 @@ use thiserror::Error;
 
 /// Codex entries related to geological points-of-interest.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum CodexGeologicalEntry {
     Fumarole,
     FumaroleAmmoniaGeysers,

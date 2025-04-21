@@ -14,6 +14,7 @@ use thiserror::Error;
 
 /// Model for any kind of codex entry.
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum CodexEntry {
     Planet(CodexPlanetEntry),
     Geological(CodexGeologicalEntry),
