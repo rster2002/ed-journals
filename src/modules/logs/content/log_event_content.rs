@@ -37,6 +37,7 @@ use carrier_finance_event::CarrierFinanceEvent;
 use carrier_jump_cancelled_event::CarrierJumpCancelled;
 use carrier_jump_event::CarrierJumpEvent;
 use carrier_jump_request_event::CarrierJumpRequestEvent;
+use carrier_location_event::CarrierLocationEvent;
 use carrier_module_pack_event::CarrierModulePackEvent;
 use carrier_name_changed_event::CarrierNameChangeEvent;
 use carrier_ship_pack_event::CarrierShipPackEvent;
@@ -48,6 +49,8 @@ use clear_saved_game_event::ClearSavedGameEvent;
 use codex_entry_event::CodexEntryEvent;
 use collect_cargo_event::CollectCargoEvent;
 use collect_items_event::CollectItemsEvent;
+use colonisation_construction_depot_event::ColonisationConstructionDepotEvent;
+use colonisation_contribution_event::ColonisationContributionEvent;
 use commander_event::CommanderEvent;
 use commit_crime_event::CommitCrimeEvent;
 use community_goal_discard_event::CommunityGoalDiscardEvent;
@@ -290,6 +293,7 @@ pub mod carrier_finance_event;
 pub mod carrier_jump_cancelled_event;
 pub mod carrier_jump_event;
 pub mod carrier_jump_request_event;
+pub mod carrier_location_event;
 pub mod carrier_module_pack_event;
 pub mod carrier_name_changed_event;
 pub mod carrier_ship_pack_event;
@@ -301,6 +305,8 @@ pub mod clear_saved_game_event;
 pub mod codex_entry_event;
 pub mod collect_cargo_event;
 pub mod collect_items_event;
+pub mod colonisation_construction_depot_event;
+pub mod colonisation_contribution_event;
 pub mod commander_event;
 pub mod commit_crime_event;
 pub mod community_goal_discard_event;
@@ -538,6 +544,7 @@ pub enum LogEventContent {
 
     // Travel
     ApproachBody(ApproachBodyEvent),
+    CarrierLocation(CarrierLocationEvent),
     Docked(DockedEvent),
     DockingCancelled(DockingCancelled),
     DockingDenied(DockingDeniedEvent),
@@ -742,6 +749,10 @@ pub enum LogEventContent {
     UpgradeSuit(UpgradeSuitEvent),
     UpgradeWeapon(UpgradeWeaponEvent),
     UseConsumable(UseConsumableEvent),
+
+    // Colonisation
+    ColonisationConstructionDepot(ColonisationConstructionDepotEvent),
+    ColonisationContribution(ColonisationContributionEvent),
 
     // Other
     #[serde(rename = "AfmuRepairs")]
