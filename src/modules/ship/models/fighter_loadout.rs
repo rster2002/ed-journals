@@ -22,4 +22,7 @@ pub enum FighterLoadout {
 
     #[serde(rename = "starter")]
     Starter,
+
+    #[serde(rename = "at")]
+    At,
 }

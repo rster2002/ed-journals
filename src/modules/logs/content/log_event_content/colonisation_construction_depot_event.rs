@@ -1,9 +1,11 @@
-//! Fired when the player collected a commodity.
+//! Fired when a player receives an update on the required commodities for a construction depot.
+//! This often fires when docking on a System Colonisation Ship, or after they have contributed.
 
 use crate::trading::Commodity;
 use serde::{Deserialize, Serialize};
 
-/// Fired when the player collected a commodity.
+/// Fired when a player receives an update on the required commodities for a construction depot.
+/// This often fires when docking on a System Colonisation Ship, or after they have contributed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationConstructionDepotEvent {
@@ -25,9 +27,6 @@ pub struct ColonisationConstructionDepotRequiredResource {
     /// The localized name of the commodity required.
     #[serde(rename = "Name_Localised")]
     pub name_localised: String,
-
-    /// Commodity required.
-    pub commodity: Commodity,
 
     /// Amount of commodities required.
     pub required_amount: u32,

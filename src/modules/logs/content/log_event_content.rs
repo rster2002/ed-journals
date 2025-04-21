@@ -37,6 +37,7 @@ use carrier_finance_event::CarrierFinanceEvent;
 use carrier_jump_cancelled_event::CarrierJumpCancelled;
 use carrier_jump_event::CarrierJumpEvent;
 use carrier_jump_request_event::CarrierJumpRequestEvent;
+use carrier_location_event::CarrierLocationEvent;
 use carrier_module_pack_event::CarrierModulePackEvent;
 use carrier_name_changed_event::CarrierNameChangeEvent;
 use carrier_ship_pack_event::CarrierShipPackEvent;
@@ -292,6 +293,7 @@ pub mod carrier_finance_event;
 pub mod carrier_jump_cancelled_event;
 pub mod carrier_jump_event;
 pub mod carrier_jump_request_event;
+pub mod carrier_location_event;
 pub mod carrier_module_pack_event;
 pub mod carrier_name_changed_event;
 pub mod carrier_ship_pack_event;
@@ -542,6 +544,7 @@ pub enum LogEventContent {
 
     // Travel
     ApproachBody(ApproachBodyEvent),
+    CarrierLocation(CarrierLocationEvent),
     Docked(DockedEvent),
     DockingCancelled(DockingCancelled),
     DockingDenied(DockingDeniedEvent),

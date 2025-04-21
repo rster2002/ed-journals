@@ -1,7 +1,9 @@
+//! Fired when the player contributes commodities to a Construction Depot.
+
 use crate::trading::Commodity;
 use serde::{Deserialize, Serialize};
 
-/// Fired when the player collected a commodity.
+/// Fired when the player contributes commodities to a Construction Depot.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationContributionEvent {
