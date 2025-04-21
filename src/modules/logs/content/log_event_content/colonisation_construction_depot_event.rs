@@ -1,7 +1,6 @@
 //! Fired when a player receives an update on the required commodities for a construction depot.
 //! This often fires when docking on a System Colonisation Ship, or after they have contributed.
 
-use crate::trading::Commodity;
 use serde::{Deserialize, Serialize};
 
 /// Fired when a player receives an update on the required commodities for a construction depot.
