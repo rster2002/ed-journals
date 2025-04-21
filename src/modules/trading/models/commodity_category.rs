@@ -164,6 +164,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::Praseodymium
             | Commodity::Samarium
             | Commodity::Silver
+            | Commodity::Steel
             | Commodity::Tantalum
             | Commodity::Thallium
             | Commodity::Thorium
@@ -180,6 +181,7 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::Gallite
             | Commodity::Goslarite
             | Commodity::Grandidierite
+            | Commodity::Haematite
             | Commodity::Indite
             | Commodity::Jadeite
             | Commodity::Lepidolite

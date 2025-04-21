@@ -7,6 +7,7 @@ use std::str::FromStr;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Genus {
     Aleoida,
     AmphoraPlant,

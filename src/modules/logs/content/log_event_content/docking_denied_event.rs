@@ -47,6 +47,9 @@ pub enum DockingDeniedReason {
     /// The player does not have docking permissions for the given fleet carrier.
     RestrictedAccess,
 
+    /// Carrier jump is imminent
+    JumpImminent,
+
     /// The reason was not specified.
     NoReason,
 

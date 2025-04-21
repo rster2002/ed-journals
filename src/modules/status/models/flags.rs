@@ -69,8 +69,8 @@ impl Flags {
         self.0 & 2048 != 0
     }
 
-    /// Whether the SRV handbreak is currently on.
-    pub fn srv_handbreak(&self) -> bool {
+    /// Whether the SRV handbrake is currently on.
+    pub fn srv_handbrake(&self) -> bool {
         self.0 & 4096 != 0
     }
 

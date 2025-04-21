@@ -6,6 +6,7 @@ use thiserror::Error;
 
 /// Codex entries related to anomalies.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum CodexAnomalyEntry {
     LagrangeClouds,
 
