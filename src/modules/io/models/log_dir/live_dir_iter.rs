@@ -132,22 +132,21 @@ mod tests {
                 i += 1;
                 assert!(entry.is_ok());
 
+                dbg!(i);
+                dbg!(&entry);
+
                 // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
                 // blocking has worked.
                 assert!(dbg!(instant.elapsed().as_millis()) > 90);
 
                 instant = Instant::now();
-
-                if i > 20 {
-                    continue;
-                }
             }
-            
+
             if file_count == 3 {
                 return;
             }
         }
-        
+
         unreachable!();
 
         // let dir = test_dir();

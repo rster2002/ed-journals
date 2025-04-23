@@ -29,14 +29,17 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
             let file = File::create(&file_path).unwrap();
             let mut buf_writer = BufWriter::new(file);
 
+            sleep(Duration::from_millis(100));
             for line in contents.lines() {
                 buf_writer.write(line.as_ref()).unwrap();
                 buf_writer.write(&[b'\n']).unwrap();
 
                 buf_writer.flush().unwrap();
 
-                sleep(Duration::from_millis(100));
+                sleep(Duration::from_millis(150));
             }
+
+            dbg!("Here");
 
             sleep(Duration::from_secs(1));
         }
