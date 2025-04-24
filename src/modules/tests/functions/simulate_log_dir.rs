@@ -36,7 +36,7 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
 
                 buf_writer.flush().unwrap();
 
-                sleep(Duration::from_millis(150));
+                sleep(Duration::from_millis(50));
             }
 
             dbg!("Here");
@@ -49,4 +49,72 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
     });
 
     dir_root
+}
+
+// Ah yes, the tests for the test utility
+#[cfg(test)]
+mod tests {
+    use std::fs::read_to_string;
+    use std::thread::sleep;
+    use std::time::Duration;
+    use crate::modules::tests::simulate_log_dir;
+
+    #[test]
+    fn generates_log_dir() {
+        let path = simulate_log_dir("generates_log_dir");
+
+        sleep(Duration::from_secs(5));
+
+        assert!(path.exists());
+    }
+
+    #[test]
+    fn contains_one_file_after_1_second() {
+        let path = simulate_log_dir("contains_one_file_after_1_second");
+
+        sleep(Duration::from_secs(1));
+
+        assert!(path.exists());
+        assert_eq!(path.read_dir().unwrap().count(), 1);
+    }
+
+    #[test]
+    fn contains_partial_data_after_1_second() {
+        let path = simulate_log_dir("contains_partial_data_after_1_second");
+
+        sleep(Duration::from_millis(12 * 50));
+
+        assert!(path.exists());
+
+        let file_entry = path.read_dir()
+            .unwrap()
+            .next()
+            .unwrap()
+            .unwrap();
+
+        let file_contents = read_to_string(file_entry.path()).unwrap();
+        let lines = file_contents.lines()
+            .count();
+
+        assert!(lines > 8);
+        assert!(lines < 15);
+    }
+
+    #[test]
+    fn contains_three_files_after_15_seconds() {
+        let path = simulate_log_dir("contains_three_files_after_15_seconds");
+
+        sleep(Duration::from_secs(15));
+
+        assert!(path.exists());
+        assert_eq!(path.read_dir().unwrap().count(), 3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_panic_before_25_seconds() {
+        let path = simulate_log_dir("should_panic_before_25_seconds");
+
+        sleep(Duration::from_secs(30));
+    }
 }

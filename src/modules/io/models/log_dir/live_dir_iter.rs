@@ -139,8 +139,8 @@ mod tests {
                 // blocking has worked.
                 assert!(dbg!(instant.elapsed().as_millis()) > 90);
 
-                if file_count == 3 && i >= 75 {
-                    return;
+                if i >= 75 {
+                    break;
                 }
 
                 instant = Instant::now();
