@@ -7,6 +7,12 @@ pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
 }
 
+impl Default for SyncBlocker {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SyncBlocker {
     pub fn new() -> Self {
         SyncBlocker {
