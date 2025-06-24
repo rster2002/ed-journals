@@ -98,22 +98,40 @@ impl Stream for LiveAsyncIter {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use futures::StreamExt;
-//     use tokio::fs;
-//     use crate::io::models::log_file::live_async_iter::LiveAsyncIter;
-//     use crate::tests::{test_dir, test_file};
-//
-//     // Test manually
-//     #[tokio::test]
-//     #[ignore]
-//     async fn works() {
-//         fs::write("test.tmp", "").await.unwrap();
-//
-//         let mut live_async_iter = LiveAsyncIter::open("test.tmp").await.unwrap();
-//
-//         let entry = live_async_iter.next().await;
-//         dbg!(entry);
-//     }
-// }
+#[cfg(test)]
+mod tests {
+    use std::time::Instant;
+    use futures::StreamExt;
+    use crate::io::LiveAsyncIter;
+    use crate::modules::tests::simulate_log_file;
+
+    #[test]
+    fn it_works() {
+        let path = simulate_log_file("live_watcher_blocks_correctly");
+
+        smol::block_on(async {
+            let mut live_async_reader = LiveAsyncIter::open(&path)
+                .await
+                .unwrap();
+
+            let mut i = 0;
+            let mut instant = Instant::now();
+            while let Some(entry) = live_async_reader.next().await {
+                i += 1;
+                assert!(entry.is_ok());
+
+                // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
+                // blocking has worked.
+                assert!(instant.elapsed().as_millis() > 90);
+
+                instant = Instant::now();
+
+                if i > 20 {
+                    return;
+                }
+            }
+
+            unreachable!();
+        });
+    }
+}

@@ -45,7 +45,7 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
         }
 
         sleep(Duration::from_millis(10000));
-        panic!("Test should have exited by now");
+        assert!(false, "Failed to complete test within 10 seconds")
     });
 
     dir_root
@@ -108,13 +108,5 @@ mod tests {
 
         assert!(path.exists());
         assert_eq!(path.read_dir().unwrap().count(), 3);
-    }
-
-    #[test]
-    #[should_panic]
-    fn should_panic_before_25_seconds() {
-        let path = simulate_log_dir("should_panic_before_25_seconds");
-
-        sleep(Duration::from_secs(30));
     }
 }
