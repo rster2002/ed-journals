@@ -31,7 +31,8 @@ impl LiveIter {
         let local_blocker = blocker.clone();
 
         // This is stopped when it is dropped
-        let mut watcher = notify::recommended_watcher(move |_| {
+        let mut watcher = notify::recommended_watcher(move |event| {
+            dbg!(&event);
             local_blocker.unblock();
         })?;
 

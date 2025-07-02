@@ -27,18 +27,21 @@ impl LiveDirIter {
 
         // This is stopped when it is dropped
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<Event>| {
+            dbg!(&event);
+
             let Ok(event) = event else {
                 return;
             };
 
-            if !matches!(event.kind, EventKind::Create(CreateKind::File)) {
+            if !matches!(event.kind, EventKind::Create(CreateKind::File) | EventKind::Create(CreateKind::Any)) {
+                dbg!("Returned");
                 return;
             }
 
             let mut lock = local_added.lock().expect("lock should have been acquired");
 
             for path in event.paths {
-                let path = match LogPath::try_from(path.as_path()) {
+                let path = match dbg!(LogPath::try_from(path.as_path())) {
                     Ok(path) => path,
                     Err(LogError::IncorrectFileName) => continue,
                     Err(error) => {
@@ -51,6 +54,8 @@ impl LiveDirIter {
 
                 lock.push_back(Ok(log_file));
             }
+
+            dbg!("Unblocking...");
 
             local_blocker.unblock();
         })?;
