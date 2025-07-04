@@ -145,6 +145,7 @@ impl From<Item> for ItemCategory {
             | Item::PowerplayAssociationData
             | Item::PowerplayIndustrialData
             | Item::PowerplayResearchData
+            | Item::PowerplayTrackerMalware
             | Item::PowerplayInjectionMalware => ItemCategory::Data,
 
             Item::AgriculturalProcessSample
