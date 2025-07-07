@@ -167,6 +167,7 @@ use powerplay_fast_track_event::PowerplayFastTrackEvent;
 use powerplay_join_event::PowerplayJoinEvent;
 use powerplay_leave_event::PowerplayLeaveEvent;
 use powerplay_merits_event::PowerplayMeritsEvent;
+use powerplay_rank_event::PowerplayRankEvent;
 use powerplay_salary_event::PowerplaySalaryEvent;
 use powerplay_vote_event::PowerplayVoteEvent;
 use progress_event::ProgressEvent;
@@ -424,6 +425,7 @@ pub mod powerplay_event;
 pub mod powerplay_fast_track_event;
 pub mod powerplay_join_event;
 pub mod powerplay_leave_event;
+pub mod powerplay_rank_event;
 pub mod powerplay_merits_event;
 pub mod powerplay_salary_event;
 pub mod powerplay_vote_event;
@@ -681,6 +683,7 @@ pub enum LogEventContent {
     PowerplayJoin(PowerplayJoinEvent),
     PowerplayLeave(PowerplayLeaveEvent),
     PowerplayMerits(PowerplayMeritsEvent),
+    PowerplayRank(PowerplayRankEvent),
     PowerplaySalary(PowerplaySalaryEvent),
     PowerplayVote(PowerplayVoteEvent),
     RequestPowerMicroResources(RequestPowerMicroResourcesEvent),

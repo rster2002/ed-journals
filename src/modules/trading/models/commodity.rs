@@ -586,6 +586,7 @@ impl Commodity {
             "gallite" => Commodity::Gallite,
             "goslarite" => Commodity::Goslarite,
             "grandidierite" => Commodity::Grandidierite,
+            "haematite" => Commodity::Haematite,
             "indite" => Commodity::Indite,
             "jadeite" => Commodity::Jadeite,
             "lepidolite" => Commodity::Lepidolite,
