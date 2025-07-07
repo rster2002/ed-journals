@@ -489,11 +489,14 @@ impl From<Commodity> for CommodityCategory {
             | Commodity::TorvalCommercialContracts
             | Commodity::TorvalDeeds
             | Commodity::PatreusFieldSupplies
+            | Commodity::PowerplayInjectionMalware
+            | Commodity::PowerplayTrackerMalware
             | Commodity::RepublicanFieldSupplies
             | Commodity::RepublicanGarisonSupplies
             | Commodity::LiberalCampaignMaterials
             | Commodity::AllianceLegaslativeContracts
             | Commodity::AllianceLegaslativeRecords
+            | Commodity::AllianceTradeAgreements
             | Commodity::FederalTradeContracts
             | Commodity::PatreusGarrisonSupplies
             | Commodity::LavignyGarrisonSupplies

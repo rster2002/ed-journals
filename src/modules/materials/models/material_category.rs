@@ -8,7 +8,11 @@ use crate::modules::materials::Material;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialCategory {
-    #[serde(alias = "raw", alias = "$MICRORESOURCE_CATEGORY_Raw;")]
+    #[serde(
+        alias = "raw",
+        alias = "$MICRORESOURCE_CATEGORY_Raw;",
+        alias = "$MICRORESOURCE_CATEGORY_Elements;"
+    )]
     Raw,
 
     #[serde(

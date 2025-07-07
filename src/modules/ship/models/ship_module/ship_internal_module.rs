@@ -121,7 +121,7 @@ impl FromStr for ShipInternalModule {
             .unwrap_or_default();
 
         let mut free = false;
-        let mut module_string = format!("{}{}", module_string, module_suffix);
+        let mut module_string = format!("{module_string}{module_suffix}");
 
         if module_string.ends_with("_free") {
             module_string = module_string.replace("_free", "");

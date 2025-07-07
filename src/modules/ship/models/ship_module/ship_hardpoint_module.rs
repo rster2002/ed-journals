@@ -148,7 +148,7 @@ impl ShipHardpointModule {
             .map(|capture| capture.as_str())
             .unwrap_or_default();
 
-        let mut module = format!("{}{}", module, module_suffix)
+        let mut module = format!("{module}{module_suffix}")
             .parse()
             .map_err(ShipHardpointModuleError::FailedToParseHardpointModule)?;
 

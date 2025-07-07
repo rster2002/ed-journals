@@ -231,6 +231,7 @@ pub enum Item {
     PowerplayElectronics,
     PowerplayPersonalProtectiveEquipment,
     PowerplayInjectionMalware,
+    PowerplayTrackerMalware,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -465,6 +466,7 @@ impl Item {
             "powerelectronics" => Item::PowerplayElectronics,
             "powerequipment" => Item::PowerplayPersonalProtectiveEquipment,
             "powerpreparationspyware" => Item::PowerplayInjectionMalware,
+            "powerspyware" => Item::PowerplayTrackerMalware,
 
             #[cfg(feature = "allow-unknown")]
             _ => Item::Unknown(name.to_string()),
@@ -725,6 +727,7 @@ impl Display for Item {
                 Item::PowerplayPersonalProtectiveEquipment =>
                     "Powerplay Personal Protective Equipment",
                 Item::PowerplayInjectionMalware => "Powerplay Injection Malware",
+                Item::PowerplayTrackerMalware => "Power Tracker Malware",
 
                 #[cfg(feature = "allow-unknown")]
                 Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),
