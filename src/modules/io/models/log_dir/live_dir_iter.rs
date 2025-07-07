@@ -88,6 +88,8 @@ impl Iterator for LiveDirIter {
             self.last = Some(entry.log_path().clone());
             entry.set_blocker(Arc::new(self.blocker.clone()));
 
+            // live_iter doesn't continue as the file doesn't know that it's not the last one.
+
             return Some(Ok(entry));
         }
 
