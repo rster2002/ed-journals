@@ -13,7 +13,7 @@ pub struct FSSDiscoveryScan {
     pub body_count: u8,
 
     /// The total number of non-body signals the player has scanned in the current system.
-    pub non_body_count: u8,
+    pub non_body_count: u16,
 
     /// The name of the current system.
     pub system_name: String,
