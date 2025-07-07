@@ -192,13 +192,11 @@ mod tests {
 
         for planet in planets {
             let planet_string = planet.to_string();
-            let planet_json_string = format!("\"{}\"", planet_string);
+            let planet_json_string = format!("\"{planet_string}\"");
             let planet_deserialized = serde_json::de::from_str::<PlanetClass>(&planet_json_string);
             assert!(
                 planet_deserialized.is_ok(),
-                "Failed to deserialize {}: {:?}",
-                planet_string,
-                planet_deserialized
+                "Failed to deserialize {planet_string}: {planet_deserialized:?}"
             );
             assert_eq!(planet, planet_deserialized.unwrap());
         }

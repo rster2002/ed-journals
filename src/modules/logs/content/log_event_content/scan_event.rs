@@ -68,7 +68,7 @@ impl<'de> Deserialize<'de> for ScanEventKind {
         if map.get("StarType").is_some() {
             return Ok(ScanEventKind::Star(
                 serde_json::from_value(value)
-                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
+                    .map_err(|e| serde::de::Error::custom(format!("{e}")))?,
             ));
         }
 
@@ -77,14 +77,13 @@ impl<'de> Deserialize<'de> for ScanEventKind {
         if map.get("TidalLock").is_some() {
             return Ok(ScanEventKind::Planet(
                 serde_json::from_value(value)
-                    .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
+                    .map_err(|e| serde::de::Error::custom(format!("{e}")))?,
             ));
         }
 
         // It none of the above match only then should it be considered a belt cluster.
         Ok(ScanEventKind::BeltCluster(
-            serde_json::from_value(value)
-                .map_err(|e| serde::de::Error::custom(format!("{}", e)))?,
+            serde_json::from_value(value).map_err(|e| serde::de::Error::custom(format!("{e}")))?,
         ))
     }
 }

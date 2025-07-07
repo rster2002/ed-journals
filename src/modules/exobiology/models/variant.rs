@@ -72,7 +72,7 @@ impl FromStr for Variant {
             .expect("Should have been captured already")
             .as_str();
 
-        let species = format!("{}_Name;", species).parse()?;
+        let species = format!("{species}_Name;").parse()?;
 
         let variant_source: VariantSource = captures
             .get(4)
