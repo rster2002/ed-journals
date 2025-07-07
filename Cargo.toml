@@ -2,7 +2,7 @@
 name = "ed-journals"
 description = "Provides models for representing and parsing elite dangerous journal files"
 repository = "https://github.com/rster2002/ed-logs"
-version = "0.9.0"
+version = "0.10.0"
 edition = "2021"
 license = "MIT"
 keywords = ["elite-dangerous", "elite-journal"]
