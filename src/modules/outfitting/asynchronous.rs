@@ -4,8 +4,8 @@ use thiserror::Error;
 use tokio::fs;
 
 use crate::modules::outfitting::Outfitting;
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as OutfittingFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as OutfittingFileWatcherError;
 
 pub type OutfittingFileWatcher = LiveJsonFileWatcher<Outfitting>;
 

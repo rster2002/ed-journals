@@ -265,23 +265,6 @@ pub use content::log_event_content::won_a_trophy_for_squadron_event;
 pub use content::LogEvent;
 pub use content::LogEventContent;
 pub use content::LogEventContentKind;
-pub use log_dir::LogDir;
-pub use log_dir::LogDirError;
-pub use log_file::LogFile;
-pub use log_file::LogFileError;
-
-mod log_dir;
-mod log_file;
 
 /// Contains models for all the different events that are written in the log files.
 mod content;
-
-/// Contains readers for when working in a synchronous environment like a manually spawned thread.
-#[deprecated]
-pub mod blocking;
-
-/// Contains readers for when working in an asynchronous environment like Tokio.
-#[cfg(all(feature = "asynchronous", feature = "tokio"))]
-#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-#[deprecated]
-pub mod asynchronous;

@@ -2,8 +2,8 @@ use std::path::Path;
 
 use thiserror::Error;
 
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as ShipLockerFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as ShipLockerFileWatcherError;
 use crate::ship_locker::ShipLocker;
 
 pub type ShipLockerFileWatcher = LiveJsonFileWatcher<ShipLocker>;

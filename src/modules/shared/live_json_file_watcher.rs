@@ -1,24 +1,22 @@
+use std::io;
 use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
-use std::{fs, io};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use serde::Deserialize;
 use thiserror::Error;
 
-use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+use crate::modules::shared::async_blocker::AsyncBlocker;
 
 #[derive(Debug)]
 pub struct LiveJsonFileWatcher<T>
 where
     T: for<'de> Deserialize<'de>,
 {
-    blocker: SyncBlocker,
+    blocker: AsyncBlocker,
     path: PathBuf,
     _watcher: RecommendedWatcher,
     first: bool,
-
-    // This is needed so that there's a constraint for the `Iterator` trait.
     phantom_data: PhantomData<T>,
 }
 
@@ -39,7 +37,7 @@ where
     T: for<'de> Deserialize<'de>,
 {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveJsonFileWatcherError> {
-        let blocker = SyncBlocker::new();
+        let blocker = AsyncBlocker::new();
         let local_blocker = blocker.clone();
 
         let mut watcher = notify::recommended_watcher(move |_| {
@@ -56,22 +54,15 @@ where
             phantom_data: PhantomData,
         })
     }
-}
 
-impl<T> Iterator for LiveJsonFileWatcher<T>
-where
-    T: for<'de> Deserialize<'de>,
-{
-    type Item = Result<T, LiveJsonFileWatcherError>;
-
-    fn next(&mut self) -> Option<Self::Item> {
+    pub async fn next(&mut self) -> Option<Result<T, LiveJsonFileWatcherError>> {
         if !self.first {
-            self.blocker.block();
+            self.blocker.block().await;
         }
 
         self.first = false;
 
-        let string_content = match fs::read_to_string(&self.path) {
+        let string_content = match async_fs::read_to_string(&self.path).await {
             Ok(value) => value,
             Err(error) => return Some(Err(error.into())),
         };

@@ -8,7 +8,7 @@ use crate::journal::shared::journal_buffer::LiveJournalBuffer;
 use crate::journal::LiveJournalBufferError;
 use crate::logs::asynchronous::{LogDirReader, LogDirReaderError};
 use crate::modules::journal::models::journal_event_kind::JournalEventKind;
-use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+use crate::modules::shared::async_blocker::AsyncBlocker;
 
 // TODO this is in need of some abstracting
 /// Asynchronous variant of the blocking [LiveJournalDirReader](BlockingLiveJournalDirReader).

@@ -50,7 +50,6 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::io::LogDir;
     use crate::logs::LogEventContent;
     use std::env::current_dir;
     use std::fs;
@@ -120,37 +119,37 @@ mod tests {
         TestFile(temp_dir.join(format!("test-{}", hash)))
     }
 
-    #[test]
-    fn test_journals_are_parsed_correctly() {
-        let dir_path = current_dir().unwrap().join("test-files").join("journals");
-
-        let log_dir = LogDir::new(dir_path);
-
-        let mut file_header_count = 0;
-        let mut entry_count = 0;
-
-        for file in log_dir.iter().unwrap() {
-            for entry in file.iter().unwrap() {
-                entry_count += 1;
-
-                let entry = match entry {
-                    Ok(entry) => entry,
-                    Err(error) => {
-                        dbg!(&file);
-                        dbg!(&error);
-                        panic!("{:?}", error);
-                    }
-                };
-
-                if let LogEventContent::FileHeader(_) = entry.content {
-                    file_header_count += 1;
-                }
-            }
-        }
-
-        dbg!(file_header_count);
-        dbg!(entry_count);
-
-        // assert_eq!(logs.len(), file_header_count);
-    }
+    // #[test]
+    // fn test_journals_are_parsed_correctly() {
+    //     let dir_path = current_dir().unwrap().join("test-files").join("journals");
+    //
+    //     let log_dir = LogDir::new(dir_path);
+    //
+    //     let mut file_header_count = 0;
+    //     let mut entry_count = 0;
+    //
+    //     for file in log_dir.iter().unwrap() {
+    //         for entry in file.iter().unwrap() {
+    //             entry_count += 1;
+    //
+    //             let entry = match entry {
+    //                 Ok(entry) => entry,
+    //                 Err(error) => {
+    //                     dbg!(&file);
+    //                     dbg!(&error);
+    //                     panic!("{:?}", error);
+    //                 }
+    //             };
+    //
+    //             if let LogEventContent::FileHeader(_) = entry.content {
+    //                 file_header_count += 1;
+    //             }
+    //         }
+    //     }
+    //
+    //     dbg!(file_header_count);
+    //     dbg!(entry_count);
+    //
+    //     // assert_eq!(logs.len(), file_header_count);
+    // }
 }

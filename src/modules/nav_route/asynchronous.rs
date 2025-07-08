@@ -4,8 +4,8 @@ use thiserror::Error;
 use tokio::fs;
 
 use crate::modules::nav_route::models::nav_route::NavRoute;
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as NavRouteFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as NavRouteFileWatcherError;
 
 pub type NavRouteFileWatcher = LiveJsonFileWatcher<NavRoute>;
 

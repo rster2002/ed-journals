@@ -1,5 +1,4 @@
-pub mod blocking;
+pub mod async_blocker;
 
-#[cfg(feature = "asynchronous")]
-#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-pub mod asynchronous;
+#[cfg(feature = "tokio")]
+pub mod live_json_file_watcher;
