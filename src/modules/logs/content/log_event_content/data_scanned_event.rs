@@ -40,4 +40,7 @@ pub enum DataScannedEventType {
 
     #[serde(rename = "$Datascan_Unknown_Uplink;")]
     UnknownUplink,
+
+    #[serde(rename = "$Datascan_Settlement_Unknown;")]
+    SettlementUnknown,
 }
