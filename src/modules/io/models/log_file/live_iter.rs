@@ -1,104 +1,134 @@
-use crate::logs::LogEvent;
-use crate::modules::io::error::LogError;
-use crate::modules::io::LogIter;
-use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
-use notify::{RecommendedWatcher, Watcher};
-use std::fs::File;
-use std::io::BufReader;
+use async_fs::File;
+use futures::io::BufReader;
+use futures::{FutureExt, Stream, StreamExt};
+use notify::event::{DataChange, ModifyKind, RemoveKind};
+use notify::{Event, EventKind, RecommendedWatcher, Watcher};
 use std::path::Path;
+use std::pin::{pin, Pin};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::task::{Context, Poll};
+use crate::io::{Iter, LogError};
+use crate::logs::LogEvent;
+use crate::modules::shared::async_blocker::AsyncBlocker;
 
-#[derive(Debug)]
 pub struct LiveIter {
-    inner: LogIter<BufReader<File>>,
-    blocker: Arc<SyncBlocker>,
+    inner: Iter<BufReader<File>>,
+    blocker: Arc<AsyncBlocker>,
+    removed: Arc<AtomicBool>,
     _watcher: RecommendedWatcher,
 }
 
 impl LiveIter {
-    pub fn open<P: AsRef<Path>>(path: P) -> Result<LiveIter, LogError> {
-        LiveIter::with_blocker(path, Arc::new(SyncBlocker::new()))
+    pub async fn open<P: AsRef<Path>>(path: P) -> Result<LiveIter, LogError> {
+        LiveIter::open_with_blocker(path, Arc::new(AsyncBlocker::default())).await
     }
 
-    pub(crate) fn with_blocker<P: AsRef<Path>>(
+    pub async fn open_with_blocker<P: AsRef<Path>>(
         path: P,
-        blocker: Arc<SyncBlocker>,
+        blocker: Arc<AsyncBlocker>,
     ) -> Result<LiveIter, LogError> {
-        let file = File::open(&path)?;
+        let file = File::open(path.as_ref()).await?;
         let buf_reader = BufReader::new(file);
-        let log_iter = LogIter::from(buf_reader);
 
+        let removed = Arc::new(AtomicBool::new(false));
+        let inner = Iter::from(buf_reader);
+
+        let local_path = path.as_ref().to_owned();
+        let local_removed = removed.clone();
         let local_blocker = blocker.clone();
 
-        // This is stopped when it is dropped
-        let mut watcher = notify::recommended_watcher(move |event| {
-            dbg!(&event);
-            local_blocker.unblock();
+        let mut watcher = notify::recommended_watcher(move |event: notify::Result<Event>| {
+            let Ok(event) = event else {
+                return;
+            };
+
+            if !local_path.exists() {
+                local_removed.store(true, Ordering::Relaxed);
+                local_blocker.unblock();
+                return;
+            }
+
+            match event.kind {
+                EventKind::Modify(ModifyKind::Any)
+                | EventKind::Modify(ModifyKind::Data(DataChange::Any)) => {
+                    local_blocker.unblock();
+                }
+                EventKind::Remove(RemoveKind::Any) => {
+                    local_removed.store(true, Ordering::Relaxed);
+                    local_blocker.unblock();
+                }
+                _ => {}
+            }
         })?;
 
         watcher.watch(path.as_ref(), notify::RecursiveMode::NonRecursive)?;
 
         Ok(LiveIter {
-            inner: log_iter,
+            inner,
+            removed,
             blocker,
             _watcher: watcher,
         })
     }
 
-    pub fn blocker(&self) -> &SyncBlocker {
-        &self.blocker
-    }
-}
-
-impl Iterator for LiveIter {
-    type Item = Result<LogEvent, LogError>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if let Some(event) = self.inner.next() {
+    async fn inner_next(&mut self) -> Option<Result<LogEvent, LogError>> {
+        if let Some(event) = self.inner.next().await {
             return Some(event);
         }
 
-        loop {
-            self.blocker.block();
+        self.blocker.block().await;
 
-            let entry = self.inner.next();
-            
-            if entry.is_some() {
-                return entry;
-            }
+        if self.removed.load(Ordering::Relaxed) {
+            return None;
         }
+
+        self.inner.next().await
+    }
+}
+
+impl Stream for LiveIter {
+    type Item = Result<LogEvent, LogError>;
+
+    fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+        pin!(self.inner_next()).poll_unpin(cx)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::modules::io::LiveIter;
     use std::time::Instant;
+    use futures::StreamExt;
+    use crate::io::LiveIter;
     use crate::modules::tests::simulate_log_file;
 
     #[test]
-    fn live_watcher_blocks_correctly() {
+    fn it_works() {
         let path = simulate_log_file("live_watcher_blocks_correctly");
-        let live_reader = LiveIter::open(&path).unwrap();
 
-        let mut i = 0;
-        let mut instant = Instant::now();
-        for entry in live_reader {
-            i += 1;
-            assert!(entry.is_ok());
+        smol::block_on(async {
+            let mut live_async_reader = LiveIter::open(&path)
+                .await
+                .unwrap();
 
-            // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
-            // blocking has worked.
-            assert!(instant.elapsed().as_millis() > 90);
+            let mut i = 0;
+            let mut instant = Instant::now();
+            while let Some(entry) = live_async_reader.next().await {
+                i += 1;
+                assert!(entry.is_ok());
 
-            instant = Instant::now();
-            
-            if i > 20 {
-                return;
+                // Simulation sleeps for 100 ms, so if ~100 ms have passed, we can be sure that the
+                // blocking has worked.
+                assert!(instant.elapsed().as_millis() > 90);
+
+                instant = Instant::now();
+
+                if i > 20 {
+                    return;
+                }
             }
-        }
 
-        // We should never get here.
-        unreachable!();
+            unreachable!();
+        });
     }
 }

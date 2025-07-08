@@ -4,7 +4,6 @@ use std::fs;
 use std::path::Path;
 use std::vec::IntoIter;
 
-#[cfg(feature = "asynchronous")]
 use futures::StreamExt;
 
 /// Iterator over the log files in a directory in chronological order.
@@ -14,32 +13,30 @@ pub struct DirIter {
 }
 
 impl DirIter {
-    /// Creates a new instance using synchronous operations.
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
-        let read_dir = fs::read_dir(path)?;
-        let mut entries = Vec::new();
+    // /// Creates a new instance using synchronous operations.
+    //
+    // pub fn new<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
+    //     let read_dir = fs::read_dir(path)?;
+    //     let mut entries = Vec::new();
+    //
+    //     for entry in read_dir {
+    //         let entry = entry?;
+    //
+    //         match LogPath::try_from(entry.path().as_path()) {
+    //             Ok(path) => entries.push(path),
+    //             Err(LogError::IncorrectFileName) => continue,
+    //             Err(e) => return Err(e),
+    //         }
+    //     }
+    //
+    //     entries.sort();
+    //
+    //     Ok(DirIter {
+    //         entries: entries.into_iter(),
+    //     })
+    // }
 
-        for entry in read_dir {
-            let entry = entry?;
-
-            match LogPath::try_from(entry.path().as_path()) {
-                Ok(path) => entries.push(path),
-                Err(LogError::IncorrectFileName) => continue,
-                Err(e) => return Err(e),
-            }
-        }
-
-        entries.sort();
-
-        Ok(DirIter {
-            entries: entries.into_iter(),
-        })
-    }
-
-    /// Creates a new instance using asynchronous operations.
-    #[cfg(feature = "asynchronous")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-    pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
+    pub async fn new<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
         let mut read_dir = async_fs::read_dir(path).await?;
 
         let mut entries = Vec::new();

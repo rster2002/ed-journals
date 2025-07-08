@@ -4,8 +4,8 @@ use thiserror::Error;
 use tokio::fs;
 
 use crate::modules::market::Market;
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as MarketFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as MarketFileWatcherError;
 
 pub type MarketFileWatcher = LiveJsonFileWatcher<Market>;
 

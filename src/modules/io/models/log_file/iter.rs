@@ -6,14 +6,14 @@ use crate::logs::LogEvent;
 use crate::modules::io::error::LogError;
 
 /// Asynchronous iterator for iterating over some [AsyncRead] and returning [LogEvents](LogEvent).
-pub struct AsyncIter<T>
+pub struct Iter<T>
 where
     T: AsyncRead + Unpin,
 {
     inner: T,
 }
 
-impl<T> AsyncIter<T>
+impl<T> Iter<T>
 where
     T: AsyncRead + Unpin,
 {
@@ -54,28 +54,28 @@ where
     }
 }
 
-impl<T> From<T> for AsyncIter<T>
+impl<T> From<T> for Iter<T>
 where
     T: AsyncRead + Unpin,
 {
     fn from(inner: T) -> Self {
-        AsyncIter { inner }
+        Iter { inner }
     }
 }
 
 #[cfg(feature = "tokio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
-impl<A> From<A> for AsyncIter<tokio_util::compat::Compat<A>>
+impl<A> From<A> for Iter<tokio_util::compat::Compat<A>>
 where
     A: tokio::io::AsyncRead + Unpin,
 {
     fn from(value: A) -> Self {
         let compat = tokio_util::compat::TokioAsyncReadCompatExt::compat(value);
-        AsyncIter::from(compat)
+        Iter::from(compat)
     }
 }
 
-impl<T> Stream for AsyncIter<T>
+impl<T> Stream for Iter<T>
 where
     T: AsyncRead + Unpin,
 {
@@ -89,7 +89,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::logs::LogEventContentKind;
-    use crate::modules::io::AsyncIter;
+    use crate::modules::io::Iter;
     use async_fs::File;
     use futures::io::Cursor;
     use futures::StreamExt;
@@ -103,7 +103,7 @@ mod tests {
             let cursor = Cursor::new(data);
             let buf_reader = futures::io::BufReader::new(cursor);
 
-            let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = Iter::from(buf_reader);
 
             assert!(reader.next().await.is_some());
             assert!(reader.next().await.is_some());
@@ -120,7 +120,7 @@ mod tests {
 
             let buf_reader = futures::io::BufReader::new(file);
 
-            let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = Iter::from(buf_reader);
 
             assert!(reader.next().await.is_none());
 

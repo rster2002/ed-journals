@@ -4,8 +4,8 @@ use thiserror::Error;
 use tokio::fs;
 
 use crate::backpack::models::backpack::Backpack;
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as BackpackFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as BackpackFileWatcherError;
 
 pub type BackpackFileWatcher = LiveJsonFileWatcher<Backpack>;
 

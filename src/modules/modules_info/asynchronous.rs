@@ -3,8 +3,8 @@ use std::path::Path;
 use thiserror::Error;
 use tokio::fs;
 
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as ModulesInfoFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as ModulesInfoFileWatcherError;
 use crate::modules_info::models::modules_info::ModulesInfo;
 
 pub type ModulesInfoFileWatcher = LiveJsonFileWatcher<ModulesInfo>;

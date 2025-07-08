@@ -4,8 +4,8 @@ use thiserror::Error;
 use tokio::fs;
 
 use crate::modules::cargo::models::cargo::Cargo;
-use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcher;
-pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFileWatcherError as CargoFileWatcherError;
+use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcher;
+pub use crate::modules::shared::live_json_file_watcher::LiveJsonFileWatcherError as CargoFileWatcherError;
 
 pub type CargoFileWatcher = LiveJsonFileWatcher<Cargo>;
 
