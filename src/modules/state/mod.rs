@@ -49,6 +49,5 @@ pub use models::state_container::StateContainer;
 /// should use one of the type aliases that use [StateContainer], like [LogState].
 pub use models::resolvers;
 
-mod macros;
 mod models;
 mod traits;

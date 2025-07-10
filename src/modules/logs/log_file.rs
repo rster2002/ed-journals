@@ -4,7 +4,7 @@ use std::io;
 use std::num::ParseIntError;
 use std::path::{Path, PathBuf};
 
-#[cfg(feature = "asynchronous")]
+#[cfg(all(feature = "asynchronous", feature = "tokio"))]
 use super::asynchronous;
 use super::blocking;
 use chrono::NaiveDateTime;
@@ -31,7 +31,7 @@ pub enum LogFileError {
     #[error("Failed to open reader: {0}")]
     FailedToOpenBlockingReader(#[from] blocking::LogFileReaderError),
 
-    #[cfg(feature = "asynchronous")]
+    #[cfg(all(feature = "asynchronous", feature = "tokio"))]
     #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     #[error("Failed to open reader: {0}")]
     FailedToOpenAsyncReader(#[from] asynchronous::LogFileReaderError),
@@ -84,7 +84,7 @@ impl LogFile {
         blocking::LiveLogFileReader::open(&self.path)
     }
 
-    #[cfg(feature = "asynchronous")]
+    #[cfg(all(feature = "asynchronous", feature = "tokio"))]
     #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         asynchronous::LogFileReader::open(self.path.as_path())
@@ -92,7 +92,7 @@ impl LogFile {
             .map_err(LogFileError::FailedToOpenAsyncReader)
     }
 
-    #[cfg(feature = "asynchronous")]
+    #[cfg(all(feature = "asynchronous", feature = "tokio"))]
     #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn create_live_async_reader(
         &self,
