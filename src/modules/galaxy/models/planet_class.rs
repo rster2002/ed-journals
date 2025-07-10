@@ -155,7 +155,7 @@ impl Display for PlanetClass {
 
                 #[cfg(feature = "allow-unknown")]
                 PlanetClass::Unknown(unknown) =>
-                    return write!(f, "Unknown planet class: '{}'", unknown),
+                    return write!(f, "Unknown planet class: '{unknown}'"),
             }
         )
     }

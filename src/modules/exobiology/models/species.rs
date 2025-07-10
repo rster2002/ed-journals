@@ -701,7 +701,7 @@ impl Display for Species {
                 Species::ThargoidBarnacleMatrix => "Thargoid Barnacle Matrix",
 
                 #[cfg(feature = "allow-unknown")]
-                Species::Unknown(unknown) => return write!(f, "Unknown species: {}", unknown),
+                Species::Unknown(unknown) => return write!(f, "Unknown species: {unknown}"),
             }
         )
     }

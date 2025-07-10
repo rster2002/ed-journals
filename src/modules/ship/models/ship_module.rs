@@ -215,7 +215,7 @@ impl Display for ShipModule {
             ShipModule::ShipKitModule(module) => write!(f, "Skip kit module: {}", module.name),
 
             #[cfg(feature = "allow-unknown")]
-            ShipModule::Unknown(unknown) => write!(f, "Unknown module: {}", unknown),
+            ShipModule::Unknown(unknown) => write!(f, "Unknown module: {unknown}"),
         }
     }
 }

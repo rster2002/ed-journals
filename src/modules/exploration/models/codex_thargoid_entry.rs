@@ -198,7 +198,7 @@ impl Display for CodexThargoidEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexThargoidEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown codex entry: '{}'", unknown),
+                    return write!(f, "Unknown codex entry: '{unknown}'"),
             }
         )
     }

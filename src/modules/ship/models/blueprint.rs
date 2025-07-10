@@ -272,7 +272,7 @@ impl Display for Blueprint {
                 Blueprint::WeaponSturdy => "Sturdy",
 
                 #[cfg(feature = "allow-unknown")]
-                Blueprint::Unknown(unknown) => return write!(f, "Unknown blueprint: {}", unknown),
+                Blueprint::Unknown(unknown) => return write!(f, "Unknown blueprint: {unknown}"),
             }
         )
     }

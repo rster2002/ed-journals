@@ -318,7 +318,7 @@ impl Display for HardpointModule {
                 HardpointModule::AdvancedMissileRack => "Advanced Missile Rack",
 
                 #[cfg(feature = "allow-unknown")]
-                HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {}", unknown),
+                HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {unknown}"),
             }
         )
     }

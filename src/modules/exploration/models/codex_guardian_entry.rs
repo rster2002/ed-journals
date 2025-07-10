@@ -116,7 +116,7 @@ impl Display for CodexGuardianEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexGuardianEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown guardian codex entry: {}", unknown),
+                    return write!(f, "Unknown guardian codex entry: {unknown}"),
             }
         )
     }

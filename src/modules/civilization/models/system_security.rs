@@ -41,7 +41,7 @@ impl Display for SystemSecurity {
 
                 #[cfg(feature = "allow-unknown")]
                 SystemSecurity::Unknown(unknown) =>
-                    return write!(f, "Unknown system security: {}", unknown),
+                    return write!(f, "Unknown system security: {unknown}"),
             }
         )
     }

@@ -730,7 +730,7 @@ impl Display for Item {
                 Item::PowerplayTrackerMalware => "Power Tracker Malware",
 
                 #[cfg(feature = "allow-unknown")]
-                Item::Unknown(unknown) => return write!(f, "Unknown item: {}", unknown),
+                Item::Unknown(unknown) => return write!(f, "Unknown item: {unknown}"),
             }
         )
     }

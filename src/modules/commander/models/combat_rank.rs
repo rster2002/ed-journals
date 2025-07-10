@@ -155,11 +155,11 @@ impl Display for CombatRank {
 
                 #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownU8(unknown) =>
-                    return write!(f, "Unknown combat rank nr: {}", unknown),
+                    return write!(f, "Unknown combat rank nr: {unknown}"),
 
                 #[cfg(feature = "allow-unknown")]
                 CombatRank::UnknownString(unknown) =>
-                    return write!(f, "Unknown combat rank: {}", unknown),
+                    return write!(f, "Unknown combat rank: {unknown}"),
             }
         )
     }

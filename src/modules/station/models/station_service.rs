@@ -187,7 +187,7 @@ impl Display for StationService {
 
                 #[cfg(feature = "allow-unknown")]
                 StationService::Unknown(unknown) =>
-                    return write!(f, "Unknown station service: {}", unknown),
+                    return write!(f, "Unknown station service: {unknown}"),
             }
         )
     }

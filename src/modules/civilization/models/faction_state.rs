@@ -66,7 +66,7 @@ impl Display for FactionState {
 
                 #[cfg(feature = "allow-unknown")]
                 FactionState::Unknown(unknown) =>
-                    return write!(f, "Unknown faction state: {}", unknown),
+                    return write!(f, "Unknown faction state: {unknown}"),
             }
         )
     }

@@ -87,7 +87,7 @@ impl Display for TradeRank {
 
                 #[cfg(feature = "allow-unknown")]
                 TradeRank::Unknown(unknown) =>
-                    return write!(f, "Unknown trade rank nr: {}", unknown),
+                    return write!(f, "Unknown trade rank nr: {unknown}"),
             }
         )
     }

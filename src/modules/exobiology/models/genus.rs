@@ -312,7 +312,7 @@ impl From<&Species> for Genus {
             | Species::ThargoidBarnacleMatrix => Genus::ThargoidBarnacle,
 
             #[cfg(feature = "allow-unknown")]
-            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {}", unknown)),
+            Species::Unknown(unknown) => Genus::Unknown(format!("Unknown species: {unknown}")),
         }
     }
 }
@@ -353,7 +353,7 @@ impl Display for Genus {
                 Genus::ThargoidBarnacle => "Thargoid Barnacle",
 
                 #[cfg(feature = "allow-unknown")]
-                Genus::Unknown(unknown) => return write!(f, "Unknown genus: {}", unknown),
+                Genus::Unknown(unknown) => return write!(f, "Unknown genus: {unknown}"),
             }
         )
     }

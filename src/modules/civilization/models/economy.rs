@@ -91,7 +91,7 @@ impl Display for Economy {
                 Economy::None => "None",
 
                 #[cfg(feature = "allow-unknown")]
-                Economy::Unknown(unknown) => return write!(f, "Unknown economy: {}", unknown),
+                Economy::Unknown(unknown) => return write!(f, "Unknown economy: {unknown}"),
             }
         )
     }

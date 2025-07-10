@@ -63,7 +63,7 @@ impl Display for ThargoidWarState {
 
                 #[cfg(feature = "allow-unknown")]
                 ThargoidWarState::Unknown(unknown) =>
-                    return write!(f, "Unknown thargoid war state: {}", unknown),
+                    return write!(f, "Unknown thargoid war state: {unknown}"),
             }
         )
     }

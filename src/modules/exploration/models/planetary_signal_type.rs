@@ -72,7 +72,7 @@ impl Display for PlanetarySignalType {
 
                 #[cfg(feature = "allow-unknown")]
                 PlanetarySignalType::Unknown(unknown) =>
-                    return write!(f, "Unknown planetary signal: {}", unknown),
+                    return write!(f, "Unknown planetary signal: {unknown}"),
             }
         )
     }

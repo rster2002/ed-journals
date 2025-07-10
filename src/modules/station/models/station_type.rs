@@ -95,7 +95,7 @@ impl Display for StationType {
 
                 #[cfg(feature = "allow-unknown")]
                 StationType::Unknown(unknown) =>
-                    return write!(f, "Unknown station type: {}", unknown),
+                    return write!(f, "Unknown station type: {unknown}"),
             }
         )
     }

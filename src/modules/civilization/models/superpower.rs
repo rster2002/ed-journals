@@ -36,7 +36,7 @@ impl Display for Superpower {
 
                 #[cfg(feature = "allow-unknown")]
                 Superpower::Unknown(unknown) =>
-                    return write!(f, "Unknown superpower: {}", unknown),
+                    return write!(f, "Unknown superpower: {unknown}"),
             }
         )
     }

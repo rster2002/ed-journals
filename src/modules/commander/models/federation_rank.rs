@@ -90,7 +90,7 @@ impl Display for FederationRank {
 
                 #[cfg(feature = "allow-unknown")]
                 FederationRank::Unknown(unknown) =>
-                    return write!(f, "Unknown federation rank nr: {}", unknown),
+                    return write!(f, "Unknown federation rank nr: {unknown}"),
             }
         )
     }

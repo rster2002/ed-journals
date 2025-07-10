@@ -431,7 +431,7 @@ impl Display for CodexPlanetEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexPlanetEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown planet codex entry: {}", unknown),
+                    return write!(f, "Unknown planet codex entry: {unknown}"),
             }
         )
     }

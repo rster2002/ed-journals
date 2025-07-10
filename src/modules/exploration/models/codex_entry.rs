@@ -181,7 +181,7 @@ impl Display for CodexEntry {
             CodexEntry::Guardian(guardian) => write!(f, "{guardian}"),
 
             #[cfg(feature = "allow-unknown")]
-            CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{}'", unknown),
+            CodexEntry::Unknown(unknown) => write!(f, "Unknown: '{unknown}'"),
         }
     }
 }

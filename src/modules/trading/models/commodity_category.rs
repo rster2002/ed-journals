@@ -507,7 +507,7 @@ impl From<Commodity> for CommodityCategory {
 
             #[cfg(feature = "allow-unknown")]
             Commodity::Unknown(value) => {
-                CommodityCategory::Unknown(format!("Unknown commodity: '{}'", value))
+                CommodityCategory::Unknown(format!("Unknown commodity: '{value}'"))
             }
         }
     }

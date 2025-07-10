@@ -70,7 +70,7 @@ impl Display for CodexOrganicStructureEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexOrganicStructureEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown organic structure codex entry: {}", unknown),
+                    return write!(f, "Unknown organic structure codex entry: {unknown}"),
             }
         )
     }

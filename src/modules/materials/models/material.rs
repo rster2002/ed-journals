@@ -673,7 +673,7 @@ impl Display for Material {
                 Material::UnusualEncryptedFiles => "Unusual Encrypted Files",
 
                 #[cfg(feature = "allow-unknown")]
-                Material::Unknown(unknown) => return write!(f, "Unknown material: {}", unknown),
+                Material::Unknown(unknown) => return write!(f, "Unknown material: {unknown}"),
             }
         )
     }

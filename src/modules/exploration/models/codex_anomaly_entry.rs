@@ -172,7 +172,7 @@ impl Display for CodexAnomalyEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexAnomalyEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown anomaly codex entry: {}", unknown),
+                    return write!(f, "Unknown anomaly codex entry: {unknown}"),
                 // CodexAnomalyEntry::ETypeAnomalies => "E Type Anomalies",
                 // CodexAnomalyEntry::KTypeAnomalies => "K Type Anomalies",
                 // CodexAnomalyEntry::LTypeAnomalies => "L Type Anomalies",

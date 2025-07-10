@@ -329,7 +329,7 @@ impl Display for InternalModule {
 
                 #[cfg(feature = "allow-unknown")]
                 InternalModule::Unknown(unknown) =>
-                    return write!(f, "Unknown module: {}", unknown),
+                    return write!(f, "Unknown module: {unknown}"),
             }
         )
     }

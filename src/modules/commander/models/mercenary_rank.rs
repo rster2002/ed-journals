@@ -87,7 +87,7 @@ impl Display for MercenaryRank {
 
                 #[cfg(feature = "allow-unknown")]
                 MercenaryRank::Unknown(unknown) =>
-                    return write!(f, "Unknown mercenary rank nr: {}", unknown),
+                    return write!(f, "Unknown mercenary rank nr: {unknown}"),
             }
         )
     }

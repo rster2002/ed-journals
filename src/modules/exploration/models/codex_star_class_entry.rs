@@ -540,7 +540,7 @@ impl Display for CodexStarClassEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexStarClassEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown star codex entry: {}", unknown),
+                    return write!(f, "Unknown star codex entry: {unknown}"),
             }
         )
     }

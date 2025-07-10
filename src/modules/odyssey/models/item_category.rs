@@ -241,7 +241,7 @@ impl From<Item> for ItemCategory {
             | Item::EBreach => ItemCategory::Consumable,
 
             #[cfg(feature = "allow-unknown")]
-            Item::Unknown(item) => ItemCategory::Unknown(format!("Unknown item: {}", item)),
+            Item::Unknown(item) => ItemCategory::Unknown(format!("Unknown item: {item}")),
         }
     }
 }

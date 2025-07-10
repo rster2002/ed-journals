@@ -87,7 +87,7 @@ impl Display for ExobiologyRank {
 
                 #[cfg(feature = "allow-unknown")]
                 ExobiologyRank::Unknown(unknown) =>
-                    return write!(f, "Unknown exobiology rank nr: {}", unknown),
+                    return write!(f, "Unknown exobiology rank nr: {unknown}"),
             }
         )
     }

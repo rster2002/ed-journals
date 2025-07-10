@@ -184,7 +184,7 @@ impl From<&Material> for MaterialCategory {
 
             #[cfg(feature = "allow-unknown")]
             Material::Unknown(value) => {
-                MaterialCategory::Unknown(format!("Unknown material: '{}'", value))
+                MaterialCategory::Unknown(format!("Unknown material: '{value}'"))
             }
         }
     }
@@ -207,7 +207,7 @@ impl Display for MaterialCategory {
                 MaterialCategory::Encoded => "Encoded",
 
                 #[cfg(feature = "allow-unknown")]
-                MaterialCategory::Unknown(unknown) => return write!(f, "{}", unknown),
+                MaterialCategory::Unknown(unknown) => return write!(f, "{unknown}"),
             }
         )
     }

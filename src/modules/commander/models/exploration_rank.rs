@@ -87,7 +87,7 @@ impl Display for ExplorationRank {
 
                 #[cfg(feature = "allow-unknown")]
                 ExplorationRank::Unknown(unknown) =>
-                    return write!(f, "Unknown exploration rank nr: {}", unknown),
+                    return write!(f, "Unknown exploration rank nr: {unknown}"),
             }
         )
     }

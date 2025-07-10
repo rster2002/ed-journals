@@ -90,7 +90,7 @@ impl Display for EmpireRank {
 
                 #[cfg(feature = "allow-unknown")]
                 EmpireRank::Unknown(unknown) =>
-                    return write!(f, "Unknown empire rank nr: {}", unknown),
+                    return write!(f, "Unknown empire rank nr: {unknown}"),
             }
         )
     }

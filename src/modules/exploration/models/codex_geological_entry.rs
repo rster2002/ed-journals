@@ -240,7 +240,7 @@ impl Display for CodexGeologicalEntry {
 
                 #[cfg(feature = "allow-unknown")]
                 CodexGeologicalEntry::Unknown(unknown) =>
-                    return write!(f, "Unknown geological codex entry: {}", unknown),
+                    return write!(f, "Unknown geological codex entry: {unknown}"),
             }
         )
     }
