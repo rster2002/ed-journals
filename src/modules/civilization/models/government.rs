@@ -81,8 +81,7 @@ impl Display for Government {
                 Government::None => "None",
 
                 #[cfg(feature = "allow-unknown")]
-                Government::Unknown(unknown) =>
-                    return write!(f, "Unknown government: {unknown}"),
+                Government::Unknown(unknown) => return write!(f, "Unknown government: {unknown}"),
             }
         )
     }

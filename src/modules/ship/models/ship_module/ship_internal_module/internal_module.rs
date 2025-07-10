@@ -328,8 +328,7 @@ impl Display for InternalModule {
                 InternalModule::AdvancedDiscoveryScanner => "Advanced Discovery Scanner",
 
                 #[cfg(feature = "allow-unknown")]
-                InternalModule::Unknown(unknown) =>
-                    return write!(f, "Unknown module: {unknown}"),
+                InternalModule::Unknown(unknown) => return write!(f, "Unknown module: {unknown}"),
             }
         )
     }

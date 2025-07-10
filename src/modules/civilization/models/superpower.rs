@@ -35,8 +35,7 @@ impl Display for Superpower {
                 Superpower::Thargoid => "Thargoid",
 
                 #[cfg(feature = "allow-unknown")]
-                Superpower::Unknown(unknown) =>
-                    return write!(f, "Unknown superpower: {unknown}"),
+                Superpower::Unknown(unknown) => return write!(f, "Unknown superpower: {unknown}"),
             }
         )
     }
