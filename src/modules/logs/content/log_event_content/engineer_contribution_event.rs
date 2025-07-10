@@ -30,6 +30,15 @@ pub enum EngineerContributionEventType {
 
     /// A material contribution where the player donated a number of materials.
     Materials(EngineerContributionEventMaterialContribution),
+
+    Bounty(EngineerContributionEventBountyContribution),
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct EngineerContributionEventBountyContribution {
+    pub quantity: u32,
+    pub total_quantity: u32,
 }
 
 /// Contribution where the player sourced and delivered a certain commodity.
