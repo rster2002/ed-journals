@@ -31,14 +31,8 @@ pub enum EngineerContributionEventType {
     /// A material contribution where the player donated a number of materials.
     Materials(EngineerContributionEventMaterialContribution),
 
+    /// A bounty contribution where the player has handed in bounties.
     Bounty(EngineerContributionEventBountyContribution),
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
-pub struct EngineerContributionEventBountyContribution {
-    pub quantity: u32,
-    pub total_quantity: u32,
 }
 
 /// Contribution where the player sourced and delivered a certain commodity.
@@ -67,4 +61,15 @@ pub struct EngineerContributionEventMaterialContribution {
 
     /// The number of materials that the player has donated to the engineer in total.
     pub total_quantity: u16,
+}
+
+/// Contribution where the plater handed in a number of bounties.
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "PascalCase")]
+pub struct EngineerContributionEventBountyContribution {
+    /// Number of bounties that were handed in at this moment.
+    pub quantity: u32,
+
+    /// The total number of bounties the player has handed in at this engineer so far.
+    pub total_quantity: u32,
 }
