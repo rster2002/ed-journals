@@ -60,7 +60,7 @@ impl LiveLogDirReader {
         let local_blocker = blocker.clone();
 
         let mut watcher = notify::recommended_watcher(move |_| {
-            local_blocker.unblock_blocking();
+            local_blocker.unblock();
         })?;
 
         watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
