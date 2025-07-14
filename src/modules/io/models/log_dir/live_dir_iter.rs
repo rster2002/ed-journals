@@ -1,4 +1,4 @@
-use crate::modules::io::{DirIter, LogError, LogFile, LogPath};
+use crate::modules::io::{DirIter, LogError, LogFile, DirEntry};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 use notify::event::CreateKind;
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
@@ -10,7 +10,7 @@ use std::sync::{Arc, Mutex};
 pub struct LiveDirIter {
     dir_iter: DirIter,
     blocker: SyncBlocker,
-    last: Option<LogPath>,
+    last: Option<DirEntry>,
     added: Arc<Mutex<VecDeque<Result<LogFile, LogError>>>>,
     _watcher: RecommendedWatcher,
 }
@@ -41,7 +41,7 @@ impl LiveDirIter {
             let mut lock = local_added.lock().expect("lock should have been acquired");
 
             for path in event.paths {
-                let path = match dbg!(LogPath::try_from(path.as_path())) {
+                let path = match dbg!(DirEntry::try_from(path.as_path())) {
                     Ok(path) => path,
                     Err(LogError::IncorrectFileName) => continue,
                     Err(error) => {

@@ -2,7 +2,7 @@ use std::path::Path;
 use std::sync::Arc;
 use notify::{Event, EventKind};
 use notify::event::CreateKind;
-use crate::io::{DirIter, LiveDirIter, LogError, LogFile, LogPath};
+use crate::io::{DirIter, LiveDirIter, LogError, LogFile, DirEntry};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 // Behavior example:

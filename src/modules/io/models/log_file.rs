@@ -10,7 +10,7 @@ pub mod live_async_iter;
 use crate::modules::io::error::LogError;
 use crate::modules::io::models::log_file::live_iter::LiveIter;
 use crate::modules::io::models::log_file::log_iter::LogIter;
-use crate::modules::io::models::log_path::LogPath;
+use crate::modules::queue::models::dir_entry::DirEntry;
 use std::cmp::Ordering;
 use std::path::Path;
 use std::sync::Arc;
@@ -21,16 +21,16 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug, Clone)]
 pub struct LogFile {
-    path: LogPath,
+    path: DirEntry,
     blocker: Option<Arc<SyncBlocker>>,
 }
 
 impl LogFile {
-    /// Create a new representation of a log file. The path is parsed and checked using [LogPath].
+    /// Create a new representation of a log file. The path is parsed and checked using [DirEntry].
     /// If you want to read a file that doesn't pass the criteria of LogPath you can instead create
     /// iterators directly.
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LogFile, LogError> {
-        let path = LogPath::try_from(path.as_ref())?;
+        let path = DirEntry::try_from(path.as_ref())?;
 
         Ok(LogFile {
             path,
@@ -54,7 +54,7 @@ impl LogFile {
         self.blocker = Some(blocker);
     }
 
-    pub fn log_path(&self) -> &LogPath {
+    pub fn log_path(&self) -> &DirEntry {
         &self.path
     }
 
@@ -109,20 +109,20 @@ impl Ord for LogFile {
     }
 }
 
-impl PartialEq<LogPath> for LogFile {
-    fn eq(&self, other: &LogPath) -> bool {
+impl PartialEq<DirEntry> for LogFile {
+    fn eq(&self, other: &DirEntry) -> bool {
         &self.path == other
     }
 }
 
-impl PartialOrd<LogPath> for LogFile {
-    fn partial_cmp(&self, other: &LogPath) -> Option<Ordering> {
+impl PartialOrd<DirEntry> for LogFile {
+    fn partial_cmp(&self, other: &DirEntry) -> Option<Ordering> {
         self.path.partial_cmp(other)
     }
 }
 
-impl From<LogPath> for LogFile {
-    fn from(value: LogPath) -> Self {
+impl From<DirEntry> for LogFile {
+    fn from(value: DirEntry) -> Self {
         LogFile {
             path: value,
             blocker: None,
@@ -130,8 +130,8 @@ impl From<LogPath> for LogFile {
     }
 }
 
-impl From<(LogPath, Arc<SyncBlocker>)> for LogFile {
-    fn from(value: (LogPath, Arc<SyncBlocker>)) -> Self {
+impl From<(DirEntry, Arc<SyncBlocker>)> for LogFile {
+    fn from(value: (DirEntry, Arc<SyncBlocker>)) -> Self {
         LogFile {
             path: value.0,
             blocker: Some(value.1),

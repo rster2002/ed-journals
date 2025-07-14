@@ -4,7 +4,7 @@ mod models;
 
 pub use error::LogError;
 
-pub use models::log_path::LogPath;
+pub use crate::modules::queue::models::dir_entry::DirEntry;
 
 pub use models::log_dir::dir_iter::DirIter;
 pub use models::log_dir::live_dir_iter::LiveDirIter;

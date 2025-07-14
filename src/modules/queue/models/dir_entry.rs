@@ -6,7 +6,7 @@ use std::cmp::Ordering;
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
-pub struct LogPath {
+pub struct DirEntry {
     path: PathBuf,
     timestamp: NaiveDateTime,
     part: u8,
@@ -29,7 +29,9 @@ lazy_static! {
     ];
 }
 
-impl TryFrom<&Path> for LogPath {
+impl<T> TryFrom<T> for DirEntry
+where T : AsRef<Path>
+{
     type Error = LogError;
 
     fn try_from(value: &Path) -> Result<Self, Self::Error> {
@@ -59,7 +61,7 @@ impl TryFrom<&Path> for LogPath {
                 .parse()
                 .map_err(LogError::FailedToParsePart)?;
 
-            return Ok(LogPath {
+            return Ok(DirEntry {
                 path: value.to_path_buf(),
                 timestamp,
                 part,
@@ -70,33 +72,33 @@ impl TryFrom<&Path> for LogPath {
     }
 }
 
-impl AsRef<Path> for LogPath {
+impl AsRef<Path> for DirEntry {
     fn as_ref(&self) -> &Path {
         self.path.as_path()
     }
 }
 
-impl From<LogPath> for PathBuf {
-    fn from(val: LogPath) -> Self {
+impl From<DirEntry> for PathBuf {
+    fn from(val: DirEntry) -> Self {
         val.path
     }
 }
 
-impl Eq for LogPath {}
+impl Eq for DirEntry {}
 
-impl PartialEq for LogPath {
+impl PartialEq for DirEntry {
     fn eq(&self, other: &Self) -> bool {
         self.path.eq(&other.path)
     }
 }
 
-impl PartialOrd for LogPath {
+impl PartialOrd for DirEntry {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl Ord for LogPath {
+impl Ord for DirEntry {
     fn cmp(&self, other: &Self) -> Ordering {
         self.timestamp
             .cmp(&other.timestamp)

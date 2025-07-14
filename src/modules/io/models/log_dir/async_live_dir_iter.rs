@@ -1,4 +1,4 @@
-use crate::io::{DirIter, LogError, LogFile, LogPath};
+use crate::io::{DirIter, LogError, LogFile, DirEntry};
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 use futures::{FutureExt, Stream};
 use notify::event::CreateKind;
@@ -13,7 +13,7 @@ use std::task::{Context, Poll};
 pub struct AsyncLiveDirIter {
     dir_iter: DirIter,
     blocker: AsyncBlocker,
-    last: Option<LogPath>,
+    last: Option<DirEntry>,
     added: Arc<Mutex<VecDeque<Result<LogFile, LogError>>>>,
     _watcher: RecommendedWatcher,
 }
@@ -43,7 +43,7 @@ impl AsyncLiveDirIter {
             };
 
             for path in event.paths {
-                let path = match LogPath::try_from(path.as_path()) {
+                let path = match DirEntry::try_from(path.as_path()) {
                     Ok(path) => path,
                     Err(LogError::IncorrectFileName) => continue,
                     Err(error) => {

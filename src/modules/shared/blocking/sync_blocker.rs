@@ -6,7 +6,7 @@ use std::thread::Thread;
 #[derive(Debug, Clone)]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
-    do_block: AtomicBool,
+    do_block: Arc<AtomicBool>,
 }
 
 impl Default for SyncBlocker {
@@ -19,7 +19,7 @@ impl SyncBlocker {
     pub fn new() -> Self {
         SyncBlocker {
             waiting_thread: Arc::new(Mutex::new((None,))),
-            do_block: AtomicBool::new(true),
+            do_block: Arc::new(AtomicBool::new(true)),
         }
     }
 
