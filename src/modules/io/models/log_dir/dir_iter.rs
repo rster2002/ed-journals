@@ -36,28 +36,28 @@ impl DirIter {
         })
     }
 
-    /// Creates a new instance using asynchronous operations.
-    #[cfg(feature = "asynchronous")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-    pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
-        let mut read_dir = async_fs::read_dir(path).await?;
-
-        let mut entries = Vec::new();
-
-        while let Some(entry) = read_dir.next().await {
-            match LogPath::try_from(entry?.path().as_path()) {
-                Ok(path) => entries.push(path),
-                Err(LogError::IncorrectFileName) => continue,
-                Err(e) => return Err(e),
-            }
-        }
-
-        entries.sort();
-
-        Ok(DirIter {
-            entries: entries.into_iter(),
-        })
-    }
+    // /// Creates a new instance using asynchronous operations.
+    // #[cfg(feature = "asynchronous")]
+    // #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+    // pub async fn new_async<P: AsRef<Path>>(path: P) -> Result<DirIter, LogError> {
+    //     let mut read_dir = async_fs::read_dir(path).await?;
+    //
+    //     let mut entries = Vec::new();
+    //
+    //     while let Some(entry) = read_dir.next().await {
+    //         match LogPath::try_from(entry?.path().as_path()) {
+    //             Ok(path) => entries.push(path),
+    //             Err(LogError::IncorrectFileName) => continue,
+    //             Err(e) => return Err(e),
+    //         }
+    //     }
+    //
+    //     entries.sort();
+    //
+    //     Ok(DirIter {
+    //         entries: entries.into_iter(),
+    //     })
+    // }
 }
 
 impl Iterator for DirIter {

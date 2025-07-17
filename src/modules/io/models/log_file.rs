@@ -1,12 +1,6 @@
 pub mod live_iter;
 pub mod log_iter;
 
-#[cfg(feature = "asynchronous")]
-pub mod async_iter;
-
-#[cfg(feature = "asynchronous")]
-pub mod live_async_iter;
-
 use crate::modules::io::error::LogError;
 use crate::modules::io::models::log_file::live_iter::LiveIter;
 use crate::modules::io::models::log_file::log_iter::LogIter;
@@ -15,8 +9,6 @@ use std::cmp::Ordering;
 use std::path::Path;
 use std::sync::Arc;
 
-#[cfg(feature = "asynchronous")]
-use crate::modules::io::models::log_file::async_iter::AsyncIter;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug, Clone)]
@@ -76,17 +68,17 @@ impl LogFile {
         }
     }
 
-    #[cfg(feature = "asynchronous")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-    pub async fn async_iter(
-        &self,
-    ) -> Result<AsyncIter<futures::io::BufReader<async_fs::File>>, LogError> {
-        let file = async_fs::File::open(&self.path).await?;
-
-        let reader = futures::io::BufReader::new(file);
-
-        Ok(AsyncIter::from(reader))
-    }
+    // #[cfg(feature = "asynchronous")]
+    // #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+    // pub async fn async_iter(
+    //     &self,
+    // ) -> Result<AsyncIter<futures::io::BufReader<async_fs::File>>, LogError> {
+    //     let file = async_fs::File::open(&self.path).await?;
+    //
+    //     let reader = futures::io::BufReader::new(file);
+    //
+    //     Ok(AsyncIter::from(reader))
+    // }
 }
 
 impl Eq for LogFile {}

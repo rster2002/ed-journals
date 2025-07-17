@@ -1,8 +1,6 @@
 pub mod dir_iter;
 pub mod live_dir_iter;
 
-#[cfg(feature = "asynchronous")]
-pub mod async_live_dir_iter;
 mod latest_iter;
 
 use crate::io::LiveDirIter;
@@ -72,20 +70,20 @@ impl LogDir {
         LiveDirIter::new(&self.path)
     }
 
-    /// Returns a [DirIter] using async file system operations. The result is the same as the sync
-    /// variant as all IO is performed when creating the iterator after which the operations are
-    /// sync.
-    #[cfg(feature = "asynchronous")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-    pub async fn async_iter(&self) -> Result<DirIter, LogError> {
-        DirIter::new_async(&self.path).await
-    }
+    // /// Returns a [DirIter] using async file system operations. The result is the same as the sync
+    // /// variant as all IO is performed when creating the iterator after which the operations are
+    // /// sync.
+    // #[cfg(feature = "asynchronous")]
+    // #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+    // pub async fn async_iter(&self) -> Result<DirIter, LogError> {
+    //     DirIter::new_async(&self.path).await
+    // }
 
-    /// Returns the last log file based on the timestamp in the file name using async IO.
-    #[cfg(feature = "asynchronous")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-    pub async fn last_async(&self) -> Result<Option<LogFile>, LogError> {
-        let iter = DirIter::new_async(&self.path).await?;
-        Ok(iter.last())
-    }
+    // /// Returns the last log file based on the timestamp in the file name using async IO.
+    // #[cfg(feature = "asynchronous")]
+    // #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+    // pub async fn last_async(&self) -> Result<Option<LogFile>, LogError> {
+    //     let iter = DirIter::new_async(&self.path).await?;
+    //     Ok(iter.last())
+    // }
 }

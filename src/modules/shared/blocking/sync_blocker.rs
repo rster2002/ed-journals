@@ -6,7 +6,6 @@ use std::thread::Thread;
 #[derive(Debug, Clone)]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
-    do_block: AtomicBool,
 }
 
 impl Default for SyncBlocker {
@@ -19,7 +18,6 @@ impl SyncBlocker {
     pub fn new() -> Self {
         SyncBlocker {
             waiting_thread: Arc::new(Mutex::new((None,))),
-            do_block: AtomicBool::new(true),
         }
     }
 
@@ -33,9 +31,9 @@ impl SyncBlocker {
     }
 
     pub fn block(&self) {
-        if !self.do_block.load(Ordering::Relaxed) {
-            return;
-        }
+        // if !self.do_block.load(Ordering::Relaxed) {
+        //     return;
+        // }
 
         {
             let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
