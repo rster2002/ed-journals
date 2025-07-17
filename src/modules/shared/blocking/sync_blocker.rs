@@ -1,3 +1,4 @@
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::thread::Thread;
@@ -5,6 +6,12 @@ use std::thread::Thread;
 #[derive(Debug, Clone)]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
+}
+
+impl Default for SyncBlocker {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl SyncBlocker {
@@ -24,6 +31,10 @@ impl SyncBlocker {
     }
 
     pub fn block(&self) {
+        // if !self.do_block.load(Ordering::Relaxed) {
+        //     return;
+        // }
+
         {
             let mut guard = self.waiting_thread.lock().expect("to have gotten a lock");
 
