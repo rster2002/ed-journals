@@ -26,6 +26,7 @@ pub use modules::commander;
 pub use modules::exobiology;
 pub use modules::exploration;
 pub use modules::galaxy;
+pub use modules::io;
 pub use modules::journal;
 pub use modules::logs;
 pub use modules::market;
@@ -49,13 +50,74 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::LogDir;
+    use crate::io::LogDir;
     use crate::logs::LogEventContent;
     use std::env::current_dir;
+    use std::fs;
+    use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::PathBuf;
+    use std::thread::current;
+
+    pub struct TestFile(PathBuf);
+
+    impl TestFile {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+    }
+
+    impl Drop for TestFile {
+        fn drop(&mut self) {
+            fs::remove_file(&self.0).unwrap()
+        }
+    }
+
+    pub struct TestDir(PathBuf);
+
+    impl TestDir {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+
+        pub fn file(&self, number: u32) -> PathBuf {
+            self.0.join(format!("{}.tmp", number))
+        }
+    }
+
+    impl Drop for TestDir {
+        fn drop(&mut self) {
+            fs::remove_dir_all(&self.0).unwrap();
+        }
+    }
 
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
+    }
+
+    pub fn test_dir() -> TestDir {
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+
+        let path = test_root().join("temp-dir").join(format!("dir-{}", hash));
+
+        let _ = fs::remove_dir_all(&path);
+        fs::create_dir_all(&path).unwrap();
+
+        TestDir(path)
+    }
+
+    pub fn test_file() -> TestFile {
+        let temp_dir = test_root().join("temp-dir");
+
+        fs::create_dir_all(&temp_dir).unwrap();
+
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+        TestFile(temp_dir.join(format!("test-{}", hash)))
     }
 
     #[test]
@@ -64,22 +126,23 @@ mod tests {
 
         let log_dir = LogDir::new(dir_path);
 
-        let logs = log_dir.journal_logs().unwrap();
-
-        assert!(logs.len() > 10);
-
         let mut file_header_count = 0;
         let mut entry_count = 0;
 
-        for journal in &logs {
-            let mut found_file_header = false;
-            let reader = journal.create_blocking_reader().unwrap();
-
-            for entry in reader {
+        for file in log_dir.iter().unwrap() {
+            for entry in file.iter().unwrap() {
                 entry_count += 1;
 
-                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
-                    found_file_header = true;
+                let entry = match entry {
+                    Ok(entry) => entry,
+                    Err(error) => {
+                        dbg!(&file);
+                        dbg!(&error);
+                        panic!("{:?}", error);
+                    }
+                };
+
+                if let LogEventContent::FileHeader(_) = entry.content {
                     file_header_count += 1;
                 }
             }

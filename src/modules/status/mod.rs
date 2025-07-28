@@ -15,6 +15,6 @@ mod models;
 
 pub mod blocking;
 
-#[cfg(feature = "asynchronous")]
+#[cfg(all(feature = "asynchronous", feature = "tokio"))]
 #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
 pub mod asynchronous;
