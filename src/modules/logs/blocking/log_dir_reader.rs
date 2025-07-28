@@ -7,6 +7,7 @@ use crate::logs::content::LogEvent;
 use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
 
 #[derive(Debug)]
+#[deprecated]
 pub struct LogDirReader {
     dir: LogDir,
     current_file: Option<LogFile>,
@@ -16,6 +17,7 @@ pub struct LogDirReader {
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogDirReaderError {
     #[error(transparent)]
     LogFileError(#[from] LogFileError),
