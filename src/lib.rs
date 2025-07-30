@@ -26,6 +26,7 @@ pub use modules::commander;
 pub use modules::exobiology;
 pub use modules::exploration;
 pub use modules::galaxy;
+pub use modules::io;
 pub use modules::journal;
 pub use modules::logs;
 pub use modules::market;
@@ -44,7 +45,6 @@ pub use modules::station;
 pub use modules::status;
 pub use modules::thargoid;
 pub use modules::trading;
-pub use modules::io;
 
 mod modules;
 
