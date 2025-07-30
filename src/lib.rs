@@ -44,6 +44,7 @@ pub use modules::station;
 pub use modules::status;
 pub use modules::thargoid;
 pub use modules::trading;
+pub use modules::io;
 
 mod modules;
 
