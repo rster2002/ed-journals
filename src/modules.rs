@@ -2,6 +2,9 @@
 /// all files at once.
 pub mod logs;
 
+/// Module for reading logs using various iterators.
+pub mod io;
+
 /// Allows for tracking journal directory as a whole, firing events for when logs change but also
 /// for when `.json` files are updated.
 pub mod journal;
