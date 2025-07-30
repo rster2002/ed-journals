@@ -16,9 +16,7 @@ where
     T: Read,
 {
     fn from(value: T) -> Self {
-        LogIter {
-            inner: value,
-        }
+        LogIter { inner: value }
     }
 }
 

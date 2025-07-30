@@ -8,7 +8,6 @@ pub enum LogError {
     IO(#[from] std::io::Error),
     SerdeJson(#[from] serde_json::Error),
     NotifyError(#[from] notify::Error),
-
     // #[error("Missing file name")]
     // MissingFileName,
 
