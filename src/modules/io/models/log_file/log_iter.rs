@@ -1,6 +1,6 @@
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogError;
-use std::io::{Bytes, Read};
+use std::io::Read;
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
 #[derive(Debug)]
@@ -8,7 +8,7 @@ pub struct LogIter<T>
 where
     T: Read,
 {
-    inner: Bytes<T>,
+    inner: T,
 }
 
 impl<T> From<T> for LogIter<T>
@@ -17,7 +17,7 @@ where
 {
     fn from(value: T) -> Self {
         LogIter {
-            inner: value.bytes(),
+            inner: value,
         }
     }
 }
@@ -31,11 +31,18 @@ where
     fn next(&mut self) -> Option<Self::Item> {
         let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
 
-        for byte in self.inner.by_ref() {
-            let byte = match byte {
-                Ok(byte) => byte,
+        let mut buf = [0u8; 1];
+        loop {
+            let size = match self.inner.read(&mut buf) {
+                Ok(size) => size,
                 Err(e) => return Some(Err(e.into())),
             };
+
+            if size == 0 {
+                break;
+            }
+
+            let byte = buf[0];
 
             if byte == b'\n' && !line.is_empty() {
                 break;
