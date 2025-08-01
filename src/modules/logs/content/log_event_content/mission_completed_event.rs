@@ -5,6 +5,7 @@ use crate::modules::station::MissionType;
 use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEvent {
     pub faction: String,
@@ -41,6 +42,7 @@ pub struct MissionCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffect {
     pub faction: String,
@@ -54,6 +56,7 @@ pub struct MissionCompletedEventFactionEffect {
 
 // Ah yes, the FactionEffectEffect
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffectEffect {
     pub effect: MissionCompletedEventFactionEffectEffectEffect,
@@ -62,6 +65,7 @@ pub struct MissionCompletedEventFactionEffectEffect {
 
 // Well, I, uh. Leave me alone alright!
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum MissionCompletedEventFactionEffectEffectEffect {
     #[serde(rename = "$MISSIONUTIL_Interaction_Summary_EP_up;")]
@@ -92,6 +96,7 @@ pub enum MissionCompletedEventFactionEffectEffectEffect {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum MissionCompletedEventTrend {
     UpGood,
@@ -106,6 +111,7 @@ pub enum MissionCompletedEventTrend {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventFactionEffectInfluence {
     pub system_address: u64,
@@ -116,6 +122,7 @@ pub struct MissionCompletedEventFactionEffectInfluence {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventCommodityReward {
     pub name: Commodity,
@@ -123,6 +130,7 @@ pub struct MissionCompletedEventCommodityReward {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionCompletedEventMaterialsReward {
     pub name: MixedMaterial,

@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// Fired when the player delivers or collects commodities for a given mission.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CargoDepotEvent {
     /// The id of the mission this event applies to.
@@ -44,6 +45,7 @@ pub struct CargoDepotEvent {
 
 /// The kind of action the player performed for the given mission.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CargoDepotEventUpdateType {
     /// The player collected commodities for the mission.
     Collect,

@@ -6,6 +6,7 @@ use crate::modules::ship::SRVType;
 
 /// Fired when the player docks their SRV to their ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DockSRVEvent {
     /// The type of SRV the player was driving.

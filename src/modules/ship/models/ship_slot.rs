@@ -13,6 +13,7 @@ use crate::modules::ship::{HardpointSize, HardpointSizeError};
 
 pub mod core_slot;
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipSlot {
     pub slot_nr: u8,
@@ -20,6 +21,7 @@ pub struct ShipSlot {
 }
 
 // TODO kinda want to refactor this to use untagged variants
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ShipSlotKind {
     ShipCockpit,

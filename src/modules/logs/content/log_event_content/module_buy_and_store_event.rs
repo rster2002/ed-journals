@@ -8,6 +8,7 @@ use crate::modules::ship::{ShipModule, ShipType};
 /// When buying a module but storing at the current location instead of equipping it to the current
 /// ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleBuyAndStoreEvent {
     /// The purchased module that has been stored at the current location.

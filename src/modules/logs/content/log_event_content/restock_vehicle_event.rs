@@ -4,6 +4,7 @@ use crate::modules::ship::FighterLoadout;
 use crate::ship::{FighterType, SRVType};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct RestockVehicleEvent {
     #[serde(rename = "Type")]
@@ -20,6 +21,7 @@ pub struct RestockVehicleEvent {
     pub count: u8,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum RestockVehicleEventType {

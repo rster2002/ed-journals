@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the current player leaves a multi-crew session.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct QuitACrewEvent {
     /// The CMDR name of the player that is hosting the multi-crew session.

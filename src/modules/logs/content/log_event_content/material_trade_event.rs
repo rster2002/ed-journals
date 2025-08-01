@@ -6,6 +6,7 @@ use crate::modules::materials::{Material, MaterialCategory};
 
 /// Fired when the player trades engineering materials at a material trader.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialTradeEvent {
     /// The id of the market where the player has trades materials.
@@ -24,6 +25,7 @@ pub struct MaterialTradeEvent {
 
 /// An entry for a material exchange, either for paying or receiving.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialTradeEventExchange {
     /// The material paid or received.

@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// A type of planetary signal that can be present on a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum PlanetarySignalType {
     /// Human signals indicate settlements and outposts.
     #[serde(rename = "$SAA_SignalType_Human;")]

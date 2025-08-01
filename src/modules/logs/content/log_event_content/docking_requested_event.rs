@@ -6,6 +6,7 @@ use crate::modules::station::StationType;
 
 /// Fired when the player has successfully required permission to dock to a given station.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DockingRequestedEvent {
     /// The name of the station the player wants to dock at.
@@ -24,6 +25,7 @@ pub struct DockingRequestedEvent {
 
 /// The number of available landing pads at the given station.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DockingRequestedEventLandingPads {
     /// The total number of small landing pads at the given station.

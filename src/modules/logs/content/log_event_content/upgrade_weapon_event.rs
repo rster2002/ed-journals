@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::odyssey::{Item, Weapon};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeWeaponEvent {
     pub name: Weapon,
@@ -14,6 +15,7 @@ pub struct UpgradeWeaponEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeWeaponEventResource {
     pub name: Item,

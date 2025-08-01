@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player collected a commodity.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CargoEvent {
     /// The current vessel the player is currently piloting.
@@ -18,6 +19,7 @@ pub struct CargoEvent {
 
 /// The type of vessel the player is currently piloting.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum CargoEventVessel {
     /// The player has collected the cargo using their ship.
@@ -41,6 +43,7 @@ impl CargoEventVessel {
 
 /// An entry for an item in the player's inventory.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CargoEventInventoryItem {
     /// The type of commodity.

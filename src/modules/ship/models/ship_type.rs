@@ -7,6 +7,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum ShipType {
     Adder,

@@ -9,6 +9,7 @@ use crate::modules::galaxy::{
 use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEvent {
     pub scan_type: ScanEventScanType,
@@ -37,6 +38,7 @@ pub struct ScanEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventScanType {
     Basic,
@@ -45,6 +47,7 @@ pub enum ScanEventScanType {
     Detailed,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ScanEventKind {
     Star(ScanEventStar),
@@ -89,6 +92,7 @@ impl<'de> Deserialize<'de> for ScanEventKind {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventStar {
     pub star_type: StarClass,
@@ -114,6 +118,7 @@ pub struct ScanEventStar {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanet {
     pub tidal_lock: bool,
@@ -150,6 +155,7 @@ pub struct ScanEventPlanet {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetAtmosphereComposition {
     pub name: AtmosphereElement,
@@ -157,6 +163,7 @@ pub struct ScanEventPlanetAtmosphereComposition {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventPlanetMaterial {
     pub name: Material,
@@ -164,6 +171,7 @@ pub struct ScanEventPlanetMaterial {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventParent {
     Null(u8),
@@ -173,6 +181,7 @@ pub enum ScanEventParent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEventRing {
     pub name: String,
@@ -185,6 +194,7 @@ pub struct ScanEventRing {
 }
 
 /// This struct is always empty and is just here to make sure [serde] recognizes the empty variant.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct ScanEventBeltCluster {}
 

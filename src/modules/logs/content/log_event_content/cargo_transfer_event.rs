@@ -7,6 +7,7 @@ use crate::modules::trading::Commodity;
 /// Fired when the player confirms transfers between their ship, SRV or fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CargoTransferEvent {
     /// List of transfers which have been processed.
     pub transfers: Vec<CargoTransferEventTransfer>,
@@ -15,6 +16,7 @@ pub struct CargoTransferEvent {
 /// An transfer which the player has performed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CargoTransferEventTransfer {
     /// The type of commodity which has been transferred.
     #[serde(rename = "Type")]
@@ -29,6 +31,7 @@ pub struct CargoTransferEventTransfer {
 
 /// Where the commodity has been transferred to.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CargoTransferEventTransferDirection {
     /// The player transferred to their own fleet carrier.
     #[serde(rename = "tocarrier")]

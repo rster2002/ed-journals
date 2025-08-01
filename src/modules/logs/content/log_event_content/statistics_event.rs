@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsEvent {
     #[serde(rename = "Bank_Account")]
     pub bank_account: StatisticsBankAccount,
@@ -21,6 +22,7 @@ pub struct StatisticsEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsBankAccount {
     #[serde(rename = "Current_Wealth")]
     pub current_wealth: u64,
@@ -48,6 +50,7 @@ pub struct StatisticsBankAccount {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     pub bounties_claimed: u32,
@@ -76,6 +79,7 @@ pub struct StatisticsCombat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsCrime {
     #[serde(rename = "Fines")]
     pub fines: u64,
@@ -94,6 +98,7 @@ pub struct StatisticsCrime {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsSmuggling {
     #[serde(rename = "Black_Markets_Traded_With")]
     pub black_markets_traded_with: u32,
@@ -112,6 +117,7 @@ pub struct StatisticsSmuggling {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsTrading {
     #[serde(rename = "Markets_Traded_With")]
     pub markets_traded_with: u32,
@@ -130,6 +136,7 @@ pub struct StatisticsTrading {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsMining {
     #[serde(rename = "Mining_Profits")]
     mining_profits: i64,
@@ -143,6 +150,7 @@ pub struct StatisticsMining {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsExploration {
     #[serde(rename = "Systems_Visited")]
     pub systems_visited: u32,
@@ -173,6 +181,7 @@ pub struct StatisticsExploration {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsPassengers {
     #[serde(rename = "Passengers_Missions_Bulk")]
     pub passengers_missions_bulk: u32,
@@ -189,6 +198,7 @@ pub struct StatisticsPassengers {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsSearchAndRescue {
     #[serde(rename = "SearchRescue_Traded")]
     pub search_rescue_traded: u32,
@@ -202,6 +212,7 @@ pub struct StatisticsSearchAndRescue {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
     pub count_of_used_engineers: u32,
@@ -226,6 +237,7 @@ pub struct StatisticsCrafting {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages")]
     pub npc_crew_total_wages: Option<u64>,
@@ -242,6 +254,7 @@ pub struct StatisticsCrew {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct StatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]
     pub multicrew_time_total: u32,

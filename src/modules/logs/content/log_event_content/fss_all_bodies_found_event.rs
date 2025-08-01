@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Fired when the player has scanned discovered all the bodies for a given system. Discovering a
 /// body could either be through proximity or using the FSS.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSAllBodiesFoundEvent {
     /// The name of the current system.

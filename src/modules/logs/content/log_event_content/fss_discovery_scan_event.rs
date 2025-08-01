@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when discovering a body in a given system, either through proximity or through the FSS.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSDiscoveryScan {
     /// Value between 0-1 to indicate percentage of system scanned

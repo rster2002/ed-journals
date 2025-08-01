@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Fired when another player in a multi-crew session launches a fighter.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CrewLaunchFighterEvent {
     #[serde(rename = "ID")]
     pub id: u64,

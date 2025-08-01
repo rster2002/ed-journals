@@ -6,6 +6,7 @@ use crate::modules::station::StationType;
 
 /// Fired when the player did not dock within the given time window.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DockingTimeoutEvent {
     /// The name of the station the player had requested to dock at.

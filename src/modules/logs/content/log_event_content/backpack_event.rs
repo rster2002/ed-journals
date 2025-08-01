@@ -6,6 +6,7 @@ use crate::modules::odyssey::Item;
 
 /// Fired when the backpack.json file is updated.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackEvent {
     /// The items the player currently has in their backpack.
@@ -24,6 +25,7 @@ pub struct BackpackEvent {
 /// An item in the player's backpack.
 // TODO this is the same as ship_locker_event
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BackpackEventObject {
     /// The item that is stormed.

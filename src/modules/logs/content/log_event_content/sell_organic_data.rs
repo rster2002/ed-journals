@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::exobiology::{Genus, Species, Variant};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SellOrganicDataEvent {
     #[serde(rename = "MarketID")]
@@ -11,6 +12,7 @@ pub struct SellOrganicDataEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SellOrganicDataEventBioData {
     pub genus: Genus,

@@ -6,6 +6,7 @@ use crate::modules::ship::SRVType;
 
 /// Fired when launching an SRV while landed on a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LaunchSRVEvent {
     // The default is necessary because when SRVs were released, there was only

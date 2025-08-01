@@ -4,6 +4,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired when the player buys a new ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEvent {
     /// The ship type for the newly bought ship.
@@ -27,6 +28,7 @@ pub struct ShipyardBuyEvent {
 }
 
 /// The action that was performed for the player's current ship.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum ShipyardBuyEventOldShipAction {
@@ -38,6 +40,7 @@ pub enum ShipyardBuyEventOldShipAction {
 }
 
 /// Stored the player's current ship at the current location.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEventStoreCurrentShip {
@@ -50,6 +53,7 @@ pub struct ShipyardBuyEventStoreCurrentShip {
 }
 
 /// Sold the player's current ship.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardBuyEventSellCurrentShip {

@@ -147,7 +147,7 @@ impl LiveStateResolver {
                     coordinates: (planet_status.latitude, planet_status.longitude),
                 })
             }
-            LogEventContent::NavRouteClear => {
+            LogEventContent::NavRouteClear(_) => {
                 if self.valid_nav_route(&input.timestamp).is_some() {
                     self.nav_route = None;
                 }

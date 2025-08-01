@@ -7,6 +7,7 @@ use crate::modules::station::{StationInfo, StationType};
 /// Fired when the player docks at a station or settlement.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct DockedEvent {
     /// The name of the station or settlement.
     pub station_name: String,

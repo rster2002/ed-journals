@@ -7,6 +7,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired when the player takes on a bounty.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum BountyEvent {
     /// For when the player takes on a normal (ship) target.
@@ -18,6 +19,7 @@ pub enum BountyEvent {
 
 /// Details about the normal bounty.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventNormal {
     /// A list of rewards which are rewarded when the player hands in the bounty.
@@ -45,6 +47,7 @@ pub struct BountyEventNormal {
 }
 
 /// The type of target for the bounty.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum BountyEventTarget {
     /// For Skimmer drone targets.
@@ -66,6 +69,7 @@ pub enum BountyEventTarget {
 
 /// Details about the reward for the bounty.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventNormalReward {
     /// The name of the faction that contributed to the reward.
@@ -77,6 +81,7 @@ pub struct BountyEventNormalReward {
 
 /// Details about a Skimmer bounty.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BountyEventSkimmer {
     /// The name of the faction that placed the bounty.

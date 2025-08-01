@@ -6,6 +6,7 @@ use crate::odyssey::{Item, ItemCategory};
 
 /// Fired when the player requests powerplay microresources from a power contact.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct RequestPowerMicroResourcesEvent {
     pub total_count: u16,
@@ -15,6 +16,7 @@ pub struct RequestPowerMicroResourcesEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct PowerMicroResourceRequest {
     pub name: Item,

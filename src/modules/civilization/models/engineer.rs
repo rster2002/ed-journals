@@ -4,6 +4,7 @@ use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
 /// Names of the engineers that are available in the game.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum Engineer {
     DidiVatermann,

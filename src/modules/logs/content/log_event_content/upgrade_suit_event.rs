@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::odyssey::{Item, Suit};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeSuitEvent {
     #[serde(rename = "SuitID")]
@@ -17,6 +18,7 @@ pub struct UpgradeSuitEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct UpgradeSuitEventResource {
     pub name: Item,

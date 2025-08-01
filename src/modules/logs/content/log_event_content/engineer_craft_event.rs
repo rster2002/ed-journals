@@ -8,6 +8,7 @@ use crate::modules::ship::{Blueprint, BlueprintModifier, ShipModule, ShipSlot};
 
 /// Fired when the player applies an engineering modification to one of their ship's modules.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEvent {
     /// The slot of the module being modified.
@@ -47,6 +48,7 @@ pub struct EngineerCraftEvent {
 
 /// A material requirement for a modification.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventIngredient {
     /// The material required.
@@ -58,6 +60,7 @@ pub struct EngineerCraftEventIngredient {
 
 /// An applied modifier to the module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventModifier {
     /// The name of the modified applied.
@@ -69,6 +72,7 @@ pub struct EngineerCraftEventModifier {
 }
 
 /// The kind of applied modifier/
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum EngineerCraftEventModifierKind {
@@ -80,6 +84,7 @@ pub enum EngineerCraftEventModifierKind {
 }
 
 /// A change in a numeric value.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventValueChange {
@@ -94,6 +99,7 @@ pub struct EngineerCraftEventValueChange {
 }
 
 /// Replacement of a certain string.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerCraftEventStringChange {

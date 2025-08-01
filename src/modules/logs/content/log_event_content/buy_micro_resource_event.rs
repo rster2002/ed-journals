@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when performing a trade with Odyssey bartenders.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(untagged)]
 pub enum BuyMicroResourceEvent {
     /// When making a single trade.
@@ -42,6 +43,7 @@ pub struct BuyMicroResourceEventSingle {
 
 /// When making multiple trades at once.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BuyMicroResourceEventMultiple {
     /// The total amount of resources traded.
@@ -60,6 +62,7 @@ pub struct BuyMicroResourceEventMultiple {
 
 /// Entry for an item the player has bought.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BuyMicroResourceEventResource {
     /// The item that was bought.

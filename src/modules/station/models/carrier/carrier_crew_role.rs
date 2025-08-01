@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 /// The given service the event is for.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewRole {
     Captain,

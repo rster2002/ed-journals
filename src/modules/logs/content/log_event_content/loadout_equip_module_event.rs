@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Suit, SuitSlot, Weapon, WeaponMod};
 
 /// Fired when equipping a module to a suit loadout.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadoutEquipModuleEvent {
     /// The id of the base suit used for the loadout.

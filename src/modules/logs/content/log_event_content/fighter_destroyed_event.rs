@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when a deployed ship launched fighter was destroyed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FighterDestroyedEvent {
     /// The id of the destroyed ship launched fighter.

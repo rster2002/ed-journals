@@ -6,6 +6,7 @@ use crate::modules::station::StationType;
 
 /// Fired when the player disembarks from their ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DisembarkEvent {
     // TODO check when this is optional

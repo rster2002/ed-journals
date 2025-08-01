@@ -7,6 +7,7 @@ use thiserror::Error;
 use crate::modules::ship::{ArmorGrade, ArmorModule};
 
 /// The class of a module. Not all classes are available for every module.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ModuleClass {
     A,

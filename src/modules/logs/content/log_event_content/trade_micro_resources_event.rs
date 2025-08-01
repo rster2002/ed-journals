@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::odyssey::Item;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TradeMicroResourcesEvent {
     #[serde(rename = "MarketID")]
@@ -13,6 +14,7 @@ pub struct TradeMicroResourcesEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TradeMicroResourcesEventOffer {
     pub name: Item,

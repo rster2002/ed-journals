@@ -5,6 +5,7 @@ use std::str::FromStr;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum StationType {
     AsteroidBase,
     Bernal,

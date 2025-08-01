@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Information about a current conflict or war in a system.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct Conflict {
     /// The kind of conflict that is happening.
@@ -19,6 +20,7 @@ pub struct Conflict {
 
 /// The kind of conflict.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum ConflictWarType {
     #[serde(rename = "election")]
@@ -38,6 +40,7 @@ pub enum ConflictWarType {
 
 /// The status of a given conflict.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum ConflictStatus {
     #[serde(rename = "")]
@@ -49,6 +52,7 @@ pub enum ConflictStatus {
 
 /// Information about the participating faction in a conflict.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ConflictFaction {
     /// The name of the faction participating in a conflict.

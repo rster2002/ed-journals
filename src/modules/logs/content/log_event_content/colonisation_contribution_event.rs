@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player contributes commodities to a Construction Depot.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationContributionEvent {
     /// The market id of the constribution target.
@@ -17,6 +18,7 @@ pub struct ColonisationContributionEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationCommodityContribution {
     /// Internal name of the contribution

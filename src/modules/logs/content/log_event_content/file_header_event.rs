@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Always the first event that is fired for a log file. In the case where a log file is
 /// [Continued](ContinuedEvent), the continued log file gets its own file header with a new part
 /// number.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct FileHeaderEvent {
     /// The part number for the log file. When just starting the game this will always be 1 and

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when selling multiple entries of exploration data.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MultiSellExplorationDataEvent {
     /// The base value of the exploration data in credits.
@@ -21,6 +22,7 @@ pub struct MultiSellExplorationDataEvent {
 
 /// Discovery that has been attributed to the current player.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MultiSellExplorationDataEventDiscovery {
     /// The name of the discovered system.

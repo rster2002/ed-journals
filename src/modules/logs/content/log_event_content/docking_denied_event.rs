@@ -7,6 +7,7 @@ use crate::modules::station::StationType;
 /// Fired when the player requested docking permission, but was denied.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct DockingDeniedEvent {
     /// The name of the station or settlement the player was denied docking for.
     pub station_name: String,
@@ -25,6 +26,7 @@ pub struct DockingDeniedEvent {
 /// The reason why the player was denied docking access.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum DockingDeniedReason {
     /// There are currently no landing pads available for the player to land on.
     NoSpace,

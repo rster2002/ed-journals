@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// A mod applied to a suit.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum SuitMod {
     /// Reduces the battery consumption of the suit's utility tool.

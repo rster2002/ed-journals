@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::materials::Material;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SynthesisEvent {
     // TODO replace with enum
@@ -11,6 +12,7 @@ pub struct SynthesisEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SynthesisEventMaterial {
     pub name: Material,

@@ -6,6 +6,7 @@ use thiserror::Error;
 
 /// The sizes that hardpoints can have. [HardpointSize::Tiny] is used for utility mounts and the
 /// other sizes are used for full-sized modules.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum HardpointSize {
     Tiny,

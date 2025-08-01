@@ -5,6 +5,7 @@ use crate::modules::ship::ShipModule;
 use crate::modules::trading::Commodity;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEvent {
     pub broker_type: TechnologyBrokerEventBrokerType,
@@ -16,6 +17,7 @@ pub struct TechnologyBrokerEvent {
     pub materials: Vec<TechnologyBrokerEventMaterial>,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum TechnologyBrokerEventBrokerType {
     #[serde(rename = "guardian")]
@@ -35,6 +37,7 @@ pub enum TechnologyBrokerEventBrokerType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventUnlockedItem {
     pub name: ShipModule,
@@ -44,6 +47,7 @@ pub struct TechnologyBrokerEventUnlockedItem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventCommodity {
     pub name: Commodity,
@@ -54,6 +58,7 @@ pub struct TechnologyBrokerEventCommodity {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct TechnologyBrokerEventMaterial {
     pub name: Material,

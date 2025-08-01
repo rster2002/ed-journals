@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired for events related to friends.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FriendsEvent {
     /// The name of the friend.
@@ -13,6 +14,7 @@ pub struct FriendsEvent {
 
 /// The status of the event related to the friend.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum FriendsEventStatus {
     /// The friend has gone offline.

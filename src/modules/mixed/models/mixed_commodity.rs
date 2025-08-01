@@ -9,6 +9,7 @@ use crate::modules::trading::Commodity;
 
 /// Special model for handling scenarios where the input might either be a 'ship' commodity or an
 /// Odyssey commodity.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum MixedCommodity {
     ShipCommodity(Commodity),
