@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// Fired when ejecting cargo out of the player's ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EjectCargoEvent {
     /// The commodity the player ejected.

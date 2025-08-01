@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::ship::ShipType;
 
 /// Fired when loading into the game.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadGameEvent {
@@ -38,6 +39,7 @@ pub struct LoadGameEvent {
 
 /// Information about the current active ship of the player.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadGameEventShipInfo {
     /// The kind of ship currently active.
@@ -61,6 +63,7 @@ pub struct LoadGameEventShipInfo {
 }
 
 /// The gamemode the player loaded into.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum LoadGameEventGameMode {
     Open,

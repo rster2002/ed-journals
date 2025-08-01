@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// Fired when selling commodities at a given market.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MarketSellEvent {
     /// The id of the market where the player has bought the commodities.

@@ -9,6 +9,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::modules::ship::{ShipType, ShipTypeError};
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipKitModule {
     pub ship: ShipType,

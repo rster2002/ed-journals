@@ -6,6 +6,7 @@ use crate::modules::station::StationInfo;
 
 /// Fired when the player approaches a planetary settlement.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ApproachSettlementEvent {
     /// The name of the settlement the player is currently approaching.
@@ -38,6 +39,7 @@ pub struct ApproachSettlementEvent {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ApproachSettlementEventLocation {
     /// The latitude of the settlement on the planet.
     pub latitude: f32,

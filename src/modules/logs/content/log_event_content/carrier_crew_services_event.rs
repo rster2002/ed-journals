@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when changes were made to a fleet carrier service.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierCrewServicesEvent {
     /// The ID of the carrier of which the crew was changed. This is functionally the same as the
@@ -25,6 +26,7 @@ pub struct CarrierCrewServicesEvent {
 /// The operation for this event. Note that some of these variants are for changes and some are
 /// for the current status. This is because sometimes the [CarrierCrewServicesEvent] is fired
 /// without a change in operation status.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierCrewServicesEventOperation {
     /// The service is getting activated.

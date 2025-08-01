@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Fired when the player discovers a non-body signal.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FSSSignalDiscoveredEvent {
     /// The address of the system the signal is in.
     pub system_address: u64,

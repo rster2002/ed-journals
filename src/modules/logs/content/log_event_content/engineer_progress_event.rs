@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Includes information about engineer progress.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum EngineerProgressEvent {
     /// Fired during startup and includes current engineer progress.
@@ -16,6 +17,7 @@ pub enum EngineerProgressEvent {
 
 /// Fired during startup and includes current engineer progress.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressStartup {
     /// List of current engineer progress.
@@ -25,6 +27,7 @@ pub struct EngineerProgressStartup {
 /// Entry for a single engineer and the progress.
 // TODO the data for this struct is so inconsistent, it could use some work.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressStartupEntry {
     /// The name of the engineer.
@@ -46,6 +49,7 @@ pub struct EngineerProgressStartupEntry {
 }
 
 /// The status for a given engineer.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum EngineerProgressStartupProgress {
     /// The engineer has been unlocked and the player can apply upgrades at this engineer.
@@ -60,6 +64,7 @@ pub enum EngineerProgressStartupProgress {
 
 /// Fired when the player progresses with an engineer.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerProgressUpdate {
     /// The name of the engineer.

@@ -4,6 +4,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired when the player starts a ship transfer between stations.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardTransferEvent {
     /// The type of the ship that is transferred.

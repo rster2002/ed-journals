@@ -6,6 +6,7 @@ use crate::modules::ship::{ShipModule, ShipSlot, ShipType};
 
 /// Fired when the player sells a module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleSellEvent {
     /// The market id where the player sold the module.

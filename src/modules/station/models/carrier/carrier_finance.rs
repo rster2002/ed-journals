@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Financial details for a given fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierFinance {
     /// The current balance of the carrier in credits. Note that this can be negative if the carrier

@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when accessing information about currently active community goals.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CommunityGoalEvent {
     /// List of currently active community goals.
@@ -13,6 +14,7 @@ pub struct CommunityGoalEvent {
 
 /// An entry for a currently active community goal.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CommunityGoalEventGoal {
     /// The id of the community goal.

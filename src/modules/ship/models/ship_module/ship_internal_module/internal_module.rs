@@ -9,6 +9,7 @@ use crate::ship::ModuleClass;
 
 /// The kind of internal module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum InternalModule {
     #[serde(rename = "hyperdrive")]

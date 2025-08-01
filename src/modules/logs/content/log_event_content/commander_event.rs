@@ -3,6 +3,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Fired as part of the startup process of the game.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct CommanderEvent {
     /// The Frontier id associated with the player.

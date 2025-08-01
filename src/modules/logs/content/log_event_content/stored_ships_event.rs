@@ -4,6 +4,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired for locations that have stored ships for the player.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipsEvent {
     /// The name of the current station the ships are stored at.
@@ -25,6 +26,7 @@ pub struct StoredShipsEvent {
 
 /// Entry for a locally stored ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventLocalShip {
     /// The id of the stored ship.
@@ -50,6 +52,7 @@ pub struct StoredShipEventLocalShip {
 
 /// Entry for a remotely stored ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventRemoteShip {
     /// The id of the ship that is stored remotely.
@@ -85,6 +88,7 @@ pub struct StoredShipEventRemoteShip {
 
 /// Information about the location the ship is currently stored.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredShipEventStorageLocation {
     /// The name of the star system the ship is currently located at.

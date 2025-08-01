@@ -4,6 +4,7 @@ use crate::modules::odyssey::{SuitSlot, Weapon, WeaponMod};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SuitModule {
     pub slot_name: SuitSlot,
 

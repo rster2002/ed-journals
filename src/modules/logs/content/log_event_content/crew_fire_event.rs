@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player fires a crew member.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CrewFireEvent {
     /// The name of the crew member that was fired.

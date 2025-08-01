@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::ship::ShipType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SetUserShipNameEvent {
     pub ship: ShipType,

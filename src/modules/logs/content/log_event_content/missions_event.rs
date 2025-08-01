@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::station::MissionType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionsEvent {
     pub active: Vec<MissionEventEntry>,
@@ -11,6 +12,7 @@ pub struct MissionsEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MissionEventEntry {
     #[serde(rename = "MissionID")]

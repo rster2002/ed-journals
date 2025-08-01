@@ -7,6 +7,7 @@ use crate::modules::station::StationType;
 /// Fired when the player cancels the docking procedure.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct DockingCancelled {
     /// The name of the station or settlement the player cancelled the docking procedure for.
     pub station_name: String,

@@ -7,6 +7,7 @@ use crate::modules::exploration::PlanetarySignalType;
 /// Fired when the given body has any special signals. Discovering these could be through proximity
 /// or through the FSS.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSBodySignalsEvent {
     /// The name of the body the signals are at.
@@ -25,6 +26,7 @@ pub struct FSSBodySignalsEvent {
 
 /// A signal discovered at a given body.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FSSBodySignalEventSignal {
     /// The kind of signal that was discovered.

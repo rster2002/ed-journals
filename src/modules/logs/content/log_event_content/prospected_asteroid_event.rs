@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// Fired when a prospector limpet is used on an asteroid.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ProspectedAsteroidEvent {
     /// List of commodities that are available in the given asteroid.
@@ -31,6 +32,7 @@ pub struct ProspectedAsteroidEvent {
 
 /// Commodity entry for a prospected asteroid.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ProspectedAsteroidEventMaterial {
     /// The commodity available in the asteroid.
@@ -46,6 +48,7 @@ pub struct ProspectedAsteroidEventMaterial {
 
 /// Indicative yield for the asteroid.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum ProspectedAsteroidEventContent {
     #[serde(rename = "$AsteroidMaterialContent_High;")]

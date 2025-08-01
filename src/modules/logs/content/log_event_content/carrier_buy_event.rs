@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player buys a new fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierBuyEvent {
     /// The id of the fleet carrier bought. This is functionally the same as the market id.

@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when information about the player's stored modules is provided.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEvent {
     #[serde(rename = "MarketID")]
@@ -13,6 +14,7 @@ pub struct StoredModulesEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEventItem {
     pub name: ShipModule,
@@ -33,6 +35,7 @@ pub struct StoredModulesEventItem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StoredModulesEventStorageLocation {
     pub star_system: String,

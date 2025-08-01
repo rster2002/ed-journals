@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// The kind of crime that can be committed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum Crime {
     Assault,

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player books a drop-ship at Frontline Solutions.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BookDropshipEvent {
     /// The number of credits the player paid for the booking.

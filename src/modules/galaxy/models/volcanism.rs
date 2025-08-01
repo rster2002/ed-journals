@@ -8,12 +8,14 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::modules::galaxy::VolcanismType;
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Volcanism {
     pub kind: VolcanismType,
     pub classification: VolcanismClassification,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum VolcanismClassification {
     Minor,

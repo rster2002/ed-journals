@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// When applying blueprint to modules, modifiers are applied to the modules which are the things
 /// that actually change the stats of the module.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum BlueprintModifier {
     Size,
