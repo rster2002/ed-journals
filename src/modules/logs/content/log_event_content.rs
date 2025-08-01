@@ -1,4 +1,9 @@
 use kinded::Kinded;
+use module_info_event::ModuleInfoEvent;
+use nav_route_clear_event::NavRouteClearEvent;
+use nav_route_event::NavRouteEvent;
+use resupply_event::ResupplyEvent;
+use self_destruct_event::SelfDestructEvemt;
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "allow-unknown")]
 use serde_json::Value;
@@ -218,6 +223,7 @@ use shipyard_new_event::ShipyardNewEvent;
 use shipyard_sell_event::ShipyardSellEvent;
 use shipyard_swap_event::ShipyardSwapEvent;
 use shipyard_transfer_event::ShipyardTransferEvent;
+use shutdown_event::ShutdownEvent;
 use squadron_created_event::SquadronCreatedEvent;
 use squadron_demotion_event::SquadronDemotionEvent;
 use squadron_promotion_event::SquadronPromotionEvent;
@@ -233,6 +239,7 @@ use supercruise_entry_event::SupercruiseEntryEvent;
 use supercruise_exit_event::SupercruiseExitEvent;
 use switch_suit_loadout_event::SwitchSuitLoadoutEvent;
 use synthasis_event::SynthesisEvent;
+use systems_shutdown_event::SystemsShutdownEvent;
 use technology_broker_event::TechnologyBrokerEvent;
 use touchdown_event::TouchdownEvent;
 use trade_micro_resources_event::TradeMicroResourcesEvent;
@@ -247,6 +254,7 @@ use vehicle_switch_event::VehicleSwitchEvent;
 use wing_add_event::WingAddEvent;
 use wing_invite_event::WingInviteEvent;
 use wing_join_event::WingJoinEvent;
+use wing_leave_event::WingLeaveEvent;
 use won_a_trophy_for_squadron_event::WonATrophyForSquadronEvent;
 
 use crate::logs::content::log_event_content::community_goal_event::CommunityGoalEvent;
@@ -403,6 +411,7 @@ pub mod mission_redirected_event;
 pub mod missions_event;
 pub mod module_buy_and_store_event;
 pub mod module_buy_event;
+pub mod module_info_event;
 pub mod module_retrieve_event;
 pub mod module_sell_event;
 pub mod module_sell_remote_event;
@@ -411,6 +420,8 @@ pub mod module_swap_event;
 pub mod multi_sell_exploration_data_event;
 pub mod music_event;
 pub mod nav_beacon_scan_event;
+pub mod nav_route_clear_event;
+pub mod nav_route_event;
 pub mod new_commander_event;
 pub mod npc_crew_rank_event;
 pub mod npc_crew_wage_paid_event;
@@ -448,6 +459,7 @@ pub mod reputation_event;
 pub mod request_power_micro_resources;
 pub mod reservoir_replenished_event;
 pub mod restock_vehicle_event;
+pub mod resupply_event;
 pub mod resurrect_event;
 pub mod saa_scan_complete_event;
 pub mod saa_signals_found_event;
@@ -458,6 +470,7 @@ pub mod scanned_event;
 pub mod scientific_research_event;
 pub mod screenshot_event;
 pub mod search_and_rescue_event;
+pub mod self_destruct_event;
 pub mod sell_drones_event;
 pub mod sell_exploration_date_event;
 pub mod sell_micro_resources_event;
@@ -479,6 +492,7 @@ pub mod shipyard_redeem;
 pub mod shipyard_sell_event;
 pub mod shipyard_swap_event;
 pub mod shipyard_transfer_event;
+pub mod shutdown_event;
 pub mod squadron_created_event;
 pub mod squadron_demotion_event;
 pub mod squadron_promotion_event;
@@ -494,6 +508,7 @@ pub mod supercruise_entry_event;
 pub mod supercruise_exit_event;
 pub mod switch_suit_loadout_event;
 pub mod synthasis_event;
+pub mod systems_shutdown_event;
 pub mod technology_broker_event;
 pub mod touchdown_event;
 pub mod trade_micro_resources_event;
@@ -508,6 +523,7 @@ pub mod vehicle_switch_event;
 pub mod wing_add_event;
 pub mod wing_invite_event;
 pub mod wing_join_event;
+pub mod wing_leave_event;
 pub mod won_a_trophy_for_squadron_event;
 
 #[cfg(feature = "legacy")]
@@ -569,8 +585,8 @@ pub enum LogEventContent {
 
     /// This event is fired when something changes in the `NavRoute.json` file and does not contain
     /// the route in the event.
-    NavRoute,
-    NavRouteClear,
+    NavRoute(NavRouteEvent),
+    NavRouteClear(NavRouteClearEvent),
 
     // Combat
     Bounty(BountyEvent),
@@ -742,7 +758,7 @@ pub enum LogEventContent {
     LoadoutEquipModule(LoadoutEquipModuleEvent),
     LoadoutRemoveModule(LoadoutRemoveModuleEvent),
     RenameSuitLoadout(RenameSuitLoadoutEvent),
-    Resupply,
+    Resupply(ResupplyEvent),
     ScanOrganic(ScanOrganicEvent),
     SellMicroResources(SellMicroResourcesEvent),
     SellOrganicData(SellOrganicDataEvent),
@@ -794,7 +810,7 @@ pub enum LogEventContent {
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not
     /// contain any data itself.
-    ModuleInfo,
+    ModuleInfo(ModuleInfoEvent),
     Music(MusicEvent),
 
     #[serde(rename = "NpcCrewPaidWage")]
@@ -811,18 +827,18 @@ pub enum LogEventContent {
     ReservoirReplenished(ReservoirReplenishedEvent),
     Resurrect(ResurrectEvent),
     Scanned(ScannedEvent),
-    SelfDestruct,
+    SelfDestruct(SelfDestructEvemt),
     SendText(SendTextEvent),
-    Shutdown,
+    Shutdown(ShutdownEvent),
     SupercruiseDestinationDrop(SupercruiseDestinationDropEvent),
     Synthesis(SynthesisEvent),
-    SystemsShutdown,
+    SystemsShutdown(SystemsShutdownEvent),
     USSDrop(USSDropEvent),
     VehicleSwitch(VehicleSwitchEvent),
     WingAdd(WingAddEvent),
     WingInvite(WingInviteEvent),
     WingJoin(WingJoinEvent),
-    WingLeave,
+    WingLeave(WingLeaveEvent),
 
     // Legacy
     #[cfg(feature = "legacy")]
