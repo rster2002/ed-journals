@@ -77,6 +77,12 @@ impl LogFile {
             .map_err(LogFileError::FailedToOpenBlockingReader)
     }
 
+    /// Creates a new reader using the path of the journal log file.
+    pub fn create_raw_blocking_reader(&self) -> Result<blocking::RawLogFileReader, LogFileError> {
+        blocking::RawLogFileReader::open(self.path.as_path())
+            .map_err(LogFileError::FailedToOpenBlockingReader)
+    }
+
     /// Creates a new live reader using the path of the journal log file.
     pub fn create_live_blocking_reader(
         &self,
@@ -88,6 +94,16 @@ impl LogFile {
     #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
     pub async fn create_async_reader(&self) -> Result<asynchronous::LogFileReader, LogFileError> {
         asynchronous::LogFileReader::open(self.path.as_path())
+            .await
+            .map_err(LogFileError::FailedToOpenAsyncReader)
+    }
+
+    #[cfg(feature = "asynchronous")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
+    pub async fn create_raw_async_reader(
+        &self,
+    ) -> Result<asynchronous::RawLogFileReader, LogFileError> {
+        asynchronous::RawLogFileReader::open(self.path.as_path())
             .await
             .map_err(LogFileError::FailedToOpenAsyncReader)
     }
