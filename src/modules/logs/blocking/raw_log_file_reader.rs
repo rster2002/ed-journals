@@ -11,7 +11,7 @@ use super::LogFileReaderError;
 pub struct RawLogFileReader {
     source: File,
     position: usize,
-    file_read_buffer: String,
+    pub(super) file_read_buffer: String,
     entry_buffer: VecDeque<Result<serde_json::Value, LogFileReaderError>>,
     failing: bool,
 }
@@ -104,20 +104,20 @@ mod tests {
 
     #[test]
     fn partial_last_lines_are_read_correctly() {
-        fs::write("a.tmp", "").unwrap();
-        let mut reader = RawLogFileReader::open("a.tmp").unwrap();
+        fs::write("a_raw.tmp", "").unwrap();
+        let mut reader = RawLogFileReader::open("a_raw.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
         fs::write(
-            "a.tmp",
+            "a_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
         )
         .unwrap();
 
         assert!(reader.next().is_none());
 
-        fs::write("a.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+        fs::write("a_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
             .unwrap();
 
@@ -150,30 +150,30 @@ mod tests {
 
         assert!(reader.next().is_none());
 
-        fs::remove_file("a.tmp").unwrap();
+        fs::remove_file("a_raw.tmp").unwrap();
     }
 
     #[test]
     fn partial_last_lines_are_read_correctly_2() {
-        fs::write("d.tmp", "").unwrap();
-        let mut reader = RawLogFileReader::open("d.tmp").unwrap();
+        fs::write("d_raw.tmp", "").unwrap();
+        let mut reader = RawLogFileReader::open("d_raw.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
         fs::write(
-            "d.tmp",
+            "d_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"#,
         )
         .unwrap();
 
         assert!(reader.next().is_none());
 
-        fs::write("d.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","#)
+        fs::write("d_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","#)
             .unwrap();
 
         assert!(reader.next().is_none());
 
-        fs::write("d.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#)
+        fs::write("d_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#)
             .unwrap();
 
         assert_eq!(
@@ -192,25 +192,25 @@ mod tests {
 
         assert!(reader.next().is_none());
 
-        fs::remove_file("d.tmp").unwrap();
+        fs::remove_file("d_raw.tmp").unwrap();
     }
 
     #[test]
     fn partial_last_lines_are_read_correctly_3() {
-        fs::write("e.tmp", "").unwrap();
-        let mut reader = RawLogFileReader::open("e.tmp").unwrap();
+        fs::write("e_raw.tmp", "").unwrap();
+        let mut reader = RawLogFileReader::open("e_raw.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
         fs::write(
-            "e.tmp",
+            "e_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
         )
             .unwrap();
 
         assert!(reader.next().is_some());
 
-        fs::write("e.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+        fs::write("e_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z",
 "#)
             .unwrap();
@@ -221,7 +221,7 @@ mod tests {
             r#"{"timestamp":"2022-10-22T15:12:05Z","#
         );
 
-        fs::write("e.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+        fs::write("e_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}
 "#)
             .unwrap();
@@ -242,18 +242,18 @@ mod tests {
 
         assert!(reader.next().is_none());
 
-        fs::remove_file("e.tmp").unwrap();
+        fs::remove_file("e_raw.tmp").unwrap();
     }
 
     #[test]
     fn incorrect_lines_return_an_err_only_when_it_is_expected() {
-        fs::write("b.tmp", "").unwrap();
-        let mut reader = RawLogFileReader::open("b.tmp").unwrap();
+        fs::write("b_raw.tmp", "").unwrap();
+        let mut reader = RawLogFileReader::open("b_raw.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
         fs::write(
-            "b.tmp",
+            "b_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Na BADLY FORMATTED
 {"timestamp":"2022-10-22T15:12:33Z","event":"FSSSignalDiscovered","SystemAddress":5031654888146,"SignalName":"HMS CHUCKLE PHUCK J6K-8XT","IsStation":true}
@@ -291,7 +291,7 @@ mod tests {
         assert!(reader.next().is_none());
 
         fs::write(
-            "b.tmp",
+            "b_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Na BADLY FORMATTED
 {"timestamp":"2022-10-22T15:12:33Z","event":"FSSSignalDiscovered","SystemAddress":5031654888146,"SignalName":"HMS CHUCKLE PHUCK J6K-8XT","IsStation":true}
@@ -305,18 +305,18 @@ mod tests {
             json!({"timestamp":"2022-10-22T15:12:33Z","event":"FSSSignalDiscovered","SystemAddress":5031654888146i64,"SignalName":"BREAK OF DAWN V3T-G0Y","IsStation":true}),
         );
 
-        fs::remove_file("b.tmp").unwrap();
+        fs::remove_file("b_raw.tmp").unwrap();
     }
 
     #[test]
     fn last_lines_are_read_correctly() {
-        fs::write("c.tmp", "").unwrap();
-        let mut reader = RawLogFileReader::open("c.tmp").unwrap();
+        fs::write("c_raw.tmp", "").unwrap();
+        let mut reader = RawLogFileReader::open("c_raw.tmp").unwrap();
 
         assert!(reader.next().is_none());
 
         fs::write(
-            "c.tmp",
+            "c_raw.tmp",
             r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
         )
             .unwrap();
@@ -335,7 +335,7 @@ mod tests {
             "Fileheader"
         );
 
-        fs::write("c.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+        fs::write("c_raw.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
 {"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
             .unwrap();
 
@@ -353,6 +353,6 @@ mod tests {
             "Commander"
         );
 
-        fs::remove_file("c.tmp").unwrap();
+        fs::remove_file("c_raw.tmp").unwrap();
     }
 }

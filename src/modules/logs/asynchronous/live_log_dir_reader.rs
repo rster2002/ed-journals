@@ -1,13 +1,10 @@
 use std::path::Path;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
-
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::logs::asynchronous::log_dir_reader::{LogDirReader, LogDirReaderError};
+use crate::logs::asynchronous::log_dir_reader::LogDirReaderError;
 use crate::logs::content::LogEvent;
-use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+
+use super::{LogFileReaderError, RawLiveLogDirReader};
 
 /// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and
 /// reads all files. Once all historic files have been read the current read will only resolve once
@@ -37,10 +34,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 /// ```
 #[derive(Debug)]
 pub struct LiveLogDirReader {
-    blocker: AsyncBlocker,
-    log_dir_reader: LogDirReader,
-    _watcher: RecommendedWatcher,
-    active: Arc<AtomicBool>,
+    inner: RawLiveLogDirReader,
 }
 
 #[derive(Debug, Error)]
@@ -54,37 +48,20 @@ pub enum LiveLogDirReaderError {
 
 impl LiveLogDirReader {
     pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
-        let log_dir_reader = LogDirReader::open(&dir_path);
-
-        let blocker = AsyncBlocker::new();
-        let local_blocker = blocker.clone();
-
-        let mut watcher = notify::recommended_watcher(move |_| {
-            local_blocker.unblock_blocking();
-        })?;
-
-        watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
-
         Ok(LiveLogDirReader {
-            blocker,
-            active: Arc::new(AtomicBool::new(true)),
-            _watcher: watcher,
-            log_dir_reader,
+            inner: RawLiveLogDirReader::open(dir_path)?,
         })
     }
 
     pub async fn next(&mut self) -> Option<Result<LogEvent, LiveLogDirReaderError>> {
-        loop {
-            if !self.active.load(Ordering::Relaxed) || self.log_dir_reader.is_failing() {
-                return None;
-            }
-
-            let Some(result) = self.log_dir_reader.next().await else {
-                self.blocker.block().await;
-                continue;
-            };
-
-            return Some(result.map_err(|e| e.into()));
-        }
+        let result = match self.inner.next().await? {
+            Ok(x) => x,
+            Err(e) => return Some(Err(e)),
+        };
+        Some(serde_json::from_value(result).map_err(|e| {
+            LiveLogDirReaderError::LogDirReaderError(
+                LogFileReaderError::FailedToParseLine(e).into(),
+            )
+        }))
     }
 }

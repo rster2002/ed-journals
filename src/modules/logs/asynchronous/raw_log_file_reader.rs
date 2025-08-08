@@ -28,7 +28,7 @@ impl RawLogFileReader {
         })
     }
 
-    async fn read_next(&mut self) -> Result<(), LogFileReaderError> {
+    pub(super) async fn read_next(&mut self) -> Result<(), LogFileReaderError> {
         self.source
             .seek(SeekFrom::Start(self.position as u64))
             .await?;

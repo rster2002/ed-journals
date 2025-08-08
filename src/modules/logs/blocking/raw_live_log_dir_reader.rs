@@ -5,7 +5,7 @@ use std::sync::Arc;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 
-use super::{LiveLogDirReaderError, RawLogDirReader};
+use super::{LiveLogDirHandle, LiveLogDirReaderError, RawLogDirReader};
 
 /// Watches the whole journal dir and reads all files. Once all historic files have been read it
 /// will block the current thread until the newest log file is changed at which it will read the
@@ -60,18 +60,6 @@ impl RawLiveLogDirReader {
             active: self.active.clone(),
             blocker: self.blocker.clone(),
         }
-    }
-}
-
-pub struct LiveLogDirHandle {
-    active: Arc<AtomicBool>,
-    blocker: SyncBlocker,
-}
-
-impl LiveLogDirHandle {
-    pub fn close(&self) {
-        self.active.swap(false, Ordering::Relaxed);
-        self.blocker.unblock();
     }
 }
 
