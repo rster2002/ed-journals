@@ -113,7 +113,7 @@ mod tests {
         let reader = LogDirReader::open(dir_path);
 
         let mut count = 0;
-        for entry in reader {
+        for _ in reader {
             count += 1;
         }
 

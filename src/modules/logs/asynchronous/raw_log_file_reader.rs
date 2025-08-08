@@ -6,8 +6,6 @@ use tokio::fs::File;
 use tokio::io::AsyncReadExt;
 use tokio::io::AsyncSeekExt;
 
-use crate::logs::content::LogEvent;
-
 use super::LogFileReaderError;
 
 #[derive(Debug)]

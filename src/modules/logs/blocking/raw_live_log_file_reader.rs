@@ -1,14 +1,12 @@
-use std::io;
-use std::path::Path;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use std::{path::Path, sync::atomic::Ordering};
 
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
-use thiserror::Error;
 
-use crate::logs::content::LogEvent;
-use crate::modules::logs::blocking::{LogFileReader, LogFileReaderError};
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+
+use super::{LiveLogFileHandle, LiveLogFileReaderError, LogFileReaderError, RawLogFileReader};
 
 /// Allows you to iterate over a journal log file and blocks when there are no entries to read, then
 /// when the file changes it will unblock and return the new line(s).
@@ -28,28 +26,16 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// }
 /// ```
 #[derive(Debug)]
-pub struct LiveLogFileReader {
+pub struct RawLiveLogFileReader {
     blocker: SyncBlocker,
-    log_file_reader: LogFileReader,
+    log_file_reader: RawLogFileReader,
     _watcher: RecommendedWatcher,
     active: Arc<AtomicBool>,
 }
 
-#[derive(Debug, Error)]
-pub enum LiveLogFileReaderError {
-    #[error(transparent)]
-    IO(#[from] io::Error),
-
-    #[error(transparent)]
-    NotifyError(#[from] notify::Error),
-
-    #[error(transparent)]
-    LogFileReaderError(#[from] LogFileReaderError),
-}
-
-impl LiveLogFileReader {
+impl RawLiveLogFileReader {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LiveLogFileReaderError> {
-        let journal_file_reader = LogFileReader::open(&path)?;
+        let journal_file_reader = RawLogFileReader::open(&path)?;
 
         let blocker = SyncBlocker::new();
         let local_blocker = blocker.clone();
@@ -61,7 +47,7 @@ impl LiveLogFileReader {
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        Ok(LiveLogFileReader {
+        Ok(RawLiveLogFileReader {
             blocker,
             log_file_reader: journal_file_reader,
             _watcher: watcher,
@@ -77,21 +63,8 @@ impl LiveLogFileReader {
     }
 }
 
-#[derive(Debug, Clone)]
-pub struct LiveLogFileHandle {
-    pub(super) active: Arc<AtomicBool>,
-    pub(super) blocker: SyncBlocker,
-}
-
-impl LiveLogFileHandle {
-    pub fn stop(&self) {
-        self.active.swap(false, Ordering::Relaxed);
-        self.blocker.unblock();
-    }
-}
-
-impl Iterator for LiveLogFileReader {
-    type Item = Result<LogEvent, LogFileReaderError>;
+impl Iterator for RawLiveLogFileReader {
+    type Item = Result<serde_json::Value, LogFileReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
