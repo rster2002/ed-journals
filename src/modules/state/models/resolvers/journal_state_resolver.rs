@@ -83,7 +83,7 @@ impl JournalStateResolver {
             .and_then(|commander_id| self.commanders.get_mut(commander_id))
     }
 
-    pub fn all_live_state(&self) -> HashMap<&String, LiveStateEntry> {
+    pub fn all_live_state(&self) -> HashMap<&String, LiveStateEntry<'_>> {
         self.commanders
             .iter()
             .map(|(key, value)| {

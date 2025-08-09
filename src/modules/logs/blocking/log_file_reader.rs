@@ -1,13 +1,12 @@
-use std::collections::VecDeque;
-use std::fs::File;
 use std::io;
-use std::io::{Read, Seek, SeekFrom};
 use std::path::Path;
 use std::string::FromUtf8Error;
 
 use thiserror::Error;
 
 use crate::logs::content::LogEvent;
+
+use super::RawLogFileReader;
 
 /// Used for reading entries from a single journal log file. The reader takes care of things like
 /// partial lines if that ever happens and parsing them to a usable [JournalEvent].
@@ -45,11 +44,7 @@ use crate::logs::content::LogEvent;
 /// ```
 #[derive(Debug)]
 pub struct LogFileReader {
-    source: File,
-    position: usize,
-    file_read_buffer: String,
-    entry_buffer: VecDeque<Result<LogEvent, LogFileReaderError>>,
-    failing: bool,
+    inner: RawLogFileReader,
 }
 
 #[derive(Debug, Error)]
@@ -67,56 +62,8 @@ pub enum LogFileReaderError {
 impl LogFileReader {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, LogFileReaderError> {
         Ok(LogFileReader {
-            source: File::open(path)?,
-            position: 0,
-            file_read_buffer: String::new(),
-            entry_buffer: VecDeque::new(),
-            failing: false,
+            inner: RawLogFileReader::open(path)?,
         })
-    }
-
-    fn read_next(&mut self) -> Result<(), LogFileReaderError> {
-        self.source.seek(SeekFrom::Start(self.position as u64))?;
-        self.position += self.source.read_to_string(&mut self.file_read_buffer)?;
-
-        // Set position back one space to ensure the reader doesn't skip a character during the
-        // next read.
-        if self.file_read_buffer.ends_with('\n') {
-            self.position -= 1;
-        }
-
-        let mut lines = self
-            .file_read_buffer
-            .lines()
-            .filter(|line| !line.trim().is_empty())
-            .peekable();
-
-        while let Some(line) = lines.next() {
-            let parse_result = serde_json::from_str(line.trim_matches('\0'));
-
-            #[cfg(test)]
-            if parse_result.is_err() {
-                dbg!(&line);
-                dbg!(&parse_result);
-            }
-
-            // If the line didn't parse, but the line is the last line that was read, it will not
-            // error and instead add the current line back into the read buffer to hopefully be
-            // completed when new lines are added.
-            if parse_result.is_err() && lines.peek().is_none() {
-                self.file_read_buffer = line.to_string();
-                return Ok(());
-            }
-
-            self.entry_buffer
-                .push_back(parse_result.map_err(|e| e.into()));
-        }
-
-        // If it reaches this point that means that the whole read buffer has been processed, so it
-        // can be cleared.
-        self.file_read_buffer.clear();
-
-        Ok(())
     }
 }
 
@@ -124,21 +71,12 @@ impl Iterator for LogFileReader {
     type Item = Result<LogEvent, LogFileReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        // If the reader has failed it will not return any new lines.
-        if self.failing {
-            return None;
-        }
+        let result = match self.inner.next()? {
+            Ok(x) => x,
+            Err(e) => return Some(Err(e)),
+        };
 
-        let result = self.read_next();
-
-        // If an error has been returned at this location that means that it is something that
-        // cannot be recovered from.
-        if let Err(error) = result {
-            self.failing = true;
-            return Some(Err(error));
-        }
-
-        self.entry_buffer.pop_front()
+        Some(serde_json::from_value(result).map_err(|e| e.into()))
     }
 }
 
@@ -239,7 +177,7 @@ mod tests {
 
         assert!(reader.next().is_none());
         assert_eq!(
-            reader.file_read_buffer,
+            reader.inner.file_read_buffer,
             r#"{"timestamp":"2022-10-22T15:12:05Z","#
         );
 

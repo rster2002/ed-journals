@@ -2,12 +2,13 @@ use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use thiserror::Error;
 
-use crate::logs::blocking::log_dir_reader::{LogDirReader, LogDirReaderError};
+use crate::logs::blocking::log_dir_reader::LogDirReaderError;
 use crate::logs::content::LogEvent;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
+
+use super::RawLiveLogDirReader;
 
 /// Watches the whole journal dir and reads all files. Once all historic files have been read it
 /// will block the current thread until the newest log file is changed at which it will read the
@@ -30,10 +31,7 @@ use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 /// ```
 #[derive(Debug)]
 pub struct LiveLogDirReader {
-    blocker: SyncBlocker,
-    log_dir_reader: LogDirReader,
-    _watcher: RecommendedWatcher,
-    active: Arc<AtomicBool>,
+    inner: RawLiveLogDirReader,
 }
 
 #[derive(Debug, Error)]
@@ -47,30 +45,13 @@ pub enum LiveLogDirReaderError {
 
 impl LiveLogDirReader {
     pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<LiveLogDirReader, LiveLogDirReaderError> {
-        let log_dir_reader = LogDirReader::open(&dir_path);
-
-        let blocker = SyncBlocker::new();
-        let local_blocker = blocker.clone();
-
-        let mut watcher = notify::recommended_watcher(move |_| {
-            local_blocker.unblock();
-        })?;
-
-        watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
-
         Ok(Self {
-            blocker,
-            log_dir_reader,
-            active: Arc::new(AtomicBool::new(true)),
-            _watcher: watcher,
+            inner: RawLiveLogDirReader::open(dir_path)?,
         })
     }
 
     pub fn handle(&self) -> LiveLogDirHandle {
-        LiveLogDirHandle {
-            active: self.active.clone(),
-            blocker: self.blocker.clone(),
-        }
+        self.inner.handle()
     }
 }
 
@@ -80,6 +61,10 @@ pub struct LiveLogDirHandle {
 }
 
 impl LiveLogDirHandle {
+    pub fn new(active: Arc<AtomicBool>, blocker: SyncBlocker) -> Self {
+        LiveLogDirHandle { active, blocker }
+    }
+
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
         self.blocker.unblock();
@@ -90,17 +75,14 @@ impl Iterator for LiveLogDirReader {
     type Item = Result<LogEvent, LiveLogDirReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            if !self.active.load(Ordering::Relaxed) || self.log_dir_reader.is_failing() {
-                return None;
-            }
-
-            let Some(result) = self.log_dir_reader.next() else {
-                self.blocker.block();
-                continue;
-            };
-
-            return Some(result.map_err(|e| e.into()));
-        }
+        let result = match self.inner.next()? {
+            Ok(x) => x,
+            Err(e) => return Some(Err(e)),
+        };
+        Some(serde_json::from_value(result).map_err(|e| {
+            LiveLogDirReaderError::LogDirReaderError(LogDirReaderError::LogFileReaderError(
+                super::LogFileReaderError::FailedToParseLine(e),
+            ))
+        }))
     }
 }

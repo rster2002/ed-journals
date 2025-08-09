@@ -2,17 +2,15 @@ use std::path::Path;
 
 use thiserror::Error;
 
-use crate::logs::blocking::{LogFileReader, LogFileReaderError};
+use crate::logs::blocking::LogFileReaderError;
 use crate::logs::content::LogEvent;
-use crate::logs::{LogDir, LogDirError, LogFile, LogFileError};
+use crate::logs::{LogDirError, LogFileError};
+
+use super::RawLogDirReader;
 
 #[derive(Debug)]
 pub struct LogDirReader {
-    dir: LogDir,
-    current_file: Option<LogFile>,
-    current_reader: Option<LogFileReader>,
-    reading_latest: bool,
-    failing: bool,
+    inner: RawLogDirReader,
 }
 
 #[derive(Debug, Error)]
@@ -30,50 +28,16 @@ pub enum LogDirReaderError {
 impl LogDirReader {
     pub fn open<P: AsRef<Path>>(path: P) -> Self {
         LogDirReader {
-            dir: LogDir::new(path.as_ref().to_path_buf()),
-            current_file: None,
-            current_reader: None,
-            reading_latest: false,
-            failing: false,
+            inner: RawLogDirReader::open(path),
         }
-    }
-
-    fn set_current_file(&mut self, journal_file: LogFile) -> Result<(), LogDirReaderError> {
-        self.current_reader = Some(journal_file.create_blocking_reader()?);
-        self.current_file = Some(journal_file);
-
-        Ok(())
     }
 
     pub fn is_reading_latest(&self) -> bool {
-        self.reading_latest
-    }
-
-    fn set_next_file(&mut self) -> Result<bool, LogDirReaderError> {
-        let files = self.dir.journal_logs_oldest_first()?;
-        let is_empty = files.is_empty();
-
-        let length = files.len();
-
-        for (index, file) in files.into_iter().enumerate() {
-            self.reading_latest = length == index + 1;
-
-            let Some(current) = &self.current_file else {
-                self.set_current_file(file)?;
-                return Ok(true);
-            };
-
-            if &file > current {
-                self.set_current_file(file)?;
-                return Ok(true);
-            }
-        }
-
-        Ok(is_empty)
+        self.inner.is_reading_latest()
     }
 
     pub fn is_failing(&self) -> bool {
-        self.failing
+        self.inner.is_failing()
     }
 }
 
@@ -81,35 +45,14 @@ impl Iterator for LogDirReader {
     type Item = Result<LogEvent, LogDirReaderError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            if self.current_reader.is_none() {
-                match self.set_next_file() {
-                    Ok(true) => {}
-                    Ok(false) => return None,
-                    Err(error) => {
-                        self.failing = true;
-                        return Some(Err(error));
-                    }
-                }
-            }
-
-            let Some(reader) = &mut self.current_reader else {
-                return None;
-            };
-
-            let Some(entry) = reader.next() else {
-                match self.set_next_file() {
-                    Ok(true) => continue,
-                    Ok(false) => return None,
-                    Err(error) => {
-                        self.failing = true;
-                        return Some(Err(error));
-                    }
-                }
-            };
-
-            return Some(entry.map_err(|e| e.into()));
-        }
+        let result = match self.inner.next()? {
+            Ok(x) => x,
+            Err(e) => return Some(Err(e)),
+        };
+        Some(
+            serde_json::from_value(result)
+                .map_err(|e| LogFileReaderError::FailedToParseLine(e).into()),
+        )
     }
 }
 
@@ -126,7 +69,7 @@ mod tests {
         let reader = LogDirReader::open(dir_path);
 
         let mut count = 0;
-        for entry in reader {
+        for _ in reader {
             count += 1;
         }
 

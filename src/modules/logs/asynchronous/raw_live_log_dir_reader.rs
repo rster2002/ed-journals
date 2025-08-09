@@ -1,0 +1,79 @@
+use std::path::Path;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
+
+use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
+use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+
+use super::{LiveLogDirReaderError, RawLogDirReader};
+
+/// The async variant of [super::blocking::LiveLogDirReader]. Watches the whole journal dir and
+/// reads all files. Once all historic files have been read the current read will only resolve once
+/// the newest log file is changed at which it will read the active log file and return the entry.
+///
+/// ```rust
+/// # use std::env::current_dir;
+/// use std::path::PathBuf;
+/// use ed_journals::logs::asynchronous::LiveLogDirReader;
+///
+/// # tokio_test::block_on(async {
+/// let path = PathBuf::from("somePath");
+/// # let path = current_dir()
+/// #    .unwrap()
+/// #    .join("test-files")
+/// #    .join("journals");
+/// let mut live_dir_reader = LiveLogDirReader::open(path)
+///     .unwrap();
+///
+/// // At first this will read all existing lines from the journal logs, after which it will wait
+/// // until it detects new entries in the latest log file.
+/// while let Some(entry) = live_dir_reader.next().await {
+///     // Do something with the entry
+///     # break;
+/// }
+/// # });
+/// ```
+#[derive(Debug)]
+pub struct RawLiveLogDirReader {
+    blocker: AsyncBlocker,
+    log_dir_reader: RawLogDirReader,
+    _watcher: RecommendedWatcher,
+    active: Arc<AtomicBool>,
+}
+
+impl RawLiveLogDirReader {
+    pub fn open<P: AsRef<Path>>(dir_path: P) -> Result<RawLiveLogDirReader, LiveLogDirReaderError> {
+        let log_dir_reader = RawLogDirReader::open(&dir_path);
+
+        let blocker = AsyncBlocker::new();
+        let local_blocker = blocker.clone();
+
+        let mut watcher = notify::recommended_watcher(move |_| {
+            local_blocker.unblock_blocking();
+        })?;
+
+        watcher.watch(dir_path.as_ref(), RecursiveMode::NonRecursive)?;
+
+        Ok(RawLiveLogDirReader {
+            blocker,
+            active: Arc::new(AtomicBool::new(true)),
+            _watcher: watcher,
+            log_dir_reader,
+        })
+    }
+
+    pub async fn next(&mut self) -> Option<Result<serde_json::Value, LiveLogDirReaderError>> {
+        loop {
+            if !self.active.load(Ordering::Relaxed) || self.log_dir_reader.is_failing() {
+                return None;
+            }
+
+            let Some(result) = self.log_dir_reader.next().await else {
+                self.blocker.block().await;
+                continue;
+            };
+
+            return Some(result.map_err(|e| e.into()));
+        }
+    }
+}

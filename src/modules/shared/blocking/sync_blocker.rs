@@ -9,9 +9,7 @@ pub struct SyncBlocker {
 
 impl SyncBlocker {
     pub fn new() -> Self {
-        SyncBlocker {
-            waiting_thread: Arc::new(Mutex::new((None,))),
-        }
+        SyncBlocker::default()
     }
 
     pub fn unblock(&self) {
@@ -31,5 +29,13 @@ impl SyncBlocker {
         }
 
         thread::park();
+    }
+}
+
+impl Default for SyncBlocker {
+    fn default() -> Self {
+        SyncBlocker {
+            waiting_thread: Arc::new(Mutex::new((None,))),
+        }
     }
 }
