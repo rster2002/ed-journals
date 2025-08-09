@@ -65,10 +65,7 @@ pub struct LiveLogFileHandle {
 
 impl LiveLogFileHandle {
     pub fn new(active: Arc<AtomicBool>, blocker: SyncBlocker) -> Self {
-        LiveLogFileHandle {
-            active,
-            blocker,
-        }
+        LiveLogFileHandle { active, blocker }
     }
 
     pub fn stop(&self) {

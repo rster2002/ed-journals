@@ -56,10 +56,7 @@ impl RawLiveLogDirReader {
     }
 
     pub fn handle(&self) -> LiveLogDirHandle {
-        LiveLogDirHandle::new(
-            self.active.clone(),
-            self.blocker.clone(),
-        )
+        LiveLogDirHandle::new(self.active.clone(), self.blocker.clone())
     }
 }
 

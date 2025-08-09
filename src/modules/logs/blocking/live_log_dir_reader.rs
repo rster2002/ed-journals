@@ -62,10 +62,7 @@ pub struct LiveLogDirHandle {
 
 impl LiveLogDirHandle {
     pub fn new(active: Arc<AtomicBool>, blocker: SyncBlocker) -> Self {
-        LiveLogDirHandle {
-            active,
-            blocker,
-        }
+        LiveLogDirHandle { active, blocker }
     }
 
     pub fn close(&self) {

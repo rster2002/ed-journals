@@ -56,10 +56,7 @@ impl RawLiveLogFileReader {
     }
 
     pub fn handle(&self) -> LiveLogFileHandle {
-        LiveLogFileHandle::new(
-            self.active.clone(),
-            self.blocker.clone(),
-        )
+        LiveLogFileHandle::new(self.active.clone(), self.blocker.clone())
     }
 }
 
