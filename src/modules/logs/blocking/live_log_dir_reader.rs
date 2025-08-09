@@ -56,11 +56,18 @@ impl LiveLogDirReader {
 }
 
 pub struct LiveLogDirHandle {
-    pub(super) active: Arc<AtomicBool>,
-    pub(super) blocker: SyncBlocker,
+    active: Arc<AtomicBool>,
+    blocker: SyncBlocker,
 }
 
 impl LiveLogDirHandle {
+    pub fn new(active: Arc<AtomicBool>, blocker: SyncBlocker) -> Self {
+        LiveLogDirHandle {
+            active,
+            blocker,
+        }
+    }
+
     pub fn close(&self) {
         self.active.swap(false, Ordering::Relaxed);
         self.blocker.unblock();

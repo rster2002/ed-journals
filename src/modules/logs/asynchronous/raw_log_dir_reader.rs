@@ -10,8 +10,8 @@ pub struct RawLogDirReader {
     dir: LogDir,
     current_file: Option<LogFile>,
     current_reader: Option<RawLogFileReader>,
-    pub(super) is_live: bool,
-    pub(super) failing: bool,
+    is_live: bool,
+    failing: bool,
 }
 
 impl RawLogDirReader {
@@ -59,6 +59,10 @@ impl RawLogDirReader {
         }
 
         Ok(is_empty)
+    }
+
+    pub fn is_live(&self) -> bool {
+        self.is_live
     }
 
     pub fn is_failing(&self) -> bool {

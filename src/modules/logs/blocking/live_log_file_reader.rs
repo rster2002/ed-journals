@@ -59,11 +59,18 @@ impl LiveLogFileReader {
 
 #[derive(Debug, Clone)]
 pub struct LiveLogFileHandle {
-    pub(super) active: Arc<AtomicBool>,
-    pub(super) blocker: SyncBlocker,
+    active: Arc<AtomicBool>,
+    blocker: SyncBlocker,
 }
 
 impl LiveLogFileHandle {
+    pub fn new(active: Arc<AtomicBool>, blocker: SyncBlocker) -> Self {
+        LiveLogFileHandle {
+            active,
+            blocker,
+        }
+    }
+
     pub fn stop(&self) {
         self.active.swap(false, Ordering::Relaxed);
         self.blocker.unblock();

@@ -33,11 +33,11 @@ impl LogDirReader {
     }
 
     pub fn is_reading_latest(&self) -> bool {
-        self.inner.is_live
+        self.inner.is_live()
     }
 
     pub fn is_failing(&self) -> bool {
-        self.inner.failing
+        self.inner.is_failing()
     }
 
     pub async fn next(&mut self) -> Option<Result<LogEvent, LogDirReaderError>> {
