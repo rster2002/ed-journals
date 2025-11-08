@@ -5,10 +5,10 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase")]
 pub struct FriendsEvent {
     /// The name of the friend.
-    name: String,
+    pub name: String,
 
     /// The status of the event related to the friend.
-    status: FriendsEventStatus,
+    pub status: FriendsEventStatus,
 }
 
 /// The status of the event related to the friend.
