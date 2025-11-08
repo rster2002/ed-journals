@@ -1,25 +1,16 @@
-//! Below is a simple example on how to read logs and feed then into the state:
+//! There are multiple models that can be used to track state for both [LogEvents](crate::logs::LogEvent) and
+//! [JournalEvents](crate::journal::JournalEvent). The most top-level models that track the most are:
 //!
-//! ```rust
-//! use std::env::current_dir;
-//! use ed_journals::logs::blocking::LogDirReader;
-//! use ed_journals::state::GameState;
-//!
-//! let path = current_dir()
-//!     .unwrap()
-//!     .join("test-files")
-//!     .join("journals");
-//!
-//! // Create a reader and an empty game state
-//! let mut log_reader = LogDirReader::open(&path);
-//! let mut state = GameState::default();
-//!
-//! // Read all the entries from the journal logs
-//! for entry in log_reader {
-//!     state.feed(&entry.unwrap());
-//!     # break;
-//! }
-//! ```
+//! - [GameState](crate::state::GameState) is used for when you want to track the state of an Elite: Dangerous installation.
+//!   It automatically differentiates between different commanders if the installation happens to
+//!   contain logs for multiple accounts.
+//! - [LogState](crate::state::LogState) acts a lot like GameState, but *does not* differentiate between different
+//!   commanders and treats everything as a single state. You might use this for example when
+//!   processing logs where the specific commander does not matter.
+//! - [JournalState](crate::state::JournalState) is used in conjunction with a
+//!   [LiveJournalDirReader](crate::journal::blocking::LiveJournalDirReader) to combine log
+//!   information with live information from the various JSON files that the game updates
+//!   periodically.
 
 pub use models::resolvers::game_state_resolver::game_commander_entry::GameCommanderEntry;
 pub use models::resolvers::journal_state_resolver::journal_commander_entry::JournalCommanderEntry;
@@ -33,6 +24,8 @@ pub use models::resolvers::shipyard_state_resolver::ship_entry::ShipEntry;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::ShipStatus;
 pub use models::resolvers::shipyard_state_resolver::ship_entry::TransferringShipStatus;
 pub use models::state::carrier_state::CarrierState;
+
+/// State related to a game instance and keeps track of multiple commanders.
 pub use models::state::game_state::GameState;
 pub use models::state::journal_state::JournalState;
 pub use models::state::live_state::LiveState;
