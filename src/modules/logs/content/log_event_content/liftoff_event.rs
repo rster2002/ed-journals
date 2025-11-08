@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when lifting off from a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LiftoffEvent {
     /// The coordinates where the player has lifted off when on a planet.
@@ -43,6 +44,7 @@ pub struct LiftoffEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LiftoffEventPosition {
     pub latitude: f32,

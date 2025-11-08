@@ -6,6 +6,7 @@ use crate::modules::ship::{ShipModule, ShipSlot, ShipType};
 
 /// Fired when buying a new module and equipping it to the current active ship.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleBuyEvent {
     /// The slot the module is installed into.

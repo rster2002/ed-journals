@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::civilization::{FactionHappiness, FactionState, Government, Superpower};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct Faction {
     pub name: String,
@@ -36,6 +37,7 @@ pub struct Faction {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FactionActiveState {
     pub state: FactionState,

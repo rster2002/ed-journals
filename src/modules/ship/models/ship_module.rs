@@ -34,6 +34,7 @@ pub mod ship_weapon_color;
 /// where utility modules have a hardpoint size of [HardpointSize::Tiny].
 ///
 /// The same is true for core internals and optional internals which both use [ShipInternalModule].
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ShipModule {
     /// Special case for the cargo bay door.

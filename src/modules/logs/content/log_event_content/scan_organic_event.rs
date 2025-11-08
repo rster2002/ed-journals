@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::exobiology::{Genus, Species, Variant};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanOrganicEvent {
     /// Possible values seem to be "Sample", "Analyze", "Log". It seems that the first scan for
@@ -29,6 +30,7 @@ pub struct ScanOrganicEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanOrganicEventScanType {
     Sample,

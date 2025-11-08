@@ -7,6 +7,7 @@ use crate::mixed::MixedCommodity;
 /// Fired when managing a fleet carrier trade order. This is fired for trade orders for both ship commodities and
 /// odyssey items.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierTradeOrderEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as
@@ -36,6 +37,7 @@ pub struct CarrierTradeOrderEvent {
 }
 
 /// The type of action for a given trade order.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierTradeOrderEventOrder {
     /// For when the fleet carrier is buying commodities from other commanders, with the specified

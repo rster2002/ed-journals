@@ -6,6 +6,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired when the player clears their ship after being arrested while on-foot.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ClearImpoundEvent {
     /// The ship type of the impounded ship.

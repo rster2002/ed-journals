@@ -6,6 +6,7 @@ use crate::modules::ship::FighterLoadout;
 
 /// Fired when the ship launched fighter has been rebuild.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FighterRebuiltEvent {
     /// The load-out of the ship launched fighter.

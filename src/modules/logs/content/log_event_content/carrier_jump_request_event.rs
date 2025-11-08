@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the fleet carrier owner schedules a jump.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierJumpRequestEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as

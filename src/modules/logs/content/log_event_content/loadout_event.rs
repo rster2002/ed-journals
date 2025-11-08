@@ -6,6 +6,7 @@ use crate::modules::ship::{ShipModule, ShipSlot, ShipType};
 
 /// Fired when there are updates to the player's ship modules.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadoutEvent {
     /// The current active ship.
@@ -27,6 +28,7 @@ pub struct LoadoutEvent {
 
 /// An active loadout module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadoutEventModule {
     /// The slot the module is assigned to.

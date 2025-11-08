@@ -6,6 +6,7 @@ use crate::modules::ship::{ShipModule, ShipType};
 
 /// Fired when selling a module that is stored at another location.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ModuleSellRemoteEvent {
     /// The storage slot the module occupied

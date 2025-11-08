@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// The state a faction can be in. The primary faction for a system also dictates the state of the
 /// system as a whole.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum FactionState {
     Blight,

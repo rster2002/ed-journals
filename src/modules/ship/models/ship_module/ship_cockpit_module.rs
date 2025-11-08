@@ -10,6 +10,7 @@ use crate::modules::ship::ShipType;
 
 /// Represents the cockpit module, which is different per ship type.
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ShipCockpitModule(pub ShipType);
 
 #[derive(Debug, Error)]

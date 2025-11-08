@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when a faction has paid for scanning a datapoint.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DatalinkVoucherEvent {
     /// Number of credits awarded.

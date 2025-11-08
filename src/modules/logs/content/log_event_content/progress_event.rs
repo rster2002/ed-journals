@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Includes information about the current progress of the player to the next rank.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ProgressEvent {
     /// Progress of the combat rank between 0-100.

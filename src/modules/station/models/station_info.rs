@@ -8,6 +8,7 @@ use crate::modules::station::StationService;
 /// 'station' in the fields, the actual location doesn't always have to be an actual space station
 /// and this model can also be set at settlements and fleet carriers.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfo {
     /// The id of the market. This is what the game uses behind the scenes instead of the actual
@@ -41,6 +42,7 @@ pub struct StationInfo {
 
 /// Information about a faction for the market.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfoFaction {
     /// The name of the faction.
@@ -52,6 +54,7 @@ pub struct StationInfoFaction {
 
 /// Information about an economy.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StationInfoEconomy {
     /// The type of economy.

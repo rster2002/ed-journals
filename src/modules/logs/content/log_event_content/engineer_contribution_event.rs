@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player contributes to an unlock requirement for an engineer.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEvent {
     /// The engineer the player contributed to.
@@ -23,6 +24,7 @@ pub struct EngineerContributionEvent {
 
 /// The kind of contribution to an engineer.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", tag = "Type")]
 pub enum EngineerContributionEventType {
     /// A commodity contribution where the player sourced and delivered a certain commodity.
@@ -37,6 +39,7 @@ pub enum EngineerContributionEventType {
 
 /// Contribution where the player sourced and delivered a certain commodity.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEventCommodityContribution {
     /// The commodity that was delivered.
@@ -51,6 +54,7 @@ pub struct EngineerContributionEventCommodityContribution {
 
 /// Contribution where the player donated a number of materials.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEventMaterialContribution {
     /// The material that was donated.
@@ -65,6 +69,7 @@ pub struct EngineerContributionEventMaterialContribution {
 
 /// Contribution where the plater handed in a number of bounties.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct EngineerContributionEventBountyContribution {
     /// Number of bounties that were handed in at this moment.

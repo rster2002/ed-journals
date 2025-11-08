@@ -9,6 +9,7 @@ use crate::materials::MaterialGrade;
 use crate::modules::materials::MaterialCategory;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Material {
     // Raw

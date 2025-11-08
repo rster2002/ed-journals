@@ -6,6 +6,7 @@ use serde::Serialize;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CombatRank {
     Harmless,
     MostlyHarmless,
@@ -32,6 +33,7 @@ pub enum CombatRank {
 }
 
 #[derive(Debug, Error)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CombatRankError {
     #[error("Unknown combat rank with id '{0}'")]
     UnknownCombatRank(u8),

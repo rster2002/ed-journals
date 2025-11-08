@@ -11,6 +11,7 @@ use crate::modules::thargoid::ThargoidShip;
 /// Fired when the player dies. Depending on the way the player died the event contains different
 /// information.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum DiedEvent {
     /// The default value that does not contain any information related to the way the player died.
@@ -25,12 +26,14 @@ pub enum DiedEvent {
 
 /// This should not contain any fields and is just here to make [serde] happy.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventNone {}
 
 /// When the player is killed by someone. This can be either be players or NPCs like Thargoids.
 /// This is also fired when killed by an on-foot combattant.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventIndividualKill {
     /// The name of the player's killer. This might be None when killed by for example a Thargoid.
@@ -50,6 +53,7 @@ pub struct DiedEventIndividualKill {
 
 /// Event for when killed by a wing.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventWingKill {
     /// List of participating killers.
@@ -58,6 +62,7 @@ pub struct DiedEventWingKill {
 
 /// A killer from a wing.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DiedEventWingKiller {
     /// The name of the commander that was part of the wing that killed the player.
@@ -71,6 +76,7 @@ pub struct DiedEventWingKiller {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(untagged)]
 pub enum DiedEventKillerShip {
     /// When killed by a human ship.

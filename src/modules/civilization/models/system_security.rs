@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// The level of security present in a system which controls how much security force is present in
 /// the system.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum SystemSecurity {
     #[serde(rename = "$SYSTEM_SECURITY_high;")]
