@@ -8,6 +8,7 @@ pub enum LogError {
     IO(#[from] std::io::Error),
     SerdeJson(#[from] serde_json::Error),
     NotifyError(#[from] notify::Error),
+    ReceiveError(#[from] crossbeam_channel::RecvError),
 
     #[error("Missing file name")]
     MissingFileName,

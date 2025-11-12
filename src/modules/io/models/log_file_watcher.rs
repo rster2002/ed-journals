@@ -38,6 +38,10 @@ impl LogFileWatcher {
         })
     }
 
+    pub fn next(&self) -> Result<(), LogError> {
+        self.receiver.recv()?
+    }
+
     fn create_watcher(sender: Sender<Result<(), LogError>>) -> Result<RecommendedWatcher, LogError> {
         Ok(notify::recommended_watcher(move |event| {
             let event: notify::Event = match event {
@@ -51,7 +55,7 @@ impl LogFileWatcher {
             #[cfg(target_family = "unix")]
             match event.kind {
                 EventKind::Create(CreateKind::File)
-                | EventKind::Modify(ModifyKind::Data(DataChange::Content)) => true,
+                | EventKind::Modify(ModifyKind::Data(_)) => true,
                 _ => return,
             };
 
@@ -63,5 +67,19 @@ impl LogFileWatcher {
 
             let _ = sender.send(Ok(()));
         })?)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::io::LogFileWatcher;
+    use crate::modules::tests::simulate_log_file;
+
+    #[test]
+    fn basic_watching_works_as_expected() {
+        let (path, handle) = simulate_log_file("basic_log.log");
+        let watcher = LogFileWatcher::open_bounded(&path, 10).unwrap();
+
+        watcher.next().unwrap();
     }
 }
