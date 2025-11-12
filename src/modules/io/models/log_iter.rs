@@ -2,7 +2,22 @@ use crate::logs::LogEvent;
 use crate::modules::io::error::LogError;
 use std::io::Read;
 
-/// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent).
+/// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent). You can
+/// read the contents of a file wrapping a file with this iterator.
+///
+/// ```rust
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use ed_journals::io::LogIter;
+///
+/// let file = File::open("./test-files/journals/Journal.2022-10-11T214552.01.log")
+///     .unwrap();
+/// let buf_reader = BufReader::new(file);
+///
+/// let mut iterator = LogIter::from(buf_reader);
+///
+/// assert!(iterator.next().is_some());
+/// ```
 #[derive(Debug)]
 pub struct LogIter<T>
 where
@@ -73,7 +88,7 @@ where
 mod tests {
 
     use crate::logs::LogEventContentKind;
-    use crate::modules::io::models::log_file::log_iter::LogIter;
+    use crate::modules::io::models::log_iter::LogIter;
     use std::fs;
     use std::fs::File;
     use std::io::{BufReader, Cursor};

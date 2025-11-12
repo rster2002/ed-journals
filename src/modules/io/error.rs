@@ -1,5 +1,5 @@
-// use chrono::ParseError;
-// use std::num::ParseIntError;
+use chrono::ParseError;
+use std::num::ParseIntError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -8,18 +8,20 @@ pub enum LogError {
     IO(#[from] std::io::Error),
     SerdeJson(#[from] serde_json::Error),
     NotifyError(#[from] notify::Error),
-    // #[error("Missing file name")]
-    // MissingFileName,
+    ReceiveError(#[from] crossbeam_channel::RecvError),
 
-    // #[error("Failed to represent file name")]
-    // FailedToRepresentOsString,
+    #[error("Missing file name")]
+    MissingFileName,
 
-    // #[error("Incorrect file name")]
-    // IncorrectFileName,
+    #[error("Failed to represent file name")]
+    FailedToRepresentOsString,
 
-    // #[error("Failed to parse timestamp of log file")]
-    // FailedToParseLogTime(#[source] ParseError),
+    #[error("Incorrect file name")]
+    IncorrectFileName,
 
-    // #[error("Failed to parse part number of log file")]
-    // FailedToParsePart(#[source] ParseIntError),
+    #[error("Failed to parse timestamp of log file")]
+    FailedToParseLogTime(#[source] ParseError),
+
+    #[error("Failed to parse part number of log file")]
+    FailedToParsePart(#[source] ParseIntError),
 }

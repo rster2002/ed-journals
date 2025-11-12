@@ -89,7 +89,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::logs::LogEventContentKind;
-    use crate::modules::io::models::log_file::async_iter::AsyncIter;
+    use crate::modules::io::models::async_iter::AsyncIter;
     use async_fs::File;
     use futures::io::Cursor;
     use futures::StreamExt;

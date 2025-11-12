@@ -112,3 +112,7 @@ pub mod partials;
 /// Sometimes the game reuses certain events and instead of 'ship' data it sets Odyssey related
 /// data. These mixed data types handle these differences.
 pub mod mixed;
+
+/// Utilities for testing.
+#[cfg(test)]
+mod tests;
