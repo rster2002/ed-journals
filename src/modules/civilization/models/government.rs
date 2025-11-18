@@ -80,6 +80,7 @@ impl Display for Government {
                 Government::PrisonColony => "Prison Colony",
                 Government::PrivateOwnership => "Private Ownership",
                 Government::Theocracy => "Theocracy",
+                Government::Megastructure => "Megastructure",
 
                 Government::None => "None",
 
