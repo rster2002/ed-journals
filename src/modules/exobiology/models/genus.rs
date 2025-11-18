@@ -25,6 +25,7 @@ pub enum Genus {
     Fumerola,
     Fungoida,
     Osseus,
+    Radicoida,
     Recepta,
     SinuousTubers, // TODO needs to be verified
     Stratum,
@@ -65,6 +66,7 @@ impl Genus {
             Genus::Fumerola => 100,
             Genus::Fungoida => 300,
             Genus::Osseus => 800,
+            Genus::Radicoida => 5, // TODO actual value might change
             Genus::Recepta => 150,
             Genus::SinuousTubers => 100,
             Genus::Stratum => 500,
@@ -97,6 +99,7 @@ impl Genus {
             Genus::Fumerola => 23800,
             Genus::Fungoida => 23900,
             Genus::Osseus => 24000,
+            Genus::Radicoida => 0, // TODO needs to be specified
             Genus::Recepta => 24100,
             Genus::SinuousTubers => 2100500,
             Genus::Stratum => 24200,
@@ -147,6 +150,7 @@ impl FromStr for Genus {
             "fumerolas_genus" => Genus::Fumerola,
             "fungoids_genus" => Genus::Fungoida,
             "osseus_genus" => Genus::Osseus,
+            "ingensradices_genus" => Genus::Radicoida,
             "recepta_genus" => Genus::Recepta,
             "tube" => Genus::SinuousTubers,
             "stratum_genus" => Genus::Stratum,
@@ -261,6 +265,8 @@ impl From<&Species> for Genus {
             | Species::OsseusPellebantus
             | Species::OsseusDiscus => Genus::Osseus,
 
+            Species::RadicoidaUnica => Genus::Radicoida,
+
             Species::ReceptaUmbrux | Species::ReceptaDeltahedronix | Species::ReceptaConditivus => {
                 Genus::Recepta
             }
@@ -345,6 +351,7 @@ impl Display for Genus {
                 Genus::Fumerola => "Fumerola",
                 Genus::Fungoida => "Fungoida",
                 Genus::Osseus => "Osseus",
+                Genus::Radicoida => "Radicoida",
                 Genus::Recepta => "Recepta",
                 Genus::SinuousTubers => "Sinuous Tubers",
                 Genus::Stratum => "Stratum",

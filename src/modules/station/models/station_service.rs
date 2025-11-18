@@ -75,6 +75,9 @@ pub enum StationService {
     #[serde(rename = "stationMenu")]
     StationMenu,
 
+    #[serde(rename = "squadronBank")]
+    SquadronBank,
+
     #[serde(rename = "carriervendor")]
     CarrierVendor,
 
@@ -153,6 +156,7 @@ impl Display for StationService {
                 StationService::Livery => "Livery",
                 StationService::Tuning => "Tuning",
                 StationService::SearchAndRescue => "Search & Rescue",
+                StationService::SquadronBank => "Squadron Bank",
                 StationService::Dock => "Dock",
                 StationService::AutoDock => "Auto Dock",
                 StationService::Commodities => "Commodities",

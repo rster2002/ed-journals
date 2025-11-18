@@ -123,6 +123,9 @@ pub enum Species {
     OsseusCornibus,
     OsseusPellebantus,
 
+    // Radicoida
+    RadicoidaUnica,
+
     // Recepta
     ReceptaUmbrux,
     ReceptaDeltahedronix,
@@ -305,6 +308,8 @@ impl Species {
             Species::OsseusPumice => 3_156_300,
             Species::OsseusCornibus => 1_483_000,
             Species::OsseusPellebantus => 9_739_000,
+
+            Species::RadicoidaUnica => 119_037,
 
             Species::ReceptaUmbrux => 12_934_900,
             Species::ReceptaDeltahedronix => 16_202_800,
@@ -490,6 +495,8 @@ impl FromStr for Species {
             "osseus_05" => Species::OsseusCornibus,
             "osseus_06" => Species::OsseusPellebantus,
 
+            "ingensradices_unicus" => Species::RadicoidaUnica,
+
             "recepta_01" => Species::ReceptaUmbrux,
             "recepta_02" => Species::ReceptaDeltahedronix,
             "recepta_03" => Species::ReceptaConditivus,
@@ -649,6 +656,8 @@ impl Display for Species {
                 Species::OsseusPellebantus => "Osseus Pellebantus",
                 Species::OsseusPumice => "Osseus Pumice",
                 Species::OsseusSpiralis => "Osseus Spiralis",
+
+                Species::RadicoidaUnica => "Radicoida Unica",
 
                 Species::ReceptaConditivus => "Recepta Conditivus",
                 Species::ReceptaDeltahedronix => "Recepta Deltahedronix",
