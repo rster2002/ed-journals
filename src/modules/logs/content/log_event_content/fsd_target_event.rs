@@ -11,15 +11,15 @@ use crate::modules::galaxy::StarClass;
 pub struct FSDTargetEvent {
     // TODO check when this is included
     #[serde(rename = "Starsystem")]
-    star_system: Option<String>,
+    pub star_system: Option<String>,
 
     /// The name of the system selected.
-    name: String,
+    pub name: String,
 
     /// Number of remaining jumps on the route, if any.
     #[serde(default)]
-    remaining_jumps_in_route: u32,
+    pub remaining_jumps_in_route: u32,
 
     /// Star class of the select system.
-    star_class: StarClass,
+    pub star_class: StarClass,
 }
