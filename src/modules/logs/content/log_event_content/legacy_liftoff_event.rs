@@ -30,6 +30,7 @@ pub struct LegacyLiftoffEvent {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[allow(dead_code)]
 pub struct LegacyLiftoffEventPosition {
     pub latitude: f32,
     pub longitude: f32,

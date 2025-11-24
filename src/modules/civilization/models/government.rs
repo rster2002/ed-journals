@@ -41,15 +41,18 @@ pub enum Government {
     #[serde(alias = "$government_Engineer;")]
     Engineer,
 
-    #[serde(alias = "$government_None;")]
-    None,
-
     #[serde(alias = "$government_Prison;")]
     Prison,
+
+    #[serde(alias = "$government_Megaconstruction;")]
+    Megastructure,
 
     /// Private ownership indicates a fleet carrier that is owned by a player.
     #[serde(alias = "$government_Carrier;")]
     PrivateOwnership,
+
+    #[serde(alias = "$government_None;")]
+    None,
 
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
@@ -77,6 +80,7 @@ impl Display for Government {
                 Government::PrisonColony => "Prison Colony",
                 Government::PrivateOwnership => "Private Ownership",
                 Government::Theocracy => "Theocracy",
+                Government::Megastructure => "Megastructure",
 
                 Government::None => "None",
 

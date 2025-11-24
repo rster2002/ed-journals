@@ -9,6 +9,7 @@ use crate::from_str_deserialize_impl;
 
 /// Mission_Sightseeing_Criminal_BOOM
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[allow(dead_code)]
 pub struct SightseeingMission {
     // TODO use enum
     pub citizen: String,
