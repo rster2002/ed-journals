@@ -10,18 +10,19 @@ use notify::event::{CreateKind, DataChange, ModifyKind};
 use crate::io::{LogError, LogIter};
 
 pub struct LogFileWatcher {
+    // Oh god
     sender: Arc<RwLock<Option<Sender<Result<(), LogError>>>>>,
-    // receiver: Receiver<Result<(), LogError>>,
     _watcher: RecommendedWatcher,
 }
 
 impl LogFileWatcher {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LogFileWatcher, LogError> {
-        // Oh god
-        let senders = Arc::new(RwLock::new(None::<Sender<Result<(), LogError>>>));
-        let local_senders = senders.clone();
+        let sender = Arc::new(RwLock::new(None::<Sender<Result<(), LogError>>>));
+        let local_senders = sender.clone();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
+            dbg!(&event);
+
             let sender_lock = local_senders.read()
                 .expect("Failed to get rw lock");
 
@@ -54,11 +55,22 @@ impl LogFileWatcher {
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
+        dbg!("Start watching here");
+        dbg!(path.as_ref());
 
         Ok(LogFileWatcher {
-            sender: senders,
+            sender,
             _watcher: watcher,
         })
+    }
+
+    pub fn set_sender(&self, sender: Sender<Result<(), LogError>>) -> Result<(), LogError> {
+        let mut guard = self.sender.write()
+            .map_err(|_| LogError::PoisonError)?;
+
+        *guard = Some(sender);
+
+        Ok(())
     }
 
     // /// Starts watching the given path and creates an [unbounded] channel.

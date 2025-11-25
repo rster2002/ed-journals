@@ -1,5 +1,7 @@
 use chrono::ParseError;
 use std::num::ParseIntError;
+use std::sync::mpsc::Sender;
+use std::sync::PoisonError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -9,6 +11,9 @@ pub enum LogError {
     SerdeJson(#[from] serde_json::Error),
     NotifyError(#[from] notify::Error),
     ReceiveError(#[from] crossbeam_channel::RecvError),
+
+    #[error("RwLock was poisoned")]
+    PoisonError,
 
     #[error("Missing file name")]
     MissingFileName,

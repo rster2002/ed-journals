@@ -45,6 +45,7 @@ impl RawLiveLogFileReader {
             local_blocker.unblock();
         })?;
 
+        dbg!(&path.as_ref());
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(RawLiveLogFileReader {

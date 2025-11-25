@@ -17,6 +17,8 @@ impl LogDirWatcher {
         let local_senders = senders.clone();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
+            dbg!(&event);
+
             let sender_lock = local_senders.read()
                 .expect("Failed to get rw lock");
 
@@ -54,5 +56,14 @@ impl LogDirWatcher {
             sender: senders,
             _watcher: watcher,
         })
+    }
+
+    pub fn set_sender(&self, sender: Sender<Result<(), LogError>>) -> Result<(), LogError> {
+        let mut guard = self.sender.write()
+            .map_err(|_| LogError::PoisonError)?;
+
+        *guard = Some(sender);
+
+        Ok(())
     }
 }
