@@ -5,6 +5,8 @@ pub use error::LogError;
 pub use models::log_iter::LogIter;
 pub use models::log_file_watcher::LogFileWatcher;
 pub use models::log_path::LogPath;
+pub use models::log_dir::LogDir;
+pub use models::log_dir_watcher::LogDirWatcher;
 
 #[cfg(feature = "asynchronous")]
 pub use models::async_iter::AsyncIter;
