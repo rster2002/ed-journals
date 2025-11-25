@@ -7,9 +7,9 @@ use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
 pub struct LogPath {
-    path: PathBuf,
-    timestamp: NaiveDateTime,
-    part: u8,
+    pub path: PathBuf,
+    pub timestamp: NaiveDateTime,
+    pub part: u8,
 }
 
 #[cfg(not(feature = "legacy"))]

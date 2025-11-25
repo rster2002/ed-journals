@@ -11,12 +11,31 @@ pub struct LogDir {
 }
 
 impl LogDir {
+    /// Creates a new [LogDir] instance targeting the given path. The provided path must point to
+    /// a directory.
     pub fn new(path: impl Into<PathBuf>) -> Self {
         LogDir {
             path: path.into(),
             index: 0,
             files: Vec::new(),
         }
+    }
+
+    /// Skip the read index to the current last entry that is available and returns it, or [None] if
+    /// there isn't an entry to return. No matter how many times this is called this will always
+    /// return the last entry.
+    pub fn skip_to_last(&mut self) -> Option<Result<LogPath, LogError>> {
+        self.inner_skip_to_last().transpose()
+    }
+
+    fn inner_skip_to_last(&mut self) -> Result<Option<LogPath>, LogError> {
+        self.read_dir()?;
+        self.index = self.files.len().saturating_sub(1);
+
+        let value = self.files.get(self.index).cloned();
+        self.index += 1;
+
+        Ok(value)
     }
 
     fn read_dir(&mut self) -> Result<(), LogError> {
@@ -48,15 +67,12 @@ impl LogDir {
         self.read_dir()?;
 
         if self.index >= self.files.len() {
-            self.index = self.files.len() - 1;
+            self.index = self.files.len().saturating_sub(1);
             return Ok(None);
         }
 
         let result = self.files.get(self.index).cloned();
-
-        if result.is_some() {
-            self.index += 1;
-        }
+        self.index += 1;
 
         Ok(result)
     }
@@ -132,5 +148,21 @@ mod tests {
         fs::write(&second_file, "").unwrap();
 
         assert!(log_dir.next().is_some());
+    }
+
+    #[test]
+    fn skip_to_last_always_returns_the_last_entry() {
+        let dir = test_dir();
+        fs::write(dir.path().join("Journal.2022-11-01T182054.01.log"), "").unwrap();
+        fs::write(dir.path().join("Journal.2022-11-01T182054.02.log"), "").unwrap();
+
+        let mut log_dir = LogDir::new(dir.path());
+
+        let last = log_dir.skip_to_last().unwrap().unwrap();
+        assert_eq!(last.part, 2);
+        assert!(log_dir.next().is_none());
+
+        assert!(log_dir.skip_to_last().is_some());
+        assert!(log_dir.skip_to_last().is_some());
     }
 }
