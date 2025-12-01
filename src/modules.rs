@@ -26,6 +26,9 @@ pub mod exobiology;
 /// for stars and planets and for analysing scans for unusual data.
 pub mod exploration;
 
+/// Models for things related specifically to the file system.
+pub mod fs;
+
 /// Utilities for working with the `Outfitting.json` file. Is updated when opening the outfitting
 /// menu on stations and includes all the modules that are available for purchase at that market.
 /// Is reset every time the player opens the outfitting menu.

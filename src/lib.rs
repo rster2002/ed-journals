@@ -25,6 +25,7 @@ pub use modules::civilization;
 pub use modules::commander;
 pub use modules::exobiology;
 pub use modules::exploration;
+pub use modules::fs;
 pub use modules::galaxy;
 pub use modules::io;
 pub use modules::journal;

@@ -3,7 +3,7 @@ use std::pin::{pin, Pin};
 use std::task::{Context, Poll};
 
 use crate::logs::LogEvent;
-use crate::modules::io::error::LogError;
+use crate::modules::io::error::LogIOError;
 
 /// Asynchronous iterator for iterating over some [AsyncRead] and returning [LogEvents](LogEvent).
 pub struct AsyncIter<T>
@@ -17,7 +17,7 @@ impl<T> AsyncIter<T>
 where
     T: AsyncRead + Unpin,
 {
-    async fn inner_next(&mut self) -> Option<Result<LogEvent, LogError>> {
+    async fn inner_next(&mut self) -> Option<Result<LogEvent, LogIOError>> {
         let mut line = Vec::with_capacity(64);
 
         loop {
@@ -79,7 +79,7 @@ impl<T> Stream for AsyncIter<T>
 where
     T: AsyncRead + Unpin,
 {
-    type Item = Result<LogEvent, LogError>;
+    type Item = Result<LogEvent, LogIOError>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         pin!(self.inner_next()).poll_unpin(cx)

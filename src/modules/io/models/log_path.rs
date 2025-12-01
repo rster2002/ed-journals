@@ -1,4 +1,4 @@
-use crate::modules::io::LogError;
+use crate::modules::io::LogIOError;
 use chrono::NaiveDateTime;
 use lazy_static::lazy_static;
 use regex::Regex;
@@ -30,14 +30,14 @@ lazy_static! {
 }
 
 impl TryFrom<&Path> for LogPath {
-    type Error = LogError;
+    type Error = LogIOError;
 
     fn try_from(value: &Path) -> Result<Self, Self::Error> {
         let file_name = value
             .file_name()
-            .ok_or(LogError::MissingFileName)?
+            .ok_or(LogIOError::MissingFileName)?
             .to_str()
-            .ok_or(LogError::FailedToRepresentOsString)?;
+            .ok_or(LogIOError::FailedToRepresentOsString)?;
 
         for (regex, format) in FILE_NAME_REGEXES.iter() {
             let Some(captures) = regex.captures(file_name) else {
@@ -50,14 +50,14 @@ impl TryFrom<&Path> for LogPath {
                 .as_str();
 
             let timestamp = NaiveDateTime::parse_from_str(timestamp_str, format)
-                .map_err(LogError::FailedToParseLogTime)?;
+                .map_err(LogIOError::FailedToParseLogTime)?;
 
             let part = captures
                 .get(2)
                 .expect("Regex should have already matched")
                 .as_str()
                 .parse()
-                .map_err(LogError::FailedToParsePart)?;
+                .map_err(LogIOError::FailedToParsePart)?;
 
             return Ok(LogPath {
                 path: value.to_path_buf(),
@@ -66,7 +66,7 @@ impl TryFrom<&Path> for LogPath {
             });
         }
 
-        Err(LogError::IncorrectFileName)
+        Err(LogIOError::IncorrectFileName)
     }
 }
 

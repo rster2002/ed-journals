@@ -6,14 +6,9 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 #[error(transparent)]
-pub enum LogError {
+pub enum LogIOError {
     IO(#[from] std::io::Error),
     SerdeJson(#[from] serde_json::Error),
-    NotifyError(#[from] notify::Error),
-    ReceiveError(#[from] crossbeam_channel::RecvError),
-
-    #[error("RwLock was poisoned")]
-    PoisonError,
 
     #[error("Missing file name")]
     MissingFileName,

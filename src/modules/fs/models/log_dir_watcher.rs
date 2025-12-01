@@ -1,19 +1,19 @@
-use crate::io::LogError;
-use notify::event::{CreateKind, ModifyKind};
-use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::Path;
 use std::sync::mpsc::Sender;
 use std::sync::{Arc, RwLock};
+use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use notify::event::{CreateKind, ModifyKind, RemoveKind};
+use crate::fs::error::LogFSError;
 
-pub struct LogFileWatcher {
-    sender: Arc<RwLock<Option<Sender<Result<(), LogError>>>>>,
+pub struct LogDirWatcher {
+    sender: Arc<RwLock<Option<Sender<Result<(), LogFSError>>>>>,
     _watcher: RecommendedWatcher,
 }
 
-impl LogFileWatcher {
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<LogFileWatcher, LogError> {
-        let sender = Arc::new(RwLock::new(None::<Sender<Result<(), LogError>>>));
-        let local_senders = sender.clone();
+impl LogDirWatcher {
+    pub fn new<P: AsRef<Path>>(path: P) -> Result<LogDirWatcher, LogFSError> {
+        let senders = Arc::new(RwLock::new(None::<Sender<Result<(), LogFSError>>>));
+        let local_senders = senders.clone();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
             let sender_lock = local_senders.read()
@@ -26,7 +26,7 @@ impl LogFileWatcher {
             let event: notify::Event = match event {
                 Ok(event) => event,
                 Err(error) => {
-                    let _ = sender.send(Err(LogError::NotifyError(error)));
+                    let _ = sender.send(Err(LogFSError::NotifyError(error)));
                     return;
                 },
             };
@@ -34,13 +34,13 @@ impl LogFileWatcher {
             #[cfg(target_family = "unix")]
             match event.kind {
                 EventKind::Create(CreateKind::File)
-                | EventKind::Modify(ModifyKind::Data(_)) => true,
+                | EventKind::Remove(RemoveKind::Any) => true,
                 _ => return,
             };
 
             #[cfg(target_family = "windows")]
             match event.kind {
-                EventKind::Create(CreateKind::Any) | EventKind::Modify(ModifyKind::Any) => true,
+                EventKind::Create(CreateKind::Any) | EventKind::Remove(RemoveKind::Any) => true,
                 _ => return,
             };
 
@@ -49,15 +49,15 @@ impl LogFileWatcher {
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        Ok(LogFileWatcher {
-            sender,
+        Ok(LogDirWatcher {
+            sender: senders,
             _watcher: watcher,
         })
     }
 
-    pub fn set_sender(&self, sender: Sender<Result<(), LogError>>) -> Result<(), LogError> {
+    pub fn set_sender(&self, sender: Sender<Result<(), LogFSError>>) -> Result<(), LogFSError> {
         let mut guard = self.sender.write()
-            .map_err(|_| LogError::PoisonError)?;
+            .map_err(|_| LogFSError::PoisonError)?;
 
         *guard = Some(sender);
 

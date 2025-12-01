@@ -1,5 +1,5 @@
 use crate::logs::LogEvent;
-use crate::modules::io::error::LogError;
+use crate::modules::io::error::LogIOError;
 use std::io::Read;
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent). You can
@@ -39,7 +39,7 @@ impl<T> Iterator for LogIter<T>
 where
     T: Read,
 {
-    type Item = Result<LogEvent, LogError>;
+    type Item = Result<LogEvent, LogIOError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes

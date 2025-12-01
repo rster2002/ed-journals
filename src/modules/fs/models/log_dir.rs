@@ -1,6 +1,7 @@
 use std::fs;
 use std::path::PathBuf;
-use crate::io::{LogError, LogPath};
+use crate::fs::error::LogFSError;
+use crate::io::LogPath;
 
 /// Reads the contents of the target directory each time [Iterator::next] is called and returns
 /// the next file in the directory.
@@ -24,11 +25,11 @@ impl LogDir {
     /// Skip the read index to the current last entry that is available and returns it, or [None] if
     /// there isn't an entry to return. No matter how many times this is called this will always
     /// return the last entry.
-    pub fn skip_to_last(&mut self) -> Option<Result<LogPath, LogError>> {
+    pub fn skip_to_last(&mut self) -> Option<Result<LogPath, LogFSError>> {
         self.inner_skip_to_last().transpose()
     }
 
-    fn inner_skip_to_last(&mut self) -> Result<Option<LogPath>, LogError> {
+    fn inner_skip_to_last(&mut self) -> Result<Option<LogPath>, LogFSError> {
         self.read_dir()?;
         self.index = self.files.len().saturating_sub(1);
 
@@ -38,7 +39,7 @@ impl LogDir {
         Ok(value)
     }
 
-    fn read_dir(&mut self) -> Result<(), LogError> {
+    fn read_dir(&mut self) -> Result<(), LogFSError> {
         let items = fs::read_dir(&self.path)?;
 
         // Allocate at least the current len, as most of the time there are at least that many files
@@ -63,7 +64,7 @@ impl LogDir {
         Ok(())
     }
 
-    fn inner_next(&mut self) -> Result<Option<LogPath>, LogError> {
+    fn inner_next(&mut self) -> Result<Option<LogPath>, LogFSError> {
         self.read_dir()?;
 
         if self.index >= self.files.len() {
@@ -79,7 +80,7 @@ impl LogDir {
 }
 
 impl Iterator for LogDir {
-    type Item = Result<LogPath, LogError>;
+    type Item = Result<LogPath, LogFSError>;
 
     fn next(&mut self) -> Option<Self::Item> {
         self.inner_next().transpose()
@@ -89,7 +90,7 @@ impl Iterator for LogDir {
 #[cfg(test)]
 mod tests {
     use std::fs;
-    use crate::io::models::log_dir::LogDir;
+    use crate::modules::fs::models::log_dir::LogDir;
     use crate::tests::test_dir;
 
     #[test]
