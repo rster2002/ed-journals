@@ -12,13 +12,10 @@ pub struct LogDirWatcher {
 
 impl LogDirWatcher {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<LogDirWatcher, LogError> {
-        // Oh god
         let senders = Arc::new(RwLock::new(None::<Sender<Result<(), LogError>>>));
         let local_senders = senders.clone();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
-            dbg!(&event);
-
             let sender_lock = local_senders.read()
                 .expect("Failed to get rw lock");
 
