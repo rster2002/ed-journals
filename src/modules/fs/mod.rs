@@ -1,9 +1,17 @@
 mod functions;
 mod models;
 mod error;
+mod traits;
 
 pub use functions::auto_detect_journal_path::auto_detect_journal_path;
 
+pub use error::LogFSError;
 pub use models::log_dir::LogDir;
 pub use models::log_dir_watcher::LogDirWatcher;
 pub use models::log_file_watcher::LogFileWatcher;
+pub use models::sync_blocker::SyncBlocker;
+
+#[cfg(feature = "asynchronous")]
+pub use models::async_blocker::AsyncBlocker;
+
+type BlockResult = Result<(), LogFSError>;

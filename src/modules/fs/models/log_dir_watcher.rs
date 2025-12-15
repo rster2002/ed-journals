@@ -1,32 +1,41 @@
 use std::path::Path;
-use std::sync::mpsc::Sender;
-use std::sync::{Arc, RwLock};
 use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{CreateKind, ModifyKind, RemoveKind};
+use notify::event::{CreateKind, RemoveKind};
 use crate::fs::error::LogFSError;
+use crate::fs::traits::blocker::Blocker;
 
+/// Watches a directory for changes and unblocks the associated blocker when a change occurs. Takes
+/// a path and any [Blocker]:
+///
+/// ```rust
+/// use std::env::current_dir;
+/// use ed_journals::fs::{auto_detect_journal_path, LogDirWatcher, SyncBlocker};
+///
+/// let path = current_dir()
+///     .unwrap()
+///     .join("test-files")
+///     .join("journals");
+///
+/// let blocker = SyncBlocker::new();
+/// let dir_watcher = LogDirWatcher::new(&path, &blocker).unwrap();
+///
+/// # return;
+/// blocker.block().unwrap();
+/// // Something changed
+/// ```
 pub struct LogDirWatcher {
-    sender: Arc<RwLock<Option<Sender<Result<(), LogFSError>>>>>,
     _watcher: RecommendedWatcher,
 }
 
 impl LogDirWatcher {
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<LogDirWatcher, LogFSError> {
-        let senders = Arc::new(RwLock::new(None::<Sender<Result<(), LogFSError>>>));
-        let local_senders = senders.clone();
+    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<LogDirWatcher, LogFSError> {
+        let mut unblocker = blocker.unblocker();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
-            let sender_lock = local_senders.read()
-                .expect("Failed to get rw lock");
-
-            let Some(sender) = sender_lock.as_ref() else {
-                return;
-            };
-
             let event: notify::Event = match event {
                 Ok(event) => event,
                 Err(error) => {
-                    let _ = sender.send(Err(LogFSError::NotifyError(error)));
+                    let _ = unblocker.unblock(Err(LogFSError::NotifyError(error)));
                     return;
                 },
             };
@@ -44,23 +53,13 @@ impl LogDirWatcher {
                 _ => return,
             };
 
-            let _ = sender.send(Ok(()));
+            let _ = unblocker.unblock(Ok(()));
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LogDirWatcher {
-            sender: senders,
             _watcher: watcher,
         })
-    }
-
-    pub fn set_sender(&self, sender: Sender<Result<(), LogFSError>>) -> Result<(), LogFSError> {
-        let mut guard = self.sender.write()
-            .map_err(|_| LogFSError::PoisonError)?;
-
-        *guard = Some(sender);
-
-        Ok(())
     }
 }

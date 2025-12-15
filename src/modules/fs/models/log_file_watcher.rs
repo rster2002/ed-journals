@@ -1,32 +1,24 @@
 use notify::event::{CreateKind, ModifyKind};
 use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::Path;
-use std::sync::mpsc::Sender;
-use std::sync::{Arc, RwLock};
 use crate::fs::error::LogFSError;
+use crate::fs::traits::blocker::Blocker;
+use crate::fs::traits::unblocker::Unblocker;
 
+/// Watches a file for changes and unblocks the associated blocker when a change occurs.
 pub struct LogFileWatcher {
-    sender: Arc<RwLock<Option<Sender<Result<(), LogFSError>>>>>,
     _watcher: RecommendedWatcher,
 }
 
 impl LogFileWatcher {
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<LogFileWatcher, LogFSError> {
-        let sender = Arc::new(RwLock::new(None::<Sender<Result<(), LogFSError>>>));
-        let local_senders = sender.clone();
+    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<LogFileWatcher, LogFSError> {
+        let mut unblocker = blocker.unblocker();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
-            let sender_lock = local_senders.read()
-                .expect("Failed to get rw lock");
-
-            let Some(sender) = sender_lock.as_ref() else {
-                return;
-            };
-
             let event: notify::Event = match event {
                 Ok(event) => event,
                 Err(error) => {
-                    let _ = sender.send(Err(LogFSError::NotifyError(error)));
+                    let _ = unblocker.unblock(Err(LogFSError::NotifyError(error)));
                     return;
                 },
             };
@@ -44,23 +36,13 @@ impl LogFileWatcher {
                 _ => return,
             };
 
-            let _ = sender.send(Ok(()));
+            let _ = unblocker.unblock(Ok(()));
         })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
         Ok(LogFileWatcher {
-            sender,
             _watcher: watcher,
         })
-    }
-
-    pub fn set_sender(&self, sender: Sender<Result<(), LogFSError>>) -> Result<(), LogFSError> {
-        let mut guard = self.sender.write()
-            .map_err(|_| LogFSError::PoisonError)?;
-
-        *guard = Some(sender);
-
-        Ok(())
     }
 }
