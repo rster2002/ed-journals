@@ -27,6 +27,7 @@ use super::{LiveLogDirHandle, LiveLogDirReaderError, RawLogDirReader};
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLiveLogDirReader {
     blocker: SyncBlocker,
     log_dir_reader: RawLogDirReader,

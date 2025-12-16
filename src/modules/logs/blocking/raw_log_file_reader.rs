@@ -8,6 +8,7 @@ use super::LogFileReaderError;
 /// Used for reading entries from a single journal log file. Unlike the [log_file_reader::LogFileReader], this iterator does *not* parse the individual items. Instead you are getting [serde_json::Value]s.
 /// [log_file_reader::LogFileReader] uses this reader under the hood.
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLogFileReader {
     source: File,
     position: usize,

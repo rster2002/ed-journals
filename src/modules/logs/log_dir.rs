@@ -6,11 +6,13 @@ use crate::modules::logs::{LogFile, LogFileError};
 
 /// Provides an abstraction for all the log files in the journal directory.
 #[derive(Debug)]
+#[deprecated]
 pub struct LogDir {
     dir_path: PathBuf,
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogDirError {
     #[error("Failed to represent OS string")]
     FailedToRepresentOsString,

@@ -14,6 +14,7 @@ use thiserror::Error;
 
 /// A representation of a journal log file. Can then be read using a [JournalFileReader].
 #[derive(Debug)]
+#[deprecated]
 pub struct LogFile {
     path: PathBuf,
     naive_date_time: NaiveDateTime,
@@ -21,6 +22,7 @@ pub struct LogFile {
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogFileError {
     #[error("Failed to represent OS string")]
     FailedToRepresentOsString,

@@ -6,6 +6,7 @@ use crate::logs::{LogDir, LogFile};
 use super::LogDirReaderError;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLogDirReader {
     dir: LogDir,
     current_file: Option<LogFile>,

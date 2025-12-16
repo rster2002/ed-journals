@@ -26,6 +26,7 @@ use super::{LiveLogFileHandle, LiveLogFileReaderError, LogFileReaderError, RawLo
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLiveLogFileReader {
     blocker: SyncBlocker,
     log_file_reader: RawLogFileReader,

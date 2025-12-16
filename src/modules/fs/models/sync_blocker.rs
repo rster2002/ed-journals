@@ -14,18 +14,24 @@ pub struct SyncBlocker {
 
 impl SyncBlocker {
     /// Creates a new blocker.
-    pub fn new() -> Self {
-        let (sender, receiver) = std::sync::mpsc::channel();
-
-        Self {
-            sender,
-            receiver,
-        }
+    pub fn new() -> SyncBlocker {
+        SyncBlocker::default()
     }
 
     /// Blocks the current thread until a registered caller unblocks it.
-    fn block(&mut self) -> BlockResult {
+    pub fn block(&mut self) -> BlockResult {
         self.receiver.recv()?
+    }
+}
+
+impl Default for SyncBlocker {
+    fn default() -> Self {
+        let (sender, receiver) = std::sync::mpsc::channel();
+
+        SyncBlocker {
+            sender,
+            receiver,
+        }
     }
 }
 

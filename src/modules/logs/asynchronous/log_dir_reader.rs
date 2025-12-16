@@ -9,11 +9,13 @@ use crate::logs::{LogDirError, LogFileError};
 use super::RawLogDirReader;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct LogDirReader {
     inner: RawLogDirReader,
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogDirReaderError {
     #[error(transparent)]
     LogFileReaderError(#[from] LogFileReaderError),

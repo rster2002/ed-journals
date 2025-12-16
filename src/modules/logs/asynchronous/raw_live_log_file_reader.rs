@@ -10,6 +10,7 @@ use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 use super::{LiveLogFileReaderError, RawLogFileReader};
 
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLiveLogFileReader {
     blocker: AsyncBlocker,
     journal_file_reader: RawLogFileReader,

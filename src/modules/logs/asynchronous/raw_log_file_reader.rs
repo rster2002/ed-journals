@@ -9,6 +9,7 @@ use tokio::io::AsyncSeekExt;
 use super::LogFileReaderError;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct RawLogFileReader {
     source: File,
     position: usize,

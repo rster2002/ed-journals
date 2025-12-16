@@ -8,11 +8,13 @@ use crate::logs::content::LogEvent;
 use super::RawLiveLogFileReader;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveLogFileReader {
     inner: RawLiveLogFileReader,
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LiveLogFileReaderError {
     #[error(transparent)]
     IO(#[from] io::Error),

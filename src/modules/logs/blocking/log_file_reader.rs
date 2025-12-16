@@ -43,11 +43,13 @@ use super::RawLogFileReader;
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct LogFileReader {
     inner: RawLogFileReader,
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LogFileReaderError {
     #[error(transparent)]
     IO(#[from] io::Error),

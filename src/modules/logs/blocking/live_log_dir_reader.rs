@@ -30,11 +30,13 @@ use super::RawLiveLogDirReader;
 /// }
 /// ```
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveLogDirReader {
     inner: RawLiveLogDirReader,
 }
 
 #[derive(Debug, Error)]
+#[deprecated]
 pub enum LiveLogDirReaderError {
     #[error(transparent)]
     LogDirReaderError(#[from] LogDirReaderError),
@@ -55,6 +57,7 @@ impl LiveLogDirReader {
     }
 }
 
+#[deprecated]
 pub struct LiveLogDirHandle {
     active: Arc<AtomicBool>,
     blocker: SyncBlocker,
