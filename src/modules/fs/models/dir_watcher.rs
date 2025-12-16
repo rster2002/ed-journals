@@ -9,7 +9,7 @@ use crate::fs::traits::blocker::Blocker;
 ///
 /// ```rust
 /// use std::env::current_dir;
-/// use ed_journals::fs::{auto_detect_journal_path, LogDirWatcher, SyncBlocker};
+/// use ed_journals::fs::{auto_detect_journal_path, DirWatcher, SyncBlocker};
 ///
 /// let path = current_dir()
 ///     .unwrap()
@@ -17,18 +17,18 @@ use crate::fs::traits::blocker::Blocker;
 ///     .join("journals");
 ///
 /// let blocker = SyncBlocker::new();
-/// let dir_watcher = LogDirWatcher::new(&path, &blocker).unwrap();
+/// let dir_watcher = DirWatcher::new(&path, &blocker).unwrap();
 ///
 /// # return;
 /// blocker.block().unwrap();
 /// // Something changed
 /// ```
-pub struct LogDirWatcher {
+pub struct DirWatcher {
     _watcher: RecommendedWatcher,
 }
 
-impl LogDirWatcher {
-    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<LogDirWatcher, LogFSError> {
+impl DirWatcher {
+    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<DirWatcher, LogFSError> {
         let mut unblocker = blocker.unblocker();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
@@ -58,7 +58,7 @@ impl LogDirWatcher {
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        Ok(LogDirWatcher {
+        Ok(DirWatcher {
             _watcher: watcher,
         })
     }

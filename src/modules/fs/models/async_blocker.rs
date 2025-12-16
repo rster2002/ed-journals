@@ -14,8 +14,17 @@ pub struct AsyncBlocker {
 }
 
 impl AsyncBlocker {
+    pub fn new(capacity: usize) -> AsyncBlocker {
+        let (sender, receiver) = futures::channel::mpsc::channel(capacity);
+
+        AsyncBlocker {
+            sender,
+            receiver,
+        }
+    }
+
     /// Block and await the current task until a registered caller unblocks it.
-    async fn block(&mut self) -> BlockResult {
+    pub async fn block(&mut self) -> BlockResult {
         self.receiver.next()
             .await
             .ok_or(LogFSError::AsyncRecvError)?

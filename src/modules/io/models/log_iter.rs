@@ -123,7 +123,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn last_lines_are_read_correctly() {
         fs::write("c.tmp", "").unwrap();
         let file = File::open("c.tmp").unwrap();

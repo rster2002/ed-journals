@@ -6,12 +6,12 @@ use crate::fs::traits::blocker::Blocker;
 use crate::fs::traits::unblocker::Unblocker;
 
 /// Watches a file for changes and unblocks the associated blocker when a change occurs.
-pub struct LogFileWatcher {
+pub struct FileWatcher {
     _watcher: RecommendedWatcher,
 }
 
-impl LogFileWatcher {
-    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<LogFileWatcher, LogFSError> {
+impl FileWatcher {
+    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<FileWatcher, LogFSError> {
         let mut unblocker = blocker.unblocker();
 
         let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
@@ -41,7 +41,7 @@ impl LogFileWatcher {
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        Ok(LogFileWatcher {
+        Ok(FileWatcher {
             _watcher: watcher,
         })
     }
