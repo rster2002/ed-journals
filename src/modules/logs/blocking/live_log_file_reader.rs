@@ -83,6 +83,9 @@ impl Iterator for LiveLogFileReader {
             Err(e) => return Some(Err(e)),
         };
 
-        Some(serde_json::from_value(result).map_err(|e| e.into()))
+        let raw_json = result.to_string();
+        Some(serde_json::from_value(result).map_err(|error| {
+            LogFileReaderError::FailedToParseLine { error, raw_json }
+        }))
     }
 }

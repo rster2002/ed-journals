@@ -55,8 +55,11 @@ pub enum LogFileReaderError {
     #[error(transparent)]
     Utf8Error(#[from] FromUtf8Error),
 
-    #[error("Failed to parse log line: {0}")]
-    FailedToParseLine(#[from] serde_json::Error),
+    #[error("Failed to parse log line: {error}\nRaw JSON: {raw_json}")]
+    FailedToParseLine {
+        error: serde_json::Error,
+        raw_json: String,
+    },
 }
 
 impl LogFileReader {
@@ -76,7 +79,10 @@ impl Iterator for LogFileReader {
             Err(e) => return Some(Err(e)),
         };
 
-        Some(serde_json::from_value(result).map_err(|e| e.into()))
+        let raw_json = result.to_string();
+        Some(serde_json::from_value(result).map_err(|error| {
+            LogFileReaderError::FailedToParseLine { error, raw_json }
+        }))
     }
 }
 

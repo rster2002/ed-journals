@@ -45,9 +45,10 @@ impl LogDirReader {
             Ok(x) => x,
             Err(e) => return Some(Err(e)),
         };
+        let raw_json = result.to_string();
         Some(
             serde_json::from_value(result)
-                .map_err(|e| LogFileReaderError::FailedToParseLine(e).into()),
+                .map_err(|error| LogFileReaderError::FailedToParseLine { error, raw_json }.into()),
         )
     }
 }
