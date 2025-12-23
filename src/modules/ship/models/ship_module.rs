@@ -57,6 +57,18 @@ pub enum ShipModule {
     #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
     DiscoverScanner,
 
+    /// Guardian Trident fighter (unlockable at Guardian tech broker)
+    #[serde(alias = "gdn_hybrid_fighter_v1", alias = "GDN_Hybrid_Fighter_V1")]
+    GuardianTridentXG7,
+
+    /// Guardian Javelin fighter (unlockable at Guardian tech broker)
+    #[serde(alias = "gdn_hybrid_fighter_v2", alias = "GDN_Hybrid_Fighter_V2")]
+    GuardianJavelinXG8,
+
+    /// Guardian Lance fighter (unlockable at Guardian tech broker)
+    #[serde(alias = "gdn_hybrid_fighter_v3", alias = "GDN_Hybrid_Fighter_V3")]
+    GuardianLanceXG9,
+
     /// Any internal module, this includes core and optional modules.
     #[serde(untagged)]
     Internal(ShipInternalModule),
@@ -201,6 +213,9 @@ impl Display for ShipModule {
             ShipModule::DataLinkScanner => write!(f, "Data Link Scanner"),
             ShipModule::CodexScanner => write!(f, "Codex Scanner"),
             ShipModule::DiscoverScanner => write!(f, "Discovery Scanner"),
+            ShipModule::GuardianTridentXG7 => write!(f, "Guardian Trident XG7"),
+            ShipModule::GuardianJavelinXG8 => write!(f, "Guardian Javelin XG8"),
+            ShipModule::GuardianLanceXG9 => write!(f, "Guardian Lance XG9"),
             ShipModule::Internal(internal_module) => internal_module.fmt(f),
             ShipModule::Hardpoint(hardpoint_module) => hardpoint_module.fmt(f),
             ShipModule::Cockpit(_) => write!(f, "Cockpit"),

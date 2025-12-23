@@ -161,6 +161,10 @@ pub enum HardpointModule {
     #[serde(rename = "mininglaser_advanced")]
     MiningLanceBeamLaser,
 
+    /// Mining Volley Repeater, exclusive to Type-11 Prospector
+    #[serde(rename = "miningtoolv2")]
+    MiningVolleyRepeater,
+
     #[serde(rename = "human_extraction")]
     SubSurfaceExtractionMissile,
 
@@ -281,6 +285,7 @@ impl Display for HardpointModule {
                 HardpointModule::SeismicCharge => "Seismic Charge",
                 HardpointModule::DisplacementMissile => "Sub-surface Displacement Missile",
                 HardpointModule::MiningLaser => "Mining Laser",
+                HardpointModule::MiningVolleyRepeater => "Mining Volley Repeater",
                 HardpointModule::ThargoidPulseNeutralizer => "Thargoid Pulse Neutralizer",
                 HardpointModule::WakeScanner => "Wake Scanner",
                 HardpointModule::PulseWaveAnalyzer => "Pulse Wave Analyzer",
