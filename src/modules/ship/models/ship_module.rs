@@ -7,11 +7,11 @@ use crate::modules::ship::{
     ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
     ShipPaintJob, ShipVoicepack,
 };
+use crate::ship::FighterType;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use crate::ship::FighterType;
 
 pub mod module_class;
 pub mod ship_bobble;
@@ -206,9 +206,7 @@ impl Display for ShipModule {
             ShipModule::DataLinkScanner => write!(f, "Data Link Scanner"),
             ShipModule::CodexScanner => write!(f, "Codex Scanner"),
             ShipModule::DiscoverScanner => write!(f, "Discovery Scanner"),
-            ShipModule::GuardianTridentXG7 => write!(f, "Guardian Trident XG7"),
-            ShipModule::GuardianJavelinXG8 => write!(f, "Guardian Javelin XG8"),
-            ShipModule::GuardianLanceXG9 => write!(f, "Guardian Lance XG9"),
+            ShipModule::Fighter(fighter) => write!(f, "{}", fighter),
             ShipModule::Internal(internal_module) => internal_module.fmt(f),
             ShipModule::Hardpoint(hardpoint_module) => hardpoint_module.fmt(f),
             ShipModule::Cockpit(_) => write!(f, "Cockpit"),
