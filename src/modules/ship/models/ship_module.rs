@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
+use crate::ship::FighterType;
 
 pub mod module_class;
 pub mod ship_bobble;
@@ -57,17 +58,9 @@ pub enum ShipModule {
     #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
     DiscoverScanner,
 
-    /// Guardian Trident fighter (unlockable at Guardian tech broker)
-    #[serde(alias = "gdn_hybrid_fighter_v1", alias = "GDN_Hybrid_Fighter_V1")]
-    GuardianTridentXG7,
-
-    /// Guardian Javelin fighter (unlockable at Guardian tech broker)
-    #[serde(alias = "gdn_hybrid_fighter_v2", alias = "GDN_Hybrid_Fighter_V2")]
-    GuardianJavelinXG8,
-
-    /// Guardian Lance fighter (unlockable at Guardian tech broker)
-    #[serde(alias = "gdn_hybrid_fighter_v3", alias = "GDN_Hybrid_Fighter_V3")]
-    GuardianLanceXG9,
+    /// Some fighter types show up as ship modules when unlocking them from technology brokers.
+    #[serde(untagged)]
+    Fighter(FighterType),
 
     /// Any internal module, this includes core and optional modules.
     #[serde(untagged)]
