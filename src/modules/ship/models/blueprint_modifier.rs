@@ -69,6 +69,7 @@ pub enum BlueprintModifier {
     ThermicResistance,
     ExplosiveResistance,
     CausticResistance,
+    GuardianModuleResistance,
     FSDInterdictorRange,
     FSDInterdictorFacingLimit,
     ScannerRange,

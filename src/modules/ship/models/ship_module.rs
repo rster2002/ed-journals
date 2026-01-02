@@ -7,6 +7,7 @@ use crate::modules::ship::{
     ShipCockpitModule, ShipDecal, ShipHardpointModule, ShipInternalModule, ShipNameplate,
     ShipPaintJob, ShipVoicepack,
 };
+use crate::ship::FighterType;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::{Display, Formatter};
@@ -56,6 +57,10 @@ pub enum ShipModule {
     /// Spacial case for the discovery scanner.
     #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
     DiscoverScanner,
+
+    /// Some fighter types show up as ship modules when unlocking them from technology brokers.
+    #[serde(untagged)]
+    Fighter(FighterType),
 
     /// Any internal module, this includes core and optional modules.
     #[serde(untagged)]
@@ -201,6 +206,7 @@ impl Display for ShipModule {
             ShipModule::DataLinkScanner => write!(f, "Data Link Scanner"),
             ShipModule::CodexScanner => write!(f, "Codex Scanner"),
             ShipModule::DiscoverScanner => write!(f, "Discovery Scanner"),
+            ShipModule::Fighter(fighter) => write!(f, "{}", fighter),
             ShipModule::Internal(internal_module) => internal_module.fmt(f),
             ShipModule::Hardpoint(hardpoint_module) => hardpoint_module.fmt(f),
             ShipModule::Cockpit(_) => write!(f, "Cockpit"),

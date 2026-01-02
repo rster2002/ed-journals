@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum FighterType {
@@ -19,4 +20,21 @@ pub enum FighterType {
 
     #[serde(rename = "gdn_hybrid_fighter_v3")]
     GuardianLanceXG9,
+}
+
+impl Display for FighterType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                FighterType::Taipan => "Taipan",
+                FighterType::GU97 => "GU97",
+                FighterType::F63Condor => "F63 Condor",
+                FighterType::GuardianTridentXG7 => "Guardian Trident XG7",
+                FighterType::GuardianJavelinXG8 => "Guardian Javelin XG8",
+                FighterType::GuardianLanceXG9 => "Guardian Lance XG9",
+            }
+        )
+    }
 }

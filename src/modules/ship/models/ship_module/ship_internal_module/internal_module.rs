@@ -17,6 +17,10 @@ pub enum InternalModule {
     #[serde(rename = "hyperdrive_overcharge")]
     FrameShiftDriveOvercharged,
 
+    /// Mk II SCO Frame Shift Drive, exclusive to Caspian Explorer
+    #[serde(rename = "hyperdrive_overcharge_overchargebooster_mkii")]
+    FrameShiftDriveOverchargedMkII,
+
     #[serde(rename = "powerplant")]
     PowerPlant,
 
@@ -71,6 +75,10 @@ pub enum InternalModule {
     #[serde(rename = "multidronecontrol_mining")]
     MiningMultiLimpetController,
 
+    /// Mk II Mining Multi-Limpet Controller, exclusive to Type-11 Prospector
+    #[serde(rename = "multidronecontrol_miningv2")]
+    MiningMultiLimpetControllerMkII,
+
     #[serde(rename = "multidronecontrol_xeno")]
     XenoMultiLimpetController,
 
@@ -89,6 +97,10 @@ pub enum InternalModule {
     #[serde(rename = "cargorack")]
     CargoRack,
 
+    /// Mk II Large Cargo Rack, exclusive to Panther Clipper MkII
+    #[serde(rename = "largecargorack")]
+    LargeCargoRackMkII,
+
     #[serde(rename = "corrosionproofcargorack")]
     AntiCorrosionCargoRack,
 
@@ -100,6 +112,10 @@ pub enum InternalModule {
 
     #[serde(rename = "engine_fast")]
     EnhancedPerformanceThrusters,
+
+    /// Mk II Gravity Optimised Thrusters, exclusive to Panther Clipper MkII
+    #[serde(rename = "engine_gravityoptimised_mkii")]
+    GravityOptimisedThrustersMkII,
 
     #[serde(rename = "fuelscoop")]
     FuelScoop,
@@ -256,6 +272,7 @@ impl InternalModule {
             (InternalModule::GuardianHybridPowerDistributor, _, _) => ModuleClass::A,
             (InternalModule::GuardianHybridPowerPlant, _, _) => ModuleClass::A,
             (InternalModule::ExperimentalWeaponStabilizer, _, _) => ModuleClass::F,
+            (InternalModule::MiningMultiLimpetControllerMkII, _, _) => ModuleClass::A,
             (_, _, _) => return None,
         })
     }
@@ -272,6 +289,7 @@ impl Display for InternalModule {
                 InternalModule::AntiCorrosionCargoRack => "Anti-Corrosion Cargo Rack",
                 InternalModule::BiWeaveShieldGenerator => "Bi-Weave Shield Generator",
                 InternalModule::CargoRack => "Cargo Rack",
+                InternalModule::LargeCargoRackMkII => "Mk II Large Cargo Rack",
                 InternalModule::CollectorLimpetController => "Collector Limpet Controller",
                 InternalModule::DetailedSurfaceScanner => "Detailed Surface Scanner",
                 InternalModule::FSDInterdictor => "FSD Interdictor",
@@ -284,7 +302,9 @@ impl Display for InternalModule {
                 InternalModule::GuardianShieldReinforcement => "Guardian Shield Reinforcement",
                 InternalModule::HullReinforcement => "Hull Reinforcement",
                 InternalModule::LifeSupport => "Life Support",
-                InternalModule::MiningMultiLimpetController => "Mining Limpet Controller",
+                InternalModule::MiningMultiLimpetController => "Mining Multi-Limpet Controller",
+                InternalModule::MiningMultiLimpetControllerMkII =>
+                    "Mk II Mining Multi-Limpet Controller",
                 InternalModule::ModuleReinforcement => "Module Reinforcement",
                 InternalModule::PassengerCabin => "Passenger Cabin",
                 InternalModule::PlanetApproachSuite => "Planet Approach Suite",
@@ -303,6 +323,8 @@ impl Display for InternalModule {
                 InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
                 InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
                 InternalModule::FrameShiftDriveOvercharged => "Frame Shift Drive (SCO)",
+                InternalModule::FrameShiftDriveOverchargedMkII =>
+                    "Mk II Supercharge Optimised Frame Shift Drive",
                 InternalModule::GuardianHullReinforcement => "Guardian Hull Reinforcement Package",
                 InternalModule::MetaAlloyHullReinforcement =>
                     "Meta Alloy Hull Reinforcement Package",
@@ -323,6 +345,8 @@ impl Display for InternalModule {
                 InternalModule::UniversalMultiLimpetController =>
                     "Universal Multi Limpet Controller",
                 InternalModule::EnhancedPerformanceThrusters => "Enhanced Performance Thrusters",
+                InternalModule::GravityOptimisedThrustersMkII =>
+                    "Mk II Gravity Optimised Thrusters",
                 InternalModule::BasicDiscoveryScanner => "Basic Discovery Scanner",
                 InternalModule::IntermediateDiscoveryScanner => "Intermediate Discovery Scanner",
                 InternalModule::AdvancedDiscoveryScanner => "Advanced Discovery Scanner",
