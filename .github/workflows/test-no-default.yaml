@@ -2,9 +2,13 @@ name: Tests no-default
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - "master"
+      - "ci"
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - "master"
+      - "ci"
 
 env:
   CARGO_TERM_COLOR: always

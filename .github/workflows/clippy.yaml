@@ -2,9 +2,13 @@ name: "Clippy check"
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - "master"
+      - "ci"
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - "master"
+      - "ci"
 
 # Make sure CI fails on all warnings, including Clippy lints
 env:
