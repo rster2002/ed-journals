@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: https://github.com/actions/checkout@4
     - name: Build
       run: cargo build --verbose
     - name: Run tests

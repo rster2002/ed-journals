@@ -11,7 +11,7 @@ jobs:
     name: cargo fmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: https://github.com/actions/checkout@4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: rustfmt
