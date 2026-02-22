@@ -5,6 +5,7 @@ use regex::Regex;
 use std::cmp::Ordering;
 use std::path::{Path, PathBuf};
 
+/// Path with the timestamp and part number parsed so that the paths can be ordered.
 #[derive(Debug, Clone)]
 pub struct LogPath {
     pub path: PathBuf,

@@ -1,7 +1,8 @@
 use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
 use std::pin::{pin, Pin};
 use std::task::{Context, Poll};
-
+use smol::stream::StreamExt;
+use crate::io::RawAsyncIter;
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogIOError;
 
@@ -10,7 +11,7 @@ pub struct AsyncIter<T>
 where
     T: AsyncRead + Unpin,
 {
-    inner: T,
+    inner: RawAsyncIter<T>,
 }
 
 impl<T> AsyncIter<T>
@@ -18,39 +19,10 @@ where
     T: AsyncRead + Unpin,
 {
     async fn inner_next(&mut self) -> Option<Result<LogEvent, LogIOError>> {
-        let mut line = Vec::with_capacity(64);
-
-        loop {
-            let mut buf: [u8; 1] = [0; 1];
-            let result = self.inner.read(&mut buf).await;
-
-            match result {
-                Ok(0) => break,
-                Ok(_) => {}
-                Err(e) => return Some(Err(e.into())),
-            }
-
-            let byte = buf[0];
-
-            if byte == b'\n' && !line.is_empty() {
-                break;
-            }
-
-            if byte == 0x00 || (line.is_empty() && byte == b' ') {
-                continue;
-            }
-
-            line.push(byte);
-        }
-
-        if line.is_empty() {
-            return None;
-        }
-
-        Some(Ok(match serde_json::from_slice(&line) {
-            Ok(event) => event,
-            Err(e) => return Some(Err(e.into())),
-        }))
+        Some(match self.inner.next().await? {
+            Ok(value) => serde_json::from_value(value).map_err(LogIOError::from),
+            Err(error) => Err(error),
+        })
     }
 }
 
@@ -59,7 +31,9 @@ where
     T: AsyncRead + Unpin,
 {
     fn from(inner: T) -> Self {
-        AsyncIter { inner }
+        AsyncIter {
+            inner: RawAsyncIter::from(inner),
+        }
     }
 }
 

@@ -1,5 +1,4 @@
 use futures::channel::mpsc::Sender;
-use futures::SinkExt;
 use crate::fs::{BlockResult, LogFSError};
 use crate::fs::traits::unblocker::Unblocker;
 

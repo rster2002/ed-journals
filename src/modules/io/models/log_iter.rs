@@ -1,6 +1,7 @@
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogIOError;
 use std::io::Read;
+use crate::io::models::raw_iter::RawIter;
 
 /// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent). You can
 /// read the contents of a file wrapping a file with this iterator.
@@ -23,7 +24,7 @@ pub struct LogIter<T>
 where
     T: Read,
 {
-    inner: T,
+    inner: RawIter<T>,
 }
 
 impl<T> From<T> for LogIter<T>
@@ -31,7 +32,9 @@ where
     T: Read,
 {
     fn from(value: T) -> Self {
-        LogIter { inner: value }
+        LogIter {
+            inner: RawIter::from(value),
+        }
     }
 }
 
@@ -42,45 +45,10 @@ where
     type Item = Result<LogEvent, LogIOError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
-
-        let mut buf = [0u8; 1];
-        loop {
-            let size = match self.inner.read(&mut buf) {
-                Ok(size) => size,
-                Err(e) => return Some(Err(e.into())),
-            };
-
-            if size == 0 {
-                break;
-            }
-
-            let byte = buf[0];
-
-            if byte == b'\n' && !line.is_empty() {
-                break;
-            }
-
-            if byte == 0x00 || (line.is_empty() && byte == b' ') {
-                continue;
-            }
-
-            line.push(byte);
-        }
-
-        if line.is_empty() {
-            return None;
-        }
-
-        Some(Ok(match serde_json::from_slice(&line) {
-            Ok(event) => event,
-            Err(e) => {
-                #[cfg(test)]
-                dbg!(&line);
-
-                return Some(Err(e.into()));
-            }
-        }))
+        Some(match self.inner.next()? {
+            Ok(value) => serde_json::from_value(value).map_err(LogIOError::from),
+            Err(error) => Err(error)
+        })
     }
 }
 
