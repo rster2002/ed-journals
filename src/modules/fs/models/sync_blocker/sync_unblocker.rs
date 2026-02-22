@@ -16,7 +16,7 @@ impl SyncUnblocker {
 }
 
 impl Unblocker for SyncUnblocker {
-    fn unblock(&mut self, result: BlockResult) -> BlockResult {
+    fn unblock(&self, result: BlockResult) -> BlockResult {
         self.inner
             .send(result)
             .map_err(|_| LogFSError::FailedToUnblock)?;

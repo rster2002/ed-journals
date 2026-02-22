@@ -6,6 +6,8 @@ use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::{BlockResult, LogFSError};
 use futures::channel::mpsc::{Receiver, Sender};
 use futures::StreamExt;
+use std::rc::Rc;
+use std::sync::Arc;
 
 /// Blocker that can be used to block in async code.
 pub struct AsyncBlocker {
@@ -30,7 +32,19 @@ impl AsyncBlocker {
 }
 
 impl Blocker for AsyncBlocker {
-    fn unblocker(&self) -> Box<dyn Unblocker> {
-        Box::new(AsyncUnblocker::new(self.sender.clone()))
+    fn unblocker(&self) -> Arc<dyn Unblocker> {
+        Arc::new(AsyncUnblocker::new(self.sender.clone()))
+    }
+}
+
+impl From<AsyncBlocker> for Arc<dyn Unblocker> {
+    fn from(blocker: AsyncBlocker) -> Arc<dyn Unblocker> {
+        blocker.unblocker()
+    }
+}
+
+impl From<&AsyncBlocker> for Arc<dyn Unblocker> {
+    fn from(blocker: &AsyncBlocker) -> Arc<dyn Unblocker> {
+        blocker.unblocker()
     }
 }

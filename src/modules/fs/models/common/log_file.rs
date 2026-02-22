@@ -1,11 +1,14 @@
-use crate::fs::{Blocker, FileWatcher, LogFSError};
+use crate::fs::{Blocker, FileWatcher, LogFSError, Unblocker};
 use crate::io::{LogIOError, LogIter};
 use crate::logs::LogEvent;
 use serde::de::DeserializeOwned;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
+use std::sync::Arc;
 
+/// Holds both a watcher and an iterator over for the given path. Calling [Iterator::next] on this
+/// will call the inner iterator.
 #[derive(Debug)]
 pub struct LogFile<R = LogEvent>
 where
@@ -18,17 +21,18 @@ where
 impl LogFile {
     pub fn new<P: AsRef<Path>>(
         path: P,
-        blocker: &impl Blocker,
+        blocker: impl Into<Arc<dyn Unblocker>>,
     ) -> Result<LogFile<LogEvent>, LogFSError> {
         LogFile::new_typed::<LogEvent, _>(path, blocker)
     }
 
     pub fn new_typed<R, P>(
         path: P,
-        blocker: &impl Blocker,
+        blocker: impl Into<Arc<dyn Unblocker>>,
     ) -> Result<LogFile<R>, LogFSError>
-    where P : AsRef<Path>,
-        R : DeserializeOwned,
+    where
+        R: DeserializeOwned,
+        P: AsRef<Path>,
     {
         let path = path.as_ref();
         let watcher = FileWatcher::new(path, blocker)?;

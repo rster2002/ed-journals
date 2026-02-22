@@ -4,7 +4,9 @@ use crate::fs::models::sync_blocker::sync_unblocker::SyncUnblocker;
 use crate::fs::traits::blocker::Blocker;
 use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::BlockResult;
+use std::rc::Rc;
 use std::sync::mpsc::{Receiver, Sender};
+use std::sync::Arc;
 
 /// Handle for blocking in sync code.
 pub struct SyncBlocker {
@@ -33,7 +35,19 @@ impl Default for SyncBlocker {
 }
 
 impl Blocker for SyncBlocker {
-    fn unblocker(&self) -> Box<dyn Unblocker> {
-        Box::new(SyncUnblocker::new(self.sender.clone()))
+    fn unblocker(&self) -> Arc<dyn Unblocker> {
+        Arc::new(SyncUnblocker::new(self.sender.clone()))
+    }
+}
+
+impl From<SyncBlocker> for Arc<dyn Unblocker> {
+    fn from(blocker: SyncBlocker) -> Arc<dyn Unblocker> {
+        blocker.unblocker()
+    }
+}
+
+impl From<&SyncBlocker> for Arc<dyn Unblocker> {
+    fn from(blocker: &SyncBlocker) -> Arc<dyn Unblocker> {
+        blocker.unblocker()
     }
 }

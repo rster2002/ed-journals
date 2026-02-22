@@ -5,6 +5,8 @@ use notify::event::{CreateKind, ModifyKind};
 use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::fmt::{Debug, Formatter};
 use std::path::Path;
+use std::rc::Rc;
+use std::sync::Arc;
 
 /// Watches a file for changes and unblocks the associated blocker when a change occurs.
 pub struct FileWatcher {
@@ -12,8 +14,11 @@ pub struct FileWatcher {
 }
 
 impl FileWatcher {
-    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<FileWatcher, LogFSError> {
-        let mut unblocker = blocker.unblocker();
+    pub fn new<P: AsRef<Path>>(
+        path: P,
+        mut unblocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> Result<FileWatcher, LogFSError> {
+        let unblocker = unblocker.into();
 
         let mut watcher =
             notify::recommended_watcher(move |event: notify::Result<notify::Event>| {

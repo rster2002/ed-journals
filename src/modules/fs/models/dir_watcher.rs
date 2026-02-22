@@ -1,8 +1,10 @@
 use crate::fs::error::LogFSError;
 use crate::fs::traits::blocker::Blocker;
+use crate::fs::Unblocker;
 use notify::event::{CreateKind, RemoveKind};
 use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::Path;
+use std::sync::Arc;
 
 /// Watches a directory for changes and unblocks the associated blocker when a change occurs. Takes
 /// a path and any [Blocker]:
@@ -28,8 +30,11 @@ pub struct DirWatcher {
 }
 
 impl DirWatcher {
-    pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<DirWatcher, LogFSError> {
-        let mut unblocker = blocker.unblocker();
+    pub fn new<P: AsRef<Path>>(
+        path: P,
+        unblocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> Result<DirWatcher, LogFSError> {
+        let mut unblocker = unblocker.into();
 
         let mut watcher =
             notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
