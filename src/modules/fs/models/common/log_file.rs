@@ -20,6 +20,16 @@ impl LogFile {
         path: P,
         blocker: &impl Blocker,
     ) -> Result<LogFile<LogEvent>, LogFSError> {
+        LogFile::new_typed::<LogEvent, _>(path, blocker)
+    }
+
+    pub fn new_typed<R, P>(
+        path: P,
+        blocker: &impl Blocker,
+    ) -> Result<LogFile<R>, LogFSError>
+    where P : AsRef<Path>,
+        R : DeserializeOwned,
+    {
         let path = path.as_ref();
         let watcher = FileWatcher::new(path, blocker)?;
         let file = File::open(path)?;

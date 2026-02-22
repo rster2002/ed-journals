@@ -2,6 +2,7 @@ use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::{BlockResult, LogFSError};
 use futures::channel::mpsc::Sender;
 
+#[derive(Clone)]
 pub struct AsyncUnblocker {
     sender: Sender<BlockResult>,
 }
