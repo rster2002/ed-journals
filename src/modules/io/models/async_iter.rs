@@ -1,7 +1,6 @@
-use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
+use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream, StreamExt};
 use std::pin::{pin, Pin};
 use std::task::{Context, Poll};
-use smol::stream::StreamExt;
 use crate::io::RawAsyncIter;
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogIOError;
