@@ -1,14 +1,23 @@
+use crate::tests::{test_dir, test_root};
 use std::fs;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::thread::{sleep, spawn};
 use std::time::Duration;
-use crate::tests::{test_dir, test_root};
 const FILES: &[(&str, &str)] = &[
-    ("Journal.2000-01-01T100000.01.log", include_str!("../fixtures/Journal.2000-01-01T100000.01.log")),
-    ("Journal.2022-11-01T182557.01.log", include_str!("../fixtures/Journal.2022-11-01T182557.01.log")),
-    ("Journal.2023-01-10T133420.01.log", include_str!("../fixtures/Journal.2023-01-10T133420.01.log")),
+    (
+        "Journal.2000-01-01T100000.01.log",
+        include_str!("../fixtures/Journal.2000-01-01T100000.01.log"),
+    ),
+    (
+        "Journal.2022-11-01T182557.01.log",
+        include_str!("../fixtures/Journal.2022-11-01T182557.01.log"),
+    ),
+    (
+        "Journal.2023-01-10T133420.01.log",
+        include_str!("../fixtures/Journal.2023-01-10T133420.01.log"),
+    ),
 ];
 
 pub fn simulate_log_dir(name: &str) -> PathBuf {
@@ -54,10 +63,10 @@ pub fn simulate_log_dir(name: &str) -> PathBuf {
 // Ah yes, the tests for the test utility
 #[cfg(test)]
 mod tests {
+    use crate::modules::tests::simulate_log_dir;
     use std::fs::read_to_string;
     use std::thread::sleep;
     use std::time::Duration;
-    use crate::modules::tests::simulate_log_dir;
 
     #[test]
     fn generates_log_dir() {
@@ -86,15 +95,10 @@ mod tests {
 
         assert!(path.exists());
 
-        let file_entry = path.read_dir()
-            .unwrap()
-            .next()
-            .unwrap()
-            .unwrap();
+        let file_entry = path.read_dir().unwrap().next().unwrap().unwrap();
 
         let file_contents = read_to_string(file_entry.path()).unwrap();
-        let lines = file_contents.lines()
-            .count();
+        let lines = file_contents.lines().count();
 
         assert!(lines > 8);
         assert!(lines < 15);

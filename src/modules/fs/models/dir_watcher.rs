@@ -1,8 +1,8 @@
-use std::path::Path;
-use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use notify::event::{CreateKind, RemoveKind};
 use crate::fs::error::LogFSError;
 use crate::fs::traits::blocker::Blocker;
+use notify::event::{CreateKind, RemoveKind};
+use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use std::path::Path;
 
 /// Watches a directory for changes and unblocks the associated blocker when a change occurs. Takes
 /// a path and any [Blocker]:
@@ -31,35 +31,35 @@ impl DirWatcher {
     pub fn new<P: AsRef<Path>>(path: P, blocker: &impl Blocker) -> Result<DirWatcher, LogFSError> {
         let mut unblocker = blocker.unblocker();
 
-        let mut watcher = notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
-            let event: notify::Event = match event {
-                Ok(event) => event,
-                Err(error) => {
-                    let _ = unblocker.unblock(Err(LogFSError::NotifyError(error)));
-                    return;
-                },
-            };
+        let mut watcher =
+            notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
+                let event: notify::Event = match event {
+                    Ok(event) => event,
+                    Err(error) => {
+                        let _ = unblocker.unblock(Err(LogFSError::NotifyError(error)));
+                        return;
+                    }
+                };
 
-            #[cfg(target_family = "unix")]
-            match event.kind {
-                EventKind::Create(CreateKind::File)
-                | EventKind::Remove(RemoveKind::Any) => true,
-                _ => return,
-            };
+                #[cfg(target_family = "unix")]
+                match event.kind {
+                    EventKind::Create(CreateKind::File) | EventKind::Remove(RemoveKind::Any) => {
+                        true
+                    }
+                    _ => return,
+                };
 
-            #[cfg(target_family = "windows")]
-            match event.kind {
-                EventKind::Create(CreateKind::Any) | EventKind::Remove(RemoveKind::Any) => true,
-                _ => return,
-            };
+                #[cfg(target_family = "windows")]
+                match event.kind {
+                    EventKind::Create(CreateKind::Any) | EventKind::Remove(RemoveKind::Any) => true,
+                    _ => return,
+                };
 
-            let _ = unblocker.unblock(Ok(()));
-        })?;
+                let _ = unblocker.unblock(Ok(()));
+            })?;
 
         watcher.watch(path.as_ref(), RecursiveMode::NonRecursive)?;
 
-        Ok(DirWatcher {
-            _watcher: watcher,
-        })
+        Ok(DirWatcher { _watcher: watcher })
     }
 }

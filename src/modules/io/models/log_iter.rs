@@ -1,10 +1,13 @@
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogIOError;
+use serde::de::DeserializeOwned;
 use std::io::Read;
-use crate::io::models::raw_iter::RawIter;
+use std::marker::PhantomData;
 
-/// Standard iterator for iterating over some [Read] and returning [LogEvents](LogEvent). You can
-/// read the contents of a file wrapping a file with this iterator.
+/// Standard iterator for iterating over some [Read] and returning entries. By default, creating
+/// an iterator using [LogIter::new] will return [LogEvent]s and can use [LogIter::new_raw] to
+/// return raw [serde_json::Value]s. If you want to parse any other type, you can use the [From]
+/// trait instead.
 ///
 /// ```rust
 /// use std::fs::File;
@@ -15,46 +18,104 @@ use crate::io::models::raw_iter::RawIter;
 ///     .unwrap();
 /// let buf_reader = BufReader::new(file);
 ///
-/// let mut iterator = LogIter::from(buf_reader);
+/// let mut iterator = LogIter::new(buf_reader);
 ///
 /// assert!(iterator.next().is_some());
 /// ```
 #[derive(Debug)]
-pub struct LogIter<T>
+pub struct LogIter<T, R = LogEvent>
 where
     T: Read,
+    R: DeserializeOwned,
 {
-    inner: RawIter<T>,
+    inner: T,
+    _p: PhantomData<R>,
 }
 
-impl<T> From<T> for LogIter<T>
+impl<T> LogIter<T>
 where
     T: Read,
 {
-    fn from(value: T) -> Self {
+    pub fn new(inner: T) -> LogIter<T, LogEvent> {
         LogIter {
-            inner: RawIter::from(value),
+            inner,
+            _p: PhantomData,
+        }
+    }
+
+    pub fn new_raw(inner: T) -> LogIter<T, serde_json::Value> {
+        LogIter {
+            inner,
+            _p: PhantomData,
         }
     }
 }
 
-impl<T> Iterator for LogIter<T>
+impl<T, R> From<T> for LogIter<T, R>
 where
     T: Read,
+    R: DeserializeOwned,
 {
-    type Item = Result<LogEvent, LogIOError>;
+    fn from(value: T) -> Self {
+        LogIter {
+            inner: value,
+            _p: PhantomData,
+        }
+    }
+}
+
+impl<T, R> Iterator for LogIter<T, R>
+where
+    T: Read,
+    R: DeserializeOwned,
+{
+    type Item = Result<R, LogIOError>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        Some(match self.inner.next()? {
-            Ok(value) => serde_json::from_value(value).map_err(LogIOError::from),
-            Err(error) => Err(error)
-        })
+        let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
+
+        let mut buf = [0u8; 1];
+        loop {
+            let size = match self.inner.read(&mut buf) {
+                Ok(size) => size,
+                Err(e) => return Some(Err(e.into())),
+            };
+
+            if size == 0 {
+                break;
+            }
+
+            let byte = buf[0];
+
+            if byte == b'\n' && !line.is_empty() {
+                break;
+            }
+
+            if byte == 0x00 || (line.is_empty() && byte == b' ') {
+                continue;
+            }
+
+            line.push(byte);
+        }
+
+        if line.is_empty() {
+            return None;
+        }
+
+        Some(Ok(match serde_json::from_slice(&line) {
+            Ok(event) => event,
+            Err(e) => {
+                #[cfg(test)]
+                dbg!(&line);
+
+                return Some(Err(e.into()));
+            }
+        }))
     }
 }
 
 #[cfg(test)]
 mod tests {
-
     use crate::logs::LogEventContentKind;
     use crate::modules::io::models::log_iter::LogIter;
     use std::fs;
@@ -67,7 +128,7 @@ mod tests {
 { "timestamp":"2020-09-21T19:04:51Z", "event":"Repair", "Item":"Wear", "Cost":10 }"#;
 
         let cursor = Cursor::new(data);
-        let mut reader = LogIter::from(cursor);
+        let mut reader = LogIter::new(cursor);
 
         assert!(reader.next().is_some());
         assert!(reader.next().is_some());
@@ -82,7 +143,7 @@ mod tests {
 "#;
 
         let cursor = Cursor::new(data);
-        let mut reader = LogIter::from(cursor);
+        let mut reader = LogIter::new(cursor);
 
         assert!(reader.next().is_some());
         assert!(reader.next().is_some());
@@ -96,7 +157,7 @@ mod tests {
         let file = File::open("c.tmp").unwrap();
         let buf_reader = BufReader::new(file);
 
-        let mut reader = LogIter::from(buf_reader);
+        let mut reader = LogIter::new(buf_reader);
 
         assert!(reader.next().is_none());
 

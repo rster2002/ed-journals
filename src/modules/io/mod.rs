@@ -7,12 +7,8 @@ mod error;
 mod models;
 
 pub use error::LogIOError;
-pub use models::log_path::LogPath;
-pub use models::raw_iter::RawIter;
 pub use models::log_iter::LogIter;
-
-#[cfg(feature = "asynchronous")]
-pub use models::raw_async_iter::RawAsyncIter;
+pub use models::log_path::LogPath;
 
 #[cfg(feature = "asynchronous")]
 pub use models::async_iter::AsyncIter;

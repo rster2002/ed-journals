@@ -1,10 +1,10 @@
+use crate::tests::test_dir;
 use std::fs;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::thread::{sleep, spawn, JoinHandle};
 use std::time::Duration;
-use crate::tests::test_dir;
 
 pub fn simulate_log_file(name: &str) -> (PathBuf, JoinHandle<()>) {
     let dir_root = test_dir().path().join(name).to_path_buf();

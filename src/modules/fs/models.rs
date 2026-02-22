@@ -1,6 +1,7 @@
+pub mod common;
+pub mod dir_watcher;
 pub mod file_watcher;
 pub mod log_dir;
-pub mod dir_watcher;
 pub mod sync_blocker;
 
 #[cfg(feature = "asynchronous")]

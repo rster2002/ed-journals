@@ -1,37 +1,93 @@
-use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream, StreamExt};
-use std::pin::{pin, Pin};
-use std::task::{Context, Poll};
-use crate::io::RawAsyncIter;
 use crate::logs::LogEvent;
 use crate::modules::io::error::LogIOError;
+use futures::{AsyncRead, AsyncReadExt, FutureExt, Stream};
+use serde::de::DeserializeOwned;
+use std::marker::PhantomData;
+use std::pin::{pin, Pin};
+use std::task::{Context, Poll};
 
-/// Asynchronous iterator for iterating over some [AsyncRead] and returning [LogEvents](LogEvent).
-pub struct AsyncIter<T>
+/// Asynchronous iterator for iterating over some [AsyncRead] and returning [serde_json::Value]s
+/// which can then manually be parsed using [serde_json::from_value]. To automatically parse
+/// entries, use [AsyncIter](crate::io::AsyncIter) instead.
+pub struct AsyncIter<T, R = LogEvent>
 where
     T: AsyncRead + Unpin,
+    R: DeserializeOwned + Unpin,
 {
-    inner: RawAsyncIter<T>,
+    inner: T,
+    _p: PhantomData<R>,
 }
 
 impl<T> AsyncIter<T>
 where
     T: AsyncRead + Unpin,
 {
-    async fn inner_next(&mut self) -> Option<Result<LogEvent, LogIOError>> {
-        Some(match self.inner.next().await? {
-            Ok(value) => serde_json::from_value(value).map_err(LogIOError::from),
-            Err(error) => Err(error),
-        })
+    pub fn new(inner: T) -> AsyncIter<T, LogEvent> {
+        AsyncIter {
+            inner,
+            _p: PhantomData,
+        }
+    }
+
+    pub fn new_raw(inner: T) -> AsyncIter<T, serde_json::Value> {
+        AsyncIter {
+            inner,
+            _p: PhantomData,
+        }
     }
 }
 
-impl<T> From<T> for AsyncIter<T>
+impl<T, R> AsyncIter<T, R>
 where
     T: AsyncRead + Unpin,
+    R: DeserializeOwned + Unpin,
+{
+    async fn inner_next(&mut self) -> Option<Result<R, LogIOError>> {
+        let mut line = Vec::with_capacity(64);
+
+        loop {
+            let mut buf: [u8; 1] = [0; 1];
+            let result = self.inner.read(&mut buf).await;
+
+            match result {
+                Ok(0) => break,
+                Ok(_) => {}
+                Err(e) => return Some(Err(e.into())),
+            }
+
+            let byte = buf[0];
+
+            if byte == b'\n' && !line.is_empty() {
+                break;
+            }
+
+            if byte == 0x00 || (line.is_empty() && byte == b' ') {
+                continue;
+            }
+
+            line.push(byte);
+        }
+
+        if line.is_empty() {
+            return None;
+        }
+
+        Some(Ok(match serde_json::from_slice(&line) {
+            Ok(event) => event,
+            Err(e) => return Some(Err(e.into())),
+        }))
+    }
+}
+
+impl<T, R> From<T> for AsyncIter<T, R>
+where
+    T: AsyncRead + Unpin,
+    R: DeserializeOwned + Unpin,
 {
     fn from(inner: T) -> Self {
         AsyncIter {
-            inner: RawAsyncIter::from(inner),
+            inner,
+            _p: PhantomData,
         }
     }
 }
@@ -48,11 +104,12 @@ where
     }
 }
 
-impl<T> Stream for AsyncIter<T>
+impl<T, R> Stream for AsyncIter<T, R>
 where
     T: AsyncRead + Unpin,
+    R: DeserializeOwned + Unpin,
 {
-    type Item = Result<LogEvent, LogIOError>;
+    type Item = Result<R, LogIOError>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         pin!(self.inner_next()).poll_unpin(cx)
@@ -62,7 +119,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::logs::LogEventContentKind;
-    use crate::modules::io::models::async_iter::AsyncIter;
+    use crate::modules::io::AsyncIter;
     use async_fs::File;
     use futures::io::Cursor;
     use futures::StreamExt;
@@ -76,7 +133,7 @@ mod tests {
             let cursor = Cursor::new(data);
             let buf_reader = futures::io::BufReader::new(cursor);
 
-            let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = AsyncIter::new(buf_reader);
 
             assert!(reader.next().await.is_some());
             assert!(reader.next().await.is_some());
@@ -93,7 +150,7 @@ mod tests {
 
             let buf_reader = futures::io::BufReader::new(file);
 
-            let mut reader = AsyncIter::from(buf_reader);
+            let mut reader = AsyncIter::new(buf_reader);
 
             assert!(reader.next().await.is_none());
 

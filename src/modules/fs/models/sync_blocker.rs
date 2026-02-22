@@ -1,10 +1,10 @@
 mod sync_unblocker;
 
-use std::sync::mpsc::{Receiver, Sender};
-use crate::fs::BlockResult;
 use crate::fs::models::sync_blocker::sync_unblocker::SyncUnblocker;
 use crate::fs::traits::blocker::Blocker;
 use crate::fs::traits::unblocker::Unblocker;
+use crate::fs::BlockResult;
+use std::sync::mpsc::{Receiver, Sender};
 
 /// Handle for blocking in sync code.
 pub struct SyncBlocker {
@@ -28,10 +28,7 @@ impl Default for SyncBlocker {
     fn default() -> Self {
         let (sender, receiver) = std::sync::mpsc::channel();
 
-        SyncBlocker {
-            sender,
-            receiver,
-        }
+        SyncBlocker { sender, receiver }
     }
 }
 

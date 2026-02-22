@@ -1,7 +1,7 @@
-use std::fs;
-use std::path::PathBuf;
 use crate::fs::error::LogFSError;
 use crate::io::LogPath;
+use std::fs;
+use std::path::PathBuf;
 
 /// Reads the contents of the target directory each time [Iterator::next] is called and returns
 /// the next file in the directory.
@@ -89,9 +89,9 @@ impl Iterator for LogDir {
 
 #[cfg(test)]
 mod tests {
-    use std::fs;
     use crate::modules::fs::models::log_dir::LogDir;
     use crate::tests::test_dir;
+    use std::fs;
 
     #[test]
     fn entries_are_returned_correctly() {
