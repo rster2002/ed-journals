@@ -9,6 +9,7 @@ use thiserror::Error;
 use crate::modules::shared::blocking::sync_blocker::SyncBlocker;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveJsonFileWatcher<T>
 where
     T: for<'de> Deserialize<'de>,

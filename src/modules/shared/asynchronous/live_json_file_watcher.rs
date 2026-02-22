@@ -10,6 +10,7 @@ use tokio::fs;
 use crate::modules::shared::asynchronous::async_blocker::AsyncBlocker;
 
 #[derive(Debug)]
+#[deprecated]
 pub struct LiveJsonFileWatcher<T>
 where
     T: for<'de> Deserialize<'de>,

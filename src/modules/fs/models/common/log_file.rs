@@ -26,6 +26,14 @@ impl LogFile {
         LogFile::new_typed::<LogEvent, _>(path, blocker)
     }
 
+    pub fn new_raw<P: AsRef<Path>>(
+        path: P,
+        blocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> Result<LogFile<serde_json::Value>, LogFSError>
+    {
+        LogFile::new_typed::<serde_json::Value, _>(path, blocker)
+    }
+
     pub fn new_typed<R, P>(
         path: P,
         blocker: impl Into<Arc<dyn Unblocker>>,

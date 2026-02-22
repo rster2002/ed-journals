@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 use tokio::sync::mpsc::{channel, Sender};
 
 #[derive(Debug, Clone)]
+#[deprecated]
 pub struct AsyncBlocker {
     waiting_sender: Arc<Mutex<(Option<Sender<()>>,)>>,
 }

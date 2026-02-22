@@ -3,6 +3,7 @@ use std::thread;
 use std::thread::Thread;
 
 #[derive(Debug, Clone)]
+#[deprecated]
 pub struct SyncBlocker {
     waiting_thread: Arc<Mutex<(Option<Thread>,)>>,
 }
