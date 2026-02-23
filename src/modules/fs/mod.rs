@@ -38,4 +38,7 @@ pub use traits::unblocker::Unblocker;
 #[cfg(feature = "asynchronous")]
 pub use models::async_blocker::AsyncBlocker;
 
+#[cfg(feature = "asynchronous")]
+pub use models::common_async;
+
 type BlockResult = Result<(), LogFSError>;

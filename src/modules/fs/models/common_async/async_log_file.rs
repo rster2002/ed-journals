@@ -17,8 +17,8 @@ pub struct AsyncLogFile<R = LogEvent>
 where
     R: DeserializeOwned + Unpin,
 {
-    watcher: FileWatcher,
     iter: AsyncIter<BufReader<File>, R>,
+    _w: FileWatcher,
 }
 
 impl AsyncLogFile {
@@ -50,7 +50,7 @@ impl AsyncLogFile {
         let reader = BufReader::new(file);
         let iter = AsyncIter::from(reader);
 
-        Ok(AsyncLogFile { watcher, iter })
+        Ok(AsyncLogFile { _w: watcher, iter })
     }
 }
 
