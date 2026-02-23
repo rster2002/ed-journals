@@ -1,10 +1,10 @@
 //! Types for common use-cases and strategies.
 
+mod changed_json_file;
 mod different_file;
+mod json_file;
 mod log_file;
 mod newest_file;
-mod json_file;
-mod changed_json_file;
 
 /// Holds both a [FileWatcher](crate::fs::FileWatcher) and an [LogIter](crate::io::LogIter) over
 /// a buf read file.
@@ -18,5 +18,5 @@ pub use different_file::DifferentFile;
 /// with a [LogPath](crate::io::LogPath) which is newer than the current one.
 pub use newest_file::NewestFile;
 
-pub use json_file::JsonFile;
 pub use changed_json_file::ChangedJsonFile;
+pub use json_file::JsonFile;

@@ -1,9 +1,9 @@
+use crate::fs::common::JsonFile;
 use crate::fs::{LogFSError, Unblocker};
 use serde::de::DeserializeOwned;
 use std::path::Path;
 use std::sync::Arc;
 use twox_hash::XxHash64;
-use crate::fs::common::JsonFile;
 
 /// Async variant of [ChangedJsonFile](crate::fs::common::ChangedJsonFile).
 pub struct AsyncChangedJsonFile<R>

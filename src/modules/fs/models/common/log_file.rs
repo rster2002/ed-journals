@@ -29,8 +29,7 @@ impl LogFile {
     pub fn new_raw<P: AsRef<Path>>(
         path: P,
         blocker: impl Into<Arc<dyn Unblocker>>,
-    ) -> Result<LogFile<serde_json::Value>, LogFSError>
-    {
+    ) -> Result<LogFile<serde_json::Value>, LogFSError> {
         LogFile::new_typed::<serde_json::Value, _>(path, blocker)
     }
 

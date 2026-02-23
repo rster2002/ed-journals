@@ -1,21 +1,26 @@
-use std::path::Path;
-use std::sync::Arc;
-use serde::de::DeserializeOwned;
-use twox_hash::XxHash64;
 use crate::fs::common::json_file::JsonFile;
 use crate::fs::{LogFSError, Unblocker};
+use serde::de::DeserializeOwned;
+use std::path::Path;
+use std::sync::Arc;
+use twox_hash::XxHash64;
 
 pub struct ChangedJsonFile<R>
-where R : DeserializeOwned,
+where
+    R: DeserializeOwned,
 {
     inner: JsonFile<R>,
     last_hash: Option<u64>,
 }
 
 impl<R> ChangedJsonFile<R>
-where R : DeserializeOwned + PartialEq,
+where
+    R: DeserializeOwned + PartialEq,
 {
-    pub fn new<P: AsRef<Path>>(path: P, unblocker: impl Into<Arc<dyn Unblocker>>) -> Result<ChangedJsonFile<R>, LogFSError> {
+    pub fn new<P: AsRef<Path>>(
+        path: P,
+        unblocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> Result<ChangedJsonFile<R>, LogFSError> {
         Ok(ChangedJsonFile {
             inner: JsonFile::new(path, unblocker)?,
             last_hash: None,

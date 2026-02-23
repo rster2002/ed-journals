@@ -1,11 +1,12 @@
+use crate::fs::{FileWatcher, LogFSError, Unblocker};
+use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
-use serde::de::DeserializeOwned;
-use crate::fs::{FileWatcher, LogFSError, Unblocker};
 
 pub struct JsonFile<R>
-where R : DeserializeOwned,
+where
+    R: DeserializeOwned,
 {
     path: PathBuf,
     _w: FileWatcher,
@@ -13,9 +14,13 @@ where R : DeserializeOwned,
 }
 
 impl<R> JsonFile<R>
-where R : DeserializeOwned,
+where
+    R: DeserializeOwned,
 {
-    pub fn new<P: AsRef<Path>>(path: P, unblocker: impl Into<Arc<dyn Unblocker>>) -> Result<JsonFile<R>, LogFSError> {
+    pub fn new<P: AsRef<Path>>(
+        path: P,
+        unblocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> Result<JsonFile<R>, LogFSError> {
         let path = path.as_ref();
         let file_watcher = FileWatcher::new(path, unblocker)?;
 

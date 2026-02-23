@@ -47,12 +47,14 @@ where
 {
     pub async fn maybe_next(&mut self, path: &LogPath) -> Result<bool, LogFSError> {
         if self.current_path.is_none()
-            || self.current_path.as_ref().is_some_and(|current| path > current)
+            || self
+                .current_path
+                .as_ref()
+                .is_some_and(|current| path > current)
         {
             self.current_path = Some(path.clone());
-            self.current_file = Some(
-                AsyncLogFile::new_typed::<R, _>(path, self.unblocker.clone()).await?,
-            );
+            self.current_file =
+                Some(AsyncLogFile::new_typed::<R, _>(path, self.unblocker.clone()).await?);
 
             return Ok(true);
         }

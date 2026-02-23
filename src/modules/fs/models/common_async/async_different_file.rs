@@ -26,7 +26,9 @@ impl AsyncDifferentFile {
         AsyncDifferentFile::new_typed::<LogEvent>(blocker)
     }
 
-    pub fn new_raw(blocker: impl Into<Arc<dyn Unblocker>>) -> AsyncDifferentFile<serde_json::Value> {
+    pub fn new_raw(
+        blocker: impl Into<Arc<dyn Unblocker>>,
+    ) -> AsyncDifferentFile<serde_json::Value> {
         AsyncDifferentFile::new_typed::<serde_json::Value>(blocker)
     }
 
@@ -53,9 +55,8 @@ where
 
         if self.current_path.is_none() || self.current_path.as_ref().is_some_and(|v| v != path) {
             self.current_path = Some(path.to_path_buf());
-            self.current_file = Some(
-                AsyncLogFile::new_typed::<R, _>(path, self.unblocker.clone()).await?,
-            );
+            self.current_file =
+                Some(AsyncLogFile::new_typed::<R, _>(path, self.unblocker.clone()).await?);
 
             return Ok(true);
         }
