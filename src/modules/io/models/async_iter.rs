@@ -9,6 +9,7 @@ use std::task::{Context, Poll};
 /// Asynchronous iterator for iterating over some [AsyncRead] and returning [serde_json::Value]s
 /// which can then manually be parsed using [serde_json::from_value]. To automatically parse
 /// entries, use [AsyncIter](crate::io::AsyncIter) instead.
+#[derive(Debug)]
 pub struct AsyncIter<T, R = LogEvent>
 where
     T: AsyncRead + Unpin,
