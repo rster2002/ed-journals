@@ -17,7 +17,7 @@ where R : DeserializeOwned,
 {
     pub fn new<P: AsRef<Path>>(path: P, unblocker: impl Into<Arc<dyn Unblocker>>) -> Result<JsonFile<R>, LogFSError> {
         let path = path.as_ref();
-        let file_watcher = FileWatcher::new(&path, unblocker)?;
+        let file_watcher = FileWatcher::new(path, unblocker)?;
 
         Ok(JsonFile {
             path: path.to_path_buf(),

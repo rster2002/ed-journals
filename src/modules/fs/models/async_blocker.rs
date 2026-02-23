@@ -6,7 +6,6 @@ use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::{BlockResult, LogFSError};
 use futures::channel::mpsc::{Receiver, Sender};
 use futures::StreamExt;
-use std::rc::Rc;
 use std::sync::Arc;
 
 /// Blocker that can be used to block in async code.

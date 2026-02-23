@@ -1,5 +1,4 @@
 use crate::fs::error::LogFSError;
-use crate::fs::traits::blocker::Blocker;
 use crate::fs::Unblocker;
 use notify::event::{CreateKind, RemoveKind};
 use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
@@ -34,7 +33,7 @@ impl DirWatcher {
         path: P,
         unblocker: impl Into<Arc<dyn Unblocker>>,
     ) -> Result<DirWatcher, LogFSError> {
-        let mut unblocker = unblocker.into();
+        let unblocker = unblocker.into();
 
         let mut watcher =
             notify::recommended_watcher(move |event: notify::Result<notify::Event>| {

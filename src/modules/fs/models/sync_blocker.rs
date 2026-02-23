@@ -4,7 +4,6 @@ use crate::fs::models::sync_blocker::sync_unblocker::SyncUnblocker;
 use crate::fs::traits::blocker::Blocker;
 use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::BlockResult;
-use std::rc::Rc;
 use std::sync::mpsc::{Receiver, Sender};
 use std::sync::Arc;
 

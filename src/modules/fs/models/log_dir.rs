@@ -55,7 +55,7 @@ impl LogDir {
                 continue;
             };
 
-            new_files.push(LogPath::from(log_path));
+            new_files.push(log_path);
         }
 
         new_files.sort();
