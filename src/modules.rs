@@ -5,18 +5,10 @@ pub mod logs;
 /// Module for reading logs using various iterators.
 pub mod io;
 
-/// Allows for tracking journal directory as a whole, firing events for when logs change but also
-/// for when `.json` files are updated.
-pub mod journal;
-
 /// Utilities for working with the `Status.json` file. The `Status.json` file contains information
 /// about the current status of the player and their ship. Things like if the player is docked
 /// or landed or the location of the player on a planet.
 pub mod status;
-
-/// Used to construct a state by feeding it events from the journal logs which can then be used
-/// to create relations between events and create a history.
-pub mod state;
 
 /// Contains models for genuses, species and variants and utilities for predicting possible
 /// biological scans for planets
@@ -25,6 +17,9 @@ pub mod exobiology;
 /// Contains functions for exploration related things, like calculating estimated exploration value
 /// for stars and planets and for analysing scans for unusual data.
 pub mod exploration;
+
+/// Models for things related specifically to the file system.
+pub mod fs;
 
 /// Utilities for working with the `Outfitting.json` file. Is updated when opening the outfitting
 /// menu on stations and includes all the modules that are available for purchase at that market.
@@ -67,13 +62,10 @@ pub mod ship_locker;
 /// Provides some utility functions and macros that are used internally.
 mod utils;
 
-/// Module for shared internal code.
-mod shared;
-
 /// Provides models for bodies like stars and planets.
 pub mod galaxy;
 
-/// This module contains models for things that have to do with civilisation and populated systems.
+/// This module contains models for things that have to do with civilization and populated systems.
 /// Things like the different superpowers or economies.
 pub mod civilization;
 
@@ -112,3 +104,7 @@ pub mod partials;
 /// Sometimes the game reuses certain events and instead of 'ship' data it sets Odyssey related
 /// data. These mixed data types handle these differences.
 pub mod mixed;
+
+/// Utilities for testing.
+#[cfg(test)]
+mod tests;

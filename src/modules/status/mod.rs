@@ -12,9 +12,3 @@ pub use models::status::StatusContents;
 pub use models::status::StatusKind;
 
 mod models;
-
-pub mod blocking;
-
-#[cfg(feature = "asynchronous")]
-#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-pub mod asynchronous;

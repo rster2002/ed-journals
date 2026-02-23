@@ -1,18 +1,10 @@
 //! Elite Dangerous create journal log files which contain information about various events that
 //! happen in the game. This module provides models and readers for working with these files.
 //!
-//! * [LogDir](logs::LogDir) represents the directory which includes all the journal files for the player. It can
-//!   be used get specific journal log files.
-//! * [LogFile](logs::LogFile) is used to create readers with which can then be used to read the contents of the
-//!   target file.
 //! * The [LogEvent](logs::LogEvent) struct is a single entry in a log file and is what is emitted by the different
 //!   kinds of readers.
 //! * The [LogEventContent](logs::LogEventContent) is the actual content of the entry and is a large enum containing all
 //!   the different types of events that are logged.
-//! * The [blocking](logs::blocking) module provides readers which block the current thread and requires you to
-//!   manually manage threads, especially when using the 'live' readers.
-//! * The [asynchronous](logs::asynchronous) module contains the readers for when you're working in an asynchronous
-//!   environment like for example when using tokio.
 //!
 //! Using these models, you can read the contents of the journal log files. Note however that this
 //! is **lossy**, meaning that it is possible to deserialize the contents of a log file, but it is
@@ -265,21 +257,6 @@ pub use content::log_event_content::won_a_trophy_for_squadron_event;
 pub use content::LogEvent;
 pub use content::LogEventContent;
 pub use content::LogEventContentKind;
-pub use log_dir::LogDir;
-pub use log_dir::LogDirError;
-pub use log_file::LogFile;
-pub use log_file::LogFileError;
-
-mod log_dir;
-mod log_file;
 
 /// Contains models for all the different events that are written in the log files.
 mod content;
-
-/// Contains readers for when working in a synchronous environment like a manually spawned thread.
-pub mod blocking;
-
-/// Contains readers for when working in an asynchronous environment like Tokio.
-#[cfg(feature = "asynchronous")]
-#[cfg_attr(docsrs, doc(cfg(feature = "asynchronous")))]
-pub mod asynchronous;
