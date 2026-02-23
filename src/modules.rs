@@ -5,18 +5,10 @@ pub mod logs;
 /// Module for reading logs using various iterators.
 pub mod io;
 
-/// Allows for tracking journal directory as a whole, firing events for when logs change but also
-/// for when `.json` files are updated.
-pub mod journal;
-
 /// Utilities for working with the `Status.json` file. The `Status.json` file contains information
 /// about the current status of the player and their ship. Things like if the player is docked
 /// or landed or the location of the player on a planet.
 pub mod status;
-
-/// Used to construct a state by feeding it events from the journal logs which can then be used
-/// to create relations between events and create a history.
-pub mod state;
 
 /// Contains models for genuses, species and variants and utilities for predicting possible
 /// biological scans for planets
@@ -70,13 +62,10 @@ pub mod ship_locker;
 /// Provides some utility functions and macros that are used internally.
 mod utils;
 
-/// Module for shared internal code.
-mod shared;
-
 /// Provides models for bodies like stars and planets.
 pub mod galaxy;
 
-/// This module contains models for things that have to do with civilisation and populated systems.
+/// This module contains models for things that have to do with civilization and populated systems.
 /// Things like the different superpowers or economies.
 pub mod civilization;
 

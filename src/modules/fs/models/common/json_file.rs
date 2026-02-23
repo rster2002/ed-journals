@@ -8,7 +8,7 @@ pub struct JsonFile<R>
 where R : DeserializeOwned,
 {
     path: PathBuf,
-    file_watcher: FileWatcher,
+    _w: FileWatcher,
     _p: PhantomData<R>,
 }
 
@@ -21,7 +21,7 @@ where R : DeserializeOwned,
 
         Ok(JsonFile {
             path: path.to_path_buf(),
-            file_watcher,
+            _w: file_watcher,
             _p: PhantomData,
         })
     }

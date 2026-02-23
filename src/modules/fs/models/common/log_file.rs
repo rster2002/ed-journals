@@ -1,4 +1,4 @@
-use crate::fs::{Blocker, FileWatcher, LogFSError, Unblocker};
+use crate::fs::{FileWatcher, LogFSError, Unblocker};
 use crate::io::{LogIOError, LogIter};
 use crate::logs::LogEvent;
 use serde::de::DeserializeOwned;
@@ -14,8 +14,8 @@ pub struct LogFile<R = LogEvent>
 where
     R: DeserializeOwned,
 {
-    watcher: FileWatcher,
     iter: LogIter<BufReader<File>, R>,
+    _w: FileWatcher,
 }
 
 impl LogFile {
@@ -48,7 +48,7 @@ impl LogFile {
         let reader = BufReader::new(file);
         let iter = LogIter::from(reader);
 
-        Ok(LogFile { watcher, iter })
+        Ok(LogFile { _w: watcher, iter })
     }
 }
 
