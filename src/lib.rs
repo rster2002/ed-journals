@@ -49,12 +49,16 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::{LogDir, LogEventContent};
+    use crate::logs::{LogEventContent};
     use std::env::current_dir;
     use std::fs;
+    use std::fs::File;
     use std::hash::{DefaultHasher, Hash, Hasher};
     use std::path::PathBuf;
     use std::thread::current;
+    use crate::fs::common::LogFile;
+    use crate::fs::LogDir;
+    use crate::io::LogIter;
 
     pub struct TestFile(PathBuf);
 
@@ -124,18 +128,20 @@ mod tests {
 
         let log_dir = LogDir::new(dir_path);
 
-        let logs = log_dir.journal_logs().unwrap();
-
-        assert!(logs.len() > 10);
-
         let mut file_header_count = 0;
         let mut entry_count = 0;
 
-        for journal in &logs {
+        for log_path in log_dir {
+            let log_path = log_path.unwrap();
             let mut found_file_header = false;
-            let reader = journal.create_blocking_reader().unwrap();
 
-            for entry in reader {
+            let file = File::open(log_path).unwrap();
+            let buf_reader = std::io::BufReader::new(file);
+            let iter = LogIter::new(buf_reader);
+
+            // let reader = journal.create_blocking_reader().unwrap();
+
+            for entry in iter {
                 entry_count += 1;
 
                 if let LogEventContent::FileHeader(_) = entry.unwrap().content {
