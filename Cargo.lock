@@ -347,7 +347,7 @@ dependencies = [
 
 [[package]]
 name = "ed-journals"
-version = "0.12.2"
+version = "0.12.3"
 dependencies = [
  "async-fs",
  "async-mutex",
