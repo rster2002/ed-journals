@@ -113,6 +113,10 @@ pub enum InternalModule {
     #[serde(rename = "engine_fast")]
     EnhancedPerformanceThrusters,
 
+    /// Mk II Agile Boost Thrusters, exclusive to Kestrel Mk II
+    #[serde(rename = "mkiiagileboost_engine")]
+    MkIIAgileBoostThrusters,
+
     /// Mk II Gravity Optimised Thrusters, exclusive to Panther Clipper MkII
     #[serde(rename = "engine_gravityoptimised_mkii")]
     GravityOptimisedThrustersMkII,
@@ -212,6 +216,9 @@ impl InternalModule {
             | InternalModule::PowerPlant
             | InternalModule::GuardianHybridPowerPlant
             | InternalModule::Thrusters
+            | InternalModule::EnhancedPerformanceThrusters
+            | InternalModule::MkIIAgileBoostThrusters
+            | InternalModule::GravityOptimisedThrustersMkII
             | InternalModule::PowerDistributor
             | InternalModule::GuardianHybridPowerDistributor
             | InternalModule::LifeSupport
@@ -320,6 +327,7 @@ impl Display for InternalModule {
                 InternalModule::ShieldGenerator => "Shield Generator",
                 InternalModule::SupercruiseAssist => "Supercruise Assist",
                 InternalModule::Thrusters => "Thrusters",
+                InternalModule::MkIIAgileBoostThrusters => "Mk II Agile Boost Thrusters",
                 InternalModule::XenoMultiLimpetController => "Xeno Limpet Controller",
                 InternalModule::Armor(armor) => return write!(f, "{}", armor.grade),
                 InternalModule::FrameShiftDriveOvercharged => "Frame Shift Drive (SCO)",

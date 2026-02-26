@@ -186,6 +186,9 @@ pub enum HardpointModule {
     #[serde(rename = "xenoscanner_basic")]
     XenoScanner,
 
+    #[serde(rename = "mkiiplasmashockautocannon")]
+    MkIIPlasmaShockAccelerator,
+
     #[cfg(feature = "allow-unknown")]
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
@@ -321,6 +324,7 @@ impl Display for HardpointModule {
                 HardpointModule::ImperialHammerRailGun => "Imperial Hammer Rail Gun",
                 HardpointModule::XenoScanner => "Xeno Scanner",
                 HardpointModule::AdvancedMissileRack => "Advanced Missile Rack",
+                HardpointModule::MkIIPlasmaShockAccelerator => "Mk II Plasma Shock Accelerator",
 
                 #[cfg(feature = "allow-unknown")]
                 HardpointModule::Unknown(unknown) => return write!(f, "Unknown: {unknown}"),

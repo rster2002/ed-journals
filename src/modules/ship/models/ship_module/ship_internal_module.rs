@@ -308,6 +308,24 @@ mod tests {
                     free: false,
                 },
             ),
+            (
+                "Int_MkIIAgileBoost_Engine_Size5_Class5",
+                ShipInternalModule {
+                    module: InternalModule::MkIIAgileBoostThrusters,
+                    size: 5,
+                    class: ModuleClass::A,
+                    free: false,
+                },
+            ),
+            (
+                "Int_Engine_Size7_Class5_GravityOptimised_MkII",
+                ShipInternalModule {
+                    module: InternalModule::GravityOptimisedThrustersMkII,
+                    size: 7,
+                    class: ModuleClass::A,
+                    free: false,
+                },
+            ),
         ];
 
         for (input, expected) in test_cases {
