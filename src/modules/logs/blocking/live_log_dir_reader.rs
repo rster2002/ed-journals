@@ -79,9 +79,10 @@ impl Iterator for LiveLogDirReader {
             Ok(x) => x,
             Err(e) => return Some(Err(e)),
         };
-        Some(serde_json::from_value(result).map_err(|e| {
+        let raw_json = result.to_string();
+        Some(serde_json::from_value(result).map_err(|error| {
             LiveLogDirReaderError::LogDirReaderError(LogDirReaderError::LogFileReaderError(
-                super::LogFileReaderError::FailedToParseLine(e),
+                super::LogFileReaderError::FailedToParseLine { error, raw_json },
             ))
         }))
     }

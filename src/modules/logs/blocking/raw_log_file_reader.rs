@@ -60,8 +60,12 @@ impl RawLogFileReader {
                 return Ok(());
             }
 
-            self.entry_buffer
-                .push_back(parse_result.map_err(|e| e.into()));
+            self.entry_buffer.push_back(parse_result.map_err(|e| {
+                LogFileReaderError::FailedToParseLine {
+                    error: e,
+                    raw_json: line.to_string(),
+                }
+            }));
         }
 
         // If it reaches this point that means that the whole read buffer has been processed, so it
