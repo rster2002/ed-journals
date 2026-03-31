@@ -15,7 +15,8 @@ fn main() {
 
     loop {
         let Some(last) = dir.skip_to_last() else {
-            // No last file available yet, wait for the blocker to be released.
+            // No last file available yet, wait for the blocker to be released by changes in the
+            // directory.
             sync_blocker.wait().unwrap();
             continue;
         };
@@ -26,7 +27,7 @@ fn main() {
         newest_file.maybe_next(&last.unwrap()).unwrap();
 
         // Read any events from the newest file. Calling `maybe_next` won't reset the inner
-        // iterator, so you can keep reading events from the same file, or immediately continue in
+        // iterator, so you can keep reading events from the same file or immediately continue in
         // case all events have been read.
         for event in newest_file {
             println!("{:?}", event.unwrap());
