@@ -20,7 +20,7 @@ impl SyncBlocker {
     }
 
     /// Blocks the current thread until a registered caller unblocks it.
-    pub fn block(&mut self) -> BlockResult {
+    pub fn wait(&mut self) -> BlockResult {
         self.receiver.recv()?
     }
 }

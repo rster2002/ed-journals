@@ -1,0 +1,42 @@
+use ed_journals::fs::{DirWatcher, LogDir, SyncBlocker};
+use ed_journals::fs::common::{LogFile, NewestFile};
+
+fn main() {
+    let mut dir = LogDir::new("./test-files/journals");
+
+    // Main blocker that will be used to block the thread until something changes.
+    let mut sync_blocker = SyncBlocker::new();
+
+    // Watch the directory for changes.
+    let dir_watcher = DirWatcher::new(&dir, &sync_blocker).unwrap();
+
+    // Container that holds the newest file.
+    let mut newest_file = NewestFile::new(&sync_blocker);
+
+    loop {
+        let Some(last) = dir.skip_to_last() else {
+            // No last file available yet, wait for the blocker to be released.
+            sync_blocker.wait().unwrap();
+            continue;
+        };
+
+        // Calling the `maybe_next` method will check the provided path against the path that is
+        // currently held by the newest file. If the path is newer than the current one, then
+        // the provided path is set and opened.
+        newest_file.maybe_next(&last.unwrap()).unwrap();
+
+        // Read any events from the newest file. Calling `maybe_next` won't reset the inner
+        // iterator, so you can keep reading events from the same file, or immediately continue in
+        // case all events have been read.
+        for event in newest_file {
+            println!("{:?}", event.unwrap());
+        }
+
+        // Block after reading all currently available events from the newest file. This is
+        // unblocked when either something changes in the directory or the content of the current
+        // newest file changes.
+        sync_blocker.wait().unwrap();
+
+        break; // You'll need to handle breaking out of the loop
+    }
+}

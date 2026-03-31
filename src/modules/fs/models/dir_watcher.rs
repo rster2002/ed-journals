@@ -21,7 +21,7 @@ use std::sync::Arc;
 /// let dir_watcher = DirWatcher::new(&path, &blocker).unwrap();
 ///
 /// # return;
-/// blocker.block().unwrap();
+/// blocker.wait().unwrap();
 /// // Something changed
 /// ```
 pub struct DirWatcher {

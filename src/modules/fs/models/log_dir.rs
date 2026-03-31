@@ -1,7 +1,7 @@
 use crate::fs::error::LogFSError;
 use crate::io::LogPath;
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// Reads the contents of the target directory each time [Iterator::next] is called and returns
 /// the next file in the directory.
@@ -84,6 +84,12 @@ impl Iterator for LogDir {
 
     fn next(&mut self) -> Option<Self::Item> {
         self.inner_next().transpose()
+    }
+}
+
+impl AsRef<Path> for LogDir {
+    fn as_ref(&self) -> &Path {
+        self.path.as_path()
     }
 }
 
