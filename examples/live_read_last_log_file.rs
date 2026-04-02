@@ -7,7 +7,8 @@ fn main() {
     // Main blocker that will be used to block the thread until something changes.
     let mut sync_blocker = SyncBlocker::new();
 
-    // Watch the directory for changes.
+    // Watch the directory for changes. Keep in mind that this will need to be kept alive to
+    // actually watch the directory, even if it's not directly used.
     let dir_watcher = DirWatcher::new(&dir, &sync_blocker).unwrap();
 
     // Container that holds the newest file.
