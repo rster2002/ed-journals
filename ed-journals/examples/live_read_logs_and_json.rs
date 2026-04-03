@@ -16,7 +16,7 @@ fn main() {
     let mut newest_file = NewestFile::new(&sync_blocker);
 
     // Open the JSON file.
-    let mut status_json = ChangedJsonFile::<Status>::new("./test-files/json/StatusNone.json", &sync_blocker).unwrap();
+    let mut status_json = ChangedJsonFile::<Status>::new("../test-files/json/StatusNone.json", &sync_blocker).unwrap();
 
     loop {
         // Check if the JSON file has changed.

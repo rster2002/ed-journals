@@ -337,6 +337,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ed-exobiology"
+version = "0.1.0"
+dependencies = [
+ "ed-journals",
+ "strum",
+ "thiserror",
+]
+
+[[package]]
 name = "ed-journals"
 version = "0.13.0-rc.1"
 dependencies = [

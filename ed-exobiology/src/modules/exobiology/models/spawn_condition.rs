@@ -1,5 +1,5 @@
-use crate::materials::Material;
-use crate::modules::galaxy::{
+use ed_journals::materials::Material;
+use ed_journals::galaxy::{
     AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType,
 };
 

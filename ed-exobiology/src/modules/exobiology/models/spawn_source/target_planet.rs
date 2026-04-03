@@ -1,6 +1,6 @@
-use crate::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
-use crate::logs::scan_event::ScanEventParent;
-use crate::materials::Material;
+use ed_journals::modules::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
+use ed_journals::modules::logs::content::log_event_content::scan_event::ScanEventParent;
+use ed_journals::modules::materials::models::material::Material;
 use serde::Serialize;
 use std::collections::HashSet;
 

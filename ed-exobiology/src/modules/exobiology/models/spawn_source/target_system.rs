@@ -1,5 +1,5 @@
-use crate::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
-use crate::galaxy::PlanetClass;
+use ed_exobiology::modules::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
+use ed_journals::modules::galaxy::models::planet_class::PlanetClass;
 use serde::Serialize;
 use std::collections::{HashMap, HashSet};
 

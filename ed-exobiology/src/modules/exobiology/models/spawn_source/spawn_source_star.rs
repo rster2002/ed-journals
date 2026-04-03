@@ -1,4 +1,4 @@
-use crate::galaxy::{StarClass, StarLuminosity};
+use ed_journals::modules::galaxy::{StarClass, StarLuminosity};
 use serde::Serialize;
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Serialize)]

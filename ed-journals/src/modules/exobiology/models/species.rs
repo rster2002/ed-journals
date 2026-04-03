@@ -1,7 +1,7 @@
 use crate::exobiology::Genus;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
-use crate::modules::exobiology::models::spawn_condition::SpawnCondition;
+use ed_exobiology::modules::exobiology::models::spawn_condition::SpawnCondition;
 use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
 use lazy_static::lazy_static;
 use serde::Serialize;
