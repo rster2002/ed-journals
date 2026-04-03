@@ -24,11 +24,15 @@ use std::sync::Arc;
 /// blocker.wait().unwrap();
 /// // Something changed
 /// ```
+///
+/// Keep in mind that this watcher needs to be kept in scope for as long as you want to receive
+/// notifications.
 pub struct DirWatcher {
     _watcher: RecommendedWatcher,
 }
 
 impl DirWatcher {
+    /// Creates a new [DirWatcher] which will watch the provided path for changes.
     pub fn new<P: AsRef<Path>>(
         path: P,
         unblocker: impl Into<Arc<dyn Unblocker>>,

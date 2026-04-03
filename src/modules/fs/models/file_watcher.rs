@@ -6,12 +6,34 @@ use std::fmt::{Debug, Formatter};
 use std::path::Path;
 use std::sync::Arc;
 
-/// Watches a file for changes and unblocks the associated blocker when a change occurs.
+/// Watches a file for changes and unblocks the provided blocker when a change occurs.
+///
+/// ```rust
+/// use std::env::current_dir;
+/// use ed_journals::fs::{auto_detect_journal_path, FileWatcher, SyncBlocker};
+///
+/// let path = current_dir()
+///     .unwrap()
+///     .join("test-files")
+///     .join("journals")
+///     .join("Journal.2000-01-01T100000.01.log");
+///
+/// let blocker = SyncBlocker::new();
+/// let file_watcher = FileWatcher::new(&path, &blocker).unwrap();
+///
+/// # return;
+/// blocker.wait().unwrap();
+/// // Something changed
+/// ```
+///
+/// Keep in mind that this watcher needs to be kept in scope for as long as you want to receive
+/// notifications.
 pub struct FileWatcher {
     _watcher: RecommendedWatcher,
 }
 
 impl FileWatcher {
+    /// Creates a new [FileWatcher] which will watch the provided path for changes.
     pub fn new<P: AsRef<Path>>(
         path: P,
         unblocker: impl Into<Arc<dyn Unblocker>>,

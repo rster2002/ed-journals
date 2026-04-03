@@ -5,6 +5,8 @@ use std::path::Path;
 use std::sync::Arc;
 use twox_hash::XxHash64;
 
+/// A wrapper around [JsonFile] which can be used to read the contents of a file and only return
+/// the contents if they have changed since the last read.
 pub struct ChangedJsonFile<R>
 where
     R: DeserializeOwned,
@@ -17,6 +19,8 @@ impl<R> ChangedJsonFile<R>
 where
     R: DeserializeOwned + PartialEq,
 {
+    /// Opens the file at the provided path and returns a [ChangedJsonFile] which can be used to
+    /// read the contents of the file.
     pub fn new<P: AsRef<Path>>(
         path: P,
         unblocker: impl Into<Arc<dyn Unblocker>>,
@@ -46,6 +50,7 @@ where
         Ok(Some(serde_json::from_slice(&bytes)?))
     }
 
+    /// The same as [ChangedJsonFile::content], but asynchronous.
     #[cfg(feature = "asynchronous")]
     pub async fn content_async(&mut self) -> Result<Option<R>, LogFSError> {
         let bytes = self.inner.byte_content_async().await?;

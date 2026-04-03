@@ -4,6 +4,7 @@ use std::marker::PhantomData;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
+/// A wrapper around [FileWatcher] which can be used to read the contents of a JSON file.
 pub struct JsonFile<R>
 where
     R: DeserializeOwned,
@@ -17,6 +18,7 @@ impl<R> JsonFile<R>
 where
     R: DeserializeOwned,
 {
+    /// Creates a new [JsonFile] from the provided path and unblocker.
     pub fn new<P: AsRef<Path>>(
         path: P,
         unblocker: impl Into<Arc<dyn Unblocker>>,
@@ -31,10 +33,12 @@ where
         })
     }
 
+    /// Returns the current contents of the file as a raw byte vector.
     pub fn byte_content(&self) -> Result<Vec<u8>, LogFSError> {
         Ok(std::fs::read(&self.path)?)
     }
 
+    /// Returns the current contents of the file as a string.
     pub fn string_content(&self) -> Result<String, LogFSError> {
         Ok(std::fs::read_to_string(&self.path)?)
     }

@@ -9,7 +9,7 @@ fn main() {
 
     // Watch the directory for changes. Keep in mind that this will need to be kept alive to
     // actually watch the directory, even if it's not directly used.
-    let dir_watcher = DirWatcher::new(&dir, &sync_blocker).unwrap();
+    let _dir_watcher = DirWatcher::new(&dir, &sync_blocker).unwrap();
 
     // Container that holds the newest file.
     let mut newest_file = NewestFile::new(&sync_blocker);
