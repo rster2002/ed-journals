@@ -1,9 +1,6 @@
 use crate::exobiology::Genus;
 use crate::exploration::shared::codex_regex::CODEX_REGEX;
 use crate::from_str_deserialize_impl;
-use ed_exobiology::modules::exobiology::models::spawn_condition::SpawnCondition;
-use crate::modules::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
-use lazy_static::lazy_static;
 use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
@@ -187,10 +184,10 @@ pub enum Species {
     Unknown(String),
 }
 
-lazy_static! {
-    static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] =
-        &[SpawnCondition::Special];
-}
+// lazy_static! {
+//     static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] =
+//         &[SpawnCondition::Special];
+// }
 
 impl Species {
     /// Whether the current variant is unknown.
@@ -200,18 +197,18 @@ impl Species {
         matches!(self, Species::Unknown(_))
     }
 
-    pub fn spawn_conditions(&self) -> &[SpawnCondition<'_>] {
-        #[cfg(feature = "allow-unknown")]
-        if let Species::Unknown(_) = self {
-            return &UNKNOWN_SPAWN_CONDITIONS;
-        }
-
-        SPECIES_SPAWN_CONDITIONS
-            .iter()
-            .find(|(species, _)| species == self)
-            .expect("Species should always have a matching spawning condition")
-            .1
-    }
+    // pub fn spawn_conditions(&self) -> &[SpawnCondition<'_>] {
+    //     #[cfg(feature = "allow-unknown")]
+    //     if let Species::Unknown(_) = self {
+    //         return &UNKNOWN_SPAWN_CONDITIONS;
+    //     }
+    //
+    //     SPECIES_SPAWN_CONDITIONS
+    //         .iter()
+    //         .find(|(species, _)| species == self)
+    //         .expect("Species should always have a matching spawning condition")
+    //         .1
+    // }
 
     pub fn genus(&self) -> Genus {
         self.into()
@@ -713,20 +710,5 @@ impl Display for Species {
                 Species::Unknown(unknown) => return write!(f, "Unknown species: {unknown}"),
             }
         )
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use strum::IntoEnumIterator;
-
-    use crate::modules::exobiology::Species;
-
-    #[test]
-    fn all_species_have_matching_spawn_conditions() {
-        for species in Species::iter() {
-            dbg!(&species);
-            assert!(!species.spawn_conditions().is_empty());
-        }
     }
 }

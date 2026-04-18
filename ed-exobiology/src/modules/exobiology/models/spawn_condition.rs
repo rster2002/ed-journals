@@ -1,7 +1,5 @@
+use ed_journals::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
 use ed_journals::materials::Material;
-use ed_journals::galaxy::{
-    AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType,
-};
 
 #[derive(Debug)]
 pub enum SpawnCondition<'a> {
@@ -10,9 +8,11 @@ pub enum SpawnCondition<'a> {
     NoAtmosphere,
     AnyThinAtmosphere,
     ThinAtmosphere(AtmosphereType),
-    /// The minimum gravity the planet must have, in G
+
+    /// The minimum gravity the planet must have, in Gs
     MinGravity(f32),
-    /// The maximum gravity the planet must have, in G
+
+    /// The maximum gravity the planet must have, in Gs
     MaxGravity(f32),
     PlanetClass(PlanetClass),
     ParentStarClass(StarClass),

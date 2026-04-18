@@ -8,4 +8,3 @@ pub use models::variant_source::VariantSource;
 pub use models::variant_source::VariantSourceError;
 
 mod models;
-mod r#static;

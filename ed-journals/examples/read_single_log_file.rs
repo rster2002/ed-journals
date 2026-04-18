@@ -1,6 +1,6 @@
+use ed_journals::io::LogIter;
 use std::fs::File;
 use std::io::BufReader;
-use ed_journals::io::LogIter;
 
 fn main() {
     let file = File::open("../test-files/journals/Journal.2000-01-01T100000.01.log").unwrap();

@@ -1,10 +1,9 @@
-use ed_journals::modules::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
-use ed_journals::modules::logs::content::log_event_content::scan_event::ScanEventParent;
-use ed_journals::modules::materials::models::material::Material;
-use serde::Serialize;
+use ed_journals::galaxy::{Atmosphere, Gravity, PlanetClass, PlanetComposition, Volcanism};
+use ed_journals::logs::scan_event::ScanEventParent;
+use ed_journals::materials::Material;
 use std::collections::HashSet;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug)]
 pub struct TargetPlanet {
     pub atmosphere: Atmosphere,
     pub gravity: Gravity,

@@ -1,9 +1,8 @@
-use ed_exobiology::modules::exobiology::models::spawn_source::spawn_source_star::SpawnSourceStar;
-use ed_journals::modules::galaxy::models::planet_class::PlanetClass;
-use serde::Serialize;
+use crate::exobiology::SpawnSourceStar;
+use ed_journals::galaxy::PlanetClass;
 use std::collections::{HashMap, HashSet};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug)]
 pub struct TargetSystem {
     pub star_system_position: [f32; 3],
     pub planet_classes_in_system: HashSet<PlanetClass>,

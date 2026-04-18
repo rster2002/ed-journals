@@ -1,7 +1,6 @@
-use ed_journals::modules::galaxy::{StarClass, StarLuminosity};
-use serde::Serialize;
+use ed_journals::galaxy::{StarClass, StarLuminosity};
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Serialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct SpawnSourceStar {
     pub class: StarClass,
     pub luminosity: StarLuminosity,

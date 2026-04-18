@@ -123,7 +123,10 @@ mod tests {
 
     #[test]
     fn test_journals_are_parsed_correctly() {
-        let dir_path = current_dir().unwrap().join("../test-files").join("journals");
+        let dir_path = current_dir()
+            .unwrap()
+            .join("../test-files")
+            .join("journals");
 
         let log_dir = LogDir::new(dir_path);
 

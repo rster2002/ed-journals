@@ -1,6 +1,7 @@
-use crate::exobiology::{SpawnCondition, Species};
-use crate::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
-use crate::materials::Material;
+use crate::exobiology::SpawnCondition;
+use ed_journals::exobiology::Species;
+use ed_journals::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
+use ed_journals::materials::Material;
 
 pub static SPECIES_SPAWN_CONDITIONS: &[(Species, &[SpawnCondition<'_>])] = &[
     (

@@ -1,5 +1,5 @@
-use ed_journals::fs::{DirWatcher, LogDir, SyncBlocker};
 use ed_journals::fs::common::NewestFile;
+use ed_journals::fs::{DirWatcher, LogDir, SyncBlocker};
 
 fn main() {
     let mut dir = LogDir::new("./test-files/journals");

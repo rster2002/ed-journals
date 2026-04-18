@@ -1,7 +1,7 @@
-use std::fs::File;
-use std::io::BufReader;
 use ed_journals::fs::LogDir;
 use ed_journals::io::LogIter;
+use std::fs::File;
+use std::io::BufReader;
 
 fn main() {
     let mut dir = LogDir::new("./test-files/journals");
