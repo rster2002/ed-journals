@@ -2,7 +2,8 @@ use crate::fs::traits::unblocker::Unblocker;
 use crate::fs::{BlockResult, LogFSError};
 use std::sync::mpsc::Sender;
 
-/// Unblocks the associated blocker by sending a message to the associated channel.
+/// Unblocks the associated [SyncBlocker](crate::fs::SyncBlocker) by sending a message to the
+/// associated channel.
 #[derive(Debug, Clone)]
 pub struct SyncUnblocker {
     inner: Sender<BlockResult>,

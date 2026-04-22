@@ -1,5 +1,6 @@
 use thiserror::Error;
 
+/// Error for any errors that occur while working with the file system
 #[derive(Debug, Error)]
 #[error(transparent)]
 pub enum LogFSError {

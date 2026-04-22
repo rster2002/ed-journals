@@ -36,14 +36,23 @@ impl<T> LogIter<T>
 where
     T: Read,
 {
+    /// Creates a new iterator over the given [Read] which will return
+    /// [LogEvents](crate::logs::LogEvent).
     pub fn new(inner: T) -> LogIter<T, LogEvent> {
-        LogIter {
-            inner,
-            _p: PhantomData,
-        }
+        LogIter::new_typed(inner)
     }
 
+    /// Creates a new iterator over the given [Read] which will return raw
+    /// [Values](serde_json::Value).
     pub fn new_raw(inner: T) -> LogIter<T, serde_json::Value> {
+        LogIter::new_typed(inner)
+    }
+
+    /// Creates a new iterator over the given [Read] which will return entries of the given type.
+    pub fn new_typed<R>(inner: T) -> LogIter<T, R>
+    where
+        R: DeserializeOwned,
+    {
         LogIter {
             inner,
             _p: PhantomData,

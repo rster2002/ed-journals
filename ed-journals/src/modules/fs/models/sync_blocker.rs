@@ -1,4 +1,4 @@
-mod sync_unblocker;
+pub mod sync_unblocker;
 
 use crate::fs::models::sync_blocker::sync_unblocker::SyncUnblocker;
 use crate::fs::traits::blocker::Blocker;

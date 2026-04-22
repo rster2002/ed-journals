@@ -3,6 +3,8 @@ use crate::fs::{BlockResult, LogFSError};
 use futures::channel::mpsc::Sender;
 use std::sync::{Arc, Mutex};
 
+/// Unblocks the associated [AsyncBlocker](crate::fs::AsyncBlocker) by sending a message to the
+/// associated channel.
 #[derive(Clone)]
 pub struct AsyncUnblocker {
     sender: Arc<Mutex<Sender<BlockResult>>>,

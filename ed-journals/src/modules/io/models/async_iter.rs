@@ -36,6 +36,16 @@ where
             _p: PhantomData,
         }
     }
+
+    pub fn new_typed<R>(inner: T) -> AsyncIter<T, R>
+    where
+        R: DeserializeOwned + Unpin,
+    {
+        AsyncIter {
+            inner,
+            _p: PhantomData,
+        }
+    }
 }
 
 impl<T, R> AsyncIter<T, R>

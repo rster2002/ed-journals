@@ -1,4 +1,4 @@
-mod async_unblocker;
+pub mod async_unblocker;
 
 use crate::fs::models::async_blocker::async_unblocker::AsyncUnblocker;
 use crate::fs::traits::blocker::Blocker;
@@ -15,6 +15,7 @@ pub struct AsyncBlocker {
 }
 
 impl AsyncBlocker {
+    /// Create a new AsyncBlocker with the given capacity.
     pub fn new(capacity: usize) -> AsyncBlocker {
         let (sender, receiver) = futures::channel::mpsc::channel(capacity);
 

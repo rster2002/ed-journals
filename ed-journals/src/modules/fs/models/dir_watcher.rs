@@ -5,8 +5,7 @@ use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::Path;
 use std::sync::Arc;
 
-/// Watches a directory for changes and unblocks the associated blocker when a change occurs. Takes
-/// a path and any [Blocker]:
+/// Watches a directory for changes and unblocks the associated blocker when a change occurs.
 ///
 /// ```rust
 /// use std::env::current_dir;
