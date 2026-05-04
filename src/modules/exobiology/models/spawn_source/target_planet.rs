@@ -4,6 +4,8 @@ use crate::materials::Material;
 use serde::Serialize;
 use std::collections::HashSet;
 
+/// The minimum amount of information needed about a system to be able to predict species for a
+/// planet. Used in [SpawnSource](crate::exobiology::SpawnSource).
 #[derive(Debug, Serialize)]
 pub struct TargetPlanet {
     pub atmosphere: Atmosphere,

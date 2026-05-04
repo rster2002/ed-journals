@@ -9,6 +9,7 @@ pub use crate::modules::shared::asynchronous::live_json_file_watcher::LiveJsonFi
 
 pub type BackpackFileWatcher = LiveJsonFileWatcher<Backpack>;
 
+/// Read the contents of the 'Backpack.json' file at the given path.
 pub async fn read_backpack_file<P: AsRef<Path>>(
     path: P,
 ) -> Result<Backpack, ReadBackpackFileError> {
