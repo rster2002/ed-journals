@@ -163,6 +163,9 @@ pub enum InternalModule {
     #[serde(rename = "passengercabin")]
     PassengerCabin,
 
+    #[serde(rename = "kkii_passengercabin")]
+    MkIIPassengerCabin,
+
     #[serde(rename = "fueltank")]
     FuelTank,
 
@@ -314,6 +317,7 @@ impl Display for InternalModule {
                     "Mk II Mining Multi-Limpet Controller",
                 InternalModule::ModuleReinforcement => "Module Reinforcement",
                 InternalModule::PassengerCabin => "Passenger Cabin",
+                InternalModule::MkIIPassengerCabin => "Mk II Passenger Cabin",
                 InternalModule::PlanetApproachSuite => "Planet Approach Suite",
                 InternalModule::PlanetaryVehicleHangar => "Planetary Vehicle Hangar",
                 InternalModule::PowerDistributor => "Power Distributor",
