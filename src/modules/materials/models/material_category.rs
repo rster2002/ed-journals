@@ -6,6 +6,7 @@ use crate::modules::materials::Material;
 
 /// The type of material, either Raw, Manufactured, or Encoded.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum MaterialCategory {
     #[serde(

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player deposits tritium to the given carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierDepositFuelEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as

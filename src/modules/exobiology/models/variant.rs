@@ -12,6 +12,7 @@ use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub struct Variant {
     pub species: Species,

@@ -7,6 +7,7 @@ use thiserror::Error;
 /// Codex entries related to organic structures other than the ones already covered by
 /// [crate::exobiology::Genus], [crate::exobiology::Species] and [crate::exobiology::Variant].
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum CodexOrganicStructureEntry {
     StolonTree,

@@ -8,6 +8,7 @@ use crate::modules::ship::{ShipModule, ShipType};
 /// Fired when the player initiates a module transfer to move a module from another station to the
 /// station the player is currently docked at.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct FetchRemoteModuleEvent {
     /// The storage slot number of the stored module.

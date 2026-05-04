@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Item, ItemCategory};
 
 /// Fired when the player drops an Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DropItemsEvent {
     /// The item the player dropped.

@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::galaxy::StarClass;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct StartJumpEvent {
     #[serde(flatten)]
@@ -13,6 +14,7 @@ pub struct StartJumpEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", tag = "JumpType")]
 pub enum StartJumpType {
     #[serde(rename_all = "PascalCase")]

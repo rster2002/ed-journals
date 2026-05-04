@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player joins the community event.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CommunityGoalJoinEvent {
     /// The id of the community goal.

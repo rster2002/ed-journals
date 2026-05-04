@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when redeeming any kind of voucher.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct RedeemVoucherEvent {
     /// The type of voucher redeemed.
@@ -25,6 +26,7 @@ pub struct RedeemVoucherEvent {
     pub broker_percentage: Option<f32>,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum RedeemVoucherEventType {
@@ -46,6 +48,7 @@ pub enum RedeemVoucherEventType {
     Codex,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct RedeemVoucherEventFaction {

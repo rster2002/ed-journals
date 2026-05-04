@@ -4,6 +4,7 @@ use std::str::FromStr;
 use serde::Serialize;
 use thiserror::Error;
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ArmorGrade {
     LightweightAlloy,

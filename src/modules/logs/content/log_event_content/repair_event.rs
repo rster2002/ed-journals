@@ -5,6 +5,7 @@ use serde::{de, Deserialize, Deserializer, Serialize};
 use crate::modules::ship::ShipModule;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct RepairEvent {
     #[serde(alias = "Item", deserialize_with = "string_or_seq_string")]

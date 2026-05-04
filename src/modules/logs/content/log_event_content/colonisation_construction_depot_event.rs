@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 /// Fired when a player receives an update on the required commodities for a construction depot.
 /// This often fires when docking on a System Colonisation Ship, or after they have contributed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationConstructionDepotEvent {
     /// The market id of the constribution target.
@@ -18,6 +19,7 @@ pub struct ColonisationConstructionDepotEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationConstructionDepotRequiredResource {
     /// Internal name of the required commodity.

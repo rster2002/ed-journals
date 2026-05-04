@@ -8,6 +8,7 @@ use crate::modules::civilization::LocationInfo;
 //  after the jump?
 /// Fired when the carrier performs the jump after the jump countdown.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierJumpEvent {
     // TODO check when this is true, specifically if this is true if you're on the ship when jumping

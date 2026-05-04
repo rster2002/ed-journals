@@ -7,6 +7,7 @@ use crate::station::{CarrierCrewRole, CarrierFinance};
 
 /// Fired when opening the fleet carrier management panel.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as
@@ -57,6 +58,7 @@ pub struct CarrierStatsEvent {
 
 /// Details about how much of the internal cargo space is being used.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventSpaceUsage {
     /// The total available capacity for the fleet carrier. This is always 25000.
@@ -83,6 +85,7 @@ pub struct CarrierStatsEventSpaceUsage {
 
 /// An entry for a given fleet carrier service.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventCrewEntry {
     /// The service this entry is for.
@@ -101,6 +104,7 @@ pub struct CarrierStatsEventCrewEntry {
 
 /// A pack that is currently stored on the carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierStatsEventPack {
     /// The name of the pack theme.

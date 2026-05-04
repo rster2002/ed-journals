@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player is the target of a crime.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CrimeVictimEvent {
     /// The name of the one that has commited the crime against the player.

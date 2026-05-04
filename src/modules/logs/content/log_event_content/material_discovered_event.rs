@@ -6,6 +6,7 @@ use crate::modules::materials::{Material, MaterialCategory};
 
 /// Fired when the player collects a specific material for the first time.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MaterialDiscoveredEvent {
     /// The kind of material discovered.

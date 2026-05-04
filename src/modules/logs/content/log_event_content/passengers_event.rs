@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when there is a change to the player's passenger manifest.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct PassengersEvent {
     /// List of passengers that are on board.
@@ -13,6 +14,7 @@ pub struct PassengersEvent {
 /// An entry for passengers that are on board.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PassengersManifestEntry {
     /// The id of the mission this entry is a part of.
     #[serde(rename = "MissionID")]

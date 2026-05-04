@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when in a multi-crew session and the current player changes their role.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ChangeCrewRoleEvent {
     // TODO what is this?
@@ -16,6 +17,7 @@ pub struct ChangeCrewRoleEvent {
 
 /// The new role the current player has changed to.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum ChangeCrewRoleEventRole {
     /// The player has gone idle.
     Idle,

@@ -9,6 +9,7 @@ use crate::modules::ship::HardpointType;
 /// The hardpoint module type. This does not contain information about the size or mounting of the
 /// module. For that, check out [ShipHardpointModule].
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum HardpointModule {
     #[serde(rename = "beamlaser")]

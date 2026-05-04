@@ -7,6 +7,7 @@ use crate::modules::galaxy::BodyType;
 
 /// Shared model for information about a given location.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LocationInfo {
     /// The name of the star system that is displayed to the player.

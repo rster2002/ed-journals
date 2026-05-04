@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when scanning data while in a ship or SRV.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct DataScannedEvent {
     /// The type of datapoint scanned.
@@ -12,6 +13,7 @@ pub struct DataScannedEvent {
 }
 
 /// The type of datapoint scanned.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum DataScannedEventType {
     #[serde(rename = "$Datascan_AbandonedDataLog;")]

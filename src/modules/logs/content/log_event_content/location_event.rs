@@ -10,6 +10,7 @@ use crate::modules::civilization::LocationInfo;
 /// the player is moven between locations for example by using a fleet carrier escape pod or when
 /// the player died.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LocationEvent {
     // TODO check when this is filled

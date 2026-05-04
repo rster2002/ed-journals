@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Suit, SuitMod, SuitModule};
 
 /// Fired when the player creates a new suit load-out.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CreateSuitLoadoutEvent {
     /// The id of the base suit used for the load-out.

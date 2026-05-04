@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when managing module packs on a fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierModulePackEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as
@@ -30,6 +31,7 @@ pub struct CarrierModulePackEvent {
 }
 
 /// The kind of operation performed for the given module pack.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierModulePackEventOperation {
     /// For when buying a new module pack.

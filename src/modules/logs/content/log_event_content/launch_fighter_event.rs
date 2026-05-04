@@ -6,6 +6,7 @@ use crate::modules::ship::FighterLoadout;
 
 /// Fired when launching a ship launched fighter.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LaunchFighterEvent {
     /// The used layout for the ship launched fighter.

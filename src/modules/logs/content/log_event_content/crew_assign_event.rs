@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when assigning crew.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CrewAssignEvent {
     /// The name of the crew that was assigned.
@@ -19,6 +20,7 @@ pub struct CrewAssignEvent {
 
 /// The role of the crew member.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum CrewAssignEventRole {
     /// The crew member has been set to active.

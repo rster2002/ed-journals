@@ -6,6 +6,7 @@ use thiserror::Error;
 use crate::try_from_deserialize_impl;
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum EmpireRank {
     None,
     Outsider,

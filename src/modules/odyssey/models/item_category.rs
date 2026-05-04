@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 /// Type of category for a given Odyssey item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum ItemCategory {
     #[serde(alias = "Data", alias = "$MICRORESOURCE_CATEGORY_Data;")]
     Data,

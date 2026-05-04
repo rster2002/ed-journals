@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Emitted when opening the outfitting menu. The contents of the outfitting menu are written to a
 /// separate file called `Outfitting.json` in the journal directory.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct OutfittingEvent {
     /// The market id the player is currently at.

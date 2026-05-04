@@ -6,6 +6,7 @@ use crate::modules::station::CarrierDockingAccess;
 
 /// Fired when the fleet carrier owner changes the docking permissions for their fleet carrier.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierDockingPermissionEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as

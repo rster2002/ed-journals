@@ -6,6 +6,7 @@ use crate::modules::commander::CombatRank;
 
 /// Fired when the player fires a new crew member.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CrewHireEvent {
     /// The name of the newly hired crew member.

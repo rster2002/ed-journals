@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 mod sightseeing_mission;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct MissionType(pub String);
 
 // #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

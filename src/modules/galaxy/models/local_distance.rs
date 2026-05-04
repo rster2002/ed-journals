@@ -3,6 +3,7 @@ use std::fmt::Debug;
 
 /// Model for working with local (system) distances. Expects the value to be in LS.
 #[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct LocalDistance(pub f32);
 
 impl LocalDistance {

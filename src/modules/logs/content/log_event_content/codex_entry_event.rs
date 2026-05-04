@@ -7,6 +7,7 @@ use crate::modules::galaxy::Region;
 
 /// Fired when the player registers a new entry in their codex.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CodexEntryEvent {
     /// The id of the entry.
@@ -64,6 +65,7 @@ pub struct CodexEntryEvent {
 
 /// Category for a given codex entry.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CodexEntryEventCategory {
     /// Includes things like genuses and species.
     #[serde(rename = "$Codex_Category_Biology;")]
@@ -86,6 +88,7 @@ pub enum CodexEntryEventCategory {
 
 /// Subcategory for a given codex entry.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum CodexEntryEventSubcategory {
     /// Subcategory related to organic structures like genuses and species.
     #[serde(rename = "$Codex_SubCategory_Organic_Structures;")]
@@ -119,6 +122,7 @@ pub enum CodexEntryEventSubcategory {
 
 /// Details about the location of the codex entry on a planet.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CodexEntryEventPlanetaryLocation {
     /// The latitude of the codex entry on a planet.

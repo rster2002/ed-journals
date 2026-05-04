@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Docking access for a fleet carrier. This, along with the 'allow notorious' option, determines
 /// who can and who cannot dock at the given fleet carrier.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CarrierDockingAccess {
     /// All commanders can dock.

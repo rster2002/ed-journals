@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when there is any update related to the carrier's finances.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierFinanceEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as

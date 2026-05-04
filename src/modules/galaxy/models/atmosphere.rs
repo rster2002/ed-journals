@@ -8,6 +8,7 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::modules::galaxy::AtmosphereType;
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct Atmosphere {
     pub hot: bool,
@@ -15,6 +16,7 @@ pub struct Atmosphere {
     pub kind: AtmosphereType,
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum AtmosphereDensity {
     Thick,

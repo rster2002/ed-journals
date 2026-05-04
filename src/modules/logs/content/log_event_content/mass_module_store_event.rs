@@ -6,6 +6,7 @@ use crate::modules::ship::{Blueprint, ShipModule, ShipSlot, ShipType};
 
 /// Fired when storing multiple modules at the current location at once.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MassModuleStoreEvent {
     /// The market id where the modules are getting stored.
@@ -25,6 +26,7 @@ pub struct MassModuleStoreEvent {
 
 /// A module that has been stored at the current location.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MassModuleStoreEventItem {
     /// The slot the module is coming from.
@@ -43,6 +45,7 @@ pub struct MassModuleStoreEventItem {
 
 /// Engineering modification applied to a module.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct MassModuleStoreEventModification {
     /// The kind of blueprint applied.

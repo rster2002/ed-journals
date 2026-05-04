@@ -4,6 +4,7 @@ use crate::modules::ship::ShipType;
 
 /// Fired when the player swaps between two ships they own.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipyardSwapEvent {
     /// The ship type for the retrieved ship.

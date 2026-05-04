@@ -13,6 +13,7 @@ use crate::modules::ship::{
 };
 
 /// Armor module for a specific ship.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ArmorModule {
     pub ship: ShipType,

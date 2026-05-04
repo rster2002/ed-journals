@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Weapon, WeaponMod};
 
 /// Fired when the player buys an (Odyssey) weapon.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct BuyWeaponEvent {
     /// The weapon the player bought.

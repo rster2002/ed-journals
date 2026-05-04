@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::modules::ship::ShipType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEvent {
     pub target_locked: bool,
@@ -13,6 +14,7 @@ pub struct ShipTargetedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase", untagged)]
 pub enum ShipTargetedEventScanStage {
     Locked(ShipTargetedEventScanStageLocked),
@@ -22,6 +24,7 @@ pub enum ShipTargetedEventScanStage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageLocked {
     pub ship: ShipType,
@@ -31,6 +34,7 @@ pub struct ShipTargetedEventScanStageLocked {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageOne {
     pub ship: ShipType,
@@ -46,6 +50,7 @@ pub struct ShipTargetedEventScanStageOne {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageTwo {
     pub ship: ShipType,
@@ -65,6 +70,7 @@ pub struct ShipTargetedEventScanStageTwo {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipTargetedEventScanStageThree {
     pub ship: ShipType,

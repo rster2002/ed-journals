@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 // TODO
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CapShipBondEvent {
     pub awarding_faction: String,

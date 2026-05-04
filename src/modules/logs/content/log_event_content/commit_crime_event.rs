@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the player commits a crime.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CommitCrimeEvent {
     /// The kind of crime the player committed.

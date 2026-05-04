@@ -9,6 +9,7 @@ use crate::modules::commander::{
 
 /// Fired when the player is promoted for a given rank.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub enum PromotionEvent {
     Exobiologist(ExobiologyRank),

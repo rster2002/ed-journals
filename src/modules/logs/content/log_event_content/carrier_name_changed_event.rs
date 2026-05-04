@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the owner changes their fleet carrier's name.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CarrierNameChangeEvent {
     /// The id of the carrier that the player deposited fuel to. This is functionally the same as

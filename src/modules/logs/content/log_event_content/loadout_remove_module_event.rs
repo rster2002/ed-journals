@@ -6,6 +6,7 @@ use crate::modules::odyssey::{Suit, SuitSlot, Weapon, WeaponMod};
 
 /// Fired when removing a module from a suit loadout.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct LoadoutRemoveModuleEvent {
     /// The id of the base suit used for the loadout.

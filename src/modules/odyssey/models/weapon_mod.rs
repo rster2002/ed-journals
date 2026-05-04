@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// A mod applied to an Odyssey weapon.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum WeaponMod {
     #[serde(rename = "weapon_handling")]
     FasterHandling,

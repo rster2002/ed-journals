@@ -7,6 +7,7 @@ use crate::modules::station::StationType;
 /// Fired when the player has been given permission to dock at a given station.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct DockingGrantedEvent {
     /// The station the player has been given permission to dock at.
     pub station_name: String,

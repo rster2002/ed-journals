@@ -18,6 +18,7 @@ pub mod internal_module;
 pub mod internal_type;
 
 /// Model for internal modules, this includes both core internals and optional internals.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipInternalModule {
     /// The kind internal module, which can both be core- and optional internals.

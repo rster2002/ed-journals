@@ -4,6 +4,7 @@ use crate::modules::exobiology::Genus;
 use crate::modules::exploration::PlanetarySignalType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SAASignalsFoundEvent {
     pub body_name: String,
@@ -20,6 +21,7 @@ pub struct SAASignalsFoundEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SAASignalsFoundEventSignal {
     #[serde(rename = "Type")]
@@ -31,6 +33,7 @@ pub struct SAASignalsFoundEventSignal {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct SAASignalsFoundEventGenus {
     pub genus: Genus,

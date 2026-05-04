@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Fired when the current player kicks another player from the multi-crew session.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct KickCrewMemberEvent {
     /// The CMDR name of the player that has been kicked.

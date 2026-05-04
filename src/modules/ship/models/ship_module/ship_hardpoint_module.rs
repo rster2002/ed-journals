@@ -21,6 +21,7 @@ pub mod hardpoint_type;
 /// Contains all the data related to hardpoints. This model is used for both full-sized hardpoint
 /// modules and utility modules. Utility modules use [HardpointSize::Tiny] and full-sized modules
 /// use the other sizes.
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub struct ShipHardpointModule {
     /// The kind internal module, which can both be full-sized hardpoints and utility modules.

@@ -6,6 +6,7 @@ use crate::modules::trading::Commodity;
 
 /// Fired when the player collects a commodity.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "PascalCase")]
 pub struct CollectCargoEvent {
     /// The commodify the player has collected.

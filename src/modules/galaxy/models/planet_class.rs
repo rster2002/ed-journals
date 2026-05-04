@@ -4,6 +4,7 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use thiserror::Error;
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum PlanetClass {
     MetalRichBody,

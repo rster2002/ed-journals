@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 /// which fires a [ScanEvent](crate::logs::scan_event::ScanEvent).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ApproachBodyEvent {
     /// The star system the approached body is part of.
     pub star_system: String,
