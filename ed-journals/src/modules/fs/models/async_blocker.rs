@@ -23,7 +23,7 @@ impl AsyncBlocker {
     }
 
     /// Block and await the current task until a registered caller unblocks it.
-    pub async fn block(&mut self) -> BlockResult {
+    pub async fn wait(&mut self) -> BlockResult {
         self.receiver
             .next()
             .await
