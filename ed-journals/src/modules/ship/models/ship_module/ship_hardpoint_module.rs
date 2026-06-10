@@ -358,6 +358,7 @@ impl ShipHardpointModule {
             (HardpointModule::PlasmaAccelerator, _, HardpointSize::Large) => ModuleClass::B,
             (HardpointModule::AdvancedPlasmaAccelerator, _, _) => ModuleClass::B,
             (HardpointModule::PlasmaAccelerator, _, HardpointSize::Huge) => ModuleClass::A,
+            (HardpointModule::MkIIPlasmaShockAccelerator, _, HardpointSize::Large) => ModuleClass::B,
 
             // Beam lasers
             (HardpointModule::BeamLaser, HardpointMounting::Fixed | HardpointMounting::Gimballed, HardpointSize::Small) => ModuleClass::E,
@@ -503,6 +504,15 @@ mod tests {
                 "Hpt_PlasmaAccelerator_Fixed_Large_Advanced",
                 ShipHardpointModule {
                     module: HardpointModule::AdvancedPlasmaAccelerator,
+                    mounting: HardpointMounting::Fixed,
+                    size: HardpointSize::Large,
+                    class: ModuleClass::B,
+                },
+            ),
+            (
+                "Hpt_MkIIPlasmaShockAutocannon_Fixed_Large",
+                ShipHardpointModule {
+                    module: HardpointModule::MkIIPlasmaShockAccelerator,
                     mounting: HardpointMounting::Fixed,
                     size: HardpointSize::Large,
                     class: ModuleClass::B,
