@@ -96,16 +96,16 @@ impl AsRef<Path> for LogDir {
 #[cfg(test)]
 mod tests {
     use crate::modules::fs::models::log_dir::LogDir;
-    use crate::tests::test_dir;
+    use crate::tests::{test_dir, test_root};
     use std::fs;
 
     #[test]
     fn entries_are_returned_correctly() {
-        let mut log_dir = LogDir::new("./test-files/journals");
+        let mut log_dir = LogDir::new(test_root().join("journals"));
 
         let entry = log_dir.next();
         assert!(entry.is_some());
-        assert!(entry.unwrap().is_ok());
+        assert!(dbg!(entry.unwrap()).is_ok());
     }
 
     #[test]
