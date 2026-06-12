@@ -1,3 +1,3 @@
 [workspace]
 resolver = "3"
-members = ["ed-exobiology","ed-journals"]
+members = ["ed-exobiology","ed-journals", "ed-state"]

@@ -1,0 +1,7 @@
+[package]
+name = "ed-state"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ed-journals = { path = "../ed-journals", version = "0.13.0-rc.2" }

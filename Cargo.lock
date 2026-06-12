@@ -311,6 +311,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "ed-state"
+version = "0.1.0"
+dependencies = [
+ "ed-journals",
+]
+
+[[package]]
 name = "errno"
 version = "0.3.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
