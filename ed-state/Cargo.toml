@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 ed-journals = { path = "../ed-journals", version = "0.13.0-rc.2" }
+chrono = { version = "0.4.38", features = ["serde"] }

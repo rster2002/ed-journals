@@ -23,4 +23,8 @@ impl SinkResult {
             *self = other;
         }
     }
+    
+    pub fn accept(&mut self) {
+        *self = SinkResult::Accepted;
+    }
 }

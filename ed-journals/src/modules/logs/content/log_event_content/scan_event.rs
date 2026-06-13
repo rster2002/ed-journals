@@ -45,11 +45,43 @@ pub enum ScanEventScanType {
     Detailed,
 }
 
+impl ScanEventScanType {
+    pub fn is_basic(&self) -> bool {
+        matches!(self, ScanEventScanType::Basic)
+    }
+
+    pub fn is_nav_beacon_detail(&self) -> bool {
+        matches!(self, ScanEventScanType::NavBeaconDetail)
+    }
+
+    pub fn is_auto_scan(&self) -> bool {
+        matches!(self, ScanEventScanType::AutoScan)
+    }
+
+    pub fn is_detailed(&self) -> bool {
+        matches!(self, ScanEventScanType::Detailed)
+    }
+}
+
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ScanEventKind {
     Star(ScanEventStar),
     Planet(ScanEventPlanet),
     BeltCluster(ScanEventBeltCluster),
+}
+
+impl ScanEventKind {
+    pub fn is_star(&self) -> bool {
+        matches!(self, ScanEventKind::Star(_))
+    }
+
+    pub fn is_planet(&self) -> bool {
+        matches!(self, ScanEventKind::Planet(_))
+    }
+
+    pub fn is_belt_cluster(&self) -> bool {
+        matches!(self, ScanEventKind::BeltCluster(_))
+    }
 }
 
 impl<'de> Deserialize<'de> for ScanEventKind {
