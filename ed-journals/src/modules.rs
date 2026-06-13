@@ -108,3 +108,4 @@ pub mod mixed;
 /// Utilities for testing.
 #[cfg(test)]
 mod tests;
+pub mod format;

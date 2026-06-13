@@ -441,14 +441,14 @@ impl FromStr for CodexPlanetEntry {
 
 from_str_deserialize_impl!(CodexPlanetEntry);
 
-impl Serialize for CodexPlanetEntry {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer
-    {
-        serializer.serialize_str(&format_codex_string(self.id()))
-    }
-}
+// impl Serialize for CodexPlanetEntry {
+//     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+//     where
+//         S: Serializer
+//     {
+//         serializer.serialize_str(&format_codex_string(self.id()))
+//     }
+// }
 
 impl Display for CodexPlanetEntry {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
