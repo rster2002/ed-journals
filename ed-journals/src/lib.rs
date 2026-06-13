@@ -51,7 +51,7 @@ mod modules;
 mod tests {
     use crate::fs::LogDir;
     use crate::io::LogIter;
-    use crate::logs::LogEventContent;
+    use crate::logs::{LogEvent, LogEventContent};
     use std::env::current_dir;
     use std::fs;
     use std::fs::File;
@@ -146,10 +146,21 @@ mod tests {
             for entry in iter {
                 entry_count += 1;
 
-                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
+                let entry = entry.unwrap();
+
+                if let LogEventContent::FileHeader(_) = entry.content {
                     found_file_header = true;
                     file_header_count += 1;
                 }
+
+                let serialized = serde_json::to_string(&entry).unwrap();
+                let result = serde_json::from_str::<LogEvent>(&serialized);
+
+                if result.is_err() {
+                    dbg!(&serialized);
+                }
+
+                result.unwrap();
             }
         }
 
