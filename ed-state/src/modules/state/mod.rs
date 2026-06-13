@@ -1,5 +1,5 @@
-mod traits;
 mod models;
+mod traits;
 
-pub use traits::log_sink::LogSink;
 pub use models::sink_result::SinkResult;
+pub use traits::event_sink::EventSink;

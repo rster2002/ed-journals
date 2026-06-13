@@ -1,1 +1,1 @@
-pub mod log_sink;
+pub mod event_sink;
