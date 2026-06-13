@@ -1,1 +1,1 @@
-pub mod small_system_info;
+pub mod partial_system_info;

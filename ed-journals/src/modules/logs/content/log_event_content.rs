@@ -1,5 +1,7 @@
 use kinded::Kinded;
 use serde::{Deserialize, Serialize};
+use crate::civilization::LocationInfo;
+
 #[cfg(feature = "allow-unknown")]
 use serde_json::Value;
 
@@ -919,7 +921,7 @@ impl LogEventContent {
         })
     }
 
-    pub fn small_system_info(&self) -> Option<PartialSystemInfo> {
+    pub fn partial_system_info(&self) -> Option<PartialSystemInfo> {
         let system_address = self.system_address()?;
         let star_name = self.star_name()?;
 
@@ -980,6 +982,17 @@ impl LogEventContent {
 
             #[cfg(feature = "legacy")]
             LogEventContent::LegacyTouchdownEvent(event) => event.body.as_ref()?,
+
+            _ => return None,
+        })
+    }
+
+    pub fn location_info(&self) -> Option<&LocationInfo> {
+        Some(match self {
+            LogEventContent::Location(event) => &event.location_info,
+            LogEventContent::FSDJump(event) => &event.system_info,
+            LogEventContent::CarrierJump(event) => &event.system_info,
+
             _ => return None,
         })
     }

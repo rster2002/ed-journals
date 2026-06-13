@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ColonisationConstructionDepotEvent {
-    /// The market id of the constribution target.
+    /// The market id of the contribution target.
     #[serde(rename = "MarketID")]
     pub market_id: u64,
 
