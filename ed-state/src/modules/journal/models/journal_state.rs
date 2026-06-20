@@ -3,7 +3,7 @@ use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::Status;
 use std::collections::HashMap;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Default, Clone)]
 pub struct JournalState<T>
 where
     T: EventSink + Default,
