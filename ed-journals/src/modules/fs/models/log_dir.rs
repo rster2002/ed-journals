@@ -22,21 +22,23 @@ impl LogDir {
         }
     }
 
-    /// Skip the read index to the current last entry that is available and returns it, or [None] if
-    /// there isn't an entry to return. No matter how many times this is called this will always
-    /// return the last entry.
-    pub fn skip_to_last(&mut self) -> Option<Result<LogPath, LogFSError>> {
-        self.inner_skip_to_last().transpose()
+    /// Return the last `n` files after which the newest will be returned when available.
+    pub fn last_n(&mut self, n: usize) -> Option<Result<LogPath, LogFSError>> {
+        if let Err(err) = self.read_dir() {
+            return Some(Err(err));
+        }
+
+        let target_index = self.files.len().saturating_sub(n);
+        if self.index < target_index {
+            self.index = target_index;
+        }
+
+        self.inner_next().transpose()
     }
 
-    fn inner_skip_to_last(&mut self) -> Result<Option<LogPath>, LogFSError> {
-        self.read_dir()?;
-        self.index = self.files.len().saturating_sub(1);
-
-        let value = self.files.get(self.index).cloned();
-        self.index += 1;
-
-        Ok(value)
+    /// Whether the given path is the last file in the directory.
+    pub fn is_last(&self, path: &LogPath) -> bool {
+        self.files.last().is_some_and(|last| last == path)
     }
 
     fn read_dir(&mut self) -> Result<(), LogFSError> {
@@ -158,18 +160,25 @@ mod tests {
     }
 
     #[test]
-    fn skip_to_last_always_returns_the_last_entry() {
+    fn last_n_are_returned_correctly() {
         let dir = test_dir();
         fs::write(dir.path().join("Journal.2022-11-01T182054.01.log"), "").unwrap();
         fs::write(dir.path().join("Journal.2022-11-01T182054.02.log"), "").unwrap();
+        fs::write(dir.path().join("Journal.2022-11-01T182054.03.log"), "").unwrap();
+        fs::write(dir.path().join("Journal.2022-11-01T182054.04.log"), "").unwrap();
+        fs::write(dir.path().join("Journal.2022-11-01T182054.05.log"), "").unwrap();
 
         let mut log_dir = LogDir::new(dir.path());
 
-        let last = log_dir.skip_to_last().unwrap().unwrap();
-        assert_eq!(last.part, 2);
-        assert!(log_dir.next().is_none());
+        let last = log_dir.last_n(3).unwrap().unwrap();
+        assert_eq!(last.part, 3);
 
-        assert!(log_dir.skip_to_last().is_some());
-        assert!(log_dir.skip_to_last().is_some());
+        let last = log_dir.last_n(3).unwrap().unwrap();
+        assert_eq!(last.part, 4);
+
+        let last = log_dir.last_n(3).unwrap().unwrap();
+        assert_eq!(last.part, 5);
+
+        assert!(log_dir.last_n(3).is_none());
     }
 }

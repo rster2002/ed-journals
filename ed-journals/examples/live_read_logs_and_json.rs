@@ -28,7 +28,7 @@ fn main() {
         }
 
         // Read the last file in the directory.
-        if let Some(last) = dir.skip_to_last() {
+        if let Some(last) = dir.last_n(1) {
             // Calling the `maybe_next` method will check the provided path against the path that is
             // currently held by the newest file. If the path is newer than the current one, then
             // the provided path is set and opened.

@@ -15,7 +15,7 @@ fn main() {
     let mut newest_file = NewestFile::new(&sync_blocker);
 
     loop {
-        let Some(last) = dir.skip_to_last() else {
+        let Some(last) = dir.last_n(1) else {
             // No last file available yet, wait for the blocker to be released by changes in the
             // directory.
             sync_blocker.wait().unwrap();
