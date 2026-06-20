@@ -8,14 +8,14 @@ use thiserror::Error;
 use crate::from_str_deserialize_impl;
 use crate::modules::galaxy::AtmosphereType;
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub struct Atmosphere {
     pub hot: bool,
     pub density: AtmosphereDensity,
     pub kind: AtmosphereType,
 }
 
-#[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
 pub enum AtmosphereDensity {
     Thick,
     Normal,

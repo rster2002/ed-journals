@@ -1,8 +1,11 @@
-use crate::exobiology::SpawnCondition;
-use crate::exobiology::r#static::species_spawn_conditions::SPECIES_SPAWN_CONDITIONS;
+use crate::SpawnCondition;
+use crate::SPECIES_SPAWN_CONDITIONS;
 use ed_journals::exobiology::Species;
 
+/// Trait for species that have spawn conditions.
 pub trait SpeciesSpawnConditions {
+    /// Returns a list of spawn conditions that should all match for this species to spawn on a
+    /// planet.
     fn spawn_conditions(&self) -> &[SpawnCondition<'_>];
 }
 
@@ -18,7 +21,7 @@ impl SpeciesSpawnConditions for Species {
 
 #[cfg(test)]
 mod tests {
-    use crate::exobiology::SpeciesSpawnConditions;
+    use crate::SpeciesSpawnConditions;
     use ed_journals::exobiology::Species;
     use strum::IntoEnumIterator;
 

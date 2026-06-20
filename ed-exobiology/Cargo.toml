@@ -1,6 +1,6 @@
 [package]
 name = "ed-exobiology"
-version = "0.1.0-rc.1"
+version = "0.1.0-rc.2"
 description = "Provides logic for predicting the species that could spawn on a planet"
 repository = "https://github.com/rster2002/ed-logs"
 edition = "2024"

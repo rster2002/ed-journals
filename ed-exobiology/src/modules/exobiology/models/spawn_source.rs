@@ -2,7 +2,7 @@ pub mod spawn_source_star;
 pub mod target_planet;
 pub mod target_system;
 
-use crate::exobiology::{
+use crate::{
     SpawnCondition, SpawnSourceStar, SpeciesSpawnConditions, TargetPlanet, TargetSystem,
 };
 use ed_journals::exobiology::Species;
@@ -10,9 +10,13 @@ use ed_journals::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, VolcanismTy
 use ed_journals::logs::scan_event::ScanEventParent;
 use strum::IntoEnumIterator;
 
+/// The minimum amount of information to be able to match all possible spawn conditions.
 #[derive(Debug)]
 pub struct SpawnSource<'a> {
+    /// Information about the system that the planet is in.
     pub target_system: &'a TargetSystem,
+
+    /// Information about the planet to predict spawnable species for.
     pub target_planet: &'a TargetPlanet,
 }
 
@@ -52,10 +56,10 @@ impl SpawnSource<'_> {
                     && &self.target_planet.atmosphere.kind == atmosphere_type
             }
             SpawnCondition::MinGravity(min_gravity) => {
-                &self.target_planet.gravity.as_g() >= min_gravity
+                &self.target_planet.surface_gravity.as_g() >= min_gravity
             }
             SpawnCondition::MaxGravity(max_gravity) => {
-                &self.target_planet.gravity.as_g() <= max_gravity
+                &self.target_planet.surface_gravity.as_g() <= max_gravity
             }
             SpawnCondition::PlanetClass(planet_class) => &self.target_planet.class == planet_class,
             SpawnCondition::ParentStarClass(star_class) => {

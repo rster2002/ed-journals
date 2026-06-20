@@ -1,5 +1,5 @@
 mod models;
-pub mod r#static;
+mod r#static;
 mod traits;
 
 pub use models::spawn_condition::SpawnCondition;

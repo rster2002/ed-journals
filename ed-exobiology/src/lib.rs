@@ -1,3 +1,3 @@
 mod modules;
 
-pub use modules::*;
+pub use modules::exobiology::*;

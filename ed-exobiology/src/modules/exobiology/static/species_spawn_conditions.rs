@@ -1,4 +1,4 @@
-use crate::exobiology::SpawnCondition;
+use crate::SpawnCondition;
 use ed_journals::exobiology::Species;
 use ed_journals::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
 use ed_journals::materials::Material;
