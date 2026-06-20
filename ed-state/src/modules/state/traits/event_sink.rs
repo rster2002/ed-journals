@@ -4,11 +4,11 @@ use ed_journals::status::Status;
 
 /// Collects events and state from different sources and processes it.
 pub trait EventSink {
-    fn sink_log(&mut self, log_event: &LogEvent) -> SinkResult {
+    fn sink_log(&mut self, _log_event: &LogEvent) -> SinkResult {
         SinkResult::Ignored
     }
 
-    fn sink_status(&mut self, status: &Status) -> SinkResult {
+    fn sink_status(&mut self, _status: &Status) -> SinkResult {
         SinkResult::Ignored
     }
 }

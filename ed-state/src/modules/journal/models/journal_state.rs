@@ -19,9 +19,7 @@ where
     fn sink_log(&mut self, log_event: &LogEvent) -> SinkResult {
         if let LogEventContent::Commander(commander) = &log_event.content {
             self.current_commander_fid = Some(commander.fid.clone());
-            self.commanders
-                .entry(commander.fid.clone())
-                .or_insert(T::default());
+            self.commanders.entry(commander.fid.clone()).or_default();
         }
 
         let Some(inner) = self.current_as_mut() else {
@@ -33,7 +31,7 @@ where
 
     fn sink_status(&mut self, status: &Status) -> SinkResult {
         self.current_as_mut()
-            .and_then(|commander| Some(commander.sink_status(&status)))
+            .map(|commander| commander.sink_status(status))
             .unwrap_or(SinkResult::Ignored)
     }
 }

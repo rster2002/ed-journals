@@ -1,12 +1,11 @@
+use crate::commander::models::materials_state::MaterialsState;
 use crate::modules::state::{EventSink, SinkResult};
 use crate::modules::system::SystemState;
-use ed_journals::logs::{LogEvent, LogEventContent};
-use std::collections::HashMap;
 use ed_journals::logs::commander_event::CommanderEvent;
-use ed_journals::logs::materials_event::MaterialsEvent;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
+use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::{Status, StatusContents};
-use crate::commander::models::materials_state::MaterialsState;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Default)]
 pub struct CommanderState {
@@ -29,7 +28,8 @@ pub struct CommanderState {
 
 impl CommanderState {
     pub fn current_system_state(&self) -> Option<&SystemState> {
-        self.current_system.as_ref()
+        self.current_system
+            .as_ref()
             .and_then(|id| self.systems.get(id))
     }
 }
@@ -70,7 +70,7 @@ impl EventSink for CommanderState {
                 self.touchdown = None;
                 result.accept();
             }
-            _ => {},
+            _ => {}
         }
 
         result

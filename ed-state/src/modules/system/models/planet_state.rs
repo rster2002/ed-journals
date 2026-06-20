@@ -4,7 +4,7 @@ use ed_journals::exobiology::{Genus, Species};
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
+use ed_journals::logs::scan_event::ScanEvent;
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
@@ -54,20 +54,18 @@ impl EventSink for PlanetState {
     fn sink_log(&mut self, log_event: &LogEvent) -> SinkResult {
         let mut result = SinkResult::Ignored;
 
-        if !log_event
+        if log_event
             .content
             .body_id()
-            .is_some_and(|body_id| body_id == self.body_id)
+            .is_none_or(|body_id| body_id != self.body_id)
         {
             return result;
         }
 
         match &log_event.content {
-            LogEventContent::Scan(event) => {
-                if event.kind.is_planet() {
-                    self.scan = Some(event.clone());
-                    result.accept();
-                }
+            LogEventContent::Scan(event) if event.kind.is_planet() => {
+                self.scan = Some(event.clone());
+                result.accept();
             }
             LogEventContent::SAAScanComplete(scan_complete) => {
                 self.saa_scan = Some(scan_complete.clone());
@@ -126,11 +124,9 @@ impl EventSink for PlanetState {
                 self.signal_counts = Some(signal_counts);
                 result.accept();
             }
-            LogEventContent::Touchdown(touchdown) => {
-                if touchdown.on_planet {
-                    self.touchdowns.push(touchdown.clone());
-                    result.accept();
-                }
+            LogEventContent::Touchdown(touchdown) if touchdown.on_planet => {
+                self.touchdowns.push(touchdown.clone());
+                result.accept();
             }
             LogEventContent::ScanOrganic(scanned_organic) => {
                 self.scanned_species.insert(scanned_organic.species.clone());

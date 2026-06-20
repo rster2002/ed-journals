@@ -1,12 +1,12 @@
-use std::collections::HashMap;
-use chrono::{DateTime, Utc};
 use crate::modules::state::{EventSink, SinkResult};
+use crate::modules::system::PlanetState;
+use chrono::{DateTime, Utc};
 use ed_journals::civilization::LocationInfo;
 use ed_journals::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
-use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
+use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::partials::PartialSystemInfo;
-use crate::modules::system::PlanetState;
+use std::collections::HashMap;
 
 #[derive(Debug, Default, Clone)]
 pub struct SystemState {
@@ -92,15 +92,17 @@ impl EventSink for SystemState {
     fn sink_log(&mut self, log_event: &LogEvent) -> SinkResult {
         let mut result = SinkResult::Ignored;
 
-        if !log_event
+        if log_event
             .content
             .system_address()
-            .is_some_and(|address| address == self.partial_system_info.system_address)
+            .is_none_or(|address| address != self.partial_system_info.system_address)
         {
             return result;
         }
 
-        if let Some(location_info) = log_event.content.location_info() && self.location_info.is_none() {
+        if let Some(location_info) = log_event.content.location_info()
+            && self.location_info.is_none()
+        {
             self.location_info = Some(location_info.clone());
         }
 
@@ -115,15 +117,13 @@ impl EventSink for SystemState {
                 self.all_found = true;
                 result.accept();
             }
-            LogEventContent::FSSSignalDiscovered(event) => {
-                if event.is_station {
-                    self.station_signals.push(event.clone());
-                    result.accept();
-                }
+            LogEventContent::FSSSignalDiscovered(event) if event.is_station => {
+                self.station_signals.push(event.clone());
+                result.accept();
             }
             LogEventContent::Scan(event) => {
                 match &event.kind {
-                    ScanEventKind::Star(star) => {
+                    ScanEventKind::Star(_star) => {
                         self.star_scans.insert(event.body_id, event.clone());
                         result.accept();
                     }
@@ -131,7 +131,7 @@ impl EventSink for SystemState {
                         self.belt_scans.insert(event.body_id, event.clone());
                         result.accept();
                     }
-                    _ => {},
+                    _ => {}
                 }
 
                 if let Some(total_bodies) = self.number_of_bodies {
@@ -144,13 +144,16 @@ impl EventSink for SystemState {
                 }
             }
 
-            _ => {},
+            _ => {}
         }
 
         if let Some(body_id) = log_event.content.body_id() {
-            result.or_replace(self.planet_state.entry(body_id)
-                .or_insert_with(|| PlanetState::from(body_id))
-                .sink_log(log_event))
+            result.or_replace(
+                self.planet_state
+                    .entry(body_id)
+                    .or_insert_with(|| PlanetState::from(body_id))
+                    .sink_log(log_event),
+            )
         }
 
         result

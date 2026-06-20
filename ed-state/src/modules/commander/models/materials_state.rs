@@ -1,7 +1,7 @@
-use std::collections::HashMap;
+use crate::state::{EventSink, SinkResult};
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::materials::Material;
-use crate::state::{EventSink, SinkResult};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Default)]
 pub struct MaterialsState {
