@@ -44,7 +44,7 @@ where
 {
     /// Checks the provided path with the currently held path, and if the path is newer, open the
     /// file and start reading events from it. Returns `true` if the file was changed.
-    pub fn maybe_next(&mut self, path: &LogPath) -> Result<bool, LogFSError> {
+    pub fn maybe_new(&mut self, path: &LogPath) -> Result<bool, LogFSError> {
         if self.current_path.is_none()
             || self
                 .current_path

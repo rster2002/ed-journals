@@ -22,12 +22,12 @@ fn main() {
             continue;
         };
 
-        // Calling the `maybe_next` method will check the provided path against the path that is
+        // Calling the `maybe_new` method will check the provided path against the path that is
         // currently held by the newest file. If the path is newer than the current one, then
         // the provided path is set and opened.
-        newest_file.maybe_next(&last.unwrap()).unwrap();
+        newest_file.maybe_new(&last.unwrap()).unwrap();
 
-        // Read any events from the newest file. Calling `maybe_next` won't reset the inner
+        // Read any events from the newest file. Calling `maybe_new` won't reset the inner
         // iterator, so you can keep reading events from the same file or immediately continue in
         // case all events have been read.
         for event in newest_file {
