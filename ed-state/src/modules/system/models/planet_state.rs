@@ -10,12 +10,11 @@ use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::trading::Commodity;
 use std::collections::HashSet;
-use ed_exobiology::{SpawnSource, TargetSystem, TargetPlanet};
 use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 
 cfg_select! {
     feature = "exobiology" => {
-
+        use ed_exobiology::{SpawnSource, TargetSystem, TargetPlanet};
     }
 }
 
