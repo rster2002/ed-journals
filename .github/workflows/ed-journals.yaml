@@ -14,7 +14,7 @@ jobs:
       - name: Build
         run: cargo build --verbose
       - name: Run tests
-        run: cargo test --verbose
+        run: cargo test -p ed-journals --verbose
 
   no-default:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: cargo build --verbose
       - name: Run tests
-        run: cargo test --no-default-features --verbose
+        run: cargo test -p ed-journals --no-default-features --verbose
 
   test-allow-unknown:
     runs-on: ubuntu-latest
@@ -32,4 +32,4 @@ jobs:
       - name: Build
         run: cargo build --verbose
       - name: Run tests
-        run: cargo test --features allow-unknown --verbose
+        run: cargo test -p ed-journals --features allow-unknown --verbose
