@@ -42,6 +42,10 @@ pub struct SystemState {
 
     /// List of station signals.
     pub station_signals: Vec<FSSSignalDiscoveredEvent>,
+
+    /// Information about the system needed for exobiology predictions.
+    #[cfg(feature = "exobiology")]
+    pub exobiology_system: Option<ed_exobiology::TargetSystem>,
 }
 
 impl SystemState {
@@ -123,15 +127,36 @@ impl EventSink for SystemState {
             }
             LogEventContent::Scan(event) => {
                 match &event.kind {
-                    ScanEventKind::Star(_star) => {
+                    ScanEventKind::Star(star) => {
                         self.star_scans.insert(event.body_id, event.clone());
+
+                        #[cfg(feature = "exobiology")]
+                        if let Some(exobiology_system) = &mut self.exobiology_system {
+                            exobiology_system.stars_in_system.insert(
+                                event.body_id,
+                                ed_exobiology::SpawnSourceStar {
+                                    class: star.star_type.clone(),
+                                    luminosity: star.luminosity.clone(),
+                                },
+                            );
+                        }
+
                         result.accept();
                     }
                     ScanEventKind::BeltCluster(_) => {
                         self.belt_scans.insert(event.body_id, event.clone());
                         result.accept();
                     }
-                    _ => {}
+                    ScanEventKind::Planet(planet) => {
+                        #[cfg(feature = "exobiology")]
+                        if let Some(exobiology_system) = &mut self.exobiology_system {
+                            exobiology_system
+                                .planet_classes_in_system
+                                .insert(planet.planet_class.clone());
+
+                            result.accept();
+                        }
+                    },
                 }
 
                 if let Some(total_bodies) = self.number_of_bodies {

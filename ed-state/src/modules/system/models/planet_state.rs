@@ -4,12 +4,20 @@ use ed_journals::exobiology::{Genus, Species};
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use ed_journals::logs::scan_event::ScanEvent;
+use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::trading::Commodity;
 use std::collections::HashSet;
+use ed_exobiology::{SpawnSource, TargetSystem, TargetPlanet};
+use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
+
+cfg_select! {
+    feature = "exobiology" => {
+
+    }
+}
 
 #[derive(Debug, Default, Clone)]
 pub struct PlanetState {
@@ -39,6 +47,160 @@ pub struct PlanetState {
 
     /// Commodity signals that have been found on the planet.
     pub commodity_signals: Vec<Commodity>,
+
+    /// Information about the planet needed for exobiology predictions.
+    #[cfg(feature = "exobiology")]
+    pub exobiology_body: Option<TargetPlanet>,
+}
+
+impl PlanetState {
+    pub fn has_human_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.human_signal_count != 0)
+    }
+
+    pub fn has_biological_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.biological_signal_count != 0)
+    }
+
+    pub fn has_geological_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.geological_signal_count != 0)
+    }
+
+    pub fn has_thargoid_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.thargoid_signal_count != 0)
+    }
+
+    pub fn has_guardian_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.guardian_signal_count != 0)
+    }
+
+    pub fn has_other_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.other_signal_count != 0)
+    }
+
+    #[cfg(feature = "exobiology")]
+    pub fn target_planet(&self) -> &Option<TargetPlanet> {
+        &self.exobiology_body
+    }
+
+    /// Returns entries for all species that could theoretically spawn on the planet and indicates
+    /// if they can actually spawn or not.
+    #[cfg(feature = "exobiology")]
+    pub fn get_planet_species(&self, target_system: &TargetSystem) -> Vec<PlanetSpeciesEntry> {
+        let Some(exobiology_body) = &self.exobiology_body else {
+            return Vec::new();
+        };
+
+        let spawn_source = SpawnSource {
+            target_system,
+            target_planet: &exobiology_body,
+        };
+
+        if !self.has_biological_signals() {
+            return Vec::new();
+        }
+
+        let species = spawn_source.get_spawnable_species();
+        let number_of_species = species.len();
+
+        species
+            .into_iter()
+            .map(|species| {
+                let will_spawn: WillSpawn = match true {
+                    // If the species has been scanned, will_spawn will be set to yes to keep it
+                    // from switching from a maybe to a no.
+                    _ if self.scanned_species.contains(&species) => WillSpawn::Yes,
+
+                    // If the possible number of species is the same as the number of biological
+                    // signals it counts all of them as yes.
+                    _ if self.signal_counts.as_ref().is_some_and(|signals| {
+                        signals.biological_signal_count == number_of_species
+                    }) =>
+                        {
+                            WillSpawn::Yes
+                        }
+
+                    // If the current species has not been scanned yet (checked by the first if
+                    // statement), but there already is another species of the same genus, then
+                    // this species does not have a chance to spawn.
+                    _ if self
+                        .scanned_species
+                        .iter()
+                        .any(|scanned| scanned.genus() == species.genus()) =>
+                        {
+                            WillSpawn::No
+                        }
+
+                    // If the planet has not been scanned yet and the genuses are still unknown, it
+                    // will count any species that hasn't already been flagged as a maybe.
+                    _ if self.saa_genuses.is_none() => WillSpawn::Maybe,
+
+                    // If the planet has been scanned, but the species' genus does not appear in the
+                    // list of scanned genuses that can spawn, then the current species will not
+                    // spawn.
+                    _ if self
+                        .saa_genuses
+                        .as_ref()
+                        .is_some_and(|genuses| !genuses.contains(&species.genus())) =>
+                        {
+                            WillSpawn::No
+                        }
+
+                    // If the species is not handled by any of the special cases above, then the
+                    // species is still under consideration.
+                    _ => WillSpawn::Maybe,
+                };
+
+                PlanetSpeciesEntry {
+                    will_spawn,
+                    scanned: self.scanned_species.contains(&species),
+                    logged: self.logged_species.contains(&species),
+                    specie: species,
+                }
+            })
+            .collect()
+    }
+
+    /// Calculates the lowest exobiology value based on the current information about the planet.
+    #[cfg(feature = "exobiology")]
+    pub fn get_lowest_exobiology_value(&self, target_system: &TargetSystem) -> u64 {
+        let mut known_values = Vec::new();
+        let mut maybe_values = Vec::new();
+
+        for entry in self.get_planet_species(target_system) {
+            match entry.will_spawn {
+                WillSpawn::Yes => known_values.push(entry.specie.base_value()),
+                WillSpawn::Maybe => maybe_values.push(entry.specie.base_value()),
+                WillSpawn::No => {}
+            }
+        }
+
+        // Calculates how many of the maybe entries could still be found.
+        let remaining_unknowns = match &self.signal_counts {
+            Some(signals) => signals.biological_signal_count - known_values.len(),
+            None => known_values.len(),
+        };
+
+        maybe_values.sort();
+
+        let known_total: u64 = maybe_values.iter().sum();
+
+        let maybe_total: u64 = maybe_values.iter().take(remaining_unknowns).sum();
+
+        known_total + maybe_total
+    }
 }
 
 impl From<u8> for PlanetState {
@@ -65,6 +227,29 @@ impl EventSink for PlanetState {
         match &log_event.content {
             LogEventContent::Scan(event) if event.kind.is_planet() => {
                 self.scan = Some(event.clone());
+
+                #[cfg(feature = "exobiology")]
+                if let ScanEventKind::Planet(planet) = &event.kind {
+                    self.exobiology_body = Some(ed_exobiology::TargetPlanet {
+                        class: planet.planet_class.clone(),
+                        atmosphere: planet.atmosphere.clone(),
+                        surface_gravity: planet.surface_gravity.clone(),
+                        surface_temperature: planet.surface_temperature,
+                        volcanism: planet.volcanism.clone(),
+                        materials: HashSet::from_iter(
+                            planet
+                                .materials
+                                .clone()
+                                .into_iter()
+                                .map(|entry| entry.name),
+                        ),
+                        composition: planet.composition.clone(),
+                        parents: event.parents.clone(),
+                        semi_major_axis: planet.orbit_info.semi_major_axis,
+                        geological_signals_present: false,
+                    });
+                }
+
                 result.accept();
             }
             LogEventContent::SAAScanComplete(scan_complete) => {

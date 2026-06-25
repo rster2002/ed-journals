@@ -315,6 +315,7 @@ name = "ed-state"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "ed-exobiology",
  "ed-journals",
 ]
 
