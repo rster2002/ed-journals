@@ -108,6 +108,15 @@ impl EventSink for SystemState {
             && self.location_info.is_none()
         {
             self.location_info = Some(location_info.clone());
+
+            #[cfg(feature = "exobiology")]
+            {
+                self.exobiology_system = Some(ed_exobiology::TargetSystem {
+                    star_system_position: location_info.star_pos,
+                    planet_classes_in_system: Default::default(),
+                    stars_in_system: Default::default(),
+                });
+            }
         }
 
         match &log_event.content {

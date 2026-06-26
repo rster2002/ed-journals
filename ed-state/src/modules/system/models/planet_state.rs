@@ -107,10 +107,6 @@ impl PlanetState {
             target_planet: &exobiology_body,
         };
 
-        if !self.has_biological_signals() {
-            return Vec::new();
-        }
-
         let species = spawn_source.get_spawnable_species();
         let number_of_species = species.len();
 
@@ -281,22 +277,22 @@ impl EventSink for PlanetState {
                 for signal in &body_signals.signals {
                     match &signal.kind {
                         PlanetarySignalType::Human => {
-                            signal_counts.human_signal_count += 1;
+                            signal_counts.human_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Biological => {
-                            signal_counts.biological_signal_count += 1;
+                            signal_counts.biological_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Geological => {
-                            signal_counts.geological_signal_count += 1;
+                            signal_counts.geological_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Thargoid => {
-                            signal_counts.thargoid_signal_count += 1;
+                            signal_counts.thargoid_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Guardian => {
-                            signal_counts.guardian_signal_count += 1;
+                            signal_counts.guardian_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Other => {
-                            signal_counts.other_signal_count += 1;
+                            signal_counts.other_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Commodity(commodity) => {
                             self.commodity_signals.push(commodity.clone());
