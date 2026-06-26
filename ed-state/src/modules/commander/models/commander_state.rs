@@ -38,11 +38,11 @@ impl EventSink for CommanderState {
     fn sink_log(&mut self, log_event: &LogEvent) -> SinkResult {
         let mut result = SinkResult::default();
 
-        if let Some(partial_system_info) = log_event.content.partial_system_info() {
+        if let Some(system_address) = log_event.content.system_address() {
             result.or_replace(
                 self.systems
-                    .entry(partial_system_info.system_address)
-                    .or_insert_with(|| SystemState::from(partial_system_info))
+                    .entry(system_address)
+                    .or_insert_with(|| SystemState::from(system_address))
                     .sink_log(log_event),
             );
         }

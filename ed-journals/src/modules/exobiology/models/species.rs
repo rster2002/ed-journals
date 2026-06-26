@@ -7,7 +7,7 @@ use std::str::FromStr;
 use strum::EnumIter;
 use thiserror::Error;
 
-#[derive(Debug, Serialize, Clone, Hash, Eq, PartialEq, EnumIter)]
+#[derive(Debug, Serialize, Clone, Hash, Eq, PartialEq, EnumIter, Ord, PartialOrd)]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum Species {
     // Aleoids

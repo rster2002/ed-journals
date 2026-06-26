@@ -12,7 +12,7 @@ use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };
 
-#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct Variant {
     pub species: Species,
     pub color: VariantColor,

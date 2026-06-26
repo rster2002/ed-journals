@@ -37,10 +37,6 @@ impl SpawnSource<'_> {
 
     /// Checks if the spawn source satisfies the given condition.
     pub fn satisfies_spawn_condition(&self, condition: &SpawnCondition) -> bool {
-        if !self.target_planet.landable {
-            return false;
-        }
-
         match condition {
             SpawnCondition::MinMeanTemperature(min_temp) => {
                 &self.target_planet.surface_temperature >= min_temp

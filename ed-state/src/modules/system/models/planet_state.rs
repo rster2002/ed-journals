@@ -103,15 +103,19 @@ impl PlanetState {
             return Vec::new();
         };
 
+        if !exobiology_body.landable || !self.has_biological_signals() {
+            return Vec::new();
+        }
+
         let spawn_source = SpawnSource {
             target_system,
             target_planet: &exobiology_body,
         };
 
-        let species = spawn_source.get_spawnable_species();
-        let number_of_species = species.len();
+        let predictions = spawn_source.get_spawnable_species();
+        let number_of_species = predictions.len();
 
-        species
+        predictions
             .into_iter()
             .map(|species| {
                 let will_spawn: WillSpawn = match true {

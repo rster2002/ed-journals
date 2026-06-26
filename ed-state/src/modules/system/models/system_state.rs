@@ -11,7 +11,7 @@ use std::collections::HashMap;
 #[derive(Debug, Default, Clone)]
 pub struct SystemState {
     /// The address of the system.
-    pub partial_system_info: PartialSystemInfo,
+    pub system_address: u64,
 
     /// Information about the system.
     pub location_info: Option<LocationInfo>,
@@ -83,10 +83,10 @@ impl SystemState {
     }
 }
 
-impl From<PartialSystemInfo> for SystemState {
-    fn from(value: PartialSystemInfo) -> Self {
+impl From<u64> for SystemState {
+    fn from(value: u64) -> Self {
         SystemState {
-            partial_system_info: value,
+            system_address: value,
             ..Default::default()
         }
     }
@@ -99,7 +99,7 @@ impl EventSink for SystemState {
         if log_event
             .content
             .system_address()
-            .is_none_or(|address| address != self.partial_system_info.system_address)
+            .is_none_or(|address| address != self.system_address)
         {
             return result;
         }
