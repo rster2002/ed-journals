@@ -22,3 +22,17 @@ pub enum WillSpawn {
     Maybe,
     No,
 }
+
+impl WillSpawn {
+    pub fn yes(&self) -> bool {
+        matches!(self, WillSpawn::Yes)
+    }
+
+    pub fn maybe(&self) -> bool {
+        matches!(self, WillSpawn::Maybe)
+    }
+
+    pub fn no(&self) -> bool {
+        matches!(self, WillSpawn::No)
+    }
+}
