@@ -1,6 +1,6 @@
-use std::fmt::{Display, Formatter};
-use serde::{Deserialize, Serialize};
 use crate::galaxy::r#static::region_boundaries::{REGIONS, REGION_BOUNDARIES};
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Region {

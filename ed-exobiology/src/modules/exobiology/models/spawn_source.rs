@@ -2,9 +2,7 @@ pub mod spawn_source_star;
 pub mod target_planet;
 pub mod target_system;
 
-use crate::{
-    SpawnCondition, SpawnSourceStar, SpeciesSpawnConditions, TargetPlanet, TargetSystem,
-};
+use crate::{SpawnCondition, SpawnSourceStar, SpeciesSpawnConditions, TargetPlanet, TargetSystem};
 use ed_journals::exobiology::Species;
 use ed_journals::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, Region, VolcanismType};
 use ed_journals::logs::scan_event::ScanEventParent;
@@ -127,9 +125,8 @@ impl SpawnSource<'_> {
                 &self.target_planet.surface_pressure <= max_pressure
             }
             SpawnCondition::Region(region) => {
-                Region::from_pos(self.target_system.star_system_position).is_some_and(
-                    |actual_region| &actual_region == region
-                )
+                Region::from_pos(self.target_system.star_system_position)
+                    .is_some_and(|actual_region| &actual_region == region)
             }
 
             SpawnCondition::Special => false,

@@ -1,14 +1,14 @@
 use crate::SpawnCondition;
+use crate::SpawnCondition::*;
 use ed_journals::exobiology::Species;
-use ed_journals::materials::Material;
-use ed_journals::galaxy::{StarClass, StarLuminosity};
+use ed_journals::exobiology::Species::*;
 use ed_journals::galaxy::AtmosphereType::*;
 use ed_journals::galaxy::PlanetClass::*;
-use ed_journals::galaxy::VolcanismType;
 use ed_journals::galaxy::Region::*;
+use ed_journals::galaxy::VolcanismType;
 use ed_journals::galaxy::VolcanismType::*;
-use ed_journals::exobiology::Species::*;
-use crate::SpawnCondition::*;
+use ed_journals::galaxy::{StarClass, StarLuminosity};
+use ed_journals::materials::Material;
 
 macro_rules! any {
     ($($x:expr),*$(,)?) => {
@@ -32,12 +32,9 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MinMeanTemperature(175.0),
             MaxMeanTemperature(180.0),
             MinPressure(0.0164),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             VolcanismType(VolcanismType::None),
-        ]
+        ],
     ),
     (
         AleoidaCoronamus,
@@ -48,12 +45,9 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MinMeanTemperature(180.0),
             MaxMeanTemperature(190.0),
             MinPressure(0.025),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             VolcanismType(VolcanismType::None),
-        ]
+        ],
     ),
     (
         AleoidaGravis,
@@ -64,12 +58,9 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MinMeanTemperature(190.0),
             MaxMeanTemperature(196.0),
             MinPressure(0.054),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             VolcanismType(VolcanismType::None)
-        ]
+        ],
     ),
     (
         AleoidaLaminiae,
@@ -80,10 +71,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MinMeanTemperature(152.0),
             MaxMeanTemperature(177.0),
             MaxPressure(0.0135),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             any![
                 Region(Acheron),
                 Region(DrymansPoint),
@@ -111,10 +99,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MaxGravity(0.276),
             MinMeanTemperature(170.0),
             MaxMeanTemperature(177.0),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             // any![
             //     Region(Region::OuterArm),
             //     Region(Region::OuterOrionSpur),
@@ -176,10 +161,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
                 VolcanismType(VolcanismType::None),
                 VolcanismType(VolcanismType::CarbonDioxideGeysers),
             ],
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             ParentStarClass(StarClass::O),
             Region(ArcadianStream),
             // TODO: 'regions': ['anemone-a'] ?? Which region is this?
@@ -334,23 +316,11 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             // TODO: regions': ['anemone-a'] ?? Which region is this?
         ],
     ),
-    (
-        BarkMound,
-        all![
-            NoAtmosphere,
-            WithinNebulaRange(150.0),
-        ],
-    ),
-    (
-        BacteriumNebulus,
-        ThinAtmosphere(Helium),
-    ),
+    (BarkMound, all![NoAtmosphere, WithinNebulaRange(150.0),]),
+    (BacteriumNebulus, ThinAtmosphere(Helium)),
     (
         BacteriumAcies,
-        any![
-            ThinAtmosphere(Neon),
-            ThinAtmosphere(NeonRich),
-        ],
+        any![ThinAtmosphere(Neon), ThinAtmosphere(NeonRich),],
     ),
     (
         BacteriumOmentum,
@@ -402,16 +372,10 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
                 PlanetClass(RockyBody),
                 PlanetClass(RockyIceBody),
             ],
-            any![
-                VolcanismType(WaterMagma),
-                VolcanismType(WaterGeysers),
-            ],
+            any![VolcanismType(WaterMagma), VolcanismType(WaterGeysers),],
             any![
                 all![
-                    any![
-                        ThinAtmosphere(Argon),
-                        ThinAtmosphere(ArgonRich),
-                    ],
+                    any![ThinAtmosphere(Argon), ThinAtmosphere(ArgonRich),],
                     MinGravity(0.169),
                     MaxGravity(0.36),
                     MinMeanTemperature(59.9),
@@ -493,40 +457,22 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     ),
     (
         BacteriumBullaris,
-        any![
-            ThinAtmosphere(Methane),
-            ThinAtmosphere(MethaneRich),
-        ],
+        any![ThinAtmosphere(Methane), ThinAtmosphere(MethaneRich),],
     ),
-    (
-        BacteriumAlcyoneum,
-        ThinAtmosphere(Ammonia),
-    ),
+    (BacteriumAlcyoneum, ThinAtmosphere(Ammonia)),
     (
         BacteriumVesicula,
-        any![
-            ThinAtmosphere(Argon),
-            ThinAtmosphere(ArgonRich),
-        ],
+        any![ThinAtmosphere(Argon), ThinAtmosphere(ArgonRich),],
     ),
     (
         BacteriumCerbrus,
         all![
             MinMeanTemperature(132.0),
             MaxMeanTemperature(500.0),
+            any![ThinAtmosphere(SulfurDioxide), ThinAtmosphere(Water),],
             any![
-                ThinAtmosphere(SulfurDioxide),
-                ThinAtmosphere(Water),
-            ],
-            any![
-                all![
-                    MinGravity(0.04),
-                    MaxGravity(0.06),
-                ],
-                all![
-                    MinGravity(0.23),
-                    MaxGravity(0.6),
-                ],
+                all![MinGravity(0.04), MaxGravity(0.06),],
+                all![MinGravity(0.23), MaxGravity(0.6),],
             ],
         ],
     ),
@@ -537,14 +483,8 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ThinAtmosphere(CarbonDioxideRich),
         ],
     ),
-    (
-        BacteriumInformem,
-        ThinAtmosphere(Nitrogen),
-    ),
-    (
-        BacteriumVolu,
-        ThinAtmosphere(Oxygen),
-    ),
+    (BacteriumInformem, ThinAtmosphere(Nitrogen)),
+    (BacteriumVolu, ThinAtmosphere(Oxygen)),
     (
         BacteriumTela,
         any![
@@ -572,10 +512,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(Water),
-                any![
-                    PlanetClass(RockyBody),
-                    PlanetClass(HighMetalContentBody),
-                ],
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
                 MinGravity(0.04),
                 MaxGravity(0.063),
                 MinMeanTemperature(395.0),
@@ -587,10 +524,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(WaterRich),
-                any![
-                    PlanetClass(IcyBody),
-                    PlanetClass(RockyIceBody),
-                ],
+                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
                 MinGravity(0.32),
                 MaxGravity(0.44),
                 MinMeanTemperature(220.0),
@@ -600,10 +534,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(Argon),
-                any![
-                    PlanetClass(IcyBody),
-                    PlanetClass(RockyIceBody),
-                ],
+                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
                 MinGravity(0.045),
                 MaxGravity(0.28),
                 MinMeanTemperature(50.0),
@@ -655,10 +586,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(Neon),
-                any![
-                    PlanetClass(IcyBody),
-                    PlanetClass(RockyIceBody),
-                ],
+                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
                 MinGravity(0.27),
                 MaxGravity(0.61),
                 MinMeanTemperature(20.0),
@@ -668,10 +596,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(NeonRich),
-                any![
-                    PlanetClass(IcyBody),
-                    PlanetClass(RockyIceBody),
-                ],
+                any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
                 MinGravity(0.27),
                 MaxGravity(0.61),
                 MinMeanTemperature(20.0),
@@ -698,10 +623,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 ThinAtmosphere(SulfurDioxide),
-                any![
-                    PlanetClass(RockyBody),
-                    PlanetClass(HighMetalContentBody),
-                ],
+                any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
                 MinGravity(0.18),
                 MaxGravity(0.61),
                 MinMeanTemperature(149.0),
@@ -711,69 +633,18 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
         ],
     ),
-    (
-        BrainTreeAureum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeOstrinum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreePuniceum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeLindigoticum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeGypseeum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeLividum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeViride,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
-    (
-        BrainTreeRoseum,
-        all![
-            NoAtmosphere,
-            AnyVolcanism,
-        ],
-    ),
+    (BrainTreeAureum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeOstrinum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreePuniceum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeLindigoticum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeGypseeum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeLividum, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeViride, all![NoAtmosphere, AnyVolcanism,]),
+    (BrainTreeRoseum, all![NoAtmosphere, AnyVolcanism,]),
     (
         CactoidaLapis,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             any![
                 Region(InnerOrionSpur),
                 Region(InnerScutumCentaurusArm),
@@ -811,14 +682,8 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         CactoidaCortexum,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
-            any![
-                ThinAtmosphere(CarbonDioxide),
-                ThinAtmosphere(Ammonia),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
+            any![ThinAtmosphere(CarbonDioxide), ThinAtmosphere(Ammonia),],
             MaxGravity(0.276),
             MinMeanTemperature(180.0),
             MaxMeanTemperature(196.0),
@@ -829,20 +694,14 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         CactoidaVermis,
         all![
             MaxGravity(0.276),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             ThinAtmosphere(Water),
         ],
     ),
     (
         CactoidaPeperatis,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             any![
                 Region(NormaExpanse),
                 Region(TheVoid),
@@ -867,10 +726,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         all![
             MaxGravity(0.276),
             MinMeanTemperature(190.0),
-            any![
-                ThinAtmosphere(CarbonDioxide),
-                ThinAtmosphere(Water),
-            ],
+            any![ThinAtmosphere(CarbonDioxide), ThinAtmosphere(Water),],
             MinDistanceFromParentSun(5.0),
         ],
     ),
@@ -879,10 +735,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         all![
             MaxGravity(0.276),
             MinMeanTemperature(190.0),
-            any![
-                ThinAtmosphere(CarbonDioxide),
-                ThinAtmosphere(Water),
-            ],
+            any![ThinAtmosphere(CarbonDioxide), ThinAtmosphere(Water),],
         ],
     ),
     (
@@ -890,10 +743,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         all![
             MaxGravity(0.276),
             MinMeanTemperature(190.0),
-            any![
-                ThinAtmosphere(CarbonDioxide),
-                ThinAtmosphere(Water),
-            ],
+            any![ThinAtmosphere(CarbonDioxide), ThinAtmosphere(Water),],
         ],
     ),
     (
@@ -910,10 +760,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             ],
             all![
                 MaxGravity(0.276),
-                any![
-                    ThinAtmosphere(Water),
-                    ThinAtmosphere(WaterRich),
-                ],
+                any![ThinAtmosphere(Water), ThinAtmosphere(WaterRich),],
             ],
         ],
     ),
@@ -921,10 +768,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         ConchaAureolas,
         all![
             ThinAtmosphere(Ammonia),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MinGravity(0.039),
             MaxGravity(0.276),
             MinMeanTemperature(152.0),
@@ -936,10 +780,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         ConchaLabiata,
         all![
             ThinAtmosphere(CarbonDioxide),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MinGravity(0.039),
             MaxGravity(0.276),
             MinMeanTemperature(150.0),
@@ -949,10 +790,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     ),
     (
         ConchaBiconcavis,
-        all![
-            MaxGravity(0.276),
-            ThinAtmosphere(Nitrogen),
-        ],
+        all![MaxGravity(0.276), ThinAtmosphere(Nitrogen),],
     ),
     (
         CrystallineShards,
@@ -1012,10 +850,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         FonticuluaCampestris,
         all![
             ThinAtmosphere(Argon),
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
             MinMeanTemperature(50.0),
             MaxMeanTemperature(150.0),
@@ -1024,28 +859,16 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         FonticuluaSegmentatus,
         all![
-            any![
-                ThinAtmosphere(Neon),
-                ThinAtmosphere(NeonRich)
-            ],
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![ThinAtmosphere(Neon), ThinAtmosphere(NeonRich)],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
     (
         FonticuluaDigitos,
         all![
-            any![
-                ThinAtmosphere(Methane),
-                ThinAtmosphere(MethaneRich),
-            ],
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![ThinAtmosphere(Methane), ThinAtmosphere(MethaneRich),],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1053,10 +876,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         FonticuluaUpupam,
         all![
             ThinAtmosphere(ArgonRich),
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1064,10 +884,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         FonticuluaLapida,
         all![
             ThinAtmosphere(Nitrogen),
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1075,10 +892,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         FonticuluaFluctus,
         all![
             ThinAtmosphere(Oxygen),
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1177,10 +991,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         FrutexaMetallicum,
         all![
             any![
-                all![
-                    ThinAtmosphere(CarbonDioxide),
-                    MaxMeanTemperature(195.0),
-                ],
+                all![ThinAtmosphere(CarbonDioxide), MaxMeanTemperature(195.0),],
                 ThinAtmosphere(Ammonia)
             ],
             PlanetClass(HighMetalContentBody),
@@ -1200,10 +1011,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         all![
             AnyThinAtmosphere,
             GeologicalSignalsPresent,
-            any![
-                VolcanismType(WaterMagma),
-                VolcanismType(WaterGeysers),
-            ],
+            any![VolcanismType(WaterMagma), VolcanismType(WaterGeysers),],
             MaxGravity(0.276),
         ],
     ),
@@ -1231,10 +1039,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
                 VolcanismType(MethaneMagma),
                 VolcanismType(MethaneGeysers),
             ],
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1308,10 +1113,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         FungoidaSetisis,
         all![
-            any![
-                ThinAtmosphere(Ammonia),
-                ThinAtmosphere(Methane),
-            ],
+            any![ThinAtmosphere(Ammonia), ThinAtmosphere(Methane),],
             MaxGravity(0.276),
         ],
     ),
@@ -1333,10 +1135,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         OsseusCornibus,
         all![
             ThinAtmosphere(CarbonDioxide),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
             MinMeanTemperature(180.0),
             MaxMeanTemperature(195.0),
@@ -1346,10 +1145,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         OsseusDiscus,
         all![
             ThinAtmosphere(Water),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1357,10 +1153,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         OsseusFractus,
         all![
             ThinAtmosphere(CarbonDioxide),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
             MinMeanTemperature(180.0),
             MaxMeanTemperature(195.0),
@@ -1370,10 +1163,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         OsseusPellebantus,
         all![
             ThinAtmosphere(CarbonDioxide),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
             MinMeanTemperature(180.0),
             MaxMeanTemperature(195.0),
@@ -1407,10 +1197,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         OsseusSpiralis,
         all![
             ThinAtmosphere(Ammonia),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276)
         ],
     ),
@@ -1418,10 +1205,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         ReceptaConditivus,
         all![
             ThinAtmosphere(SulfurDioxide),
-            any![
-                PlanetClass(IcyBody),
-                PlanetClass(RockyIceBody),
-            ],
+            any![PlanetClass(IcyBody), PlanetClass(RockyIceBody),],
             MaxGravity(0.276),
         ],
     ),
@@ -1429,26 +1213,17 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         ReceptaDeltahedronix,
         all![
             ThinAtmosphere(SulfurDioxide),
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             MaxGravity(0.276),
         ],
     ),
     (
         ReceptaUmbrux,
-        all![
-            ThinAtmosphere(SulfurDioxide),
-            MaxGravity(0.276),
-        ],
+        all![ThinAtmosphere(SulfurDioxide), MaxGravity(0.276),],
     ),
     (
         SinuousTubersAlbidum,
-        all![
-            NoAtmosphere,
-            PlanetClass(RockyBody),
-        ],
+        all![NoAtmosphere, PlanetClass(RockyBody),],
     ),
     (
         SinuousTubersBlatteum,
@@ -1462,17 +1237,11 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     ),
     (
         SinuousTubersCaeruleum,
-        all![
-            NoAtmosphere,
-            PlanetClass(RockyBody),
-        ],
+        all![NoAtmosphere, PlanetClass(RockyBody),],
     ),
     (
         SinuousTubersLindigoticum,
-        all![
-            NoAtmosphere,
-            PlanetClass(RockyBody),
-        ],
+        all![NoAtmosphere, PlanetClass(RockyBody),],
     ),
     (
         SinuousTubersPrasinum,
@@ -1486,10 +1255,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     ),
     (
         SinuousTubersRoseum,
-        all![
-            NoAtmosphere,
-            VolcanismType(SilicateMagma),
-        ],
+        all![NoAtmosphere, VolcanismType(SilicateMagma),],
     ),
     (
         SinuousTubersViolaceum,
@@ -1601,10 +1367,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         StratumLimaxus,
         all![
-            any![
-                ThinAtmosphere(SulfurDioxide),
-                ThinAtmosphere(CarbonDioxide),
-            ],
+            any![ThinAtmosphere(SulfurDioxide), ThinAtmosphere(CarbonDioxide),],
             any![
                 Region(NormaExpanse),
                 Region(InnerScutumCentaurusArm),
@@ -1647,7 +1410,6 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
                 //     Region(Region::SagittariusCarinaArm),
                 // ],
             ],
-
             all![
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.04),
@@ -1655,14 +1417,12 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(196.0),
             ],
-
             all![
                 ThinAtmosphere(CarbonDioxide),
                 MinGravity(0.27),
                 MinMeanTemperature(165.0),
                 MaxMeanTemperature(400.0),
             ],
-
             all![
                 ThinAtmosphere(CarbonDioxideRich),
                 MinMeanTemperature(170.0),
@@ -1766,10 +1526,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TubusSororibus,
         all![
-            any![
-                ThinAtmosphere(CarbonDioxide),
-                ThinAtmosphere(Ammonia),
-            ],
+            any![ThinAtmosphere(CarbonDioxide), ThinAtmosphere(Ammonia),],
             PlanetClass(HighMetalContentBody),
             MaxGravity(0.15),
             MinMeanTemperature(160.0),
@@ -1789,14 +1546,8 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TussockCapillum,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(RockyIceBody),
-            ],
-            any![
-                ThinAtmosphere(Argon),
-                ThinAtmosphere(Methane),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(RockyIceBody),],
+            any![ThinAtmosphere(Argon), ThinAtmosphere(Methane),],
             MaxGravity(0.276),
             MinMeanTemperature(80.0),
             MaxMeanTemperature(130.0),
@@ -1860,10 +1611,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TussockDivisa,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             any![
                 Region(RykersHope),
                 Region(OuterOrionPerseusConflux),
@@ -1885,10 +1633,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TussockIgnis,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             ThinAtmosphere(CarbonDioxide),
             MinGravity(0.04),
             MaxGravity(0.20),
@@ -1911,10 +1656,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TussockPennatis,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             ThinAtmosphere(CarbonDioxide),
             MaxGravity(0.04),
             MaxGravity(0.276),
@@ -1925,10 +1667,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
     (
         TussockPropagito,
         all![
-            any![
-                PlanetClass(RockyBody),
-                PlanetClass(HighMetalContentBody),
-            ],
+            any![PlanetClass(RockyBody), PlanetClass(HighMetalContentBody),],
             any![
                 Region(GalacticCenter),
                 Region(OdinsHold),
@@ -1996,24 +1735,9 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MaxGravity(0.276),
         ],
     ),
-    (
-        ThargoidBarnacleCommon,
-        Special,
-    ),
-    (
-        ThargoidBarnacleLarge,
-        Special,
-    ),
-    (
-        ThargoidBarnacleBarbs,
-        Special,
-    ),
-    (
-        ThargoidBarnacleMatrixSubmerged,
-        Special,
-    ),
-    (
-        ThargoidBarnacleMatrix,
-        Special,
-    )
+    (ThargoidBarnacleCommon, Special),
+    (ThargoidBarnacleLarge, Special),
+    (ThargoidBarnacleBarbs, Special),
+    (ThargoidBarnacleMatrixSubmerged, Special),
+    (ThargoidBarnacleMatrix, Special),
 ];

@@ -1,5 +1,5 @@
-use crate::SpawnCondition;
 use crate::SPECIES_SPAWN_CONDITIONS;
+use crate::SpawnCondition;
 use ed_journals::exobiology::Species;
 
 /// Trait for species that have spawn conditions.
@@ -14,7 +14,7 @@ impl SpeciesSpawnConditions for Species {
         &SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
-            .unwrap_or_else(|| {
+            .unwrap_or({
                 // This is just as a fallback
                 &(Species::AleoidaArcus, SpawnCondition::Special)
             })
@@ -24,7 +24,7 @@ impl SpeciesSpawnConditions for Species {
 
 #[cfg(test)]
 mod tests {
-    use crate::{SpeciesSpawnConditions, SPECIES_SPAWN_CONDITIONS};
+    use crate::{SPECIES_SPAWN_CONDITIONS, SpeciesSpawnConditions};
     use ed_journals::exobiology::Species;
     use strum::IntoEnumIterator;
 

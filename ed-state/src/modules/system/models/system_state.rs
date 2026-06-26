@@ -165,7 +165,7 @@ impl EventSink for SystemState {
 
                             result.accept();
                         }
-                    },
+                    }
                 }
 
                 if let Some(total_bodies) = self.number_of_bodies {

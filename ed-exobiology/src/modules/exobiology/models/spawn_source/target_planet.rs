@@ -1,4 +1,6 @@
-use ed_journals::galaxy::{Atmosphere, Gravity, LocalDistance, PlanetClass, PlanetComposition, Volcanism};
+use ed_journals::galaxy::{
+    Atmosphere, Gravity, LocalDistance, PlanetClass, PlanetComposition, Volcanism,
+};
 use ed_journals::logs::scan_event::ScanEventParent;
 use ed_journals::materials::Material;
 use std::collections::HashSet;

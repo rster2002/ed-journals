@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use crate::from_str_deserialize_impl;
-use serde::{Serialize};
+use serde::Serialize;
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Eq, Hash)]

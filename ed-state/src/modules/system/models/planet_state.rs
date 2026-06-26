@@ -1,7 +1,9 @@
 use crate::modules::state::{EventSink, SinkResult};
+use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 use crate::system::models::signal_counts::SignalCounts;
 use ed_journals::exobiology::{Genus, Species};
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
+use ed_journals::galaxy::LocalDistance;
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
 use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
@@ -10,8 +12,6 @@ use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::trading::Commodity;
 use std::collections::HashSet;
-use ed_journals::galaxy::LocalDistance;
-use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 
 cfg_select! {
     feature = "exobiology" => {
@@ -124,9 +124,9 @@ impl PlanetState {
                     _ if self.signal_counts.as_ref().is_some_and(|signals| {
                         signals.biological_signal_count == number_of_species
                     }) =>
-                        {
-                            WillSpawn::Yes
-                        }
+                    {
+                        WillSpawn::Yes
+                    }
 
                     // If the current species has not been scanned yet (checked by the first if
                     // statement), but there already is another species of the same genus, then
@@ -135,9 +135,9 @@ impl PlanetState {
                         .scanned_species
                         .iter()
                         .any(|scanned| scanned.genus() == species.genus()) =>
-                        {
-                            WillSpawn::No
-                        }
+                    {
+                        WillSpawn::No
+                    }
 
                     // If the planet has not been scanned yet and the genuses are still unknown, it
                     // will count any species that hasn't already been flagged as a maybe.
@@ -150,9 +150,9 @@ impl PlanetState {
                         .saa_genuses
                         .as_ref()
                         .is_some_and(|genuses| !genuses.contains(&species.genus())) =>
-                        {
-                            WillSpawn::No
-                        }
+                    {
+                        WillSpawn::No
+                    }
 
                     // If the species is not handled by any of the special cases above, then the
                     // species is still under consideration.
@@ -235,11 +235,7 @@ impl EventSink for PlanetState {
                         surface_pressure: planet.surface_pressure,
                         volcanism: planet.volcanism.clone(),
                         materials: HashSet::from_iter(
-                            planet
-                                .materials
-                                .clone()
-                                .into_iter()
-                                .map(|entry| entry.name),
+                            planet.materials.clone().into_iter().map(|entry| entry.name),
                         ),
                         composition: planet.composition.clone(),
                         parents: event.parents.clone(),

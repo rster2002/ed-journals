@@ -1,6 +1,6 @@
+use crate::civilization::LocationInfo;
 use kinded::Kinded;
 use serde::{Deserialize, Serialize};
-use crate::civilization::LocationInfo;
 
 #[cfg(feature = "allow-unknown")]
 use serde_json::Value;

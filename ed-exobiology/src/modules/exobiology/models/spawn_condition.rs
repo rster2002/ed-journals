@@ -1,4 +1,6 @@
-use ed_journals::galaxy::{AtmosphereType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType};
+use ed_journals::galaxy::{
+    AtmosphereType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType,
+};
 use ed_journals::materials::Material;
 
 /// A condition that the planet must meet to spawn a specific species.
