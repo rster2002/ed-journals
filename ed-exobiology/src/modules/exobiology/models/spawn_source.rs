@@ -6,7 +6,7 @@ use crate::{
     SpawnCondition, SpawnSourceStar, SpeciesSpawnConditions, TargetPlanet, TargetSystem,
 };
 use ed_journals::exobiology::Species;
-use ed_journals::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, VolcanismType};
+use ed_journals::galaxy::{AtmosphereDensity, AtmosphereType, Nebula, Region, VolcanismType};
 use ed_journals::logs::scan_event::ScanEventParent;
 use strum::IntoEnumIterator;
 
@@ -30,14 +30,19 @@ impl SpawnSource<'_> {
 
     /// Checks if the given species can spawn on this spawn source.
     pub fn can_spawn_species(&self, species: &Species) -> bool {
-        species
-            .spawn_conditions()
-            .iter()
-            .all(|condition| self.satisfies_spawn_condition(condition))
+        if !self.target_planet.landable {
+            return false;
+        }
+
+        self.satisfies_spawn_condition(species.spawn_conditions())
     }
 
     /// Checks if the spawn source satisfies the given condition.
     pub fn satisfies_spawn_condition(&self, condition: &SpawnCondition) -> bool {
+        if !self.target_planet.landable {
+            return false;
+        }
+
         match condition {
             SpawnCondition::MinMeanTemperature(min_temp) => {
                 &self.target_planet.surface_temperature >= min_temp
@@ -62,6 +67,9 @@ impl SpawnSource<'_> {
                 &self.target_planet.surface_gravity.as_g() <= max_gravity
             }
             SpawnCondition::PlanetClass(planet_class) => &self.target_planet.class == planet_class,
+            SpawnCondition::PrimaryStarClass(star_class) => {
+                &self.target_system.stars_in_system[&0].class == star_class
+            }
             SpawnCondition::ParentStarClass(star_class) => {
                 self.parent_stars().any(|star| &star.class == star_class)
             }
@@ -80,7 +88,7 @@ impl SpawnSource<'_> {
             }
             SpawnCondition::MinDistanceFromParentSun(min_distance) => {
                 // TODO not sure, but Eccentricity might need to be taken into account as well
-                &(self.target_planet.semi_major_axis / 149597870700.0) >= min_distance
+                &(self.target_planet.semi_major_axis.as_au()) >= min_distance
             }
             SpawnCondition::AnyVolcanism => {
                 self.target_planet.volcanism.kind != VolcanismType::None
@@ -97,26 +105,31 @@ impl SpawnSource<'_> {
             SpawnCondition::MaterialPresence(material) => {
                 self.target_planet.materials.contains(material)
             }
-            SpawnCondition::RockyComposition => {
-                let Some(composition) = &self.target_planet.composition else {
-                    return false;
-                };
-
-                composition.rock > 0.0
+            SpawnCondition::RockyComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.rock > 0.0),
+            SpawnCondition::IcyComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.ice > 0.0),
+            SpawnCondition::MetalComposition => self
+                .target_planet
+                .composition
+                .as_ref()
+                .is_some_and(|composition| composition.metal > 0.0),
+            SpawnCondition::MinPressure(min_pressure) => {
+                &self.target_planet.surface_pressure >= min_pressure
             }
-            SpawnCondition::IcyComposition => {
-                let Some(composition) = &self.target_planet.composition else {
-                    return false;
-                };
-
-                composition.ice > 0.0
+            SpawnCondition::MaxPressure(max_pressure) => {
+                &self.target_planet.surface_pressure <= max_pressure
             }
-            SpawnCondition::MetalComposition => {
-                let Some(composition) = &self.target_planet.composition else {
-                    return false;
-                };
-
-                composition.metal > 0.0
+            SpawnCondition::Region(region) => {
+                Region::from_pos(self.target_system.star_system_position).is_some_and(
+                    |actual_region| &actual_region == region
+                )
             }
 
             SpawnCondition::Special => false,

@@ -21,14 +21,14 @@ pub enum Species {
     AmphoraPlant,
 
     // Anemones
-    AnemoneLuteolum,               // TODO needs to be verified
-    AnemoneCroceum,                // TODO needs to be verified
-    AnemonePuniceum,               // TODO needs to be verified
-    AnemoneRoseum,                 // TODO needs to be verified
-    AnemoneBlatteumBioluminescent, // TODO needs to be verified
-    AnemoneRubeumBioluminescent,   // TODO needs to be verified
-    AnemonePrasinumBioluminescent, // TODO needs to be verified
-    AnemoneRoseumBioluminescent,   // TODO needs to be verified
+    AnemoneLuteolum,
+    AnemoneCroceum,
+    AnemonePuniceum,
+    AnemoneRoseum,
+    AnemoneBlatteumBioluminescent,
+    AnemoneRubeumBioluminescent,
+    AnemonePrasinumBioluminescent,
+    AnemoneRoseumBioluminescent,
 
     // Bark mounds
     BarkMound,
@@ -184,11 +184,6 @@ pub enum Species {
     Unknown(String),
 }
 
-// lazy_static! {
-//     static ref UNKNOWN_SPAWN_CONDITIONS: &'static [SpawnCondition<'static>] =
-//         &[SpawnCondition::Special];
-// }
-
 impl Species {
     /// Whether the current variant is unknown.
     #[cfg(feature = "allow-unknown")]
@@ -196,19 +191,6 @@ impl Species {
     pub fn is_unknown(&self) -> bool {
         matches!(self, Species::Unknown(_))
     }
-
-    // pub fn spawn_conditions(&self) -> &[SpawnCondition<'_>] {
-    //     #[cfg(feature = "allow-unknown")]
-    //     if let Species::Unknown(_) = self {
-    //         return &UNKNOWN_SPAWN_CONDITIONS;
-    //     }
-    //
-    //     SPECIES_SPAWN_CONDITIONS
-    //         .iter()
-    //         .find(|(species, _)| species == self)
-    //         .expect("Species should always have a matching spawning condition")
-    //         .1
-    // }
 
     pub fn genus(&self) -> Genus {
         self.into()
@@ -222,21 +204,18 @@ impl Species {
             Species::AleoidaLaminiae => 3_385_200,
             Species::AleoidaGravis => 12_934_900,
 
-            // TODO this needs a value
-            Species::AmphoraPlant => 0,
+            Species::AmphoraPlant => 1_628_800,
 
-            // TODO these need values
-            Species::AnemoneLuteolum => 0,
-            Species::AnemoneCroceum => 0,
-            Species::AnemonePuniceum => 0,
-            Species::AnemoneRoseum => 0,
-            Species::AnemoneBlatteumBioluminescent => 0,
-            Species::AnemoneRubeumBioluminescent => 0,
-            Species::AnemonePrasinumBioluminescent => 0,
-            Species::AnemoneRoseumBioluminescent => 0,
+            Species::AnemoneLuteolum => 1_499_900,
+            Species::AnemoneCroceum => 1_499_900,
+            Species::AnemonePuniceum => 1_499_900,
+            Species::AnemoneRoseum => 1_499_900,
+            Species::AnemoneBlatteumBioluminescent => 1_499_900,
+            Species::AnemoneRubeumBioluminescent => 1_499_900,
+            Species::AnemonePrasinumBioluminescent => 1_499_900,
+            Species::AnemoneRoseumBioluminescent => 1_499_900,
 
-            // TODO this needs a value
-            Species::BarkMound => 0,
+            Species::BarkMound => 1_471_900,
 
             Species::BacteriumAurasus => 1_000_000,
             Species::BacteriumNebulus => 5_289_900,
@@ -252,15 +231,14 @@ impl Species {
             Species::BacteriumCerbrus => 1_689_800,
             Species::BacteriumVerrata => 3_897_000,
 
-            // TODO these need values
-            Species::BrainTreeRoseum => 0,
-            Species::BrainTreeGypseeum => 0,
-            Species::BrainTreeOstrinum => 0,
-            Species::BrainTreeViride => 0,
-            Species::BrainTreeLividum => 0,
-            Species::BrainTreeAureum => 0,
-            Species::BrainTreePuniceum => 0,
-            Species::BrainTreeLindigoticum => 0,
+            Species::BrainTreeRoseum => 1_593_700,
+            Species::BrainTreeGypseeum => 1_593_700,
+            Species::BrainTreeOstrinum => 1_593_700,
+            Species::BrainTreeViride => 1_593_700,
+            Species::BrainTreeLividum => 1_593_700,
+            Species::BrainTreeAureum => 1_593_700,
+            Species::BrainTreePuniceum => 1_593_700,
+            Species::BrainTreeLindigoticum => 1_593_700,
 
             Species::CactoidaCortexum => 3_667_600,
             Species::CactoidaLapis => 2_483_600,
@@ -358,15 +336,14 @@ impl Species {
             Species::ThargoidBarnacleMatrixSubmerged => 0,
             Species::ThargoidBarnacleMatrix => 2_313_500,
 
-            // TODO these need values
-            Species::SinuousTubersRoseum => 0,
-            Species::SinuousTubersPrasinum => 0,
-            Species::SinuousTubersAlbidum => 0,
-            Species::SinuousTubersCaeruleum => 0,
-            Species::SinuousTubersBlatteum => 0,
-            Species::SinuousTubersLindigoticum => 0,
-            Species::SinuousTubersViolaceum => 0,
-            Species::SinuousTubersViride => 0,
+            Species::SinuousTubersRoseum => 1_514_500,
+            Species::SinuousTubersPrasinum => 1_514_500,
+            Species::SinuousTubersAlbidum => 1_514_500,
+            Species::SinuousTubersCaeruleum => 1_514_500,
+            Species::SinuousTubersBlatteum => 1_514_500,
+            Species::SinuousTubersLindigoticum => 1_514_500,
+            Species::SinuousTubersViolaceum => 1_514_500,
+            Species::SinuousTubersViride => 1_514_500,
 
             #[cfg(feature = "allow-unknown")]
             Species::Unknown(_) => 0,
@@ -593,14 +570,14 @@ impl Display for Species {
                 Species::BacteriumVesicula => "Bacterium Vesicula",
                 Species::BacteriumVolu => "Bacterium Volu",
 
-                Species::BrainTreeAureum => "Aureum Brain Tree ",
-                Species::BrainTreeGypseeum => "Gypseeum Brain Tree ",
-                Species::BrainTreeLindigoticum => "Lindigoticum Brain Tree ",
-                Species::BrainTreeLividum => "Lividum Brain Tree ",
-                Species::BrainTreeOstrinum => "Ostrinum Brain Tree ",
-                Species::BrainTreePuniceum => "Puniceum Brain Tree ",
-                Species::BrainTreeRoseum => "Roseum Brain Tree ",
-                Species::BrainTreeViride => "Viride Brain Tree ",
+                Species::BrainTreeAureum => "Aureum Brain Tree",
+                Species::BrainTreeGypseeum => "Gypseeum Brain Tree",
+                Species::BrainTreeLindigoticum => "Lindigoticum Brain Tree",
+                Species::BrainTreeLividum => "Lividum Brain Tree",
+                Species::BrainTreeOstrinum => "Ostrinum Brain Tree",
+                Species::BrainTreePuniceum => "Puniceum Brain Tree",
+                Species::BrainTreeRoseum => "Roseum Brain Tree",
+                Species::BrainTreeViride => "Viride Brain Tree",
 
                 Species::CactoidaCortexum => "Cactoida Cortexum",
                 Species::CactoidaLapis => "Cactoida Lapis",

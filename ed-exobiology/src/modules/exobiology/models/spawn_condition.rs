@@ -1,4 +1,4 @@
-use ed_journals::galaxy::{AtmosphereType, PlanetClass, StarClass, StarLuminosity, VolcanismType};
+use ed_journals::galaxy::{AtmosphereType, PlanetClass, Region, StarClass, StarLuminosity, VolcanismType};
 use ed_journals::materials::Material;
 
 /// A condition that the planet must meet to spawn a specific species.
@@ -31,6 +31,9 @@ pub enum SpawnCondition<'a> {
     /// Matches any planet that orbits a star of the given class.
     ParentStarClass(StarClass),
 
+    /// The class of the primary star in the system.
+    PrimaryStarClass(StarClass),
+
     /// Matches any planet that orbits a star of the given luminosity.
     ParentStarLuminosity(StarLuminosity),
 
@@ -45,6 +48,12 @@ pub enum SpawnCondition<'a> {
 
     /// Matches any planet that has a volcanism of the given type.
     VolcanismType(VolcanismType),
+
+    /// The minimum atmospheric pressure required.
+    MinPressure(f32),
+
+    /// The maximum atmospheric pressure.
+    MaxPressure(f32),
 
     /// Matches any planet that is at least the given distance from the center of the sun in AU.
     MinDistanceFromParentSun(f32),
@@ -61,6 +70,9 @@ pub enum SpawnCondition<'a> {
     RockyComposition,
     IcyComposition,
     MetalComposition,
+
+    /// The region of the galaxy the species can spawn in.
+    Region(Region),
 
     /// Special conditions that cannot be checked in the journal state. Species with this condition
     /// will never be matched automatically.

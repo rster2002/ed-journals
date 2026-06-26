@@ -10,6 +10,7 @@ use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::trading::Commodity;
 use std::collections::HashSet;
+use ed_journals::galaxy::LocalDistance;
 use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 
 cfg_select! {
@@ -225,11 +226,13 @@ impl EventSink for PlanetState {
 
                 #[cfg(feature = "exobiology")]
                 if let ScanEventKind::Planet(planet) = &event.kind {
-                    self.exobiology_body = Some(ed_exobiology::TargetPlanet {
+                    self.exobiology_body = Some(TargetPlanet {
+                        landable: planet.landable,
                         class: planet.planet_class.clone(),
                         atmosphere: planet.atmosphere.clone(),
                         surface_gravity: planet.surface_gravity.clone(),
                         surface_temperature: planet.surface_temperature,
+                        surface_pressure: planet.surface_pressure,
                         volcanism: planet.volcanism.clone(),
                         materials: HashSet::from_iter(
                             planet
@@ -240,7 +243,7 @@ impl EventSink for PlanetState {
                         ),
                         composition: planet.composition.clone(),
                         parents: event.parents.clone(),
-                        semi_major_axis: planet.orbit_info.semi_major_axis,
+                        semi_major_axis: LocalDistance::from_m(planet.orbit_info.semi_major_axis),
                         geological_signals_present: false,
                     });
                 }

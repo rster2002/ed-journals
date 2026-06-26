@@ -6,17 +6,17 @@ use ed_journals::exobiology::Species;
 pub trait SpeciesSpawnConditions {
     /// Returns a list of spawn conditions that should all match for this species to spawn on a
     /// planet.
-    fn spawn_conditions(&self) -> &[SpawnCondition<'_>];
+    fn spawn_conditions(&self) -> &SpawnCondition<'_>;
 }
 
 impl SpeciesSpawnConditions for Species {
-    fn spawn_conditions(&self) -> &[SpawnCondition<'_>] {
-        SPECIES_SPAWN_CONDITIONS
+    fn spawn_conditions(&self) -> &SpawnCondition<'_> {
+        &SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
             .unwrap_or_else(|| {
                 // This is just as a fallback
-                &(Species::AleoidaArcus, &[SpawnCondition::Special])
+                &(Species::AleoidaArcus, SpawnCondition::Special)
             })
             .1
     }
@@ -24,15 +24,14 @@ impl SpeciesSpawnConditions for Species {
 
 #[cfg(test)]
 mod tests {
-    use crate::SpeciesSpawnConditions;
+    use crate::{SpeciesSpawnConditions, SPECIES_SPAWN_CONDITIONS};
     use ed_journals::exobiology::Species;
     use strum::IntoEnumIterator;
 
     #[test]
     fn all_species_have_matching_spawn_conditions() {
         for species in Species::iter() {
-            dbg!(&species);
-            assert!(!species.spawn_conditions().is_empty());
+            assert!(SPECIES_SPAWN_CONDITIONS.iter().any(|(s, _)| *s == species));
         }
     }
 }

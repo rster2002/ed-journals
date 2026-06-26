@@ -8,7 +8,10 @@ pub use models::atmosphere_type::AtmosphereType;
 pub use models::body_type::BodyType;
 pub use models::galactic_distance::GalacticDistance;
 pub use models::gravity::Gravity;
+pub use models::gravity::G_CONSTANT;
 pub use models::local_distance::LocalDistance;
+pub use models::local_distance::LS_IN_M;
+pub use models::local_distance::LS_IN_AU;
 pub use models::nebula::Nebula;
 pub use models::orbit_info::OrbitInfo;
 pub use models::planet_class::PlanetClass;
@@ -27,3 +30,4 @@ pub use models::volcanism_type::VolcanismType;
 
 mod functions;
 mod models;
+mod r#static;

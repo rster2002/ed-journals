@@ -75,7 +75,7 @@ pub enum CodexEntryEventCategory {
 
     /// Includes entries related to guardians.
     #[serde(rename = "$Codex_Category_Civilisations;")]
-    Civilisations,
+    Civilizations,
 
     /// Unknown codex category.
     #[cfg(feature = "allow-unknown")]
