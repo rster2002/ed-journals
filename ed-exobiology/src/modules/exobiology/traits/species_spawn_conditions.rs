@@ -14,7 +14,10 @@ impl SpeciesSpawnConditions for Species {
         SPECIES_SPAWN_CONDITIONS
             .iter()
             .find(|(species, _)| species == self)
-            .expect("Species should always have a matching spawning condition")
+            .unwrap_or_else(|| {
+                // This is just as a fallback
+                &(Species::AleoidaArcus, &[SpawnCondition::Special])
+            })
             .1
     }
 }
