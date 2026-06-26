@@ -75,12 +75,36 @@ impl ScanEventKind {
         matches!(self, ScanEventKind::Star(_))
     }
 
+    pub fn star(&self) -> Option<&ScanEventStar> {
+        if let ScanEventKind::Star(star) = self {
+            return Some(star);
+        }
+
+        None
+    }
+
     pub fn is_planet(&self) -> bool {
         matches!(self, ScanEventKind::Planet(_))
     }
 
+    pub fn planet(&self) -> Option<&ScanEventPlanet> {
+        if let ScanEventKind::Planet(planet) = self {
+            return Some(planet);
+        }
+
+        None
+    }
+
     pub fn is_belt_cluster(&self) -> bool {
         matches!(self, ScanEventKind::BeltCluster(_))
+    }
+
+    pub fn belt_cluster(&self) -> Option<&ScanEventBeltCluster> {
+        if let ScanEventKind::BeltCluster(cluster) = self {
+            return Some(cluster);
+        }
+
+        None
     }
 }
 

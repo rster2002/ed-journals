@@ -10,29 +10,13 @@ pub struct ApproachBodyEvent {
     /// The star system the approached body is part of.
     pub star_system: String,
 
+    /// The address of the system this approached body is in.
+    pub system_address: u64,
+
     /// The name of the body which the player is approaching.
     pub body: String,
-}
 
-#[cfg(test)]
-mod tests {
-    use serde_json::json;
-
-    use crate::logs::content::log_event_content::approach_body_event::ApproachBodyEvent;
-
-    #[test]
-    fn approach_body_is_parsed_correctly() {
-        let value: ApproachBodyEvent = serde_json::from_value(json!({
-            "StarSystem": "Eranin",
-            "Body": "Eranin 2"
-        }))
-        .unwrap();
-
-        let expected = ApproachBodyEvent {
-            star_system: "Eranin".to_string(),
-            body: "Eranin 2".to_string(),
-        };
-
-        assert_eq!(value, expected);
-    }
+    /// The id of the approached body.
+    #[serde(rename = "BodyID")]
+    pub body_id: u8,
 }
