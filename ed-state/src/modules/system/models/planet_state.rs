@@ -1,4 +1,5 @@
 use crate::modules::state::{EventSink, SinkResult};
+use crate::system::models::planet_organic::{PlanetOrganic, PlanetOrganicScan};
 use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 use crate::system::models::signal_counts::SignalCounts;
 use ed_journals::exobiology::{Genus, Species};
@@ -10,8 +11,9 @@ use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
+use ed_journals::status::{PlanetStatus, Status};
 use ed_journals::trading::Commodity;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 cfg_select! {
     feature = "exobiology" => {
@@ -33,12 +35,17 @@ pub struct PlanetState {
     /// List of genuses found by SAA, if any.
     pub saa_genuses: Option<HashSet<Genus>>,
 
-    /// Species that have been scanned on the planet.
-    pub scanned_species: HashSet<Species>,
-
-    /// Species that have been fully logged on the planet.
-    pub logged_species: HashSet<Species>,
-
+    /// Organics that were scanned on this planet.
+    pub organics: HashMap<Genus, PlanetOrganic>,
+    //
+    // // /// Species that have been scanned on the planet.
+    // // pub scanned_species: HashSet<Species>,
+    // //
+    // // /// Species that have been fully logged on the planet.
+    // // pub logged_species: HashSet<Species>,
+    //
+    // /// The actual locations if the different organics that were scanned on the planet.
+    // pub organic_locations: Vec<PlanetOrganic>,
     /// List of touchdowns on the planet.
     pub touchdowns: Vec<TouchdownEvent>,
 
@@ -47,6 +54,9 @@ pub struct PlanetState {
 
     /// Commodity signals that have been found on the planet.
     pub commodity_signals: Vec<Commodity>,
+
+    /// The status of the player on the current planet.
+    pub planet_status: Option<PlanetStatus>,
 
     /// Information about the planet needed for exobiology predictions.
     #[cfg(feature = "exobiology")]
@@ -121,7 +131,13 @@ impl PlanetState {
                 let will_spawn: WillSpawn = match true {
                     // If the species has been scanned, will_spawn will be set to yes to keep it
                     // from switching from a maybe to a no.
-                    _ if self.scanned_species.contains(&species) => WillSpawn::Yes,
+                    _ if self
+                        .organics
+                        .get(&species.genus())
+                        .is_some_and(|organic| organic.species == species) =>
+                    {
+                        WillSpawn::Yes
+                    }
 
                     // If the possible number of species is the same as the number of biological
                     // signals it counts all of them as yes.
@@ -135,13 +151,7 @@ impl PlanetState {
                     // If the current species has not been scanned yet (checked by the first if
                     // statement), but there already is another species of the same genus, then
                     // this species does not have a chance to spawn.
-                    _ if self
-                        .scanned_species
-                        .iter()
-                        .any(|scanned| scanned.genus() == species.genus()) =>
-                    {
-                        WillSpawn::No
-                    }
+                    _ if self.organics.contains_key(&species.genus()) => WillSpawn::No,
 
                     // If the planet has not been scanned yet and the genuses are still unknown, it
                     // will count any species that hasn't already been flagged as a maybe.
@@ -165,9 +175,17 @@ impl PlanetState {
 
                 PlanetSpeciesEntry {
                     will_spawn,
-                    scanned: self.scanned_species.contains(&species),
-                    logged: self.logged_species.contains(&species),
-                    specie: species,
+
+                    confirmed: self
+                        .organics
+                        .get(&species.genus())
+                        .is_some_and(|organic| organic.species == species),
+
+                    completed: self.organics.get(&species.genus()).is_some_and(|organic| {
+                        organic.species == species && organic.is_completed()
+                    }),
+
+                    species,
                 }
             })
             .collect()
@@ -181,8 +199,8 @@ impl PlanetState {
 
         for entry in self.get_planet_species(target_system) {
             match entry.will_spawn {
-                WillSpawn::Yes => known_values.push(entry.specie.base_value()),
-                WillSpawn::Maybe => maybe_values.push(entry.specie.base_value()),
+                WillSpawn::Yes => known_values.push(entry.species.base_value()),
+                WillSpawn::Maybe => maybe_values.push(entry.species.base_value()),
                 WillSpawn::No => {}
             }
         }
@@ -312,21 +330,59 @@ impl EventSink for PlanetState {
                 result.accept();
             }
             LogEventContent::ScanOrganic(scanned_organic) => {
-                self.scanned_species.insert(scanned_organic.species.clone());
+                let entry = self
+                    .organics
+                    .entry(scanned_organic.genus.clone())
+                    .or_insert_with(|| PlanetOrganic::from(scanned_organic.species.clone()));
 
-                if let ScanOrganicEventScanType::Log = scanned_organic.scan_type {
-                    self.logged_species.insert(scanned_organic.species.clone());
+                entry.variant = entry.variant.clone().or(scanned_organic.variant.clone());
+
+                let location = self
+                    .planet_status
+                    .as_ref()
+                    .map(|status| (status.latitude, status.longitude));
+
+                match scanned_organic.scan_type {
+                    ScanOrganicEventScanType::Log => {
+                        entry.first_scan = Some(PlanetOrganicScan {
+                            scan: scanned_organic.clone(),
+                            location,
+                        });
+                    }
+                    ScanOrganicEventScanType::Sample => {
+                        entry.second_scan = Some(PlanetOrganicScan {
+                            scan: scanned_organic.clone(),
+                            location,
+                        });
+                    }
+                    ScanOrganicEventScanType::Analyse => {
+                        entry.third_scan_scan = Some(PlanetOrganicScan {
+                            scan: scanned_organic.clone(),
+                            location,
+                        });
+                    }
                 }
 
-                result.accept();
+                if let Some(status) = &self.planet_status {
+                    entry
+                        .scan_locations
+                        .push((status.latitude, status.longitude));
+                }
             }
             LogEventContent::CodexEntry(codex_entry) => match &codex_entry.name {
                 CodexEntry::Species(species) => {
-                    self.scanned_species.insert(species.clone());
+                    self.organics.entry(species.genus())
+                        .or_insert_with(|| PlanetOrganic::from(species.clone()));
+
                     result.accept();
                 }
                 CodexEntry::Variant(variant) => {
-                    self.scanned_species.insert(variant.species.clone());
+                    let entry = self.organics.entry(variant.genus())
+                        .or_insert_with(|| PlanetOrganic::from(variant.species.clone()));
+
+                    // Set here to handle already existing entry for the species.
+                    entry.variant = Some(variant.clone());
+
                     result.accept();
                 }
                 _ => {}
@@ -335,5 +391,14 @@ impl EventSink for PlanetState {
         }
 
         result
+    }
+
+    fn sink_status(&mut self, status: &Status) -> SinkResult {
+        self.planet_status = status
+            .contents
+            .as_ref()
+            .and_then(|status| status.planet_status.clone());
+
+        SinkResult::from(self.planet_status.is_some())
     }
 }

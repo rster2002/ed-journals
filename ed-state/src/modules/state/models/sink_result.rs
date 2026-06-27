@@ -27,4 +27,19 @@ impl SinkResult {
     pub fn accept(&mut self) {
         *self = SinkResult::Accepted;
     }
+
+    pub fn accept_if(&mut self, condition: bool) {
+        if condition {
+            self.accept();
+        }
+    }
+}
+
+impl From<bool> for SinkResult {
+    fn from(value: bool) -> Self {
+        match value {
+            true => SinkResult::Accepted,
+            false => SinkResult::Ignored,
+        }
+    }
 }

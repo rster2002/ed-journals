@@ -7,6 +7,7 @@ use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::partials::PartialSystemInfo;
 use std::collections::HashMap;
+use ed_journals::status::{PlanetStatus, Status};
 
 #[derive(Debug, Default, Clone)]
 pub struct SystemState {
@@ -39,6 +40,9 @@ pub struct SystemState {
 
     /// Whether all bodies have been discovered in the system.
     pub all_found: bool,
+
+    /// The body the commander is close to.
+    pub near_body: Option<u8>,
 
     /// List of station signals.
     pub station_signals: Vec<FSSSignalDiscoveredEvent>,
@@ -80,6 +84,11 @@ impl SystemState {
         }
 
         result
+    }
+
+    pub fn near_body_state(&self) -> Option<&PlanetState> {
+        self.near_body
+            .and_then(|id| self.planet_state.get(&id))
     }
 }
 
@@ -132,6 +141,14 @@ impl EventSink for SystemState {
             }
             LogEventContent::FSSSignalDiscovered(event) if event.is_station => {
                 self.station_signals.push(event.clone());
+                result.accept();
+            }
+            LogEventContent::ApproachBody(approach_body) => {
+                self.near_body = Some(approach_body.body_id);
+                result.accept();
+            }
+            LogEventContent::LeaveBody(_) => {
+                self.near_body = None;
                 result.accept();
             }
             LogEventContent::Scan(event) => {
@@ -191,5 +208,13 @@ impl EventSink for SystemState {
         }
 
         result
+    }
+
+    fn sink_status(&mut self, status: &Status) -> SinkResult {
+        // Only pass new statuses to the currently near planet.
+        self.near_body
+            .and_then(|body_id| self.planet_state.get_mut(&body_id))
+            .map(|planet| planet.sink_status(status))
+            .unwrap_or(SinkResult::Ignored)
     }
 }

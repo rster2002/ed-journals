@@ -31,7 +31,13 @@ pub struct ScanOrganicEvent {
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Ord, PartialOrd, Eq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanOrganicEventScanType {
-    Sample,
-    Analyse,
+    /// Fired only for the first sample in the sequence.
     Log,
+
+    /// Fired for the second **and** the last sample in the sequence.
+    Sample,
+
+    /// Fired only for the last sample int the sequence **after** an event with the `Sample`
+    /// variant.
+    Analyse,
 }

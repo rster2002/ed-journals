@@ -4,3 +4,4 @@ pub mod system_state;
 
 #[cfg(feature = "exobiology")]
 pub mod planet_species_entry;
+pub mod planet_organic;

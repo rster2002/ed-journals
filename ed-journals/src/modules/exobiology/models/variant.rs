@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 use crate::deserialize_in_order_impl;
+use crate::exobiology::Genus;
 use crate::exobiology::models::species::SpeciesError;
 use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
@@ -24,6 +25,10 @@ impl Variant {
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     pub fn is_unknown(&self) -> bool {
         matches!(self.species, Species::Unknown(_)) || matches!(self.color, VariantColor::Unknown)
+    }
+
+    pub fn genus(&self) -> Genus {
+        self.species.genus()
     }
 }
 
