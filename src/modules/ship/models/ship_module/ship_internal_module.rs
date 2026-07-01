@@ -334,7 +334,7 @@ mod tests {
                     size: 5,
                     class: ModuleClass::A,
                     free: false,
-                }
+                },
             ),
             (
                 "explorer_nx_armour_grade1_default",
@@ -346,8 +346,8 @@ mod tests {
                     size: 1,
                     class: ModuleClass::C,
                     free: false,
-                }
-            )
+                },
+            ),
         ];
 
         for (input, expected) in test_cases {

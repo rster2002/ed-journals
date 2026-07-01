@@ -50,11 +50,11 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::{LogDir, LogEvent};
+    use crate::logs::blocking::{LogFileReader, RawLogFileReader};
     use crate::logs::LogEventContent;
+    use crate::logs::{LogDir, LogEvent};
     use std::env::current_dir;
     use std::path::PathBuf;
-    use crate::logs::blocking::{LogFileReader, RawLogFileReader};
 
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
@@ -105,7 +105,10 @@ mod tests {
         ];
 
         for test_file in test_files {
-            let path = current_dir().unwrap().join("test-files").join("journals")
+            let path = current_dir()
+                .unwrap()
+                .join("test-files")
+                .join("journals")
                 .join(test_file);
 
             let reader = RawLogFileReader::open(&path).unwrap();

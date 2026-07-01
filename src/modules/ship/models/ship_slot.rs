@@ -327,7 +327,9 @@ impl Display for ShipSlot {
             ShipSlotKind::CargoHatch => write!(f, "Cargo Hatch"),
             ShipSlotKind::UtilityMount => write!(f, "Utility Mount"),
             ShipSlotKind::Hardpoint(size) => write!(f, "{} Hardpoint", size.size_str()),
-            ShipSlotKind::MiningHardPoint(size) => write!(f, "{} Mining Hardpoint", size.size_str()),
+            ShipSlotKind::MiningHardPoint(size) => {
+                write!(f, "{} Mining Hardpoint", size.size_str())
+            }
             ShipSlotKind::OptionalInternal(size) => write!(f, "Size {size} Optional Internal"),
             ShipSlotKind::Military => write!(f, "Military Slot"),
             ShipSlotKind::LimpetController => write!(f, "Limpet Controller Slot"),

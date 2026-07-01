@@ -126,10 +126,8 @@ impl StateResolver<LogEvent> for PlanetStateResolver {
 
                 self.signal_counts = Some(signal_counts);
             }
-            LogEventContent::Touchdown(touchdown) => {
-                if touchdown.on_planet {
-                    self.touchdowns.push(touchdown.clone());
-                }
+            LogEventContent::Touchdown(touchdown) if touchdown.on_planet => {
+                self.touchdowns.push(touchdown.clone());
             }
             LogEventContent::ScanOrganic(scanned_organic) => {
                 self.scanned_species.insert(scanned_organic.species.clone());

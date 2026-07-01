@@ -127,13 +127,11 @@ impl StateResolver<LogEvent> for LogStateResolver {
                 }
             },
 
-            LogEventContent::CarrierStats(stats) => {
-                if self.carrier_state.is_none() {
-                    let mut state: CarrierState = stats.clone().into();
-                    state.feed(input);
+            LogEventContent::CarrierStats(stats) if self.carrier_state.is_none() => {
+                let mut state: CarrierState = stats.clone().into();
+                state.feed(input);
 
-                    self.carrier_state = Some(state);
-                }
+                self.carrier_state = Some(state);
             }
 
             LogEventContent::Loadout(event) => {
