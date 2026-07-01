@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+use crate::ship::SRVType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
 pub enum FighterType {
     #[serde(rename = "independent_fighter")]
     Taipan,
@@ -23,6 +25,11 @@ pub enum FighterType {
 
     #[serde(rename = "lander01")]
     Nomad,
+
+    #[cfg(feature = "allow-unknown")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+    #[serde(untagged)]
+    Unknown(String),
 }
 
 impl Display for FighterType {
@@ -38,6 +45,10 @@ impl Display for FighterType {
                 FighterType::GuardianJavelinXG8 => "Guardian Javelin XG8",
                 FighterType::GuardianLanceXG9 => "Guardian Lance XG9",
                 FighterType::Nomad => "Nomad",
+
+                #[cfg(feature = "allow-unknown")]
+                #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
+                SRVType::Unknown(unknown) => unknown,
             }
         )
     }
