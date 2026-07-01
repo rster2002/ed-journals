@@ -91,7 +91,6 @@ impl FromStr for ShipInternalModule {
     type Err = ShipInternalModuleError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        dbg!(s);
         let armor_result = ArmorModule::from_str(s);
 
         match armor_result {
