@@ -133,4 +133,20 @@ mod tests {
         assert!(status.kind.ship_status().is_some());
         assert!(status.kind.ship_status().unwrap().destination.is_some());
     }
+
+    #[test]
+    fn nomad_status_file_is_parsed_correctly() {
+        let file = test_root().join("json").join("StatusCombat.json");
+
+        let string_contents = read_to_string(file).unwrap();
+
+        let status = serde_json::from_str::<Status>(&string_contents);
+
+        dbg!(&status);
+        let status = status.unwrap().contents.unwrap();
+
+        assert!(!status.flags.landed());
+        assert!(status.kind.is_ship_status());
+        assert!(status.kind.ship_status().is_some());
+    }
 }

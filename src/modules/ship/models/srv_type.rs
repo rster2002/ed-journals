@@ -10,6 +10,9 @@ pub enum SRVType {
 
     #[serde(rename = "combat_multicrew_srv_01")]
     Scorpion,
+
+    #[serde(rename = "lander01")]
+    Nomad,
 }
 
 impl Display for SRVType {
@@ -20,6 +23,7 @@ impl Display for SRVType {
             match self {
                 SRVType::Scarab => "Scarab",
                 SRVType::Scorpion => "Scorpion",
+                SRVType::Nomad => "Nomad",
             }
         )
     }

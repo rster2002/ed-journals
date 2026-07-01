@@ -160,6 +160,9 @@ pub enum InternalModule {
     #[serde(rename = "fighterbay")]
     FighterHangar,
 
+    #[serde(rename = "fighterbaymk2")]
+    MkIIVesselHangar,
+
     #[serde(rename = "passengercabin")]
     PassengerCabin,
 
@@ -278,6 +281,7 @@ impl InternalModule {
             (InternalModule::PlanetApproachSuite, _, _) => ModuleClass::I,
             (InternalModule::AntiCorrosionCargoRack, _, Some(ModuleClass::D)) => ModuleClass::F,
             (InternalModule::FighterHangar, _, _) => ModuleClass::D,
+            (InternalModule::MkIIVesselHangar, _, _) => ModuleClass::D,
             (InternalModule::GuardianFSDBooster, _, _) => ModuleClass::H,
             (InternalModule::GuardianHybridPowerDistributor, _, _) => ModuleClass::A,
             (InternalModule::GuardianHybridPowerPlant, _, _) => ModuleClass::A,
@@ -304,6 +308,7 @@ impl Display for InternalModule {
                 InternalModule::DetailedSurfaceScanner => "Detailed Surface Scanner",
                 InternalModule::FSDInterdictor => "FSD Interdictor",
                 InternalModule::FighterHangar => "Fighter Hangar",
+                InternalModule::MkIIVesselHangar => "Mk II Vessel Hangar",
                 InternalModule::FrameShiftDrive => "Frame Shift Drive",
                 InternalModule::FuelScoop => "Fuel Scoop",
                 InternalModule::FuelTank => "Fuel Tank",

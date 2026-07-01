@@ -20,6 +20,9 @@ pub enum FighterType {
 
     #[serde(rename = "gdn_hybrid_fighter_v3")]
     GuardianLanceXG9,
+
+    #[serde(rename = "lander01")]
+    Nomad,
 }
 
 impl Display for FighterType {
@@ -34,6 +37,7 @@ impl Display for FighterType {
                 FighterType::GuardianTridentXG7 => "Guardian Trident XG7",
                 FighterType::GuardianJavelinXG8 => "Guardian Javelin XG8",
                 FighterType::GuardianLanceXG9 => "Guardian Lance XG9",
+                FighterType::Nomad => "Nomad",
             }
         )
     }

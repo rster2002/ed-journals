@@ -22,15 +22,43 @@ pub struct ShipSlot {
 // TODO kinda want to refactor this to use untagged variants
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ShipSlotKind {
+    /// Special "slot" reserved for the ship's cockpit.
     ShipCockpit,
+
+    /// Special "slot" reserved for the cargo hatch.
     CargoHatch,
+
+    /// Slot for utility modules.
     UtilityMount,
+
+    /// General non-restricted hardpoint.
     Hardpoint(HardpointSize),
+
+    /// Hardpoint reserved for mining hardware.
+    MiningHardPoint(HardpointSize),
+
+    /// Any non-restricted optional internal slot with the size of the slot.
     OptionalInternal(u8),
+
+    /// A slot reserved for a limpet controller as seen on the Type 11.
+    LimpetController,
+
+    /// A slot reserved for a fighter bay.
+    FighterBay,
+
+    /// Optional internal slot reserved for military modules.
     Military,
+
+    /// Core internal slot for the different core modules.
     CoreInternal(CoreSlot),
+
+    /// Special "slot" reserved for the data link scanner.
     DataLinkScanner,
+
+    /// Special "slot" reserved for the codex scanner.
     CodexScanner,
+
+    /// Special "slot" reserved for the discovery scanner.
     DiscoveryScanner,
 
     // Cosmetic
@@ -68,8 +96,12 @@ lazy_static! {
     static ref UTILITY_HARDPOINT_REGEX: Regex = Regex::new(r#"^TinyHardpoint(\d+)$"#).unwrap();
     static ref HARDPOINT_REGEX: Regex =
         Regex::new(r#"^(Small|Medium|Large|Huge)Hardpoint(\d+)$"#).unwrap();
+    static ref MINING_HARDPOINT_REGEX: Regex =
+        Regex::new(r#"^(Small|Medium|Large|Huge)MiningHardpoint(\d+)$"#).unwrap();
     static ref OPTIONAL_INTERNAL_REGEX: Regex = Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap();
     static ref MILITARY_REGEX: Regex = Regex::new(r#"^Military(\d+)$"#).unwrap();
+    static ref LIMPET_CONTROLLER_REGEX: Regex = Regex::new(r#"^LimpetController(\d+)$"#).unwrap();
+    static ref FIGHTER_BAY_REGEX: Regex = Regex::new(r#"^FighterBay(\d+)$"#).unwrap();
     static ref DECAL_REGEX: Regex = Regex::new(r#"^Decal(\d+)$"#).unwrap();
     static ref NAMEPLATE_REGEX: Regex = Regex::new(r#"^ShipName(\d+)$"#).unwrap();
     static ref ID_PLATE_REGEX: Regex = Regex::new(r#"^ShipID(\d+)$"#).unwrap();
@@ -136,6 +168,26 @@ impl FromStr for ShipSlot {
             });
         }
 
+        if let Some(captures) = MINING_HARDPOINT_REGEX.captures(s) {
+            let size = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()?;
+
+            let slot_nr = captures
+                .get(2)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::MiningHardPoint(size),
+            });
+        }
+
         if let Some(captures) = OPTIONAL_INTERNAL_REGEX.captures(s) {
             let slot_nr = captures
                 .get(1)
@@ -168,6 +220,34 @@ impl FromStr for ShipSlot {
             return Ok(ShipSlot {
                 slot_nr,
                 kind: ShipSlotKind::Military,
+            });
+        }
+
+        if let Some(captures) = LIMPET_CONTROLLER_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::LimpetController,
+            });
+        }
+
+        if let Some(captures) = FIGHTER_BAY_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::FighterBay,
             });
         }
 
@@ -247,8 +327,11 @@ impl Display for ShipSlot {
             ShipSlotKind::CargoHatch => write!(f, "Cargo Hatch"),
             ShipSlotKind::UtilityMount => write!(f, "Utility Mount"),
             ShipSlotKind::Hardpoint(size) => write!(f, "{} Hardpoint", size.size_str()),
+            ShipSlotKind::MiningHardPoint(size) => write!(f, "{} Mining Hardpoint", size.size_str()),
             ShipSlotKind::OptionalInternal(size) => write!(f, "Size {size} Optional Internal"),
             ShipSlotKind::Military => write!(f, "Military Slot"),
+            ShipSlotKind::LimpetController => write!(f, "Limpet Controller Slot"),
+            ShipSlotKind::FighterBay => write!(f, "Fighter Bay Slot"),
             ShipSlotKind::CoreInternal(core_slot) => write!(f, "{core_slot} Core Internal"),
             ShipSlotKind::DataLinkScanner => write!(f, "Data Link Scanner"),
             ShipSlotKind::CodexScanner => write!(f, "Codex Scanner"),

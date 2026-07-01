@@ -50,10 +50,11 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::logs::LogDir;
+    use crate::logs::{LogDir, LogEvent};
     use crate::logs::LogEventContent;
     use std::env::current_dir;
     use std::path::PathBuf;
+    use crate::logs::blocking::{LogFileReader, RawLogFileReader};
 
     pub fn test_root() -> PathBuf {
         PathBuf::from("./test-files")
@@ -90,5 +91,36 @@ mod tests {
         dbg!(entry_count);
 
         // assert_eq!(logs.len(), file_header_count);
+    }
+
+    #[test]
+    fn specific_test_files() {
+        let test_files = vec![
+            "Journal.2026-06-26T160414.01.log",
+            "Journal.2026-06-27T100101.01.log",
+            "Journal.2026-06-27T193336.01.log",
+            "Journal.2026-06-28T115632.01.log",
+            "Journal.2026-07-01T181306.01.log",
+            "Journal.2026-07-01T192537.01.log",
+        ];
+
+        for test_file in test_files {
+            let path = current_dir().unwrap().join("test-files").join("journals")
+                .join(test_file);
+
+            let reader = RawLogFileReader::open(&path).unwrap();
+
+            for entry in reader {
+                let entry = entry.unwrap();
+
+                let event = serde_json::from_value::<LogEvent>(entry.clone());
+
+                if event.is_err() {
+                    dbg!(entry);
+                }
+
+                event.unwrap();
+            }
+        }
     }
 }
