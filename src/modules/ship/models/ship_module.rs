@@ -231,7 +231,10 @@ mod tests {
     use serde_json::Value;
 
     use crate::modules::ship::ShipModule;
-    use crate::ship::{ArmorGrade, ArmorModule, HardpointMounting, HardpointSize, InternalModule, ModuleClass, ShipInternalModule, ShipType};
+    use crate::ship::{
+        ArmorGrade, ArmorModule, HardpointMounting, HardpointSize, InternalModule, ModuleClass,
+        ShipInternalModule, ShipType,
+    };
 
     #[test]
     fn modules_are_parsed_correctly() {
@@ -256,20 +259,18 @@ mod tests {
 
     #[test]
     fn specific_ship_module_test_cases_are_parsed_correctly() {
-        let test_cases = [
-            (
-                "$federation_corvette_armour_grade1_name;",
-                ShipModule::Internal(ShipInternalModule {
-                    module: InternalModule::Armor(ArmorModule {
-                        ship: ShipType::FederalCorvette,
-                        grade: ArmorGrade::LightweightAlloy,
-                    }),
-                    size: 1,
-                    class: ModuleClass::C,
-                    free: false,
-                })
-            )
-        ];
+        let test_cases = [(
+            "$federation_corvette_armour_grade1_name;",
+            ShipModule::Internal(ShipInternalModule {
+                module: InternalModule::Armor(ArmorModule {
+                    ship: ShipType::FederalCorvette,
+                    grade: ArmorGrade::LightweightAlloy,
+                }),
+                size: 1,
+                class: ModuleClass::C,
+                free: false,
+            }),
+        )];
 
         for (input, expected) in test_cases {
             let result = serde_json::from_value::<ShipModule>(Value::String(input.to_string()));

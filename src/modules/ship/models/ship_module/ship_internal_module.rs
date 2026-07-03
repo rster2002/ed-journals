@@ -358,7 +358,7 @@ mod tests {
                     class: ModuleClass::C,
                     free: false,
                 },
-            )
+            ),
         ];
 
         for (input, expected) in test_cases {

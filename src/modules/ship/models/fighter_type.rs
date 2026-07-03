@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-use crate::ship::SRVType;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
