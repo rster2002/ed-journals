@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[cfg_attr(not(feature = "allow-unknown"), non_exhaustive)]
@@ -29,6 +31,21 @@ pub enum FighterType {
     #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
     #[serde(untagged)]
     Unknown(String),
+}
+
+impl FighterType {
+    #[cfg(feature = "allow-unknown")]
+    pub fn is_unknown(&self) -> bool {
+        matches!(self, FighterType::Unknown(_))
+    }
+}
+
+impl FromStr for FighterType {
+    type Err = serde_json::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        serde_json::from_value(Value::String(s.to_string()))
+    }
 }
 
 impl Display for FighterType {
