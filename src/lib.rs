@@ -75,12 +75,19 @@ mod tests {
 
         for journal in &logs {
             let mut found_file_header = false;
-            let reader = journal.create_blocking_reader().unwrap();
+            let reader = journal.create_raw_blocking_reader().unwrap();
 
             for entry in reader {
                 entry_count += 1;
 
-                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
+                let entry = entry.unwrap();
+                let parsed = serde_json::from_value::<LogEvent>(entry.clone());
+
+                if parsed.is_err() {
+                    dbg!(entry);
+                }
+
+                if let LogEventContent::FileHeader(_) = parsed.unwrap().content {
                     found_file_header = true;
                     file_header_count += 1;
                 }

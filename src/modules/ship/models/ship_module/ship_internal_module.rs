@@ -347,6 +347,18 @@ mod tests {
                     free: false,
                 },
             ),
+            (
+                "$federation_corvette_armour_grade1_name;",
+                ShipInternalModule {
+                    module: InternalModule::Armor(ArmorModule {
+                        ship: ShipType::FederalCorvette,
+                        grade: ArmorGrade::LightweightAlloy,
+                    }),
+                    size: 1,
+                    class: ModuleClass::C,
+                    free: false,
+                },
+            )
         ];
 
         for (input, expected) in test_cases {
