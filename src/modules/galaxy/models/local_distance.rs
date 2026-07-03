@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 
 /// Model for working with local (system) distances. Expects the value to be in LS.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, PartialOrd)]
 pub struct LocalDistance(pub f32);
 
 impl LocalDistance {
