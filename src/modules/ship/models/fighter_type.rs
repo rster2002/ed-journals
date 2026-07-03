@@ -47,7 +47,7 @@ impl Display for FighterType {
 
                 #[cfg(feature = "allow-unknown")]
                 #[cfg_attr(docsrs, doc(cfg(feature = "allow-unknown")))]
-                SRVType::Unknown(unknown) => unknown,
+                FighterType::Unknown(unknown) => unknown,
             }
         )
     }
