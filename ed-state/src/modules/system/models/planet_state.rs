@@ -5,7 +5,7 @@ use ed_journals::exobiology::Genus;
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use ed_journals::logs::scan_event::ScanEvent;
+use ed_journals::logs::scan_event::{ScanEvent};
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
@@ -16,6 +16,9 @@ use std::collections::{HashMap, HashSet};
 cfg_select! {
     feature = "exobiology" => {
         use ed_exobiology::{SpawnSource, TargetSystem, TargetPlanet};
+        use ed_journals::galaxy::LocalDistance;
+        use ed_journals::logs::scan_event::ScanEventKind;
+        use crate::system::{PlanetSpeciesEntry, WillSpawn};
     }
     _ => {}
 }
@@ -213,7 +216,6 @@ impl PlanetState {
         maybe_values.sort();
 
         let known_total: u64 = maybe_values.iter().sum();
-
         let maybe_total: u64 = maybe_values.iter().take(remaining_unknowns).sum();
 
         known_total + maybe_total
