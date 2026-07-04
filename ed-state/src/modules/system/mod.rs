@@ -11,4 +11,5 @@ cfg_select! {
         pub use models::planet_species_entry::PlanetSpeciesEntry;
         pub use models::planet_species_entry::WillSpawn;
     }
+    _ => {}
 }

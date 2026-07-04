@@ -1,13 +1,11 @@
 use crate::modules::state::{EventSink, SinkResult};
 use crate::system::models::planet_organic::{PlanetOrganic, PlanetOrganicScan};
-use crate::system::models::planet_species_entry::{PlanetSpeciesEntry, WillSpawn};
 use crate::system::models::signal_counts::SignalCounts;
-use ed_journals::exobiology::{Genus, Species};
+use ed_journals::exobiology::Genus;
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
-use ed_journals::galaxy::LocalDistance;
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
+use ed_journals::logs::scan_event::ScanEvent;
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
@@ -19,6 +17,7 @@ cfg_select! {
     feature = "exobiology" => {
         use ed_exobiology::{SpawnSource, TargetSystem, TargetPlanet};
     }
+    _ => {}
 }
 
 #[derive(Debug, Default, Clone)]

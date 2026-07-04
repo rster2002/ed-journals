@@ -28,7 +28,7 @@ pub enum AtmosphereType {
     SulfurDioxide,
     MetallicVapour,
 
-    #[cfg(not(feature = "strict"))]
+    #[cfg(feature = "allow-unknown")]
     Unknown(String),
 }
 
@@ -71,10 +71,10 @@ impl FromStr for AtmosphereType {
             }
             "metallic vapour" | "metallicvapour" => AtmosphereType::MetallicVapour,
 
-            #[cfg(feature = "strict")]
+            #[cfg(not(feature = "allow-unknown"))]
             _ => return Err(AtmosphereTypeError::UnknownAtmosphereType(s.to_string())),
 
-            #[cfg(not(feature = "strict"))]
+            #[cfg(feature = "allow-unknown")]
             _ => AtmosphereType::Unknown(s.to_string()),
         })
     }
