@@ -158,7 +158,7 @@ impl FromStr for CodexEntry {
             }
         }
 
-        Err(CodexEntryError::UnknownEntry(s.to_string()))
+        Ok(CodexEntry::Unknown(s.to_string()))
     }
 }
 
@@ -188,7 +188,7 @@ impl Display for CodexEntry {
 
 #[cfg(test)]
 mod tests {
-    use crate::exploration::CodexEntry;
+    use crate::exploration::{CodexEntry, CodexEntryError};
     use serde_json::Value;
 
     #[test]
@@ -209,5 +209,19 @@ mod tests {
 
             assert!(result.is_ok());
         }
+    }
+
+    #[cfg(not(feature = "allow-unknown"))]
+    #[test]
+    fn unknown_value_returns_error() {
+        let result = serde_json::from_value::<CodexEntry>(Value::String("yeah no".to_string()));
+        assert!(result.is_err());
+    }
+
+    #[cfg(feature = "allow-unknown")]
+    #[test]
+    fn unknown_value_returns_unknown_variant() {
+        let result = serde_json::from_value::<CodexEntry>(Value::String("yeah no".to_string()));
+        assert_eq!(result.unwrap(), CodexEntry::Unknown("yeah no".to_string()));
     }
 }

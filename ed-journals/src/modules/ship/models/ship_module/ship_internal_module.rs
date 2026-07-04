@@ -84,7 +84,7 @@ impl ShipInternalModule {
 
 lazy_static! {
     static ref SHIP_INTERNAL_MODULE_REGEX: Regex =
-        Regex::new(r#"^\$?[iI]nt_([a-zA-Z_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_[a-zA-Z_]+?)?(_name;)?$"#).unwrap();
+        Regex::new(r#"^\$?[iI]nt_([a-zA-Z0-9_]+?)(_[sS]ize(1|2|3|4|5|6|7|8))?(_[cC]lass(1|2|3|4|5))?(_[tT]iny)?(_[a-zA-Z_]+?)?(_name;)?$"#).unwrap();
 }
 
 impl FromStr for ShipInternalModule {
@@ -323,6 +323,39 @@ mod tests {
                     module: InternalModule::GravityOptimisedThrustersMkII,
                     size: 7,
                     class: ModuleClass::A,
+                    free: false,
+                },
+            ),
+            (
+                "$int_multidronecontrol_miningv2_size5_class5_name;",
+                ShipInternalModule {
+                    module: InternalModule::MiningMultiLimpetControllerMkII,
+                    size: 5,
+                    class: ModuleClass::A,
+                    free: false,
+                },
+            ),
+            (
+                "explorer_nx_armour_grade1_default",
+                ShipInternalModule {
+                    module: InternalModule::Armor(ArmorModule {
+                        ship: ShipType::CaspianExplorer,
+                        grade: ArmorGrade::LightweightAlloy,
+                    }),
+                    size: 1,
+                    class: ModuleClass::C,
+                    free: false,
+                },
+            ),
+            (
+                "$federation_corvette_armour_grade1_name;",
+                ShipInternalModule {
+                    module: InternalModule::Armor(ArmorModule {
+                        ship: ShipType::FederalCorvette,
+                        grade: ArmorGrade::LightweightAlloy,
+                    }),
+                    size: 1,
+                    class: ModuleClass::C,
                     free: false,
                 },
             ),

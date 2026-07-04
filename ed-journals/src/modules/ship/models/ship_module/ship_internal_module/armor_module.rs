@@ -42,7 +42,8 @@ pub enum ArmorModuleError {
 
 lazy_static! {
     static ref ARMOR_MODULE_REGEX: Regex =
-        Regex::new(r#"^\$?(\w+?)_[aA]rmour(_[gG]rade(\d+)|_(\w+))(_name;)?$"#).unwrap();
+        Regex::new(r#"^\$?(\w+?)_[aA]rmour(_[gG]rade(\d+)|_(\w+?))(_default)?(_name)?;?$"#)
+            .unwrap();
 }
 
 impl FromStr for ArmorModule {
@@ -142,6 +143,20 @@ mod tests {
                 ArmorModule {
                     ship: ShipType::SideWinder,
                     grade: ArmorGrade::MirroredSurfaceComposite,
+                },
+            ),
+            (
+                "$federation_corvette_armour_reactive_name;",
+                ArmorModule {
+                    ship: ShipType::FederalCorvette,
+                    grade: ArmorGrade::ReactiveSurfaceComposite,
+                },
+            ),
+            (
+                "$federation_corvette_armour_grade1_name;",
+                ArmorModule {
+                    ship: ShipType::FederalCorvette,
+                    grade: ArmorGrade::LightweightAlloy,
                 },
             ),
         ];

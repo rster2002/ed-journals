@@ -1,3 +1,4 @@
+use crate::from_str_deserialize_impl;
 use crate::modules::ship::models::ship_module::ship_bobble::ShipBobble;
 use crate::modules::ship::models::ship_module::ship_engine_color::ShipEngineColor;
 use crate::modules::ship::models::ship_module::ship_kit_module::ShipKitModule;
@@ -8,10 +9,10 @@ use crate::modules::ship::{
     ShipPaintJob, ShipVoicepack,
 };
 use crate::ship::FighterType;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
+use thiserror::Error;
 
 pub mod module_class;
 pub mod ship_bobble;
@@ -35,70 +36,41 @@ pub mod ship_weapon_color;
 /// where utility modules have a hardpoint size of [HardpointSize::Tiny].
 ///
 /// The same is true for core internals and optional internals which both use [ShipInternalModule].
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ShipModule {
     /// Special case for the cargo bay door.
-    #[serde(
-        alias = "modularcargobaydoor",
-        alias = "modularcargobaydoorfdl",
-        alias = "$modularcargobaydoor_name;",
-        alias = "$modularcargobaydoorfdl_name;"
-    )]
     CargoBayDoor,
 
     /// Spacial case for the data link scanner.
-    #[serde(alias = "hpt_shipdatalinkscanner")]
     DataLinkScanner,
 
     /// Spacial case for the codex scanner.
-    #[serde(alias = "int_codexscanner")]
     CodexScanner,
 
     /// Spacial case for the discovery scanner.
-    #[serde(alias = "int_stellarbodydiscoveryscanner_standard")]
     DiscoverScanner,
 
     /// Some fighter types show up as ship modules when unlocking them from technology brokers.
-    #[serde(untagged)]
     Fighter(FighterType),
 
     /// Any internal module, this includes core and optional modules.
-    #[serde(untagged)]
     Internal(ShipInternalModule),
 
     /// For external modules, both full-sized hardpoints and utility modules.
-    #[serde(untagged)]
     Hardpoint(ShipHardpointModule),
 
-    #[serde(untagged)]
+    /// Special module for a cockpit for a specific ship.
     Cockpit(ShipCockpitModule),
 
     // Cosmetic
-    #[serde(untagged)]
     PaintJob(ShipPaintJob),
-
-    #[serde(untagged)]
     Decal(ShipDecal),
-
-    #[serde(untagged)]
     VoicePack(ShipVoicepack),
-
-    #[serde(untagged)]
     Nameplate(ShipNameplate),
-
-    #[serde(untagged)]
     EngineColor(ShipEngineColor),
-
-    #[serde(untagged)]
     WeaponColor(ShipWeaponColor),
-
-    #[serde(untagged)]
     ShipKitModule(ShipKitModule),
-
-    #[serde(untagged)]
     Bobble(ShipBobble),
-
-    #[serde(untagged)]
     StringLights(ShipStringLights),
 
     #[cfg(feature = "allow-unknown")]
@@ -189,15 +161,159 @@ impl ShipModule {
                 | ShipModule::StringLights(_)
         )
     }
+
+    fn exact_match(s: &str) -> Option<ShipModule> {
+        Some(match s {
+            "modularcargobaydoor"
+            | "modularcargobaydoorfdl"
+            | "$modularcargobaydoor_name;"
+            | "$modularcargobaydoorfdl_name;" => ShipModule::CargoBayDoor,
+
+            "hpt_shipdatalinkscanner" => ShipModule::DataLinkScanner,
+            "int_codexscanner" => ShipModule::CodexScanner,
+            "int_stellarbodydiscoveryscanner_standard" => ShipModule::DiscoverScanner,
+
+            _ => return None,
+        })
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum ShipModuleError {
+    #[error("Unknown ship module: '{0}'")]
+    UnknownEntry(String),
 }
 
 impl FromStr for ShipModule {
-    type Err = serde_json::Error;
+    type Err = ShipModuleError;
 
+    // TODO this needs to be cleaner eventually
+    #[cfg(not(feature = "allow-unknown"))]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        serde_json::from_value(Value::String(s.to_string()))
+        if let Some(exact_match) = Self::exact_match(s) {
+            return Ok(exact_match);
+        }
+
+        if let Ok(fighter) = FighterType::from_str(s) {
+            return Ok(ShipModule::Fighter(fighter));
+        }
+
+        if let Ok(interal) = ShipInternalModule::from_str(s) {
+            return Ok(ShipModule::Internal(interal));
+        }
+
+        if let Ok(hardpoint) = ShipHardpointModule::from_str(s) {
+            return Ok(ShipModule::Hardpoint(hardpoint));
+        }
+
+        if let Ok(cockpit) = ShipCockpitModule::from_str(s) {
+            return Ok(ShipModule::Cockpit(cockpit));
+        }
+
+        if let Ok(paint_job) = ShipPaintJob::from_str(s) {
+            return Ok(ShipModule::PaintJob(paint_job));
+        }
+
+        if let Ok(decal_job) = ShipDecal::from_str(s) {
+            return Ok(ShipModule::Decal(decal_job));
+        }
+
+        if let Ok(voice_pack) = ShipVoicepack::from_str(s) {
+            return Ok(ShipModule::VoicePack(voice_pack));
+        }
+
+        if let Ok(nameplate) = ShipNameplate::from_str(s) {
+            return Ok(ShipModule::Nameplate(nameplate));
+        }
+
+        if let Ok(engine_color) = ShipEngineColor::from_str(s) {
+            return Ok(ShipModule::EngineColor(engine_color));
+        }
+
+        if let Ok(weapon_color) = ShipWeaponColor::from_str(s) {
+            return Ok(ShipModule::WeaponColor(weapon_color));
+        }
+
+        if let Ok(ship_kit_module) = ShipKitModule::from_str(s) {
+            return Ok(ShipModule::ShipKitModule(ship_kit_module));
+        }
+
+        if let Ok(bobble) = ShipBobble::from_str(s) {
+            return Ok(ShipModule::Bobble(bobble));
+        }
+
+        if let Ok(string_lights) = ShipStringLights::from_str(s) {
+            return Ok(ShipModule::StringLights(string_lights));
+        }
+
+        Err(ShipModuleError::UnknownEntry(s.to_string()))
+    }
+
+    #[cfg(feature = "allow-unknown")]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Some(exact_match) = Self::exact_match(s) {
+            return Ok(exact_match);
+        }
+
+        if let Ok(fighter) = FighterType::from_str(s) {
+            if !fighter.is_unknown() {
+                return Ok(ShipModule::Fighter(fighter));
+            }
+        }
+
+        if let Ok(internal) = ShipInternalModule::from_str(s) {
+            return Ok(ShipModule::Internal(internal));
+        }
+
+        if let Ok(hardpoint) = ShipHardpointModule::from_str(s) {
+            return Ok(ShipModule::Hardpoint(hardpoint));
+        }
+
+        if let Ok(cockpit) = ShipCockpitModule::from_str(s) {
+            return Ok(ShipModule::Cockpit(cockpit));
+        }
+
+        if let Ok(paint_job) = ShipPaintJob::from_str(s) {
+            return Ok(ShipModule::PaintJob(paint_job));
+        }
+
+        if let Ok(decal_job) = ShipDecal::from_str(s) {
+            return Ok(ShipModule::Decal(decal_job));
+        }
+
+        if let Ok(voice_pack) = ShipVoicepack::from_str(s) {
+            return Ok(ShipModule::VoicePack(voice_pack));
+        }
+
+        if let Ok(nameplate) = ShipNameplate::from_str(s) {
+            return Ok(ShipModule::Nameplate(nameplate));
+        }
+
+        if let Ok(engine_color) = ShipEngineColor::from_str(s) {
+            return Ok(ShipModule::EngineColor(engine_color));
+        }
+
+        if let Ok(weapon_color) = ShipWeaponColor::from_str(s) {
+            return Ok(ShipModule::WeaponColor(weapon_color));
+        }
+
+        if let Ok(ship_kit_module) = ShipKitModule::from_str(s) {
+            return Ok(ShipModule::ShipKitModule(ship_kit_module));
+        }
+
+        if let Ok(bobble) = ShipBobble::from_str(s) {
+            return Ok(ShipModule::Bobble(bobble));
+        }
+
+        if let Ok(string_lights) = ShipStringLights::from_str(s) {
+            return Ok(ShipModule::StringLights(string_lights));
+        }
+
+        Err(ShipModuleError::UnknownEntry(s.to_string()))
     }
 }
+
+from_str_deserialize_impl!(ShipModule);
 
 impl Display for ShipModule {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -231,7 +347,10 @@ mod tests {
     use serde_json::Value;
 
     use crate::modules::ship::ShipModule;
-    use crate::ship::{HardpointMounting, HardpointSize, ModuleClass};
+    use crate::ship::{
+        ArmorGrade, ArmorModule, HardpointMounting, HardpointSize, InternalModule, ModuleClass,
+        ShipInternalModule, ShipType,
+    };
 
     #[test]
     fn modules_are_parsed_correctly() {
@@ -252,6 +371,33 @@ mod tests {
         }
 
         assert!(count > 1000);
+    }
+
+    #[test]
+    fn specific_ship_module_test_cases_are_parsed_correctly() {
+        let test_cases = [(
+            "$federation_corvette_armour_grade1_name;",
+            ShipModule::Internal(ShipInternalModule {
+                module: InternalModule::Armor(ArmorModule {
+                    ship: ShipType::FederalCorvette,
+                    grade: ArmorGrade::LightweightAlloy,
+                }),
+                size: 1,
+                class: ModuleClass::C,
+                free: false,
+            }),
+        )];
+
+        for (input, expected) in test_cases {
+            let result = serde_json::from_value::<ShipModule>(Value::String(input.to_string()));
+
+            if result.is_err() {
+                dbg!(&input);
+                dbg!(&result);
+            }
+
+            assert_eq!(result.unwrap(), expected);
+        }
     }
 
     #[test]

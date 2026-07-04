@@ -18,6 +18,7 @@ use directories::UserDirs;
 /// * `$HOME/.local/share/Steam/steamapps/common/Elite Dangerous/Products/elite-dangerous-64/Logs/Saved Games/Frontier Developments/Elite Dangerous`
 /// * `$HOME/.local/share/Steam/steamapps/common/Proton 4.2/dist/share/default_pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`
 /// * `$HOME/.local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`
+/// * `$HOME/Games/Heroic/Prefixes/Elite Dangerous/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`
 pub fn auto_detect_journal_path() -> Option<PathBuf> {
     #[cfg(target_family = "windows")]
     {
@@ -43,6 +44,7 @@ pub fn auto_detect_journal_path() -> Option<PathBuf> {
             user_dir.home_dir().join(".local/share/Steam/steamapps/common/Elite Dangerous/Products/elite-dangerous-64/Logs/Saved Games/Frontier Developments/Elite Dangerous"),
             user_dir.home_dir().join(".local/share/Steam/steamapps/common/Proton 4.2/dist/share/default_pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous"),
             user_dir.home_dir().join(".local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous"),
+            user_dir.home_dir().join("Games/Heroic/Prefixes/Elite Dangerous/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous"),
         ]
             .into_iter()
             .find(|path| path.exists())
