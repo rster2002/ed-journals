@@ -215,7 +215,7 @@ impl PlanetState {
 
         maybe_values.sort();
 
-        let known_total: u64 = maybe_values.iter().sum();
+        let known_total: u64 = known_values.iter().sum();
         let maybe_total: u64 = maybe_values.iter().take(remaining_unknowns).sum();
 
         known_total + maybe_total
