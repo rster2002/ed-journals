@@ -12,7 +12,7 @@ include = ["/src", "/LICENSE", "readme.md"]
 [dependencies]
 ed-journals = { path = "../ed-journals", version = "0.13.0" }
 chrono = { version = "0.4.38", features = ["serde"] }
-ed-exobiology = { path = "../ed-exobiology", optional = true }
+ed-exobiology = { path = "../ed-exobiology", version = "0.1.0", optional = true }
 
 [features]
 default = []
