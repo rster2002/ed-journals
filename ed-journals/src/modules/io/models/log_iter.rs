@@ -1,0 +1,195 @@
+use crate::logs::LogEvent;
+use crate::modules::io::error::LogIOError;
+use serde::de::DeserializeOwned;
+use std::io::Read;
+use std::marker::PhantomData;
+
+/// Standard iterator for iterating over some [Read] and returning entries. By default, creating
+/// an iterator using [LogIter::new] will return [LogEvent]s and can use [LogIter::new_raw] to
+/// return raw [serde_json::Value]s. If you want to parse any other type, you can use the [From]
+/// trait instead.
+///
+/// ```rust
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use ed_journals::io::LogIter;
+///
+/// let file = File::open("../test-files/journals/Journal.2022-10-11T214552.01.log")
+///     .unwrap();
+/// let buf_reader = BufReader::new(file);
+///
+/// let mut iterator = LogIter::new(buf_reader);
+///
+/// assert!(iterator.next().is_some());
+/// ```
+#[derive(Debug)]
+pub struct LogIter<T, R = LogEvent>
+where
+    T: Read,
+    R: DeserializeOwned,
+{
+    inner: T,
+    _p: PhantomData<R>,
+}
+
+impl<T> LogIter<T>
+where
+    T: Read,
+{
+    /// Creates a new iterator over the given [Read] which will return
+    /// [LogEvents](crate::logs::LogEvent).
+    pub fn new(inner: T) -> LogIter<T, LogEvent> {
+        LogIter::new_typed(inner)
+    }
+
+    /// Creates a new iterator over the given [Read] which will return raw
+    /// [Values](serde_json::Value).
+    pub fn new_raw(inner: T) -> LogIter<T, serde_json::Value> {
+        LogIter::new_typed(inner)
+    }
+
+    /// Creates a new iterator over the given [Read] which will return entries of the given type.
+    pub fn new_typed<R>(inner: T) -> LogIter<T, R>
+    where
+        R: DeserializeOwned,
+    {
+        LogIter {
+            inner,
+            _p: PhantomData,
+        }
+    }
+}
+
+impl<T, R> From<T> for LogIter<T, R>
+where
+    T: Read,
+    R: DeserializeOwned,
+{
+    fn from(value: T) -> Self {
+        LogIter {
+            inner: value,
+            _p: PhantomData,
+        }
+    }
+}
+
+impl<T, R> Iterator for LogIter<T, R>
+where
+    T: Read,
+    R: DeserializeOwned,
+{
+    type Item = Result<R, LogIOError>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let mut line = Vec::with_capacity(64); // Line are mostly at least 64 bytes
+
+        let mut buf = [0u8; 1];
+        loop {
+            let size = match self.inner.read(&mut buf) {
+                Ok(size) => size,
+                Err(e) => return Some(Err(e.into())),
+            };
+
+            if size == 0 {
+                break;
+            }
+
+            let byte = buf[0];
+
+            if byte == b'\n' && !line.is_empty() {
+                break;
+            }
+
+            if byte == 0x00 || (line.is_empty() && byte == b' ') {
+                continue;
+            }
+
+            line.push(byte);
+        }
+
+        if line.is_empty() {
+            return None;
+        }
+
+        Some(Ok(match serde_json::from_slice(&line) {
+            Ok(event) => event,
+            Err(e) => {
+                #[cfg(test)]
+                dbg!(String::from_utf8_lossy(&line).to_string());
+
+                return Some(Err(e.into()));
+            }
+        }))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::logs::LogEventContentKind;
+    use crate::modules::io::models::log_iter::LogIter;
+    use std::fs;
+    use std::fs::File;
+    use std::io::{BufReader, Cursor};
+
+    #[test]
+    fn log_reader_reads_completed_file_correctly() {
+        let data = r#"{ "timestamp":"2020-09-21T19:04:44Z", "event":"Repair", "Item":"Paint", "Cost":1 }
+{ "timestamp":"2020-09-21T19:04:51Z", "event":"Repair", "Item":"Wear", "Cost":10 }"#;
+
+        let cursor = Cursor::new(data);
+        let mut reader = LogIter::new(cursor);
+
+        assert!(reader.next().is_some());
+        assert!(reader.next().is_some());
+
+        assert!(dbg!(reader.next()).is_none());
+    }
+
+    #[test]
+    fn log_reader_handles_trailing_newlines_correctly() {
+        let data = r#"{ "timestamp":"2020-09-21T19:04:44Z", "event":"Repair", "Item":"Paint", "Cost":1 }
+{ "timestamp":"2020-09-21T19:04:51Z", "event":"Repair", "Item":"Wear", "Cost":10 }
+"#;
+
+        let cursor = Cursor::new(data);
+        let mut reader = LogIter::new(cursor);
+
+        assert!(reader.next().is_some());
+        assert!(reader.next().is_some());
+
+        assert!(dbg!(reader.next()).is_none());
+    }
+
+    #[test]
+    fn last_lines_are_read_correctly() {
+        fs::write("c.tmp", "").unwrap();
+        let file = File::open("c.tmp").unwrap();
+        let buf_reader = BufReader::new(file);
+
+        let mut reader = LogIter::new(buf_reader);
+
+        assert!(reader.next().is_none());
+
+        fs::write(
+            "c.tmp",
+            r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}"#,
+        )
+            .unwrap();
+
+        assert_eq!(
+            reader.next().unwrap().unwrap().content.kind(),
+            LogEventContentKind::FileHeader
+        );
+
+        fs::write("c.tmp", r#"{"timestamp":"2022-10-22T15:10:41Z","event":"Fileheader","part":1,"language":"English/UK","Odyssey":true,"gameversion":"4.0.0.1450","build":"r286858/r0 "}
+{"timestamp":"2022-10-22T15:12:05Z","event":"Commander","FID":"F123456789","Name":"TEST"}"#)
+            .unwrap();
+
+        assert_eq!(
+            reader.next().unwrap().unwrap().content.kind(),
+            LogEventContentKind::Commander
+        );
+
+        fs::remove_file("c.tmp").unwrap();
+    }
+}

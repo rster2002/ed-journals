@@ -1,0 +1,161 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
+
+//! # ED Journals
+//!
+//! This library provides models and utilities to work with Elite Dangerous journal files.
+//!
+//! > **Warning** this project is currently in beta, which means that it is very much work in progress. Breaking
+//! > changes are likely to happen.
+//!
+//! ## Where to start
+//!
+//! This library contains quite a large number of modules that each cover a different part of the
+//! game, but there are a couple of modules that are important to point out:
+//!
+//! * The [logs] module contains readers and models for reading the `Journal.log` files that are
+//!   stored in the games journal directory.
+//! * [State](state) can be used to turn the logs from the `Journal.log` files into a single state that can
+//!   then be queried and used to figure out the current or previous state of the game.
+//! * The [journal] module can be used to interact with the whole journal directory and can watch
+//!   the directory as a whole for changes.
+
+pub use modules::backpack;
+pub use modules::cargo;
+pub use modules::civilization;
+pub use modules::commander;
+pub use modules::exobiology;
+pub use modules::exploration;
+pub use modules::fs;
+pub use modules::galaxy;
+pub use modules::io;
+pub use modules::logs;
+pub use modules::market;
+pub use modules::materials;
+pub use modules::mixed;
+pub use modules::modules_info;
+pub use modules::nav_route;
+pub use modules::odyssey;
+pub use modules::outfitting;
+pub use modules::partials;
+pub use modules::ship;
+pub use modules::ship_locker;
+pub use modules::shipyard;
+pub use modules::station;
+pub use modules::status;
+pub use modules::thargoid;
+pub use modules::trading;
+
+mod modules;
+
+#[cfg(test)]
+mod tests {
+    use crate::fs::LogDir;
+    use crate::io::LogIter;
+    use crate::logs::LogEventContent;
+    use std::env::current_dir;
+    use std::fs;
+    use std::fs::File;
+    use std::hash::{DefaultHasher, Hash, Hasher};
+    use std::path::PathBuf;
+    use std::thread::current;
+
+    pub struct TestFile(PathBuf);
+
+    impl TestFile {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+    }
+
+    impl Drop for TestFile {
+        fn drop(&mut self) {
+            fs::remove_file(&self.0).unwrap()
+        }
+    }
+
+    pub struct TestDir(PathBuf);
+
+    impl TestDir {
+        pub fn path(&self) -> PathBuf {
+            self.0.clone()
+        }
+
+        pub fn file(&self, number: u32) -> PathBuf {
+            self.0.join(format!("{}.tmp", number))
+        }
+    }
+
+    impl Drop for TestDir {
+        fn drop(&mut self) {
+            fs::remove_dir_all(&self.0).unwrap();
+        }
+    }
+
+    pub fn test_root() -> PathBuf {
+        PathBuf::from("../test-files")
+    }
+
+    pub fn test_dir() -> TestDir {
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+
+        let path = test_root().join("temp-dir").join(format!("dir-{}", hash));
+
+        let _ = fs::remove_dir_all(&path);
+        fs::create_dir_all(&path).unwrap();
+
+        TestDir(path)
+    }
+
+    pub fn test_file() -> TestFile {
+        let temp_dir = test_root().join("temp-dir");
+
+        fs::create_dir_all(&temp_dir).unwrap();
+
+        let mut hasher = DefaultHasher::new();
+        current().id().hash(&mut hasher);
+
+        let hash = hasher.finish();
+        TestFile(temp_dir.join(format!("test-{}", hash)))
+    }
+
+    #[test]
+    fn test_journals_are_parsed_correctly() {
+        let dir_path = current_dir()
+            .unwrap()
+            .join("../test-files")
+            .join("journals");
+
+        let log_dir = LogDir::new(dir_path);
+
+        let mut file_header_count = 0;
+        let mut entry_count = 0;
+
+        for log_path in log_dir {
+            let log_path = log_path.unwrap();
+            let mut found_file_header = false;
+
+            let file = File::open(log_path).unwrap();
+            let buf_reader = std::io::BufReader::new(file);
+            let iter = LogIter::new(buf_reader);
+
+            // let reader = journal.create_blocking_reader().unwrap();
+
+            for entry in iter {
+                entry_count += 1;
+
+                if let LogEventContent::FileHeader(_) = entry.unwrap().content {
+                    found_file_header = true;
+                    file_header_count += 1;
+                }
+            }
+        }
+
+        dbg!(file_header_count);
+        dbg!(entry_count);
+
+        // assert_eq!(logs.len(), file_header_count);
+    }
+}
