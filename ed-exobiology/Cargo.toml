@@ -1,14 +1,14 @@
 [package]
 name = "ed-exobiology"
-version = "0.1.0-rc.2"
+version = "0.1.0"
 description = "Provides logic for predicting the species that could spawn on a planet"
-repository = "https://github.com/rster2002/ed-logs"
+repository = "https://github.com/rster2002/ed-journals"
 edition = "2024"
 license = "MIT"
 keywords = ["elite-dangerous", "elite-journal", "exobiology"]
-readme = "../readme.md"
+readme = "readme.md"
 include = ["/src", "/LICENSE", "readme.md"]
 
 [dependencies]
-ed-journals = { path = "../ed-journals", version = "0.13.0-rc.2" }
+ed-journals = { path = "../ed-journals", version = "0.13.0" }
 strum = { version = "0.26.2", features = ["derive"] }
