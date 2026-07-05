@@ -280,7 +280,7 @@ dependencies = [
 
 [[package]]
 name = "ed-exobiology"
-version = "0.1.0-rc.2"
+version = "0.1.0"
 dependencies = [
  "ed-journals",
  "strum",
@@ -288,7 +288,7 @@ dependencies = [
 
 [[package]]
 name = "ed-journals"
-version = "0.13.0-rc.2"
+version = "0.13.0"
 dependencies = [
  "async-fs",
  "async-mutex",

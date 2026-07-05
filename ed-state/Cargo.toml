@@ -1,12 +1,18 @@
 [package]
 name = "ed-state"
 version = "0.1.0"
+description = "Crate for collecting incremental game updates into long-lived models"
+repository = "https://github.com/rster2002/ed-journals"
 edition = "2024"
+license = "MIT"
+keywords = ["elite-dangerous", "elite-journal"]
+readme = "readme.md"
+include = ["/src", "/LICENSE", "readme.md"]
 
 [dependencies]
-ed-journals = { path = "../ed-journals", version = "0.13.0-rc.2" }
+ed-journals = { path = "../ed-journals", version = "0.13.0" }
 chrono = { version = "0.4.38", features = ["serde"] }
-ed-exobiology = { path = "../ed-exobiology", optional = true }
+ed-exobiology = { path = "../ed-exobiology", version = "0.1.0", optional = true }
 
 [features]
 default = []
