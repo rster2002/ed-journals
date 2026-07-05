@@ -29,7 +29,7 @@ pub enum Blueprint {
 
     // Frame shift drive
     #[serde(rename = "FSD_LongRange")]
-    FrameShiftDriveLongRange,
+    FrameShiftDriveIncreasedRange,
 
     #[serde(rename = "FSD_FastBoot")]
     FrameShiftDriveFasterBootSequence,
@@ -68,19 +68,16 @@ pub enum Blueprint {
     PowerDistributorChargeEnhanced,
 
     #[serde(rename = "PowerDistributor_PriorityEngines")]
-    PowerDistributorEngineFocussed,
+    PowerDistributorEngineFocused,
 
     #[serde(rename = "PowerDistributor_HighCapacity")]
-    PowerDistributorHighCapacity,
-
-    #[serde(rename = "PowerDistributor_PriorityEngines")]
-    PowerDistributorPrioritizeEngines,
+    PowerDistributorHighChargeCapacity,
 
     #[serde(rename = "PowerDistributor_PriorityWeapons")]
-    PowerDistributorPrioritizeWeapons,
+    PowerDistributorWeaponFocused,
 
     #[serde(rename = "PowerDistributor_PrioritySystems")]
-    PowerDistributorPrioritizeSystems,
+    PowerDistributorSystemFocused,
 
     #[serde(rename = "PowerDistributor_Shielded")]
     PowerDistributorShielded,
@@ -149,10 +146,10 @@ pub enum Blueprint {
 
     // Thrusters
     #[serde(rename = "Engine_Dirty")]
-    ThrustersDirtyTuning,
+    ThrustersDirty,
 
     #[serde(rename = "Engine_Tuned")]
-    ThrustersCleanTuning,
+    ThrustersClean,
 
     #[serde(rename = "Engine_Reinforced")]
     ThrustersStrengthened,
@@ -177,7 +174,7 @@ pub enum Blueprint {
     WeaponEfficient,
 
     #[serde(rename = "Weapon_Focused")]
-    WeaponFocussed,
+    WeaponFocused,
 
     #[serde(rename = "Weapon_LongRange")]
     WeaponLongRange,
@@ -219,7 +216,7 @@ impl Display for Blueprint {
                 Blueprint::FSDInterdictorExpandedCaptureArc => "Expanded Capture Arc",
                 Blueprint::FSDInterdictorLongRange => "Long Range",
                 Blueprint::FrameShiftDriveFasterBootSequence => "Faster Boot Sequence",
-                Blueprint::FrameShiftDriveLongRange => "Long Range",
+                Blueprint::FrameShiftDriveIncreasedRange => "Long Range",
                 Blueprint::FrameShiftDriveShielded => "Shielded",
                 Blueprint::HeatSinkCapacity => "Ammo capacity",
                 Blueprint::HullReinforcementBlastResistant => "Blast Resistant",
@@ -232,11 +229,10 @@ impl Display for Blueprint {
                 Blueprint::MiscShielded => "Shielded",
                 Blueprint::PointDefenceCapacity => "Ammo capacity",
                 Blueprint::PowerDistributorChargeEnhanced => "Charge Enhanced",
-                Blueprint::PowerDistributorEngineFocussed => "Engine Focussed",
-                Blueprint::PowerDistributorHighCapacity => "High Capacity",
-                Blueprint::PowerDistributorPrioritizeEngines => "Prioritize Engines",
-                Blueprint::PowerDistributorPrioritizeSystems => "Prioritize Systems",
-                Blueprint::PowerDistributorPrioritizeWeapons => "Prioritize Weapons",
+                Blueprint::PowerDistributorEngineFocused => "Engine Focused",
+                Blueprint::PowerDistributorHighChargeCapacity => "High Capacity",
+                Blueprint::PowerDistributorSystemFocused => "Prioritize Systems",
+                Blueprint::PowerDistributorWeaponFocused => "Prioritize Weapons",
                 Blueprint::PowerDistributorShielded => "Shielded",
                 Blueprint::PowerPlantArmored => "Armored",
                 Blueprint::PowerPlantLowEmissions => "Low Emissions",
@@ -257,12 +253,12 @@ impl Display for Blueprint {
                 Blueprint::ShieldGeneratorKineticResistant => "Kinetic Resistant",
                 Blueprint::ShieldGeneratorReinforced => "Reinforced",
                 Blueprint::ShieldGeneratorThermalResistant => "Thermal Resistant",
-                Blueprint::ThrustersCleanTuning => "Clean Tuning",
-                Blueprint::ThrustersDirtyTuning => "Dirty Tuning",
+                Blueprint::ThrustersClean => "Clean Tuning",
+                Blueprint::ThrustersDirty => "Dirty Tuning",
                 Blueprint::ThrustersStrengthened => "Strengthened",
                 Blueprint::WeaponDoubleShot => "Double Shot",
                 Blueprint::WeaponEfficient => "Efficient",
-                Blueprint::WeaponFocussed => "Focussed",
+                Blueprint::WeaponFocused => "Focused",
                 Blueprint::WeaponHighCapacity => "High Capacity",
                 Blueprint::WeaponLightweight => "Lightweight",
                 Blueprint::WeaponLongRange => "Long Range",
