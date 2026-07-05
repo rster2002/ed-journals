@@ -1201,10 +1201,7 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
             MaxGravity(0.276)
         ],
     ),
-    (
-        RadicoidaUnica,
-        Special,
-    ),
+    (RadicoidaUnica, Special),
     (
         ReceptaConditivus,
         all![
