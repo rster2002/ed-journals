@@ -1202,6 +1202,10 @@ pub static SPECIES_SPAWN_CONDITIONS: &[(Species, SpawnCondition<'_>)] = &[
         ],
     ),
     (
+        RadicoidaUnica,
+        Special,
+    ),
+    (
         ReceptaConditivus,
         all![
             ThinAtmosphere(SulfurDioxide),

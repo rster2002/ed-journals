@@ -5,7 +5,7 @@ use ed_journals::exobiology::Genus;
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
-use ed_journals::logs::scan_event::{ScanEvent};
+use ed_journals::logs::scan_event::ScanEvent;
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
@@ -372,13 +372,16 @@ impl EventSink for PlanetState {
             }
             LogEventContent::CodexEntry(codex_entry) => match &codex_entry.name {
                 CodexEntry::Species(species) => {
-                    self.organics.entry(species.genus())
+                    self.organics
+                        .entry(species.genus())
                         .or_insert_with(|| PlanetOrganic::from(species.clone()));
 
                     result.accept();
                 }
                 CodexEntry::Variant(variant) => {
-                    let entry = self.organics.entry(variant.genus())
+                    let entry = self
+                        .organics
+                        .entry(variant.genus())
                         .or_insert_with(|| PlanetOrganic::from(variant.species.clone()));
 
                     // Set here to handle already existing entry for the species.

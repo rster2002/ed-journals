@@ -1,4 +1,4 @@
-use ed_journals::exobiology::{Genus, Species};
+use ed_journals::exobiology::Genus;
 use ed_journals::logs::scan_organic_event::ScanOrganicEvent;
 
 #[derive(Debug, Clone, PartialEq, Eq)]

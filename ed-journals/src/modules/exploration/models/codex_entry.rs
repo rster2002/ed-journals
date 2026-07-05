@@ -188,7 +188,7 @@ impl Display for CodexEntry {
 
 #[cfg(test)]
 mod tests {
-    use crate::exploration::{CodexEntry, CodexEntryError};
+    use crate::exploration::CodexEntry;
     use serde_json::Value;
 
     #[test]

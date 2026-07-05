@@ -13,6 +13,7 @@ use std::sync::Arc;
 ///
 /// let path = current_dir()
 ///     .unwrap()
+///     .join("..")
 ///     .join("test-files")
 ///     .join("journals");
 ///

@@ -2,14 +2,14 @@ use crate::commander::models::current_organic_progress::CurrentOrganicProgress;
 use crate::commander::models::materials_state::MaterialsState;
 use crate::modules::state::{EventSink, SinkResult};
 use crate::modules::system::SystemState;
+use crate::system::PlanetOrganic;
+use ed_journals::galaxy::planet_distance;
 use ed_journals::logs::commander_event::CommanderEvent;
 use ed_journals::logs::scan_organic_event::ScanOrganicEventScanType;
 use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::{PlanetStatus, Status, StatusContents};
 use std::collections::HashMap;
-use ed_journals::galaxy::planet_distance;
-use crate::system::PlanetOrganic;
 
 #[derive(Debug, Clone, Default)]
 pub struct CommanderState {
@@ -57,13 +57,12 @@ impl CommanderState {
 
     /// Returns current active organic for the commander.
     pub fn current_organic(&self) -> Option<&PlanetOrganic> {
-        self.current_organic_progress
-            .as_ref()
-            .and_then(|current| {
-                self.systems.get(&current.system_address)
-                    .and_then(|system| system.planet_state.get(&current.body_id))
-                    .and_then(|planet| planet.organics.get(&current.genus))
-            })
+        self.current_organic_progress.as_ref().and_then(|current| {
+            self.systems
+                .get(&current.system_address)
+                .and_then(|system| system.planet_state.get(&current.body_id))
+                .and_then(|planet| planet.organics.get(&current.genus))
+        })
     }
 
     /// Return the current organic only if the commander is currently on the same planet.
@@ -89,22 +88,22 @@ impl CommanderState {
         Some(planet_distance(
             planet_status.planet_radius,
             &(planet_status.latitude, planet_status.longitude),
-            coordinates
+            coordinates,
         ))
     }
 
     pub fn distance_from_first_organic(&self) -> Option<f32> {
-        self.distance_from(&self.current_body_organic()?
-            .first_scan
-            .as_ref()?
-            .location?)
+        self.distance_from(&self.current_body_organic()?.first_scan.as_ref()?.location?)
     }
 
     pub fn distance_from_second_organic(&self) -> Option<f32> {
-        self.distance_from(&self.current_body_organic()?
-            .second_scan
-            .as_ref()?
-            .location?)
+        self.distance_from(
+            &self
+                .current_body_organic()?
+                .second_scan
+                .as_ref()?
+                .location?,
+        )
     }
 
     /// Returns the current distance to the closest active organic.
@@ -155,7 +154,7 @@ impl EventSink for CommanderState {
                     self.current_organic_progress = None;
                 }
                 _ => {}
-            }
+            },
             LogEventContent::Touchdown(event) => {
                 self.touchdown = Some(event.clone());
                 result.accept();

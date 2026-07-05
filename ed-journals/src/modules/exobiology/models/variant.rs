@@ -7,8 +7,8 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 use crate::deserialize_in_order_impl;
-use crate::exobiology::Genus;
 use crate::exobiology::models::species::SpeciesError;
+use crate::exobiology::Genus;
 use crate::modules::exobiology::{
     Species, VariantColor, VariantColorError, VariantSource, VariantSourceError,
 };

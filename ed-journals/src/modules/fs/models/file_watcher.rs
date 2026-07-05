@@ -14,6 +14,7 @@ use std::sync::Arc;
 ///
 /// let path = current_dir()
 ///     .unwrap()
+///     .join("..")
 ///     .join("test-files")
 ///     .join("journals")
 ///     .join("Journal.2000-01-01T100000.01.log");

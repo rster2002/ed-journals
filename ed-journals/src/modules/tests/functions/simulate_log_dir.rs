@@ -1,4 +1,4 @@
-use crate::tests::{test_dir, test_root};
+use crate::tests::test_dir;
 use std::fs;
 use std::fs::File;
 use std::io::{BufWriter, Write};

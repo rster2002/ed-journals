@@ -5,9 +5,8 @@ use ed_journals::civilization::LocationInfo;
 use ed_journals::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
 use ed_journals::logs::{LogEvent, LogEventContent};
-use ed_journals::partials::PartialSystemInfo;
+use ed_journals::status::Status;
 use std::collections::HashMap;
-use ed_journals::status::{PlanetStatus, Status};
 
 #[derive(Debug, Default, Clone)]
 pub struct SystemState {
@@ -87,8 +86,7 @@ impl SystemState {
     }
 
     pub fn near_body_state(&self) -> Option<&PlanetState> {
-        self.near_body
-            .and_then(|id| self.planet_state.get(&id))
+        self.near_body.and_then(|id| self.planet_state.get(&id))
     }
 }
 
@@ -153,6 +151,7 @@ impl EventSink for SystemState {
             }
             LogEventContent::Scan(event) => {
                 match &event.kind {
+                    #[allow(unused)]
                     ScanEventKind::Star(star) => {
                         self.star_scans.insert(event.body_id, event.clone());
 
@@ -173,8 +172,9 @@ impl EventSink for SystemState {
                         self.belt_scans.insert(event.body_id, event.clone());
                         result.accept();
                     }
+
+                    #[cfg(feature = "exobiology")]
                     ScanEventKind::Planet(planet) => {
-                        #[cfg(feature = "exobiology")]
                         if let Some(exobiology_system) = &mut self.exobiology_system {
                             exobiology_system
                                 .planet_classes_in_system
@@ -183,6 +183,9 @@ impl EventSink for SystemState {
                             result.accept();
                         }
                     }
+
+                    #[cfg(not(feature = "exobiology"))]
+                    _ => {}
                 }
 
                 if let Some(total_bodies) = self.number_of_bodies {

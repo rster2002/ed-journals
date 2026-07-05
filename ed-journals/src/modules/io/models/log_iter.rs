@@ -14,7 +14,7 @@ use std::marker::PhantomData;
 /// use std::io::BufReader;
 /// use ed_journals::io::LogIter;
 ///
-/// let file = File::open("./test-files/journals/Journal.2022-10-11T214552.01.log")
+/// let file = File::open("../test-files/journals/Journal.2022-10-11T214552.01.log")
 ///     .unwrap();
 /// let buf_reader = BufReader::new(file);
 ///
@@ -115,7 +115,7 @@ where
             Ok(event) => event,
             Err(e) => {
                 #[cfg(test)]
-                dbg!(&line);
+                dbg!(String::from_utf8_lossy(&line).to_string());
 
                 return Some(Err(e.into()));
             }
