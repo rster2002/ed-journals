@@ -121,7 +121,7 @@ impl PlanetState {
 
         let spawn_source = SpawnSource {
             target_system,
-            target_planet: &exobiology_body,
+            target_planet: exobiology_body,
         };
 
         let predictions = spawn_source.get_spawnable_species();
