@@ -16,14 +16,19 @@ pub struct PlanetSpeciesEntry {
     pub completed: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum WillSpawn {
-    Yes,
-    Maybe,
     No,
+    Maybe,
+    Yes,
+    Completed,
 }
 
 impl WillSpawn {
+    pub fn completed(&self) -> bool {
+        matches!(self, WillSpawn::Completed)
+    }
+
     pub fn yes(&self) -> bool {
         matches!(self, WillSpawn::Yes)
     }

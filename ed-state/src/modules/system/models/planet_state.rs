@@ -131,6 +131,22 @@ impl PlanetState {
             .into_iter()
             .map(|species| {
                 let will_spawn: WillSpawn = match true {
+                    // If the species entry has been completed, return it as so in the list.
+                    _ if self.organics
+                        .values()
+                        .any(|organic| organic.species == species && organic.is_completed()) =>
+                    {
+                        WillSpawn::Completed
+                    }
+
+                    // If the species is not in the SAA genuses list, then it does not spawn
+                    _ if self.saa_genuses
+                        .as_ref()
+                        .is_some_and(|genuses| !genuses.contains(&species.genus())) =>
+                    {
+                        WillSpawn::No
+                    }
+
                     // If the species has been scanned, will_spawn will be set to yes to keep it
                     // from switching from a maybe to a no.
                     _ if self
@@ -201,7 +217,7 @@ impl PlanetState {
 
         for entry in self.get_planet_species(target_system) {
             match entry.will_spawn {
-                WillSpawn::Yes => known_values.push(entry.species.base_value()),
+                WillSpawn::Yes | WillSpawn::Completed => known_values.push(entry.species.base_value()),
                 WillSpawn::Maybe => maybe_values.push(entry.species.base_value()),
                 WillSpawn::No => {}
             }
