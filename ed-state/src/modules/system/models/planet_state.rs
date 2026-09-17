@@ -366,7 +366,9 @@ impl EventSink for PlanetState {
                             location,
                         });
                     }
-                    ScanOrganicEventScanType::Sample => {
+                    // The second scan emits just the `Sample` events, whereas the last scan emits
+                    // both the `Sample` and `Analyse` events.
+                    ScanOrganicEventScanType::Sample if entry.second_scan.is_none() => {
                         entry.second_scan = Some(PlanetOrganicScan {
                             scan: scanned_organic.clone(),
                             location,
@@ -378,6 +380,7 @@ impl EventSink for PlanetState {
                             location,
                         });
                     }
+                    _ => {}
                 }
 
                 if let Some(status) = &self.planet_status {

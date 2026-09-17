@@ -37,7 +37,7 @@ pub enum ScanOrganicEventScanType {
     /// Fired for the second **and** the last sample in the sequence.
     Sample,
 
-    /// Fired only for the last sample int the sequence **after** an event with the `Sample`
+    /// Fired only for the last sample in the sequence **after** an event with the `Sample`
     /// variant.
     Analyse,
 }
