@@ -967,10 +967,7 @@ impl LogEventContent {
             LogEventContent::FSDJump(event) => &event.system_info.body,
             LogEventContent::CarrierJump(event) => &event.system_info.body,
             LogEventContent::ApproachSettlement(event) => &event.body_name,
-            LogEventContent::CarrierJumpRequest(event) => match &event.body {
-                Some(name) => name,
-                None => return None,
-            },
+            LogEventContent::CarrierJumpRequest(event) => event.body.as_ref()?,
             LogEventContent::DropshipDeploy(event) => &event.body,
             LogEventContent::FSSBodySignals(event) => &event.body_name,
             LogEventContent::LeaveBody(event) => &event.body,
