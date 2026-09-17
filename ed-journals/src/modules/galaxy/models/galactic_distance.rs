@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 
 /// A distance in light-years between two objects in the galaxy, usually between two systems.
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 pub struct GalacticDistance(f32);
 
 impl GalacticDistance {

@@ -4,7 +4,7 @@ use std::fmt::Debug;
 pub const G_CONSTANT: f32 = 9.812;
 
 /// Gravity in m/s².
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct Gravity(pub f32);
 
 impl Gravity {
