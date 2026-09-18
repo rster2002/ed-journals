@@ -127,6 +127,12 @@ impl PlanetState {
         let predictions = spawn_source.get_spawnable_species();
         let number_of_species = predictions.len();
 
+        let species_per_genus_count =
+            predictions.iter().fold(HashMap::new(), |mut map, species| {
+                *map.entry(species.genus()).or_insert(0usize) += 1;
+                map
+            });
+
         predictions
             .into_iter()
             .map(|species| {
@@ -147,6 +153,18 @@ impl PlanetState {
                         .is_some_and(|genuses| !genuses.contains(&species.genus())) =>
                     {
                         WillSpawn::No
+                    }
+
+                    // If there is exactly one predicted species for a genus and that genus is
+                    // present on the planet, then it will spawn.
+                    _ if self.saa_genuses.as_ref().is_some_and(|genuses| {
+                        genuses.contains(&species.genus())
+                            && species_per_genus_count
+                                .get(&species.genus())
+                                .is_some_and(|count| count == &1)
+                    }) =>
+                    {
+                        WillSpawn::Yes
                     }
 
                     // If the species has been scanned, will_spawn will be set to yes to keep it
