@@ -21,23 +21,28 @@ pub enum WillSpawn {
     No,
     Maybe,
     Yes,
+    Scanning,
     Completed,
 }
 
 impl WillSpawn {
-    pub fn completed(&self) -> bool {
-        matches!(self, WillSpawn::Completed)
-    }
-
-    pub fn yes(&self) -> bool {
-        matches!(self, WillSpawn::Yes)
+    pub fn no(&self) -> bool {
+        matches!(self, WillSpawn::No)
     }
 
     pub fn maybe(&self) -> bool {
         matches!(self, WillSpawn::Maybe)
     }
 
-    pub fn no(&self) -> bool {
-        matches!(self, WillSpawn::No)
+    pub fn yes(&self) -> bool {
+        matches!(self, WillSpawn::Yes)
+    }
+
+    pub fn scanning(&self) -> bool {
+        matches!(self, WillSpawn::Scanning)
+    }
+
+    pub fn completed(&self) -> bool {
+        matches!(self, WillSpawn::Completed)
     }
 }

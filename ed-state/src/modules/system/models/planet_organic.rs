@@ -27,6 +27,10 @@ impl PlanetOrganic {
         self.third_scan_scan.is_some()
     }
 
+    pub fn is_scanning(&self) -> bool {
+        self.first_scan.is_some()
+    }
+
     pub fn progress_nr(&self) -> u8 {
         if self.third_scan_scan.is_some() {
             return 3;
@@ -36,7 +40,11 @@ impl PlanetOrganic {
             return 2;
         }
 
-        1
+        if self.first_scan.is_some() {
+            return 1;
+        }
+
+        0
     }
 
     pub fn progress_factor(&self) -> f64 {

@@ -146,6 +146,15 @@ impl PlanetState {
                         WillSpawn::Completed
                     }
 
+                    // If the species is currently being scanned, return it as so in the list.
+                    _ if self
+                        .organics
+                        .values()
+                        .any(|organic| organic.species == species && organic.is_scanning()) =>
+                    {
+                        WillSpawn::Scanning
+                    }
+
                     // If the species is not in the SAA genuses list, then it does not spawn
                     _ if self
                         .saa_genuses
@@ -182,6 +191,19 @@ impl PlanetState {
                     _ if self.signal_counts.as_ref().is_some_and(|signals| {
                         signals.biological_signal_count == number_of_species
                     }) =>
+                    {
+                        WillSpawn::Yes
+                    }
+
+                    // If the number of signals are the same as the number of unique predicted
+                    // genuses, then all species with one predicted species for a genus is
+                    // automatically a yes.
+                    _ if species_per_genus_count
+                        .get(&species.genus())
+                        .is_some_and(|count| count == &1)
+                        && self.signal_counts.as_ref().is_some_and(|signals| {
+                            signals.biological_signal_count == species_per_genus_count.len()
+                        }) =>
                     {
                         WillSpawn::Yes
                     }
@@ -237,7 +259,7 @@ impl PlanetState {
 
         for entry in self.get_planet_species(target_system) {
             match entry.will_spawn {
-                WillSpawn::Yes | WillSpawn::Completed => {
+                WillSpawn::Yes | WillSpawn::Scanning | WillSpawn::Completed => {
                     known_values.push(entry.species.base_value())
                 }
                 WillSpawn::Maybe => maybe_values.push(entry.species.base_value()),
