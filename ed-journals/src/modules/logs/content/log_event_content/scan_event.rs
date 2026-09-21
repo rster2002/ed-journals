@@ -8,34 +8,48 @@ use crate::modules::galaxy::{
 };
 use crate::modules::materials::Material;
 
+/// Fired when information about a body within a system is scanned.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct ScanEvent {
+    /// The kind of scan that was performed.
     pub scan_type: ScanEventScanType,
+
+    /// The name of the body.
     pub body_name: String,
 
+    /// The id of the body within the system.
     #[serde(rename = "BodyID")]
     pub body_id: u8,
 
+    /// Parents the body orbits, going from the most direct parent to the least direct parent.
     #[serde(default)]
     pub parents: Vec<ScanEventParent>,
+
+    /// The name of the system the body is in.
     pub star_system: String,
+
+    /// The address of the system the body is in.
     pub system_address: u64,
 
+    /// The distance from the jump-in point.
     #[serde(rename = "DistanceFromArrivalLS")]
     pub distance_from_arrival: LocalDistance,
 
+    /// Whether the body has been discovered before.
     #[serde(default)]
     pub was_discovered: bool,
 
+    /// Whether the body has been mapped before.
     #[serde(default)]
     pub was_mapped: bool,
 
-    /// [None] value should be considered a belt cluster
+    /// Detailed information about the body per type of body.
     #[serde(flatten)]
     pub kind: ScanEventKind,
 }
 
+/// The type of scan that was performed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventScanType {
@@ -75,6 +89,7 @@ impl ScanEventKind {
         matches!(self, ScanEventKind::Star(_))
     }
 
+    /// If the body is a star, return the star-specific details, otherwise [None].
     pub fn star(&self) -> Option<&ScanEventStar> {
         if let ScanEventKind::Star(star) = self {
             return Some(star);
@@ -87,6 +102,7 @@ impl ScanEventKind {
         matches!(self, ScanEventKind::Planet(_))
     }
 
+    /// If the body is a star, return the planet-specific details, otherwise [None].
     pub fn planet(&self) -> Option<&ScanEventPlanet> {
         if let ScanEventKind::Planet(planet) = self {
             return Some(planet);
@@ -99,6 +115,7 @@ impl ScanEventKind {
         matches!(self, ScanEventKind::BeltCluster(_))
     }
 
+    /// If the body is a belt cluster, return the belt cluster-specific details, otherwise [None].
     pub fn belt_cluster(&self) -> Option<&ScanEventBeltCluster> {
         if let ScanEventKind::BeltCluster(cluster) = self {
             return Some(cluster);
@@ -219,13 +236,32 @@ pub struct ScanEventPlanetMaterial {
     pub percent: f32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventParent {
+    /// The body orbits around a null-point with the given body id. This is used when multiple
+    /// bodies orbit each other.
     Null(u8),
+
+    /// The body orbits around a star with the given body id.
     Star(u8),
+
+    /// The body orbits around a ring with the given body id.
     Ring(u8),
+
+    /// The body orbits around a planet with the given body id.
     Planet(u8),
+}
+
+impl ScanEventParent {
+    pub fn body_id(&self) -> u8 {
+        match self {
+            ScanEventParent::Null(id) => *id,
+            ScanEventParent::Star(id) => *id,
+            ScanEventParent::Ring(id) => *id,
+            ScanEventParent::Planet(id) => *id,
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
