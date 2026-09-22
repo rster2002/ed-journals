@@ -236,7 +236,7 @@ pub struct ScanEventPlanetMaterial {
     pub percent: f32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 #[serde(rename_all = "PascalCase")]
 pub enum ScanEventParent {
     /// The body orbits around a null-point with the given body id. This is used when multiple
@@ -283,7 +283,9 @@ pub struct ScanEventBeltCluster {}
 #[cfg(test)]
 mod tests {
     use crate::galaxy::LocalDistance;
+    use crate::logs::scan_event::ScanEventParent;
     use crate::modules::logs::content::log_event_content::scan_event::ScanEvent;
+    use std::cmp::Ordering;
 
     #[test]
     fn scan_event_is_parsed_correctly() {
@@ -326,5 +328,26 @@ mod tests {
 
         let distance = LocalDistance::from_au(2.0);
         assert_roughly_eq(distance.as_ls(), 1000.0);
+    }
+
+    #[test]
+    fn parent_vecs_are_ordered_correctly() {
+        let test_cases = &[
+            (
+                vec![ScanEventParent::Null(1)],
+                vec![ScanEventParent::Null(0)],
+                Ordering::Greater,
+            ),
+            (
+                vec![ScanEventParent::Planet(1), ScanEventParent::Null(0)],
+                vec![ScanEventParent::Null(0)],
+                Ordering::Greater,
+            ),
+        ];
+
+        for (a, b, expected) in test_cases {
+            let result = a.cmp(&b);
+            assert_eq!(result, *expected);
+        }
     }
 }
