@@ -260,9 +260,9 @@ use crate::modules::partials::PartialSystemInfo;
 #[cfg(feature = "legacy")]
 use legacy_liftoff_event::LegacyLiftoffEvent;
 
+use crate::logs::content::log_event_content::game_mode_change_event::GameModeChangeEvent;
 #[cfg(feature = "legacy")]
 use legacy_touchdown_event::LegacyTouchdownEvent;
-use crate::logs::content::log_event_content::game_mode_change_event::GameModeChangeEvent;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -517,10 +517,10 @@ pub mod won_a_trophy_for_squadron_event;
 #[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
 pub mod legacy_liftoff_event;
 
+pub mod game_mode_change_event;
 #[cfg(feature = "legacy")]
 #[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
 pub mod legacy_touchdown_event;
-pub mod game_mode_change_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///

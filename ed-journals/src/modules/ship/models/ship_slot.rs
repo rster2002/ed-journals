@@ -224,7 +224,7 @@ impl FromStr for ShipSlot {
             return Ok(ShipSlot {
                 slot_nr,
                 kind: ShipSlotKind::Cargo,
-            })
+            });
         }
 
         if let Some(captures) = MILITARY_REGEX.captures(s) {
