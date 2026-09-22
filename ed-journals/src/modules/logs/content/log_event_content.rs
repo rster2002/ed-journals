@@ -262,6 +262,7 @@ use legacy_liftoff_event::LegacyLiftoffEvent;
 
 #[cfg(feature = "legacy")]
 use legacy_touchdown_event::LegacyTouchdownEvent;
+use crate::logs::content::log_event_content::game_mode_change_event::GameModeChangeEvent;
 
 pub mod afmu_repairs_event;
 pub mod applied_to_squadron_event;
@@ -519,6 +520,7 @@ pub mod legacy_liftoff_event;
 #[cfg(feature = "legacy")]
 #[cfg_attr(docsrs, doc(cfg(feature = "legacy")))]
 pub mod legacy_touchdown_event;
+pub mod game_mode_change_event;
 
 /// Enum containing all the possible events that can be found in a [JournalFile].
 ///
@@ -785,12 +787,14 @@ pub enum LogEventContent {
     FighterRebuilt(FighterRebuiltEvent),
     Friends(FriendsEvent),
     FuelScoop(FuelScoopEvent),
+    GameModeChange(GameModeChangeEvent),
     JetConeBoost(JetConeBoostEvent),
     JetConeDamage(JetConeDamageEvent),
     JoinACrew(JoinACrewEvent),
     KickCrewMember(KickCrewMemberEvent),
     LaunchDrone(LaunchDroneEvent),
     LaunchFighter(LaunchFighterEvent),
+    LaunchVessel(LaunchFighterEvent),
     LaunchSRV(LaunchSRVEvent),
 
     /// This event is fired when something changes in the `ModulesInfo.json` file and does not

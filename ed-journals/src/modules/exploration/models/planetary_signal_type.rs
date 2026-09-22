@@ -31,6 +31,9 @@ pub enum PlanetarySignalType {
     #[serde(rename = "$SAA_SignalType_PlanetAnomaly;")]
     PlanetAnomaly,
 
+    #[serde(rename = "$PlanetaryMiningLocation_Name;")]
+    PlanetaryMiningLocation,
+
     /// Other unspecified signal.
     #[serde(rename = "$SAA_SignalType_Other;")]
     Other,
@@ -67,6 +70,7 @@ impl Display for PlanetarySignalType {
                 PlanetarySignalType::Thargoid => "Thargoid",
                 PlanetarySignalType::Guardian => "Guardian",
                 PlanetarySignalType::PlanetAnomaly => "Planet Anomaly",
+                PlanetarySignalType::PlanetaryMiningLocation => "Planetary Mining Location",
                 PlanetarySignalType::Other => "Other",
                 PlanetarySignalType::Commodity(commodity) => return commodity.fmt(f),
 

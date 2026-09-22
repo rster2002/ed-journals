@@ -40,6 +40,9 @@ pub enum ShipSlotKind {
     /// Any non-restricted optional internal slot with the size of the slot.
     OptionalInternal(u8),
 
+    /// A slot reserved for cargo racks.
+    Cargo,
+
     /// A slot reserved for a limpet controller as seen on the Type 11.
     LimpetController,
 
@@ -99,6 +102,7 @@ lazy_static! {
     static ref MINING_HARDPOINT_REGEX: Regex =
         Regex::new(r#"^(Small|Medium|Large|Huge)MiningHardpoint(\d+)$"#).unwrap();
     static ref OPTIONAL_INTERNAL_REGEX: Regex = Regex::new(r#"^Slot(\d+)_Size(\d+)$"#).unwrap();
+    static ref CARGO_REGEX: Regex = Regex::new(r#"^Cargo(\d+)$"#).unwrap();
     static ref MILITARY_REGEX: Regex = Regex::new(r#"^Military(\d+)$"#).unwrap();
     static ref LIMPET_CONTROLLER_REGEX: Regex = Regex::new(r#"^LimpetController(\d+)$"#).unwrap();
     static ref FIGHTER_BAY_REGEX: Regex = Regex::new(r#"^FighterBay(\d+)$"#).unwrap();
@@ -207,6 +211,20 @@ impl FromStr for ShipSlot {
                 slot_nr,
                 kind: ShipSlotKind::OptionalInternal(size),
             });
+        }
+
+        if let Some(captures) = CARGO_REGEX.captures(s) {
+            let slot_nr = captures
+                .get(1)
+                .expect("Should have been captured already")
+                .as_str()
+                .parse()
+                .map_err(|_| ShipSlotError::FailedToParseSlotNr(s.to_string()))?;
+
+            return Ok(ShipSlot {
+                slot_nr,
+                kind: ShipSlotKind::Cargo,
+            })
         }
 
         if let Some(captures) = MILITARY_REGEX.captures(s) {
@@ -331,6 +349,7 @@ impl Display for ShipSlot {
                 write!(f, "{} Mining Hardpoint", size.size_str())
             }
             ShipSlotKind::OptionalInternal(size) => write!(f, "Size {size} Optional Internal"),
+            ShipSlotKind::Cargo => write!(f, "Cargo Slot"),
             ShipSlotKind::Military => write!(f, "Military Slot"),
             ShipSlotKind::LimpetController => write!(f, "Limpet Controller Slot"),
             ShipSlotKind::FighterBay => write!(f, "Fighter Bay Slot"),
