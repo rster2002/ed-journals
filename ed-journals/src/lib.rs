@@ -49,13 +49,14 @@ mod modules;
 
 #[cfg(test)]
 mod tests {
-    use crate::fs::LogDir;
+    use crate::fs::{auto_detect_journal_path, LogDir};
     use crate::io::LogIter;
-    use crate::logs::LogEventContent;
+    use crate::logs::{LogEvent, LogEventContent};
     use std::env::current_dir;
     use std::fs;
     use std::fs::File;
     use std::hash::{DefaultHasher, Hash, Hasher};
+    use std::io::BufReader;
     use std::path::PathBuf;
     use std::thread::current;
 
@@ -157,5 +158,34 @@ mod tests {
         dbg!(entry_count);
 
         // assert_eq!(logs.len(), file_header_count);
+    }
+
+    #[test]
+    #[ignore]
+    fn live_test_files() {
+        let journal_path = std::env::var("JOURNAL_PATH")
+            .ok()
+            .map(PathBuf::from)
+            .or_else(|| auto_detect_journal_path())
+            .unwrap();
+
+        let log_dir = LogDir::new(journal_path);
+
+        for file in log_dir {
+            let file = File::open(file.unwrap()).unwrap();
+            let buf_reader = BufReader::new(file);
+            let iter = LogIter::new_raw(buf_reader);
+
+            for entry in iter {
+                let entry_value = entry.unwrap();
+                let log_entry_result = serde_json::from_value::<LogEvent>(entry_value.clone());
+
+                if let Err(err) = log_entry_result {
+                    dbg!(entry_value);
+                    dbg!(err);
+                    return;
+                }
+            }
+        }
     }
 }
