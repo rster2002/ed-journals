@@ -5,5 +5,7 @@ pub struct SignalCounts {
     pub geological_signal_count: usize,
     pub thargoid_signal_count: usize,
     pub guardian_signal_count: usize,
+    pub planetairy_anomaly_signal_count: usize,
+    pub planetairy_mining_location_signal_count: usize,
     pub other_signal_count: usize,
 }

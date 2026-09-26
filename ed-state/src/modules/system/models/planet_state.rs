@@ -78,6 +78,18 @@ impl PlanetState {
             .is_some_and(|signals| signals.biological_signal_count != 0)
     }
 
+    pub fn has_anomaly_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.planetairy_anomaly_signal_count != 0)
+    }
+
+    pub fn has_mining_signals(&self) -> bool {
+        self.signal_counts
+            .as_ref()
+            .is_some_and(|signals| signals.planetairy_mining_location_signal_count != 0)
+    }
+
     pub fn has_geological_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
@@ -353,6 +365,8 @@ impl EventSink for PlanetState {
                     geological_signal_count: 0,
                     thargoid_signal_count: 0,
                     guardian_signal_count: 0,
+                    planetairy_anomaly_signal_count: 0,
+                    planetairy_mining_location_signal_count: 0,
                     other_signal_count: 0,
                 };
 
@@ -369,6 +383,12 @@ impl EventSink for PlanetState {
                         }
                         PlanetarySignalType::Thargoid => {
                             signal_counts.thargoid_signal_count += signal.count as usize;
+                        }
+                        PlanetarySignalType::PlanetAnomaly => {
+                            signal_counts.planetairy_anomaly_signal_count += signal.count as usize;
+                        }
+                        PlanetarySignalType::PlanetaryMiningLocation => {
+                            signal_counts.planetairy_mining_location_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::Guardian => {
                             signal_counts.guardian_signal_count += signal.count as usize;
