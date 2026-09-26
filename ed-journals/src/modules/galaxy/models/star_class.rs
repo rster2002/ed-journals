@@ -192,6 +192,14 @@ impl StarClass {
             _ => 1_200.0,
         }
     }
+
+    pub fn is_neutron_star(&self) -> bool {
+        matches!(self, StarClass::N)
+    }
+
+    pub fn is_scoopable(&self) -> bool {
+        matches!(self, StarClass::K | StarClass::G | StarClass::B | StarClass::F | StarClass::O | StarClass::A | StarClass::M)
+    }
 }
 
 impl Display for StarClass {
