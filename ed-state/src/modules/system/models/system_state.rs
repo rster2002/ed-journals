@@ -6,7 +6,7 @@ use ed_journals::logs::fss_signal_discovered_event::FSSSignalDiscoveredEvent;
 use ed_journals::logs::scan_event::{ScanEvent, ScanEventKind};
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::Status;
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 
 #[derive(Debug, Default, Clone)]
 pub struct SystemState {
@@ -26,10 +26,10 @@ pub struct SystemState {
     pub belt_scans: HashMap<u8, ScanEvent>,
 
     /// Times when the player was in the system.
-    pub visits: Vec<DateTime<Utc>>,
+    pub visits: BTreeSet<DateTime<Utc>>,
 
     /// Times when the player's was in the system.
-    pub carrier_visits: Vec<DateTime<Utc>>,
+    pub carrier_visits: BTreeSet<DateTime<Utc>>,
 
     /// The number of bodies that are present in the system.
     pub number_of_bodies: Option<u8>,
@@ -127,6 +127,10 @@ impl EventSink for SystemState {
         }
 
         match &log_event.content {
+            LogEventContent::FSDJump(event) => {
+                self.visits.insert(log_event.timestamp);
+                result.accept();
+            }
             LogEventContent::FSSDiscoveryScan(event) => {
                 self.number_of_bodies = Some(event.body_count);
                 self.progress = event.progress;
