@@ -1,7 +1,7 @@
 use crate::modules::state::{EventSink, SinkResult};
 use crate::system::models::planet_organic::{PlanetOrganic, PlanetOrganicScan};
 use crate::system::models::signal_counts::SignalCounts;
-use ed_journals::exobiology::Genus;
+use ed_journals::exobiology::{Genus, Species};
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
@@ -136,7 +136,11 @@ impl PlanetState {
             target_planet: exobiology_body,
         };
 
-        let predictions = spawn_source.get_spawnable_species();
+        let mut predictions: HashSet<Species> = spawn_source
+            .get_spawnable_species()
+            .into_iter()
+            .collect();
+
         let number_of_species = predictions.len();
 
         let species_per_genus_count =
@@ -144,6 +148,13 @@ impl PlanetState {
                 *map.entry(species.genus()).or_insert(0usize) += 1;
                 map
             });
+
+        // Include species that have been scanned but not predicted.
+        for scanned_species in self.organics.values().map(|organic| &organic.species) {
+            if !predictions.contains(scanned_species) {
+                predictions.insert(scanned_species.clone());
+            }
+        }
 
         predictions
             .into_iter()
