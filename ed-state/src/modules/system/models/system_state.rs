@@ -127,7 +127,7 @@ impl EventSink for SystemState {
         }
 
         match &log_event.content {
-            LogEventContent::FSDJump(event) => {
+            LogEventContent::FSDJump(_) => {
                 self.visits.insert(log_event.timestamp);
                 result.accept();
             }

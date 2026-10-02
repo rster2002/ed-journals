@@ -1,7 +1,7 @@
 use crate::modules::state::{EventSink, SinkResult};
 use crate::system::models::planet_organic::{PlanetOrganic, PlanetOrganicScan};
 use crate::system::models::signal_counts::SignalCounts;
-use ed_journals::exobiology::{Genus, Species};
+use ed_journals::exobiology::Genus;
 use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
@@ -136,10 +136,8 @@ impl PlanetState {
             target_planet: exobiology_body,
         };
 
-        let mut predictions: HashSet<Species> = spawn_source
-            .get_spawnable_species()
-            .into_iter()
-            .collect();
+        let mut predictions: HashSet<ed_journals::exobiology::Species> =
+            spawn_source.get_spawnable_species().into_iter().collect();
 
         let number_of_species = predictions.len();
 
@@ -399,7 +397,8 @@ impl EventSink for PlanetState {
                             signal_counts.planetairy_anomaly_signal_count += signal.count as usize;
                         }
                         PlanetarySignalType::PlanetaryMiningLocation => {
-                            signal_counts.planetairy_mining_location_signal_count += signal.count as usize;
+                            signal_counts.planetairy_mining_location_signal_count +=
+                                signal.count as usize;
                         }
                         PlanetarySignalType::Guardian => {
                             signal_counts.guardian_signal_count += signal.count as usize;

@@ -198,7 +198,16 @@ impl StarClass {
     }
 
     pub fn is_scoopable(&self) -> bool {
-        matches!(self, StarClass::K | StarClass::G | StarClass::B | StarClass::F | StarClass::O | StarClass::A | StarClass::M)
+        matches!(
+            self,
+            StarClass::K
+                | StarClass::G
+                | StarClass::B
+                | StarClass::F
+                | StarClass::O
+                | StarClass::A
+                | StarClass::M
+        )
     }
 }
 
