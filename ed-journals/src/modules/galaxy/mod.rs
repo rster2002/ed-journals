@@ -1,4 +1,5 @@
 pub use functions::bearing_to::bearing_to;
+pub use functions::planet_bearing::planet_bearing;
 pub use functions::planet_distance::planet_distance;
 pub use models::atmosphere::Atmosphere;
 pub use models::atmosphere::AtmosphereDensity;

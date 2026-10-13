@@ -409,7 +409,6 @@ impl EventSink for PlanetState {
                         PlanetarySignalType::Commodity(commodity) => {
                             self.commodity_signals.push(commodity.clone());
                         }
-                        _ => {}
                     }
                 }
 
