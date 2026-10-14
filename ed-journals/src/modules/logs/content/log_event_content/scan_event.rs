@@ -77,14 +77,21 @@ impl ScanEventScanType {
     }
 }
 
+/// The kind of object the scan describes including specific information per type.
 #[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum ScanEventKind {
+    /// The scan describes a star.
     Star(ScanEventStar),
+
+    /// The scan describes a planet.
     Planet(ScanEventPlanet),
+
+    /// The scan describes a belt cluster.
     BeltCluster(ScanEventBeltCluster),
 }
 
 impl ScanEventKind {
+    /// Whether the scan describes a star.
     pub fn is_star(&self) -> bool {
         matches!(self, ScanEventKind::Star(_))
     }
@@ -98,6 +105,7 @@ impl ScanEventKind {
         None
     }
 
+    /// Whether the scan describes a planet.
     pub fn is_planet(&self) -> bool {
         matches!(self, ScanEventKind::Planet(_))
     }
@@ -111,6 +119,7 @@ impl ScanEventKind {
         None
     }
 
+    /// Whether the scan describes a belt cluster.
     pub fn is_belt_cluster(&self) -> bool {
         matches!(self, ScanEventKind::BeltCluster(_))
     }
@@ -218,8 +227,12 @@ pub struct ScanEventPlanet {
     pub rotation_period: f32,
     pub axial_tilt: f32,
 
+    /// The rings around this planet.
     #[serde(default)]
     pub rings: Vec<ScanEventRing>,
+
+    /// Specifies the reserve level for the rings around this planet. Only set if there is at least one ring.
+    pub reserve_level: Option<ScanEventReserveLevel>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -274,6 +287,24 @@ pub struct ScanEventRing {
     pub mass_mt: f32,
     pub inner_rad: f32,
     pub outer_rad: f32,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub enum ScanEventReserveLevel {
+    #[serde(rename = "DepletedResources")]
+    Depleted,
+
+    #[serde(rename = "LowResources")]
+    Low,
+
+    #[serde(rename = "CommonResources")]
+    Common,
+
+    #[serde(rename = "MajorResources")]
+    Major,
+
+    #[serde(rename = "PristineResources")]
+    Pristine,
 }
 
 /// This struct is always empty and is just here to make sure [serde] recognizes the empty variant.
