@@ -1,7 +1,7 @@
 //! Collection of iterators for iterating over log entries. These come in both [sync](LogIter) and
 //! [async](AsyncIter) variants and also have raw variants if you want to handle the JSON lines
-//! yourself. The [LogPath] model is used to order the path names of logs and ensure they follow
-//! the expected format.
+//! yourself. The [LogPath](models::log_path::LogPath) model is used to order the path names of logs
+//! and ensure they follow the expected format.
 
 mod error;
 mod models;

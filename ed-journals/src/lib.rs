@@ -4,20 +4,24 @@
 //!
 //! This library provides models and utilities to work with Elite Dangerous journal files.
 //!
-//! > **Warning** this project is currently in beta, which means that it is very much work in progress. Breaking
-//! > changes are likely to happen.
+//! > **Warning** this project is currently in beta, which means that it is very much work in
+//! > progress. Breaking changes are likely to happen.
 //!
 //! ## Where to start
 //!
 //! This library contains quite a large number of modules that each cover a different part of the
 //! game, but there are a couple of modules that are important to point out:
 //!
-//! * The [logs] module contains readers and models for reading the `Journal.log` files that are
-//!   stored in the games journal directory.
-//! * [State](state) can be used to turn the logs from the `Journal.log` files into a single state that can
-//!   then be queried and used to figure out the current or previous state of the game.
-//! * The [journal] module can be used to interact with the whole journal directory and can watch
-//!   the directory as a whole for changes.
+//! * The [logs] module contains the actual log model and the different events that the game writes.
+//! * The [fs] and [io] modules cover everything you need to actually read and parse the logs.
+//! * Check the different modules for handling the dynamic JSON files that are written by the game,
+//!   which can be read using the [JsonFile](fs::common::JsonFile) helper or any other [fs::common]
+//!   strategy.
+//! * The remaining modules cover shared functionality for things like [ships](ship) and
+//!   [the galaxy](galaxy).
+//!
+//! Make sure to check out the [examples](https://github.com/rster2002/ed-journals/tree/master/ed-journals/examples)
+//! in the project repository on some common patterns for reading the data from the game.
 
 pub use modules::backpack;
 pub use modules::cargo;
