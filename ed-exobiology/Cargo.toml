@@ -10,5 +10,5 @@ readme = "readme.md"
 include = ["/src", "/LICENSE", "readme.md"]
 
 [dependencies]
-ed-journals = { path = "../ed-journals", version = "0.13.0" }
+ed-journals = { path = "../ed-journals", version = "0.14.0" }
 strum = { version = "0.26.2", features = ["derive"] }
