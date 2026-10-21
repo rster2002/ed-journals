@@ -1,6 +1,6 @@
 [package]
 name = "ed-state"
-version = "0.1.0"
+version = "0.2.0"
 description = "Crate for collecting incremental game updates into long-lived models"
 repository = "https://github.com/rster2002/ed-journals"
 edition = "2024"
