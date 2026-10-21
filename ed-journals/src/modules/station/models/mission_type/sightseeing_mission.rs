@@ -19,6 +19,7 @@ pub struct SightseeingMission {
 }
 
 #[derive(Debug, Error)]
+#[allow(dead_code)]
 pub enum SightSeeingMissionError {
     #[error("Failed to parse sightseeing mission: '{0}'")]
     FailedToParse(String),
