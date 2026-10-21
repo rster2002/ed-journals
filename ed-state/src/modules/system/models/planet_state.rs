@@ -410,7 +410,7 @@ impl EventSink for PlanetState {
                             self.commodity_signals.push(commodity.clone());
                         }
                         // Needed to cover `Unknown` case when it's enabled.
-                        #[allow(dead_code)]
+                        #[allow(dead_code, unreachable_patterns)]
                         _ => {}
                     }
                 }
