@@ -17,7 +17,6 @@ pub enum InternalModule {
     #[serde(rename = "hyperdrive_overcharge")]
     FrameShiftDriveOvercharged,
 
-    /// Mk II SCO Frame Shift Drive, exclusive to Caspian Explorer
     #[serde(rename = "hyperdrive_overcharge_overchargebooster_mkii")]
     FrameShiftDriveOverchargedMkII,
 
@@ -97,7 +96,6 @@ pub enum InternalModule {
     #[serde(rename = "cargorack")]
     CargoRack,
 
-    /// Mk II Large Cargo Rack, exclusive to Panther Clipper MkII
     #[serde(rename = "largecargorack")]
     LargeCargoRackMkII,
 
@@ -113,11 +111,9 @@ pub enum InternalModule {
     #[serde(rename = "engine_fast")]
     EnhancedPerformanceThrusters,
 
-    /// Mk II Agile Boost Thrusters, exclusive to Kestrel Mk II
     #[serde(rename = "mkiiagileboost_engine")]
     MkIIAgileBoostThrusters,
 
-    /// Mk II Gravity Optimised Thrusters, exclusive to Panther Clipper MkII
     #[serde(rename = "engine_gravityoptimised_mkii")]
     GravityOptimisedThrustersMkII,
 

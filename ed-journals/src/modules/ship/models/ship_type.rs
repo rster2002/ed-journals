@@ -14,6 +14,7 @@ pub enum ShipType {
     AllianceChieftain,
     AllianceCrusader,
     Anaconda,
+    AnacondaMkII,
     AspExplorer,
     AspScout,
     BelugaLiner,
@@ -78,6 +79,7 @@ impl FromStr for ShipType {
         Ok(match string {
             "adder" => ShipType::Adder,
             "anaconda" => ShipType::Anaconda,
+            "anacondamkii" => ShipType::AnacondaMkII,
             "asp" => ShipType::AspExplorer,
             "asp_scout" => ShipType::AspScout,
             "belugaliner" => ShipType::BelugaLiner,
@@ -147,6 +149,7 @@ impl Display for ShipType {
                 ShipType::AllianceChieftain => "Alliance Chieftain",
                 ShipType::AllianceCrusader => "Alliance Crusader",
                 ShipType::Anaconda => "Anaconda",
+                ShipType::AnacondaMkII => "Anaconda Mk II",
                 ShipType::AspExplorer => "Asp Explorer",
                 ShipType::AspScout => "Asp Scout",
                 ShipType::BelugaLiner => "Beluga Liner",
