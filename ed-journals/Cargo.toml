@@ -7,7 +7,7 @@ edition = "2021"
 license = "MIT"
 keywords = ["elite-dangerous", "elite-journal"]
 readme = "../readme.md"
-include = ["/src", "/LICENSE", "readme.md"]
+include = ["/src", "/LICENSE", "readme.md", "/examples"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
