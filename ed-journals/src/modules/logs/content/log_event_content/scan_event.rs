@@ -44,6 +44,9 @@ pub struct ScanEvent {
     #[serde(default)]
     pub was_mapped: bool,
 
+    #[serde(default)]
+    pub was_footfalled: bool,
+
     /// Detailed information about the body per type of body.
     #[serde(flatten)]
     pub kind: ScanEventKind,
@@ -289,7 +292,7 @@ pub struct ScanEventRing {
     pub outer_rad: f32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ScanEventReserveLevel {
     #[serde(rename = "DepletedResources")]
     Depleted,
