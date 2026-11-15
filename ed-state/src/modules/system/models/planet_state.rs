@@ -2,7 +2,9 @@ use crate::modules::state::{EventSink, SinkResult};
 use crate::system::models::planet_organic::{PlanetOrganic, PlanetOrganicScan};
 use crate::system::models::signal_counts::SignalCounts;
 use ed_journals::exobiology::Genus;
-use ed_journals::exploration::{CodexEntry, PlanetarySignalType};
+use ed_journals::exploration::{
+    CodexEntry, PlanetarySignalType, calculate_estimated_planet_worth, calculate_estimated_worth,
+};
 use ed_journals::logs::saa_scan_complete_event::SAAScanCompleteEvent;
 use ed_journals::logs::saa_signals_found_event::SAASignalsFoundEventSignal;
 use ed_journals::logs::scan_event::ScanEvent;
@@ -12,6 +14,7 @@ use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::{PlanetStatus, Status};
 use ed_journals::trading::Commodity;
 use std::collections::{HashMap, HashSet};
+use chrono::{DateTime, Utc};
 
 cfg_select! {
     feature = "exobiology" => {
@@ -25,7 +28,13 @@ cfg_select! {
 
 #[derive(Debug, Default, Clone)]
 pub struct PlanetState {
+    /// The ID of the body this planet is associated with.
     pub body_id: u8,
+
+    /// The time at which this planet was scanned.
+    pub scanned_at: Option<DateTime<Utc>>,
+
+    /// The scan event for this planet, if any.
     pub scan: Option<ScanEvent>,
 
     /// The SAA scan for this planet, if any.
@@ -66,52 +75,98 @@ pub struct PlanetState {
 }
 
 impl PlanetState {
+    /// Whether the planet has any human signals.
     pub fn has_human_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.human_signal_count != 0)
     }
 
+    /// Whether the planet has any biological signals.
     pub fn has_biological_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.biological_signal_count != 0)
     }
 
+    /// Whether the planet has any anomaly signals.
     pub fn has_anomaly_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.planetairy_anomaly_signal_count != 0)
     }
 
+    /// Whether the planet has any mining signals.
     pub fn has_mining_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.planetairy_mining_location_signal_count != 0)
     }
 
+    /// Whether the planet has any geological signals.
     pub fn has_geological_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.geological_signal_count != 0)
     }
 
+    /// Whether the planet has any thargoid signals.
     pub fn has_thargoid_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.thargoid_signal_count != 0)
     }
 
+    /// Whether the planet has any guardian signals.
     pub fn has_guardian_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.guardian_signal_count != 0)
     }
 
+    /// Whether the planet has any other signals.
     pub fn has_other_signals(&self) -> bool {
         self.signal_counts
             .as_ref()
             .is_some_and(|signals| signals.other_signal_count != 0)
+    }
+
+    /// Whether the planet is considered to be the first footfall for the current commander.
+    pub fn is_first_footfall(&self) -> Option<bool> {
+        self.scan.as_ref()
+            .map(|scan| !scan.was_footfalled)
+    }
+
+    /// The estimated value of the scanned planet.
+    pub fn estimated_exploration_value(&self) -> Option<u64> {
+        self.scan
+            .as_ref()
+            .and_then(|scan| Some((scan, scan.kind.planet()?)))
+            .map(|(scan, planet)| {
+                calculate_estimated_planet_worth(
+                    planet,
+                    !scan.was_discovered,
+                    if scan.was_mapped {
+                        false
+                    } else {
+                        self.saa_scan.is_some()
+                    },
+                )
+            })
+    }
+
+    /// The estimated total value of scanned species on this planet.
+    pub fn estimated_exobiology_value(&self) -> Option<u64> {
+        Some(self.organics.values()
+            .filter(|organic| organic.is_completed())
+            .map(|organic| {
+                if self.is_first_footfall().unwrap_or_default() {
+                    organic.species.base_value() * 5
+                } else {
+                    organic.species.base_value()
+                }
+            })
+            .sum())
     }
 
     #[cfg(feature = "exobiology")]
@@ -327,6 +382,7 @@ impl EventSink for PlanetState {
         match &log_event.content {
             LogEventContent::Scan(event) if event.kind.is_planet() => {
                 self.scan = Some(event.clone());
+                self.scanned_at = Some(log_event.timestamp);
 
                 #[cfg(feature = "exobiology")]
                 if let ScanEventKind::Planet(planet) = &event.kind {

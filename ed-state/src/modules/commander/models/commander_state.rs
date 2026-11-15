@@ -10,10 +10,15 @@ use ed_journals::logs::touchdown_event::TouchdownEvent;
 use ed_journals::logs::{LogEvent, LogEventContent};
 use ed_journals::status::{PlanetStatus, Status, StatusContents};
 use std::collections::HashMap;
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, Default)]
 pub struct CommanderState {
     pub commander: Option<CommanderEvent>,
+
+    pub last_death: Option<DateTime<Utc>>,
+    pub last_exploration_sell: Option<DateTime<Utc>>,
+    pub last_exobiology_sell: Option<DateTime<Utc>>,
 
     /// Systems that the player has visited.
     pub systems: HashMap<u64, SystemState>,
@@ -35,6 +40,7 @@ pub struct CommanderState {
 }
 
 impl CommanderState {
+    /// Returns the state of the system the commander is currently in.
     pub fn current_system_state(&self) -> Option<&SystemState> {
         self.current_system
             .as_ref()
@@ -116,6 +122,46 @@ impl CommanderState {
 
         Some(first_distance.min(second_distance))
     }
+
+    /// Returns the current value of exploration since last sell or death.
+    pub fn current_exploration_value(&self) -> u64 {
+        let last_reset = self.last_exploration_sell
+            .max(self.last_death)
+            .unwrap_or_default();
+
+        self.systems
+            .values()
+            .map(|system| {
+                system.planet_state
+                    .values()
+                    .filter(|planet| {
+                        planet.scanned_at.is_some_and(|scanned| scanned > last_reset)
+                    })
+                    .filter_map(|planet| planet.estimated_exploration_value())
+                    .sum::<u64>()
+            })
+            .sum()
+    }
+
+    /// Returns the current value of exobiology since last sell or death.
+    pub fn current_exobiology_value(&self) -> u64 {
+        let last_reset = self.last_exobiology_sell
+            .max(self.last_death)
+            .unwrap_or_default();
+
+        self.systems
+            .values()
+            .map(|system| {
+                system.planet_state
+                    .values()
+                    .filter(|planet| {
+                        planet.scanned_at.is_some_and(|scanned| scanned > last_reset)
+                    })
+                    .filter_map(|planet| planet.estimated_exobiology_value())
+                    .sum::<u64>()
+            })
+            .sum()
+    }
 }
 
 impl EventSink for CommanderState {
@@ -163,6 +209,15 @@ impl EventSink for CommanderState {
                 self.touchdown = None;
                 result.accept();
             }
+            LogEventContent::Died(_) => {
+                self.last_death = Some(log_event.timestamp);
+            },
+            LogEventContent::SellExplorationData(_) => {
+                self.last_exploration_sell = Some(log_event.timestamp);
+            },
+            LogEventContent::SellOrganicData(_) => {
+                self.last_exobiology_sell = Some(log_event.timestamp);
+            },
             _ => {}
         }
 

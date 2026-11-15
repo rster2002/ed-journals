@@ -88,6 +88,14 @@ impl SystemState {
     pub fn near_body_state(&self) -> Option<&PlanetState> {
         self.near_body.and_then(|id| self.planet_state.get(&id))
     }
+
+    /// Returns the estimated value of the total value of all bodies scanned and mapped.
+    pub fn estimated_value(&self) -> u64 {
+        self.planet_state
+            .values()
+            .filter_map(|state| state.estimated_exploration_value())
+            .sum()
+    }
 }
 
 impl From<u64> for SystemState {

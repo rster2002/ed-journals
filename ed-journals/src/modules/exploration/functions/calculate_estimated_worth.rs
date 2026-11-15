@@ -5,33 +5,34 @@ use crate::modules::galaxy::TerraformState;
 pub fn calculate_estimated_worth(scan: &ScanEvent) -> u64 {
     match &scan.kind {
         ScanEventKind::Star(star_scan) => {
-            calculate_estimated_star_worth(star_scan, !scan.was_discovered) as u64
+            calculate_estimated_star_worth(star_scan, !scan.was_discovered)
         }
         ScanEventKind::Planet(planet_scan) => {
             calculate_estimated_planet_worth(planet_scan, !scan.was_discovered, !scan.was_mapped)
-                as u64
         }
         _ => 0,
     }
 }
 
-fn calculate_estimated_star_worth(scan: &ScanEventStar, is_first_discovery: bool) -> f32 {
+/// Calculates the estimated worth of a scanned star.
+pub fn calculate_estimated_star_worth(scan: &ScanEventStar, is_first_discovery: bool) -> u64 {
     let base_value = scan.star_type.base_value();
     let mass_factor = f32::max(scan.stellar_mass, 1.0);
     let body_value = base_value + mass_factor * base_value / 66.25;
 
-    if is_first_discovery {
+    (if is_first_discovery {
         body_value * 2.6
     } else {
         body_value
-    }
+    }) as u64
 }
 
-fn calculate_estimated_planet_worth(
+/// Calculates the estimated worth of a scanned planet.
+pub fn calculate_estimated_planet_worth(
     scan: &ScanEventPlanet,
     is_first_discovery: bool,
     is_first_map: bool,
-) -> f32 {
+) -> u64 {
     let base_value = scan.planet_class.base_value();
     let terraformable_bonus = if scan.terraform_state == TerraformState::Terraformable {
         scan.planet_class.terraformable_bonus()
@@ -46,9 +47,9 @@ fn calculate_estimated_planet_worth(
         500.0,
     );
 
-    match (is_first_discovery, is_first_map) {
+    (match (is_first_discovery, is_first_map) {
         (true, true) => body_value * 9.619_019,
         (false, true) => body_value * 8.0956,
         _ => body_value * 3.333_333_3,
-    }
+    }) as u64
 }
